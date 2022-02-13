@@ -887,7 +887,22 @@ public final class sekuel {
         }
     }
      
-
+    public void Commit(){
+        try {
+            connect.commit();
+        } catch (Exception e) {
+        }
+    }
+     
+    public void RollBack(){
+        try {
+            connect.rollback();
+        } catch (Exception e) {
+            System.out.println("Notif : "+e);
+            JOptionPane.showMessageDialog(null,"Gagal melakukan rollback..!");
+        }
+    }
+    
     public void cariIsi(String sql,JComboBox cmb){
         try {
             ps=connect.prepareStatement(sql);

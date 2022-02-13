@@ -110,9 +110,8 @@ public final class SisruteCekReferensiDiagnosa extends javax.swing.JDialog {
             });
         }   
         try {
-            prop.loadFromXML(new FileInputStream("setting/database.xml")); 
-            link=prop.getProperty("URLAPISISRUTE");
-            idrs=prop.getProperty("IDSISRUTE");
+            link=koneksiDB.UrlSisrute();
+            idrs=koneksiDB.ConsIdSisrute();
         } catch (Exception e) {
             System.out.println("E : "+e);
         }

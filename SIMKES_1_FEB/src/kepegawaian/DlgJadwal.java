@@ -10,6 +10,9 @@
  */
 
 package kepegawaian;
+import bridging.BPJSApi;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import kepegawaian.DlgCariDokter;
 import fungsi.WarnaTable;
 import fungsi.batasInput;
@@ -33,6 +36,10 @@ import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import simrskhanza.DlgCariPoli;
 
 /**
@@ -46,6 +53,14 @@ public class DlgJadwal extends javax.swing.JDialog {
     private validasi Valid=new validasi();
     private PreparedStatement ps;
     private ResultSet rs;
+    private HttpHeaders headers;
+    private HttpEntity requestEntity;
+    private ObjectMapper mapper = new ObjectMapper();
+    private JsonNode root;
+    private JsonNode nameNode;
+    private JsonNode response;
+    private BPJSApi api = new BPJSApi();
+    private String link = "", requestJson = "", URL = "", utc = "";
 
     /** Creates new form DlgJadwal
      * @param parent
@@ -175,9 +190,15 @@ public class DlgJadwal extends javax.swing.JDialog {
             public void windowDeactivated(WindowEvent e) {}
         });
         
+        try {
+            link = koneksiDB.UrlMobileJKN();
+        } catch (Exception e) {
+            System.out.println("E : " + e);
+        }
     }
     DlgCariDokter dokter=new DlgCariDokter(null,false);
     DlgCariPoli poli=new DlgCariPoli(null,false);
+    
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -492,7 +513,7 @@ public class DlgJadwal extends javax.swing.JDialog {
         panelBiasa1.add(TPoli);
         TPoli.setBounds(316, 72, 272, 23);
 
-        cmbHari.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SENIN", "SELASA", "RABU", "KAMIS", "JUMAT", "SABTU", "AKHAD" }));
+        cmbHari.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "----", "SENIN", "SELASA", "RABU", "KAMIS", "JUMAT", "SABTU", "AKHAD" }));
         cmbHari.setName("cmbHari"); // NOI18N
         cmbHari.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -694,6 +715,7 @@ public class DlgJadwal extends javax.swing.JDialog {
                 tampil();
                 emptTeks();
             }
+//              simpanHfis();
         }
 }//GEN-LAST:event_BtnSimpanActionPerformed
 
@@ -1045,6 +1067,47 @@ private void BtnPoliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
             TPoli.setText(tabMode.getValueAt(row,6).toString());
             Kuota.setText(Valid.SetAngka(Double.parseDouble(tabMode.getValueAt(row,7).toString())));
             Sequel.cariIsi("select kd_poli from poliklinik where nm_poli='"+tabMode.getValueAt(row,6).toString()+"'",KdPoli);
+        }
+    }
+    
+    public void simpanHfis(){
+        try {
+            headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+            headers.add("X-Cons-ID", koneksiDB.ConsIdBpjs());
+            headers.add("X-Timestamp", String.valueOf(api.GetUTCdatetimeAsString()));
+            headers.add("X-Signature", api.getHmac());
+            headers.add("user_key", koneksiDB.UserKeyBpjs());
+            URL = link + "/jadwaldokter/updatejadwaldokter";
+            requestJson = "{"
+                    + "\"kodepoli\":\"" + Sequel.cariIsi("select kd_poli_bpjs from maping_poli_bpjs where kd_poli_rs=?", KdPoli.getText()) + "\","
+                    + "\"kodesubspesialis\":\"" + Sequel.cariIsi("select kd_subpoli_hfis from maping_poli_bpjs where kd_poli_rs=?", KdPoli.getText()) + "\","
+                    + "\"kodedokter\":\"" + Sequel.cariIsi("select kd_dokter_bpjs from maping_dokter_dpjpvclaim where kd_dokter=?", kddokter.getText()) + "\","
+                    + "\"jadwal\": [" +
+                                "{" +
+                                    "\"hari\": \""+cmbHari.getSelectedIndex()+"\"," +
+                                    "\"buka\": \""+cmbJam1.getSelectedItem().toString()+":"+cmbMnt1.getSelectedItem().toString()+"\"," +
+                                    "\"tutup\": \""+cmbJam2.getSelectedItem().toString()+":"+cmbMnt2.getSelectedItem().toString()+"\"" +
+                                "}" +
+                            "]" +
+                        "}";
+            System.out.println("JSON : " + requestJson);
+            requestEntity = new HttpEntity(requestJson, headers);
+            root = mapper.readTree(api.getRest().exchange(URL, HttpMethod.POST, requestEntity, String.class).getBody());
+            nameNode = root.path("metadata");
+            System.out.println("code : " + nameNode.path("code").asText());
+            System.out.println("message : " + nameNode.path("message").asText());
+            //response = mapper.readTree(api.Decrypt(root.path("response").asText(),utc)).path("noSuratKontrol");
+            if (nameNode.path("code").asText().equals("200")) {
+                JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
+            } else {
+                JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
+            }
+        } catch (Exception ex) {
+            System.out.println("Notifikasi Bridging : " + ex);
+            if (ex.toString().contains("UnknownHostException")) {
+                JOptionPane.showMessageDialog(null, "Koneksi ke server BPJS terputus...!");
+            }
         }
     }
     

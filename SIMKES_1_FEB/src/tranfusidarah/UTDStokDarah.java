@@ -34,6 +34,7 @@ public class UTDStokDarah extends javax.swing.JDialog {
     private PreparedStatement ps;
     private ResultSet rs;
     private UTDKomponenDarah komponen=new UTDKomponenDarah(null,true);
+    private UTDDonor donor=new UTDDonor(null,true);
     private int i;
     private Calendar cal;
     private SimpleDateFormat sdf;
@@ -46,7 +47,7 @@ public class UTDStokDarah extends javax.swing.JDialog {
         initComponents();
 
         Object[] row={
-            "No.Kantung","Komponen","G.D.","Rhesus","Aftap","Kadaluarsa",
+            "No. Registrasi","No. Kantong","Komponen","G.D.","Rhesus","Aftap","Kadaluarsa",
             "Asal Darah","Status","Jasa Sarana","Paket BHP",
             "KSO","Manajemen","Biaya","Pembatalan","Kode Komponen"
         };
@@ -58,23 +59,25 @@ public class UTDStokDarah extends javax.swing.JDialog {
         tbDokter.setPreferredScrollableViewportSize(new Dimension(800,800));
         tbDokter.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 15; i++) {
+        for (i = 0; i < 16; i++) {
             TableColumn column = tbDokter.getColumnModel().getColumn(i);
             if(i==0){
                 column.setPreferredWidth(80);
             }else if(i==1){
-                column.setPreferredWidth(230);
+                column.setPreferredWidth(80);
             }else if(i==2){
-                column.setPreferredWidth(35);
+                column.setPreferredWidth(230);
             }else if(i==3){
-                column.setPreferredWidth(50);
+                column.setPreferredWidth(35);
             }else if(i==4){
-                column.setPreferredWidth(75);
+                column.setPreferredWidth(50);
             }else if(i==5){
                 column.setPreferredWidth(75);
             }else if(i==6){
-                column.setPreferredWidth(100);
+                column.setPreferredWidth(75);
             }else if(i==7){
+                column.setPreferredWidth(100);
+            }else if(i==8){
                 column.setPreferredWidth(80);
             }else{
                 column.setMinWidth(0);
@@ -118,7 +121,7 @@ public class UTDStokDarah extends javax.swing.JDialog {
             public void windowClosed(WindowEvent e) {
                 if(komponen.getTable().getSelectedRow()!= -1){ 
                     KodeKomponen.setText(komponen.getTable().getValueAt(komponen.getTable().getSelectedRow(),0).toString());
-                    NoKantong.setText(komponen.getTable().getValueAt(komponen.getTable().getSelectedRow(),0).toString()+NoKantong.getText());
+                    NoKantong.setText(NoKantong.getText()+komponen.getTable().getValueAt(komponen.getTable().getSelectedRow(),0).toString());
                     NamaKomponen.setText(komponen.getTable().getValueAt(komponen.getTable().getSelectedRow(),1).toString());
                     KodeKomponen.requestFocus();
                     cal = Calendar.getInstance();
@@ -150,7 +153,54 @@ public class UTDStokDarah extends javax.swing.JDialog {
             }
             @Override
             public void keyReleased(KeyEvent e) {}
-        });  
+        }); 
+        
+        donor.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {}
+            @Override
+            public void windowClosing(WindowEvent e) {}
+            @Override
+            public void windowClosed(WindowEvent e) {
+                if(donor.getTable().getSelectedRow()!= -1){ 
+//                    KodeKomponen.setText(komponen.getTable().getValueAt(komponen.getTable().getSelectedRow(),0).toString());
+                    NoKantong.setText(donor.getTable().getValueAt(donor.getTable().getSelectedRow(),12).toString());
+                    NoKantong1.setText(donor.getTable().getValueAt(donor.getTable().getSelectedRow(),12).toString());
+                    GolonganDarah.setSelectedItem(donor.getTable().getValueAt(donor.getTable().getSelectedRow(),9).toString());
+                    Resus.setSelectedItem(donor.getTable().getValueAt(donor.getTable().getSelectedRow(),10).toString());
+//                    NamaKomponen.setText(komponen.getTable().getValueAt(komponen.getTable().getSelectedRow(),1).toString());
+//                    KodeKomponen.requestFocus();
+//                    cal = Calendar.getInstance();
+//                    cal.setTime(Aftap.getDate());
+//                    cal.add( Calendar.DATE,Integer.parseInt(komponen.getTable().getValueAt(komponen.getTable().getSelectedRow(),2).toString()));
+//                    sdf = new SimpleDateFormat("yyyy-MM-dd");
+//                    Valid.SetTgl(Kadaluarsa,sdf.format(cal.getTime()));
+                    NoKantong.requestFocus();
+                } 
+            }
+            @Override
+            public void windowIconified(WindowEvent e) {}
+            @Override
+            public void windowDeiconified(WindowEvent e) {}
+            @Override
+            public void windowActivated(WindowEvent e) {}
+            @Override
+            public void windowDeactivated(WindowEvent e) {}
+        });
+        
+        donor.getTable().addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {}
+            @Override
+            public void keyPressed(KeyEvent e) {
+                    if(e.getKeyCode()==KeyEvent.VK_SPACE){
+                        donor.dispose();
+                    }
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {}
+        }); 
+        
         ChkInput.setSelected(false);
         panelCari.setVisible(false);
         posisi(); 
@@ -190,6 +240,9 @@ public class UTDStokDarah extends javax.swing.JDialog {
         label33 = new widget.Label();
         jLabel12 = new widget.Label();
         Asal = new widget.ComboBox();
+        btnKantong = new widget.Button();
+        NoKantong1 = new widget.TextBox();
+        label13 = new widget.Label();
         ChkInput = new widget.CekBox();
         PanelCariUtama = new javax.swing.JPanel();
         panelCariKategori = new javax.swing.JPanel();
@@ -297,11 +350,11 @@ public class UTDStokDarah extends javax.swing.JDialog {
         FormInput.setPreferredSize(new java.awt.Dimension(660, 138));
         FormInput.setLayout(null);
 
-        label12.setText("No.Kantong :");
+        label12.setText("No. Registrasi :");
         label12.setName("label12"); // NOI18N
         label12.setPreferredSize(new java.awt.Dimension(75, 23));
         FormInput.add(label12);
-        label12.setBounds(0, 12, 85, 23);
+        label12.setBounds(0, 10, 85, 23);
 
         NoKantong.setName("NoKantong"); // NOI18N
         NoKantong.setPreferredSize(new java.awt.Dimension(207, 23));
@@ -311,7 +364,7 @@ public class UTDStokDarah extends javax.swing.JDialog {
             }
         });
         FormInput.add(NoKantong);
-        NoKantong.setBounds(88, 12, 100, 23);
+        NoKantong.setBounds(88, 10, 100, 23);
 
         label18.setText("Komponen :");
         label18.setName("label18"); // NOI18N
@@ -378,7 +431,7 @@ public class UTDStokDarah extends javax.swing.JDialog {
         FormInput.add(Resus);
         Resus.setBounds(294, 72, 65, 23);
 
-        Aftap.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "27-02-2019" }));
+        Aftap.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "18-09-2021" }));
         Aftap.setDisplayFormat("dd-MM-yyyy");
         Aftap.setName("Aftap"); // NOI18N
         Aftap.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -395,7 +448,7 @@ public class UTDStokDarah extends javax.swing.JDialog {
         FormInput.add(label32);
         label32.setBounds(0, 72, 85, 23);
 
-        Kadaluarsa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "27-02-2019" }));
+        Kadaluarsa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "18-09-2021" }));
         Kadaluarsa.setDisplayFormat("dd-MM-yyyy");
         Kadaluarsa.setName("Kadaluarsa"); // NOI18N
         Kadaluarsa.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -426,6 +479,35 @@ public class UTDStokDarah extends javax.swing.JDialog {
         });
         FormInput.add(Asal);
         Asal.setBounds(294, 102, 169, 23);
+
+        btnKantong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
+        btnKantong.setMnemonic('1');
+        btnKantong.setToolTipText("Alt+1");
+        btnKantong.setName("btnKantong"); // NOI18N
+        btnKantong.setPreferredSize(new java.awt.Dimension(28, 23));
+        btnKantong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKantongActionPerformed(evt);
+            }
+        });
+        FormInput.add(btnKantong);
+        btnKantong.setBounds(190, 10, 28, 23);
+
+        NoKantong1.setName("NoKantong1"); // NOI18N
+        NoKantong1.setPreferredSize(new java.awt.Dimension(207, 23));
+        NoKantong1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                NoKantong1KeyPressed(evt);
+            }
+        });
+        FormInput.add(NoKantong1);
+        NoKantong1.setBounds(350, 10, 100, 23);
+
+        label13.setText("No. Kantong :");
+        label13.setName("label13"); // NOI18N
+        label13.setPreferredSize(new java.awt.Dimension(75, 23));
+        FormInput.add(label13);
+        label13.setBounds(260, 10, 85, 23);
 
         PanelInput.add(FormInput, java.awt.BorderLayout.CENTER);
 
@@ -824,11 +906,11 @@ public class UTDStokDarah extends javax.swing.JDialog {
         }else{
             if(Sequel.mengedittf("utd_stok_darah","no_kantong=?",
                 "no_kantong=?,kode_komponen=?,golongan_darah=?,resus=?,"+
-                "tanggal_aftap=?,tanggal_kadaluarsa=?,asal_darah=?",8,new String[]{     
+                "tanggal_aftap=?,tanggal_kadaluarsa=?,asal_darah=?,no_bag=?",9,new String[]{     
                     NoKantong.getText(),KodeKomponen.getText(),GolonganDarah.getSelectedItem().toString(),
                     Resus.getSelectedItem().toString(),Valid.SetTgl(Aftap.getSelectedItem()+""),
                     Valid.SetTgl(Kadaluarsa.getSelectedItem()+""),Asal.getSelectedItem().toString(),
-                    tabMode.getValueAt(tbDokter.getSelectedRow(),0).toString()
+                    NoKantong1.getText(),tabMode.getValueAt(tbDokter.getSelectedRow(),0).toString()
               })==true){
                 emptTeks();
                 tampil();
@@ -935,11 +1017,11 @@ public class UTDStokDarah extends javax.swing.JDialog {
         }else if(KodeKomponen.getText().trim().equals("")||NamaKomponen.getText().trim().equals("")){
             Valid.textKosong(KodeKomponen,"Komponen");
         }else{
-            if(Sequel.menyimpantf("utd_stok_darah","?,?,?,?,?,?,?,?","Kode",8,new String[]{
+            if(Sequel.menyimpantf("utd_stok_darah","?,?,?,?,?,?,?,?,?","Kode",9,new String[]{
                 NoKantong.getText(),KodeKomponen.getText(),GolonganDarah.getSelectedItem().toString(),
                 Resus.getSelectedItem().toString(),Valid.SetTgl(Aftap.getSelectedItem()+""),
                 Valid.SetTgl(Kadaluarsa.getSelectedItem()+""),Asal.getSelectedItem().toString(),
-                "Ada"
+                "Ada",NoKantong1.getText()
               })==true){
                 emptTeks();
                 tampil();
@@ -1063,6 +1145,20 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         tampil();
     }//GEN-LAST:event_CmbCariAsalItemStateChanged
 
+    private void btnKantongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKantongActionPerformed
+        // TODO add your handling code here:
+        donor.emptTeks();
+        donor.isCek();
+        donor.getTable();
+        donor.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
+        donor.setLocationRelativeTo(internalFrame1);        
+        donor.setVisible(true);
+    }//GEN-LAST:event_btnKantongActionPerformed
+
+    private void NoKantong1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NoKantong1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NoKantong1KeyPressed
+
     /**
     * @param args the command line arguments
     */
@@ -1103,11 +1199,13 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.Label LCount;
     private widget.TextBox NamaKomponen;
     private widget.TextBox NoKantong;
+    private widget.TextBox NoKantong1;
     private javax.swing.JPanel PanelCariUtama;
     private javax.swing.JPanel PanelInput;
     private javax.swing.JPopupMenu Popup;
     private widget.ComboBox Resus;
     private widget.TextBox TCari;
+    private widget.Button btnKantong;
     private widget.Button btnKomponen;
     private widget.InternalFrame internalFrame1;
     private widget.Label jLabel10;
@@ -1120,6 +1218,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JPanel jPanel2;
     private widget.Label label10;
     private widget.Label label12;
+    private widget.Label label13;
     private widget.Label label18;
     private widget.Label label32;
     private widget.Label label33;
@@ -1138,7 +1237,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         try{
             if(panelCari.isVisible()==false){
                 ps=koneksi.prepareStatement(
-                    "select utd_stok_darah.no_kantong,utd_komponen_darah.nama as darah,"+
+                    "select utd_stok_darah.no_kantong,utd_stok_darah.no_bag,utd_komponen_darah.nama as darah,"+
                     "utd_stok_darah.golongan_darah,utd_stok_darah.resus,"+
                     "utd_stok_darah.tanggal_aftap,utd_stok_darah.tanggal_kadaluarsa,"+
                     "utd_stok_darah.asal_darah,utd_stok_darah.status,"+
@@ -1155,7 +1254,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                     "order by utd_stok_darah.tanggal_kadaluarsa");
             }else{
                 ps=koneksi.prepareStatement(
-                    "select utd_stok_darah.no_kantong,utd_komponen_darah.nama as darah,"+
+                    "select utd_stok_darah.no_kantong,utd_stok_darah.no_bag,utd_komponen_darah.nama as darah,"+
                     "utd_stok_darah.golongan_darah,utd_stok_darah.resus,"+
                     "utd_stok_darah.tanggal_aftap,utd_stok_darah.tanggal_kadaluarsa,"+
                     "utd_stok_darah.asal_darah,utd_stok_darah.status,"+
@@ -1198,9 +1297,9 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                     tabMode.addRow(new Object[]{
                         rs.getString(1),rs.getString(2),rs.getString(3),
                         rs.getString(4),rs.getString(5),rs.getString(6),
-                        rs.getString(7),rs.getString(8),rs.getDouble(9),
+                        rs.getString(7),rs.getString(8),rs.getString(9),
                         rs.getDouble(10),rs.getDouble(11),rs.getDouble(12),
-                        rs.getDouble(13),rs.getDouble(14),rs.getString(15)
+                        rs.getDouble(13),rs.getDouble(14),rs.getDouble(15),rs.getString(16)
                     });
                 }
             } catch (Exception e) {
@@ -1223,19 +1322,21 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         KodeKomponen.setText("");
         NamaKomponen.setText("");
         NoKantong.setText("");
+        NoKantong1.setText("");
         NoKantong.requestFocus();
     }
 
     private void getData() {
         if(tbDokter.getSelectedRow()!= -1){
             NoKantong.setText(tbDokter.getValueAt(tbDokter.getSelectedRow(),0).toString());
-            KodeKomponen.setText(tbDokter.getValueAt(tbDokter.getSelectedRow(),14).toString());
-            NamaKomponen.setText(tbDokter.getValueAt(tbDokter.getSelectedRow(),1).toString());
-            GolonganDarah.setSelectedItem(tbDokter.getValueAt(tbDokter.getSelectedRow(),2).toString());
-            Resus.setSelectedItem(tbDokter.getValueAt(tbDokter.getSelectedRow(),3).toString());
-            Valid.SetTgl(Aftap,tbDokter.getValueAt(tbDokter.getSelectedRow(),4).toString());
-            Valid.SetTgl(Kadaluarsa,tbDokter.getValueAt(tbDokter.getSelectedRow(),5).toString());
-            Asal.setSelectedItem(tbDokter.getValueAt(tbDokter.getSelectedRow(),6).toString());
+            NoKantong1.setText(tbDokter.getValueAt(tbDokter.getSelectedRow(),1).toString());
+            KodeKomponen.setText(tbDokter.getValueAt(tbDokter.getSelectedRow(),15).toString());
+            NamaKomponen.setText(tbDokter.getValueAt(tbDokter.getSelectedRow(),2).toString());
+            GolonganDarah.setSelectedItem(tbDokter.getValueAt(tbDokter.getSelectedRow(),3).toString());
+            Resus.setSelectedItem(tbDokter.getValueAt(tbDokter.getSelectedRow(),4).toString());
+            Valid.SetTgl(Aftap,tbDokter.getValueAt(tbDokter.getSelectedRow(),5).toString());
+            Valid.SetTgl(Kadaluarsa,tbDokter.getValueAt(tbDokter.getSelectedRow(),6).toString());
+            Asal.setSelectedItem(tbDokter.getValueAt(tbDokter.getSelectedRow(),7).toString());
         }
     }
 

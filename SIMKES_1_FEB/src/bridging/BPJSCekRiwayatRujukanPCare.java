@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fungsi.koneksiDB;
 import fungsi.sekuel;
 import fungsi.validasi;
 import fungsi.var;
@@ -57,6 +58,8 @@ public final class BPJSCekRiwayatRujukanPCare extends javax.swing.JDialog {
     private JsonNode root;
     private JsonNode nameNode;
     private JsonNode response;
+    private JsonNode respon;
+    private JsonNode res1;
         
     /** Creates new form DlgKamar
      * @param parent
@@ -399,16 +402,25 @@ public final class BPJSCekRiwayatRujukanPCare extends javax.swing.JDialog {
         try {
             headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-	    headers.add("X-Cons-ID",prop.getProperty("CONSIDAPIBPJS"));
-	    headers.add("X-Timestamp",String.valueOf(api.GetUTCdatetimeAsString()));            
-	    headers.add("X-Signature",api.getHmac());
+	    headers.add("X-Cons-ID",koneksiDB.ConsIdBpjs());
+            headers.add("X-Timestamp",String.valueOf(api.GetUTCdatetimeAsString()));            
+            headers.add("X-Signature",api.getHmac());
+            headers.add("user_key", koneksiDB.UserKeyBpjs());
 	    requestEntity = new HttpEntity(headers);
-            URL = link+"/Rujukan/List/Peserta/"+nomorrujukan;	
+            URL = koneksiDB.UrlBpjs()+"/Rujukan/List/Peserta/"+nomorrujukan;	
 	    root = mapper.readTree(api.getRest().exchange(URL, HttpMethod.GET, requestEntity, String.class).getBody());
             nameNode = root.path("metaData");
             if(nameNode.path("code").asText().equals("200")){
                 Valid.tabelKosong(tabMode);
-                response = root.path("response").path("rujukan");
+                if(koneksiDB.UrlBpjs().contains("apijkn")){
+                    JsonNode res1 = root.path("response");
+                    String res = api.decrypt(res1.asText());
+                    String lz = api.lzDecrypt(res);
+                    response = mapper.readTree(lz);
+                } else {
+                    response = root.path("response");
+                }
+                response = respon.path("rujukan");
                 if(response.isArray()){
                     i=1;
                     for(JsonNode list:response){

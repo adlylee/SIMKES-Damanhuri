@@ -23,12 +23,18 @@ import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -60,11 +66,18 @@ public final class DlgRl36 extends javax.swing.JDialog {
         //tbBangsal.setDefaultRenderer(Object.class, new WarnaTable(jPanel2.getBackground(),tbBangsal.getBackground()));
         tbBangsal.setPreferredScrollableViewportSize(new Dimension(500,500));
         tbBangsal.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tbBangsal.getModel());
+        tbBangsal.setRowSorter(sorter);
+        
+        List<RowSorter.SortKey> sortKeys = new ArrayList<RowSorter.SortKey>();
+        sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+//        sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+        sorter.setSortKeys(sortKeys);
 
         for (i = 0; i < 7; i++) {
             TableColumn column = tbBangsal.getColumnModel().getColumn(i);
             if(i==0){
-                column.setPreferredWidth(25);
+                column.setPreferredWidth(45);
             }else if(i==1){
                 column.setPreferredWidth(250);
             }else{
@@ -77,9 +90,9 @@ public final class DlgRl36 extends javax.swing.JDialog {
         
         try {
             ps=koneksi.prepareStatement(
-                    "select kode_paket,nm_perawatan from paket_operasi where kategori='Operasi' order by nm_perawatan");         
-            pscari=koneksi.prepareStatement("select count(operasi.kode_paket) from operasi where "+
-                    "operasi.kode_paket=? and operasi.tgl_operasi between ? and ? and operasi.kategori=?");
+                    "select kd_sps, nm_sps from spesialis where kd_sps in ('S0006','S0012','S0024','S0009','S0010','S0014','S0005')");         
+            pscari=koneksi.prepareStatement("select count(operasi.kode_paket) from operasi join dokter on operasi.operator1 = dokter.kd_dokter where "+
+                    "dokter.kd_sps=? and operasi.tgl_operasi between ? and ? and operasi.kategori=?");
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -397,7 +410,7 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
             rs=ps.executeQuery();
             i=1;
             while(rs.next()){
-                pscari.setString(1,rs.getString("kode_paket"));
+                pscari.setString(1,rs.getString("kd_sps"));
                 pscari.setString(2,Valid.SetTgl(Tgl1.getSelectedItem()+"")+" 00:00:00.0");
                 pscari.setString(3,Valid.SetTgl(Tgl2.getSelectedItem()+"")+" 23:59:59.0");
                 pscari.setString(4,"Khusus");
@@ -407,7 +420,7 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                     khusus=rscari.getInt(1);
                 }
                 
-                pscari.setString(1,rs.getString("kode_paket"));
+                pscari.setString(1,rs.getString("kd_sps"));
                 pscari.setString(2,Valid.SetTgl(Tgl1.getSelectedItem()+"")+" 00:00:00.0");
                 pscari.setString(3,Valid.SetTgl(Tgl2.getSelectedItem()+"")+" 23:59:59.0");
                 pscari.setString(4,"Besar");
@@ -417,7 +430,7 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                     besar=rscari.getInt(1);
                 }
                 
-                pscari.setString(1,rs.getString("kode_paket"));
+                pscari.setString(1,rs.getString("kd_sps"));
                 pscari.setString(2,Valid.SetTgl(Tgl1.getSelectedItem()+"")+" 00:00:00.0");
                 pscari.setString(3,Valid.SetTgl(Tgl2.getSelectedItem()+"")+" 23:59:59.0");
                 pscari.setString(4,"Sedang");
@@ -427,7 +440,7 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                     sedang=rscari.getInt(1);
                 }
                 
-                pscari.setString(1,rs.getString("kode_paket"));
+                pscari.setString(1,rs.getString("kd_sps"));
                 pscari.setString(2,Valid.SetTgl(Tgl1.getSelectedItem()+"")+" 00:00:00.0");
                 pscari.setString(3,Valid.SetTgl(Tgl2.getSelectedItem()+"")+" 23:59:59.0");
                 pscari.setString(4,"Kecil");
@@ -437,11 +450,67 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                     kecil=rscari.getInt(1);
                 }
                 
-                tabMode.addRow(new Object[]{
-                    i,rs.getString("nm_perawatan"),(khusus+besar+sedang+kecil),khusus,besar,sedang,kecil
-                });
-                i++;
+                if(rs.getString("kd_sps").equals("S0006")){
+                    tabMode.addRow(new Object[]{
+                        1,"Bedah",(khusus+besar+sedang+kecil),khusus,besar,sedang,kecil
+                    });
+                }
+                if(rs.getString("kd_sps").equals("S0012")){
+                    tabMode.addRow(new Object[]{
+                        2,"Obstetrik & Ginekologi",(khusus+besar+sedang+kecil),khusus,besar,sedang,kecil
+                    });
+                }
+                if(rs.getString("kd_sps").equals("S0024")){
+                    tabMode.addRow(new Object[]{
+                        3,"Bedah Saraf",(khusus+besar+sedang+kecil),khusus,besar,sedang,kecil
+                    });
+                }
+                if(rs.getString("kd_sps").equals("S0009")){
+                    tabMode.addRow(new Object[]{
+                        4,"THT",(khusus+besar+sedang+kecil),khusus,besar,sedang,kecil
+                    });
+                }
+                if(rs.getString("kd_sps").equals("S0010")){
+                    tabMode.addRow(new Object[]{
+                        5,"Mata",(khusus+besar+sedang+kecil),khusus,besar,sedang,kecil
+                    });
+                }
+                if(rs.getString("kd_sps").equals("S0014")){
+                    tabMode.addRow(new Object[]{
+                        6,"Kulit & Kelamin",(khusus+besar+sedang+kecil),khusus,besar,sedang,kecil
+                    });
+                }
+                if(rs.getString("kd_sps").equals("S0005")){
+                    tabMode.addRow(new Object[]{
+                        10,"Bedah Orthopedi",(khusus+besar+sedang+kecil),khusus,besar,sedang,kecil
+                    });
+                }
+//                tabMode.addRow(new Object[]{
+//                    i,rs.getString("nm_sps"),(khusus+besar+sedang+kecil),khusus,besar,sedang,kecil
+//                });
+//                i++;
             }
+            tabMode.addRow(new Object[]{
+                    7,"Gigi & Mulut","0","0","0","0","0"
+            });
+            tabMode.addRow(new Object[]{
+                    8,"Bedah Anak","0","0","0","0","0"
+            });
+            tabMode.addRow(new Object[]{
+                    9,"Kardiovaskuler","0","0","0","0","0"
+            });
+            tabMode.addRow(new Object[]{
+                    11,"Thorak","0","0","0","0","0"
+            });
+            tabMode.addRow(new Object[]{
+                    12,"Digestive","0","0","0","0","0"
+            });
+            tabMode.addRow(new Object[]{
+                    13,"Urologi","0","0","0","0","0"
+            });
+            tabMode.addRow(new Object[]{
+                    14,"Lain - lain","0","0","0","0","0"
+            });
             this.setCursor(Cursor.getDefaultCursor());
         } catch (Exception e) {
             System.out.println(e);

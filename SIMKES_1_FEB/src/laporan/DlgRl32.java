@@ -412,34 +412,34 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
             ttlmeninggal=0;
             ttlpulang=0;
             while(rs.next()){
-                rujukan=Sequel.cariInteger("select count(rujuk_masuk.no_rawat) from reg_periksa inner join rujuk_masuk inner join kategori_pasien_igd "+
+                rujukan=Sequel.cariIntegerCount("select count(rujuk_masuk.no_rawat) from reg_periksa inner join rujuk_masuk inner join kategori_pasien_igd "+
                         "on rujuk_masuk.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rawat=kategori_pasien_igd.no_rawat where kategori_pasien_igd.kategori='"+rs.getString("kategori")+"' and "+
                         "reg_periksa.tgl_registrasi between '"+Valid.SetTgl(Tgl1.getSelectedItem()+"")+"' and '"+Valid.SetTgl(Tgl2.getSelectedItem()+"")+"'");
                 ttlrujukan=ttlrujukan+rujukan;
                 
-                nonrujukan=Sequel.cariInteger("select count(reg_periksa.no_rawat) from reg_periksa inner join kategori_pasien_igd on reg_periksa.no_rawat=kategori_pasien_igd.no_rawat where kategori_pasien_igd.kategori='"+rs.getString("kategori")+"' and "+
+                nonrujukan=Sequel.cariIntegerCount("select count(reg_periksa.no_rawat) from reg_periksa inner join kategori_pasien_igd on reg_periksa.no_rawat=kategori_pasien_igd.no_rawat where kategori_pasien_igd.kategori='"+rs.getString("kategori")+"' and "+
                         "reg_periksa.tgl_registrasi between '"+Valid.SetTgl(Tgl1.getSelectedItem()+"")+"' and '"+Valid.SetTgl(Tgl2.getSelectedItem()+"")+"' and "+
                         "reg_periksa.no_rawat not in(select no_rawat from rujuk_masuk)");
                 ttlnonrujukan=ttlnonrujukan+nonrujukan;
                 
-                dirawat=Sequel.cariInteger("select count(reg_periksa.no_rawat) from reg_periksa inner join kamar_inap inner join kategori_pasien_igd  "+
+                dirawat=Sequel.cariIntegerCount("select count(reg_periksa.no_rawat) from reg_periksa inner join kamar_inap inner join kategori_pasien_igd  "+
                         "on reg_periksa.no_rawat=kamar_inap.no_rawat and reg_periksa.no_rawat=kategori_pasien_igd.no_rawat where kategori_pasien_igd.kategori='"+rs.getString("kategori")+"' and "+
                         "reg_periksa.tgl_registrasi between '"+Valid.SetTgl(Tgl1.getSelectedItem()+"")+"' and '"+Valid.SetTgl(Tgl2.getSelectedItem()+"")+"' group by reg_periksa.no_rawat");
                 ttldirawat=ttldirawat+dirawat;
                 
-                dirujuk=Sequel.cariInteger("select count(rujuk.no_rawat) from reg_periksa inner join rujuk inner join kategori_pasien_igd on rujuk.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rawat=kategori_pasien_igd.no_rawat "+
+                dirujuk=Sequel.cariIntegerCount("select count(rujuk.no_rawat) from reg_periksa inner join rujuk inner join kategori_pasien_igd on rujuk.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rawat=kategori_pasien_igd.no_rawat "+
                         "where kategori_pasien_igd.kategori='"+rs.getString("kategori")+"' and reg_periksa.tgl_registrasi between '"+Valid.SetTgl(Tgl1.getSelectedItem()+"")+"' and '"+Valid.SetTgl(Tgl2.getSelectedItem()+"")+"'");
                 ttldirujuk=ttldirujuk+dirujuk;
                 
-                meninggal=Sequel.cariInteger("select count(reg_periksa.no_rkm_medis) from pasien_mati inner join reg_periksa inner join kategori_pasien_igd "+
+                meninggal=Sequel.cariIntegerCount("select count(reg_periksa.no_rkm_medis) from pasien_mati inner join reg_periksa inner join kategori_pasien_igd "+
                         "on reg_periksa.no_rkm_medis=pasien_mati.no_rkm_medis and reg_periksa.no_rawat=kategori_pasien_igd.no_rawat where kategori_pasien_igd.kategori='"+rs.getString("kategori")+"' and "+
                         "reg_periksa.tgl_registrasi between '"+Valid.SetTgl(Tgl1.getSelectedItem()+"")+"' and '"+Valid.SetTgl(Tgl2.getSelectedItem()+"")+"'");
                 ttlmeninggal=ttlmeninggal+meninggal;
                 
-                pulang=Sequel.cariInteger("select count(reg_periksa.no_rawat) from reg_periksa inner join kamar_inap inner join kategori_pasien_igd "+
+                pulang=Sequel.cariIntegerCount("select count(reg_periksa.no_rawat) from reg_periksa inner join kamar_inap inner join kategori_pasien_igd "+
                         "on reg_periksa.no_rawat=kamar_inap.no_rawat and reg_periksa.no_rawat=kategori_pasien_igd.no_rawat where kategori_pasien_igd.kategori='"+rs.getString("kategori")+"' and "+
                         "reg_periksa.tgl_registrasi between '"+Valid.SetTgl(Tgl1.getSelectedItem()+"")+"' and '"+Valid.SetTgl(Tgl2.getSelectedItem()+"")+"' and "+
-                        "kamar_inap.stts_pulang<>('Rujuk' or 'Meninggal' or 'Pindah Kamar') group by reg_periksa.no_rawat");
+                        "kamar_inap.stts_pulang NOT IN ('Rujuk','Meninggal','Pindah Kamar','-') group by reg_periksa.no_rawat");
                 ttlpulang=ttlpulang+pulang;
                 tabMode.addRow(new Object[]{
                     i,rs.getString("kategori"),rujukan,nonrujukan,dirawat,dirujuk,pulang,meninggal,"0"

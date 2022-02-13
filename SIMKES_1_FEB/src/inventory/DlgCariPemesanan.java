@@ -1459,6 +1459,7 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
             ppHapus.setEnabled(false);
         }        
         ppBayar.setEnabled(var.getbayar_pemesanan_obat());
+        ppUbah.setEnabled(var.getstok_obat_pasien());
     }
     
 }

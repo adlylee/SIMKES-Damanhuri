@@ -5,7 +5,7 @@
  */
 package fungsi;
 
-import AESsecurity.EnkripsiAES;
+import fungsi.EnkripsiAES;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.io.FileInputStream;
 import java.sql.Connection;
@@ -26,11 +26,12 @@ public final class koneksiDB {
         if(connection == null){
             try{
                 prop.loadFromXML(new FileInputStream("setting/database.xml"));
-                dataSource.setURL("jdbc:mysql://"+EnkripsiAES.decrypt(prop.getProperty("HOST"))+":"+EnkripsiAES.decrypt(prop.getProperty("PORT"))+"/"+EnkripsiAES.decrypt(prop.getProperty("DATABASE"))+"?zeroDateTimeBehavior=convertToNull");
+                dataSource.setURL("jdbc:mysql://"+EnkripsiAES.decrypt(prop.getProperty("HOST"))+":"+EnkripsiAES.decrypt(prop.getProperty("PORT"))+"/"+EnkripsiAES.decrypt(prop.getProperty("DATABASE"))+"?zeroDateTimeBehavior=convertToNull&autoReconnect=true&useCompression=true");
                 dataSource.setUser(EnkripsiAES.decrypt(prop.getProperty("USER")));
                 dataSource.setPassword(EnkripsiAES.decrypt(prop.getProperty("PAS")));
                 connection=dataSource.getConnection();       
-                System.out.println("\n\n   Bismillahirrahmanirrahim ... \n\n"+
+                System.out.println("\n\n                                                        \n"+
+                        "   Bismillahirrahmanirrahim ...                                        \n\n"+
                         "    ____  ___  __  __  ____   ____    _  __ _                              \n" +
                         "   / ___||_ _||  \\/  ||  _ \\ / ___|  | |/ /| |__    __ _  _ __   ____ __ _ \n" +
                         "   \\___ \\ | | | |\\/| || |_) |\\___ \\  | ' / | '_ \\  / _` || '_ \\ |_  // _` |\n" +
@@ -45,9 +46,29 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" +
-                        "    Version 01.01.2021 [Activated]                 ");
+                        "    Version 12.02.2022 [Activated] Bridging VCLAIM V.2                 \n"+
+                        "                                                                           \n"+
+                        "    * Known Bug :                                                           \n"+
+                        "       - Laporan diet belum fix                                            \n"+
+                        "       - Nama poli di resep                                           \n"+
+                        "                                                                       \n"+
+                        "    * Changelog :                                                       \n"+
+                        "       - Update Tanggal Pulang                                           \n"+
+                        "       - Pemberian Diet                                           \n"+
+                        "                                                                       \n");
             }catch(Exception e){
-                JOptionPane.showMessageDialog(null,"Koneksi Putus : "+e);
+                System.out.println("Notif : "+e);
+                try {
+                    if(connection.isClosed()){
+                        prop.loadFromXML(new FileInputStream("setting/database.xml"));
+                        dataSource.setURL("jdbc:mysql://"+EnkripsiAES.decrypt(prop.getProperty("HOST"))+":"+EnkripsiAES.decrypt(prop.getProperty("PORT"))+"/"+EnkripsiAES.decrypt(prop.getProperty("DATABASE"))+"?zeroDateTimeBehavior=convertToNull&amp;autoReconnect=true&amp;cachePrepStmts=true");
+                        dataSource.setUser(EnkripsiAES.decrypt(prop.getProperty("USER")));
+                        dataSource.setPassword(EnkripsiAES.decrypt(prop.getProperty("PAS")));
+                        connection=dataSource.getConnection();  
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null,"Koneksi Putus : "+e);
+                }
             }
         }
         return connection;        
@@ -93,5 +114,93 @@ public final class koneksiDB {
         return var;
     }
     
+    public static String AKTIFKANBATCHOBAT(){
+        try{
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var=prop.getProperty("AKTIFKANBATCHOBAT");
+        }catch(Exception e){
+            var=""; 
+        }
+        return var;
+    }
     
+    public static String ConsIdBpjs(){
+        try {
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var = EnkripsiAES.decrypt(prop.getProperty("CONSIDAPIBPJS"));
+        } catch (Exception ex) {
+            System.out.println("Notifikasi : "+ex);
+        }
+        return var;
+    }
+    
+    public static String SecretKeyBpjs(){
+        try {
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var = EnkripsiAES.decrypt(prop.getProperty("SECRETKEYAPIBPJS"));
+        } catch (Exception ex) {
+            System.out.println("Notifikasi : "+ex);
+        }
+        return var;
+    }
+    
+    public static String UserKeyBpjs(){
+        try {
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var = EnkripsiAES.decrypt(prop.getProperty("USERKEYAPIBPJS"));
+        } catch (Exception ex) {
+            System.out.println("Notifikasi : "+ex);
+        }
+        return var;
+    }
+    
+    public static String UrlBpjs(){
+        try {
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var = prop.getProperty("URLAPIBPJS");
+        } catch (Exception ex) {
+            System.out.println("Notifikasi : "+ex);
+        }
+        return var;
+    }
+    
+    public static String UrlMobileJKN(){
+        try {
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var = prop.getProperty("URLAPIMOBILEJKN");
+        } catch (Exception ex) {
+            System.out.println("Notifikasi : "+ex);
+        }
+        return var;
+    }
+    
+    public static String UrlSisrute(){
+        try {
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var = prop.getProperty("URLAPISISRUTE");
+        } catch (Exception ex) {
+            System.out.println("Notifikasi : "+ex);
+        }
+        return var;
+    }
+    
+    public static String ConsIdSisrute(){
+        try {
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var = EnkripsiAES.decrypt(prop.getProperty("IDSISRUTE"));
+        } catch (Exception ex) {
+            System.out.println("Notifikasi : "+ex);
+        }
+        return var;
+    }
+    
+    public static String PassSisrute(){
+        try {
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var = EnkripsiAES.decrypt(prop.getProperty("PASSSISRUTE"));
+        } catch (Exception ex) {
+            System.out.println("Notifikasi : "+ex);
+        }
+        return var;
+    }
 }

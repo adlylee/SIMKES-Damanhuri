@@ -981,6 +981,10 @@ public class PanelDiagnosa extends widget.panelisi {
         }
     }
     
+    public JTable getTable(){
+        return tbDiagnosa;
+    }
+    
     public void batal(){
         Diagnosa.setText("");
         for(i=0;i<tbDiagnosa.getRowCount();i++){ 
@@ -1000,7 +1004,7 @@ public class PanelDiagnosa extends widget.panelisi {
                 for(i=0;i<tbDiagnosaPasien.getRowCount();i++){ 
                     if(tbDiagnosaPasien.getValueAt(i,0).toString().equals("true")){
                         Sequel.queryu2("delete from diagnosa_pasien where no_rawat=? and kd_penyakit=?",2,new String[]{
-                            tbDiagnosaPasien.getValueAt(i,2).toString(),tbDiagnosaPasien.getValueAt(i,5).toString()
+                            tbDiagnosaPasien.getValueAt(i,2).toString(),tbDiagnosaPasien.getValueAt(i,7).toString()
                         });
                     }
                 }

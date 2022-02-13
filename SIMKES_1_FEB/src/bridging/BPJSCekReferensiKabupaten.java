@@ -148,8 +148,7 @@ public final class BPJSCekReferensiKabupaten extends javax.swing.JDialog {
         }); 
         
         try {
-            prop.loadFromXML(new FileInputStream("setting/database.xml")); 
-            link=prop.getProperty("URLAPIBPJS");
+            link = koneksiDB.UrlBpjs();
         } catch (Exception e) {
             System.out.println("E : "+e);
         }
@@ -375,16 +374,25 @@ public final class BPJSCekReferensiKabupaten extends javax.swing.JDialog {
         try {
             headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-	    headers.add("X-Cons-ID",prop.getProperty("CONSIDAPIBPJS"));
-	    headers.add("X-Timestamp",String.valueOf(api.GetUTCdatetimeAsString()));            
-	    headers.add("X-Signature",api.getHmac());
+	    headers.add("X-Cons-ID", koneksiDB.ConsIdBpjs());
+            headers.add("X-Timestamp", String.valueOf(api.GetUTCdatetimeAsString()));
+            headers.add("X-Signature", api.getHmac());
+            headers.add("user_key", koneksiDB.UserKeyBpjs());
 	    requestEntity = new HttpEntity(headers);
             URL = link+"/referensi/kabupaten/propinsi/"+KdProp.getText();	
             root = mapper.readTree(api.getRest().exchange(URL, HttpMethod.GET, requestEntity, String.class).getBody());
             nameNode = root.path("metaData");
             if(nameNode.path("code").asText().equals("200")){
                 Valid.tabelKosong(tabMode);
-                response = root.path("response");
+                if(koneksiDB.UrlBpjs().contains("apijkn")){
+                    JsonNode res1 = root.path("response");
+                    String res = api.decrypt(res1.asText());
+                    String lz = api.lzDecrypt(res);
+                    response = mapper.readTree(lz);
+                } else {
+                    response = root.path("response");
+                }
+//                response = root.path("response");
                 if(response.path("list").isArray()){
                     i=1;
                     for(JsonNode list:response.path("list")){
@@ -398,6 +406,7 @@ public final class BPJSCekReferensiKabupaten extends javax.swing.JDialog {
                     }
                 }
             }else {
+                System.out.println("message : " + nameNode.path("message").asText());
                 JOptionPane.showMessageDialog(null,nameNode.path("message").asText());                
             }   
         } catch (Exception ex) {

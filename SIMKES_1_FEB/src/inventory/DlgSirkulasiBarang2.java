@@ -1,14 +1,6 @@
 package inventory;
 import fungsi.WarnaTable;
 import fungsi.batasInput;
-import grafikanalisa.grafikpembelianterbanyak;
-import grafikanalisa.grafikpembeliantersedikit;
-import grafikanalisa.grafikpenjualanterbanyak;
-import grafikanalisa.grafikpenjualantersedikit;
-import grafikanalisa.grafikpiutangterbanyak;
-import grafikanalisa.grafikpiutangtersedikit;
-import grafikanalisa.grafikresepterbanyak;
-import grafikanalisa.grafikreseptersedikit;
 import fungsi.koneksiDB;
 import fungsi.sekuel;
 import fungsi.validasi;
@@ -698,57 +690,27 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
     }//GEN-LAST:event_BtnAllKeyPressed
 
     private void ppGrafikJualBanyakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppGrafikJualBanyakActionPerformed
-        grafikpenjualanterbanyak grafik=new grafikpenjualanterbanyak("Grafik 10 Barang Penjualan Terbanyak"," penjualan.tgl_jual between '"+Valid.SetTgl(Tgl1.getSelectedItem()+"")+"' "+
-                       "and '"+Valid.SetTgl(Tgl2.getSelectedItem()+"")+"' ");
-                    grafik.setSize(internalFrame1.getWidth(), internalFrame1.getHeight());
-                    grafik.setLocationRelativeTo(internalFrame1);
-                    grafik.setAlwaysOnTop(false);
-                    grafik.setVisible(true);
+        
     }//GEN-LAST:event_ppGrafikJualBanyakActionPerformed
 
     private void ppGrafikJualDikitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppGrafikJualDikitActionPerformed
-        grafikpenjualantersedikit grafik=new grafikpenjualantersedikit("Grafik 10 Barang Penjualan Tersedikit"," penjualan.tgl_jual between '"+Valid.SetTgl(Tgl1.getSelectedItem()+"")+"' "+
-                       "and '"+Valid.SetTgl(Tgl2.getSelectedItem()+"")+"' ");
-                    grafik.setSize(internalFrame1.getWidth(), internalFrame1.getHeight());
-                    grafik.setLocationRelativeTo(internalFrame1);
-                    grafik.setAlwaysOnTop(false);
-                    grafik.setVisible(true);
+        
     }//GEN-LAST:event_ppGrafikJualDikitActionPerformed
 
     private void ppGrafikbeliBanyakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppGrafikbeliBanyakActionPerformed
-        grafikpembelianterbanyak grafik=new grafikpembelianterbanyak("Grafik 10 Barang Pembelian Terbanyak"," pembelian.tgl_beli between '"+Valid.SetTgl(Tgl1.getSelectedItem()+"")+"' "+
-                       "and '"+Valid.SetTgl(Tgl2.getSelectedItem()+"")+"' ");
-                    grafik.setSize(internalFrame1.getWidth(), internalFrame1.getHeight());
-                    grafik.setLocationRelativeTo(internalFrame1);
-                    grafik.setAlwaysOnTop(false);
-                    grafik.setVisible(true);
+        
     }//GEN-LAST:event_ppGrafikbeliBanyakActionPerformed
 
     private void ppGrafikbelidikitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppGrafikbelidikitActionPerformed
-        grafikpembeliantersedikit grafik=new grafikpembeliantersedikit("Grafik 10 Barang Pembelian Tersedikit"," pembelian.tgl_beli between '"+Valid.SetTgl(Tgl1.getSelectedItem()+"")+"' "+
-                       "and '"+Valid.SetTgl(Tgl2.getSelectedItem()+"")+"' ");
-                    grafik.setSize(internalFrame1.getWidth(), internalFrame1.getHeight());
-                    grafik.setLocationRelativeTo(internalFrame1);
-                    grafik.setAlwaysOnTop(false);
-                    grafik.setVisible(true);
+        
     }//GEN-LAST:event_ppGrafikbelidikitActionPerformed
 
     private void ppGrafikPiutangBanyakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppGrafikPiutangBanyakActionPerformed
-        grafikpiutangterbanyak grafik=new grafikpiutangterbanyak("Grafik 10 Barang Piutang Terbanyak"," piutang.tgl_piutang between '"+Valid.SetTgl(Tgl1.getSelectedItem()+"")+"' "+
-                       "and '"+Valid.SetTgl(Tgl2.getSelectedItem()+"")+"' ");
-                    grafik.setSize(internalFrame1.getWidth(), internalFrame1.getHeight());
-                    grafik.setLocationRelativeTo(internalFrame1);
-                    grafik.setAlwaysOnTop(false);
-                    grafik.setVisible(true);
+        
     }//GEN-LAST:event_ppGrafikPiutangBanyakActionPerformed
 
     private void ppGrafikPiutangDikitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppGrafikPiutangDikitActionPerformed
-        grafikpiutangtersedikit grafik=new grafikpiutangtersedikit("Grafik 10 Barang Piutang Tersedikit"," piutang.tgl_piutang between '"+Valid.SetTgl(Tgl1.getSelectedItem()+"")+"' "+
-                       "and '"+Valid.SetTgl(Tgl2.getSelectedItem()+"")+"' ");
-                    grafik.setSize(internalFrame1.getWidth(), internalFrame1.getHeight());
-                    grafik.setLocationRelativeTo(internalFrame1);
-                    grafik.setAlwaysOnTop(false);
-                    grafik.setVisible(true);
+        
     }//GEN-LAST:event_ppGrafikPiutangDikitActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -756,21 +718,11 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
     }//GEN-LAST:event_formWindowOpened
 
     private void ppGrafikResepPaliingBanyakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppGrafikResepPaliingBanyakActionPerformed
-        grafikresepterbanyak grafik=new grafikresepterbanyak("Grafik 10 Barang Resep Ke Pasien Terbanyak"," tgl_perawatan between '"+Valid.SetTgl(Tgl1.getSelectedItem()+"")+"' "+
-            "and '"+Valid.SetTgl(Tgl2.getSelectedItem()+"")+"' ");
-        grafik.setSize(internalFrame1.getWidth(), internalFrame1.getHeight());
-        grafik.setLocationRelativeTo(internalFrame1);
-        grafik.setAlwaysOnTop(false);
-        grafik.setVisible(true);
+        
     }//GEN-LAST:event_ppGrafikResepPaliingBanyakActionPerformed
 
     private void ppGrafikResepPaliingSedikitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppGrafikResepPaliingSedikitActionPerformed
-        grafikreseptersedikit grafik=new grafikreseptersedikit("Grafik 10 Barang Resep Ke Pasien Tersedikit"," tgl_perawatan between '"+Valid.SetTgl(Tgl1.getSelectedItem()+"")+"' "+
-            "and '"+Valid.SetTgl(Tgl2.getSelectedItem()+"")+"' ");
-        grafik.setSize(internalFrame1.getWidth(), internalFrame1.getHeight());
-        grafik.setLocationRelativeTo(internalFrame1);
-        grafik.setAlwaysOnTop(false);
-        grafik.setVisible(true);
+        
     }//GEN-LAST:event_ppGrafikResepPaliingSedikitActionPerformed
 
     private void ppLokasiBtnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppLokasiBtnPrintActionPerformed

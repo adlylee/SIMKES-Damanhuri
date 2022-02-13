@@ -491,6 +491,17 @@ public final class DlgCariObat2 extends javax.swing.JDialog {
         kdgudang = new widget.TextBox();
         nmgudang = new widget.TextBox();
         BtnGudang = new widget.Button();
+        jLabel19 = new widget.Label();
+        jLabel20 = new widget.Label();
+        jLabel14 = new widget.Label();
+        jLabel15 = new widget.Label();
+        jLabel16 = new widget.Label();
+        jLabel17 = new widget.Label();
+        jLabel21 = new widget.Label();
+        jLabel22 = new widget.Label();
+        jLabel23 = new widget.Label();
+        jLabel24 = new widget.Label();
+        jLabel25 = new widget.Label();
         TabRawat = new javax.swing.JTabbedPane();
         Scroll = new widget.ScrollPane();
         tbObat = new widget.Table();
@@ -736,7 +747,7 @@ public final class DlgCariObat2 extends javax.swing.JDialog {
         jLabel5.setBounds(4, 10, 68, 23);
 
         DTPTgl.setForeground(new java.awt.Color(50, 70, 50));
-        DTPTgl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "27-02-2019" }));
+        DTPTgl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10-11-2021" }));
         DTPTgl.setDisplayFormat("dd-MM-yyyy");
         DTPTgl.setName("DTPTgl"); // NOI18N
         DTPTgl.setOpaque(false);
@@ -818,7 +829,6 @@ public final class DlgCariObat2 extends javax.swing.JDialog {
         FormInput.add(Jeniskelas);
         Jeniskelas.setBounds(435, 10, 110, 23);
 
-        ChkNoResep.setBorder(null);
         ChkNoResep.setSelected(true);
         ChkNoResep.setText("No.Resep   ");
         ChkNoResep.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -832,7 +842,7 @@ public final class DlgCariObat2 extends javax.swing.JDialog {
             }
         });
         FormInput.add(ChkNoResep);
-        ChkNoResep.setBounds(548, 10, 100, 23);
+        ChkNoResep.setBounds(360, 40, 100, 23);
 
         label21.setText("Depo :");
         label21.setName("label21"); // NOI18N
@@ -869,6 +879,83 @@ public final class DlgCariObat2 extends javax.swing.JDialog {
         });
         FormInput.add(BtnGudang);
         BtnGudang.setBounds(332, 40, 28, 23);
+
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setText("Tombol pintasan :");
+        jLabel19.setName("jLabel19"); // NOI18N
+        jLabel19.setPreferredSize(new java.awt.Dimension(68, 23));
+        FormInput.add(jLabel19);
+        jLabel19.setBounds(550, 10, 90, 23);
+
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel20.setText("1 =1x1");
+        jLabel20.setName("jLabel20"); // NOI18N
+        jLabel20.setPreferredSize(new java.awt.Dimension(68, 23));
+        FormInput.add(jLabel20);
+        jLabel20.setBounds(640, 10, 80, 23);
+
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel14.setText("2 =2x1");
+        jLabel14.setName("jLabel14"); // NOI18N
+        jLabel14.setPreferredSize(new java.awt.Dimension(68, 23));
+        FormInput.add(jLabel14);
+        jLabel14.setBounds(640, 20, 80, 23);
+
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel15.setText("3 =3x1");
+        jLabel15.setName("jLabel15"); // NOI18N
+        jLabel15.setPreferredSize(new java.awt.Dimension(68, 23));
+        FormInput.add(jLabel15);
+        jLabel15.setBounds(640, 30, 80, 23);
+
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel16.setText("4 =4x1");
+        jLabel16.setName("jLabel16"); // NOI18N
+        jLabel16.setPreferredSize(new java.awt.Dimension(68, 23));
+        FormInput.add(jLabel16);
+        jLabel16.setBounds(640, 40, 80, 23);
+
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel17.setText("q =Sebelum makan");
+        jLabel17.setName("jLabel17"); // NOI18N
+        jLabel17.setPreferredSize(new java.awt.Dimension(68, 23));
+        FormInput.add(jLabel17);
+        jLabel17.setBounds(640, 50, 100, 23);
+
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel21.setText("w =Sesudah makan");
+        jLabel21.setName("jLabel21"); // NOI18N
+        jLabel21.setPreferredSize(new java.awt.Dimension(68, 23));
+        FormInput.add(jLabel21);
+        jLabel21.setBounds(750, 50, 100, 23);
+
+        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel22.setText("n =Jika nyeri 1 tab");
+        jLabel22.setName("jLabel22"); // NOI18N
+        jLabel22.setPreferredSize(new java.awt.Dimension(68, 23));
+        FormInput.add(jLabel22);
+        jLabel22.setBounds(690, 10, 100, 23);
+
+        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel23.setText("L =Jika nyeri dada, dibawah lidah");
+        jLabel23.setName("jLabel23"); // NOI18N
+        jLabel23.setPreferredSize(new java.awt.Dimension(68, 23));
+        FormInput.add(jLabel23);
+        jLabel23.setBounds(690, 20, 180, 23);
+
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel24.setText("S =Jika sesak / bengkak");
+        jLabel24.setName("jLabel24"); // NOI18N
+        jLabel24.setPreferredSize(new java.awt.Dimension(68, 23));
+        FormInput.add(jLabel24);
+        jLabel24.setBounds(690, 30, 180, 23);
+
+        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel25.setText("E =Harus habis");
+        jLabel25.setName("jLabel25"); // NOI18N
+        jLabel25.setPreferredSize(new java.awt.Dimension(68, 23));
+        FormInput.add(jLabel25);
+        jLabel25.setBounds(690, 40, 180, 23);
 
         internalFrame1.add(FormInput, java.awt.BorderLayout.PAGE_START);
 
@@ -1114,7 +1201,102 @@ public final class DlgCariObat2 extends javax.swing.JDialog {
                     aturanpakai.setLocationRelativeTo(internalFrame1);
                     aturanpakai.setVisible(true);
                 }
-            }             
+            }
+            //tambahan koding ulun alridho
+         if(evt.getKeyCode()==KeyEvent.VK_1){
+             tbObat.setValueAt("1xsehari 1 tablet",tbObat.getSelectedRow(),13); 
+          }else if(evt.getKeyCode()==KeyEvent.VK_2){
+             tbObat.setValueAt("2xsehari 1 tablet",tbObat.getSelectedRow(),13); 
+          }else if(evt.getKeyCode()==KeyEvent.VK_3){
+             tbObat.setValueAt("3xsehari 1 tablet",tbObat.getSelectedRow(),13); 
+          }else if(evt.getKeyCode()==KeyEvent.VK_4){
+             tbObat.setValueAt("4xsehari 1 tablet",tbObat.getSelectedRow(),13); 
+          }else if(evt.getKeyCode()==KeyEvent.VK_5){
+             tbObat.setValueAt("1 x sehari  5  ml",tbObat.getSelectedRow(),13); 
+          }else if(evt.getKeyCode()==KeyEvent.VK_6){
+             tbObat.setValueAt("2 x sehari  5  ml",tbObat.getSelectedRow(),13); 
+          }else if(evt.getKeyCode()==KeyEvent.VK_7){
+             tbObat.setValueAt("3 x sehari  5  ml",tbObat.getSelectedRow(),13); 
+          }else if(evt.getKeyCode()==KeyEvent.VK_T){
+             tbObat.setValueAt("4 x sehari  5  ml",tbObat.getSelectedRow(),13); 
+          }else if(evt.getKeyCode()==KeyEvent.VK_Y){
+             tbObat.setValueAt("Minggu  I 4x1 Sehari 1 Tetes",tbObat.getSelectedRow(),13); //28
+          }else if(evt.getKeyCode()==KeyEvent.VK_U){
+             tbObat.setValueAt("Minggu II 3x1 Sehari 1 Tetes",tbObat.getSelectedRow(),13); //28
+          }
+          if(evt.getKeyCode()==KeyEvent.VK_Q){
+            String a;
+            a=tbObat.getValueAt(tbObat.getSelectedRow(),13).toString().substring(0,17);
+            tbObat.setValueAt(a+" Sebelum Makan",tbObat.getSelectedRow(),13);
+          }else if(evt.getKeyCode()==KeyEvent.VK_W){
+            String a;
+            a=tbObat.getValueAt(tbObat.getSelectedRow(),13).toString().substring(0,17);
+            tbObat.setValueAt(a+" Sesudah Makan",tbObat.getSelectedRow(),13);
+          }else if(evt.getKeyCode()==KeyEvent.VK_N){
+            tbObat.setValueAt("Jika Nyeri 1 Tablet",tbObat.getSelectedRow(),13);
+          }else if(evt.getKeyCode()==KeyEvent.VK_L){
+            tbObat.setValueAt("1 tablet Jika nyeri dada, dibawah lidah ",tbObat.getSelectedRow(),13);
+          }else if(evt.getKeyCode()==KeyEvent.VK_S){
+            tbObat.setValueAt("1 tablet Jika sesak / kaki bengkak",tbObat.getSelectedRow(),13);
+          }else if(evt.getKeyCode()==KeyEvent.VK_E){
+             String a;
+             a=tbObat.getValueAt(tbObat.getSelectedRow(),13).toString().substring(0,17);
+             tbObat.setValueAt(a+" Harus habis",tbObat.getSelectedRow(),13);
+          }else if(evt.getKeyCode()==KeyEvent.VK_R){
+            String a;
+            a=tbObat.getValueAt(tbObat.getSelectedRow(),13).toString().substring(0,17);  
+            tbObat.setValueAt(a+" Bila gatal",tbObat.getSelectedRow(),13);
+          }
+          if(evt.getKeyCode()==KeyEvent.VK_Z){
+            String a;
+            a=tbObat.getValueAt(tbObat.getSelectedRow(),13).toString().substring(0,31);
+            tbObat.setValueAt(a+"  Pagi",tbObat.getSelectedRow(),13);
+          }else if(evt.getKeyCode()==KeyEvent.VK_X){
+            String a;
+            a=tbObat.getValueAt(tbObat.getSelectedRow(),13).toString().substring(0,31);
+            tbObat.setValueAt(a+" Siang",tbObat.getSelectedRow(),13);
+          }else if(evt.getKeyCode()==KeyEvent.VK_C){
+            String a;
+            a=tbObat.getValueAt(tbObat.getSelectedRow(),13).toString().substring(0,31);
+            tbObat.setValueAt(a+"  Sore",tbObat.getSelectedRow(),13);
+          }else if(evt.getKeyCode()==KeyEvent.VK_V){
+            String a;
+            a=tbObat.getValueAt(tbObat.getSelectedRow(),13).toString().substring(0,31);
+            tbObat.setValueAt(a+" Malam",tbObat.getSelectedRow(),13);
+          } else if(evt.getKeyCode()==KeyEvent.VK_A){
+            String a;
+            a=tbObat.getValueAt(tbObat.getSelectedRow(),13).toString().substring(0,31);
+            tbObat.setValueAt(a+" Dikunyah",tbObat.getSelectedRow(),13);
+          } else if(evt.getKeyCode()==KeyEvent.VK_O){
+            tbObat.setValueAt("2xsehari 4 tetes telinga",tbObat.getSelectedRow(),13);
+          } else if(evt.getKeyCode()==KeyEvent.VK_P){
+            tbObat.setValueAt("2xsehari 1/2 tablet",tbObat.getSelectedRow(),13);
+          } else if(evt.getKeyCode()==KeyEvent.VK_I){
+            tbObat.setValueAt("1xsehari 1/2 tablet",tbObat.getSelectedRow(),13);
+          }else if(evt.getKeyCode()==KeyEvent.VK_8){
+            tbObat.setValueAt("2xsehari 1 tetes",tbObat.getSelectedRow(),13);
+          } else if(evt.getKeyCode()==KeyEvent.VK_9){
+            tbObat.setValueAt("4xsehari 1 tetes",tbObat.getSelectedRow(),13);
+          } else if(evt.getKeyCode()==KeyEvent.VK_0){
+            tbObat.setValueAt("6xsehari 1 tetes",tbObat.getSelectedRow(),13);
+          } else if(evt.getKeyCode()==KeyEvent.VK_G){
+            String a;
+            a=tbObat.getValueAt(tbObat.getSelectedRow(),13).toString();
+            //if (a.length()==16){
+                tbObat.setValueAt(a+" Mata kanan & kiri",tbObat.getSelectedRow(),13);
+            //} 
+            //System.out.println(a.length()); 
+           
+          } else if(evt.getKeyCode()==KeyEvent.VK_H){
+            String a;
+            a=tbObat.getValueAt(tbObat.getSelectedRow(),13).toString().substring(0,16);
+            tbObat.setValueAt(a+" Mata kanan",tbObat.getSelectedRow(),13);
+          } else if(evt.getKeyCode()==KeyEvent.VK_J){
+            String a;
+            a=tbObat.getValueAt(tbObat.getSelectedRow(),13).toString().substring(0,16);
+            tbObat.setValueAt(a+" Mata kiri",tbObat.getSelectedRow(),13);
+          }
+         //end tambahan koding ulun alridho
         }
 }//GEN-LAST:event_tbObatKeyPressed
 
@@ -1844,6 +2026,17 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     private widget.ComboBox cmbJam;
     private widget.ComboBox cmbMnt;
     private widget.InternalFrame internalFrame1;
+    private widget.Label jLabel14;
+    private widget.Label jLabel15;
+    private widget.Label jLabel16;
+    private widget.Label jLabel17;
+    private widget.Label jLabel19;
+    private widget.Label jLabel20;
+    private widget.Label jLabel21;
+    private widget.Label jLabel22;
+    private widget.Label jLabel23;
+    private widget.Label jLabel24;
+    private widget.Label jLabel25;
     private widget.Label jLabel5;
     private javax.swing.JPanel jPanel3;
     private widget.TextBox kdgudang;

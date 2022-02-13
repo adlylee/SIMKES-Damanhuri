@@ -52,7 +52,7 @@ public class BPJSMonitoringKlaim extends javax.swing.JDialog {
     private JsonNode root;
     private JsonNode nameNode;
     private JsonNode response;
-    private double tagihan=0,gruper=0,tarifrs=0;
+    private double tagihan=0,gruper=0,tarifrs=0,total=0,subtotal=0;
    
     /** Creates new form DlgProgramStudi
      * @param parent
@@ -279,13 +279,6 @@ public class BPJSMonitoringKlaim extends javax.swing.JDialog {
             @Override
             public void keyReleased(KeyEvent e) {}
         }); 
-        
-        try {
-            prop.loadFromXML(new FileInputStream("setting/database.xml")); 
-            link=prop.getProperty("URLAPIBPJS");
-        } catch (Exception e) {
-            System.out.println("E : "+e);
-        }
                 
     }
 
@@ -897,19 +890,30 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
     
     private void Monitor(String tanggal,String jenispelayanan,String status){
         try {
-            URL = link+"/Monitoring/Klaim/Tanggal/"+tanggal+"/JnsPelayanan/"+jenispelayanan+"/Status/"+1;	
+            
+            link = koneksiDB.UrlBpjs();
+            URL = link+"/Monitoring/Klaim/Tanggal/"+tanggal+"/JnsPelayanan/"+jenispelayanan+"/Status/"+status;	
             headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-            headers.add("X-Cons-ID",prop.getProperty("CONSIDAPIBPJS"));
+            headers.add("X-Cons-ID",koneksiDB.ConsIdBpjs());
             headers.add("X-Timestamp",String.valueOf(api.GetUTCdatetimeAsString()));            
             headers.add("X-Signature",api.getHmac());
+            headers.add("user_key", koneksiDB.UserKeyBpjs());
             requestEntity = new HttpEntity(headers);
             root = mapper.readTree(api.getRest().exchange(URL, HttpMethod.GET, requestEntity, String.class).getBody());
             nameNode = root.path("metaData");
-            System.out.println("code : "+nameNode.path("code").asText());
-            System.out.println("message : "+nameNode.path("message").asText());
+//            System.out.println("code : "+nameNode.path("code").asText());
+//            System.out.println("message : "+nameNode.path("message").asText());
             if(nameNode.path("code").asText().equals("200")){
-                response = root.path("response");
+                if(koneksiDB.UrlBpjs().contains("apijkn")){
+                    JsonNode res1 = root.path("response");
+                    String res = api.decrypt(res1.asText());
+                    String lz = api.lzDecrypt(res);
+                    response = mapper.readTree(lz);
+                } else {
+                    response = root.path("response");
+                }
+//                System.out.println(response);
                 if(response.path("klaim").isArray()){
                     for(JsonNode list:response.path("klaim")){
                         pssep=koneksi.prepareStatement("select * from bridging_sep where no_sep=? and klsrawat like ? ");
@@ -918,15 +922,19 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                             pssep.setString(2,"%"+Kelas.getSelectedItem().toString().substring(0,1).replace("S","")+"%");
                             rssep=pssep.executeQuery();
                             while(rssep.next()){
+                                subtotal = list.path("biaya").path("bySetujui").asDouble()-
+                                            list.path("biaya").path("byTopup").asDouble()-
+                                            list.path("biaya").path("byTarifRS").asDouble();
+                                total = total + subtotal;
                                 tabMode.addRow(new Object[]{
-                                    rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),
-                                    rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),
-                                    rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12),
-                                    rs.getString(13),rs.getString(14),rs.getString(14)+" "+rs.getString(15),rs.getString(16),
-                                    rs.getString(17),rs.getString(18),rs.getString(19),rs.getString(20),
-                                    rs.getString(21),rs.getString(22),rs.getString(23),rs.getString(24),
-                                    rs.getString(25),rs.getString(26),rs.getString(27),rs.getString(28),
-                                    rs.getString(29),rs.getString(30),rs.getString(31),
+                                    rssep.getString("no_sep"),rssep.getString("no_rawat"),rssep.getString("nomr"),rssep.getString("nama_pasien"),
+                                    rssep.getString("tglsep"),rssep.getString("tglrujukan"),rssep.getString("no_rujukan"),rssep.getString("kdppkrujukan"),
+                                    rssep.getString("nmppkrujukan"),rssep.getString("kdppkpelayanan"),rssep.getString("nmppkpelayanan"),rssep.getString("jnspelayanan"),
+                                    rssep.getString("catatan"),rssep.getString("diagawal"),rssep.getString("nmdiagnosaawal"),rssep.getString("kdpolitujuan"),
+                                    rssep.getString("nmpolitujuan"),rssep.getString("klsrawat"),rssep.getString("lakalantas"),rssep.getString("keterangankkl"),
+                                    rssep.getString("user"),rssep.getString("tanggal_lahir"),rssep.getString("peserta"),rssep.getString("jkel"),
+                                    rssep.getString("no_kartu"),rssep.getString("tglpulang"),rssep.getString("asal_rujukan"),rssep.getString("eksekutif"),
+                                    rssep.getString("cob"),rssep.getString("penjamin"),rssep.getString("notelep"),
                                     list.path("Inacbg").path("kode").asText()+" "+list.path("Inacbg").path("nama").asText(),
                                     list.path("status").asText(),list.path("noFPK").asText(),
                                     Valid.SetAngka(list.path("biaya").path("byPengajuan").asDouble()),
@@ -952,7 +960,27 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         }
                     }
                 }
+                tabMode.addRow(new Object[]{
+                                    "TOTAL",">>>>>",">>>>>","",
+                                    "","","","",
+                                    "","","","",
+                                    "","","","",
+                                    "","","","",
+                                    "","","","",
+                                    "","","","",
+                                    "","","",
+                                    "",
+                                    "",
+                                    "",
+                                    "",
+                                    "",
+                                    "",
+                                    "","",
+                                    Valid.SetAngka(total)
+                                    
+                                });
             }else {
+                JOptionPane.showMessageDialog(rootPane,nameNode.path("message").asText());
                 System.out.println(nameNode.path("message").asText());               
             }
         } catch (Exception ex) {

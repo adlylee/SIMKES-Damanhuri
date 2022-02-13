@@ -24,8 +24,13 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
@@ -45,6 +50,7 @@ public final class DlgPindahGudang extends javax.swing.JDialog {
     private riwayatobat Trackobat=new riwayatobat();
     private ResultSet rs;
     private String tgl="",sql="";
+    private double ttl=0,jml=0,hrg=0;
     /** Creates new form DlgPenyakit
      * @param parent
      * @param modal */
@@ -659,22 +665,20 @@ private void BtnCetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             param.put("kontakrs",var.getkontakrs());
             param.put("emailrs",var.getemailrs());   
             param.put("logo",Sequel.cariGambar("select logo from setting"));      
-            
-            tgl=" mutasibarang.tanggal between '"+Valid.SetTgl(DTPCari1.getSelectedItem()+"")+" 00:00:00' and '"+Valid.SetTgl(DTPCari2.getSelectedItem()+"")+" 23:59:59' ";
-            sql="select mutasibarang.kd_bangsaldari,(select nm_bangsal from bangsal where kd_bangsal=kd_bangsaldari) as dari,"+
-                "mutasibarang.kd_bangsalke,(select nm_bangsal from bangsal where kd_bangsal=kd_bangsalke) as ke, "+
-                "mutasibarang.kode_brng,databarang.nama_brng,mutasibarang.jml,mutasibarang.harga,(mutasibarang.jml*mutasibarang.harga)  as total,"+
-                "mutasibarang.tanggal,mutasibarang.keterangan from mutasibarang inner join databarang on mutasibarang.kode_brng=databarang.kode_brng "+
-                "where "+tgl+" and mutasibarang.kd_bangsaldari like '%"+TCari.getText().trim()+"%' or "+
-                  tgl+" and (select nm_bangsal from bangsal where kd_bangsal=kd_bangsaldari) like '%"+TCari.getText().trim()+"%' or "+
-                  tgl+" and mutasibarang.kd_bangsalke like '%"+TCari.getText().trim()+"%' or "+
-                  tgl+" and (select nm_bangsal from bangsal where kd_bangsal=kd_bangsalke) like '%"+TCari.getText().trim()+"%' or "+ 
-                  tgl+" and mutasibarang.kode_brng like '%"+TCari.getText().trim()+"%' or "+ 
-                  tgl+" and databarang.nama_brng like '%"+TCari.getText().trim()+"%' or "+ 
-                  tgl+" and mutasibarang.tanggal like '%"+TCari.getText().trim()+"%' or "+
-                  tgl+" and mutasibarang.keterangan like '%"+TCari.getText().trim()+"%' order by mutasibarang.tanggal";
-            Valid.MyReport("rptMutasiObat.jrxml","report","::[ Transaksi Mutasi Barang ]::", sql,param);
-          
+                tgl=" mutasibarang.tanggal between '"+Valid.SetTgl(DTPCari1.getSelectedItem()+"")+" 00:00:00' and '"+Valid.SetTgl(DTPCari2.getSelectedItem()+"")+" 23:59:59' ";
+                sql="select mutasibarang.kd_bangsaldari,(select nm_bangsal from bangsal where kd_bangsal=kd_bangsaldari) as dari,"+
+                        "mutasibarang.kd_bangsalke,(select nm_bangsal from bangsal where kd_bangsal=kd_bangsalke) as ke, "+
+                        "mutasibarang.kode_brng,databarang.nama_brng,mutasibarang.jml,mutasibarang.harga,IF(tanggal < '2021-03-01',harga/jml,harga)"
+                        +",(mutasibarang.jml*IF(tanggal < '2021-03-01',harga/jml,harga))  as total,mutasibarang.tanggal,mutasibarang.keterangan from mutasibarang inner join databarang on mutasibarang.kode_brng=databarang.kode_brng "+
+                        "where "+tgl+" and mutasibarang.kd_bangsaldari like '%"+TCari.getText().trim()+"%' or "+
+                        tgl+" and (select nm_bangsal from bangsal where kd_bangsal=kd_bangsaldari) like '%"+TCari.getText().trim()+"%' or "+
+                        tgl+" and mutasibarang.kd_bangsalke like '%"+TCari.getText().trim()+"%' or "+
+                        tgl+" and (select nm_bangsal from bangsal where kd_bangsal=kd_bangsalke) like '%"+TCari.getText().trim()+"%' or "+ 
+                        tgl+" and mutasibarang.kode_brng like '%"+TCari.getText().trim()+"%' or "+ 
+                        tgl+" and databarang.nama_brng like '%"+TCari.getText().trim()+"%' or "+ 
+                        tgl+" and mutasibarang.tanggal like '%"+TCari.getText().trim()+"%' or "+
+                        tgl+" and mutasibarang.keterangan like '%"+TCari.getText().trim()+"%' order by mutasibarang.tanggal";
+                Valid.MyReport("rptMutasiObat.jrxml","report","::[ Transaksi Mutasi Barang ]::", sql,param);
         }
         this.setCursor(Cursor.getDefaultCursor());
 }//GEN-LAST:event_BtnCetakActionPerformed
@@ -807,7 +811,7 @@ private void BtnCetakKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         tgl=" mutasibarang.tanggal between '"+Valid.SetTgl(DTPCari1.getSelectedItem()+"")+" 00:00:00' and '"+Valid.SetTgl(DTPCari2.getSelectedItem()+"")+" 23:59:59' ";
         sql="select mutasibarang.kd_bangsaldari,(select nm_bangsal from bangsal where kd_bangsal=kd_bangsaldari),"+
                 "mutasibarang.kd_bangsalke,(select nm_bangsal from bangsal where kd_bangsal=kd_bangsalke), "+
-                "mutasibarang.kode_brng,databarang.nama_brng,mutasibarang.jml,mutasibarang.harga,(mutasibarang.jml*mutasibarang.harga)  as total,"+
+                "mutasibarang.kode_brng,databarang.nama_brng,mutasibarang.jml,IF(tanggal < '2021-03-01',harga/jml,harga) as harga,(mutasibarang.jml*IF(tanggal < '2021-03-01',harga/jml,harga))  as total,"+
                 "mutasibarang.tanggal,mutasibarang.keterangan from mutasibarang inner join databarang on mutasibarang.kode_brng=databarang.kode_brng "+
                 "where "+tgl+" and mutasibarang.kd_bangsaldari like '%"+TCari.getText().trim()+"%' or "+
                 tgl+" and (select nm_bangsal from bangsal where kd_bangsal=kd_bangsaldari) like '%"+TCari.getText().trim()+"%' or "+
@@ -817,18 +821,30 @@ private void BtnCetakKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 tgl+" and databarang.nama_brng like '%"+TCari.getText().trim()+"%' or "+ 
                 tgl+" and mutasibarang.tanggal like '%"+TCari.getText().trim()+"%' or "+
                 tgl+" and mutasibarang.keterangan like '%"+TCari.getText().trim()+"%' "+order;
-        
         Valid.tabelKosong(tabMode);
         try{
             try {
                 rs=koneksi.prepareStatement(sql).executeQuery();
-                while(rs.next()){                
+                ttl=0;jml=0;hrg=0;
+                while(rs.next()){
+                    jml = jml+rs.getDouble("jml");
+                    hrg = hrg+rs.getDouble("harga");
+                    ttl = ttl+rs.getDouble("total");
                     tabMode.addRow(new Object[]{
                         rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),
                         rs.getString(5),rs.getString(6),rs.getDouble(7),rs.getDouble(8),
                         rs.getDouble(9),rs.getString(10),rs.getString(11)
                     });
                 }
+                tabMode.addRow(new Object[] {
+                        "","","","",">> Total",
+                        ":",
+                        jml,
+                        hrg,
+                        ttl,
+                        "",
+                        ""
+                });
             } catch (Exception e) {
                 System.out.println("Notif : "+e);
             } finally{
@@ -836,10 +852,12 @@ private void BtnCetakKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                     rs.close();
                 }
             }
+            
         }catch(Exception e){
             System.out.println("Notifikasi : "+e);
         }
         LCount.setText(""+tabMode.getRowCount());
+
     }
 
     private void getData() {

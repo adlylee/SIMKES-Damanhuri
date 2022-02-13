@@ -45,7 +45,7 @@ public class PanelResume extends widget.panelisi {
     private validasi Valid=new validasi();
     private ResultSet rs,rs2,rs3,rs4,rshal;
     private PreparedStatement ps,ps2;
-    private String sql,tanggal="",jam="",dpjp="",kddpjp="",tanggal1="",tanggal2="",norm="";
+    private String sql,tanggal="",jam="",dpjp="",kddpjp="",tanggal1="",tanggal2="",norm="",limit="",additional="";
     private StringBuilder htmlContent;
     private boolean caritanggal=false;
     private int i=0,y=0,w=0,urut;
@@ -590,6 +590,14 @@ public class PanelResume extends widget.panelisi {
     private widget.Table tbRegistrasi;
     // End of variables declaration//GEN-END:variables
     private void tampil(){     
+        switch(limit){
+            case "Semua":
+                additional = " ASC";
+                break;
+            default:
+                additional = " DESC LIMIT "+limit;
+                break;
+        }
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         try{
             htmlContent = new StringBuilder();
@@ -672,7 +680,7 @@ public class PanelResume extends widget.panelisi {
                                    "on reg_periksa.kd_dokter=dokter.kd_dokter and reg_periksa.kd_pj=penjab.kd_pj "+
                                    "and reg_periksa.kd_poli=poliklinik.kd_poli where stts<>'Batal' and "+
                                    "reg_periksa.no_rkm_medis='"+rs.getString("no_rkm_medis")+"' and "+
-                                   "reg_periksa.tgl_registrasi between '"+tanggal1+"' and '"+tanggal2+"' order by reg_periksa.tgl_registrasi").executeQuery();
+                                   "reg_periksa.tgl_registrasi between '"+tanggal1+"' and '"+tanggal2+"' order by reg_periksa.tgl_registrasi "+additional).executeQuery();
                         }else{
                             rs2=koneksi.prepareStatement(
                                    "select reg_periksa.no_reg,reg_periksa.no_rawat,reg_periksa.tgl_registrasi,reg_periksa.jam_reg,"+
@@ -681,7 +689,7 @@ public class PanelResume extends widget.panelisi {
                                    "from reg_periksa inner join dokter inner join poliklinik inner join penjab "+
                                    "on reg_periksa.kd_dokter=dokter.kd_dokter and reg_periksa.kd_pj=penjab.kd_pj "+
                                    "and reg_periksa.kd_poli=poliklinik.kd_poli where stts<>'Batal' and "+
-                                   "reg_periksa.no_rkm_medis='"+rs.getString("no_rkm_medis")+"' order by reg_periksa.tgl_registrasi").executeQuery();
+                                   "reg_periksa.no_rkm_medis='"+rs.getString("no_rkm_medis")+"' order by reg_periksa.tgl_registrasi "+additional).executeQuery();
                         }
                             
                         urut=1;
@@ -5929,6 +5937,14 @@ public class PanelResume extends widget.panelisi {
         this.tanggal1=tanggal1;
         this.tanggal2=tanggal2;
         this.caritanggal=caritanggal;
+    }
+    
+    public void setRM(String norm,String tanggal1,String tanggal2,boolean caritanggal,String limit){
+        this.norm=norm;
+        this.tanggal1=tanggal1;
+        this.tanggal2=tanggal2;
+        this.caritanggal=caritanggal;
+        this.limit=limit;
     }
 
     public void pilihTab() {

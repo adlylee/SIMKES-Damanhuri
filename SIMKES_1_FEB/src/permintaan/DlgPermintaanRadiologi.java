@@ -229,6 +229,8 @@ public final class DlgPermintaanRadiologi extends javax.swing.JDialog {
         jLabel15 = new widget.Label();
         jLabel4 = new widget.Label();
         TNoPermintaan = new widget.TextBox();
+        jLabel11 = new widget.Label();
+        TKlinis = new widget.TextBox();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         panelisi5 = new widget.panelisi();
@@ -375,7 +377,7 @@ public final class DlgPermintaanRadiologi extends javax.swing.JDialog {
 
         FormInput.setName("FormInput"); // NOI18N
         FormInput.setOpaque(false);
-        FormInput.setPreferredSize(new java.awt.Dimension(560, 129));
+        FormInput.setPreferredSize(new java.awt.Dimension(560, 169));
         FormInput.setLayout(new java.awt.BorderLayout(1, 1));
 
         ChkInput.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/143.png"))); // NOI18N
@@ -401,7 +403,7 @@ public final class DlgPermintaanRadiologi extends javax.swing.JDialog {
         FormInput.add(ChkInput, java.awt.BorderLayout.PAGE_END);
 
         PanelInput.setName("PanelInput"); // NOI18N
-        PanelInput.setPreferredSize(new java.awt.Dimension(560, 108));
+        PanelInput.setPreferredSize(new java.awt.Dimension(560, 128));
         PanelInput.setLayout(null);
 
         jLabel3.setText("No.Rawat :");
@@ -432,7 +434,7 @@ public final class DlgPermintaanRadiologi extends javax.swing.JDialog {
         PanelInput.add(jLabel9);
         jLabel9.setBounds(0, 42, 92, 23);
 
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "27-02-2019" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10-01-2022" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy");
         Tanggal.setName("Tanggal"); // NOI18N
         Tanggal.setOpaque(false);
@@ -519,6 +521,16 @@ public final class DlgPermintaanRadiologi extends javax.swing.JDialog {
         });
         PanelInput.add(TNoPermintaan);
         TNoPermintaan.setBounds(502, 72, 130, 23);
+
+        jLabel11.setText("Klinis :");
+        jLabel11.setName("jLabel11"); // NOI18N
+        PanelInput.add(jLabel11);
+        jLabel11.setBounds(0, 102, 92, 23);
+
+        TKlinis.setHighlighter(null);
+        TKlinis.setName("TKlinis"); // NOI18N
+        PanelInput.add(TKlinis);
+        TKlinis.setBounds(95, 102, 540, 40);
 
         FormInput.add(PanelInput, java.awt.BorderLayout.CENTER);
 
@@ -924,6 +936,7 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     private widget.TextBox Penjab;
     private widget.ScrollPane Scroll2;
     private widget.TextBox TCariPeriksa;
+    private widget.TextBox TKlinis;
     private widget.TextBox TNoPermintaan;
     private widget.TextBox TNoRM;
     private widget.TextBox TNoRw;
@@ -934,6 +947,7 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     private widget.Button btnDokter;
     private widget.InternalFrame internalFrame1;
     private widget.Label jLabel10;
+    private widget.Label jLabel11;
     private widget.Label jLabel15;
     private widget.Label jLabel3;
     private widget.Label jLabel4;
@@ -1259,6 +1273,9 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
                             CmbJam.getSelectedItem()+":"+CmbMenit.getSelectedItem()+":"+CmbDetik.getSelectedItem(), 
                             "0000-00-00","00:00:00","0000-00-00","00:00:00",KodePerujuk.getText(),status.replaceAll("R","r")
                         })==true){
+                        Sequel.menyimpan("diagnosa_pasien_klinis","?,?","No.Permintaan",2,new String[]{
+                            TNoPermintaan.getText(),TKlinis.getText()
+                        });
                         for(i=0;i<tbPemeriksaan.getRowCount();i++){ 
                             if(tbPemeriksaan.getValueAt(i,0).toString().equals("true")){
                                 Sequel.menyimpan2("permintaan_pemeriksaan_radiologi","?,?,?","pemeriksaan lab",3,new String[]{
@@ -1275,6 +1292,9 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
                                 CmbJam.getSelectedItem()+":"+CmbMenit.getSelectedItem()+":"+CmbDetik.getSelectedItem(), 
                                 "0000-00-00","00:00:00","0000-00-00","00:00:00",KodePerujuk.getText(),status.replaceAll("R","r")
                             })==true){
+                            Sequel.menyimpan("diagnosa_pasien_klinis","?,?","No.Permintaan",2,new String[]{
+                                TNoPermintaan.getText(),TKlinis.getText()
+                            });
                             for(i=0;i<tbPemeriksaan.getRowCount();i++){ 
                                 if(tbPemeriksaan.getValueAt(i,0).toString().equals("true")){
                                     Sequel.menyimpan2("permintaan_pemeriksaan_radiologi","?,?,?","pemeriksaan lab",3,new String[]{
@@ -1291,6 +1311,9 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
                                     CmbJam.getSelectedItem()+":"+CmbMenit.getSelectedItem()+":"+CmbDetik.getSelectedItem(), 
                                     "0000-00-00","00:00:00","0000-00-00","00:00:00",KodePerujuk.getText(),status.replaceAll("R","r")
                                 })==true){
+                                Sequel.menyimpan("diagnosa_pasien_klinis","?,?","No.Permintaan",2,new String[]{
+                                    TNoPermintaan.getText(),TKlinis.getText()
+                                });
                                 for(i=0;i<tbPemeriksaan.getRowCount();i++){ 
                                     if(tbPemeriksaan.getValueAt(i,0).toString().equals("true")){
                                         Sequel.menyimpan2("permintaan_pemeriksaan_radiologi","?,?,?","pemeriksaan lab",3,new String[]{

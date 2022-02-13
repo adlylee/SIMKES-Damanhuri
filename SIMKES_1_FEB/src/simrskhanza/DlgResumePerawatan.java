@@ -54,14 +54,6 @@ public final class DlgResumePerawatan extends javax.swing.JDialog {
                     KdRw.setText(pasien.getTable().getValueAt(pasien.getTable().getSelectedRow(),1).toString());
                     TPasien.setText(pasien.getTable().getValueAt(pasien.getTable().getSelectedRow(),2).toString());
                 }    
-                if(pasien.getTable2().getSelectedRow()!= -1){                   
-                    KdRw.setText(pasien.getTable2().getValueAt(pasien.getTable2().getSelectedRow(),1).toString());
-                    TPasien.setText(pasien.getTable2().getValueAt(pasien.getTable2().getSelectedRow(),2).toString());
-                } 
-                if(pasien.getTable3().getSelectedRow()!= -1){                   
-                    KdRw.setText(pasien.getTable3().getValueAt(pasien.getTable3().getSelectedRow(),1).toString());
-                    TPasien.setText(pasien.getTable3().getValueAt(pasien.getTable3().getSelectedRow(),2).toString());
-                } 
                 KdRw.requestFocus();
             }
             @Override
@@ -86,33 +78,6 @@ public final class DlgResumePerawatan extends javax.swing.JDialog {
             @Override
             public void keyReleased(KeyEvent e) {}
         });
-        
-        pasien.getTable2().addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {}
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode()==KeyEvent.VK_SPACE){
-                    pasien.dispose();
-                }
-            }
-            @Override
-            public void keyReleased(KeyEvent e) {}
-        });
-        
-        pasien.getTable3().addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {}
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode()==KeyEvent.VK_SPACE){
-                    pasien.dispose();
-                }
-            }
-            @Override
-            public void keyReleased(KeyEvent e) {}
-        });
-        
     }
     
     DlgPasien pasien=new DlgPasien(null,false);
@@ -133,6 +98,8 @@ public final class DlgResumePerawatan extends javax.swing.JDialog {
         Tgl1 = new widget.Tanggal();
         label18 = new widget.Label();
         Tgl2 = new widget.Tanggal();
+        jLabel6 = new widget.Label();
+        cmbHlm = new widget.ComboBox();
         label19 = new widget.Label();
         BtnPrint = new widget.Button();
         BtnKeluar = new widget.Button();
@@ -197,6 +164,16 @@ public final class DlgResumePerawatan extends javax.swing.JDialog {
             }
         });
         panelGlass5.add(Tgl2);
+
+        jLabel6.setText("Tampil Per :");
+        jLabel6.setName("jLabel6"); // NOI18N
+        jLabel6.setPreferredSize(new java.awt.Dimension(70, 23));
+        panelGlass5.add(jLabel6);
+
+        cmbHlm.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "3", "5", "7", "10", "Semua" }));
+        cmbHlm.setName("cmbHlm"); // NOI18N
+        cmbHlm.setPreferredSize(new java.awt.Dimension(90, 23));
+        panelGlass5.add(cmbHlm);
 
         label19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label19.setName("label19"); // NOI18N
@@ -340,13 +317,13 @@ private void BtnSeek2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
 }//GEN-LAST:event_BtnSeek2KeyPressed
 
 private void BtnCari1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCari1ActionPerformed
-    panelResume1.setRM(KdRw.getText(),Valid.SetTgl(Tgl1.getSelectedItem()+""), Valid.SetTgl(Tgl2.getSelectedItem()+""),ChkTanggal.isSelected());
+    panelResume1.setRM(KdRw.getText(),Valid.SetTgl(Tgl1.getSelectedItem()+""), Valid.SetTgl(Tgl2.getSelectedItem()+""),ChkTanggal.isSelected(),cmbHlm.getSelectedItem().toString());
     panelResume1.pilihTab();
 }//GEN-LAST:event_BtnCari1ActionPerformed
 
 private void BtnCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnCari1KeyPressed
     if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-        panelResume1.setRM(KdRw.getText(),Valid.SetTgl(Tgl1.getSelectedItem()+""), Valid.SetTgl(Tgl2.getSelectedItem()+""),ChkTanggal.isSelected());
+        panelResume1.setRM(KdRw.getText(),Valid.SetTgl(Tgl1.getSelectedItem()+""), Valid.SetTgl(Tgl2.getSelectedItem()+""),ChkTanggal.isSelected(),cmbHlm.getSelectedItem().toString());
         panelResume1.pilihTab();
     }else{
        // Valid.pindah(evt, TKd, BtnAll);
@@ -366,7 +343,7 @@ private void BtnCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     }//GEN-LAST:event_Tgl2KeyPressed
 
     private void ChkTanggalItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ChkTanggalItemStateChanged
-        panelResume1.setRM(KdRw.getText(),Valid.SetTgl(Tgl1.getSelectedItem()+""), Valid.SetTgl(Tgl2.getSelectedItem()+""),ChkTanggal.isSelected());
+        panelResume1.setRM(KdRw.getText(),Valid.SetTgl(Tgl1.getSelectedItem()+""), Valid.SetTgl(Tgl2.getSelectedItem()+""),ChkTanggal.isSelected(),cmbHlm.getSelectedItem().toString());
         panelResume1.pilihTab();
     }//GEN-LAST:event_ChkTanggalItemStateChanged
 
@@ -397,7 +374,9 @@ private void BtnCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.TextBox TPasien;
     private widget.Tanggal Tgl1;
     private widget.Tanggal Tgl2;
+    private widget.ComboBox cmbHlm;
     private widget.InternalFrame internalFrame1;
+    private widget.Label jLabel6;
     private widget.Label label17;
     private widget.Label label18;
     private widget.Label label19;
@@ -413,7 +392,7 @@ private void BtnCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     public void setNoRm(String norm,String nama) {
         KdRw.setText(norm);
         TPasien.setText(nama);
-        panelResume1.setRM(KdRw.getText(),Valid.SetTgl(Tgl1.getSelectedItem()+""), Valid.SetTgl(Tgl2.getSelectedItem()+""),ChkTanggal.isSelected());
+        panelResume1.setRM(KdRw.getText(),Valid.SetTgl(Tgl1.getSelectedItem()+""), Valid.SetTgl(Tgl2.getSelectedItem()+""),ChkTanggal.isSelected(),cmbHlm.getSelectedItem().toString());
         panelResume1.pilihTab();
     }
     

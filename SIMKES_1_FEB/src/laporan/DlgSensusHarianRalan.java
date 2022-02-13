@@ -52,7 +52,7 @@ public final class DlgSensusHarianRalan extends javax.swing.JDialog {
     private DlgKabupaten kabupaten=new DlgKabupaten(null,false);
     private DlgPenanggungJawab penjab=new DlgPenanggungJawab(null,false);
     private ResultSet rs;
-    private int i=0,jkl=0,jkp=0,rujukan=0,pengunjungbaru=0,pengunjunglama=0,statuspolibaru=0,statuspolilama=0;
+    private int i=0,jkl=0,jkp=0,rujukan=0,pengunjungbaru=0,pengunjunglama=0,statuspolibaru=0,statuspolilama=0,dirawat=0;
     private String diagnosautama="",diagnosasekunder="",perujuk="";
     
     /** Creates new form DlgLhtBiaya
@@ -1014,7 +1014,7 @@ public final class DlgSensusHarianRalan extends javax.swing.JDialog {
                        "reg_periksa.kd_dokter,dokter.nm_dokter,reg_periksa.no_rkm_medis,pasien.nm_pasien,pasien.tgl_lahir,"+
                        "pasien.jk,concat(reg_periksa.umurdaftar,' ',reg_periksa.sttsumur)as umur,poliklinik.nm_poli,"+
                        "reg_periksa.p_jawab,reg_periksa.almt_pj,reg_periksa.hubunganpj,reg_periksa.biaya_reg,"+
-                       "reg_periksa.stts_daftar,penjab.png_jawab,pasien.no_tlp,reg_periksa.stts,kecamatan.nm_kec,kabupaten.nm_kab,reg_periksa.status_poli "+
+                       "reg_periksa.stts_daftar,penjab.png_jawab,pasien.no_tlp,reg_periksa.stts,kecamatan.nm_kec,kabupaten.nm_kab,reg_periksa.status_poli,reg_periksa.status_lanjut "+
                        "from reg_periksa inner join dokter inner join pasien inner join poliklinik inner join penjab "+
                        "inner join kecamatan inner join kabupaten "+
                        "on reg_periksa.kd_dokter=dokter.kd_dokter and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "+
@@ -1046,7 +1046,7 @@ public final class DlgSensusHarianRalan extends javax.swing.JDialog {
                 ps.setString(20,"%"+nmkabupaten.getText().trim()+"%");
                 ps.setString(21,"%"+TCari.getText().trim()+"%");
                 rs=ps.executeQuery();
-                i=1;jkl=0;jkp=0;rujukan=0;pengunjungbaru=0;pengunjunglama=0;statuspolibaru=0;statuspolilama=0;
+                i=1;jkl=0;jkp=0;rujukan=0;pengunjungbaru=0;pengunjunglama=0;statuspolibaru=0;statuspolilama=0;dirawat=0;
                 while(rs.next()){
                     diagnosautama=Sequel.cariIsi("select kd_penyakit from diagnosa_pasien where prioritas='1' and status='Ralan' and no_rawat=?",rs.getString("no_rawat"));
                     diagnosasekunder=Sequel.cariIsi("select kd_penyakit from diagnosa_pasien where prioritas='2' and status='Ralan' and no_rawat=?",rs.getString("no_rawat"));
@@ -1066,6 +1066,10 @@ public final class DlgSensusHarianRalan extends javax.swing.JDialog {
                         statuspolilama++;
                     }else{
                         statuspolibaru++;
+                    }
+                    
+                    if(rs.getString("stts").equals("Dirawat")){
+                        dirawat++;
                     }
                     
                     perujuk=Sequel.cariIsi("select perujuk from rujuk_masuk where no_rawat=?",rs.getString("no_rawat"));
@@ -1096,7 +1100,7 @@ public final class DlgSensusHarianRalan extends javax.swing.JDialog {
                     ps.close();
                 }
             }
-            if((jkl>0)||(jkp>0)||(pengunjungbaru>0)||(pengunjunglama>0)||(statuspolibaru>0)||(statuspolilama>0)||(rujukan>0)){
+            if((jkl>0)||(jkp>0)||(pengunjungbaru>0)||(pengunjunglama>0)||(statuspolibaru>0)||(statuspolilama>0)||(rujukan>0)||(dirawat>0)){
                 tabmode.addRow(new String[]{
                     "","","","","","","","","","","","","","","","","","","","",""
                 }); 
@@ -1104,7 +1108,7 @@ public final class DlgSensusHarianRalan extends javax.swing.JDialog {
                     "","","Laki-Laki",": "+jkl,"","Pengunjung Baru",": "+pengunjungbaru,"","Jenis Kunjungan Baru",": "+statuspolibaru,"","Rujukan",": "+rujukan,"","","","","","","",""
                 });  
                 tabmode.addRow(new String[]{
-                    "","","Perempuan",": "+jkp,"","Pengunjung Lama",": "+pengunjunglama,"","Jenis Kunjungan Lama",": "+statuspolilama,"","","","","","","","","","",""
+                    "","","Perempuan",": "+jkp,"","Pengunjung Lama",": "+pengunjunglama,"","Jenis Kunjungan Lama",": "+statuspolilama,"","Dirawat",": "+dirawat,"","","","","","","",""
                 });
             }                
         } catch (Exception e) {
@@ -1122,7 +1126,7 @@ public final class DlgSensusHarianRalan extends javax.swing.JDialog {
                        "reg_periksa.kd_dokter,dokter.nm_dokter,reg_periksa.no_rkm_medis,pasien.nm_pasien,pasien.tgl_lahir,"+
                        "pasien.jk,concat(reg_periksa.umurdaftar,' ',reg_periksa.sttsumur)as umur,poliklinik.nm_poli,"+
                        "reg_periksa.p_jawab,reg_periksa.almt_pj,reg_periksa.hubunganpj,reg_periksa.biaya_reg,"+
-                       "reg_periksa.stts_daftar,penjab.png_jawab,pasien.no_tlp,reg_periksa.stts,kecamatan.nm_kec,kabupaten.nm_kab,reg_periksa.status_poli "+
+                       "reg_periksa.stts_daftar,penjab.png_jawab,pasien.no_tlp,reg_periksa.stts,kecamatan.nm_kec,kabupaten.nm_kab,reg_periksa.status_poli,reg_periksa.status_lanjut "+
                        "from reg_periksa inner join dokter inner join pasien inner join poliklinik inner join penjab "+
                        "inner join kecamatan inner join kabupaten "+
                        "on reg_periksa.kd_dokter=dokter.kd_dokter and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "+
@@ -1154,7 +1158,7 @@ public final class DlgSensusHarianRalan extends javax.swing.JDialog {
                 ps.setString(20,"%"+nmkabupaten.getText().trim()+"%");
                 ps.setString(21,"%"+TCari.getText().trim()+"%");
                 rs=ps.executeQuery();
-                i=1;jkl=0;jkp=0;rujukan=0;pengunjungbaru=0;pengunjunglama=0;statuspolibaru=0;statuspolilama=0;
+                i=1;jkl=0;jkp=0;rujukan=0;pengunjungbaru=0;pengunjunglama=0;statuspolibaru=0;statuspolilama=0;dirawat=0;
                 while(rs.next()){
                     diagnosautama=Sequel.cariIsi("select kd_penyakit from diagnosa_pasien where prioritas='1' and status='Ralan' and no_rawat=?",rs.getString("no_rawat"));
                     diagnosasekunder=Sequel.cariIsi("select kd_penyakit from diagnosa_pasien where prioritas='2' and status='Ralan' and no_rawat=?",rs.getString("no_rawat"));
@@ -1174,6 +1178,10 @@ public final class DlgSensusHarianRalan extends javax.swing.JDialog {
                         statuspolilama++;
                     }else{
                         statuspolibaru++;
+                    }
+                    
+                    if(rs.getString("stts").equals("Dirawat")){
+                        dirawat++;
                     }
                     
                     perujuk=Sequel.cariIsi("select perujuk from rujuk_masuk where no_rawat=?",rs.getString("no_rawat"));
@@ -1204,7 +1212,7 @@ public final class DlgSensusHarianRalan extends javax.swing.JDialog {
                     ps.close();
                 }
             }
-            if((jkl>0)||(jkp>0)||(pengunjungbaru>0)||(pengunjunglama>0)||(statuspolibaru>0)||(statuspolilama>0)||(rujukan>0)){
+            if((jkl>0)||(jkp>0)||(pengunjungbaru>0)||(pengunjunglama>0)||(statuspolibaru>0)||(statuspolilama>0)||(rujukan>0)||(dirawat>0)){
                 tabmode2.addRow(new String[]{
                     "","","","","","","","","","","","","","","","","","","","",""
                 });  
@@ -1212,7 +1220,7 @@ public final class DlgSensusHarianRalan extends javax.swing.JDialog {
                     "","","Laki-Laki",": "+jkl,"","Pengunjung Baru",": "+pengunjungbaru,"","Jenis Kunjungan Baru",": "+statuspolibaru,"","Rujukan",": "+rujukan,"","","","","","","",""
                 });  
                 tabmode2.addRow(new String[]{
-                    "","","Perempuan",": "+jkp,"","Pengunjung Lama",": "+pengunjunglama,"","Jenis Kunjungan Lama",": "+statuspolilama,"","","","","","","","","","",""
+                    "","","Perempuan",": "+jkp,"","Pengunjung Lama",": "+pengunjunglama,"","Jenis Kunjungan Lama",": "+statuspolilama,"","Dirawat",": "+dirawat,"","","","","","","",""
                 }); 
             }                
         } catch (Exception e) {

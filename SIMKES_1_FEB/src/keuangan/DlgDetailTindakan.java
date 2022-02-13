@@ -1889,21 +1889,19 @@ public final class DlgDetailTindakan extends javax.swing.JDialog {
                    "rawat_jl_dr.jam_rawat,penjab.png_jawab,poliklinik.nm_poli, " +
                    "rawat_jl_dr.material,rawat_jl_dr.bhp,rawat_jl_dr.tarif_tindakandr,"+
                    "rawat_jl_dr.kso,rawat_jl_dr.menejemen,rawat_jl_dr.biaya_rawat "+
-                   "from pasien inner join reg_periksa inner join jns_perawatan inner join "+
-                   "dokter inner join rawat_jl_dr inner join poliklinik inner join penjab "+
-                   "on rawat_jl_dr.no_rawat=reg_periksa.no_rawat "+
-                   "and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "+
-                   "and reg_periksa.kd_pj=penjab.kd_pj "+
-                   "and reg_periksa.kd_poli=poliklinik.kd_poli "+
-                   "and rawat_jl_dr.kd_jenis_prw=jns_perawatan.kd_jenis_prw "+
-                   "and rawat_jl_dr.kd_dokter=dokter.kd_dokter "+
+                   "from pasien inner join reg_periksa on reg_periksa.no_rkm_medis=pasien.no_rkm_medis "
+                   + "inner join rawat_jl_dr on rawat_jl_dr.no_rawat=reg_periksa.no_rawat "
+                   + "inner join jns_perawatan on jns_perawatan.kd_jenis_prw = rawat_jl_dr.kd_jenis_prw "
+                   + "inner join dokter on rawat_jl_dr.kd_dokter=dokter.kd_dokter "
+                   + "inner join poliklinik on reg_periksa.kd_poli=poliklinik.kd_poli "
+                   + "inner join penjab on reg_periksa.kd_pj=penjab.kd_pj  "+
                    "where rawat_jl_dr.tgl_perawatan between ? and ? and rawat_jl_dr.no_rawat like ? and penjab.png_jawab like ? or "+
                     "rawat_jl_dr.tgl_perawatan between ? and ? and reg_periksa.no_rkm_medis like ? and penjab.png_jawab like ? or "+
                     "rawat_jl_dr.tgl_perawatan between ? and ? and pasien.nm_pasien like ? and penjab.png_jawab like ? or "+
                     "rawat_jl_dr.tgl_perawatan between ? and ? and jns_perawatan.nm_perawatan like ? and penjab.png_jawab like ? or "+
                     "rawat_jl_dr.tgl_perawatan between ? and ? and rawat_jl_dr.kd_dokter like ? and penjab.png_jawab like ? or "+
                     "rawat_jl_dr.tgl_perawatan between ? and ? and dokter.nm_dokter like ? and penjab.png_jawab like ? or "+
-                    "rawat_jl_dr.tgl_perawatan between ? and ? and penjab.png_jawab like ? or "+
+                    "rawat_jl_dr.tgl_perawatan between ? and ? and penjab.png_jawab like ? and penjab.png_jawab like ? or "+
                     "rawat_jl_dr.tgl_perawatan between ? and ? and poliklinik.nm_poli like ? and penjab.png_jawab like ? "+
                    " order by rawat_jl_dr.no_rawat desc");
             try {
@@ -1933,11 +1931,12 @@ public final class DlgDetailTindakan extends javax.swing.JDialog {
                 ps.setString(24,"%"+NmCaraBayarRad.getText()+"%");
                 ps.setString(25,Valid.SetTgl(Tgl1.getSelectedItem()+""));
                 ps.setString(26,Valid.SetTgl(Tgl2.getSelectedItem()+""));
-                ps.setString(27,"%"+NmCaraBayarRad.getText()+"%");
-                ps.setString(28,Valid.SetTgl(Tgl1.getSelectedItem()+""));
-                ps.setString(29,Valid.SetTgl(Tgl2.getSelectedItem()+""));
-                ps.setString(30,"%"+TCari.getText().trim()+"%");
-                ps.setString(31,"%"+NmCaraBayarRad.getText()+"%");
+                ps.setString(27,"%"+TCari.getText().trim()+"%");
+                ps.setString(28,"%"+NmCaraBayarRad.getText()+"%");
+                ps.setString(29,Valid.SetTgl(Tgl1.getSelectedItem()+""));
+                ps.setString(30,Valid.SetTgl(Tgl2.getSelectedItem()+""));
+                ps.setString(31,"%"+TCari.getText().trim()+"%");
+                ps.setString(32,"%"+NmCaraBayarRad.getText()+"%");
                 rs=ps.executeQuery();
                 i=1;
                 material=0;bhp=0;jmdokter=0;kso=0;menejemen=0;total=0;
@@ -2002,7 +2001,7 @@ public final class DlgDetailTindakan extends javax.swing.JDialog {
                     "rawat_jl_pr.tgl_perawatan between ? and ? and jns_perawatan.nm_perawatan like ? and penjab.png_jawab like ? or "+
                     "rawat_jl_pr.tgl_perawatan between ? and ? and rawat_jl_pr.nip like ? and penjab.png_jawab like ? or "+
                     "rawat_jl_pr.tgl_perawatan between ? and ? and petugas.nama like ? and penjab.png_jawab like ? or "+
-                    "rawat_jl_pr.tgl_perawatan between ? and ? and penjab.png_jawab like ? or "+
+                    "rawat_jl_pr.tgl_perawatan between ? and ? and penjab.png_jawab like ? and penjab.png_jawab like ? or "+
                     "rawat_jl_pr.tgl_perawatan between ? and ? and poliklinik.nm_poli like ? and penjab.png_jawab like ? "+
                    " order by rawat_jl_pr.no_rawat desc");
             try {
@@ -2032,11 +2031,12 @@ public final class DlgDetailTindakan extends javax.swing.JDialog {
                 ps.setString(24,"%"+NmCaraBayarRad.getText()+"%");
                 ps.setString(25,Valid.SetTgl(Tgl1.getSelectedItem()+""));
                 ps.setString(26,Valid.SetTgl(Tgl2.getSelectedItem()+""));
-                ps.setString(27,"%"+NmCaraBayarRad.getText()+"%");
-                ps.setString(28,Valid.SetTgl(Tgl1.getSelectedItem()+""));
-                ps.setString(29,Valid.SetTgl(Tgl2.getSelectedItem()+""));
-                ps.setString(30,"%"+TCari.getText().trim()+"%");
-                ps.setString(31,"%"+NmCaraBayarRad.getText()+"%");
+                ps.setString(27,"%"+TCari.getText().trim()+"%");
+                ps.setString(28,"%"+NmCaraBayarRad.getText()+"%");
+                ps.setString(29,Valid.SetTgl(Tgl1.getSelectedItem()+""));
+                ps.setString(30,Valid.SetTgl(Tgl2.getSelectedItem()+""));
+                ps.setString(31,"%"+TCari.getText().trim()+"%");
+                ps.setString(32,"%"+NmCaraBayarRad.getText()+"%");
                 rs=ps.executeQuery();
                 i=1;
                 material=0;bhp=0;jmpetugas=0;kso=0;menejemen=0;total=0;
@@ -2104,7 +2104,7 @@ public final class DlgDetailTindakan extends javax.swing.JDialog {
                     "rawat_jl_drpr.tgl_perawatan between ? and ? and dokter.nm_dokter like ? and penjab.png_jawab like ? or "+
                     "rawat_jl_drpr.tgl_perawatan between ? and ? and rawat_jl_drpr.nip like ? and penjab.png_jawab like ? or "+
                     "rawat_jl_drpr.tgl_perawatan between ? and ? and petugas.nama like ? and penjab.png_jawab like ? or "+
-                    "rawat_jl_drpr.tgl_perawatan between ? and ? and penjab.png_jawab like ? or "+
+                    "rawat_jl_drpr.tgl_perawatan between ? and ? and penjab.png_jawab like ? and penjab.png_jawab like ? or "+
                     "rawat_jl_drpr.tgl_perawatan between ? and ? and poliklinik.nm_poli like ? and penjab.png_jawab like ? "+
                    " order by rawat_jl_drpr.no_rawat desc");
             try {
@@ -2142,11 +2142,12 @@ public final class DlgDetailTindakan extends javax.swing.JDialog {
                 ps.setString(32,"%"+NmCaraBayarRad.getText()+"%");
                 ps.setString(33,Valid.SetTgl(Tgl1.getSelectedItem()+""));
                 ps.setString(34,Valid.SetTgl(Tgl2.getSelectedItem()+""));
-                ps.setString(35,"%"+NmCaraBayarRad.getText()+"%");
-                ps.setString(36,Valid.SetTgl(Tgl1.getSelectedItem()+""));
-                ps.setString(37,Valid.SetTgl(Tgl2.getSelectedItem()+""));
-                ps.setString(38,"%"+TCari.getText().trim()+"%");
-                ps.setString(39,"%"+NmCaraBayarRad.getText()+"%");
+                ps.setString(35,"%"+TCari.getText().trim()+"%");
+                ps.setString(36,"%"+NmCaraBayarRad.getText()+"%");
+                ps.setString(37,Valid.SetTgl(Tgl1.getSelectedItem()+""));
+                ps.setString(38,Valid.SetTgl(Tgl2.getSelectedItem()+""));
+                ps.setString(39,"%"+TCari.getText().trim()+"%");
+                ps.setString(40,"%"+NmCaraBayarRad.getText()+"%");
                 rs=ps.executeQuery();
                 i=1;
                 material=0;bhp=0;jmdokter=0;jmpetugas=0;kso=0;menejemen=0;total=0;
@@ -2431,7 +2432,7 @@ public final class DlgDetailTindakan extends javax.swing.JDialog {
                     "rawat_inap_dr.tgl_perawatan between ? and ? and jns_perawatan_inap.nm_perawatan like ? and penjab.png_jawab like ? or "+
                     "rawat_inap_dr.tgl_perawatan between ? and ? and rawat_inap_dr.kd_dokter like ? and penjab.png_jawab like ? or "+
                     "rawat_inap_dr.tgl_perawatan between ? and ? and dokter.nm_dokter like ? and penjab.png_jawab like ? or "+
-                    "rawat_inap_dr.tgl_perawatan between ? and ? and penjab.png_jawab like ? "+
+                    "rawat_inap_dr.tgl_perawatan between ? and ? and penjab.png_jawab like ? and penjab.png_jawab like ? "+
                    " order by rawat_inap_dr.no_rawat desc");
             try {
                 ps.setString(1,Valid.SetTgl(Tgl1.getSelectedItem()+""));
@@ -2460,7 +2461,8 @@ public final class DlgDetailTindakan extends javax.swing.JDialog {
                 ps.setString(24,"%"+NmCaraBayarRad.getText()+"%");
                 ps.setString(25,Valid.SetTgl(Tgl1.getSelectedItem()+""));
                 ps.setString(26,Valid.SetTgl(Tgl2.getSelectedItem()+""));
-                ps.setString(27,"%"+NmCaraBayarRad.getText()+"%");
+                ps.setString(27,"%"+TCari.getText().trim()+"%");
+                ps.setString(28,"%"+NmCaraBayarRad.getText()+"%");
                 rs=ps.executeQuery();
                 i=1;
                 material=0;bhp=0;jmdokter=0;kso=0;menejemen=0;total=0;
@@ -2528,7 +2530,7 @@ public final class DlgDetailTindakan extends javax.swing.JDialog {
                     "rawat_inap_pr.tgl_perawatan between ? and ? and jns_perawatan_inap.nm_perawatan like ? and penjab.png_jawab like ? or "+
                     "rawat_inap_pr.tgl_perawatan between ? and ? and rawat_inap_pr.nip like ? and penjab.png_jawab like ? or "+
                     "rawat_inap_pr.tgl_perawatan between ? and ? and petugas.nama like ? and penjab.png_jawab like ? or "+
-                    "rawat_inap_pr.tgl_perawatan between ? and ? and penjab.png_jawab like ? "+
+                    "rawat_inap_pr.tgl_perawatan between ? and ? and penjab.png_jawab like ? and penjab.png_jawab like ? "+
                    " order by rawat_inap_pr.no_rawat desc");
             try {
                 ps.setString(1,Valid.SetTgl(Tgl1.getSelectedItem()+""));
@@ -2557,7 +2559,8 @@ public final class DlgDetailTindakan extends javax.swing.JDialog {
                 ps.setString(24,"%"+NmCaraBayarRad.getText()+"%");
                 ps.setString(25,Valid.SetTgl(Tgl1.getSelectedItem()+""));
                 ps.setString(26,Valid.SetTgl(Tgl2.getSelectedItem()+""));
-                ps.setString(27,"%"+NmCaraBayarRad.getText()+"%");
+                ps.setString(27,"%"+TCari.getText().trim()+"%");
+                ps.setString(28,"%"+NmCaraBayarRad.getText()+"%");
                 rs=ps.executeQuery();
                 i=1;
                 material=0;bhp=0;jmpetugas=0;kso=0;menejemen=0;total=0;
@@ -2878,7 +2881,7 @@ public final class DlgDetailTindakan extends javax.swing.JDialog {
                    "periksa_lab.tgl_periksa between ? and ? and petugas.nama like ? and penjab.png_jawab like ? or "+
                    "periksa_lab.tgl_periksa between ? and ? and periksa_lab.dokter_perujuk like ? and penjab.png_jawab like ? or "+
                    "periksa_lab.tgl_periksa between ? and ? and (select nm_dokter from dokter where dokter.kd_dokter=periksa_lab.dokter_perujuk ) like ? and penjab.png_jawab like ? or "+
-                   "periksa_lab.tgl_periksa between ? and ? and penjab.png_jawab like ? "+
+                   "periksa_lab.tgl_periksa between ? and ? and penjab.png_jawab like ? and penjab.png_jawab like ? "+
                    " order by periksa_lab.tgl_periksa");
             try {
                 ps.setString(1,Valid.SetTgl(Tgl1.getSelectedItem()+""));
@@ -2927,7 +2930,8 @@ public final class DlgDetailTindakan extends javax.swing.JDialog {
                 ps.setString(44,"%"+NmCaraBayarRad.getText()+"%");
                 ps.setString(45,Valid.SetTgl(Tgl1.getSelectedItem()+""));
                 ps.setString(46,Valid.SetTgl(Tgl2.getSelectedItem()+""));
-                ps.setString(47,"%"+NmCaraBayarRad.getText()+"%");
+                ps.setString(47,"%"+TCari.getText().trim()+"%");
+                ps.setString(48,"%"+NmCaraBayarRad.getText()+"%");
                 rs=ps.executeQuery();
                 i=1;
                 material=0;bhp=0;jmdokter=0;jmpetugas=0;jmperujuk=0;

@@ -432,14 +432,15 @@
             <Component class="widget.ComboBox" name="cmbHari">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="7">
-                    <StringItem index="0" value="SENIN"/>
-                    <StringItem index="1" value="SELASA"/>
-                    <StringItem index="2" value="RABU"/>
-                    <StringItem index="3" value="KAMIS"/>
-                    <StringItem index="4" value="JUMAT"/>
-                    <StringItem index="5" value="SABTU"/>
-                    <StringItem index="6" value="AKHAD"/>
+                  <StringArray count="8">
+                    <StringItem index="0" value="----"/>
+                    <StringItem index="1" value="SENIN"/>
+                    <StringItem index="2" value="SELASA"/>
+                    <StringItem index="3" value="RABU"/>
+                    <StringItem index="4" value="KAMIS"/>
+                    <StringItem index="5" value="JUMAT"/>
+                    <StringItem index="6" value="SABTU"/>
+                    <StringItem index="7" value="AKHAD"/>
                   </StringArray>
                 </Property>
                 <Property name="name" type="java.lang.String" value="cmbHari" noResource="true"/>

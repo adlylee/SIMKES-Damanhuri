@@ -64,7 +64,7 @@ public class DlgFrekuensiPenyakitRalan extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-        Object[] row={"Kode","Nama Penyakit","Diagnosa Lain","Lk2(Hidup)","Pr(Hidup)","Lk2(Mati)","Pr(Mati)","Jumlah"};
+        Object[] row={"Kode","Nama Penyakit","Diagnosa Lain","Lk2(Baru)","Pr(Baru)","Jumlah Kasus","Jumlah Kunjungan"};
         tabMode=new DefaultTableModel(null,row){
               @Override public boolean isCellEditable(int rowIndex, int colIndex){return false;}
               Class[] types = new Class[] {
@@ -82,12 +82,12 @@ public class DlgFrekuensiPenyakitRalan extends javax.swing.JDialog {
         TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tbDokter.getModel());
         tbDokter.setRowSorter(sorter);
         List<RowSorter.SortKey> sortKeys = new ArrayList<>(25);
-        sortKeys.add(new RowSorter.SortKey(7, SortOrder.DESCENDING));
+        sortKeys.add(new RowSorter.SortKey(6, SortOrder.DESCENDING));
         sortKeys.add(new RowSorter.SortKey(0, SortOrder.DESCENDING));
         sorter.setSortKeys(sortKeys);
         tbDokter.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (int m = 0; m < 8; m++) {
+        for (int m = 0; m < 7; m++) {
             TableColumn column = tbDokter.getColumnModel().getColumn(m);
             if(m==0){
                 column.setPreferredWidth(60);
@@ -95,6 +95,10 @@ public class DlgFrekuensiPenyakitRalan extends javax.swing.JDialog {
                 column.setPreferredWidth(350);
             }else if(m==2){
                 column.setPreferredWidth(400);
+            }else if(m==5){
+                column.setPreferredWidth(100);
+            }else if(m==6){
+                column.setPreferredWidth(100);
             }else{
                 column.setPreferredWidth(60);
             }
@@ -2039,9 +2043,9 @@ private void ppGrafikTerkecilPieActionPerformed(java.awt.event.ActionEvent evt) 
                     }   
 
                     a=0;
-                    ps3=koneksi.prepareStatement("select diagnosa_pasien.no_rawat as jumlah from diagnosa_pasien inner join reg_periksa inner join pasien_mati "+
+                    ps3=koneksi.prepareStatement("select diagnosa_pasien.no_rawat as jumlah from diagnosa_pasien inner join reg_periksa "+
                        "inner join pasien on reg_periksa.no_rawat=diagnosa_pasien.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "+
-                       "and pasien_mati.no_rkm_medis=pasien.no_rkm_medis where diagnosa_pasien.status='Ralan' and diagnosa_pasien.prioritas='1' and pasien.jk='L' and reg_periksa.tgl_registrasi between ? and ? "+
+                       "where diagnosa_pasien.status='Ralan' and diagnosa_pasien.status_penyakit='Baru' and diagnosa_pasien.prioritas='1' and pasien.jk='L' and reg_periksa.tgl_registrasi between ? and ? "+
                        "and diagnosa_pasien.kd_penyakit=? group by diagnosa_pasien.no_rawat");  
                     try{
                         ps3.setString(1,Valid.SetTgl(Tgl1.getSelectedItem()+""));
@@ -2063,9 +2067,9 @@ private void ppGrafikTerkecilPieActionPerformed(java.awt.event.ActionEvent evt) 
                         
 
                     b=0;
-                    ps4=koneksi.prepareStatement("select diagnosa_pasien.no_rawat as jumlah from diagnosa_pasien inner join reg_periksa inner join pasien_mati "+
+                    ps4=koneksi.prepareStatement("select diagnosa_pasien.no_rawat as jumlah from diagnosa_pasien inner join reg_periksa "+
                        "inner join pasien on reg_periksa.no_rawat=diagnosa_pasien.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "+
-                       "and pasien_mati.no_rkm_medis=pasien.no_rkm_medis where diagnosa_pasien.status='Ralan' and diagnosa_pasien.prioritas='1' and pasien.jk='P' and reg_periksa.tgl_registrasi between ? and ? "+
+                       "where diagnosa_pasien.status='Ralan' and diagnosa_pasien.status_penyakit='Baru' and diagnosa_pasien.prioritas='1' and pasien.jk='P' and reg_periksa.tgl_registrasi between ? and ? "+
                        "and diagnosa_pasien.kd_penyakit=? group by diagnosa_pasien.no_rawat"); 
                     try {
                         ps4.setString(1,Valid.SetTgl(Tgl1.getSelectedItem()+""));
@@ -2088,7 +2092,7 @@ private void ppGrafikTerkecilPieActionPerformed(java.awt.event.ActionEvent evt) 
                     c=0;
                     ps5=koneksi.prepareStatement("select diagnosa_pasien.no_rawat as jumlah from diagnosa_pasien inner join reg_periksa "+
                        "inner join pasien on reg_periksa.no_rawat=diagnosa_pasien.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "+
-                       "where diagnosa_pasien.status='Ralan' and diagnosa_pasien.prioritas='1' and pasien.jk='L' and reg_periksa.tgl_registrasi between ? and ? "+
+                       "where diagnosa_pasien.status='Ralan' and diagnosa_pasien.prioritas='1' and reg_periksa.tgl_registrasi between ? and ? "+
                        "and diagnosa_pasien.kd_penyakit=? group by diagnosa_pasien.no_rawat");
                     try{
                         ps5.setString(1,Valid.SetTgl(Tgl1.getSelectedItem()+""));
@@ -2096,7 +2100,7 @@ private void ppGrafikTerkecilPieActionPerformed(java.awt.event.ActionEvent evt) 
                         ps5.setString(3,rs.getString("kd_penyakit"));
                         rs5=ps5.executeQuery();
                         rs5.last();
-                        if(rs5.getRow()>0)  c=rs5.getRow()-a;
+                        if(rs5.getRow()>0)  c=rs5.getRow();
                     } catch (Exception e) {
                         System.out.println("Notif ps5 : "+e);
                     } finally{
@@ -2108,30 +2112,7 @@ private void ppGrafikTerkecilPieActionPerformed(java.awt.event.ActionEvent evt) 
                         }
                     }
 
-                    d=0;
-                    ps6=koneksi.prepareStatement("select diagnosa_pasien.no_rawat as jumlah from diagnosa_pasien inner join reg_periksa "+
-                       "inner join pasien on reg_periksa.no_rawat=diagnosa_pasien.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "+
-                       "where diagnosa_pasien.status='Ralan' and diagnosa_pasien.prioritas='1' and pasien.jk='P' and reg_periksa.tgl_registrasi between ? and ? "+
-                       "and diagnosa_pasien.kd_penyakit=? group by diagnosa_pasien.no_rawat");
-                    try{
-                        ps6.setString(1,Valid.SetTgl(Tgl1.getSelectedItem()+""));
-                        ps6.setString(2,Valid.SetTgl(Tgl2.getSelectedItem()+""));
-                        ps6.setString(3,rs.getString("kd_penyakit"));
-                        rs6=ps6.executeQuery();
-                        rs6.last();
-                        if(rs6.getRow()>0) d=rs6.getRow()-b;
-                    } catch (Exception e) {
-                        System.out.println("Notif ps6 : "+e);
-                    } finally{
-                        if(rs6!=null){
-                            rs6.close();
-                        }
-                        if(ps6!=null){
-                            ps6.close();
-                        }
-                    }
-                    
-                    tabMode.addRow(new Object[]{rs.getString("kd_penyakit"),rs.getString("penyakit"),diagnosa,c,d,a,b,i});
+                    tabMode.addRow(new Object[]{rs.getString("kd_penyakit"),rs.getString("penyakit"),diagnosa,a,b,a+b,c});
                     label9.setText("Record : "+tabMode.getRowCount()+" dari "+rs.getString("jml"));
                 }
             } catch (Exception e) {

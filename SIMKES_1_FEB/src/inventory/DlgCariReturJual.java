@@ -94,7 +94,7 @@ public class DlgCariReturJual extends javax.swing.JDialog {
             }else if(i==5){
                 column.setPreferredWidth(200);
             }else if(i==6){
-                column.setPreferredWidth(60);
+                column.setPreferredWidth(200);
             }else if(i==7){
                 column.setPreferredWidth(90);
             }else if(i==8){
@@ -958,26 +958,33 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
         Valid.tabelKosong(tabMode);
         try{
             ps=koneksi.prepareStatement("select returjual.no_retur_jual,returjual.tgl_retur, "+
-                    "returjual.nip,petugas.nama,pasien.no_rkm_medis,pasien.nm_pasien,bangsal.nm_bangsal "+
-                    " from returjual inner join petugas inner join pasien inner join bangsal "+
-                    " inner join detreturjual inner join databarang inner join kodesatuan "+
-                    " on detreturjual.kode_brng=databarang.kode_brng "+
-                    " and returjual.kd_bangsal=bangsal.kd_bangsal "+
-                    " and returjual.no_rkm_medis=pasien.no_rkm_medis "+
-                    " and detreturjual.kode_sat=kodesatuan.kode_sat "+
-                    " and returjual.no_retur_jual=detreturjual.no_retur_jual "+
-                    " and returjual.nip=petugas.nip "+
-                    " where "+tanggal+noret+ptg+sat+bar+" and returjual.no_retur_jual like '%"+TCari.getText()+"%' or "+
-                    tanggal+noret+ptg+sat+bar+" and returjual.nip like '%"+TCari.getText()+"%' or "+
-                    tanggal+noret+ptg+sat+bar+" and petugas.nama like '%"+TCari.getText()+"%' or "+
-                    tanggal+noret+ptg+sat+bar+" and detreturjual.kode_brng like '%"+TCari.getText()+"%' or "+
-                    tanggal+noret+ptg+sat+bar+" and databarang.nama_brng like '%"+TCari.getText()+"%' or "+
-                    tanggal+noret+ptg+sat+bar+" and pasien.no_rkm_medis like '%"+TCari.getText()+"%' or "+
-                    tanggal+noret+ptg+sat+bar+" and pasien.nm_pasien like '%"+TCari.getText()+"%' or "+
-                    tanggal+noret+ptg+sat+bar+" and bangsal.nm_bangsal like '%"+TCari.getText()+"%' or "+
-                    tanggal+noret+ptg+sat+bar+" and detreturjual.nota_jual like '%"+TCari.getText()+"%' or "+
-                    tanggal+noret+ptg+sat+bar+" and kodesatuan.satuan like '%"+TCari.getText()+"%' or "+
-                    tanggal+noret+ptg+sat+bar+" and detreturjual.kode_sat like '%"+TCari.getText()+"%' "+
+                    "returjual.nip,petugas.nama,pasien.no_rkm_medis,pasien.nm_pasien,b2.nm_bangsal,b1.nm_bangsal "+
+//                    " from returjual inner join petugas inner join pasien inner join bangsal b1"+
+//                    " inner join detreturjual inner join databarang inner join kodesatuan inner join kamar_inap inner join kamar left join bangsal b2"+
+//                    " on detreturjual.kode_brng=databarang.kode_brng "+
+//                    " and returjual.kd_bangsal=b1.kd_bangsal "+
+//                    " and returjual.no_rkm_medis=pasien.no_rkm_medis "+
+//                    " and detreturjual.kode_sat=kodesatuan.kode_sat "+
+//                    " and returjual.no_retur_jual=detreturjual.no_retur_jual "+
+//                    " and returjual.nip=petugas.nip and kamar_inap.no_rawat = SUBSTRING(returjual.no_retur_jual,1,17) and kamar_inap.kd_kamar = kamar.kd_kamar and b2.kd_bangsal = kamar.kd_bangsal "+
+                    "FROM returjual join pasien on returjual.no_rkm_medis = pasien.no_rkm_medis join kamar_inap on kamar_inap.no_rawat = SUBSTRING(returjual.no_retur_jual,1,17) "+
+                    "Join kamar on kamar_inap.kd_kamar = kamar.kd_kamar join bangsal b1 on b1.kd_bangsal = kamar.kd_bangsal "+
+                    "join detreturjual on returjual.no_retur_jual = detreturjual.no_retur_jual "+
+                    "join databarang on detreturjual.kode_brng = databarang.kode_brng join petugas on returjual.nip = petugas.nip "+
+                    "join kodesatuan on detreturjual.kode_sat = kodesatuan.kode_sat left join bangsal b2 on returjual.kd_bangsal = b2.kd_bangsal "+
+                    " where "+tanggal+noret+ptg+sat+bar+
+                             " and "
+                            + "(returjual.no_retur_jual like '%"+TCari.getText()+"%' or "+
+                    "returjual.nip like '%"+TCari.getText()+"%' or "+
+                    "petugas.nama like '%"+TCari.getText()+"%' or "+
+                    "detreturjual.kode_brng like '%"+TCari.getText()+"%' or "+
+                    "databarang.nama_brng like '%"+TCari.getText()+"%' or "+
+                    "pasien.no_rkm_medis like '%"+TCari.getText()+"%' or "+
+                    "pasien.nm_pasien like '%"+TCari.getText()+"%' or "+
+                    "b1.nm_bangsal like '%"+TCari.getText()+"%' or "+
+                    "detreturjual.nota_jual like '%"+TCari.getText()+"%' or "+
+                    "kodesatuan.satuan like '%"+TCari.getText()+"%' or "+
+                    "detreturjual.kode_sat like '%"+TCari.getText()+"%') "+
                     " group by returjual.no_retur_jual order by returjual.tgl_retur,returjual.no_retur_jual ");
             try {
                 rs=ps.executeQuery();
@@ -987,7 +994,7 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                                    rs.getString(2),
                                    rs.getString(3)+", "+rs.getString(4),
                                    rs.getString(5)+", "+rs.getString(6),
-                                   "Retur Jual :","di "+rs.getString(7),"","","",""
+                                   "Retur :","di "+rs.getString(7),"dari "+rs.getString(8),"","",""
                     });
                     sat="";bar="";nonot="";
                     if(!nmsat.getText().equals("")){
@@ -1004,12 +1011,15 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                             "detreturjual.subtotal,detreturjual.no_batch from detreturjual inner join databarang inner join kodesatuan "+
                             " on detreturjual.kode_brng=databarang.kode_brng "+
                             " and detreturjual.kode_sat=kodesatuan.kode_sat where "+
-                            " detreturjual.no_retur_jual='"+rs.getString(1)+"' "+sat+bar+nonot+" and detreturjual.kode_brng like '%"+TCari.getText()+"%' or "+
-                            " detreturjual.no_retur_jual='"+rs.getString(1)+"' "+sat+bar+nonot+" and databarang.nama_brng like '%"+TCari.getText()+"%' or "+
-                            " detreturjual.no_retur_jual='"+rs.getString(1)+"' "+sat+bar+nonot+" and detreturjual.nota_jual like '%"+TCari.getText()+"%' or "+
-                            " detreturjual.no_retur_jual='"+rs.getString(1)+"' "+sat+bar+nonot+" and detreturjual.kode_sat like '%"+TCari.getText()+"%' or "+
-                            " detreturjual.no_retur_jual='"+rs.getString(1)+"' "+sat+bar+nonot+" and detreturjual.nota_jual like '%"+TCari.getText()+"%' or "+
-                            " detreturjual.no_retur_jual='"+rs.getString(1)+"' "+sat+bar+nonot+" and kodesatuan.satuan like '%"+TCari.getText()+"%' order by detreturjual.kode_brng  ");
+                            " detreturjual.no_retur_jual='"+rs.getString(1)+"' "+sat+bar+nonot
+//                                     "and "
+//                                    + "(detreturjual.kode_brng like '%"+TCari.getText()+"%' or "+
+//                            "databarang.nama_brng like '%"+TCari.getText()+"%' or "+
+//                            "detreturjual.nota_jual like '%"+TCari.getText()+"%' or "+
+//                            "detreturjual.kode_sat like '%"+TCari.getText()+"%' or "+
+//                            "detreturjual.nota_jual like '%"+TCari.getText()+"%' or "+
+//                            "kodesatuan.satuan like '%"+TCari.getText()+"%') "
+                                    + " order by detreturjual.kode_brng  ");
                     try {
                         subtotal=0;
                         no=1;
@@ -1050,7 +1060,6 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
         }catch(Exception e){
             System.out.println("Notifikasi : "+e);
         }
-        
     }
 
     public void isCek(){
@@ -1061,6 +1070,6 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
             ppHapus.setEnabled(false);
         }  
     }
-
- 
+    
+   
 }

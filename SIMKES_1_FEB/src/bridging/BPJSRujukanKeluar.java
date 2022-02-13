@@ -94,7 +94,7 @@ public final class BPJSRujukanKeluar extends javax.swing.JDialog {
 
 
         Object[] row={
-            "No.SEP","No.Rawat","No.RM","Nama Pasien","Tgl.Rujukan", 
+            "No.SEP","No.Rawat","No.RM","Nama Pasien","Tgl.Rujukan","Tgl.Kunjungan",
             "No.Rujukan","Kode PPK","Nama PPK Rujukan","Jenis Pelayanan","Tipe Rujukan","Catatan",
             "Kode Diagnosa","Nama Diagnosa", "Kode Poli", "Nama Poli"
         };
@@ -107,7 +107,7 @@ public final class BPJSRujukanKeluar extends javax.swing.JDialog {
         tbObat.setPreferredScrollableViewportSize(new Dimension(500,500));
         tbObat.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 15; i++) {
+        for (i = 0; i < 16; i++) {
             TableColumn column = tbObat.getColumnModel().getColumn(i);
             if(i==0){
                 column.setPreferredWidth(120);
@@ -138,6 +138,8 @@ public final class BPJSRujukanKeluar extends javax.swing.JDialog {
             }else if(i==13){
                 column.setPreferredWidth(80);
             }else if(i==14){
+                column.setPreferredWidth(150);
+            }else{
                 column.setPreferredWidth(150);
             }
         }
@@ -343,6 +345,8 @@ public final class BPJSRujukanKeluar extends javax.swing.JDialog {
         TipeRujukan = new widget.ComboBox();
         jLabel34 = new widget.Label();
         Catatan1 = new widget.TextBox();
+        jLabel42 = new widget.Label();
+        TanggalKunjungan = new widget.Tanggal();
 
         jPopupMenu1.setName("jPopupMenu1"); // NOI18N
 
@@ -406,7 +410,7 @@ public final class BPJSRujukanKeluar extends javax.swing.JDialog {
         panelGlass8.add(jLabel19);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-02-2019" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "29-01-2022" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -420,7 +424,7 @@ public final class BPJSRujukanKeluar extends javax.swing.JDialog {
         panelGlass8.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-02-2019" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "29-01-2022" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -583,7 +587,7 @@ public final class BPJSRujukanKeluar extends javax.swing.JDialog {
         jLabel30.setBounds(0, 12, 102, 23);
 
         TanggalRujukKeluar.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalRujukKeluar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-02-2019" }));
+        TanggalRujukKeluar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "29-01-2022" }));
         TanggalRujukKeluar.setDisplayFormat("dd-MM-yyyy");
         TanggalRujukKeluar.setName("TanggalRujukKeluar"); // NOI18N
         TanggalRujukKeluar.setOpaque(false);
@@ -760,6 +764,20 @@ public final class BPJSRujukanKeluar extends javax.swing.JDialog {
         internalFrame6.add(Catatan1);
         Catatan1.setBounds(514, 12, 278, 23);
 
+        jLabel42.setText("Tanggal Kunjungan :");
+        jLabel42.setName("jLabel42"); // NOI18N
+        internalFrame6.add(jLabel42);
+        jLabel42.setBounds(810, 10, 102, 23);
+
+        TanggalKunjungan.setForeground(new java.awt.Color(50, 70, 50));
+        TanggalKunjungan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "29-01-2022" }));
+        TanggalKunjungan.setDisplayFormat("dd-MM-yyyy");
+        TanggalKunjungan.setName("TanggalKunjungan"); // NOI18N
+        TanggalKunjungan.setOpaque(false);
+        TanggalKunjungan.setPreferredSize(new java.awt.Dimension(95, 23));
+        internalFrame6.add(TanggalKunjungan);
+        TanggalKunjungan.setBounds(914, 10, 90, 23);
+
         internalFrame1.add(internalFrame6, java.awt.BorderLayout.PAGE_START);
 
         getContentPane().add(internalFrame1, java.awt.BorderLayout.CENTER);
@@ -802,18 +820,20 @@ public final class BPJSRujukanKeluar extends javax.swing.JDialog {
                 Valid.textKosong(KdPoli1, "Poli Tujuan");        
             }else{  
                 try {
-                    URL = link+"/Rujukan/update";	
+                    URL = link+"/Rujukan/2.0/Update";	
                     headers = new HttpHeaders();
                     headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-                    headers.add("X-Cons-ID",prop.getProperty("CONSIDAPIBPJS"));
-                    headers.add("X-Timestamp",String.valueOf(api.GetUTCdatetimeAsString()));            
-                    headers.add("X-Signature",api.getHmac());
+                    headers.add("X-Cons-ID", koneksiDB.ConsIdBpjs());
+                    headers.add("X-Timestamp", String.valueOf(api.GetUTCdatetimeAsString()));
+                    headers.add("X-Signature", api.getHmac());
+                    headers.add("user_key", koneksiDB.UserKeyBpjs());
                     requestJson ="{" +
                                     "\"request\": {" +
                                         "\"t_rujukan\": {" +
                                             "\"noRujukan\": \""+tbObat.getValueAt(tbObat.getSelectedRow(),5).toString()+"\"," +
+                                            "\"tglRujukan\": \""+Valid.SetTgl(TanggalRujukKeluar.getSelectedItem() + "")+"\"," +
+                                            "\"tglRencanaKunjungan\": \""+Valid.SetTgl(TanggalRujukKeluar.getSelectedItem() + "")+"\"," +
                                             "\"ppkDirujuk\": \""+KdPpkRujukan1.getText()+"\"," +
-                                            "\"tipe\": \""+TipeRujukan.getSelectedItem().toString().substring(0,1)+"\"," +
                                             "\"jnsPelayanan\": \""+JenisPelayanan1.getSelectedItem().toString().substring(0,1)+"\"," +
                                             "\"catatan\": \""+Catatan1.getText()+"\"," +
                                             "\"diagRujukan\": \""+KdPenyakit1.getText()+"\"," +
@@ -1085,6 +1105,7 @@ public final class BPJSRujukanKeluar extends javax.swing.JDialog {
     private widget.TextBox NmPpkRujukan1;
     private widget.ScrollPane Scroll;
     private widget.TextBox TCari;
+    private widget.Tanggal TanggalKunjungan;
     private widget.Tanggal TanggalRujukKeluar;
     private widget.ComboBox TipeRujukan;
     private widget.Button btnDiagnosa1;
@@ -1101,6 +1122,7 @@ public final class BPJSRujukanKeluar extends javax.swing.JDialog {
     private widget.Label jLabel32;
     private widget.Label jLabel33;
     private widget.Label jLabel34;
+    private widget.Label jLabel42;
     private widget.Label jLabel6;
     private widget.Label jLabel7;
     private javax.swing.JPanel jPanel3;
@@ -1115,7 +1137,7 @@ public final class BPJSRujukanKeluar extends javax.swing.JDialog {
         try{
             ps=koneksi.prepareStatement(
                     "select bridging_rujukan_bpjs.no_sep, bridging_sep.no_rawat,"+
-                    "bridging_sep.nomr,bridging_sep.nama_pasien,bridging_rujukan_bpjs.tglRujukan,"+
+                    "bridging_sep.nomr,bridging_sep.nama_pasien,bridging_rujukan_bpjs.tglRujukan,bridging_rujukan_bpjs.tglKunjungan,"+
                     "bridging_rujukan_bpjs.no_rujukan,bridging_rujukan_bpjs.ppkDirujuk,"+
                     "bridging_rujukan_bpjs.nm_ppkDirujuk,"+
                     "if(bridging_rujukan_bpjs.jnsPelayanan='1','1. Rawat Inap','2. Rawat Jalan'),"+
@@ -1179,7 +1201,7 @@ public final class BPJSRujukanKeluar extends javax.swing.JDialog {
                         rs.getString(4),rs.getString(5),rs.getString(6),
                         rs.getString(7),rs.getString(8),rs.getString(9),
                         rs.getString(10),rs.getString(11),rs.getString(12),
-                        rs.getString(13),rs.getString(14),rs.getString(15)
+                        rs.getString(13),rs.getString(14),rs.getString(15),rs.getString(16)
                     });
                 }
             } catch (Exception e) {
@@ -1213,16 +1235,17 @@ public final class BPJSRujukanKeluar extends javax.swing.JDialog {
 
     private void getData() {
         if(tbObat.getSelectedRow()!= -1){
-            TipeRujukan.setSelectedItem(tbObat.getValueAt(tbObat.getSelectedRow(),9).toString());
-            KdPpkRujukan1.setText(tbObat.getValueAt(tbObat.getSelectedRow(),6).toString());
-            NmPpkRujukan1.setText(tbObat.getValueAt(tbObat.getSelectedRow(),7).toString());
-            KdPenyakit1.setText(tbObat.getValueAt(tbObat.getSelectedRow(),11).toString());
-            NmPenyakit1.setText(tbObat.getValueAt(tbObat.getSelectedRow(),12).toString());
-            KdPoli1.setText(tbObat.getValueAt(tbObat.getSelectedRow(),13).toString());
-            NmPoli1.setText(tbObat.getValueAt(tbObat.getSelectedRow(),14).toString());
-            JenisPelayanan1.setSelectedItem(tbObat.getValueAt(tbObat.getSelectedRow(),8).toString());
-            Catatan1.setText(tbObat.getValueAt(tbObat.getSelectedRow(),10).toString());
+            TipeRujukan.setSelectedItem(tbObat.getValueAt(tbObat.getSelectedRow(),10).toString());
+            KdPpkRujukan1.setText(tbObat.getValueAt(tbObat.getSelectedRow(),7).toString());
+            NmPpkRujukan1.setText(tbObat.getValueAt(tbObat.getSelectedRow(),8).toString());
+            KdPenyakit1.setText(tbObat.getValueAt(tbObat.getSelectedRow(),12).toString());
+            NmPenyakit1.setText(tbObat.getValueAt(tbObat.getSelectedRow(),13).toString());
+            KdPoli1.setText(tbObat.getValueAt(tbObat.getSelectedRow(),14).toString());
+            NmPoli1.setText(tbObat.getValueAt(tbObat.getSelectedRow(),15).toString());
+            JenisPelayanan1.setSelectedItem(tbObat.getValueAt(tbObat.getSelectedRow(),9).toString());
+            Catatan1.setText(tbObat.getValueAt(tbObat.getSelectedRow(),11).toString());
             Valid.SetTgl(TanggalRujukKeluar,tbObat.getValueAt(tbObat.getSelectedRow(),4).toString());
+            Valid.SetTgl(TanggalKunjungan,tbObat.getValueAt(tbObat.getSelectedRow(),5).toString());
         }
     }
 
@@ -1278,9 +1301,10 @@ public final class BPJSRujukanKeluar extends javax.swing.JDialog {
 
             headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-            headers.add("X-Cons-ID",prop.getProperty("CONSIDAPIBPJS"));
-            headers.add("X-Timestamp",String.valueOf(api.GetUTCdatetimeAsString()));            
-            headers.add("X-Signature",api.getHmac());
+            headers.add("X-Cons-ID", koneksiDB.ConsIdBpjs());
+            headers.add("X-Timestamp", String.valueOf(api.GetUTCdatetimeAsString()));
+            headers.add("X-Signature", api.getHmac());
+//            headers.add("user_key", koneksiDB.UserKeyBpjs());
             requestJson ="{" +
                             "\"request\": {" +
                                 "\"t_rujukan\": {" +

@@ -109,10 +109,9 @@ public final class SisruteCekReferensiFaskes extends javax.swing.JDialog {
                 }
             });
         }   
-        try {
-            prop.loadFromXML(new FileInputStream("setting/database.xml")); 
-            link=prop.getProperty("URLAPISISRUTE");
-            idrs=prop.getProperty("IDSISRUTE");
+        try { 
+            link=koneksiDB.UrlSisrute();
+            idrs=koneksiDB.ConsIdSisrute();
         } catch (Exception e) {
             System.out.println("E : "+e);
         }

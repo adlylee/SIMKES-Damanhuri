@@ -7,6 +7,7 @@ package bridging;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fungsi.koneksiDB;
 import java.io.FileInputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -40,33 +41,37 @@ public class BPJSCekNIK {
     private JsonNode root;
     private JsonNode nameNode;
     private JsonNode response;
+    private JsonNode res1;
         
     public BPJSCekNIK(){
         super();
-        try {
-            prop.loadFromXML(new FileInputStream("setting/database.xml"));
-            link=prop.getProperty("URLAPIBPJS");   
-        } catch (Exception e) {
-            System.out.println("E : "+e);
-        }
     }
     
     public void tampil(String nik) {
         try {
             headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-	    headers.add("X-Cons-ID",prop.getProperty("CONSIDAPIBPJS"));
+	    headers.add("X-Cons-ID",koneksiDB.ConsIdBpjs());
 	    headers.add("X-Timestamp",String.valueOf(api.GetUTCdatetimeAsString()));
 	    headers.add("X-Signature",api.getHmac());
+            headers.add("user_key", koneksiDB.UserKeyBpjs());
 	    requestEntity = new HttpEntity(headers);
-            URL = link+"/Peserta/nik/"+nik+"/tglSEP/"+dateFormat.format(date);	
+            URL = koneksiDB.UrlBpjs()+"/Peserta/nik/"+nik+"/tglSEP/"+dateFormat.format(date);	
             root = mapper.readTree(api.getRest().exchange(URL, HttpMethod.GET, requestEntity, String.class).getBody());
             nameNode = root.path("metaData");
-            System.out.println("code : "+nameNode.path("code").asText());
-            System.out.println("message : "+nameNode.path("message").asText());
+//            System.out.println("code : "+nameNode.path("code").asText());
+//            System.out.println("message : "+nameNode.path("message").asText());
             informasi=nameNode.path("message").asText();
             if(nameNode.path("code").asText().equals("200")){
-                response = root.path("response");
+                if(koneksiDB.UrlBpjs().contains("apijkn")){
+                    res1 = root.path("response");
+                    String res = api.decrypt(res1.asText());
+                    String lz = api.lzDecrypt(res);
+                    response = mapper.readTree(lz);
+                } else {
+                    response = root.path("response");
+                }
+//                response = root.path("response");
                 this.nik=response.path("peserta").path("nik").asText();
                 nama=response.path("peserta").path("nama").asText();
                 cobnmAsuransi=response.path("peserta").path("cob").path("nmAsuransi").asText();

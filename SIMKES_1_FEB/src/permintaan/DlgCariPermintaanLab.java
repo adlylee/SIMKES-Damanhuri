@@ -2400,7 +2400,7 @@ private void tbLabRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
                         rs.getString("noorder"),rs.getString("no_rawat"),rs.getString("no_rkm_medis")+" "+
                         rs.getString("nm_pasien"),rs.getString("tgl_permintaan"),rs.getString("jam_permintaan"),
                         rs.getString("tgl_sampel"),rs.getString("jam_sampel"),rs.getString("tgl_hasil"),
-                        rs.getString("jam_hasil"),rs.getString("dokter_perujuk"),rs.getString("nm_dokter"),rs.getString("nm_bangsal")
+                        rs.getString("jam_hasil"),rs.getString("dokter_perujuk"),rs.getString("nm_dokter"),cekKamar(rs.getString("no_rawat"),rs.getString("tgl_permintaan"))
                     });
                     ps2=koneksi.prepareStatement(
                             "select permintaan_pemeriksaan_lab.kd_jenis_prw,jns_perawatan_lab.nm_perawatan "+
@@ -2616,5 +2616,11 @@ private void tbLabRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
         };
         // Timer
         new Timer(1200, taskPerformer).start();
+    }
+    
+    public String cekKamar(String norawat,String tanggal){
+        String bangsal;
+        bangsal = Sequel.cariIsi("SELECT bangsal.nm_bangsal FROM kamar JOIN kamar_inap ON kamar.kd_kamar = kamar_inap.kd_kamar JOIN bangsal ON kamar.kd_bangsal = bangsal.kd_bangsal WHERE kamar_inap.no_rawat = '"+norawat+"' AND kamar_inap.tgl_masuk <= '"+tanggal+"' ORDER BY kamar_inap.tgl_masuk DESC LIMIT 1");
+        return bangsal;
     }
 }

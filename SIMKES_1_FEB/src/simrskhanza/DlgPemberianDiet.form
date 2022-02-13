@@ -430,7 +430,7 @@
                     </Property>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="1">
-                        <StringItem index="0" value="05-04-2019"/>
+                        <StringItem index="0" value="12-02-2022"/>
                       </StringArray>
                     </Property>
                     <Property name="displayFormat" type="java.lang.String" value="dd-MM-yyyy"/>
@@ -458,7 +458,7 @@
                     </Property>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="1">
-                        <StringItem index="0" value="05-04-2019"/>
+                        <StringItem index="0" value="12-02-2022"/>
                       </StringArray>
                     </Property>
                     <Property name="displayFormat" type="java.lang.String" value="dd-MM-yyyy"/>
@@ -653,7 +653,7 @@
                     </Property>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="1">
-                        <StringItem index="0" value="05-04-2019"/>
+                        <StringItem index="0" value="12-02-2022"/>
                       </StringArray>
                     </Property>
                     <Property name="displayFormat" type="java.lang.String" value="dd-MM-yyyy"/>
@@ -672,11 +672,12 @@
                 <Component class="widget.ComboBox" name="cmbJam">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="4">
+                      <StringArray count="5">
                         <StringItem index="0" value="Pagi"/>
                         <StringItem index="1" value="Siang"/>
                         <StringItem index="2" value="Sore"/>
                         <StringItem index="3" value="Malam"/>
+                        <StringItem index="4" value="Snack"/>
                       </StringArray>
                     </Property>
                     <Property name="name" type="java.lang.String" value="cmbJam" noResource="true"/>

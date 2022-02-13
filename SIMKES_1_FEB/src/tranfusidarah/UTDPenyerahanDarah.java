@@ -18,7 +18,12 @@ import java.awt.event.WindowListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
@@ -26,6 +31,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import keuangan.Jurnal;
 import kepegawaian.DlgCariPetugas;
+import simrskhanza.DlgKamarInap;
 
 public class UTDPenyerahanDarah extends javax.swing.JDialog {
     private final DefaultTableModel tabModeMedis,tabModeNonMedis,tabMode;
@@ -38,7 +44,7 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
     private double ttl=0,y=0,stokbarang=0,bayar=0,total2=0,ppn=0,besarppn=0,tagihanppn=0;;
     private int jml=0,i=0,index=0,row=0,pilih=0;
     private String verifikasi_penyerahan_darah_di_kasir="",status="Belum Dibayar";
-    private PreparedStatement ps,ps2,psstok,psdarah;
+    private PreparedStatement ps,ps2,psstok,psdarah,pssimpanperiksa;
     private ResultSet rs,rs2,rsstok,rsdarah;
     private boolean[] pilihan;
     private String[] kodebarang,namabarang,kategori,satuan,jumlah,stokasal,hbeli,total,
@@ -47,6 +53,7 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
     private DlgCariPetugas petugas=new DlgCariPetugas(null,false);
     private WarnaTable2 warna=new WarnaTable2();
     private UTDCariPenyerahanDarah carijual=new UTDCariPenyerahanDarah(null,false);
+    private DlgKamarInap kamar=new DlgKamarInap(null,false);
 
     /** Creates new form DlgProgramStudi
      * @param parent
@@ -254,6 +261,43 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
             public void windowDeactivated(WindowEvent e) {}
         });
         
+        kamar.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {}
+            @Override
+            public void windowClosing(WindowEvent e) {}
+            @Override
+            public void windowClosed(WindowEvent e) {
+                if(kamar.getTable().getSelectedRow()!= -1){ 
+                    norawat.setText(kamar.getTable().getValueAt(kamar.getTable().getSelectedRow(),1).toString());
+                    nmpengambil.setText(kamar.getTable().getValueAt(kamar.getTable().getSelectedRow(),2).toString());
+                    alamatpengambil.setText(kamar.getTable().getValueAt(kamar.getTable().getSelectedRow(),3).toString());
+                    keterangan.setText(kamar.getTable().getValueAt(kamar.getTable().getSelectedRow(),8).toString());
+                } 
+            }
+            @Override
+            public void windowIconified(WindowEvent e) {}
+            @Override
+            public void windowDeiconified(WindowEvent e) {}
+            @Override
+            public void windowActivated(WindowEvent e) {}
+            @Override
+            public void windowDeactivated(WindowEvent e) {}
+        });
+        
+        kamar.getTable().addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {}
+            @Override
+            public void keyPressed(KeyEvent e) {
+                    if(e.getKeyCode()==KeyEvent.VK_SPACE){
+                        kamar.dispose();
+                    }
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {}
+        }); 
+        
         Valid.loadCombo(CmbAkun,"nama_bayar","akun_bayar");
         try {            
             PPN.setText(Sequel.cariIsi("select ppn from akun_bayar where nama_bayar=?",CmbAkun.getSelectedItem().toString()));
@@ -354,6 +398,8 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
         alamatpengambil = new widget.TextBox();
         jLabel10 = new widget.Label();
         CmbAkun = new widget.ComboBox();
+        btnPtgPJ1 = new widget.Button();
+        norawat = new widget.TextBox();
 
         Kd2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         Kd2.setName("Kd2"); // NOI18N
@@ -846,6 +892,7 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
         scrollPane1.setComponentPopupMenu(Popup);
         scrollPane1.setName("scrollPane1"); // NOI18N
         scrollPane1.setOpaque(true);
+        scrollPane1.setPreferredSize(new java.awt.Dimension(402, 402));
 
         tbDarah.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1024,7 +1071,7 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
         label21.setName("label21"); // NOI18N
         label21.setPreferredSize(new java.awt.Dimension(70, 23));
         panelisi3.add(label21);
-        label21.setBounds(366, 70, 148, 23);
+        label21.setBounds(347, 70, 110, 23);
 
         nmpengambil.setName("nmpengambil"); // NOI18N
         nmpengambil.setPreferredSize(new java.awt.Dimension(207, 23));
@@ -1034,13 +1081,13 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
             }
         });
         panelisi3.add(nmpengambil);
-        nmpengambil.setBounds(517, 70, 275, 23);
+        nmpengambil.setBounds(560, 70, 200, 23);
 
         label23.setText("Alamat Pengambil Darah :");
         label23.setName("label23"); // NOI18N
         label23.setPreferredSize(new java.awt.Dimension(70, 23));
         panelisi3.add(label23);
-        label23.setBounds(366, 100, 148, 23);
+        label23.setBounds(330, 100, 140, 23);
 
         alamatpengambil.setName("alamatpengambil"); // NOI18N
         alamatpengambil.setPreferredSize(new java.awt.Dimension(207, 23));
@@ -1050,7 +1097,7 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
             }
         });
         panelisi3.add(alamatpengambil);
-        alamatpengambil.setBounds(517, 100, 275, 23);
+        alamatpengambil.setBounds(480, 100, 275, 23);
 
         jLabel10.setText("Akun Bayar :");
         jLabel10.setName("jLabel10"); // NOI18N
@@ -1065,6 +1112,29 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
         });
         panelisi3.add(CmbAkun);
         CmbAkun.setBounds(99, 100, 230, 23);
+
+        btnPtgPJ1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
+        btnPtgPJ1.setMnemonic('2');
+        btnPtgPJ1.setToolTipText("Alt+2");
+        btnPtgPJ1.setName("btnPtgPJ1"); // NOI18N
+        btnPtgPJ1.setPreferredSize(new java.awt.Dimension(28, 23));
+        btnPtgPJ1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPtgPJ1ActionPerformed(evt);
+            }
+        });
+        panelisi3.add(btnPtgPJ1);
+        btnPtgPJ1.setBounds(764, 70, 28, 23);
+
+        norawat.setName("norawat"); // NOI18N
+        norawat.setPreferredSize(new java.awt.Dimension(80, 23));
+        norawat.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                norawatKeyPressed(evt);
+            }
+        });
+        panelisi3.add(norawat);
+        norawat.setBounds(459, 70, 100, 23);
 
         scrollPane2.setViewportView(panelisi3);
 
@@ -1222,6 +1292,55 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                             }
                         }
                     }
+                    
+                    //simpan tindakan
+                    for(i=0;i<tbDarah.getRowCount();i++){ 
+                        if(tbDarah.getValueAt(i,0).toString().equals("true")){
+                            try {
+                                ps = koneksi.prepareStatement("SELECT kd_jenis_prw , bagian_rs , bhp , tarif_perujuk , tarif_tindakan_dokter, tarif_tindakan_petugas , kso, menejemen , total_byr FROM jns_perawatan_lab WHERE nm_perawatan LIKE '%UTD - "+tbDarah.getValueAt(i,2).toString()+"%'");
+                                rs=ps.executeQuery();
+                                while(rs.next()){
+                                    String pj = Sequel.cariIsi("SELECT kd_dokterutd FROM set_pjlab");
+                                    String user=var.getkode();
+                                    String status = "Ranap";
+                                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");  
+                                    LocalDateTime now = LocalDateTime.now();  
+                                    System.out.println(dtf.format(now));  
+  
+                                    pssimpanperiksa=koneksi.prepareStatement(
+                                        "insert into periksa_lab values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                                    try {
+                                        pssimpanperiksa.setString(1,norawat.getText());
+                                        pssimpanperiksa.setString(2,user);
+                                        pssimpanperiksa.setString(3,rs.getString(1));
+                                        pssimpanperiksa.setString(4,Valid.SetTgl(tanggal.getSelectedItem()+""));
+                                        pssimpanperiksa.setString(5,dtf.format(now));
+                                        pssimpanperiksa.setString(6,pj);
+                                        pssimpanperiksa.setDouble(7,rs.getDouble(2));
+                                        pssimpanperiksa.setDouble(8,rs.getDouble(3));
+                                        pssimpanperiksa.setDouble(9,rs.getDouble(4));
+                                        pssimpanperiksa.setDouble(10,rs.getDouble(5));
+                                        pssimpanperiksa.setDouble(11,rs.getDouble(6));
+                                        pssimpanperiksa.setDouble(12,rs.getDouble(7));
+                                        pssimpanperiksa.setDouble(13,rs.getDouble(8));
+                                        pssimpanperiksa.setDouble(14,rs.getDouble(9));
+                                        pssimpanperiksa.setString(15,pj);
+                                        pssimpanperiksa.setString(16,status);
+                                        pssimpanperiksa.executeUpdate();   
+                                    } catch (Exception e) {
+                                        System.out.println("Notifikasi 1 : "+e);
+                                    } finally{
+                                        if(pssimpanperiksa!=null){
+                                            pssimpanperiksa.close();
+                                        }
+                                    }
+                                }
+                            } catch (SQLException ex) {
+                                Logger.getLogger(UTDPenyerahanDarah.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                    
                     //simpan bhp medis
                     for(i=0;i<tbMedis.getRowCount();i++){  
                         try {
@@ -1643,6 +1762,19 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         Valid.pindah(evt,nmpengambil,BtnSimpan);
     }//GEN-LAST:event_alamatpengambilKeyPressed
 
+    private void btnPtgPJ1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPtgPJ1ActionPerformed
+        // TODO add your handling code here:
+        kamar.emptTeks();
+        kamar.isCek();
+        kamar.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
+        kamar.setLocationRelativeTo(internalFrame1);        
+        kamar.setVisible(true);
+    }//GEN-LAST:event_btnPtgPJ1ActionPerformed
+
+    private void norawatKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_norawatKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_norawatKeyPressed
+
     /**
     * @param args the command line arguments
     */
@@ -1689,6 +1821,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private widget.TextBox alamatpengambil;
     private widget.Button btnPtgCross;
     private widget.Button btnPtgPJ;
+    private widget.Button btnPtgPJ1;
     private widget.ComboBox dinas;
     private widget.InternalFrame internalFrame1;
     private widget.Label jLabel10;
@@ -1721,6 +1854,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private widget.TextBox nmptgcross;
     private widget.TextBox nmptgpj;
     private widget.TextBox nopenyerahan;
+    private widget.TextBox norawat;
     private widget.panelisi panelisi1;
     private widget.panelisi panelisi3;
     private widget.panelisi panelisi4;
@@ -1809,7 +1943,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             }
             
             psdarah=koneksi.prepareStatement(
-                    "select utd_stok_darah.no_kantong,utd_komponen_darah.nama as darah,"+
+                    "select utd_stok_darah.no_bag,utd_komponen_darah.nama as darah,"+
                     "utd_stok_darah.golongan_darah,utd_stok_darah.resus,"+
                     "utd_stok_darah.tanggal_aftap,utd_stok_darah.tanggal_kadaluarsa,"+
                     "utd_stok_darah.asal_darah,utd_stok_darah.status,"+

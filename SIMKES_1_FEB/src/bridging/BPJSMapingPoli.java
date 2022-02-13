@@ -48,6 +48,7 @@ public final class BPJSMapingPoli extends javax.swing.JDialog {
     private int i=0;
     private DlgCariPoli poli=new DlgCariPoli(null,false);
     private BPJSCekReferensiPoli polibpjs=new BPJSCekReferensiPoli(null,false);
+    private BPJSCekReferensiPoliHfis polihfisbpjs=new BPJSCekReferensiPoliHfis(null,false);
     
 
     /** Creates new form DlgJnsPerawatanRalan
@@ -167,7 +168,43 @@ public final class BPJSMapingPoli extends javax.swing.JDialog {
             }
             @Override
             public void keyReleased(KeyEvent e) {}
-        });  
+        }); 
+        
+        polihfisbpjs.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {}
+            @Override
+            public void windowClosing(WindowEvent e) {}
+            @Override
+            public void windowClosed(WindowEvent e) {
+                if(polihfisbpjs.getTable().getSelectedRow()!= -1){                   
+                    KdPoliBPJS1.setText(polihfisbpjs.getTable().getValueAt(polihfisbpjs.getTable().getSelectedRow(),3).toString());
+                    NmPoliBPJS1.setText(polihfisbpjs.getTable().getValueAt(polihfisbpjs.getTable().getSelectedRow(),2).toString());
+                    KdPoliBPJS1.requestFocus();
+                }                  
+            }
+            @Override
+            public void windowIconified(WindowEvent e) {}
+            @Override
+            public void windowDeiconified(WindowEvent e) {}
+            @Override
+            public void windowActivated(WindowEvent e) {}
+            @Override
+            public void windowDeactivated(WindowEvent e) {}
+        });
+        
+        polihfisbpjs.getTable().addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {}
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode()==KeyEvent.VK_SPACE){
+                    polihfisbpjs.dispose();
+                }
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {}
+        }); 
     
     }
 
@@ -207,6 +244,10 @@ public final class BPJSMapingPoli extends javax.swing.JDialog {
         KdPoliBPJS = new widget.TextBox();
         NmPoliBPJS = new widget.TextBox();
         btnPoliBPJS = new widget.Button();
+        jLabel20 = new widget.Label();
+        KdPoliBPJS1 = new widget.TextBox();
+        NmPoliBPJS1 = new widget.TextBox();
+        btnPoliBPJS1 = new widget.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -493,6 +534,34 @@ public final class BPJSMapingPoli extends javax.swing.JDialog {
         FormInput.add(btnPoliBPJS);
         btnPoliBPJS.setBounds(690, 10, 28, 23);
 
+        jLabel20.setText("Unit HFIS :");
+        jLabel20.setName("jLabel20"); // NOI18N
+        FormInput.add(jLabel20);
+        jLabel20.setBounds(730, 10, 70, 23);
+
+        KdPoliBPJS1.setEditable(false);
+        KdPoliBPJS1.setHighlighter(null);
+        KdPoliBPJS1.setName("KdPoliBPJS1"); // NOI18N
+        FormInput.add(KdPoliBPJS1);
+        KdPoliBPJS1.setBounds(805, 10, 70, 23);
+
+        NmPoliBPJS1.setEditable(false);
+        NmPoliBPJS1.setName("NmPoliBPJS1"); // NOI18N
+        FormInput.add(NmPoliBPJS1);
+        NmPoliBPJS1.setBounds(877, 10, 190, 23);
+
+        btnPoliBPJS1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
+        btnPoliBPJS1.setMnemonic('3');
+        btnPoliBPJS1.setToolTipText("ALt+3");
+        btnPoliBPJS1.setName("btnPoliBPJS1"); // NOI18N
+        btnPoliBPJS1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPoliBPJS1ActionPerformed(evt);
+            }
+        });
+        FormInput.add(btnPoliBPJS1);
+        btnPoliBPJS1.setBounds(1070, 10, 28, 23);
+
         internalFrame1.add(FormInput, java.awt.BorderLayout.PAGE_START);
 
         getContentPane().add(internalFrame1, java.awt.BorderLayout.CENTER);
@@ -688,6 +757,12 @@ private void btnPoliBPJSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         }
     }//GEN-LAST:event_tbJnsPerawatanKeyReleased
 
+    private void btnPoliBPJS1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPoliBPJS1ActionPerformed
+        polihfisbpjs.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
+        polihfisbpjs.setLocationRelativeTo(internalFrame1);
+        polihfisbpjs.setVisible(true);
+    }//GEN-LAST:event_btnPoliBPJS1ActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -715,15 +790,19 @@ private void btnPoliBPJSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private widget.Button BtnSimpan;
     private widget.PanelBiasa FormInput;
     private widget.TextBox KdPoliBPJS;
+    private widget.TextBox KdPoliBPJS1;
     private widget.Label LCount;
     private widget.TextBox NmPoliBPJS;
+    private widget.TextBox NmPoliBPJS1;
     private widget.ScrollPane Scroll;
     private widget.TextBox TCari;
     private widget.TextBox TPoli;
     private widget.Button btnPoliBPJS;
+    private widget.Button btnPoliBPJS1;
     private widget.Button btnPoliRS;
     private widget.InternalFrame internalFrame1;
     private widget.Label jLabel19;
+    private widget.Label jLabel20;
     private widget.Label jLabel4;
     private widget.Label jLabel6;
     private widget.Label jLabel7;
