@@ -54,7 +54,7 @@ public final class BPJSCariSuratKontrol extends javax.swing.JDialog {
     private validasi Valid = new validasi();
     private int i = 0;
     private BPJSApi api = new BPJSApi();
-    private String URL = "", link = "", utc = "",requestJson = "",user="";
+    private String URL = "", link = "", utc = "", requestJson = "", user = "", page;
     private HttpHeaders headers;
     private HttpEntity requestEntity;
     private ObjectMapper mapper = new ObjectMapper();
@@ -76,7 +76,7 @@ public final class BPJSCariSuratKontrol extends javax.swing.JDialog {
         this.setLocation(10, 2);
         setSize(628, 674);
 
-        tabMode = new DefaultTableModel(null, new String[]{"No.", "Jenis Kontrol", "No Surat", "Jenis Pelayanan", "Tanggal Kontrol", "No Sep", "Terbit Sep"}) {
+        tabMode = new DefaultTableModel(null, new String[]{"No.", "Jenis Kontrol", "No Surat", "Jenis Pelayanan", "Tanggal Kontrol", "No Sep", "Terbit Sep", "Kode Dokter", "Nama Dokter"}) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
                 return false;
@@ -101,7 +101,7 @@ public final class BPJSCariSuratKontrol extends javax.swing.JDialog {
             } else if (i == 4) {
                 column.setPreferredWidth(100);
             } else {
-                column.setPreferredWidth(150);
+                column.setPreferredWidth(180);
             }
         }
         tbKamar.setDefaultRenderer(Object.class, new WarnaTable());
@@ -138,10 +138,10 @@ public final class BPJSCariSuratKontrol extends javax.swing.JDialog {
         } catch (Exception e) {
             user = var.getkode();
         }
-        
+
         try {
             link = koneksiDB.UrlBpjs();
-            URL = link + "/RencanaKontrol/ListRencanaKontrol/";
+            URL = link + "/RencanaKontrol/";
         } catch (Exception e) {
             System.out.println("E : " + e);
         }
@@ -168,6 +168,8 @@ public final class BPJSCariSuratKontrol extends javax.swing.JDialog {
         panelGlass6 = new widget.panelisi();
         jLabel16 = new widget.Label();
         Dokter = new widget.TextBox();
+        jLabel37 = new widget.Label();
+        Status = new widget.ComboBox();
         BtnCari = new widget.Button();
         jLabel17 = new widget.Label();
         BtnKeluar = new widget.Button();
@@ -232,6 +234,19 @@ public final class BPJSCariSuratKontrol extends javax.swing.JDialog {
             }
         });
         panelGlass6.add(Dokter);
+
+        jLabel37.setText("Bulan :");
+        jLabel37.setName("jLabel37"); // NOI18N
+        panelGlass6.add(jLabel37);
+
+        Status.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
+        Status.setName("Status"); // NOI18N
+        Status.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                StatusKeyPressed(evt);
+            }
+        });
+        panelGlass6.add(Status);
 
         BtnCari.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/accept.png"))); // NOI18N
         BtnCari.setMnemonic('6');
@@ -323,12 +338,16 @@ public final class BPJSCariSuratKontrol extends javax.swing.JDialog {
             try {
                 bodyWithDeleteRequest();
             } catch (Exception e) {
-                
+
             }
         } else {
             JOptionPane.showMessageDialog(null, "Maaf, silahkan pilih data SUrat Kontrol ...!!!!");
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void StatusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_StatusKeyPressed
+
+    }//GEN-LAST:event_StatusKeyPressed
 
     /**
      * @param args the command line arguments
@@ -353,10 +372,12 @@ public final class BPJSCariSuratKontrol extends javax.swing.JDialog {
     private widget.TextBox JenisKontrol;
     private widget.TextBox Poli;
     private widget.ScrollPane Scroll;
+    private widget.ComboBox Status;
     private widget.TextBox TanggalKontrol;
     private widget.InternalFrame internalFrame1;
     private widget.Label jLabel16;
     private widget.Label jLabel17;
+    private widget.Label jLabel37;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private widget.panelisi panelGlass6;
@@ -365,6 +386,7 @@ public final class BPJSCariSuratKontrol extends javax.swing.JDialog {
 
     public void tampil() {
         try {
+            page = Status.getSelectedItem().toString();
             headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("X-Cons-ID", koneksiDB.ConsIdBpjs());
@@ -372,32 +394,56 @@ public final class BPJSCariSuratKontrol extends javax.swing.JDialog {
             headers.add("X-Signature", api.getHmac());
             headers.add("user_key", koneksiDB.UserKeyBpjs());
             requestEntity = new HttpEntity(headers);
-            root = mapper.readTree(api.getRest().exchange(URL + "Bulan/02/Tahun/2022/Nokartu/" + Dokter.getText() + "/filter/1", HttpMethod.GET, requestEntity, String.class).getBody());
-            nameNode = root.path("metaData");
-            System.out.println("code : " + nameNode.path("code").asText());
-            System.out.println("message : " + nameNode.path("message").asText());
-            if (nameNode.path("code").asText().equals("200")) {
-                Valid.tabelKosong(tabMode);
-                JsonNode res1 = root.path("response");
-                String res = api.decrypt(res1.asText());
-                String lz = api.lzDecrypt(res);
-                response = mapper.readTree(lz);
+            if (Dokter.getText().length() == 13) {
+                root = mapper.readTree(api.getRest().exchange(URL + "ListRencanaKontrol/Bulan/" + page + "/Tahun/2022/Nokartu/" + Dokter.getText() + "/filter/1", HttpMethod.GET, requestEntity, String.class).getBody());
+                nameNode = root.path("metaData");
+                System.out.println("code : " + nameNode.path("code").asText());
+                System.out.println("message : " + nameNode.path("message").asText());
+                if (nameNode.path("code").asText().equals("200")) {
+                    Valid.tabelKosong(tabMode);
+                    JsonNode res1 = root.path("response");
+                    String res = api.decrypt(res1.asText());
+                    String lz = api.lzDecrypt(res);
+                    response = mapper.readTree(lz);
 //                System.out.println(response);
-                if (response.path("list").isArray()) {
-                    i = 1;
-                    for (JsonNode list : response.path("list")) {
+                    if (response.path("list").isArray()) {
+                        i = 1;
+                        for (JsonNode list : response.path("list")) {
 //                        if (list.path("noSuratKontrol").asText().toLowerCase().contains(Dokter.getText().toLowerCase())
 //                                || list.path("noSuratKontrol").asText().toLowerCase().contains(Dokter.getText().toLowerCase())) {
-                        tabMode.addRow(new Object[]{
-                            i + ".", list.path("namaJnsKontrol").asText(), list.path("noSuratKontrol").asText(), list.path("jnsPelayanan").asText(), list.path("tglRencanaKontrol").asText(), list.path("noSepAsalKontrol").asText(), list.path("terbitSEP").asText()
-                        });
-                        i++;
+                            tabMode.addRow(new Object[]{
+                                i + ".", list.path("namaJnsKontrol").asText(), list.path("noSuratKontrol").asText(), list.path("jnsPelayanan").asText(), list.path("tglRencanaKontrol").asText(), list.path("noSepAsalKontrol").asText(), list.path("terbitSEP").asText(), list.path("kodeDokter").asText(), list.path("namaDokter").asText()
+                            });
+                            i++;
 //                        }
+                        }
                     }
+                } else {
+                    JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
                 }
             } else {
-                JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
+                root = mapper.readTree(api.getRest().exchange(URL + "noSuratKontrol/" + Dokter.getText(), HttpMethod.GET, requestEntity, String.class).getBody());
+                nameNode = root.path("metaData");
+                System.out.println("code : " + nameNode.path("code").asText());
+                System.out.println("message : " + nameNode.path("message").asText());
+                if (nameNode.path("code").asText().equals("200")) {
+                    Valid.tabelKosong(tabMode);
+                    JsonNode res1 = root.path("response");
+                    String res = api.decrypt(res1.asText());
+                    String lz = api.lzDecrypt(res);
+                    response = mapper.readTree(lz);
+//                System.out.println(response);
+                    tabMode.addRow(new Object[]{
+                                i + ".", response.path("namaJnsKontrol").asText(), response.path("noSuratKontrol").asText(), response.path("sep").path("jnsPelayanan").asText(), response.path("tglRencanaKontrol").asText(), response.path("sep").path("noSep").asText(), response.path("sep").path("tglSep").asText(), response.path("kodeDokter").asText(), response.path("namaDokter").asText()
+                            });
+                    tabMode.addRow(new Object[]{
+                                i + ".", response.path("namaJnsKontrol").asText(), response.path("noSuratKontrol").asText(), response.path("sep").path("jnsPelayanan").asText(), "", "", "Pembuat Surat Kontrol", response.path("kodeDokterPembuat").asText(), response.path("namaDokterPembuat").asText()
+                            });
+                } else {
+                    JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
+                }
             }
+
         } catch (Exception ex) {
             System.out.println("Notifikasi : " + ex);
             if (ex.toString().contains("UnknownHostException")) {
@@ -413,7 +459,7 @@ public final class BPJSCariSuratKontrol extends javax.swing.JDialog {
     public void SetNoKarut(String noka) {
         Dokter.setText(noka);
     }
-    
+
     @Test
     public void bodyWithDeleteRequest() throws Exception {
         String notif = "";

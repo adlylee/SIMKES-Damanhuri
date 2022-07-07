@@ -317,7 +317,8 @@ public final class BPJSCekReferensiSpesialistikKontrol extends javax.swing.JDial
     public void tampil() {
         try {
             headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
+//            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.add("Content-Type", "application/x-www-form-urlencoded");
             headers.add("X-Cons-ID", koneksiDB.ConsIdBpjs());
             headers.add("X-Timestamp", String.valueOf(api.GetUTCdatetimeAsString()));
             headers.add("X-Signature", api.getHmac());

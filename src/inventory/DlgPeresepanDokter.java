@@ -1042,6 +1042,7 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                         cmbJam.getSelectedItem()+":"+cmbMnt.getSelectedItem()+":"+cmbDtk.getSelectedItem(),status
                         })==true){
                             simpandata();
+                            JOptionPane.showMessageDialog(null, "Berhasil Simpan Resep");
                     }else{
                         if(ChkRM.isSelected()==true){
                            // Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_resep,6),signed)),0) from resep_obat where tgl_perawatan like '%"+DTPBeri.getSelectedItem().toString().substring(6,10)+"%' ",DTPBeri.getSelectedItem().toString().substring(6,10),6,NoResep);           
@@ -1055,6 +1056,7 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                             cmbJam.getSelectedItem()+":"+cmbMnt.getSelectedItem()+":"+cmbDtk.getSelectedItem(),status
                             })==true){
                                 simpandata();
+                                JOptionPane.showMessageDialog(null, "Berhasil Simpan Resep");
                         }else{
                             if(ChkRM.isSelected()==true){
                                 //Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_resep,6),signed)),0) from resep_obat where tgl_perawatan like '%"+DTPBeri.getSelectedItem().toString().substring(6,10)+"%' ",DTPBeri.getSelectedItem().toString().substring(6,10),6,NoResep);           
@@ -1069,6 +1071,7 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                                 cmbJam.getSelectedItem()+":"+cmbMnt.getSelectedItem()+":"+cmbDtk.getSelectedItem(),status
                                 })==true){
                                     simpandata();
+                                    JOptionPane.showMessageDialog(null, "Berhasil Simpan Resep");
                             }
                         }
                     }
@@ -2626,12 +2629,14 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                                     ""+(Double.parseDouble(tbResep.getValueAt(i,1).toString())/carikapasitas.getDouble(1)),
                                     tbResep.getValueAt(i,8).toString()
                                 });
+                                System.out.println("Berhasil Simpan Resep");
                             }else{
                                 Sequel.menyimpan("resep_dokter","?,?,?,?","data",4,new String[]{
                                     NoResep.getText(),tbResep.getValueAt(i,2).toString(),
                                     ""+(Double.parseDouble(tbResep.getValueAt(i,1).toString())),
                                     tbResep.getValueAt(i,8).toString()
-                                });                                
+                                });     
+                                System.out.println("Berhasil Simpan Resep");
                             }
                         } catch (Exception e) {
                             System.out.println("Notifikasi Kapasitas : "+e);
@@ -2648,7 +2653,8 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                             NoResep.getText(),tbResep.getValueAt(i,2).toString(),
                             ""+(Double.parseDouble(tbResep.getValueAt(i,1).toString())),
                             tbResep.getValueAt(i,8).toString()
-                        });                                  
+                        });   
+                        System.out.println("Berhasil Simpan Resep");
                     }                      
                 }
                 tbResep.setValueAt("",i,1);
@@ -2661,6 +2667,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                        tbObatResepRacikan.getValueAt(i,2).toString(),tbObatResepRacikan.getValueAt(i,4).toString(),
                        tbObatResepRacikan.getValueAt(i,5).toString(),tbObatResepRacikan.getValueAt(i,6).toString()
                     });
+                    System.out.println("Berhasil Simpan Resep");
                 }
             }
 
@@ -2673,6 +2680,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                         tbDetailResepObatRacikan.getValueAt(i,9).toString(),tbDetailResepObatRacikan.getValueAt(i,11).toString(),
                         tbDetailResepObatRacikan.getValueAt(i,12).toString(),tbDetailResepObatRacikan.getValueAt(i,13).toString()
                     });
+                    System.out.println("Berhasil Simpan Resep");
                 }
             }
 

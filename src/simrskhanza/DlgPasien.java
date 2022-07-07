@@ -15,8 +15,6 @@ import bridging.BPJSCekNIK;
 import bridging.BPJSCekNoKartu;
 import bridging.BPJSNik;
 import bridging.BPJSPeserta;
-import bridging.PCareNIK;
-import bridging.PCarePeserta;
 import fungsi.WarnaTable;
 import fungsi.batasInput;
 import fungsi.koneksiDB;
@@ -867,8 +865,6 @@ public class DlgPasien extends javax.swing.JDialog {
         MenuBPJS = new javax.swing.JMenu();
         MnCekKepesertaan = new javax.swing.JMenuItem();
         MnCekNIK = new javax.swing.JMenuItem();
-        MnCekKepesertaan1 = new javax.swing.JMenuItem();
-        MnCekNIK1 = new javax.swing.JMenuItem();
         ppKelahiranBayi = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         MnLaporanRM = new javax.swing.JMenuItem();
@@ -1424,34 +1420,6 @@ public class DlgPasien extends javax.swing.JDialog {
             }
         });
         MenuBPJS.add(MnCekNIK);
-
-        MnCekKepesertaan1.setBackground(new java.awt.Color(255, 255, 254));
-        MnCekKepesertaan1.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        MnCekKepesertaan1.setForeground(new java.awt.Color(70, 70, 70));
-        MnCekKepesertaan1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
-        MnCekKepesertaan1.setText("Pencarian Peserta Berdasarkan Nomor Kepesertaan PCare");
-        MnCekKepesertaan1.setName("MnCekKepesertaan1"); // NOI18N
-        MnCekKepesertaan1.setPreferredSize(new java.awt.Dimension(350, 26));
-        MnCekKepesertaan1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MnCekKepesertaan1ActionPerformed(evt);
-            }
-        });
-        MenuBPJS.add(MnCekKepesertaan1);
-
-        MnCekNIK1.setBackground(new java.awt.Color(255, 255, 254));
-        MnCekNIK1.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        MnCekNIK1.setForeground(new java.awt.Color(70, 70, 70));
-        MnCekNIK1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
-        MnCekNIK1.setText("Pencarian Peserta Berdasarkan NIK/No.KTP PCare");
-        MnCekNIK1.setName("MnCekNIK1"); // NOI18N
-        MnCekNIK1.setPreferredSize(new java.awt.Dimension(350, 26));
-        MnCekNIK1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MnCekNIK1ActionPerformed(evt);
-            }
-        });
-        MenuBPJS.add(MnCekNIK1);
 
         jPopupMenu1.add(MenuBPJS);
 
@@ -2508,7 +2476,7 @@ public class DlgPasien extends javax.swing.JDialog {
         FormInput.add(jLabel13);
         jLabel13.setBounds(4, 102, 95, 23);
 
-        DTPLahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "14-02-2021" }));
+        DTPLahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-01-2022" }));
         DTPLahir.setDisplayFormat("dd-MM-yyyy");
         DTPLahir.setName("DTPLahir"); // NOI18N
         DTPLahir.setOpaque(false);
@@ -2640,7 +2608,7 @@ public class DlgPasien extends javax.swing.JDialog {
         FormInput.add(TKtp);
         TKtp.setBounds(712, 132, 130, 23);
 
-        DTPDaftar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "14-02-2021" }));
+        DTPDaftar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-01-2022" }));
         DTPDaftar.setDisplayFormat("dd-MM-yyyy");
         DTPDaftar.setName("DTPDaftar"); // NOI18N
         DTPDaftar.setOpaque(false);
@@ -5932,34 +5900,6 @@ private void KabupatenMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
         prop.setVisible(true);
     }//GEN-LAST:event_BtnSeek11ActionPerformed
 
-    private void MnCekKepesertaan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnCekKepesertaan1ActionPerformed
-        if (!TNoPeserta.getText().equals("")) {
-            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            PCarePeserta form = new PCarePeserta(null, true);
-            form.tampil(TNoPeserta.getText());
-            form.setSize(640, internalFrame1.getHeight() - 20);
-            form.setLocationRelativeTo(internalFrame1);
-            form.setVisible(true);
-            this.setCursor(Cursor.getDefaultCursor());
-        } else {
-            JOptionPane.showMessageDialog(null, "Maaf, Nomor kepesertaan kosong...!!!");
-        }
-    }//GEN-LAST:event_MnCekKepesertaan1ActionPerformed
-
-    private void MnCekNIK1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnCekNIK1ActionPerformed
-        if (!TKtp.getText().equals("")) {
-            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            PCareNIK form = new PCareNIK(null, true);
-            form.tampil(TKtp.getText());
-            form.setSize(640, internalFrame1.getHeight() - 20);
-            form.setLocationRelativeTo(internalFrame1);
-            form.setVisible(true);
-            this.setCursor(Cursor.getDefaultCursor());
-        } else {
-            JOptionPane.showMessageDialog(null, "Maaf, NIK KTP kosong...!!!");
-        }
-    }//GEN-LAST:event_MnCekNIK1ActionPerformed
-
     private void tbPasienKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbPasienKeyReleased
         if (tabMode.getRowCount() != 0) {
             if ((evt.getKeyCode() == KeyEvent.VK_ENTER) || (evt.getKeyCode() == KeyEvent.VK_UP) || (evt.getKeyCode() == KeyEvent.VK_DOWN)) {
@@ -6200,9 +6140,7 @@ private void KabupatenMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
     private javax.swing.JMenuItem MnBarcodeRM8;
     private javax.swing.JMenuItem MnBarcodeRM9;
     private javax.swing.JMenuItem MnCekKepesertaan;
-    private javax.swing.JMenuItem MnCekKepesertaan1;
     private javax.swing.JMenuItem MnCekNIK;
-    private javax.swing.JMenuItem MnCekNIK1;
     private javax.swing.JMenuItem MnCopyResep;
     private javax.swing.JMenuItem MnCover;
     private javax.swing.JMenuItem MnCover1;

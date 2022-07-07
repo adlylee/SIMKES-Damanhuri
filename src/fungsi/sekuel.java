@@ -27,6 +27,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.sql.Array;
 import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,7 +35,9 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -208,7 +211,7 @@ public final class sekuel {
         try{             
             ps=connect.prepareStatement("insert into "+table+" values("+value+")");
             for(angka=1;angka<=i;angka++){
-                ps.setString(angka,a[angka-1]);
+                    ps.setString(angka,a[angka-1]);
             }            
             ps.executeUpdate();
             
@@ -1615,6 +1618,43 @@ public final class sekuel {
         }
             
         return dicari;
+    }
+    
+    public String cariStringArray(String sql){
+        String dicari = "";
+        String holder;
+        try {
+            ps=connect.prepareStatement(sql);
+            try{
+                rs=ps.executeQuery(); 
+                while(rs.next()){
+                    holder=rs.getString(1);
+                    dicari+= "'"+holder+"',";
+                }
+            }catch(Exception e){
+                System.out.println("Notifikasi : "+e);
+            }finally{
+                if(rs != null){
+                    rs.close();
+                }
+                
+                if(ps != null){
+                    ps.close();
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Notifikasi : "+e);
+        }
+
+        return dicari;
+    }
+    
+    public static String buangChar(String str) {
+        return buangCharTerakhir(str, 1);
+    }
+
+    public static String buangCharTerakhir(String str, int chars) {
+        return str.substring(0, str.length() - chars);
     }
 
     private String gambar(String id) {

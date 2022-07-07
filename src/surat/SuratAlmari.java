@@ -487,8 +487,11 @@ public final class SuratAlmari extends javax.swing.JDialog {
             Valid.textKosong(TNm,"almari");
         }else{
             if(tbBangsal.getSelectedRow()>-1){
-                Sequel.mengedit("surat_lemari","kd=?","lemari=?,kd=?",3,new String[]{TNm.getText(),TKd.getText(),tbBangsal.getValueAt(tbBangsal.getSelectedRow(), 1).toString()});
-                if(tabMode.getRowCount()!=0){tampil();}
+                Sequel.mengedit("surat_lemari","kd=?","lemari=?,kd=?",3,new String[]{TNm.getText(),TKd.getText(),
+                    tbBangsal.getValueAt(tbBangsal.getSelectedRow(), 1).toString()});
+                if(tabMode.getRowCount()!=0){
+                    tampil();
+                }
                 emptTeks();
             }            
         }

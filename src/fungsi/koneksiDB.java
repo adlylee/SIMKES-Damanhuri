@@ -46,15 +46,14 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" +
-                        "    Version 12.02.2022 [Activated] Bridging VCLAIM V.2                 \n"+
+                        "    Version 28.04.2022 [ 1.0.5 ] [Activated] GO RAWAT INAP E-RM \n"+
                         "                                                                           \n"+
                         "    * Known Bug :                                                           \n"+
                         "       - Laporan diet belum fix                                            \n"+
                         "       - Nama poli di resep                                           \n"+
                         "                                                                       \n"+
                         "    * Changelog :                                                       \n"+
-                        "       - Update Tanggal Pulang                                           \n"+
-                        "       - Pemberian Diet                                           \n"+
+                        "       - Billing Rawat Inap                                              \n"+
                         "                                                                       \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);
@@ -65,6 +64,7 @@ public final class koneksiDB {
                         dataSource.setUser(EnkripsiAES.decrypt(prop.getProperty("USER")));
                         dataSource.setPassword(EnkripsiAES.decrypt(prop.getProperty("PAS")));
                         connection=dataSource.getConnection();  
+                        System.out.println("Berhasil Menghubungkan Kembali .");
                     }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null,"Koneksi Putus : "+e);
@@ -198,6 +198,36 @@ public final class koneksiDB {
         try {
             prop.loadFromXML(new FileInputStream("setting/database.xml"));
             var = EnkripsiAES.decrypt(prop.getProperty("PASSSISRUTE"));
+        } catch (Exception ex) {
+            System.out.println("Notifikasi : "+ex);
+        }
+        return var;
+    }
+    
+    public static String UrlSirs(){
+        try {
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var = prop.getProperty("URLAPISIRS");
+        } catch (Exception ex) {
+            System.out.println("Notifikasi : "+ex);
+        }
+        return var;
+    }
+    
+    public static String IdSirs() {
+        try {
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var = EnkripsiAES.decrypt(prop.getProperty("IDSIRS"));
+        } catch (Exception ex) {
+            System.out.println("Notifikasi : "+ex);
+        }
+        return var;
+    }
+    
+    public static String PassSirs() {
+        try {
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var = EnkripsiAES.decrypt(prop.getProperty("PASSSIRS"));
         } catch (Exception ex) {
             System.out.println("Notifikasi : "+ex);
         }

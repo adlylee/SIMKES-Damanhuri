@@ -1,6 +1,11 @@
 package bridging;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import fungsi.koneksiDB;
+import java.awt.HeadlessException;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.MessageDigest;
@@ -11,21 +16,29 @@ import java.security.cert.X509Certificate;
 import java.util.Properties;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.X509TrustManager;
+import javax.swing.JOptionPane;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 public class SirsApi {        
     private static final Properties prop = new Properties();
-    private String Key,pass;
+    private String Key,pass , url , token ,requestJson;
+    private HttpHeaders headers ;
+    private HttpEntity requestEntity;
+    private ObjectMapper mapper = new ObjectMapper();
+    private JsonNode root;
+    private JsonNode nameNode;
+    private JsonNode response;
+    
     public SirsApi(){
-        try {            
-            prop.loadFromXML(new FileInputStream("setting/database.xml"));   
-            pass = prop.getProperty("PASSSIRS");
-        } catch (Exception ex) {
-            System.out.println("Notifikasi : "+ex);
-        }
+        pass = koneksiDB.PassSirs();
     }
     public String getHmac() {        
         try {                    
@@ -59,6 +72,38 @@ public class SirsApi {
         HttpComponentsClientHttpRequestFactory factory=new HttpComponentsClientHttpRequestFactory();
         factory.getHttpClient().getConnectionManager().getSchemeRegistry().register(scheme);
         return new RestTemplate(factory);
+    }
+    
+    public String getToken(){
+        try {
+            token = "";
+            headers = new HttpHeaders();
+            headers.add("accept","*/*");
+	    headers.add("Content-Type","application/json");
+            requestJson = "{"
+                        + "\"userName\":\"" + koneksiDB.IdSirs() + "\","
+                        + "\"password\":\"" + koneksiDB.PassSirs()+ "\""
+                        + "}";
+            System.out.println("JSON : " + requestJson);
+            requestEntity = new HttpEntity(requestJson, headers);
+            url = koneksiDB.UrlSirs()+"/api/rslogin";	
+            root = mapper.readTree(getRest().exchange(url, HttpMethod.POST, requestEntity, String.class).getBody());
+            System.out.println(root);
+            token = root.path("message").asText();
+            nameNode = root.path("data");            
+            if(root.path("status").asText().equals("true")){ 
+                token = nameNode.path("access_token").asText();
+            }else {
+                JOptionPane.showMessageDialog(null,nameNode.path("message").asText());                
+            }   
+        } catch (HeadlessException | IOException | KeyManagementException | NoSuchAlgorithmException | RestClientException ex) {
+            System.out.println("Notifikasi : "+ex);
+            System.out.println(url);
+            if(ex.toString().contains("UnknownHostException")){
+                JOptionPane.showMessageDialog(null,"Koneksi ke server Kemenkes terputus...!");
+            }
+        }
+        return token;
     }
 
 }

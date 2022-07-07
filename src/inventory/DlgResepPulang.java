@@ -60,7 +60,7 @@ public final class DlgResepPulang extends javax.swing.JDialog {
         initComponents();
         this.setLocation(8,1);
         setSize(628,674);        
-        Object[] row={"No.Rawat","Tgl.Registrasi","Pasien","Obat","Jml","Harga","Tuslah","Total","Dosis"};
+        Object[] row={"No.Rawat","Tgl.Registrasi","Pasien","Obat","Jml","Harga","Tuslah","Total","Dosis","No.Resep"};
         tabMode=new DefaultTableModel(null,row){
               @Override public boolean isCellEditable(int rowIndex, int colIndex){return false;}
         };
@@ -69,7 +69,7 @@ public final class DlgResepPulang extends javax.swing.JDialog {
         tbResep.setPreferredScrollableViewportSize(new Dimension(500,500));
         tbResep.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 9; i++) {
             TableColumn column = tbResep.getColumnModel().getColumn(i);
             if(i==0){
                 column.setPreferredWidth(120);
@@ -88,6 +88,8 @@ public final class DlgResepPulang extends javax.swing.JDialog {
             }else if(i==7){
                 column.setPreferredWidth(100);
             }else if(i==8){
+                column.setPreferredWidth(150);
+            }else if(i==9){
                 column.setPreferredWidth(150);
             }
         }
@@ -657,9 +659,9 @@ public final class DlgResepPulang extends javax.swing.JDialog {
                         Dosis.getText(),Sequel.cariIsi("select current_date()"),
                         Sequel.cariIsi("select current_time()"),var.getkdbangsal()
                     })==true){
-                    Trackobat.catatRiwayat(KdBarang.getText(),0,Valid.SetAngka(Jml.getText()),"Resep Pulang",var.getkode(),var.getkdbangsal(),"Simpan");
-                    Sequel.menyimpan("gudangbarang","'"+KdBarang.getText()+"','"+var.getkdbangsal()+"','-"+Jml.getText()+"'", 
-                                     "stok=stok-'"+Jml.getText()+"'","kode_brng='"+KdBarang.getText()+"' and kd_bangsal='"+var.getkdbangsal()+"'");                               
+//                    Trackobat.catatRiwayat(KdBarang.getText(),0,Valid.SetAngka(Jml.getText()),"Resep Pulang",var.getkode(),var.getkdbangsal(),"Simpan");
+//                    Sequel.menyimpan("gudangbarang","'"+KdBarang.getText()+"','"+var.getkdbangsal()+"','-"+Jml.getText()+"'", 
+//                                     "stok=stok-'"+Jml.getText()+"'","kode_brng='"+KdBarang.getText()+"' and kd_bangsal='"+var.getkdbangsal()+"'");                               
                     tampil();
                     BtnBatalActionPerformed(evt);
                 } 
@@ -1113,7 +1115,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 while(rs.next()){
                     jumlahtotal=Double.parseDouble(rs.getString(7))+tuslah;
                     tabMode.addRow(new String[]{
-                        rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),"500",Double.toString(jumlahtotal),rs.getString(8)
+                        rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),"500",Double.toString(jumlahtotal),rs.getString(8),""
                     });
                 }
             } catch (Exception e) {

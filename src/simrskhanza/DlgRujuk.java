@@ -859,8 +859,8 @@ public final class DlgRujuk extends javax.swing.JDialog {
         }else if(TDokter.getText().trim().equals("")){
             Valid.textKosong(KdDok,"dokter yang bertugas");
         }else{         
-            Valid.editTable(tabMode,"rujuk","no_rujuk",TNoRj,"no_rawat='"+TNoRw.getText()+
-                    "',rujuk_ke='"+TTmpRujuk.getText()+
+            Valid.editTable(tabMode,"rujuk","no_rujuk",TNoRj,
+                    "no_rawat='"+TNoRw.getText()+"',rujuk_ke='"+TTmpRujuk.getText()+
                     "',tgl_rujuk='"+Valid.SetTgl(DTPRujuk.getSelectedItem()+"")+
                     "',jam='"+CmbJam.getSelectedItem()+":"+CmbMenit.getSelectedItem()+":"+CmbDetik.getSelectedItem()+
                     "',keterangan_diagnosa='"+TDiagnosa.getText()+

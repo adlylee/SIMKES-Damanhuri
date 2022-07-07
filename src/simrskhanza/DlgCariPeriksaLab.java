@@ -1,4 +1,5 @@
 package simrskhanza;
+import bridging.MyLimsTransaksi;
 import kepegawaian.DlgCariPetugas;
 import keuangan.Jurnal;
 import fungsi.WarnaTable;
@@ -41,6 +42,7 @@ public class DlgCariPeriksaLab extends javax.swing.JDialog {
     private Connection koneksi=koneksiDB.condb();
     private DlgPasien member=new DlgPasien(null,false);
     private DlgCariPetugas petugas=new DlgCariPetugas(null,false);
+    private MyLimsTransaksi cari = new MyLimsTransaksi(null, false);
     private int i,jmlkunjungan=0,jmlpemeriksaan=0,jmlsubpemeriksaan=0;
     private PreparedStatement ps,ps2,ps3,ps4,psrekening,ps5;
     private ResultSet rs,rs2,rs3,rs5,rsrekening;
@@ -299,6 +301,7 @@ public class DlgCariPeriksaLab extends javax.swing.JDialog {
         MnCetakNota = new javax.swing.JMenuItem();
         MnUbah = new javax.swing.JMenuItem();
         MnSaranKesan = new javax.swing.JMenuItem();
+        MnBridgingLims = new javax.swing.JMenuItem();
         WindowSaran = new javax.swing.JDialog();
         internalFrame6 = new widget.InternalFrame();
         panelGlass6 = new widget.panelisi();
@@ -542,6 +545,20 @@ public class DlgCariPeriksaLab extends javax.swing.JDialog {
             }
         });
         jPopupMenu1.add(MnSaranKesan);
+
+        MnBridgingLims.setBackground(new java.awt.Color(255, 255, 254));
+        MnBridgingLims.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        MnBridgingLims.setForeground(new java.awt.Color(70, 70, 70));
+        MnBridgingLims.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        MnBridgingLims.setText("Tarik Data MyLims");
+        MnBridgingLims.setName("MnBridgingLims"); // NOI18N
+        MnBridgingLims.setPreferredSize(new java.awt.Dimension(200, 28));
+        MnBridgingLims.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnBridgingLimsActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(MnBridgingLims);
 
         WindowSaran.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         WindowSaran.setName("WindowSaran"); // NOI18N
@@ -3012,6 +3029,14 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         // TODO add your handling code here:
     }//GEN-LAST:event_tbDokter2KeyPressed
 
+    private void MnBridgingLimsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnBridgingLimsActionPerformed
+        cari.setSize(internalFrame1.getWidth(), internalFrame1.getHeight());
+        cari.setPasien(tbDokter.getValueAt(tbDokter.getSelectedRow(),0).toString(),tbDokter.getValueAt(tbDokter.getSelectedRow(),1).toString().substring(0, 6),tbDokter.getValueAt(tbDokter.getSelectedRow(),3).toString(),tbDokter.getValueAt(tbDokter.getSelectedRow(),4).toString());
+        cari.setLocationRelativeTo(internalFrame1);
+        cari.tampil();
+        cari.setVisible(true);
+    }//GEN-LAST:event_MnBridgingLimsActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -3039,6 +3064,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.TextBox Kd2;
     private widget.TextArea Kesan;
     private widget.editorpane LoadHTML1;
+    private javax.swing.JMenuItem MnBridgingLims;
     private javax.swing.JMenuItem MnCetakHasilLab;
     private javax.swing.JMenuItem MnCetakHasilLab1;
     private javax.swing.JMenuItem MnCetakHasilLab10;

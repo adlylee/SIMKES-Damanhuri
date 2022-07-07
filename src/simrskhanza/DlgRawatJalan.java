@@ -849,8 +849,6 @@ public final class DlgRawatJalan extends javax.swing.JDialog {
         ChkAccor.setSelected(false);
         isMenu(); 
         jam();
-        TPenilaian.setVisible(false);
-        jLabel28.setVisible(false);
         
         try {
             prop.loadFromXML(new FileInputStream("setting/database.xml"));
@@ -3111,7 +3109,7 @@ public final class DlgRawatJalan extends javax.swing.JDialog {
                 TCari.setPreferredSize(new Dimension(240,23));
                 TCariPasien.setText(TNoRM.getText());
                 if(var.getresume_pasien()==true){
-                    panelResume.setRM(TNoRM.getText(),Valid.SetTgl(DTPCari1.getSelectedItem()+""), Valid.SetTgl(DTPCari2.getSelectedItem()+""),false);
+                    panelResume.setRM(TNoRM.getText(),Valid.SetTgl(DTPCari1.getSelectedItem()+""), Valid.SetTgl(DTPCari2.getSelectedItem()+""),false,"3");
                     panelResume.pilihTab();
                 }                    
                 LCount.setText("0");

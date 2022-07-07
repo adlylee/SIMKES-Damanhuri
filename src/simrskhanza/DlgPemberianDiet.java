@@ -750,7 +750,7 @@ public class DlgPemberianDiet extends javax.swing.JDialog {
             param.put("logo",Sequel.cariGambar("select logo from setting")); 
             Valid.MyReport("rptBrDiet.jrxml","report","::[ Data Pemberian Diet ]::","select detail_beri_diet.no_rawat,reg_periksa.no_rkm_medis,pasien.nm_pasien, " +
                 "concat(detail_beri_diet.kd_kamar,', ',bangsal.nm_bangsal) as kd_kamar,detail_beri_diet.tanggal,detail_beri_diet.waktu,diet.nama_diet, kamar_inap.diagnosa_awal  " +
-                "from detail_beri_diet inner join reg_periksa inner join pasien inner join diet inner join kamar inner join bangsal " +
+                "from detail_beri_diet inner join reg_periksa inner join pasien inner join diet inner join kamar inner join bangsal" +
                 "on detail_beri_diet.no_rawat=reg_periksa.no_rawat " +
                 "and detail_beri_diet.kd_kamar=kamar.kd_kamar "+
                 "and kamar.kd_bangsal=bangsal.kd_bangsal "+

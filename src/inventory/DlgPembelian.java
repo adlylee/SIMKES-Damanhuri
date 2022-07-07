@@ -1487,7 +1487,7 @@ private void btnGudangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     public void isCek(){
         Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_faktur,6),signed)),0) from pembelian ","PB",6,NoFaktur); 
         TCari.requestFocus();
-        tppn.setText("10");
+        tppn.setText("11");
         if(var.getjml2()>=1){
             kdptg.setEditable(false);
             btnPetugas.setEnabled(false);

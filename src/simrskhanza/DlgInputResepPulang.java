@@ -499,9 +499,9 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                             tbKamar.getValueAt(i,4).toString(),Sequel.cariIsi("select current_date()"),
                             Sequel.cariIsi("select current_time()"),var.getkdbangsal()
                         })==true){
-                            Trackobat.catatRiwayat(tbKamar.getValueAt(i,1).toString(),0,Valid.SetAngka(tbKamar.getValueAt(i,0).toString()),"Resep Pulang",var.getkode(),var.getkdbangsal(),"Simpan");
-                            Sequel.menyimpan("gudangbarang","'"+tbKamar.getValueAt(i,1).toString()+"','"+var.getkdbangsal()+"','-"+tbKamar.getValueAt(i,0).toString()+"'", 
-                                                 "stok=stok-'"+tbKamar.getValueAt(i,0).toString()+"'","kode_brng='"+tbKamar.getValueAt(i,1).toString()+"' and kd_bangsal='"+var.getkdbangsal()+"'");                               
+//                            Trackobat.catatRiwayat(tbKamar.getValueAt(i,1).toString(),0,Valid.SetAngka(tbKamar.getValueAt(i,0).toString()),"Resep Pulang",var.getkode(),var.getkdbangsal(),"Simpan");
+//                            Sequel.menyimpan("gudangbarang","'"+tbKamar.getValueAt(i,1).toString()+"','"+var.getkdbangsal()+"','-"+tbKamar.getValueAt(i,0).toString()+"'", 
+//                                                 "stok=stok-'"+tbKamar.getValueAt(i,0).toString()+"'","kode_brng='"+tbKamar.getValueAt(i,1).toString()+"' and kd_bangsal='"+var.getkdbangsal()+"'");                               
                     }
                 }
             }  
