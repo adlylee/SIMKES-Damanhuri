@@ -21,7 +21,6 @@ import bridging.BPJSSPRI;
 import bridging.BPJSSuratKontrol;
 import bridging.DlgSKDPBPJS;
 import bridging.InhealthDataSJP;
-import bridging.PCareDataPendaftaran;
 import bridging.SisruteRujukanKeluar;
 import laporan.DlgDiagnosaPenyakit;
 import laporan.DlgFrekuensiPenyakitRalan;
