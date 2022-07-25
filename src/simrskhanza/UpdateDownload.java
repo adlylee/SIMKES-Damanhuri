@@ -109,10 +109,10 @@ public class UpdateDownload extends JFrame{
             public void run()
             {
                 try {
-                    URL= "http://192.168.0.250/updatesimrs/changelog.txt";
+                    URL= koneksiDB.UrlAutoUpdate()+"/changelog.txt";
                     String data = getData(URL);
                     VERSION=data.substring(data.indexOf("[version]")+9,data.indexOf("[/version]"));
-                    downloadFile("http://192.168.0.250/updatesimrs/download/"+VERSION+"/SIMKESKhanza.zip");
+                    downloadFile(koneksiDB.UrlAutoUpdate()+"/download/"+VERSION+"/SIMKESKhanza.zip");
                     unzip();
                     copyFiles(new File(root),new File("").getAbsolutePath());
                     cleanup();

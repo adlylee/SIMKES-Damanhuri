@@ -46,7 +46,6 @@ public class DlgNomorTelp extends javax.swing.JDialog {
         jLabel4 = new widget.Label();
         BtnSimpan = new widget.Button();
         BtnKeluar = new widget.Button();
-        BtnKeluar1 = new widget.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -110,22 +109,6 @@ public class DlgNomorTelp extends javax.swing.JDialog {
             }
         });
 
-        BtnKeluar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/cross.png"))); // NOI18N
-        BtnKeluar1.setMnemonic('T');
-        BtnKeluar1.setText("Tutup");
-        BtnKeluar1.setToolTipText("Alt+1");
-        BtnKeluar1.setPreferredSize(new java.awt.Dimension(100, 30));
-        BtnKeluar1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnKeluar1ActionPerformed(evt);
-            }
-        });
-        BtnKeluar1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                BtnKeluar1KeyPressed(evt);
-            }
-        });
-
         javax.swing.GroupLayout internalFrame1Layout = new javax.swing.GroupLayout(internalFrame1);
         internalFrame1.setLayout(internalFrame1Layout);
         internalFrame1Layout.setHorizontalGroup(
@@ -139,9 +122,7 @@ public class DlgNomorTelp extends javax.swing.JDialog {
                     .addGroup(internalFrame1Layout.createSequentialGroup()
                         .addComponent(BtnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(BtnKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BtnKeluar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(BtnKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(internalFrame1Layout.createSequentialGroup()
                         .addComponent(TNoRM, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -164,9 +145,8 @@ public class DlgNomorTelp extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(internalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnKeluar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(BtnKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         getContentPane().add(internalFrame1, java.awt.BorderLayout.CENTER);
@@ -226,14 +206,6 @@ public class DlgNomorTelp extends javax.swing.JDialog {
         //}
     }//GEN-LAST:event_TNoHpKeyPressed
 
-    private void BtnKeluar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnKeluar1ActionPerformed
-        TNoHp.setText("Sesudah makan");
-    }//GEN-LAST:event_BtnKeluar1ActionPerformed
-
-    private void BtnKeluar1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnKeluar1KeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnKeluar1KeyPressed
-
     /**
      * @param args the command line arguments
      */
@@ -278,7 +250,6 @@ public class DlgNomorTelp extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private widget.Button BtnKeluar;
-    private widget.Button BtnKeluar1;
     private widget.Button BtnSimpan;
     private widget.TextBox TNoHp;
     private widget.TextBox TNoRM;

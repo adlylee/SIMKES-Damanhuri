@@ -233,4 +233,14 @@ public final class koneksiDB {
         }
         return var;
     }
+    
+    public static String UrlAutoUpdate(){
+        try {
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var = EnkripsiAES.decrypt(prop.getProperty("URLUPDATESISTEM"));
+        } catch (Exception ex) {
+            System.out.println("Notifikasi : "+ex);
+        }
+        return var;
+    }
 }

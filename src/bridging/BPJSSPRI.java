@@ -1751,6 +1751,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         jLabel15.setVisible(false);
         isForm();
         tampil();
+        cekDiagnosa();
     }
 
     public void setNoRm(String norawat, String nokartu, String norm, String namapasien, String tanggallahir, String jk, String diagnosa, String nosep) {
@@ -1775,6 +1776,12 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         ChkInput.setSelected(false);
         isForm();
         tampil();
+    }
+    
+    private void cekDiagnosa(){
+        String kd_penyakit = Sequel.cariIsi("SELECT kd_penyakit FROM diagnosa_pasien WHERE no_rawat = ? AND prioritas = 1 AND status = 'Ralan' LIMIT 1",NoRawat.getText());
+        String nm_penyakit = Sequel.cariIsi("SELECT nm_penyakit FROM penyakit WHERE kd_penyakit = ? LIMIT 1",kd_penyakit);
+        Diagnosa.setText(kd_penyakit+" - "+nm_penyakit);
     }
 
     private void isForm() {

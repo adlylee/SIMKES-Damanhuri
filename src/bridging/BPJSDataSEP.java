@@ -1176,7 +1176,14 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
                     Valid.SetTgl(TanggalSEP, skdp2.getTable().getValueAt(skdp2.getTable().getSelectedRow(), 7).toString());
                     KdDPJP.setText(skdp2.getTable().getValueAt(skdp2.getTable().getSelectedRow(), 10).toString());
                     NmDPJP.setText(skdp2.getTable().getValueAt(skdp2.getTable().getSelectedRow(), 11).toString());
+                    String kd_diagnosa = skdp2.getTable().getValueAt(skdp2.getTable().getSelectedRow(), 6).toString();
+                    int position = kd_diagnosa.indexOf(" - ");
+                    System.out.println(position);
+                    KdPenyakit.setText(kd_diagnosa.substring(0,position));
+                    NmPenyakit.setText(kd_diagnosa.substring(position + 3));
                     NoSKDP.requestFocus();
+                    String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+                    NoRujukan.setText(timeStamp);
                 }
             }
 
@@ -4560,6 +4567,10 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             AsalRujukan.setSelectedIndex(1);
             KdPoli.setText("");
             NmPoli.setText("");
+            KdDPJP.setText("");
+            NmDPJP.setText("");
+            KdPenyakit.setText("");
+            NmPenyakit.setText("");
         } else if (JenisPelayanan.getSelectedIndex() == 1) {
             LabelPoli.setVisible(true);
             KdPoli.setVisible(true);
@@ -6474,6 +6485,11 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         Sequel.cariIsi("select no_rkm_medis from reg_periksa where no_rawat=? ", TNoRM, TNoRw.getText());
         Catatan.setText("-");
     }
+    
+    private void cekDiagnosa(){
+        Sequel.cariIsi("SELECT kd_penyakit FROM diagnosa_pasien WHERE no_rawat = ? AND prioritas = 1 AND status = 'Ralan' LIMIT 1",KdPenyakit,TNoRw.getText());
+        Sequel.cariIsi("SELECT nm_penyakit FROM penyakit WHERE kd_penyakit = ? LIMIT 1",NmPenyakit,KdPenyakit.getText());
+    }
 
     private void emptTeks() {
         TNoRw.setText("");
@@ -6541,6 +6557,9 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         JenisPelayanan.setSelectedItem(status);
         JenisPelayananItemStateChanged(null);
         isRawat();
+        if(kdpoli == "IGDK"){
+            cekDiagnosa();
+        }
     }
 
     public void isCek() {
