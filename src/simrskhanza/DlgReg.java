@@ -222,7 +222,7 @@ public final class DlgReg extends javax.swing.JDialog {
             } else if (i == 10) {
                 column.setPreferredWidth(40);
             } else if (i == 11) {
-                column.setPreferredWidth(150);
+                column.setPreferredWidth(170);
             } else if (i == 12) {
                 column.setPreferredWidth(145);
             } else if (i == 13) {
@@ -263,9 +263,14 @@ public final class DlgReg extends javax.swing.JDialog {
                 super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
                 String stts_rawat = (String) table.getModel().getValueAt(row, 20);
+                String sep = (String) table.getModel().getValueAt(row, 24);
+                String pj_bayar = (String) table.getModel().getValueAt(row, 13);
                 
                 if ("Sudah".equals(stts_rawat)) {
                     setBackground(new Color(204, 255, 152));
+                    setForeground(Color.BLACK);
+                } else if ("Batal".equals(stts_rawat) && !"".equals(sep) && "BPJS".equals(pj_bayar)) {
+                    setBackground(new Color(53, 153, 255));
                     setForeground(Color.BLACK);
                 } else if ("Batal".equals(stts_rawat)) {
                     setBackground(new Color(153, 0, 76));
@@ -408,7 +413,7 @@ public final class DlgReg extends javax.swing.JDialog {
         tbPetugas2.setPreferredScrollableViewportSize(new Dimension(800, 800));
         tbPetugas2.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 20; i++) {
+        for (i = 0; i < 21; i++) {
             TableColumn column = tbPetugas2.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(20);
