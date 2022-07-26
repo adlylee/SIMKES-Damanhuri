@@ -8652,6 +8652,10 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
 
     private void tbPetugas1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPetugas1MouseClicked
         if (tabMode3.getRowCount() != 0) {
+            try {
+                getDataPL();
+            } catch (java.lang.NullPointerException e) {
+            }
             if (evt.getClickCount() == 1) {
                 i = tbPetugas1.getSelectedColumn();
                 if (i == 7) {
@@ -8696,7 +8700,8 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
         if (tabMode.getRowCount() != 0) {
             if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
                 try {
-                    getData();
+//                    getData();
+                      getDataPL();
                 } catch (java.lang.NullPointerException e) {
                 }
                 i = tbPetugas1.getSelectedColumn();
@@ -10015,85 +10020,98 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
                     + "reg_periksa.kd_poli,reg_periksa.kd_pj from reg_periksa inner join dokter inner join pasien inner join poliklinik inner join penjab "
                     + "on reg_periksa.kd_dokter=dokter.kd_dokter and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "
                     + "and reg_periksa.kd_pj=penjab.kd_pj and reg_periksa.kd_poli=poliklinik.kd_poli  where   "
-                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi >= (curdate() - INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  reg_periksa.no_reg like ? or "
-                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi >= (curdate() - INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  reg_periksa.no_rawat like ? or "
-                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi >= (curdate() - INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  reg_periksa.tgl_registrasi like ? or "
-                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi >= (curdate() - INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  reg_periksa.kd_dokter like ? or "
-                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi >= (curdate() - INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  dokter.nm_dokter like ? or "
-                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi >= (curdate() - INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  reg_periksa.no_rkm_medis like ? or "
-                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi >= (curdate() - INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  reg_periksa.stts_daftar like ? or "
-                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi >= (curdate() - INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  pasien.nm_pasien like ? or "
-                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi >= (curdate() - INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  poliklinik.nm_poli like ? or "
-                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi >= (curdate() - INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  reg_periksa.p_jawab like ? or "
-                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi >= (curdate() - INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  reg_periksa.almt_pj like ? or "
-                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi >= (curdate() - INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  reg_periksa.hubunganpj like ? or "
-                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi >= (curdate() - INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  penjab.png_jawab like ? order by " + order);
+                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi BETWEEN date_sub(?, INTERVAL 1 day) and date_sub(?, INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  reg_periksa.no_reg like ? or "
+                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi BETWEEN date_sub(?, INTERVAL 1 day) and date_sub(?, INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  reg_periksa.no_rawat like ? or "
+                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi BETWEEN date_sub(?, INTERVAL 1 day) and date_sub(?, INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  reg_periksa.tgl_registrasi like ? or "
+                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi BETWEEN date_sub(?, INTERVAL 1 day) and date_sub(?, INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  reg_periksa.kd_dokter like ? or "
+                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi BETWEEN date_sub(?, INTERVAL 1 day) and date_sub(?, INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  dokter.nm_dokter like ? or "
+                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi BETWEEN date_sub(?, INTERVAL 1 day) and date_sub(?, INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  reg_periksa.no_rkm_medis like ? or "
+                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi BETWEEN date_sub(?, INTERVAL 1 day) and date_sub(?, INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  reg_periksa.stts_daftar like ? or "
+                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi BETWEEN date_sub(?, INTERVAL 1 day) and date_sub(?, INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  pasien.nm_pasien like ? or "
+                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi BETWEEN date_sub(?, INTERVAL 1 day) and date_sub(?, INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  poliklinik.nm_poli like ? or "
+                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi BETWEEN date_sub(?, INTERVAL 1 day) and date_sub(?, INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  reg_periksa.p_jawab like ? or "
+                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi BETWEEN date_sub(?, INTERVAL 1 day) and date_sub(?, INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  reg_periksa.almt_pj like ? or "
+                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi BETWEEN date_sub(?, INTERVAL 1 day) and date_sub(?, INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  reg_periksa.hubunganpj like ? or "
+                    + " reg_periksa.stts='Belum' and reg_periksa.tgl_registrasi BETWEEN date_sub(?, INTERVAL 1 day) and date_sub(?, INTERVAL 1 day) and poliklinik.kd_poli<>'IGDK' and poliklinik.nm_poli like ? and  dokter.nm_dokter like ? and  penjab.png_jawab like ? order by " + order);
             try {
-                ps.setString(1, "%" + CrPoli.getText() + "%");
-                ps.setString(2, "%" + CrDokter.getText() + "%");
-                // ps.setString(3,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
-                // ps.setString(4,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
-                ps.setString(3, "%" + TCari.getText().trim() + "%");
-                ps.setString(4, "%" + CrPoli.getText() + "%");
-                ps.setString(5, "%" + CrDokter.getText() + "%");
-                // ps.setString(8,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
-                // ps.setString(9,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
-                ps.setString(6, "%" + TCari.getText().trim() + "%");
-                ps.setString(7, "%" + CrPoli.getText() + "%");
-                ps.setString(8, "%" + CrDokter.getText() + "%");
-                //  ps.setString(13,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
-                // ps.setString(14,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
-                ps.setString(9, "%" + TCari.getText().trim() + "%");
-                ps.setString(10, "%" + CrPoli.getText() + "%");
-                ps.setString(11, "%" + CrDokter.getText() + "%");
-                //  ps.setString(18,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
-                //  ps.setString(19,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
-                ps.setString(12, "%" + TCari.getText().trim() + "%");
+                 ps.setString(1,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
+                 ps.setString(2,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
+                ps.setString(3, "%" + CrPoli.getText() + "%");
+                ps.setString(4, "%" + CrDokter.getText() + "%");
+                
+                ps.setString(5, "%" + TCari.getText().trim() + "%");
+                 ps.setString(6,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
+                 ps.setString(7,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
+                
+                ps.setString(8, "%" + CrPoli.getText() + "%");
+                ps.setString(9, "%" + CrDokter.getText() + "%");
+                ps.setString(10, "%" + TCari.getText().trim() + "%");
+                  ps.setString(11,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
+                 ps.setString(12,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
+                
                 ps.setString(13, "%" + CrPoli.getText() + "%");
                 ps.setString(14, "%" + CrDokter.getText() + "%");
-                //  ps.setString(23,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
-                //  ps.setString(24,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
                 ps.setString(15, "%" + TCari.getText().trim() + "%");
-                ps.setString(16, "%" + CrPoli.getText() + "%");
-                ps.setString(17, "%" + CrDokter.getText() + "%");
-                //   ps.setString(28,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
-                //  ps.setString(29,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
-                ps.setString(18, "%" + TCari.getText().trim() + "%");
-                ps.setString(19, "%" + CrPoli.getText() + "%");
-                ps.setString(20, "%" + CrDokter.getText() + "%");
-                //  ps.setString(33,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
-                //  ps.setString(34,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
-                ps.setString(21, "%" + TCari.getText().trim() + "%");
-                ps.setString(22, "%" + CrPoli.getText() + "%");
-                ps.setString(23, "%" + CrDokter.getText() + "%");
-                //  ps.setString(38,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
-                //  ps.setString(39,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
-                ps.setString(24, "%" + TCari.getText().trim() + "%");
-                ps.setString(25, "%" + CrPoli.getText() + "%");
-                ps.setString(26, "%" + CrDokter.getText() + "%");
-                //  ps.setString(43,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
-                //  ps.setString(44,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
-                ps.setString(27, "%" + TCari.getText().trim() + "%");
+                  ps.setString(16,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
+                  ps.setString(17,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
+                
+                ps.setString(18, "%" + CrPoli.getText() + "%");
+                ps.setString(19, "%" + CrDokter.getText() + "%");
+                ps.setString(20, "%" + TCari.getText().trim() + "%");
+                  ps.setString(21,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
+                  ps.setString(22,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
+                
+                ps.setString(23, "%" + CrPoli.getText() + "%");
+                ps.setString(24, "%" + CrDokter.getText() + "%");
+                ps.setString(25, "%" + TCari.getText().trim() + "%");
+                   ps.setString(26,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
+                  ps.setString(27,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
+                
                 ps.setString(28, "%" + CrPoli.getText() + "%");
                 ps.setString(29, "%" + CrDokter.getText() + "%");
-                //  ps.setString(48,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
-                //  ps.setString(49,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
                 ps.setString(30, "%" + TCari.getText().trim() + "%");
-                ps.setString(31, "%" + CrPoli.getText() + "%");
-                ps.setString(32, "%" + CrDokter.getText() + "%");
-                //  ps.setString(53,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
-                //  ps.setString(54,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
-                ps.setString(33, "%" + TCari.getText().trim() + "%");
-                ps.setString(34, "%" + CrPoli.getText() + "%");
-                ps.setString(35, "%" + CrDokter.getText() + "%");
-                //  ps.setString(58,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
-                //  ps.setString(59,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
-                ps.setString(36, "%" + TCari.getText().trim() + "%");
-                ps.setString(37, "%" + CrPoli.getText() + "%");
-                ps.setString(38, "%" + CrDokter.getText() + "%");
-                //  ps.setString(63,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
-                //  ps.setString(64,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
-                ps.setString(39, "%" + TCari.getText().trim() + "%");
+                  ps.setString(31,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
+                  ps.setString(32,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
+                
+                ps.setString(33, "%" + CrPoli.getText() + "%");
+                ps.setString(34, "%" + CrDokter.getText() + "%");
+                ps.setString(35, "%" + TCari.getText().trim() + "%");
+                  ps.setString(36,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
+                  ps.setString(37,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
+                
+                ps.setString(38, "%" + CrPoli.getText() + "%");
+                ps.setString(39, "%" + CrDokter.getText() + "%");
+                ps.setString(40, "%" + TCari.getText().trim() + "%");
+                  ps.setString(41,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
+                  ps.setString(42,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
+                
+                ps.setString(43, "%" + CrPoli.getText() + "%");
+                ps.setString(44, "%" + CrDokter.getText() + "%");
+                ps.setString(45, "%" + TCari.getText().trim() + "%");
+                  ps.setString(46,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
+                  ps.setString(47,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
+                
+                ps.setString(48, "%" + CrPoli.getText() + "%");
+                ps.setString(49, "%" + CrDokter.getText() + "%");
+                ps.setString(50, "%" + TCari.getText().trim() + "%");
+                  ps.setString(51,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
+                  ps.setString(52,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
+                
+                ps.setString(53, "%" + CrPoli.getText() + "%");
+                ps.setString(54, "%" + CrDokter.getText() + "%");
+                ps.setString(55, "%" + TCari.getText().trim() + "%");
+                  ps.setString(56,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
+                  ps.setString(57,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
+                
+                ps.setString(58, "%" + CrPoli.getText() + "%");
+                ps.setString(59, "%" + CrDokter.getText() + "%");
+                ps.setString(60, "%" + TCari.getText().trim() + "%");
+                  ps.setString(61,Valid.SetTgl(DTPCari1.getSelectedItem()+""));
+                  ps.setString(62,Valid.SetTgl(DTPCari2.getSelectedItem()+""));
+                
+                ps.setString(63, "%" + CrPoli.getText() + "%");
+                ps.setString(64, "%" + CrDokter.getText() + "%");
+                ps.setString(65, "%" + TCari.getText().trim() + "%");
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     tabMode3.addRow(new Object[]{false, rs.getString(1),
@@ -10801,7 +10819,7 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
     }
 
     public void setPasien(String NamaPasien, String Kontak, String Alamat, String TempatLahir, String TglLahir,
-            String JK, String NoKartuJKN, String NIK, String nosisrute, String FaskesAsal) {
+        String JK, String NoKartuJKN, String NIK, String nosisrute, String FaskesAsal) {
         var.setform("DlgReg");
         ChkInput.setSelected(true);
         isForm();
@@ -10820,5 +10838,31 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
             tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 3).toString(), "Sudah Kembali",
             tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 7).toString(), tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 3).toString(), "RI033"
         });
+    }
+    
+    private void getDataPL() {
+        if (tbPetugas1.getSelectedRow() != -1) {
+            Kd2.setText(tbPetugas1.getValueAt(tbPetugas1.getSelectedRow(), 2).toString());
+            Valid.SetTgl(DTPReg, tbPetugas1.getValueAt(tbPetugas1.getSelectedRow(), 3).toString());
+            CmbJam.setSelectedItem(tbPetugas1.getValueAt(tbPetugas1.getSelectedRow(), 4).toString().substring(0, 2));
+            CmbMenit.setSelectedItem(tbPetugas1.getValueAt(tbPetugas1.getSelectedRow(), 4).toString().substring(3, 5));
+            CmbDetik.setSelectedItem(tbPetugas1.getValueAt(tbPetugas1.getSelectedRow(), 4).toString().substring(6, 8));
+            kddokter.setText(tbPetugas1.getModel().getValueAt(tbPetugas1.getSelectedRow(), 5).toString());
+            TDokter.setText(tbPetugas1.getModel().getValueAt(tbPetugas1.getSelectedRow(), 6).toString());
+            TNoRM.setText(tbPetugas1.getModel().getValueAt(tbPetugas1.getSelectedRow(), 7).toString());
+            isCekPasien();
+            TPoli.setText(tbPetugas1.getModel().getValueAt(tbPetugas1.getSelectedRow(), 11).toString());
+            nmpnj.setText(tbPetugas1.getModel().getValueAt(tbPetugas1.getSelectedRow(), 12).toString());
+            TPngJwb.setText(tbPetugas1.getModel().getValueAt(tbPetugas1.getSelectedRow(), 13).toString());
+            TAlmt.setText(tbPetugas1.getModel().getValueAt(tbPetugas1.getSelectedRow(), 14).toString());
+            THbngn.setText(tbPetugas1.getModel().getValueAt(tbPetugas1.getSelectedRow(), 15).toString());
+            TBiaya.setText(tbPetugas1.getModel().getValueAt(tbPetugas1.getSelectedRow(), 16).toString());
+            TStatus.setText(tbPetugas1.getModel().getValueAt(tbPetugas1.getSelectedRow(), 17).toString());
+            kdpoli.setText(tbPetugas1.getModel().getValueAt(tbPetugas1.getSelectedRow(), 21).toString());
+            kdpnj.setText(tbPetugas1.getModel().getValueAt(tbPetugas1.getSelectedRow(), 22).toString());
+            Sequel.cariIsi("select perujuk from rujuk_masuk where no_rawat=?", AsalRujukan, tbPetugas1.getModel().getValueAt(tbPetugas1.getSelectedRow(), 2).toString());
+            TNoRw.setText(tbPetugas1.getModel().getValueAt(tbPetugas1.getSelectedRow(), 2).toString());
+            TNoReg.setText(tbPetugas1.getModel().getValueAt(tbPetugas1.getSelectedRow(), 1).toString());
+        }
     }
 }

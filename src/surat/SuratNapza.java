@@ -170,7 +170,7 @@ public class SuratNapza extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Surat Sehat ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Surat Napza ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
         internalFrame1.setName(""); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout());
@@ -181,7 +181,7 @@ public class SuratNapza extends javax.swing.JDialog {
         FormInput.setPreferredSize(new java.awt.Dimension(500, 240));
         FormInput.setLayout(null);
 
-        TglDiagnostik.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "06-07-2022" }));
+        TglDiagnostik.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-07-2022" }));
         TglDiagnostik.setDisplayFormat("dd-MM-yyyy");
         TglDiagnostik.setOpaque(false);
         TglDiagnostik.addItemListener(new java.awt.event.ItemListener() {
@@ -200,7 +200,7 @@ public class SuratNapza extends javax.swing.JDialog {
             }
         });
         FormInput.add(TglDiagnostik);
-        TglDiagnostik.setBounds(210, 40, 98, 23);
+        TglDiagnostik.setBounds(195, 40, 98, 23);
 
         jLabel6.setText("Keperluan :");
         FormInput.add(jLabel6);
@@ -227,7 +227,7 @@ public class SuratNapza extends javax.swing.JDialog {
         jLabel14.setText("No. Surat :");
         jLabel14.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         FormInput.add(jLabel14);
-        jLabel14.setBounds(40, 10, 90, 23);
+        jLabel14.setBounds(25, 10, 90, 23);
 
         TNoSurat.setBackground(new java.awt.Color(245, 250, 240));
         TNoSurat.setHighlighter(null);
@@ -237,7 +237,7 @@ public class SuratNapza extends javax.swing.JDialog {
             }
         });
         FormInput.add(TNoSurat);
-        TNoSurat.setBounds(140, 10, 370, 23);
+        TNoSurat.setBounds(125, 10, 370, 23);
 
         dJam.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" }));
         dJam.setPreferredSize(new java.awt.Dimension(100, 23));
@@ -247,7 +247,7 @@ public class SuratNapza extends javax.swing.JDialog {
             }
         });
         FormInput.add(dJam);
-        dJam.setBounds(360, 40, 45, 23);
+        dJam.setBounds(355, 40, 45, 23);
 
         dMenit.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59" }));
         dMenit.setPreferredSize(new java.awt.Dimension(100, 23));
@@ -257,7 +257,7 @@ public class SuratNapza extends javax.swing.JDialog {
             }
         });
         FormInput.add(dMenit);
-        dMenit.setBounds(410, 40, 45, 23);
+        dMenit.setBounds(405, 40, 45, 23);
 
         dDetik.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59" }));
         dDetik.setPreferredSize(new java.awt.Dimension(100, 23));
@@ -267,24 +267,24 @@ public class SuratNapza extends javax.swing.JDialog {
             }
         });
         FormInput.add(dDetik);
-        dDetik.setBounds(460, 40, 45, 23);
+        dDetik.setBounds(450, 40, 45, 23);
 
         jLabel18.setText("Pada Tanggal");
         jLabel18.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         FormInput.add(jLabel18);
-        jLabel18.setBounds(140, 40, 65, 23);
+        jLabel18.setBounds(125, 40, 65, 23);
 
         jLabel19.setText("Pada Tanggal");
         jLabel19.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         FormInput.add(jLabel19);
-        jLabel19.setBounds(140, 70, 65, 23);
+        jLabel19.setBounds(125, 70, 65, 23);
 
         jLabel20.setText("Pada Tanggal");
         jLabel20.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         FormInput.add(jLabel20);
-        jLabel20.setBounds(140, 100, 65, 23);
+        jLabel20.setBounds(125, 100, 65, 23);
 
-        TglPsikiatrik.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "06-07-2022" }));
+        TglPsikiatrik.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-07-2022" }));
         TglPsikiatrik.setDisplayFormat("dd-MM-yyyy");
         TglPsikiatrik.setOpaque(false);
         TglPsikiatrik.addItemListener(new java.awt.event.ItemListener() {
@@ -303,9 +303,9 @@ public class SuratNapza extends javax.swing.JDialog {
             }
         });
         FormInput.add(TglPsikiatrik);
-        TglPsikiatrik.setBounds(210, 70, 98, 23);
+        TglPsikiatrik.setBounds(195, 70, 98, 23);
 
-        TglPemeriksaan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "06-07-2022" }));
+        TglPemeriksaan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-07-2022" }));
         TglPemeriksaan.setDisplayFormat("dd-MM-yyyy");
         TglPemeriksaan.setOpaque(false);
         TglPemeriksaan.addItemListener(new java.awt.event.ItemListener() {
@@ -324,22 +324,22 @@ public class SuratNapza extends javax.swing.JDialog {
             }
         });
         FormInput.add(TglPemeriksaan);
-        TglPemeriksaan.setBounds(210, 100, 98, 23);
+        TglPemeriksaan.setBounds(195, 100, 98, 23);
 
         jLabel21.setText("Jam");
         jLabel21.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         FormInput.add(jLabel21);
-        jLabel21.setBounds(320, 40, 30, 23);
+        jLabel21.setBounds(315, 40, 30, 23);
 
         jLabel22.setText("Jam");
         jLabel22.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         FormInput.add(jLabel22);
-        jLabel22.setBounds(320, 70, 30, 23);
+        jLabel22.setBounds(315, 70, 30, 23);
 
         jLabel23.setText("Jam");
         jLabel23.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         FormInput.add(jLabel23);
-        jLabel23.setBounds(320, 100, 30, 23);
+        jLabel23.setBounds(315, 100, 30, 23);
 
         psiJam.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" }));
         psiJam.setPreferredSize(new java.awt.Dimension(100, 23));
@@ -349,7 +349,7 @@ public class SuratNapza extends javax.swing.JDialog {
             }
         });
         FormInput.add(psiJam);
-        psiJam.setBounds(360, 70, 45, 23);
+        psiJam.setBounds(355, 70, 45, 23);
 
         psiMenit.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59" }));
         psiMenit.setPreferredSize(new java.awt.Dimension(100, 23));
@@ -359,7 +359,7 @@ public class SuratNapza extends javax.swing.JDialog {
             }
         });
         FormInput.add(psiMenit);
-        psiMenit.setBounds(410, 70, 45, 23);
+        psiMenit.setBounds(405, 70, 45, 23);
 
         psiDetik.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59" }));
         psiDetik.setPreferredSize(new java.awt.Dimension(100, 23));
@@ -369,7 +369,7 @@ public class SuratNapza extends javax.swing.JDialog {
             }
         });
         FormInput.add(psiDetik);
-        psiDetik.setBounds(460, 70, 45, 23);
+        psiDetik.setBounds(450, 70, 45, 23);
 
         plJam.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" }));
         plJam.setPreferredSize(new java.awt.Dimension(100, 23));
@@ -379,7 +379,7 @@ public class SuratNapza extends javax.swing.JDialog {
             }
         });
         FormInput.add(plJam);
-        plJam.setBounds(360, 100, 45, 23);
+        plJam.setBounds(355, 100, 45, 23);
 
         plMenit.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59" }));
         plMenit.setPreferredSize(new java.awt.Dimension(100, 23));
@@ -389,7 +389,7 @@ public class SuratNapza extends javax.swing.JDialog {
             }
         });
         FormInput.add(plMenit);
-        plMenit.setBounds(410, 100, 45, 23);
+        plMenit.setBounds(405, 100, 45, 23);
 
         plDetik.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59" }));
         plDetik.setPreferredSize(new java.awt.Dimension(100, 23));
@@ -399,7 +399,7 @@ public class SuratNapza extends javax.swing.JDialog {
             }
         });
         FormInput.add(plDetik);
-        plDetik.setBounds(460, 100, 45, 23);
+        plDetik.setBounds(450, 100, 45, 23);
 
         chkDiag.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         chkDiag.setSelected(true);
@@ -469,6 +469,11 @@ public class SuratNapza extends javax.swing.JDialog {
 
         gejala.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "Ada", "Tidak Ada" }));
         gejala.setPreferredSize(new java.awt.Dimension(100, 23));
+        gejala.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gejalaActionPerformed(evt);
+            }
+        });
         gejala.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 gejalaKeyPressed(evt);
@@ -623,7 +628,7 @@ public class SuratNapza extends javax.swing.JDialog {
         jLabel15.setPreferredSize(new java.awt.Dimension(60, 23));
         panelGlass7.add(jLabel15);
 
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "06-07-2022" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-07-2022" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setOpaque(false);
         DTPCari1.setPreferredSize(new java.awt.Dimension(133, 23));
@@ -634,7 +639,7 @@ public class SuratNapza extends javax.swing.JDialog {
         jLabel17.setPreferredSize(new java.awt.Dimension(24, 23));
         panelGlass7.add(jLabel17);
 
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "06-07-2022" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-07-2022" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setOpaque(false);
         DTPCari2.setPreferredSize(new java.awt.Dimension(133, 23));
@@ -695,7 +700,6 @@ public class SuratNapza extends javax.swing.JDialog {
         internalFrame1.add(Scroll, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(internalFrame1, java.awt.BorderLayout.CENTER);
-        internalFrame1.getAccessibleContext().setAccessibleName("::[ Data Surat Napza ]::");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1015,6 +1019,10 @@ public class SuratNapza extends javax.swing.JDialog {
 //            PLdetik.setEditable(true);
 //        }
     }//GEN-LAST:event_chkPLActionPerformed
+
+    private void gejalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gejalaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_gejalaActionPerformed
 
     /**
      * @param args the command line arguments

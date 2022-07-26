@@ -68,6 +68,7 @@ import bridging.BPJSSPRI;
 import bridging.BPJSSuratKontrol;
 import bridging.SirsApi;
 import bridging.SirsLaporanCovid19V3;
+import permintaan.DlgPermintaanKerohanian;
 
 /**
  *
@@ -822,6 +823,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         MnSKDPBPJS = new javax.swing.JMenuItem();
         MnPermintaanLab = new javax.swing.JMenuItem();
         MnPermintaanRadiologi = new javax.swing.JMenuItem();
+        MnPermintaanKerohanian = new javax.swing.JMenuItem();
         MnTindakan = new javax.swing.JMenu();
         MnRawatJalan = new javax.swing.JMenuItem();
         MnRawatInap = new javax.swing.JMenuItem();
@@ -1514,6 +1516,24 @@ public class DlgKamarInap extends javax.swing.JDialog {
             }
         });
         MnPermintaan.add(MnPermintaanRadiologi);
+
+        MnPermintaanKerohanian.setBackground(new java.awt.Color(255, 255, 254));
+        MnPermintaanKerohanian.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        MnPermintaanKerohanian.setForeground(new java.awt.Color(70, 70, 70));
+        MnPermintaanKerohanian.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        MnPermintaanKerohanian.setText("Permintaan Kerohanian");
+        MnPermintaanKerohanian.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        MnPermintaanKerohanian.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        MnPermintaanKerohanian.setIconTextGap(5);
+        MnPermintaanKerohanian.setName("MnPermintaanKerohanian"); // NOI18N
+        MnPermintaanKerohanian.setPreferredSize(new java.awt.Dimension(170, 26));
+        MnPermintaanKerohanian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnPermintaanKerohanianActionPerformed(evt);
+            }
+        });
+        MnPermintaan.add(MnPermintaanKerohanian);
+        MnPermintaanKerohanian.getAccessibleContext().setAccessibleName("Permintaan Kerohanian");
 
         jPopupMenu1.add(MnPermintaan);
 
@@ -3785,7 +3805,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         R2.setPreferredSize(new java.awt.Dimension(90, 23));
         panelCari.add(R2);
 
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-02-2022" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-07-2022" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -3807,7 +3827,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         jLabel22.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel22);
 
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-02-2022" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-07-2022" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -3833,7 +3853,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         R3.setPreferredSize(new java.awt.Dimension(75, 23));
         panelCari.add(R3);
 
-        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-02-2022" }));
+        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-07-2022" }));
         DTPCari3.setDisplayFormat("dd-MM-yyyy");
         DTPCari3.setName("DTPCari3"); // NOI18N
         DTPCari3.setOpaque(false);
@@ -3855,7 +3875,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         jLabel25.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel25);
 
-        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-02-2022" }));
+        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-07-2022" }));
         DTPCari4.setDisplayFormat("dd-MM-yyyy");
         DTPCari4.setName("DTPCari4"); // NOI18N
         DTPCari4.setOpaque(false);
@@ -8970,6 +8990,57 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
         }
     }//GEN-LAST:event_ppSuratPRIBtnPrintActionPerformed
 
+    private void MnPermintaanKerohanianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnPermintaanKerohanianActionPerformed
+        if (tabMode.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Maaf, table masih kosong...!!!!");
+            TCari.requestFocus();
+        } else if (tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 0).toString().equals("")) {
+            try {
+                psanak = koneksi.prepareStatement(
+"");
+                try {
+                    psanak.setString(1, tbKamIn.getValueAt(tbKamIn.getSelectedRow() - 1, 0).toString());
+                    rs2 = psanak.executeQuery();
+                    if (rs2.next()) {
+                        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                        DlgPermintaanKerohanian dlgro = new DlgPermintaanKerohanian(null, false);
+                        dlgro.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
+                        dlgro.setLocationRelativeTo(internalFrame1);
+                        dlgro.emptTeks();
+                        dlgro.isCek();
+                        dlgro.setNoRm(rs2.getString("no_rawat2"), "Ranap");
+                        dlgro.setVisible(true);
+                        this.setCursor(Cursor.getDefaultCursor());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu pasien...!!!");
+                        tbKamIn.requestFocus();
+                    }
+                } catch (Exception ex) {
+                    System.out.println("Notifikasi : " + ex);
+                } finally {
+                    if (rs2 != null) {
+                        rs2.close();
+                    }
+                    if (psanak != null) {
+                        psanak.close();
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        } else {
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            DlgPermintaanKerohanian dlgro = new DlgPermintaanKerohanian(null, false);
+            dlgro.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
+            dlgro.setLocationRelativeTo(internalFrame1);
+            dlgro.emptTeks();
+            dlgro.isCek();
+            dlgro.setNoRm(norawat.getText(), "Ranap");
+            dlgro.setVisible(true);
+            this.setCursor(Cursor.getDefaultCursor());
+        }
+    }//GEN-LAST:event_MnPermintaanKerohanianActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -9076,6 +9147,7 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
     private javax.swing.JMenuItem MnPeriksaLab;
     private javax.swing.JMenuItem MnPeriksaRadiologi;
     private javax.swing.JMenu MnPermintaan;
+    private javax.swing.JMenuItem MnPermintaanKerohanian;
     private javax.swing.JMenuItem MnPermintaanLab;
     private javax.swing.JMenuItem MnPermintaanRadiologi;
     private javax.swing.JMenuItem MnRM2D;
