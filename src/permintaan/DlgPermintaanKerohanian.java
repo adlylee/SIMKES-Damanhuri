@@ -1113,7 +1113,7 @@ private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
         if (reply == JOptionPane.YES_OPTION) {
             try {                    
                 koneksi.setAutoCommit(false);
-                //autoNomor();
+                //autoNomor();simpan
                 if(Sequel.menyimpantf2("permintaan_kerohanian","?,?,?,?,?,?,?","No.Permintaan",7,new String[]{
                     TNoPermintaan.getText(),TNoRw.getText(),TKdKamar.getText(),Valid.SetTgl(Tanggal.getSelectedItem()+""),
                     KdPtg.getText(),"-",Ket.getText()
