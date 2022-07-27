@@ -57,7 +57,7 @@ public final class DlgBulanan extends javax.swing.JDialog {
     private DlgBarcode bar=new DlgBarcode(null,false);
     private String[] id;
     private String[] tgl;
-    private String pilih="";
+    private String pilih="",jam = "",lebih = "";
     
     int no=0,i=0,toleransi=0,terlambat1=0,terlambat2=0;
     /** Creates new form DlgBangsal
@@ -66,7 +66,7 @@ public final class DlgBulanan extends javax.swing.JDialog {
     public DlgBulanan(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        Object[] row={"NIP","Nama","Shift","Jam Datang","Jam Pulang","Status","Keterlambatan","Durasi","Catatan"};
+        Object[] row={"NIP","Nama","Shift","Jam Datang","Jam Pulang","Status","Keterlambatan","Kelebihan","Durasi","Catatan"};
         tabMode=new DefaultTableModel(null,row){
               @Override public boolean isCellEditable(int rowIndex, int colIndex){return false;}
         };
@@ -75,7 +75,7 @@ public final class DlgBulanan extends javax.swing.JDialog {
         tbBangsal.setPreferredScrollableViewportSize(new Dimension(500,500));
         tbBangsal.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 9; i++) {
+        for (i = 0; i < 10; i++) {
             TableColumn column = tbBangsal.getColumnModel().getColumn(i);
             if(i==0){
                 column.setPreferredWidth(100);
@@ -92,8 +92,10 @@ public final class DlgBulanan extends javax.swing.JDialog {
             }else if(i==6){
                 column.setPreferredWidth(90);
             }else if(i==7){
-                column.setPreferredWidth(80);
+                column.setPreferredWidth(90);
             }else if(i==8){
+                column.setPreferredWidth(80);
+            }else if(i==9){
                 column.setPreferredWidth(300);
             }
         }
@@ -129,6 +131,10 @@ public final class DlgBulanan extends javax.swing.JDialog {
         Valid.loadCombo(Departemen,"nama","departemen");
         Departemen.addItem("Semua");
         Departemen.setSelectedItem("Semua");
+        
+        Valid.loadCombo(Bidang,"nama","bidang");
+        Bidang.addItem("Semua");
+        Bidang.setSelectedItem("Semua");
         
         bar.addWindowListener(new WindowListener() {
             @Override
@@ -173,15 +179,15 @@ public final class DlgBulanan extends javax.swing.JDialog {
            ps=koneksi.prepareStatement(
                 "select  pegawai.id, pegawai.nik, pegawai.nama, rekap_presensi.shift, rekap_presensi.jam_datang, "+
                 "rekap_presensi.jam_pulang, rekap_presensi.status, rekap_presensi.keterlambatan, rekap_presensi.durasi, "+
-                "rekap_presensi.keterangan from pegawai inner join rekap_presensi inner join departemen "+
-                "on pegawai.departemen=departemen.dep_id and pegawai.id=rekap_presensi.id where "+
-                " pegawai.stts_aktif<>'KELUAR' and departemen.nama like ? and pegawai.nik like ? and rekap_presensi.jam_datang like ?  "+
-                "or pegawai.stts_aktif<>'KELUAR' and departemen.nama like ? and pegawai.nama like ? and  rekap_presensi.jam_datang like ?  "+                   
-                "or pegawai.stts_aktif<>'KELUAR' and departemen.nama like ? and rekap_presensi.shift like ? and  rekap_presensi.jam_datang like ?  "+
-                "or pegawai.stts_aktif<>'KELUAR' and departemen.nama like ? and rekap_presensi.status like ? and  rekap_presensi.jam_datang like ?  "+
-                "or pegawai.stts_aktif<>'KELUAR' and departemen.nama like ? and rekap_presensi.keterlambatan like ? and  rekap_presensi.jam_datang like ?  "+
-                "or pegawai.stts_aktif<>'KELUAR' and departemen.nama like ? and rekap_presensi.jam_datang like ? and  rekap_presensi.jam_datang like ? "+
-                "or pegawai.stts_aktif<>'KELUAR' and departemen.nama like ? and rekap_presensi.jam_pulang like ? and  rekap_presensi.jam_datang like ?  order by pegawai.nama ");
+                "rekap_presensi.keterangan from pegawai inner join rekap_presensi inner join departemen inner join bidang "+
+                "on pegawai.departemen=departemen.dep_id and pegawai.id=rekap_presensi.id and pegawai.bidang = bidang.nama where "+
+                " pegawai.stts_aktif<>'KELUAR' and departemen.nama like ? and bidang.nama like ? and rekap_presensi.jam_datang like ? and ( pegawai.nik like ?   "+
+                "or pegawai.nama like ? "+                   
+                "or rekap_presensi.shift like ?  "+
+                "or rekap_presensi.status like ? "+
+                "or rekap_presensi.keterlambatan like ?   "+
+                "or rekap_presensi.jam_datang like ?  "+
+                "or rekap_presensi.jam_pulang like ? ) order by pegawai.nama ");
             psketerlambatan=koneksi.prepareStatement("select * from set_keterlambatan");
             rsketerlambatan=psketerlambatan.executeQuery();
             if(rsketerlambatan.next()){
@@ -247,6 +253,8 @@ public final class DlgBulanan extends javax.swing.JDialog {
         BlnCari = new widget.ComboBox();
         label12 = new widget.Label();
         Departemen = new widget.ComboBox();
+        label13 = new widget.Label();
+        Bidang = new widget.ComboBox();
         jLabel6 = new widget.Label();
         TCari = new widget.TextBox();
         BtnCari = new widget.Button();
@@ -539,6 +547,15 @@ public final class DlgBulanan extends javax.swing.JDialog {
         Departemen.setName("Departemen"); // NOI18N
         Departemen.setPreferredSize(new java.awt.Dimension(130, 23));
         panelGlass7.add(Departemen);
+
+        label13.setText("Bidang :");
+        label13.setName("label13"); // NOI18N
+        label13.setPreferredSize(new java.awt.Dimension(77, 23));
+        panelGlass7.add(label13);
+
+        Bidang.setName("Bidang"); // NOI18N
+        Bidang.setPreferredSize(new java.awt.Dimension(130, 23));
+        panelGlass7.add(Bidang);
 
         jLabel6.setText("Key Word :");
         jLabel6.setName("jLabel6"); // NOI18N
@@ -1141,6 +1158,7 @@ public final class DlgBulanan extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private widget.ComboBox Bidang;
     private widget.ComboBox BlnCari;
     private widget.Button BtnAll;
     private widget.Button BtnBatal;
@@ -1179,6 +1197,7 @@ public final class DlgBulanan extends javax.swing.JDialog {
     private widget.TextBox jampulang;
     private widget.Label label11;
     private widget.Label label12;
+    private widget.Label label13;
     private widget.Label label2;
     private widget.Label label23;
     private widget.Label label24;
@@ -1196,26 +1215,15 @@ public final class DlgBulanan extends javax.swing.JDialog {
         Valid.tabelKosong(tabMode);
         try{  
             ps.setString(1,"%"+Departemen.getSelectedItem().toString().replaceAll("Semua","")+"%");
-            ps.setString(2,"%"+TCari.getText().trim()+"%");
+            ps.setString(2,"%"+Bidang.getSelectedItem().toString().replaceAll("Semua","")+"%");
             ps.setString(3,"%"+ThnCari.getSelectedItem()+"-"+BlnCari.getSelectedItem()+"%");
-            ps.setString(4,"%"+Departemen.getSelectedItem().toString().replaceAll("Semua","")+"%");
+            ps.setString(4,"%"+TCari.getText().trim()+"%");
             ps.setString(5,"%"+TCari.getText().trim()+"%");
-            ps.setString(6,"%"+ThnCari.getSelectedItem()+"-"+BlnCari.getSelectedItem()+"%");
-            ps.setString(7,"%"+Departemen.getSelectedItem().toString().replaceAll("Semua","")+"%");
+            ps.setString(6,"%"+TCari.getText().trim()+"%");
+            ps.setString(7,"%"+TCari.getText().trim()+"%");
             ps.setString(8,"%"+TCari.getText().trim()+"%");
-            ps.setString(9,"%"+ThnCari.getSelectedItem()+"-"+BlnCari.getSelectedItem()+"%");
-            ps.setString(10,"%"+Departemen.getSelectedItem().toString().replaceAll("Semua","")+"%");
-            ps.setString(11,"%"+TCari.getText().trim()+"%");
-            ps.setString(12,"%"+ThnCari.getSelectedItem()+"-"+BlnCari.getSelectedItem()+"%");
-            ps.setString(13,"%"+Departemen.getSelectedItem().toString().replaceAll("Semua","")+"%");
-            ps.setString(14,"%"+TCari.getText().trim()+"%");
-            ps.setString(15,"%"+ThnCari.getSelectedItem()+"-"+BlnCari.getSelectedItem()+"%");
-            ps.setString(16,"%"+Departemen.getSelectedItem().toString().replaceAll("Semua","")+"%");
-            ps.setString(17,"%"+TCari.getText().trim()+"%");
-            ps.setString(18,"%"+ThnCari.getSelectedItem()+"-"+BlnCari.getSelectedItem()+"%");
-            ps.setString(19,"%"+Departemen.getSelectedItem().toString().replaceAll("Semua","")+"%");
-            ps.setString(20,"%"+TCari.getText().trim()+"%");
-            ps.setString(21,"%"+ThnCari.getSelectedItem()+"-"+BlnCari.getSelectedItem()+"%");
+            ps.setString(9,"%"+TCari.getText().trim()+"%");
+            ps.setString(10,"%"+TCari.getText().trim()+"%");
             rs=ps.executeQuery();            
             rs.last();            
             id=new String[rs.getRow()];
@@ -1223,13 +1231,21 @@ public final class DlgBulanan extends javax.swing.JDialog {
             rs.beforeFirst();            
             i=0;            
             while(rs.next()){
+                if (rs.getString(7).contains("Tepat Waktu")) {
+                    jam = "00:00:00";
+                    lebih = rs.getString(8);
+                } else {
+                    jam = rs.getString(8);
+                    lebih = "00:00:00";
+                }
                 tabMode.addRow(new String[]{rs.getString(2),
                                rs.getString(3),
                                rs.getString(4),
                                rs.getString(5),
                                rs.getString(6),
-                               rs.getString(7),
-                               rs.getString(8),
+                               rs.getString(7),//ini status
+                               jam,//keterlambatan
+                               lebih,
                                rs.getString(9),
                                rs.getString(10)});
                 id[i]=rs.getString(1);
@@ -1307,9 +1323,14 @@ public final class DlgBulanan extends javax.swing.JDialog {
     }
     
     public void isCek(){
-        BtnSimpan.setEnabled(var.getpresensi_bulanan());
-        BtnHapus.setEnabled(var.getpresensi_bulanan());
-        BtnEdit.setEnabled(var.getpresensi_bulanan());
+        if (var.getkode().equals("Admin Utama")) {
+            BtnSimpan.setEnabled(true);
+            BtnHapus.setEnabled(true);
+            BtnEdit.setEnabled(true);
+            BtnSimpan.setVisible(true);
+            BtnHapus.setVisible(true);
+            BtnEdit.setVisible(true);
+        }
         BtnPrint.setEnabled(var.getpresensi_bulanan());
      }
 

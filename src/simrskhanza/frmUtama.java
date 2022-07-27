@@ -8248,7 +8248,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         isTutup();
         DlgBulanan bulanan=new DlgBulanan(this,false);
         bulanan.isCek();
-        bulanan.tampil();
+//        bulanan.tampil();
         bulanan.setSize(PanelUtama.getWidth(), PanelUtama.getHeight());
         bulanan.setLocationRelativeTo(PanelUtama);
         bulanan.setVisible(true);

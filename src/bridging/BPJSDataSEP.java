@@ -1176,7 +1176,14 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
                     Valid.SetTgl(TanggalSEP, skdp2.getTable().getValueAt(skdp2.getTable().getSelectedRow(), 7).toString());
                     KdDPJP.setText(skdp2.getTable().getValueAt(skdp2.getTable().getSelectedRow(), 10).toString());
                     NmDPJP.setText(skdp2.getTable().getValueAt(skdp2.getTable().getSelectedRow(), 11).toString());
+                    String kd_diagnosa = skdp2.getTable().getValueAt(skdp2.getTable().getSelectedRow(), 6).toString();
+                    int position = kd_diagnosa.indexOf(" - ");
+                    System.out.println(position);
+                    KdPenyakit.setText(kd_diagnosa.substring(0,position));
+                    NmPenyakit.setText(kd_diagnosa.substring(position + 3));
                     NoSKDP.requestFocus();
+                    String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+                    NoRujukan.setText(timeStamp);
                 }
             }
 
@@ -4560,6 +4567,10 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             AsalRujukan.setSelectedIndex(1);
             KdPoli.setText("");
             NmPoli.setText("");
+            KdDPJP.setText("");
+            NmDPJP.setText("");
+            KdPenyakit.setText("");
+            NmPenyakit.setText("");
         } else if (JenisPelayanan.getSelectedIndex() == 1) {
             LabelPoli.setVisible(true);
             KdPoli.setVisible(true);
@@ -6474,6 +6485,11 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         Sequel.cariIsi("select no_rkm_medis from reg_periksa where no_rawat=? ", TNoRM, TNoRw.getText());
         Catatan.setText("-");
     }
+    
+    private void cekDiagnosa(){
+        Sequel.cariIsi("SELECT kd_penyakit FROM diagnosa_pasien WHERE no_rawat = ? AND prioritas = 1 AND status = 'Ralan' LIMIT 1",KdPenyakit,TNoRw.getText());
+        Sequel.cariIsi("SELECT nm_penyakit FROM penyakit WHERE kd_penyakit = ? LIMIT 1",NmPenyakit,KdPenyakit.getText());
+    }
 
     private void emptTeks() {
         TNoRw.setText("");
@@ -6541,6 +6557,9 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         JenisPelayanan.setSelectedItem(status);
         JenisPelayananItemStateChanged(null);
         isRawat();
+        if(kdpoli == "IGDK"){
+            cekDiagnosa();
+        }
     }
 
     public void isCek() {
@@ -6830,33 +6849,26 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             headers.add("X-Cons-ID", koneksiDB.ConsIdBpjs());
             headers.add("X-Timestamp", String.valueOf(api.GetUTCdatetimeAsString()));
             headers.add("X-Signature", api.getHmac());
-            if (koneksiDB.UrlBpjs().contains("apijkn")) {
-                headers.add("user_key", koneksiDB.UserKeyBpjs());
-                URL = koneksiDB.UrlBpjs() + "/SEP/2.0/insert";
-                klsRawat = "\"klsRawat\": {"
-                        + "\"klsRawatHak\":\"" + Kelas.getSelectedItem().toString().substring(0, 1) + "\","
-                        + "\"klsRawatNaik\":\"" + (Kelas1.getSelectedIndex() > 0 ? Kelas1.getSelectedItem().toString().substring(0, 1) : "") + "\","
-                        + "\"pembiayaan\":\"" + (cmbPembiayaan.getSelectedIndex() > 0 ? cmbPembiayaan.getSelectedItem().toString().substring(0, 1) : "") + "\","
-                        + "\"penanggungJawab\":\"" + (pnj.getText().equals("") ? "" : pnj.getText()) + "\""
-                        + "},";
-                sep2tambah = "\"tujuanKunj\":\"" + cmbKunjungan.getSelectedItem().toString().substring(0, 1) + "\","
-                        + "\"flagProcedure\":\"" + (cmbProcedure.getSelectedIndex() > 0 ? cmbProcedure.getSelectedItem().toString().substring(0, 1) : "") + "\","
-                        + "\"kdPenunjang\":\"" + penunjang + "\","
-                        + "\"assesmentPel\":\"" + (cmbAsesment.getSelectedIndex() > 0 ? cmbAsesment.getSelectedItem().toString().substring(0, 1) : "") + "\",";
-                if (JenisPelayanan.getSelectedIndex() == 1) {
-                    dpjlayan = "\"dpjpLayan\":\"" + KdDPJP.getText() + "\",";
-                } else {
-                    dpjlayan = "\"dpjpLayan\":\"\",";
-                }
-
-                penjaminan = "";
+            headers.add("user_key", koneksiDB.UserKeyBpjs());
+            URL = koneksiDB.UrlBpjs() + "/SEP/2.0/insert";
+            klsRawat = "\"klsRawat\": {"
+                    + "\"klsRawatHak\":\"" + Kelas.getSelectedItem().toString().substring(0, 1) + "\","
+                    + "\"klsRawatNaik\":\"" + (Kelas1.getSelectedIndex() > 0 ? Kelas1.getSelectedItem().toString().substring(0, 1) : "") + "\","
+                    + "\"pembiayaan\":\"" + (cmbPembiayaan.getSelectedIndex() > 0 ? cmbPembiayaan.getSelectedItem().toString().substring(0, 1) : "") + "\","
+                    + "\"penanggungJawab\":\"" + (pnj.getText().equals("") ? "" : pnj.getText()) + "\""
+                    + "},";
+            sep2tambah = "\"tujuanKunj\":\"" + cmbKunjungan.getSelectedItem().toString().substring(0, 1) + "\","
+                    + "\"flagProcedure\":\"" + (cmbProcedure.getSelectedIndex() > 0 ? cmbProcedure.getSelectedItem().toString().substring(0, 1) : "") + "\","
+                    + "\"kdPenunjang\":\"" + penunjang + "\","
+                    + "\"assesmentPel\":\"" + (cmbAsesment.getSelectedIndex() > 0 ? cmbAsesment.getSelectedItem().toString().substring(0, 1) : "") + "\",";
+            if (JenisPelayanan.getSelectedIndex() == 1) {
+                dpjlayan = "\"dpjpLayan\":\"" + KdDPJPLayan.getText() + "\",";
             } else {
-                URL = koneksiDB.UrlBpjs() + "/SEP/1.1/insert";
-                klsRawat = "\"klsRawat\":\"" + Kelas.getSelectedItem().toString().substring(0, 1) + "\",";
-                sep2tambah = "";
-                dpjlayan = "";
-                penjaminan = "\"penjamin\": \"" + penjamin + "\",";
+                dpjlayan = "\"dpjpLayan\":\"\",";
             }
+
+            penjaminan = "";
+
             requestJson = "{"
                     + "\"request\":"
                     + "{"
@@ -6906,7 +6918,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
                     + sep2tambah
                     + "\"skdp\": {"
                     + "\"noSurat\": \"" + NoSKDP.getText() + "\","
-                    + "\"kodeDPJP\": \"" + KdDPJPLayan.getText() + "\""
+                    + "\"kodeDPJP\": \"" + KdDPJP.getText() + "\""
                     + "},"
                     + dpjlayan
                     + "\"noTelp\": \"" + NoTelp.getText() + "\","

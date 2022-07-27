@@ -1,5 +1,6 @@
 package simrskhanza;
 
+import fungsi.koneksiDB;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,13 +15,13 @@ public class Update {
     
     public static String getLatestVersion() throws Exception
     {
-        URL= "http://192.168.0.250/updatesimrs/changelog.txt";
+        URL= koneksiDB.UrlAutoUpdate()+"/changelog.txt";
         String data = getData(URL);
         return data.substring(data.indexOf("[version]")+9,data.indexOf("[/version]"));
     }
     public static String getWhatsNew() throws Exception
     {
-        URL= "http://192.168.0.250/updatesimrs/changelog.txt";
+        URL= koneksiDB.UrlAutoUpdate()+"/changelog.txt";
         String data = getData(URL);
         return data.substring(data.indexOf("[history]")+9,data.indexOf("[/history]"));
     }
