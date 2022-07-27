@@ -361,7 +361,7 @@ public final class DlgCariPetugas extends javax.swing.JDialog {
     private widget.Button BtnTambah;
     private widget.Label LCount;
     private widget.ScrollPane Scroll;
-    private widget.TextBox TCari;
+    public widget.TextBox TCari;
     private widget.InternalFrame internalFrame1;
     private widget.Label label10;
     private widget.Label label9;

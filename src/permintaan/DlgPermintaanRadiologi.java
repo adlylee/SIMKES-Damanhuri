@@ -434,7 +434,7 @@ public final class DlgPermintaanRadiologi extends javax.swing.JDialog {
         PanelInput.add(jLabel9);
         jLabel9.setBounds(0, 42, 92, 23);
 
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10-01-2022" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "19-07-2022" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy");
         Tanggal.setName("Tanggal"); // NOI18N
         Tanggal.setOpaque(false);
@@ -514,6 +514,11 @@ public final class DlgPermintaanRadiologi extends javax.swing.JDialog {
 
         TNoPermintaan.setHighlighter(null);
         TNoPermintaan.setName("TNoPermintaan"); // NOI18N
+        TNoPermintaan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TNoPermintaanActionPerformed(evt);
+            }
+        });
         TNoPermintaan.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 TNoPermintaanKeyPressed(evt);
@@ -898,6 +903,10 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     private void TNoPermintaanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TNoPermintaanKeyPressed
         //Valid.pindah(evt,TNoReg,DTPReg);
     }//GEN-LAST:event_TNoPermintaanKeyPressed
+
+    private void TNoPermintaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TNoPermintaanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TNoPermintaanActionPerformed
 
     /**
     * @param args the command line arguments
