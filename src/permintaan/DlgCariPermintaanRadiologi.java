@@ -467,7 +467,7 @@ public class DlgCariPermintaanRadiologi extends javax.swing.JDialog {
         WindowAmbilSampel.setUndecorated(true);
         WindowAmbilSampel.setResizable(false);
 
-        internalFrame5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Update Waktu Pengambilan Sampel ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Update Waktu Pengambilan Sampel ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame5.setName("internalFrame5"); // NOI18N
         internalFrame5.setLayout(null);
 
@@ -502,7 +502,7 @@ public class DlgCariPermintaanRadiologi extends javax.swing.JDialog {
         internalFrame5.add(jLabel26);
         jLabel26.setBounds(6, 32, 100, 23);
 
-        TanggalPulang.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "17-11-2019 08:26:51" }));
+        TanggalPulang.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "23-07-2022 10:23:52" }));
         TanggalPulang.setDisplayFormat("dd-MM-yyyy HH:mm:ss");
         TanggalPulang.setName("TanggalPulang"); // NOI18N
         TanggalPulang.setOpaque(false);
@@ -577,6 +577,11 @@ public class DlgCariPermintaanRadiologi extends javax.swing.JDialog {
 
         TCari.setName("TCari"); // NOI18N
         TCari.setPreferredSize(new java.awt.Dimension(318, 23));
+        TCari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TCariActionPerformed(evt);
+            }
+        });
         TCari.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 TCariKeyPressed(evt);
@@ -732,7 +737,6 @@ public class DlgCariPermintaanRadiologi extends javax.swing.JDialog {
 
         TabPilihRawat.setBackground(new java.awt.Color(255, 255, 254));
         TabPilihRawat.setForeground(new java.awt.Color(70, 70, 70));
-        TabPilihRawat.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         TabPilihRawat.setName("TabPilihRawat"); // NOI18N
         TabPilihRawat.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -797,7 +801,6 @@ public class DlgCariPermintaanRadiologi extends javax.swing.JDialog {
 
         TabRawatJalan.setBackground(new java.awt.Color(255, 255, 254));
         TabRawatJalan.setForeground(new java.awt.Color(70, 70, 70));
-        TabRawatJalan.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         TabRawatJalan.setName("TabRawatJalan"); // NOI18N
         TabRawatJalan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -929,7 +932,6 @@ public class DlgCariPermintaanRadiologi extends javax.swing.JDialog {
 
         TabRawatInap.setBackground(new java.awt.Color(255, 255, 254));
         TabRawatInap.setForeground(new java.awt.Color(70, 70, 70));
-        TabRawatInap.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         TabRawatInap.setName("TabRawatInap"); // NOI18N
         TabRawatInap.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1837,26 +1839,6 @@ private void tbRadiologiRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
         pilihTab();
     }//GEN-LAST:event_TabPilihRawatMouseClicked
 
-    private void tbRadiologiRanapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbRadiologiRanapMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tbRadiologiRanapMouseClicked
-
-    private void tbRadiologiRanapKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbRadiologiRanapKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tbRadiologiRanapKeyPressed
-
-    private void tbRadiologiRanap2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbRadiologiRanap2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tbRadiologiRanap2MouseClicked
-
-    private void tbRadiologiRanap2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbRadiologiRanap2KeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tbRadiologiRanap2KeyPressed
-
-    private void TabRawatInapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabRawatInapMouseClicked
-        pilihRanap();
-    }//GEN-LAST:event_TabRawatInapMouseClicked
-
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         aktif=true;
     }//GEN-LAST:event_formWindowActivated
@@ -1864,6 +1846,30 @@ private void tbRadiologiRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
     private void formWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeactivated
         aktif=false;
     }//GEN-LAST:event_formWindowDeactivated
+
+    private void TabRawatInapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabRawatInapMouseClicked
+        pilihRanap();
+    }//GEN-LAST:event_TabRawatInapMouseClicked
+
+    private void tbRadiologiRanap2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbRadiologiRanap2KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbRadiologiRanap2KeyPressed
+
+    private void tbRadiologiRanap2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbRadiologiRanap2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbRadiologiRanap2MouseClicked
+
+    private void tbRadiologiRanapKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbRadiologiRanapKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbRadiologiRanapKeyPressed
+
+    private void tbRadiologiRanapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbRadiologiRanapMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbRadiologiRanapMouseClicked
+
+    private void TCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TCariActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TCariActionPerformed
 
     /**
     * @param args the command line arguments
@@ -2121,7 +2127,7 @@ private void tbRadiologiRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
     
     public void isCek(){
         MnCetakHasilRadiologi.setEnabled(var.getpermintaan_radiologi());
-        BtnSampel.setEnabled(var.getpermintaan_radiologi());
+//        BtnSampel.setEnabled(var.getpermintaan_radiologi());
         BtnHasil.setEnabled(var.getperiksa_radiologi());
         BtnHapus.setEnabled(var.getpermintaan_radiologi());
         BtnPrint.setEnabled(var.getpermintaan_radiologi());

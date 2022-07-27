@@ -99,7 +99,7 @@ public final class var {
             password_asuransi=false,kemenkes_sitt=false,siranap_ketersediaan_kamar=false,grafik_tb_periodelaporan=false,grafik_tb_rujukan=false,
             grafik_tb_riwayat=false,grafik_tb_tipediagnosis=false,grafik_tb_statushiv=false,grafik_tb_skoringanak=false,grafik_tb_konfirmasiskoring5=false,
             grafik_tb_konfirmasiskoring6=false,grafik_tb_sumberobat=false,grafik_tb_hasilakhirpengobatan=false,grafik_tb_hasilteshiv=false,
-            kadaluarsa_batch=false,sisa_stok=false,obat_per_resep=false,pemakaian_air_pdam=false,limbah_b3_medis=false,grafik_air_pdam_pertanggal=false;
+            kadaluarsa_batch=false,sisa_stok=false,obat_per_resep=false,pemakaian_air_pdam=false,limbah_b3_medis=false,grafik_air_pdam_pertanggal=false, roh=false;
     
     public static void setData(String user, String pass) {
        try {                
@@ -236,7 +236,8 @@ public final class var {
                         var.billing_ralan=true;
                         var.billing_ranap=true;
                         var.jm_ranap_dokter=true;
-                        var.igd=true;                    
+                        var.igd=true;    
+                        var.roh=true;
                         var.barcoderalan=true;
                         var.barcoderanap=true;
                         var.set_harga_obat_ralan=true;
@@ -699,7 +700,8 @@ public final class var {
                         var.billing_ralan=rs2.getBoolean("billing_ralan"); 
                         var.billing_ranap=rs2.getBoolean("billing_ranap"); 
                         var.jm_ranap_dokter=rs2.getBoolean("jm_ranap_dokter");   
-                        var.igd=rs2.getBoolean("igd");                    
+                        var.igd=rs2.getBoolean("igd");
+                        var.roh=rs2.getBoolean("roh");
                         var.barcoderalan=rs2.getBoolean("barcoderalan"); 
                         var.barcoderanap=rs2.getBoolean("barcoderanap"); 
                         var.set_harga_obat_ralan=rs2.getBoolean("set_harga_obat_ralan"); 
@@ -1160,7 +1162,8 @@ public final class var {
                         var.billing_ralan=false;
                         var.billing_ranap=false;
                         var.jm_ranap_dokter=false;   
-                        var.igd=false;   
+                        var.igd=false;  
+                        var.roh=false;
                         var.barcoderalan=false; 
                         var.barcoderanap=false;
                         var.set_harga_obat_ralan=false; 
@@ -1551,7 +1554,7 @@ public final class var {
     public static boolean getdiet_pasien(){return var.diet_pasien;} 
     public static boolean getkelahiran_bayi(){return var.kelahiran_bayi;} 
     public static boolean getperiksa_lab(){return var.periksa_lab;} 
-    public static boolean getperiksa_radiologi(){return var.periksa_radiologi;} 
+    public static boolean getperiksa_radiologi(){return var.periksa_radiologi;}
     public static boolean getkasir_ralan(){return var.kasir_ralan;} 
     public static boolean getdeposit_pasien(){return var.deposit_pasien;} 
     public static boolean getpiutang_pasien(){return var.piutang_pasien;} 
@@ -1658,7 +1661,8 @@ public final class var {
     public static void setstatus(boolean status){var.status=status;}
     public static boolean getstatus(){return var.status;}
     public static boolean getjm_ranap_dokter(){return var.jm_ranap_dokter;}     
-    public static boolean getigd(){return var.igd;}     
+    public static boolean getigd(){return var.igd;}
+    public static boolean getroh(){return var.roh;}
     public static boolean getbarcoderalan(){return var.barcoderalan;}     
     public static boolean getbarcoderanap(){return var.barcoderanap;}    
     public static boolean getset_harga_obat_ralan(){return var.set_harga_obat_ralan;}  
@@ -1922,7 +1926,7 @@ public final class var {
     public static void setperiksalabfalse(){var.periksa_lab=false;} 
     public static void setpermintaanlabfalse(){var.permintaan_lab=false;} 
     public static boolean getpermintaan_radiologi(){return var.permintaan_radiologi;}
-    public static void setperiksaradiologifalse(){var.periksa_radiologi=false;} 
+    public static void setperiksaradiologifalse(){var.periksa_radiologi=false;}
     public static void setpermintaanradiologifalse(){var.permintaan_radiologi=false;} 
     public static boolean getsurat_indeks(){return var.surat_indeks;}
     public static boolean getsurat_map(){return var.surat_map;}

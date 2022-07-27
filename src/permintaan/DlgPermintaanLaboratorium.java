@@ -1472,7 +1472,7 @@ private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                     rstindakan=pstindakan4.executeQuery();
                 } 
                             
-                while(rstindakan.next()){                
+                while(rstindakan.next()){
                     tabMode2.addRow(new Object[]{false,rstindakan.getString(1),rstindakan.getString(2)});
                 }
             } catch (Exception e) {
