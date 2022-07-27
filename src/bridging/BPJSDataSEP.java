@@ -6849,33 +6849,26 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             headers.add("X-Cons-ID", koneksiDB.ConsIdBpjs());
             headers.add("X-Timestamp", String.valueOf(api.GetUTCdatetimeAsString()));
             headers.add("X-Signature", api.getHmac());
-            if (koneksiDB.UrlBpjs().contains("apijkn")) {
-                headers.add("user_key", koneksiDB.UserKeyBpjs());
-                URL = koneksiDB.UrlBpjs() + "/SEP/2.0/insert";
-                klsRawat = "\"klsRawat\": {"
-                        + "\"klsRawatHak\":\"" + Kelas.getSelectedItem().toString().substring(0, 1) + "\","
-                        + "\"klsRawatNaik\":\"" + (Kelas1.getSelectedIndex() > 0 ? Kelas1.getSelectedItem().toString().substring(0, 1) : "") + "\","
-                        + "\"pembiayaan\":\"" + (cmbPembiayaan.getSelectedIndex() > 0 ? cmbPembiayaan.getSelectedItem().toString().substring(0, 1) : "") + "\","
-                        + "\"penanggungJawab\":\"" + (pnj.getText().equals("") ? "" : pnj.getText()) + "\""
-                        + "},";
-                sep2tambah = "\"tujuanKunj\":\"" + cmbKunjungan.getSelectedItem().toString().substring(0, 1) + "\","
-                        + "\"flagProcedure\":\"" + (cmbProcedure.getSelectedIndex() > 0 ? cmbProcedure.getSelectedItem().toString().substring(0, 1) : "") + "\","
-                        + "\"kdPenunjang\":\"" + penunjang + "\","
-                        + "\"assesmentPel\":\"" + (cmbAsesment.getSelectedIndex() > 0 ? cmbAsesment.getSelectedItem().toString().substring(0, 1) : "") + "\",";
-                if (JenisPelayanan.getSelectedIndex() == 1) {
-                    dpjlayan = "\"dpjpLayan\":\"" + KdDPJP.getText() + "\",";
-                } else {
-                    dpjlayan = "\"dpjpLayan\":\"\",";
-                }
-
-                penjaminan = "";
+            headers.add("user_key", koneksiDB.UserKeyBpjs());
+            URL = koneksiDB.UrlBpjs() + "/SEP/2.0/insert";
+            klsRawat = "\"klsRawat\": {"
+                    + "\"klsRawatHak\":\"" + Kelas.getSelectedItem().toString().substring(0, 1) + "\","
+                    + "\"klsRawatNaik\":\"" + (Kelas1.getSelectedIndex() > 0 ? Kelas1.getSelectedItem().toString().substring(0, 1) : "") + "\","
+                    + "\"pembiayaan\":\"" + (cmbPembiayaan.getSelectedIndex() > 0 ? cmbPembiayaan.getSelectedItem().toString().substring(0, 1) : "") + "\","
+                    + "\"penanggungJawab\":\"" + (pnj.getText().equals("") ? "" : pnj.getText()) + "\""
+                    + "},";
+            sep2tambah = "\"tujuanKunj\":\"" + cmbKunjungan.getSelectedItem().toString().substring(0, 1) + "\","
+                    + "\"flagProcedure\":\"" + (cmbProcedure.getSelectedIndex() > 0 ? cmbProcedure.getSelectedItem().toString().substring(0, 1) : "") + "\","
+                    + "\"kdPenunjang\":\"" + penunjang + "\","
+                    + "\"assesmentPel\":\"" + (cmbAsesment.getSelectedIndex() > 0 ? cmbAsesment.getSelectedItem().toString().substring(0, 1) : "") + "\",";
+            if (JenisPelayanan.getSelectedIndex() == 1) {
+                dpjlayan = "\"dpjpLayan\":\"" + KdDPJPLayan.getText() + "\",";
             } else {
-                URL = koneksiDB.UrlBpjs() + "/SEP/1.1/insert";
-                klsRawat = "\"klsRawat\":\"" + Kelas.getSelectedItem().toString().substring(0, 1) + "\",";
-                sep2tambah = "";
-                dpjlayan = "";
-                penjaminan = "\"penjamin\": \"" + penjamin + "\",";
+                dpjlayan = "\"dpjpLayan\":\"\",";
             }
+
+            penjaminan = "";
+
             requestJson = "{"
                     + "\"request\":"
                     + "{"
@@ -6925,7 +6918,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
                     + sep2tambah
                     + "\"skdp\": {"
                     + "\"noSurat\": \"" + NoSKDP.getText() + "\","
-                    + "\"kodeDPJP\": \"" + KdDPJPLayan.getText() + "\""
+                    + "\"kodeDPJP\": \"" + KdDPJP.getText() + "\""
                     + "},"
                     + dpjlayan
                     + "\"noTelp\": \"" + NoTelp.getText() + "\","
