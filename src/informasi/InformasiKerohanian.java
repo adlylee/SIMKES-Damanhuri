@@ -43,13 +43,12 @@ public class InformasiKerohanian extends javax.swing.JDialog {
     private Connection koneksi=koneksiDB.condb();
     private int i;
     private PreparedStatement ps,ps2;
-//    private final Properties prop = new Properties();
-//    private BackgroundMusic music;
     private ResultSet rs,rs2;
 //    private Date now;
 //    private boolean aktif=false;
     private DlgCariPetugas petugas=new DlgCariPetugas(null,false);
     private DlgCariBangsal ruang=new DlgCariBangsal(null,false);
+    private String norm="";
     
     /** Creates new form DlgProgramStudi
      * @param parent
@@ -185,9 +184,7 @@ public class InformasiKerohanian extends javax.swing.JDialog {
 
         Kd2 = new widget.TextBox();
         jPopupMenu1 = new javax.swing.JPopupMenu();
-        MnCetakHasilRadiologi = new javax.swing.JMenuItem();
-        MnBarcodePermintaan = new javax.swing.JMenuItem();
-        MnBarcodePermintaan1 = new javax.swing.JMenuItem();
+        MnCetakKerohanian = new javax.swing.JMenuItem();
         WindowAmbilPetugas = new javax.swing.JDialog();
         internalFrame5 = new widget.InternalFrame();
         BtnCloseIn4 = new widget.Button();
@@ -227,47 +224,19 @@ public class InformasiKerohanian extends javax.swing.JDialog {
 
         jPopupMenu1.setName("jPopupMenu1"); // NOI18N
 
-        MnCetakHasilRadiologi.setBackground(new java.awt.Color(255, 255, 254));
-        MnCetakHasilRadiologi.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        MnCetakHasilRadiologi.setForeground(new java.awt.Color(70, 70, 70));
-        MnCetakHasilRadiologi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
-        MnCetakHasilRadiologi.setText("Cetak Permintaan Radiologi");
-        MnCetakHasilRadiologi.setName("MnCetakHasilRadiologi"); // NOI18N
-        MnCetakHasilRadiologi.setPreferredSize(new java.awt.Dimension(200, 28));
-        MnCetakHasilRadiologi.addActionListener(new java.awt.event.ActionListener() {
+        MnCetakKerohanian.setBackground(new java.awt.Color(255, 255, 254));
+        MnCetakKerohanian.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        MnCetakKerohanian.setForeground(new java.awt.Color(70, 70, 70));
+        MnCetakKerohanian.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        MnCetakKerohanian.setText("Cetak Permintaan Kerohanian");
+        MnCetakKerohanian.setName("MnCetakKerohanian"); // NOI18N
+        MnCetakKerohanian.setPreferredSize(new java.awt.Dimension(200, 28));
+        MnCetakKerohanian.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MnCetakHasilRadiologiActionPerformed(evt);
+                MnCetakKerohanianActionPerformed(evt);
             }
         });
-        jPopupMenu1.add(MnCetakHasilRadiologi);
-
-        MnBarcodePermintaan.setBackground(new java.awt.Color(255, 255, 254));
-        MnBarcodePermintaan.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        MnBarcodePermintaan.setForeground(new java.awt.Color(70, 70, 70));
-        MnBarcodePermintaan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
-        MnBarcodePermintaan.setText("Barcode No.Permintaan");
-        MnBarcodePermintaan.setName("MnBarcodePermintaan"); // NOI18N
-        MnBarcodePermintaan.setPreferredSize(new java.awt.Dimension(200, 28));
-        MnBarcodePermintaan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MnBarcodePermintaanActionPerformed(evt);
-            }
-        });
-        jPopupMenu1.add(MnBarcodePermintaan);
-
-        MnBarcodePermintaan1.setBackground(new java.awt.Color(255, 255, 254));
-        MnBarcodePermintaan1.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        MnBarcodePermintaan1.setForeground(new java.awt.Color(70, 70, 70));
-        MnBarcodePermintaan1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
-        MnBarcodePermintaan1.setText("Barcode No.Permintaan 2");
-        MnBarcodePermintaan1.setName("MnBarcodePermintaan1"); // NOI18N
-        MnBarcodePermintaan1.setPreferredSize(new java.awt.Dimension(200, 28));
-        MnBarcodePermintaan1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MnBarcodePermintaan1ActionPerformed(evt);
-            }
-        });
-        jPopupMenu1.add(MnBarcodePermintaan1);
+        jPopupMenu1.add(MnCetakKerohanian);
 
         WindowAmbilPetugas.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         WindowAmbilPetugas.setName("WindowAmbilPetugas"); // NOI18N
@@ -309,7 +278,7 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         internalFrame5.add(jLabel26);
         jLabel26.setBounds(6, 32, 100, 23);
 
-        cmbPetugas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "A", "B", "C" }));
+        cmbPetugas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "A", "B", "C" }));
         cmbPetugas.setName("cmbPetugas"); // NOI18N
         cmbPetugas.setPreferredSize(new java.awt.Dimension(120, 23));
         cmbPetugas.addActionListener(new java.awt.event.ActionListener() {
@@ -585,6 +554,11 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         scrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         scrollPane1.setName("scrollPane1"); // NOI18N
         scrollPane1.setOpaque(true);
+        scrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                scrollPane1MouseReleased(evt);
+            }
+        });
 
         tbKerohanian.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -602,6 +576,9 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         tbKerohanian.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbKerohanianMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tbKerohanianMouseReleased(evt);
             }
         });
         tbKerohanian.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -704,10 +681,6 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         }
 }//GEN-LAST:event_BtnHapusKeyPressed
 
-    private void MnCetakHasilRadiologiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnCetakHasilRadiologiActionPerformed
- 
-    }//GEN-LAST:event_MnCetakHasilRadiologiActionPerformed
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         tampil();
     }//GEN-LAST:event_formWindowOpened
@@ -717,7 +690,6 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                     if(tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),0).toString().trim().equals("")){
                         Valid.textKosong(TCari,"No.Permintaan");
                     }else{ 
-//                        TanggalPulang.setDate(new Date());
                         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));        
                         WindowAmbilPetugas.setLocationRelativeTo(internalFrame1);
                         WindowAmbilPetugas.setVisible(true);
@@ -732,14 +704,6 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private void BtnHasilKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnHasilKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnHasilKeyPressed
-
-    private void MnBarcodePermintaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnBarcodePermintaanActionPerformed
-  
-    }//GEN-LAST:event_MnBarcodePermintaanActionPerformed
-
-    private void MnBarcodePermintaan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnBarcodePermintaan1ActionPerformed
-   
-    }//GEN-LAST:event_MnBarcodePermintaan1ActionPerformed
 
     private void BtnCloseIn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCloseIn4ActionPerformed
         WindowAmbilPetugas.dispose();
@@ -817,6 +781,84 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbPetugasActionPerformed
 
+    private void MnCetakKerohanianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnCetakKerohanianActionPerformed
+        if(tbKerohanian.getSelectedRow()!= -1){
+                this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                if(tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),0).toString().trim().equals("")){
+                    Valid.textKosong(TCari,"No.Permintaan");
+                }else{   
+                    
+                    Sequel.queryu("delete from temporary_permintaan_kerohanian");
+                    try {
+                        ps2=koneksi.prepareStatement(
+                                "select permintaan_pemeriksaan_kerohanian.kd_rh, jns_kerohanian.nama_rh from " +
+                                "permintaan_pemeriksaan_kerohanian inner join jns_kerohanian on " +
+                                "permintaan_pemeriksaan_kerohanian.kd_rh=jns_kerohanian.kd_rh " +
+                                "where permintaan_pemeriksaan_kerohanian.noorder=?");
+                        try {
+                            ps2.setString(1,tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),0).toString());
+                            rs2=ps2.executeQuery();
+                            while(rs2.next()){
+                                Sequel.menyimpan("temporary_permintaan_kerohanian","?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?",38,new String[]{
+                                    "0",rs2.getString("kd_rh"),rs2.getString("nama_rh"),"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""
+                                });
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Notif 2 : "+e);
+                        } finally{
+                            if(rs2!=null){
+                                rs2.close();
+                            }
+                            if(ps2!=null){
+                                ps2.close();
+                            }
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Notif : "+e);
+                    }            
+                    
+                    Map<String, Object> param = new HashMap<>();
+                    param.put("noperiksa",tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),0).toString());
+                    norm=Sequel.cariIsi("select no_rkm_medis from reg_periksa where no_rawat=? ",tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),1).toString());
+                    param.put("norm",norm);
+                    param.put("namapasien",Sequel.cariIsi("select nm_pasien from pasien where no_rkm_medis=? ",norm));
+                    param.put("lahir",Sequel.cariIsi("select DATE_FORMAT(tgl_lahir,'%d-%m-%Y') from pasien where no_rkm_medis=? ",norm));
+                    param.put("noktp",Sequel.cariIsi("select no_ktp from pasien where no_rkm_medis=?",norm));
+                    param.put("jkel",Sequel.cariIsi("select if(jk='L','Laki-laki','Perempuan') as jk from pasien where no_rkm_medis=? ",norm));
+                    param.put("agama", Sequel.cariIsi("select agama from pasien where no_rkm_medis=?", norm));
+                    param.put("kamar",tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),3).toString());
+                    param.put("petugas", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 6).toString());
+                    param.put("tanggal",Valid.SetTgl3(tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),4).toString()));
+                    param.put("keterangan", Sequel.cariIsi("select keterangan from permintaan_kerohanian,reg_periksa where permintaan_kerohanian.no_rawat=reg_periksa.no_rawat and permintaan_kerohanian.no_rawat=?", norm));
+                    param.put("namars",var.getnamars());
+                    param.put("alamatrs",var.getalamatrs());
+                    param.put("kotars",var.getkabupatenrs());
+                    param.put("propinsirs",var.getpropinsirs());
+                    param.put("kontakrs",var.getkontakrs());
+                    param.put("emailrs",var.getemailrs());   
+                    param.put("logo",Sequel.cariGambar("select logo from setting")); 
+
+                    Valid.MyReport("rptPermintaanKerohanian.jrxml","report","::[ Permintaan Kerohanian ]::",
+                        "select no, temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9, temp10, temp11, temp12, temp13, temp14, temp14, temp15, temp16 from temporary_permintaan_kerohanian order by no asc",param);            
+                }
+                this.setCursor(Cursor.getDefaultCursor());
+            }else{            
+                JOptionPane.showMessageDialog(null,"Maaf, silahkan pilih data permintaan...!!!!");
+                TCari.requestFocus();
+            } 
+
+    }//GEN-LAST:event_MnCetakKerohanianActionPerformed
+
+    private void scrollPane1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scrollPane1MouseReleased
+    
+    }//GEN-LAST:event_scrollPane1MouseReleased
+
+    private void tbKerohanianMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbKerohanianMouseReleased
+        if(evt.isPopupTrigger()){
+            jPopupMenu1.show(evt.getComponent(), evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_tbKerohanianMouseReleased
+
     /**
     * @param args the command line arguments
     */
@@ -847,9 +889,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.TextBox CrPetugas;
     private widget.TextBox Kd2;
     private widget.Label LCount;
-    private javax.swing.JMenuItem MnBarcodePermintaan;
-    private javax.swing.JMenuItem MnBarcodePermintaan1;
-    private javax.swing.JMenuItem MnCetakHasilRadiologi;
+    private javax.swing.JMenuItem MnCetakKerohanian;
     private widget.TextBox TCari;
     private widget.Tanggal Tgl1;
     private widget.Tanggal Tgl2;
@@ -967,7 +1007,6 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         }catch(Exception e){
             System.out.println("Notifikasi : "+e);
         }
-        LCount.setText(""+tabMode.getRowCount());
     }
     
     private void getData() {
@@ -978,7 +1017,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     }
     
     public void isCek(){
-        MnCetakHasilRadiologi.setEnabled(var.getpermintaan_radiologi());
+//        MnCetakHasilKerohanian.setEnabled(var.getpermintaan_kerohanian());
 //        BtnSampel.setEnabled(var.getpermintaan_radiologi());
         BtnHasil.setEnabled(var.getperiksa_radiologi());
         BtnHapus.setEnabled(var.getpermintaan_radiologi());
@@ -989,33 +1028,5 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         TCari.setText(pasien);
     }
     
-    private void tampilKamar() {
-        Valid.tabelKosong(tabMode);
-        try{   
-            ps=koneksi.prepareStatement("select kamar.kd_kamar, bangsal.nm_bangsal from kamar inner join bangsal on bangsal.kd_bangsal=kamar.kd_bangsal where "
-                    + "kamar.statusdata='1' and kamar.kd_kamar like ? or "
-                    + "kamar.statusdata='1' and bangsal.nm_bangsal like ? group by kamar.kd_kamar order by bangsal.nm_bangsal");
-            try {
-                ps.setString(1,"%"+TCari.getText().trim()+"%");
-                ps.setString(2,"%"+TCari.getText().trim()+"%");
-                rs=ps.executeQuery();
-                while(rs.next()){
-                    tabMode.addRow(new Object[]{rs.getString(1),rs.getString(2) });
-                }
-            } catch (Exception e) {
-                System.out.println(e);
-            } finally{
-                if(rs!=null){
-                    rs.close();
-                }
-                if(ps!=null){
-                    ps.close();
-                }
-            }                
-        }catch(SQLException e){
-            System.out.println("Notifikasi : "+e);
-        }
-        LCount.setText(""+tabMode.getRowCount());
-    }
  
 }
