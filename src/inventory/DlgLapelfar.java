@@ -12,14 +12,10 @@ import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.HashMap;
-import java.util.Map;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import keuangan.Jurnal;
 
 public class DlgLapelfar extends javax.swing.JDialog {
 
@@ -41,6 +37,7 @@ public class DlgLapelfar extends javax.swing.JDialog {
         Object[] row = {
             "Nama Barang", "Bentuk Sediaan", "Stok Awal",
             "Penerimaan", "Ralan", "Ranap", "Total", "Harga", "Total Harga"
+            ,"Stok Gudang","Stok Rajal","Stok Ranap","Stok IGD"
         };
         tabMode = new DefaultTableModel(null, row) {
             @Override
@@ -51,6 +48,7 @@ public class DlgLapelfar extends javax.swing.JDialog {
                 java.lang.Object.class, java.lang.Object.class,
                 java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class,
                 java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+               ,java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
             };
 
             @Override
@@ -63,7 +61,7 @@ public class DlgLapelfar extends javax.swing.JDialog {
         tbDokter.setPreferredScrollableViewportSize(new Dimension(800, 800));
         tbDokter.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 13; i++) {
             TableColumn column = tbDokter.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(70);
@@ -83,35 +81,13 @@ public class DlgLapelfar extends javax.swing.JDialog {
                 column.setPreferredWidth(80);
             } else if (i == 8) {
                 column.setPreferredWidth(90);
+            } else {
+                column.setPreferredWidth(90);
             }
         }
         tbDokter.setDefaultRenderer(Object.class, new WarnaTable());
 
         TCari.setDocument(new batasInput((byte) 100).getKata(TCari));
-        if (koneksiDB.cariCepat().equals("aktif")) {
-            TCari.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
-                @Override
-                public void insertUpdate(DocumentEvent e) {
-                    if (TCari.getText().length() > 2) {
-                        prosesCari();
-                    }
-                }
-
-                @Override
-                public void removeUpdate(DocumentEvent e) {
-                    if (TCari.getText().length() > 2) {
-                        prosesCari();
-                    }
-                }
-
-                @Override
-                public void changedUpdate(DocumentEvent e) {
-                    if (TCari.getText().length() > 2) {
-                        prosesCari();
-                    }
-                }
-            });
-        }
 
     }
 
@@ -366,7 +342,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
     }//GEN-LAST:event_BtnCariKeyPressed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        prosesCari();
+//        prosesCari();
     }//GEN-LAST:event_formWindowOpened
 
     private void BtnAllKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnAllKeyPressed
@@ -458,8 +434,9 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         rs.getString(1), rs.getString(4), rs.getDouble(5),
                         rs.getDouble(5), rs.getDouble(6), rs.getDouble(7), total,
                         rs.getDouble(3), rs.getDouble(3) * total
+                        ,cariStok(rs.getString("kode_brng"), "B0002"),cariStok(rs.getString("kode_brng"), "B0014"),cariStok(rs.getString("kode_brng"), "B0001"),cariStok(rs.getString("kode_brng"), "B0018")
                     });
-                    System.out.println(rs.getDouble(9));
+//                    System.out.println(rs.getDouble(9));
                 }
             } catch (Exception e) {
                 System.out.println("Notif : " + e);
@@ -478,6 +455,12 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
 
     public void isCek() {
         BtnPrint.setEnabled(var.getkadaluarsa_batch());
+    }
+    
+    public double cariStok(String kode_brng,String lokasi){
+        double stok = 0;
+        stok = Sequel.cariIsiAngka("SELECT stok FROM gudangbarang WHERE kode_brng='"+kode_brng+"' AND kd_bangsal='"+lokasi+"'");
+        return stok;
     }
 
 }

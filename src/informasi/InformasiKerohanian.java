@@ -44,11 +44,9 @@ public class InformasiKerohanian extends javax.swing.JDialog {
     private int i;
     private PreparedStatement ps,ps2;
     private ResultSet rs,rs2;
-//    private Date now;
-//    private boolean aktif=false;
     private DlgCariPetugas petugas=new DlgCariPetugas(null,false);
     private DlgCariBangsal ruang=new DlgCariBangsal(null,false);
-    private String alarm="",formalarm="",nol_detik,detik,tglsampel="",tglhasil="",norm="",kamar="",namakamar="",diagnosa="";
+    private String norm="";
     
     /** Creates new form DlgProgramStudi
      * @param parent

@@ -99,7 +99,7 @@ public final class var {
             password_asuransi=false,kemenkes_sitt=false,siranap_ketersediaan_kamar=false,grafik_tb_periodelaporan=false,grafik_tb_rujukan=false,
             grafik_tb_riwayat=false,grafik_tb_tipediagnosis=false,grafik_tb_statushiv=false,grafik_tb_skoringanak=false,grafik_tb_konfirmasiskoring5=false,
             grafik_tb_konfirmasiskoring6=false,grafik_tb_sumberobat=false,grafik_tb_hasilakhirpengobatan=false,grafik_tb_hasilteshiv=false,
-            kadaluarsa_batch=false,sisa_stok=false,obat_per_resep=false,pemakaian_air_pdam=false,limbah_b3_medis=false,grafik_air_pdam_pertanggal=false, roh=false, permintaan_kerohanian=false, kunjungan_permintaan_kerohanian=false;
+            kadaluarsa_batch=false,sisa_stok=false,obat_per_resep=false,pemakaian_air_pdam=false,limbah_b3_medis=false,grafik_air_pdam_pertanggal=false;
     
     public static void setData(String user, String pass) {
        try {                
@@ -237,7 +237,6 @@ public final class var {
                         var.billing_ranap=true;
                         var.jm_ranap_dokter=true;
                         var.igd=true;    
-                        var.roh=true;
                         var.barcoderalan=true;
                         var.barcoderanap=true;
                         var.set_harga_obat_ralan=true;
@@ -488,7 +487,6 @@ public final class var {
                         var.bpjs_cek_tanggal_rujukan=true;
                         var.permintaan_lab=true;
                         var.permintaan_radiologi=true;
-                        var.permintaan_kerohanian=true;
                         var.surat_indeks=true;
                         var.surat_map=true;
                         var.surat_almari=true;
@@ -558,7 +556,6 @@ public final class var {
                         var.kunjungan_permintaan_lab2=true;
                         var.kunjungan_permintaan_radiologi=true;
                         var.kunjungan_permintaan_radiologi2=true;
-                        var.kunjungan_permintaan_kerohanian=true;
                         var.pcare_pemberian_obat=true;
                         var.pcare_pemberian_tindakan=true;
                         var.pembayaran_akun_bayar3=true;
@@ -702,8 +699,7 @@ public final class var {
                         var.billing_ralan=rs2.getBoolean("billing_ralan"); 
                         var.billing_ranap=rs2.getBoolean("billing_ranap"); 
                         var.jm_ranap_dokter=rs2.getBoolean("jm_ranap_dokter");   
-                        var.igd=rs2.getBoolean("igd");
-                        var.roh=rs2.getBoolean("roh");
+                        var.igd=rs2.getBoolean("igd");                        
                         var.barcoderalan=rs2.getBoolean("barcoderalan"); 
                         var.barcoderanap=rs2.getBoolean("barcoderanap"); 
                         var.set_harga_obat_ralan=rs2.getBoolean("set_harga_obat_ralan"); 
@@ -954,7 +950,6 @@ public final class var {
                         var.bpjs_cek_tanggal_rujukan=rs2.getBoolean("bpjs_cek_tanggal_rujukan");
                         var.permintaan_lab=rs2.getBoolean("permintaan_lab");
                         var.permintaan_radiologi=rs2.getBoolean("permintaan_radiologi");
-                        var.permintaan_kerohanian=rs2.getBoolean("permintaan_kerohanian");
                         var.surat_indeks=rs2.getBoolean("surat_indeks");
                         var.surat_map=rs2.getBoolean("surat_map");
                         var.surat_almari=rs2.getBoolean("surat_almari");
@@ -1024,7 +1019,6 @@ public final class var {
                         var.kunjungan_permintaan_lab2=rs2.getBoolean("kunjungan_permintaan_lab2");
                         var.kunjungan_permintaan_radiologi=rs2.getBoolean("kunjungan_permintaan_radiologi");
                         var.kunjungan_permintaan_radiologi2=rs2.getBoolean("kunjungan_permintaan_radiologi2");
-                        var.kunjungan_permintaan_kerohanian=rs2.getBoolean("kunjungan_permintaan_kerohanian");
                         var.pcare_pemberian_obat=rs2.getBoolean("pcare_pemberian_obat");
                         var.pcare_pemberian_tindakan=rs2.getBoolean("pcare_pemberian_tindakan");
                         var.pembayaran_akun_bayar3=rs2.getBoolean("pembayaran_akun_bayar3");
@@ -1167,7 +1161,6 @@ public final class var {
                         var.billing_ranap=false;
                         var.jm_ranap_dokter=false;   
                         var.igd=false;  
-                        var.roh=false;
                         var.barcoderalan=false; 
                         var.barcoderanap=false;
                         var.set_harga_obat_ralan=false; 
@@ -1418,7 +1411,6 @@ public final class var {
                         var.bpjs_cek_tanggal_rujukan=false;
                         var.permintaan_lab=false;
                         var.permintaan_radiologi=false;
-                        var.permintaan_kerohanian=false;
                         var.surat_indeks=false;
                         var.surat_map=false;
                         var.surat_almari=false;
@@ -1488,7 +1480,6 @@ public final class var {
                         var.kunjungan_permintaan_lab2=false;
                         var.kunjungan_permintaan_radiologi=false;
                         var.kunjungan_permintaan_radiologi2=false;
-                        var.kunjungan_permintaan_kerohanian=false;
                         var.pcare_pemberian_obat=false;
                         var.pcare_pemberian_tindakan=false;
                         var.pembayaran_akun_bayar3=false;
@@ -1668,7 +1659,6 @@ public final class var {
     public static boolean getstatus(){return var.status;}
     public static boolean getjm_ranap_dokter(){return var.jm_ranap_dokter;}     
     public static boolean getigd(){return var.igd;}
-    public static boolean getroh(){return var.roh;}
     public static boolean getbarcoderalan(){return var.barcoderalan;}     
     public static boolean getbarcoderanap(){return var.barcoderanap;}    
     public static boolean getset_harga_obat_ralan(){return var.set_harga_obat_ralan;}  
@@ -1932,7 +1922,6 @@ public final class var {
     public static void setperiksalabfalse(){var.periksa_lab=false;} 
     public static void setpermintaanlabfalse(){var.permintaan_lab=false;} 
     public static boolean getpermintaan_radiologi(){return var.permintaan_radiologi;}
-   public static boolean getpermintaan_kerohanian(){return var.permintaan_kerohanian;} 
     public static void setperiksaradiologifalse(){var.periksa_radiologi=false;}
     public static void setpermintaanradiologifalse(){var.permintaan_radiologi=false;} 
     public static boolean getsurat_indeks(){return var.surat_indeks;}
@@ -2006,7 +1995,6 @@ public final class var {
     public static boolean getkunjungan_permintaan_lab2(){return var.kunjungan_permintaan_lab2;}
     public static boolean getkunjungan_permintaan_radiologi(){return var.kunjungan_permintaan_radiologi;}
     public static boolean getkunjungan_permintaan_radiologi2(){return var.kunjungan_permintaan_radiologi2;}
-    public static boolean getkunjungan_permintaan_kerohanian(){return var.kunjungan_permintaan_kerohanian;}
     public static boolean getpcare_pemberian_obat(){return var.pcare_pemberian_obat;}
     public static boolean getpcare_pemberian_tindakan(){return var.pcare_pemberian_tindakan;}
     public static boolean getpembayaran_akun_bayar3(){return var.pembayaran_akun_bayar3;}

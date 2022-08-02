@@ -1176,6 +1176,8 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
                     Valid.SetTgl(TanggalSEP, skdp2.getTable().getValueAt(skdp2.getTable().getSelectedRow(), 7).toString());
                     KdDPJP.setText(skdp2.getTable().getValueAt(skdp2.getTable().getSelectedRow(), 10).toString());
                     NmDPJP.setText(skdp2.getTable().getValueAt(skdp2.getTable().getSelectedRow(), 11).toString());
+                    KdDPJPLayan.setText(skdp2.getTable().getValueAt(skdp2.getTable().getSelectedRow(), 10).toString());
+                    NmDPJPLayan.setText(skdp2.getTable().getValueAt(skdp2.getTable().getSelectedRow(), 11).toString());
                     String kd_diagnosa = skdp2.getTable().getValueAt(skdp2.getTable().getSelectedRow(), 6).toString();
                     int position = kd_diagnosa.indexOf(" - ");
                     System.out.println(position);
@@ -3835,8 +3837,8 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             Valid.textKosong(btnKabupaten, "Kabupaten");
         } else if ((LakaLantas.getSelectedIndex() == 1) && NmKecamatan.getText().equals("")) {
             Valid.textKosong(btnKecamatan, "Kecamatan");
-        } else if (KdDPJP.getText().trim().equals("") || NmDPJP.getText().trim().equals("")) {
-            Valid.textKosong(KdDPJP, "DPJP");
+        } else if (KdDPJPLayan.getText().trim().equals("") || NmDPJPLayan.getText().trim().equals("")) {
+            Valid.textKosong(KdDPJPLayan, "DPJP");
         } else {
             if (JenisPelayanan.getSelectedIndex() == 0) {
                 insertSEP();
@@ -6552,8 +6554,8 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         TCari1.setText(norwt);
         KdPoli.setText(Sequel.cariIsi("select kd_poli_bpjs from maping_poli_bpjs where kd_poli_rs=?", kdpoli));
         NmPoli.setText(Sequel.cariIsi("select nm_poli_bpjs from maping_poli_bpjs where kd_poli_bpjs=?", KdPoli.getText()));
-        KdDPJP.setText(Sequel.cariIsi("select kd_dokter_bpjs from maping_dokter_dpjpvclaim where kd_dokter=?", kddokter));
-        NmDPJP.setText(Sequel.cariIsi("select nm_dokter_bpjs from maping_dokter_dpjpvclaim where kd_dokter=?", kddokter));
+        KdDPJPLayan.setText(Sequel.cariIsi("select kd_dokter_bpjs from maping_dokter_dpjpvclaim where kd_dokter=?", kddokter));
+        NmDPJPLayan.setText(Sequel.cariIsi("select nm_dokter_bpjs from maping_dokter_dpjpvclaim where kd_dokter=?", kddokter));
         JenisPelayanan.setSelectedItem(status);
         JenisPelayananItemStateChanged(null);
         isRawat();
@@ -6564,6 +6566,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
 
     public void isCek() {
         BtnSimpan.setEnabled(var.getbpjs_sep());
+        System.out.println(var.getbpjs_sep());
         BtnHapus.setEnabled(var.getbpjs_sep());
         BtnPrint.setEnabled(var.getbpjs_sep());
         BtnEdit.setEnabled(var.getbpjs_sep());
@@ -6954,7 +6957,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
                     COB.getSelectedItem().toString(), penjamin, NoTelp.getText(), Katarak.getSelectedItem().toString(),
                     tglkkl, Keterangan.getText(), Suplesi.getSelectedItem().toString(),
                     NoSEPSuplesi.getText(), KdPropinsi.getText(), NmPropinsi.getText(), KdKabupaten.getText(), NmKabupaten.getText(),
-                    KdKecamatan.getText(), NmKecamatan.getText(), NoSKDP.getText(), KdDPJP.getText(), NmDPJP.getText()
+                    KdKecamatan.getText(), NmKecamatan.getText(), NoSKDP.getText(), KdDPJPLayan.getText(), NmDPJPLayan.getText()
                 }) == true) {
                     Sequel.menyimpan("rujuk_masuk", "?,?,?,?,?,?,?,?,?,?", 10, new String[]{
                         TNoRw.getText(), NmPpkRujukan.getText(), "-", NoRujukan.getText(), "0", NmPpkRujukan.getText(), KdPenyakit.getText(), "-",
@@ -6979,7 +6982,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
                         tglkkl, Keterangan.getText(), Suplesi.getSelectedItem().toString(), NoSEPSuplesi.getText(), KdPropinsi.getText(), NmPropinsi.getText(), KdKabupaten.getText(), NmKabupaten.getText(),
                         KdKecamatan.getText(), NmKecamatan.getText(), NoSKDP.getText(), KdDPJP.getText(), NmDPJP.getText(), cmbKunjungan.getSelectedItem().toString().substring(0, 1),
                         (cmbProcedure.getSelectedIndex() > 0 ? cmbProcedure.getSelectedItem().toString().substring(0, 1) : ""), (cmbPenunjang.getSelectedIndex() > 0 ? cmbPenunjang.getSelectedIndex() + "" : ""),
-                        (cmbAsesment.getSelectedIndex() > 0 ? cmbAsesment.getSelectedItem().toString().substring(0, 1) : ""), KdDPJP.getText(), NmDPJP.getText()
+                        (cmbAsesment.getSelectedIndex() > 0 ? cmbAsesment.getSelectedItem().toString().substring(0, 1) : ""), KdDPJPLayan.getText(), NmDPJPLayan.getText()
                     }) == true) {
                         Sequel.menyimpan("rujuk_masuk", "?,?,?,?,?,?,?,?,?,?", 10, new String[]{
                             TNoRw.getText(), NmPpkRujukan.getText(), "-", NoRujukan.getText(), "0", NmPpkRujukan.getText(), KdPenyakit.getText(), "-",
