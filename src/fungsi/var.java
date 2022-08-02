@@ -99,7 +99,7 @@ public final class var {
             password_asuransi=false,kemenkes_sitt=false,siranap_ketersediaan_kamar=false,grafik_tb_periodelaporan=false,grafik_tb_rujukan=false,
             grafik_tb_riwayat=false,grafik_tb_tipediagnosis=false,grafik_tb_statushiv=false,grafik_tb_skoringanak=false,grafik_tb_konfirmasiskoring5=false,
             grafik_tb_konfirmasiskoring6=false,grafik_tb_sumberobat=false,grafik_tb_hasilakhirpengobatan=false,grafik_tb_hasilteshiv=false,
-            kadaluarsa_batch=false,sisa_stok=false,obat_per_resep=false,pemakaian_air_pdam=false,limbah_b3_medis=false,grafik_air_pdam_pertanggal=false, roh=false;
+            kadaluarsa_batch=false,sisa_stok=false,obat_per_resep=false,pemakaian_air_pdam=false,limbah_b3_medis=false,grafik_air_pdam_pertanggal=false;
     
     public static void setData(String user, String pass) {
        try {                
@@ -237,7 +237,6 @@ public final class var {
                         var.billing_ranap=true;
                         var.jm_ranap_dokter=true;
                         var.igd=true;    
-                        var.roh=true;
                         var.barcoderalan=true;
                         var.barcoderanap=true;
                         var.set_harga_obat_ralan=true;
@@ -700,8 +699,7 @@ public final class var {
                         var.billing_ralan=rs2.getBoolean("billing_ralan"); 
                         var.billing_ranap=rs2.getBoolean("billing_ranap"); 
                         var.jm_ranap_dokter=rs2.getBoolean("jm_ranap_dokter");   
-                        var.igd=rs2.getBoolean("igd");
-                        var.roh=rs2.getBoolean("roh");
+                        var.igd=rs2.getBoolean("igd");                        
                         var.barcoderalan=rs2.getBoolean("barcoderalan"); 
                         var.barcoderanap=rs2.getBoolean("barcoderanap"); 
                         var.set_harga_obat_ralan=rs2.getBoolean("set_harga_obat_ralan"); 
@@ -1163,7 +1161,6 @@ public final class var {
                         var.billing_ranap=false;
                         var.jm_ranap_dokter=false;   
                         var.igd=false;  
-                        var.roh=false;
                         var.barcoderalan=false; 
                         var.barcoderanap=false;
                         var.set_harga_obat_ralan=false; 
@@ -1662,7 +1659,6 @@ public final class var {
     public static boolean getstatus(){return var.status;}
     public static boolean getjm_ranap_dokter(){return var.jm_ranap_dokter;}     
     public static boolean getigd(){return var.igd;}
-    public static boolean getroh(){return var.roh;}
     public static boolean getbarcoderalan(){return var.barcoderalan;}     
     public static boolean getbarcoderanap(){return var.barcoderanap;}    
     public static boolean getset_harga_obat_ralan(){return var.set_harga_obat_ralan;}  
