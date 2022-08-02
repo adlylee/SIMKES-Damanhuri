@@ -1333,7 +1333,7 @@ public class DlgBarang extends javax.swing.JDialog {
         karyawan.setBounds(660, 192, 110, 23);
 
         DTPExpired.setForeground(new java.awt.Color(50, 70, 50));
-        DTPExpired.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "27-02-2019" }));
+        DTPExpired.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "11-03-2019" }));
         DTPExpired.setDisplayFormat("dd-MM-yyyy");
         DTPExpired.setName("DTPExpired"); // NOI18N
         DTPExpired.setOpaque(false);
@@ -1398,6 +1398,11 @@ public class DlgBarang extends javax.swing.JDialog {
 
         kdkategori.setName("kdkategori"); // NOI18N
         kdkategori.setPreferredSize(new java.awt.Dimension(207, 23));
+        kdkategori.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kdkategoriActionPerformed(evt);
+            }
+        });
         kdkategori.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 kdkategoriKeyPressed(evt);
@@ -1409,6 +1414,11 @@ public class DlgBarang extends javax.swing.JDialog {
         nmkategori.setEditable(false);
         nmkategori.setName("nmkategori"); // NOI18N
         nmkategori.setPreferredSize(new java.awt.Dimension(207, 23));
+        nmkategori.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nmkategoriActionPerformed(evt);
+            }
+        });
         FormInput.add(nmkategori);
         nmkategori.setBounds(192, 162, 260, 23);
 
@@ -2327,6 +2337,14 @@ private void KapasitasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
             }
         }
     }//GEN-LAST:event_tbDokterKeyReleased
+
+    private void nmkategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nmkategoriActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nmkategoriActionPerformed
+
+    private void kdkategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kdkategoriActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_kdkategoriActionPerformed
 
     /**
      * @param args the command line arguments

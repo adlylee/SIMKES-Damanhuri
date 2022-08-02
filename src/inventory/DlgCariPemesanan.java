@@ -41,6 +41,7 @@ public class DlgCariPemesanan extends javax.swing.JDialog {
     private ResultSet rs,rs2;
     private double tagihan=0;
     private Jurnal jur=new Jurnal();
+    public DlgCariKategori kategori = new DlgCariKategori(null, false);
 
     /** Creates new form DlgProgramStudi
      * @param parent
@@ -51,7 +52,7 @@ public class DlgCariPemesanan extends javax.swing.JDialog {
 
         Object[] row={"No.Faktur","Suplier","Petugas","Barang",
                     "Satuan","Jml.Beli","Harga Beli(Rp)","SubTotal(Rp)",
-                    "Disk(%)","Bsr.Disk(Rp)","Total(Rp)"};
+                    "Disk(%)","Bsr.Disk(Rp)","Total(Rp)","Kategori"};
         tabMode=new DefaultTableModel(null,row){
               @Override public boolean isCellEditable(int rowIndex, int colIndex){return false;}
         };
@@ -60,7 +61,7 @@ public class DlgCariPemesanan extends javax.swing.JDialog {
         tbDokter.setPreferredScrollableViewportSize(new Dimension(800,800));
         tbDokter.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < 12; i++) {
             TableColumn column = tbDokter.getColumnModel().getColumn(i);
             if(i==0){
                 column.setPreferredWidth(120);
@@ -84,6 +85,8 @@ public class DlgCariPemesanan extends javax.swing.JDialog {
                 column.setPreferredWidth(100);
             }else if(i==10){
                 column.setPreferredWidth(100);
+            }else if(i==11){
+                column.setPreferredWidth(100);
             }
         }
         tbDokter.setDefaultRenderer(Object.class, new WarnaTable());
@@ -95,6 +98,7 @@ public class DlgCariPemesanan extends javax.swing.JDialog {
         KdIF.setDocument(new batasInput((byte)15).getKata(KdIF));
         kdjenis.setDocument(new batasInput((byte)4).getKata(kdjenis));
         TCari.setDocument(new batasInput((byte)100).getKata(TCari));  
+        nmkategori.setDocument(new batasInput((byte)100).getKata(nmkategori));
         
         if(koneksiDB.cariCepat().equals("aktif")){
             TCari.getDocument().addDocumentListener(new javax.swing.event.DocumentListener(){
@@ -289,6 +293,44 @@ public class DlgCariPemesanan extends javax.swing.JDialog {
             public void keyReleased(KeyEvent e) {}
         });
         
+        kategori.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                if (var.getform().equals("DlgCariPemesanan")) {
+                    if (kategori.getTable().getSelectedRow() != -1) {
+                        kdkategori.setText(kategori.getTable().getValueAt(kategori.getTable().getSelectedRow(), 0).toString());
+                        nmkategori.setText(kategori.getTable().getValueAt(kategori.getTable().getSelectedRow(), 1).toString());
+                    }
+                }
+                kdkategori.requestFocus();
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+                kategori.emptTeks();
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+        });
+        
     }
 
     /** This method is called from within the constructor to
@@ -326,6 +368,10 @@ public class DlgCariPemesanan extends javax.swing.JDialog {
         kdjenis = new widget.TextBox();
         btnSatuan = new widget.Button();
         nmjenis = new widget.TextBox();
+        label22 = new widget.Label();
+        kdkategori = new widget.TextBox();
+        nmkategori = new widget.TextBox();
+        BtnKategori = new widget.Button();
         panelisi3 = new widget.panelisi();
         label15 = new widget.Label();
         NoFaktur = new widget.TextBox();
@@ -553,6 +599,11 @@ public class DlgCariPemesanan extends javax.swing.JDialog {
 
         kdbar.setName("kdbar"); // NOI18N
         kdbar.setPreferredSize(new java.awt.Dimension(80, 23));
+        kdbar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kdbarActionPerformed(evt);
+            }
+        });
         kdbar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 kdbarKeyPressed(evt);
@@ -618,6 +669,41 @@ public class DlgCariPemesanan extends javax.swing.JDialog {
         });
         panelisi4.add(nmjenis);
         nmjenis.setBounds(103, 10, 167, 23);
+
+        label22.setText("Kategori :");
+        label22.setName("label22"); // NOI18N
+        label22.setPreferredSize(new java.awt.Dimension(65, 23));
+        panelisi4.add(label22);
+        label22.setBounds(760, 10, 88, 23);
+
+        kdkategori.setName("kdkategori"); // NOI18N
+        kdkategori.setPreferredSize(new java.awt.Dimension(207, 23));
+        kdkategori.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                kdkategoriKeyPressed(evt);
+            }
+        });
+        panelisi4.add(kdkategori);
+        kdkategori.setBounds(853, 10, 53, 23);
+
+        nmkategori.setEditable(false);
+        nmkategori.setName("nmkategori"); // NOI18N
+        nmkategori.setPreferredSize(new java.awt.Dimension(207, 23));
+        panelisi4.add(nmkategori);
+        nmkategori.setBounds(908, 10, 167, 23);
+
+        BtnKategori.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
+        BtnKategori.setMnemonic('2');
+        BtnKategori.setToolTipText("Alt+2");
+        BtnKategori.setName("BtnKategori"); // NOI18N
+        BtnKategori.setPreferredSize(new java.awt.Dimension(28, 23));
+        BtnKategori.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnKategoriActionPerformed(evt);
+            }
+        });
+        panelisi4.add(BtnKategori);
+        BtnKategori.setBounds(1080, 10, 25, 23);
 
         jPanel1.add(panelisi4, java.awt.BorderLayout.CENTER);
 
@@ -951,6 +1037,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
         nmsup.setText("");
         kdptg.setText("");
         nmptg.setText("");
+        nmkategori.setText("");
         tampil();
     }//GEN-LAST:event_BtnAllActionPerformed
 
@@ -1137,6 +1224,30 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
         barang.industri.setVisible(true);
     }//GEN-LAST:event_btnIFActionPerformed
 
+    private void kdbarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kdbarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_kdbarActionPerformed
+
+    private void kdkategoriKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kdkategoriKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
+            Sequel.cariIsi("select nama from kategori where kode=?", nmkategori, kdkategori.getText());
+        } else if (evt.getKeyCode() == KeyEvent.VK_PAGE_UP) {
+            Sequel.cariIsi("select nama from kategori where kode=?", nmkategori, kdkategori.getText());
+            kdjenis.requestFocus();
+        } else if (evt.getKeyCode() == KeyEvent.VK_UP) {
+            BtnKategoriActionPerformed(null);
+        }
+    }//GEN-LAST:event_kdkategoriKeyPressed
+
+    private void BtnKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnKategoriActionPerformed
+        var.setform("DlgCariPemesanan");
+        kategori.isCek();
+        kategori.setSize(internalFrame1.getWidth() - 40, internalFrame1.getHeight() - 40);
+        kategori.setLocationRelativeTo(internalFrame1);
+        kategori.setAlwaysOnTop(false);
+        kategori.setVisible(true);
+    }//GEN-LAST:event_BtnKategoriActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -1156,6 +1267,7 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private widget.Button BtnAll;
     private widget.Button BtnCari;
+    private widget.Button BtnKategori;
     private widget.Button BtnKeluar;
     private widget.Button BtnPrint;
     private widget.TextBox KdIF;
@@ -1175,6 +1287,7 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     private javax.swing.JPopupMenu jPopupMenu1;
     private widget.TextBox kdbar;
     private widget.TextBox kdjenis;
+    private widget.TextBox kdkategori;
     private widget.TextBox kdptg;
     private widget.TextBox kdsup;
     private widget.Label label10;
@@ -1185,10 +1298,12 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     private widget.Label label15;
     private widget.Label label16;
     private widget.Label label17;
+    private widget.Label label22;
     private widget.Label label24;
     private widget.Label label9;
     private widget.TextBox nmbar;
     private widget.TextBox nmjenis;
+    private widget.TextBox nmkategori;
     private widget.TextBox nmptg;
     private widget.TextBox nmsup;
     private widget.panelisi panelisi1;
@@ -1203,14 +1318,14 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
 
     private void tampil() {
        Valid.tabelKosong(tabMode);
-        try{   
+        try{
             ps=koneksi.prepareStatement("select pemesanan.tgl_pesan,pemesanan.no_faktur, "+
                     "pemesanan.kode_suplier,datasuplier.nama_suplier, "+
                     "pemesanan.nip,petugas.nama,bangsal.nm_bangsal,pemesanan.tgl_faktur, "+
                     "pemesanan.tgl_tempo,pemesanan.status,pemesanan.total2,pemesanan.ppn,"+
                     "pemesanan.meterai,pemesanan.tagihan,pemesanan.no_order "+
                     " from pemesanan inner join datasuplier inner join petugas inner join bangsal  "+
-                    " inner join detailpesan inner join databarang inner join kodesatuan "+
+                    " inner join detailpesan inner join databarang inner join kategori_barang inner join kodesatuan "+
                     " inner join jenis inner join industrifarmasi "+
                     " on detailpesan.kode_brng=databarang.kode_brng "+
                     " and detailpesan.kode_sat=kodesatuan.kode_sat "+
@@ -1218,20 +1333,21 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                     " and pemesanan.no_faktur=detailpesan.no_faktur "+
                     " and pemesanan.kode_suplier=datasuplier.kode_suplier "+
                     " and databarang.kode_industri=industrifarmasi.kode_industri "+
-                    " and pemesanan.nip=petugas.nip and databarang.kdjns=jenis.kdjns"+
-                    " where pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and pemesanan.no_faktur like ? or "+
-                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and pemesanan.kode_suplier like ? or "+
-                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and datasuplier.nama_suplier like ? or "+
-                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and pemesanan.nip like ? or "+
-                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and petugas.nama like ? or "+
-                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and bangsal.nm_bangsal like ? or "+
-                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and detailpesan.kode_brng like ? or "+
-                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and databarang.nama_brng like ? or "+
-                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and detailpesan.kode_sat like ? or "+
-                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and detailpesan.no_batch like ? or "+
-                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and industrifarmasi.nama_industri like ? or "+
-                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and pemesanan.no_order like ? or "+
-                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and jenis.nama like ? "+
+                    " and pemesanan.nip=petugas.nip and databarang.kdjns=jenis.kdjns and databarang.kode_kategori=kategori_barang.kode "+
+                    " where pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and kategori_barang.kode like ? and pemesanan.no_faktur like ? or "+
+                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and kategori_barang.kode like ? and pemesanan.kode_suplier like ? or "+
+                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and kategori_barang.kode like ? and datasuplier.nama_suplier like ? or "+
+                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and kategori_barang.kode like ? and pemesanan.nip like ? or "+
+                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and kategori_barang.kode like ? and petugas.nama like ? or "+
+                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and kategori_barang.kode like ? and bangsal.nm_bangsal like ? or "+
+                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and kategori_barang.kode like ? and detailpesan.kode_brng like ? or "+
+                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and kategori_barang.kode like ? and databarang.nama_brng like ? or "+
+                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and kategori_barang.kode like ? and detailpesan.kode_sat like ? or "+
+                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and kategori_barang.kode like ? and detailpesan.no_batch like ? or "+
+                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and kategori_barang.kode like ? and industrifarmasi.nama_industri like ? or "+
+                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and kategori_barang.kode like ? and pemesanan.no_order like ? or "+
+                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and kategori_barang.kode like ? and jenis.nama like ? or "+
+                    " pemesanan.tgl_pesan between ? and ? and pemesanan.no_faktur like ? and datasuplier.nama_suplier like ? and petugas.nama like ?  and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and kategori_barang.kode like ? and kategori_barang.kode like ? "+
                     " group by pemesanan.no_faktur order by pemesanan.tgl_pesan,pemesanan.no_faktur ");
             try {
                 ps.setString(1,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
@@ -1242,87 +1358,87 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                 ps.setString(6,"%"+nmjenis.getText()+"%");
                 ps.setString(7,"%"+nmbar.getText()+"%");
                 ps.setString(8,"%"+NmIF.getText()+"%");
-                ps.setString(9,"%"+TCari.getText()+"%");
-                ps.setString(10,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
-                ps.setString(11,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
-                ps.setString(12,"%"+NoFaktur.getText()+"%");
-                ps.setString(13,"%"+nmsup.getText()+"%");
-                ps.setString(14,"%"+nmptg.getText()+"%");
-                ps.setString(15,"%"+nmjenis.getText()+"%");
-                ps.setString(16,"%"+nmbar.getText()+"%");
-                ps.setString(17,"%"+NmIF.getText()+"%");
-                ps.setString(18,"%"+TCari.getText()+"%");
-                ps.setString(19,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
-                ps.setString(20,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
-                ps.setString(21,"%"+NoFaktur.getText()+"%");
-                ps.setString(22,"%"+nmsup.getText()+"%");
-                ps.setString(23,"%"+nmptg.getText()+"%");
-                ps.setString(24,"%"+nmjenis.getText()+"%");
-                ps.setString(25,"%"+nmbar.getText()+"%");
-                ps.setString(26,"%"+NmIF.getText()+"%");
-                ps.setString(27,"%"+TCari.getText()+"%");
-                ps.setString(28,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
-                ps.setString(29,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
-                ps.setString(30,"%"+NoFaktur.getText()+"%");
-                ps.setString(31,"%"+nmsup.getText()+"%");
-                ps.setString(32,"%"+nmptg.getText()+"%");
-                ps.setString(33,"%"+nmjenis.getText()+"%");
-                ps.setString(34,"%"+nmbar.getText()+"%");
-                ps.setString(35,"%"+NmIF.getText()+"%");
-                ps.setString(36,"%"+TCari.getText()+"%");
-                ps.setString(37,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
-                ps.setString(38,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
-                ps.setString(39,"%"+NoFaktur.getText()+"%");
-                ps.setString(40,"%"+nmsup.getText()+"%");
-                ps.setString(41,"%"+nmptg.getText()+"%");
-                ps.setString(42,"%"+nmjenis.getText()+"%");
-                ps.setString(43,"%"+nmbar.getText()+"%");
-                ps.setString(44,"%"+NmIF.getText()+"%");
-                ps.setString(45,"%"+TCari.getText()+"%");
-                ps.setString(46,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
-                ps.setString(47,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
-                ps.setString(48,"%"+NoFaktur.getText()+"%");
-                ps.setString(49,"%"+nmsup.getText()+"%");
-                ps.setString(50,"%"+nmptg.getText()+"%");
-                ps.setString(51,"%"+nmjenis.getText()+"%");
-                ps.setString(52,"%"+nmbar.getText()+"%");
-                ps.setString(53,"%"+NmIF.getText()+"%");
-                ps.setString(54,"%"+TCari.getText()+"%");
-                ps.setString(55,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
-                ps.setString(56,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
-                ps.setString(57,"%"+NoFaktur.getText()+"%");
-                ps.setString(58,"%"+nmsup.getText()+"%");
-                ps.setString(59,"%"+nmptg.getText()+"%");
-                ps.setString(60,"%"+nmjenis.getText()+"%");
-                ps.setString(61,"%"+nmbar.getText()+"%");
-                ps.setString(62,"%"+NmIF.getText()+"%");
-                ps.setString(63,"%"+TCari.getText()+"%");
-                ps.setString(64,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
-                ps.setString(65,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
-                ps.setString(66,"%"+NoFaktur.getText()+"%");
-                ps.setString(67,"%"+nmsup.getText()+"%");
-                ps.setString(68,"%"+nmptg.getText()+"%");
-                ps.setString(69,"%"+nmjenis.getText()+"%");
-                ps.setString(70,"%"+nmbar.getText()+"%");
-                ps.setString(71,"%"+NmIF.getText()+"%");
-                ps.setString(72,"%"+TCari.getText()+"%");
-                ps.setString(73,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
-                ps.setString(74,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
-                ps.setString(75,"%"+NoFaktur.getText()+"%");
-                ps.setString(76,"%"+nmsup.getText()+"%");
-                ps.setString(77,"%"+nmptg.getText()+"%");
-                ps.setString(78,"%"+nmjenis.getText()+"%");
-                ps.setString(79,"%"+nmbar.getText()+"%");
-                ps.setString(80,"%"+NmIF.getText()+"%");
-                ps.setString(81,"%"+TCari.getText()+"%");
-                ps.setString(82,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
-                ps.setString(83,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
-                ps.setString(84,"%"+NoFaktur.getText()+"%");
-                ps.setString(85,"%"+nmsup.getText()+"%");
-                ps.setString(86,"%"+nmptg.getText()+"%");
-                ps.setString(87,"%"+nmjenis.getText()+"%");
-                ps.setString(88,"%"+nmbar.getText()+"%");
-                ps.setString(89,"%"+NmIF.getText()+"%");
+                ps.setString(9,"%"+kdkategori.getText()+"%");
+                ps.setString(10,"%"+TCari.getText()+"%");
+                ps.setString(11,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
+                ps.setString(12,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
+                ps.setString(13,"%"+NoFaktur.getText()+"%");
+                ps.setString(14,"%"+nmsup.getText()+"%");
+                ps.setString(15,"%"+nmptg.getText()+"%");
+                ps.setString(16,"%"+nmjenis.getText()+"%");
+                ps.setString(17,"%"+nmbar.getText()+"%");
+                ps.setString(18,"%"+NmIF.getText()+"%");
+                ps.setString(19,"%"+kdkategori.getText()+"%");
+                ps.setString(20,"%"+TCari.getText()+"%");
+                ps.setString(21,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
+                ps.setString(22,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
+                ps.setString(23,"%"+NoFaktur.getText()+"%");
+                ps.setString(24,"%"+nmsup.getText()+"%");
+                ps.setString(25,"%"+nmptg.getText()+"%");
+                ps.setString(26,"%"+nmjenis.getText()+"%");
+                ps.setString(27,"%"+nmbar.getText()+"%");
+                ps.setString(28,"%"+NmIF.getText()+"%");
+                ps.setString(29,"%"+kdkategori.getText()+"%");
+                ps.setString(30,"%"+TCari.getText()+"%");
+                ps.setString(31,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
+                ps.setString(32,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
+                ps.setString(33,"%"+NoFaktur.getText()+"%");
+                ps.setString(34,"%"+nmsup.getText()+"%");
+                ps.setString(35,"%"+nmptg.getText()+"%");
+                ps.setString(36,"%"+nmjenis.getText()+"%");
+                ps.setString(37,"%"+nmbar.getText()+"%");
+                ps.setString(38,"%"+NmIF.getText()+"%");
+                ps.setString(39,"%"+kdkategori.getText()+"%");
+                ps.setString(40,"%"+TCari.getText()+"%");
+                ps.setString(41,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
+                ps.setString(42,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
+                ps.setString(43,"%"+NoFaktur.getText()+"%");
+                ps.setString(44,"%"+nmsup.getText()+"%");
+                ps.setString(45,"%"+nmptg.getText()+"%");
+                ps.setString(46,"%"+nmjenis.getText()+"%");
+                ps.setString(47,"%"+nmbar.getText()+"%");
+                ps.setString(48,"%"+NmIF.getText()+"%");
+                ps.setString(49,"%"+kdkategori.getText()+"%");
+                ps.setString(50,"%"+TCari.getText()+"%");
+                ps.setString(51,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
+                ps.setString(52,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
+                ps.setString(53,"%"+NoFaktur.getText()+"%");
+                ps.setString(54,"%"+nmsup.getText()+"%");
+                ps.setString(55,"%"+nmptg.getText()+"%");
+                ps.setString(56,"%"+nmjenis.getText()+"%");
+                ps.setString(57,"%"+nmbar.getText()+"%");
+                ps.setString(58,"%"+NmIF.getText()+"%");
+                ps.setString(59,"%"+kdkategori.getText()+"%");
+                ps.setString(60,"%"+TCari.getText()+"%");
+                ps.setString(61,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
+                ps.setString(62,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
+                ps.setString(63,"%"+NoFaktur.getText()+"%");
+                ps.setString(64,"%"+nmsup.getText()+"%");
+                ps.setString(65,"%"+nmptg.getText()+"%");
+                ps.setString(66,"%"+nmjenis.getText()+"%");
+                ps.setString(67,"%"+nmbar.getText()+"%");
+                ps.setString(68,"%"+NmIF.getText()+"%");
+                ps.setString(69,"%"+kdkategori.getText()+"%");
+                ps.setString(70,"%"+TCari.getText()+"%");
+                ps.setString(71,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
+                ps.setString(72,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
+                ps.setString(73,"%"+NoFaktur.getText()+"%");
+                ps.setString(74,"%"+nmsup.getText()+"%");
+                ps.setString(75,"%"+nmptg.getText()+"%");
+                ps.setString(76,"%"+nmjenis.getText()+"%");
+                ps.setString(77,"%"+nmbar.getText()+"%");
+                ps.setString(78,"%"+NmIF.getText()+"%");
+                ps.setString(79,"%"+kdkategori.getText()+"%");
+                ps.setString(80,"%"+TCari.getText()+"%");
+                ps.setString(81,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
+                ps.setString(82,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
+                ps.setString(83,"%"+NoFaktur.getText()+"%");
+                ps.setString(84,"%"+nmsup.getText()+"%");
+                ps.setString(85,"%"+nmptg.getText()+"%");
+                ps.setString(86,"%"+nmjenis.getText()+"%");
+                ps.setString(87,"%"+nmbar.getText()+"%");
+                ps.setString(88,"%"+NmIF.getText()+"%");
+                ps.setString(89,"%"+kdkategori.getText()+"%");
                 ps.setString(90,"%"+TCari.getText()+"%");
                 ps.setString(91,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
                 ps.setString(92,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
@@ -1332,25 +1448,48 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                 ps.setString(96,"%"+nmjenis.getText()+"%");
                 ps.setString(97,"%"+nmbar.getText()+"%");
                 ps.setString(98,"%"+NmIF.getText()+"%");
-                ps.setString(99,"%"+TCari.getText()+"%");
-                ps.setString(100,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
-                ps.setString(101,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
-                ps.setString(102,"%"+NoFaktur.getText()+"%");
-                ps.setString(103,"%"+nmsup.getText()+"%");
-                ps.setString(104,"%"+nmptg.getText()+"%");
-                ps.setString(105,"%"+nmjenis.getText()+"%");
-                ps.setString(106,"%"+nmbar.getText()+"%");
-                ps.setString(107,"%"+NmIF.getText()+"%");
-                ps.setString(108,"%"+TCari.getText()+"%");
-                ps.setString(109,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
-                ps.setString(110,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
-                ps.setString(111,"%"+NoFaktur.getText()+"%");
-                ps.setString(112,"%"+nmsup.getText()+"%");
-                ps.setString(113,"%"+nmptg.getText()+"%");
-                ps.setString(114,"%"+nmjenis.getText()+"%");
-                ps.setString(115,"%"+nmbar.getText()+"%");
-                ps.setString(116,"%"+NmIF.getText()+"%");
-                ps.setString(117,"%"+TCari.getText()+"%");
+                ps.setString(99,"%"+kdkategori.getText()+"%");
+                ps.setString(100,"%"+TCari.getText()+"%");
+                ps.setString(101,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
+                ps.setString(102,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
+                ps.setString(103,"%"+NoFaktur.getText()+"%");
+                ps.setString(104,"%"+nmsup.getText()+"%");
+                ps.setString(105,"%"+nmptg.getText()+"%");
+                ps.setString(106,"%"+nmjenis.getText()+"%");
+                ps.setString(107,"%"+nmbar.getText()+"%");
+                ps.setString(108,"%"+NmIF.getText()+"%");
+                ps.setString(109,"%"+kdkategori.getText()+"%");
+                ps.setString(110,"%"+TCari.getText()+"%");
+                ps.setString(111,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
+                ps.setString(112,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
+                ps.setString(113,"%"+NoFaktur.getText()+"%");
+                ps.setString(114,"%"+nmsup.getText()+"%");
+                ps.setString(115,"%"+nmptg.getText()+"%");
+                ps.setString(116,"%"+nmjenis.getText()+"%");
+                ps.setString(117,"%"+nmbar.getText()+"%");
+                ps.setString(118,"%"+NmIF.getText()+"%");
+                ps.setString(119,"%"+kdkategori.getText()+"%");
+                ps.setString(120,"%"+TCari.getText()+"%");
+                ps.setString(121,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
+                ps.setString(122,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
+                ps.setString(123,"%"+NoFaktur.getText()+"%");
+                ps.setString(124,"%"+nmsup.getText()+"%");
+                ps.setString(125,"%"+nmptg.getText()+"%");
+                ps.setString(126,"%"+nmjenis.getText()+"%");
+                ps.setString(127,"%"+nmbar.getText()+"%");
+                ps.setString(128,"%"+NmIF.getText()+"%");
+                ps.setString(129,"%"+kdkategori.getText()+"%");
+                ps.setString(130,"%"+TCari.getText()+"%");
+                ps.setString(131,Valid.SetTgl(TglBeli1.getSelectedItem()+""));
+                ps.setString(132,Valid.SetTgl(TglBeli2.getSelectedItem()+""));
+                ps.setString(133,"%"+NoFaktur.getText()+"%");
+                ps.setString(134,"%"+nmsup.getText()+"%");
+                ps.setString(135,"%"+nmptg.getText()+"%");
+                ps.setString(136,"%"+nmjenis.getText()+"%");
+                ps.setString(137,"%"+nmbar.getText()+"%");
+                ps.setString(138,"%"+NmIF.getText()+"%");
+                ps.setString(139,"%"+kdkategori.getText()+"%");
+                ps.setString(140,"%"+TCari.getText()+"%");
                 rs=ps.executeQuery();
                 tagihan=0;
                 while(rs.next()){
@@ -1358,58 +1497,73 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                           rs.getString(5)+", "+rs.getString(6),"Pengadaan di "+rs.getString(7) +" :","","","","","","",""
                     });  
                     
-                    ps2=koneksi.prepareStatement("select detailpesan.kode_brng,databarang.nama_brng, "+
-                        "detailpesan.kode_sat,kodesatuan.satuan,detailpesan.jumlah,detailpesan.h_pesan, "+
-                        "detailpesan.subtotal,detailpesan.dis,detailpesan.besardis,detailpesan.total,"+
-                        "detailpesan.no_batch,industrifarmasi.nama_industri,detailpesan.kadaluarsa "+
-                        "from detailpesan inner join databarang inner join kodesatuan inner join jenis inner join industrifarmasi "+
-                        " on detailpesan.kode_brng=databarang.kode_brng and databarang.kdjns=jenis.kdjns "+
-                        " and databarang.kode_industri=industrifarmasi.kode_industri and detailpesan.kode_sat=kodesatuan.kode_sat where "+
-                        " detailpesan.no_faktur=? and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and detailpesan.kode_brng like ? or "+
-                        " detailpesan.no_faktur=? and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and databarang.nama_brng like ? or "+
-                        " detailpesan.no_faktur=? and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and detailpesan.kode_sat like ? or "+
-                        " detailpesan.no_faktur=? and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and detailpesan.no_batch like ? or "+
-                        " detailpesan.no_faktur=? and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and industrifarmasi.nama_industri like ? or "+
-                        " detailpesan.no_faktur=? and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and jenis.nama like ? order by detailpesan.kode_brng  ");
+                    ps2=koneksi.prepareStatement("select detailpesan.kode_brng,databarang.nama_brng, detailpesan.kode_sat," +
+                        "kodesatuan.satuan,detailpesan.jumlah,detailpesan.h_pesan, detailpesan.subtotal,detailpesan.dis," +
+                        "detailpesan.besardis,detailpesan.total,detailpesan.no_batch,industrifarmasi.nama_industri," +
+                        "detailpesan.kadaluarsa,kategori_barang.kode, kategori_barang.nama from detailpesan inner join databarang inner join " +
+                        "kategori_barang inner join kodesatuan inner join jenis inner join industrifarmasi  on " +
+                        "detailpesan.kode_brng=databarang.kode_brng and databarang.kdjns=jenis.kdjns  and " +
+                        "databarang.kode_industri=industrifarmasi.kode_industri and detailpesan.kode_sat=kodesatuan.kode_sat and " +
+                        "databarang.kode_kategori=kategori_barang.kode where "+
+                        " detailpesan.no_faktur=? and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and kategori_barang.kode like ? and detailpesan.kode_brng like ? or "+
+                        " detailpesan.no_faktur=? and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and kategori_barang.kode like ? and databarang.nama_brng like ? or "+
+                        " detailpesan.no_faktur=? and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and kategori_barang.kode like ? and detailpesan.kode_sat like ? or "+
+                        " detailpesan.no_faktur=? and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and kategori_barang.kode like ? and detailpesan.no_batch like ? or "+
+                        " detailpesan.no_faktur=? and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and kategori_barang.kode like ? and industrifarmasi.nama_industri like ? or "+
+                        " detailpesan.no_faktur=? and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and kategori_barang.kode like ? and jenis.nama like ? or "+            
+                        " detailpesan.no_faktur=? and jenis.nama like ? and databarang.nama_brng like ? and industrifarmasi.nama_industri like ? and kategori_barang.kode like ? and kategori_barang.kode like ? order by detailpesan.kode_brng");
                     
                     try {
                         ps2.setString(1,rs.getString(2));
                         ps2.setString(2,"%"+nmjenis.getText()+"%");
                         ps2.setString(3,"%"+nmbar.getText()+"%");
                         ps2.setString(4,"%"+NmIF.getText()+"%");
-                        ps2.setString(5,"%"+TCari.getText()+"%");
-                        ps2.setString(6,rs.getString(2));
-                        ps2.setString(7,"%"+nmjenis.getText()+"%");
-                        ps2.setString(8,"%"+nmbar.getText()+"%");
-                        ps2.setString(9,"%"+NmIF.getText()+"%");
-                        ps2.setString(10,"%"+TCari.getText()+"%");
-                        ps2.setString(11,rs.getString(2));
-                        ps2.setString(12,"%"+nmjenis.getText()+"%");
-                        ps2.setString(13,"%"+nmbar.getText()+"%");
-                        ps2.setString(14,"%"+NmIF.getText()+"%");
-                        ps2.setString(15,"%"+TCari.getText()+"%");
-                        ps2.setString(16,rs.getString(2));
-                        ps2.setString(17,"%"+nmjenis.getText()+"%");
-                        ps2.setString(18,"%"+nmbar.getText()+"%");
-                        ps2.setString(19,"%"+NmIF.getText()+"%");
-                        ps2.setString(20,"%"+TCari.getText()+"%");
-                        ps2.setString(21,rs.getString(2));
-                        ps2.setString(22,"%"+nmjenis.getText()+"%");
-                        ps2.setString(23,"%"+nmbar.getText()+"%");
-                        ps2.setString(24,"%"+NmIF.getText()+"%");
-                        ps2.setString(25,"%"+TCari.getText()+"%");
-                        ps2.setString(26,rs.getString(2));
-                        ps2.setString(27,"%"+nmjenis.getText()+"%");
-                        ps2.setString(28,"%"+nmbar.getText()+"%");
-                        ps2.setString(29,"%"+NmIF.getText()+"%");
+                        ps2.setString(5,"%"+kdkategori.getText()+"%");
+                        ps2.setString(6,"%"+TCari.getText()+"%");
+                        ps2.setString(7,rs.getString(2));
+                        ps2.setString(8,"%"+nmjenis.getText()+"%");
+                        ps2.setString(9,"%"+nmbar.getText()+"%");
+                        ps2.setString(10,"%"+NmIF.getText()+"%");
+                        ps2.setString(11,"%"+kdkategori.getText()+"%");
+                        ps2.setString(12,"%"+TCari.getText()+"%");
+                        ps2.setString(13,rs.getString(2));
+                        ps2.setString(14,"%"+nmjenis.getText()+"%");
+                        ps2.setString(15,"%"+nmbar.getText()+"%");
+                        ps2.setString(16,"%"+NmIF.getText()+"%");
+                        ps2.setString(17,"%"+kdkategori.getText()+"%");
+                        ps2.setString(18,"%"+TCari.getText()+"%");
+                        ps2.setString(19,rs.getString(2));
+                        ps2.setString(20,"%"+nmjenis.getText()+"%");
+                        ps2.setString(21,"%"+nmbar.getText()+"%");
+                        ps2.setString(22,"%"+NmIF.getText()+"%");
+                        ps2.setString(23,"%"+kdkategori.getText()+"%");
+                        ps2.setString(24,"%"+TCari.getText()+"%");
+                        ps2.setString(25,rs.getString(2));
+                        ps2.setString(26,"%"+nmjenis.getText()+"%");
+                        ps2.setString(27,"%"+nmbar.getText()+"%");
+                        ps2.setString(28,"%"+NmIF.getText()+"%");
+                        ps2.setString(29,"%"+kdkategori.getText()+"%");
                         ps2.setString(30,"%"+TCari.getText()+"%");
+                        ps2.setString(31,rs.getString(2));
+                        ps2.setString(32,"%"+nmjenis.getText()+"%");
+                        ps2.setString(33,"%"+nmbar.getText()+"%");
+                        ps2.setString(34,"%"+NmIF.getText()+"%");
+                        ps2.setString(35,"%"+kdkategori.getText()+"%");
+                        ps2.setString(36,"%"+TCari.getText()+"%");
+                        ps2.setString(37,rs.getString(2));
+                        ps2.setString(38,"%"+nmjenis.getText()+"%");
+                        ps2.setString(39,"%"+nmbar.getText()+"%");
+                        ps2.setString(40,"%"+NmIF.getText()+"%");
+                        ps2.setString(41,"%"+kdkategori.getText()+"%");
+                        ps2.setString(42,"%"+TCari.getText()+"%");
+                        
                         rs2=ps2.executeQuery();
                         int no=1;
                         while(rs2.next()){
                                 tabMode.addRow(new Object[]{no+". Batch "+rs2.getString("no_batch"),"Exp : "+rs2.getString("kadaluarsa"),"I.F. : "+rs2.getString("nama_industri"),rs2.getString(1)+", "+rs2.getString(2),
                                             rs2.getString(3)+", "+rs2.getString(4),
                                             rs2.getString(5),Valid.SetAngka(rs2.getDouble(6)),Valid.SetAngka(rs2.getDouble(7)),
-                                            Valid.SetAngka(rs2.getDouble(8)),Valid.SetAngka(rs2.getDouble(9)),Valid.SetAngka(rs2.getDouble(10))});
+                                            Valid.SetAngka(rs2.getDouble(8)),Valid.SetAngka(rs2.getDouble(9)),Valid.SetAngka(rs2.getDouble(10)), rs2.getString(14)+", "+rs2.getString(15)});
                             no++;
                         }                        
                     } catch (Exception e) {
@@ -1448,6 +1602,8 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
         kdbar.setText("");
         nmbar.setText("");
         kdjenis.setText("");
+        kdkategori.setText("");
+        nmkategori.setText("");
         kdbar.requestFocus();        
     }
     
