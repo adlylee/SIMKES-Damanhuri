@@ -56,6 +56,7 @@ import bridging.BPJSDataSEP;
 import bridging.BPJSMapingPoli;
 import bridging.BPJSMapingDokterDPJP;
 import bridging.BPJSMonitoringKlaim;
+import bridging.BPJSMonitoringKunjungan;
 import bridging.BPJSRujukanKeluar;
 import bridging.INACBGCariCoderNIK;
 import bridging.INACBGCoderNIK;
@@ -382,6 +383,7 @@ import tranfusidarah.UTDPenyerahanDarah;
 import tranfusidarah.UTDStokDarah;
 import informasi.InformasiKerohanian;
 import informasi.InfoKerohanian;
+import laporan.DlgFrekuensiPenyakitRalanDanRanap;
 
 
 /**
@@ -925,6 +927,8 @@ public class frmUtama extends javax.swing.JFrame {
         btnPelayananPenunjang = new widget.ButtonBig();
         btnFrekuensiRanapPerDokter = new widget.ButtonBig();
         BtnToolRoh = new widget.ButtonBig();
+        btnMonitoringKunjungan = new widget.ButtonBig();
+        btnFrekuensiRalanDanRanap = new widget.ButtonBig();
         internalFrame1 = new widget.InternalFrame();
         BtnMenu = new widget.ButtonBig();
         jSeparator4 = new javax.swing.JSeparator();
@@ -5646,7 +5650,7 @@ public class frmUtama extends javax.swing.JFrame {
 
         tanggal.setEditable(false);
         tanggal.setForeground(new java.awt.Color(50, 70, 50));
-        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "28/07/2022" }));
+        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "15/08/2022" }));
         tanggal.setDisplayFormat("dd/MM/yyyy");
         tanggal.setName("tanggal"); // NOI18N
         tanggal.setOpaque(false);
@@ -5777,6 +5781,28 @@ public class frmUtama extends javax.swing.JFrame {
         BtnToolRoh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnToolRohActionPerformed(evt);
+            }
+        });
+
+        btnMonitoringKunjungan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/1360486845_23.png"))); // NOI18N
+        btnMonitoringKunjungan.setText("Monitoring Kunjungan BPJS");
+        btnMonitoringKunjungan.setIconTextGap(0);
+        btnMonitoringKunjungan.setName("btnMonitoringKunjungan"); // NOI18N
+        btnMonitoringKunjungan.setPreferredSize(new java.awt.Dimension(200, 90));
+        btnMonitoringKunjungan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMonitoringKunjunganActionPerformed(evt);
+            }
+        });
+
+        btnFrekuensiRalanDanRanap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/applications-office.png"))); // NOI18N
+        btnFrekuensiRalanDanRanap.setText("10 Besar Penyakit Ralan Dan Ranap");
+        btnFrekuensiRalanDanRanap.setIconTextGap(0);
+        btnFrekuensiRalanDanRanap.setName("btnFrekuensiRalanDanRanap"); // NOI18N
+        btnFrekuensiRalanDanRanap.setPreferredSize(new java.awt.Dimension(200, 90));
+        btnFrekuensiRalanDanRanap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFrekuensiRalanDanRanapActionPerformed(evt);
             }
         });
 
@@ -12144,6 +12170,29 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_btnRohActionPerformed
 
+    private void btnMonitoringKunjunganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMonitoringKunjunganActionPerformed
+        isTutup();
+        DlgHome.dispose();
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        BPJSMonitoringKunjungan form=new BPJSMonitoringKunjungan(this,false);
+        form.setSize(PanelUtama.getWidth(), PanelUtama.getHeight());
+        form.setLocationRelativeTo(PanelUtama);
+        form.setVisible(true);
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_btnMonitoringKunjunganActionPerformed
+
+    private void btnFrekuensiRalanDanRanapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFrekuensiRalanDanRanapActionPerformed
+        isTutup();
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        DlgFrekuensiPenyakitRalanDanRanap ktginventaris=new DlgFrekuensiPenyakitRalanDanRanap(this,false);
+        ktginventaris.isCek();
+        ktginventaris.setSize(PanelUtama.getWidth(),PanelUtama.getHeight());
+        ktginventaris.setLocationRelativeTo(PanelUtama);
+        ktginventaris.setVisible(true);
+        DlgHome.dispose();
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_btnFrekuensiRalanDanRanapActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -12283,6 +12332,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private widget.ButtonBig btnDisplayApotek;
     private widget.ButtonBig btnDokter;
     private widget.ButtonBig btnFrekuensiRalan;
+    private widget.ButtonBig btnFrekuensiRalanDanRanap;
     private widget.ButtonBig btnFrekuensiRanap;
     private widget.ButtonBig btnFrekuensiRanapPerDokter;
     private widget.ButtonBig btnGolonganBarang;
@@ -12355,6 +12405,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private widget.ButtonBig btnMerkInventaris;
     private widget.ButtonBig btnMetodeRacik;
     private widget.ButtonBig btnMonitoringKlaim;
+    private widget.ButtonBig btnMonitoringKunjungan;
     private widget.ButtonBig btnMutasiBarang;
     private widget.ButtonBig btnMutasiBerkas;
     private widget.ButtonBig btnObat;
@@ -13897,13 +13948,15 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             }
 
             if(var.getpenyakit_ralan()==true){                
-                Panelmenu.add(btnFrekuensiRalan); 
+                Panelmenu.add(btnFrekuensiRalan);
+                Panelmenu.add(btnFrekuensiRalanDanRanap);
                 jmlmenu++;
             }
 
             if(var.getpenyakit_ranap()==true){  
                 Panelmenu.add(btnFrekuensiRanap); 
-                Panelmenu.add(btnFrekuensiRanapPerDokter); 
+                Panelmenu.add(btnFrekuensiRanapPerDokter);
+                Panelmenu.add(btnFrekuensiRalanDanRanap);
                 jmlmenu++;
             }
 
@@ -14397,6 +14450,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
 
             if(var.getbpjs_monitoring_klaim()==true){
                 Panelmenu.add(btnMonitoringKlaim);
+                Panelmenu.add(btnMonitoringKunjungan);
                 jmlmenu++;
             }
 
@@ -15732,12 +15786,14 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
 
         if(var.getpenyakit_ralan()==true){                
             Panelmenu.add(btnFrekuensiRalan); 
+            Panelmenu.add(btnFrekuensiRalanDanRanap);
             jmlmenu++;
         }
 
         if(var.getpenyakit_ranap()==true){  
             Panelmenu.add(btnFrekuensiRanap);
-            Panelmenu.add(btnFrekuensiRanapPerDokter); 
+            Panelmenu.add(btnFrekuensiRanapPerDokter);
+            Panelmenu.add(btnFrekuensiRalanDanRanap);
             jmlmenu++;
         }
 
@@ -16228,6 +16284,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
 
         if(var.getbpjs_monitoring_klaim()==true){
             Panelmenu.add(btnMonitoringKlaim);
+            Panelmenu.add(btnMonitoringKunjungan);
             jmlmenu++;
         }
         
@@ -17922,6 +17979,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         if(var.getpenyakit_ralan()==true){  
             if(btnFrekuensiRalan.getText().toLowerCase().trim().contains(TCari.getText().toLowerCase().trim())){
                 Panelmenu.add(btnFrekuensiRalan); 
+                Panelmenu.add(btnFrekuensiRalanDanRanap);
                 jmlmenu++;
             }                
         }
@@ -17930,6 +17988,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             if(btnFrekuensiRanap.getText().toLowerCase().trim().contains(TCari.getText().toLowerCase().trim())){
                 Panelmenu.add(btnFrekuensiRanap);
                 Panelmenu.add(btnFrekuensiRanapPerDokter); 
+                Panelmenu.add(btnFrekuensiRalanDanRanap);
                 jmlmenu++;
             }                
         }
@@ -18613,6 +18672,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         if(var.getbpjs_monitoring_klaim()==true){
             if(btnMonitoringKlaim.getText().toLowerCase().trim().contains(TCari.getText().toLowerCase().trim())){
                 Panelmenu.add(btnMonitoringKlaim);
+                Panelmenu.add(btnMonitoringKunjungan);
                 jmlmenu++;
             }                
         }

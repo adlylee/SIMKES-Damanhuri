@@ -1,0 +1,110 @@
+package bridging;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import fungsi.koneksiDB;
+import fungsi.sekuel;
+import java.awt.HeadlessException;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.KeyManagementException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import java.util.Properties;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.X509TrustManager;
+import javax.swing.JOptionPane;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+
+public class BridgingWA {        
+    private static final Properties prop = new Properties();
+    private sekuel Sequel=new sekuel();
+    private String Key,pass , url , token ,requestJson, urlApi = "" , sender = "" , number ="" , message = "" , reurn = "";
+    private HttpHeaders headers ;
+    private HttpEntity requestEntity;
+    private ObjectMapper mapper = new ObjectMapper();
+    private JsonNode root;
+    private JsonNode nameNode;
+    private JsonNode response;
+    
+    
+    public String getHmac() {        
+        try {                    
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] hashInBytes = md.digest(pass.getBytes(StandardCharsets.UTF_8));
+
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hashInBytes) {
+                sb.append(String.format("%02x", b));
+            }
+            Key=sb.toString();            
+        } catch (Exception ex) {
+            System.out.println("Notifikasi : "+ex);
+        }
+	return Key;
+    }
+
+    
+    public RestTemplate getRest() throws NoSuchAlgorithmException, KeyManagementException {
+        SSLContext sslContext = SSLContext.getInstance("SSL");
+        javax.net.ssl.TrustManager[] trustManagers= {
+            new X509TrustManager() {
+                public X509Certificate[] getAcceptedIssuers() {return null;}
+                public void checkServerTrusted(X509Certificate[] arg0, String arg1)throws CertificateException {}
+                public void checkClientTrusted(X509Certificate[] arg0, String arg1)throws CertificateException {}
+            }
+        };
+        sslContext.init(null,trustManagers , new SecureRandom());
+        SSLSocketFactory sslFactory=new SSLSocketFactory(sslContext,SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+        Scheme scheme=new Scheme("https",443,sslFactory);
+        HttpComponentsClientHttpRequestFactory factory=new HttpComponentsClientHttpRequestFactory();
+        factory.getHttpClient().getConnectionManager().getSchemeRegistry().register(scheme);
+        return new RestTemplate(factory);
+    }
+    
+    public String sendWa(String no_rkm_medis, String nama,String tanggal,String poli){
+        try {
+            message = "Assalamualaikum "+nama+". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai .\n" +
+                " Handak behabar dan meingatakan pian, kalau nya BESOK tanggal "+tanggal+" pian ada JADWAL PERIKSA ke "+poli+" di Rumah Sakit H. Damanhuri Barabai . Pian bisa datang LANGSUNG ke ANJUNGAN PASIEN MANDIRI (APM) ." +
+                " Pastikan RUJUKAN BPJS pian masih berlaku. Jika sudah habis, maka mintalah rujukan kembali untuk berobat ke Rumah Sakit.Terima kasih \\n \\nWassalamualaikum\n" +
+                " Daftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US";
+            number = Sequel.cariIsi("SELECT no_tlp FROM pasien WHERE no_rkm_medis = "+no_rkm_medis);
+            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'token'");
+            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'server'");
+            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'phonenumber'");
+            requestJson = "type=text&sender="+sender+"&number="+number+"&message="+message+"&api_key="+token;
+            System.out.println("PostField : " + requestJson);
+            requestEntity = new HttpEntity(requestJson);
+            url = urlApi+"/wagateway/kirimpesan";	
+            root = mapper.readTree(getRest().exchange(url, HttpMethod.POST, requestEntity, String.class).getBody());
+            System.out.println(root);
+            token = root.path("message").asText();
+            nameNode = root.path("data");            
+            if(root.path("status").asText().equals("true")){ 
+                reurn = "Sukses";
+            }else {
+                JOptionPane.showMessageDialog(null,nameNode.path("message").asText());                
+            }   
+        } catch (HeadlessException | IOException | KeyManagementException | NoSuchAlgorithmException | RestClientException ex) {
+            System.out.println("Notifikasi : "+ex);
+            System.out.println(url);
+            if(ex.toString().contains("UnknownHostException")){
+                JOptionPane.showMessageDialog(null,"Koneksi ke server Kemenkes terputus...!");
+            }
+        }
+        return token;
+    }
+
+}

@@ -2477,7 +2477,7 @@ public class DlgPasien extends javax.swing.JDialog {
         FormInput.add(jLabel13);
         jLabel13.setBounds(4, 102, 95, 23);
 
-        DTPLahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "28-02-2022" }));
+        DTPLahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10-08-2022" }));
         DTPLahir.setDisplayFormat("dd-MM-yyyy");
         DTPLahir.setName("DTPLahir"); // NOI18N
         DTPLahir.setOpaque(false);
@@ -2609,7 +2609,7 @@ public class DlgPasien extends javax.swing.JDialog {
         FormInput.add(TKtp);
         TKtp.setBounds(712, 132, 130, 23);
 
-        DTPDaftar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "28-02-2022" }));
+        DTPDaftar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10-08-2022" }));
         DTPDaftar.setDisplayFormat("dd-MM-yyyy");
         DTPDaftar.setName("DTPDaftar"); // NOI18N
         DTPDaftar.setOpaque(false);
@@ -2660,32 +2660,32 @@ public class DlgPasien extends javax.swing.JDialog {
         R5.setText("Saudara");
         R5.setName("R5"); // NOI18N
         FormInput.add(R5);
-        R5.setBounds(165, 222, 100, 23);
+        R5.setBounds(165, 222, 70, 23);
 
         buttonGroup1.add(R4);
         R4.setText("Suami");
         R4.setName("R4"); // NOI18N
         FormInput.add(R4);
-        R4.setBounds(101, 222, 100, 23);
+        R4.setBounds(101, 222, 60, 23);
 
         buttonGroup1.add(R3);
         R3.setText("Istri");
         R3.setName("R3"); // NOI18N
         FormInput.add(R3);
-        R3.setBounds(240, 192, 100, 23);
+        R3.setBounds(240, 192, 50, 23);
 
         buttonGroup1.add(R2);
         R2.setText("Ibu");
         R2.setName("R2"); // NOI18N
         FormInput.add(R2);
-        R2.setBounds(165, 192, 100, 23);
+        R2.setBounds(165, 192, 60, 23);
 
         buttonGroup1.add(R1);
         R1.setText("Ayah");
         R1.setName("R1"); // NOI18N
         R1.setPreferredSize(new java.awt.Dimension(40, 20));
         FormInput.add(R1);
-        R1.setBounds(101, 192, 100, 23);
+        R1.setBounds(101, 192, 60, 23);
 
         jLabel24.setText("Askes/Asuransi :");
         jLabel24.setName("jLabel24"); // NOI18N
@@ -3030,7 +3030,7 @@ public class DlgPasien extends javax.swing.JDialog {
         R6.setText("Anak");
         R6.setName("R6"); // NOI18N
         FormInput.add(R6);
-        R6.setBounds(240, 222, 100, 23);
+        R6.setBounds(240, 222, 70, 23);
 
         BtnKelurahan1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/011.png"))); // NOI18N
         BtnKelurahan1.setMnemonic('2');
@@ -3697,6 +3697,8 @@ private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
             klg = "SAUDARA";
         } else if (R6.isSelected() == true) {
             klg = "ANAK";
+        } else if (R7.isSelected() == true) {
+            klg = "LAINNYA";
         }
 
         if (Kelurahan.isEditable() == true) {
@@ -6623,6 +6625,9 @@ private void KabupatenMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
                         break;
                     case "ANAK":
                         R6.setSelected(true);
+                        break;
+                    case "LAINNYA":
+                        R7.setSelected(true);
                         break;
 
                 }

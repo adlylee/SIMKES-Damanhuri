@@ -20,11 +20,25 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Github/SIMKES-Khanza/src/permintaan/DlgPermintaanRadiologi.java</file>
-            <file>file:/D:/Github/SIMKES-Khanza/src/informasi/InformasiKerohanian.java</file>
-            <file>file:/D:/Github/SIMKES-Khanza/src/inventory/DlgCariPemesanan.java</file>
-            <file>file:/D:/Github/SIMKES-Khanza/src/permintaan/DlgPermintaanKerohanian.java</file>
-            <file>file:/D:/Github/SIMKES-Khanza/src/inventory/Dlg10ObatTerbanyakPoli.java</file>
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/inventory/DlgPembelian.java</file>
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/inventory/DlgPemesanan.java</file>
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/simrskhanza/DlgIGD.java</file>
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/simrskhanza/DlgKamarInap.java</file>
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/inventory/DlgCariPemesanan.java</file>
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/inventory/DlgUbahPemesanan.java</file>
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/permintaan/DlgCariPermintaanLab.java</file>
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/fungsi/sekuel.java</file>
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/fungsi/validasi.java</file>
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/simrskhanza/DlgReg.java</file>
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/keuangan/DlgBilingRanap.java</file>
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/inventory/DlgResepObat.java</file>
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/inventory/DlgResepPulang.java</file>
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/bridging/BPJSMonitoringKlaim.java</file>
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/simrskhanza/frmUtama.java</file>
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/bridging/BPJSMonitoringKunjungan.java</file>
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/bridging/BPJSDataSEP.java</file>
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/fungsi/var.java</file>
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/fungsi/koneksiDB.java</file>
         </group>
     </open-files>
 </project-private>

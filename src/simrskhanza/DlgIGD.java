@@ -695,6 +695,7 @@ public final class DlgIGD extends javax.swing.JDialog {
         MnJKRA = new javax.swing.JMenuItem();
         MnLembarRalan = new javax.swing.JMenuItem();
         MnBlangkoResep = new javax.swing.JMenuItem();
+        ppCetakRMRanap = new javax.swing.JMenuItem();
         MnGelang = new javax.swing.JMenu();
         MnGelang1 = new javax.swing.JMenuItem();
         MnLabelTracker = new javax.swing.JMenuItem();
@@ -731,6 +732,7 @@ public final class DlgIGD extends javax.swing.JDialog {
         ppBerkasDigital = new javax.swing.JMenuItem();
         ppIKP = new javax.swing.JMenuItem();
         MnInputHP = new javax.swing.JMenuItem();
+        ppDPJP = new javax.swing.JMenuItem();
         MnStatus = new javax.swing.JMenu();
         ppBerkas = new javax.swing.JMenuItem();
         MnSudah = new javax.swing.JMenuItem();
@@ -746,11 +748,9 @@ public final class DlgIGD extends javax.swing.JDialog {
         MnStatusBaru = new javax.swing.JMenuItem();
         MnStatusLama = new javax.swing.JMenuItem();
         ppRiwayat = new javax.swing.JMenuItem();
-        ppDPJP = new javax.swing.JMenuItem();
         MnHapusData = new javax.swing.JMenu();
         MnHapusTagihanOperasi = new javax.swing.JMenuItem();
         MnHapusObatOperasi = new javax.swing.JMenuItem();
-        ppCetakRMRanap = new javax.swing.JMenuItem();
         Kd2 = new widget.TextBox();
         DlgSakit = new javax.swing.JDialog();
         internalFrame3 = new widget.InternalFrame();
@@ -1627,6 +1627,23 @@ public final class DlgIGD extends javax.swing.JDialog {
         });
         jMenu4.add(MnBlangkoResep);
 
+        ppCetakRMRanap.setBackground(new java.awt.Color(255, 255, 254));
+        ppCetakRMRanap.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        ppCetakRMRanap.setForeground(new java.awt.Color(70, 70, 70));
+        ppCetakRMRanap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        ppCetakRMRanap.setText("Cetak RM Ranap");
+        ppCetakRMRanap.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        ppCetakRMRanap.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        ppCetakRMRanap.setIconTextGap(5);
+        ppCetakRMRanap.setName("ppCetakRMRanap"); // NOI18N
+        ppCetakRMRanap.setPreferredSize(new java.awt.Dimension(250, 26));
+        ppCetakRMRanap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ppCetakRMRanapBtnPrintActionPerformed(evt);
+            }
+        });
+        jMenu4.add(ppCetakRMRanap);
+
         jPopupMenu1.add(jMenu4);
 
         MnGelang.setBackground(new java.awt.Color(250, 255, 245));
@@ -2208,6 +2225,23 @@ public final class DlgIGD extends javax.swing.JDialog {
         });
         MenuInputData.add(MnInputHP);
 
+        ppDPJP.setBackground(new java.awt.Color(255, 255, 254));
+        ppDPJP.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        ppDPJP.setForeground(new java.awt.Color(70, 70, 70));
+        ppDPJP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        ppDPJP.setText("Input DPJP");
+        ppDPJP.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        ppDPJP.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        ppDPJP.setIconTextGap(5);
+        ppDPJP.setName("ppDPJP"); // NOI18N
+        ppDPJP.setPreferredSize(new java.awt.Dimension(250, 26));
+        ppDPJP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ppDPJPBtnPrintActionPerformed(evt);
+            }
+        });
+        MenuInputData.add(ppDPJP);
+
         jPopupMenu1.add(MenuInputData);
 
         MnStatus.setBackground(new java.awt.Color(250, 255, 245));
@@ -2455,23 +2489,6 @@ public final class DlgIGD extends javax.swing.JDialog {
         });
         jPopupMenu1.add(ppRiwayat);
 
-        ppDPJP.setBackground(new java.awt.Color(255, 255, 254));
-        ppDPJP.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        ppDPJP.setForeground(new java.awt.Color(70, 70, 70));
-        ppDPJP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
-        ppDPJP.setText("Input DPJP");
-        ppDPJP.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        ppDPJP.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppDPJP.setIconTextGap(5);
-        ppDPJP.setName("ppDPJP"); // NOI18N
-        ppDPJP.setPreferredSize(new java.awt.Dimension(250, 26));
-        ppDPJP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ppDPJPBtnPrintActionPerformed(evt);
-            }
-        });
-        jPopupMenu1.add(ppDPJP);
-
         MnHapusData.setBackground(new java.awt.Color(250, 255, 245));
         MnHapusData.setForeground(new java.awt.Color(70, 70, 70));
         MnHapusData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
@@ -2518,23 +2535,6 @@ public final class DlgIGD extends javax.swing.JDialog {
 
         jPopupMenu1.add(MnHapusData);
 
-        ppCetakRMRanap.setBackground(new java.awt.Color(255, 255, 254));
-        ppCetakRMRanap.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        ppCetakRMRanap.setForeground(new java.awt.Color(70, 70, 70));
-        ppCetakRMRanap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
-        ppCetakRMRanap.setText("Cetak RM Ranap");
-        ppCetakRMRanap.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        ppCetakRMRanap.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppCetakRMRanap.setIconTextGap(5);
-        ppCetakRMRanap.setName("ppCetakRMRanap"); // NOI18N
-        ppCetakRMRanap.setPreferredSize(new java.awt.Dimension(250, 26));
-        ppCetakRMRanap.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ppCetakRMRanapBtnPrintActionPerformed(evt);
-            }
-        });
-        jPopupMenu1.add(ppCetakRMRanap);
-
         Kd2.setName("Kd2"); // NOI18N
         Kd2.setPreferredSize(new java.awt.Dimension(207, 23));
 
@@ -2552,7 +2552,7 @@ public final class DlgIGD extends javax.swing.JDialog {
 
         TglSakit1.setEditable(false);
         TglSakit1.setForeground(new java.awt.Color(50, 70, 50));
-        TglSakit1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "15-07-2022" }));
+        TglSakit1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-08-2022" }));
         TglSakit1.setDisplayFormat("dd-MM-yyyy");
         TglSakit1.setName("TglSakit1"); // NOI18N
         TglSakit1.setOpaque(false);
@@ -2600,7 +2600,7 @@ public final class DlgIGD extends javax.swing.JDialog {
 
         TglSakit2.setEditable(false);
         TglSakit2.setForeground(new java.awt.Color(50, 70, 50));
-        TglSakit2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "15-07-2022" }));
+        TglSakit2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-08-2022" }));
         TglSakit2.setDisplayFormat("dd-MM-yyyy");
         TglSakit2.setName("TglSakit2"); // NOI18N
         TglSakit2.setOpaque(false);
@@ -3083,7 +3083,7 @@ public final class DlgIGD extends javax.swing.JDialog {
         panelGlass7.add(jLabel15);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "15-07-2022" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-08-2022" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -3097,7 +3097,7 @@ public final class DlgIGD extends javax.swing.JDialog {
         panelGlass7.add(jLabel17);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "15-07-2022" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-08-2022" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -3167,6 +3167,7 @@ public final class DlgIGD extends javax.swing.JDialog {
         FormInput.add(jLabel8);
         jLabel8.setBounds(0, 72, 70, 23);
 
+        TNoRw.setEditable(false);
         TNoRw.setHighlighter(null);
         TNoRw.setName("TNoRw"); // NOI18N
         TNoRw.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -3189,10 +3190,15 @@ public final class DlgIGD extends javax.swing.JDialog {
         jLabel9.setBounds(165, 72, 36, 23);
 
         DTPReg.setForeground(new java.awt.Color(50, 70, 50));
-        DTPReg.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "15-07-2022" }));
+        DTPReg.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-08-2022" }));
         DTPReg.setDisplayFormat("dd-MM-yyyy");
         DTPReg.setName("DTPReg"); // NOI18N
         DTPReg.setOpaque(false);
+        DTPReg.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                DTPRegItemStateChanged(evt);
+            }
+        });
         DTPReg.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 DTPRegKeyPressed(evt);
@@ -6085,6 +6091,10 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
         }
     }//GEN-LAST:event_MnInputHPBtnPrintActionPerformed
 
+    private void DTPRegItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_DTPRegItemStateChanged
+        isNumber();
+    }//GEN-LAST:event_DTPRegItemStateChanged
+
     /**
      * @data args the command line arguments
      */
@@ -6502,7 +6512,8 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
     private void isPas() {
         if (validasiregistrasi.equals("Yes")) {
             if (Sequel.cariInteger("select count(no_rkm_medis) from reg_periksa where no_rkm_medis=? and status_bayar='Belum Bayar' and stts<>'Batal'", TNoRM.getText()) > 0) {
-                JOptionPane.showMessageDialog(rootPane, "Maaf, pasien pada kunjungan sebelumnya memiliki tagihan yang belum di closing.\nSilahkan konfirmasi dengan pihak kasir.. !!");
+                String tgl = Sequel.cariIsi("SELECT tgl_registrasi FROM reg_periksa WHERE no_rkm_medis=? and status_bayar='Belum Bayar' and stts<>'Batal' LIMIT 1", TNoRM.getText());
+                JOptionPane.showMessageDialog(rootPane, "Maaf, pasien pada kunjungan sebelumnya memiliki tagihan yang belum di closing di tanggal "+Valid.SetTgl3(tgl)+".\nSilahkan konfirmasi dengan pihak kasir.. !!");
             } else {
                 if (validasicatatan.equals("Yes")) {
                     if (Sequel.cariInteger("select count(no_rkm_medis) from catatan_pasien where no_rkm_medis=?", TNoRM.getText()) > 0) {
@@ -6651,8 +6662,12 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
                 Valid.autoNomer3("select ifnull(MAX(CONVERT(no_reg,signed)),0) from reg_periksa where kd_dokter='" + kddokter.getText() + "' and tgl_registrasi='" + Valid.SetTgl(DTPReg.getSelectedItem() + "") + "'", "", 3, TNoReg);
                 break;
         }
-        if (Kd2.getText().equals("")) {
+        if (var.getkode().equals("Admin Utama")) {
             Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_rawat,6),signed)),0) from reg_periksa where tgl_registrasi='" + Valid.SetTgl(DTPReg.getSelectedItem() + "") + "' ", dateformat.format(DTPReg.getDate()) + "/", 6, TNoRw);
+        } else {
+            if (Kd2.getText().equals("")) {
+                Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_rawat,6),signed)),0) from reg_periksa where tgl_registrasi='" + Valid.SetTgl(DTPReg.getSelectedItem() + "") + "' ", dateformat.format(DTPReg.getDate()) + "/", 6, TNoRw);
+            }
         }
     }
 
