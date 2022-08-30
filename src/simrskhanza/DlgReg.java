@@ -107,7 +107,6 @@ public final class DlgReg extends javax.swing.JDialog {
     private SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
     private char ESC = 27;
     // ganti kertas
-    private char[] FORM_FEED = {12};
     // reset setting
     private char[] RESET = {ESC, '@'};
     // huruf tebal diaktifkan
