@@ -1,4 +1,4 @@
 setting/
 dist/setting
-build/
+build/*
 src/setting/database.xml
