@@ -1,3 +1,5 @@
 setting/
 dist/setting
 build/
+/dist/
+nbproject/
