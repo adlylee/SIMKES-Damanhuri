@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+<<<<<<< HEAD
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/D:/Github/SIMKES-Khanza/src/keuangan/DlgBilingRalan.java</file>
+            <file>file:/D:/Github/SIMKES-Khanza/src/permintaan/DlgBookingRegistrasi.java</file>
+            <file>file:/D:/Github/SIMKES-Khanza/src/inventory/DlgCariPemesanan.java</file>
+            <file>file:/D:/Github/SIMKES-Khanza/src/simrskhanza/DlgPelayananFarmasi.java</file>
+=======
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="3">
         <file>
             <url>file:/Users/keuangan/Library/Caches/NetBeans/12.0/jshell/junk/console.jsh</url>
@@ -39,6 +48,7 @@
             <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/bridging/MyLimsTransaksi.java</file>
             <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/fungsi/koneksiDB.java</file>
             <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/bridging/LimsApi.java</file>
+>>>>>>> 4497ee4bedfba4fcee25823b26cdc13a30250310
         </group>
     </open-files>
 </project-private>
