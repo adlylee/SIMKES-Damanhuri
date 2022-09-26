@@ -386,6 +386,7 @@ import informasi.InformasiKerohanian;
 import informasi.InfoKerohanian;
 import java.awt.geom.RoundRectangle2D;
 import laporan.DlgFrekuensiPenyakitRalanDanRanap;
+import permintaan.DlgPermintaanKerohanian;
 
 
 /**
@@ -928,8 +929,9 @@ public class frmUtama extends javax.swing.JFrame {
         btnFrekuensiRanapPerDokter = new widget.ButtonBig();
         btnMonitoringKunjungan = new widget.ButtonBig();
         btnFrekuensiRalanDanRanap = new widget.ButtonBig();
-        btnMyLimsMapping = new widget.ButtonBig();
+        btnPelFar = new widget.ButtonBig();
         btnKerohanian = new widget.ButtonBig();
+        btnMyLimsMapping = new widget.ButtonBig();
         internalFrame1 = new widget.InternalFrame();
         BtnMenu = new widget.ButtonBig();
         jSeparator4 = new javax.swing.JSeparator();
@@ -1019,7 +1021,7 @@ public class frmUtama extends javax.swing.JFrame {
         internalFrame3.setWarnaBawah(new java.awt.Color(237, 237, 250));
         internalFrame3.setLayout(null);
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/1028145_OJZ2LN0 (1).png"))); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/shield.png"))); // NOI18N
         jLabel6.setName("jLabel6"); // NOI18N
         internalFrame3.add(jLabel6);
         jLabel6.setBounds(355, 10, 240, 300);
@@ -5631,7 +5633,7 @@ public class frmUtama extends javax.swing.JFrame {
 
         tanggal.setEditable(false);
         tanggal.setForeground(new java.awt.Color(50, 70, 50));
-        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02/09/2022" }));
+        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26/09/2022" }));
         tanggal.setDisplayFormat("dd/MM/yyyy");
         tanggal.setName("tanggal"); // NOI18N
         tanggal.setOpaque(false);
@@ -5768,25 +5770,36 @@ public class frmUtama extends javax.swing.JFrame {
             }
         });
 
-        btnMyLimsMapping.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/applications-office.png"))); // NOI18N
-        btnMyLimsMapping.setText("Mapping MyLims");
-        btnMyLimsMapping.setIconTextGap(0);
-        btnMyLimsMapping.setName("btnMyLimsMapping"); // NOI18N
-        btnMyLimsMapping.setPreferredSize(new java.awt.Dimension(200, 90));
-        btnMyLimsMapping.addActionListener(new java.awt.event.ActionListener() {
+        btnPelFar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/applications-office.png"))); // NOI18N
+        btnPelFar.setText("10 Besar Penyakit Ralan Dan Ranap");
+        btnPelFar.setIconTextGap(0);
+        btnPelFar.setName("btnPelFar"); // NOI18N
+        btnPelFar.setPreferredSize(new java.awt.Dimension(200, 90));
+        btnPelFar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMyLimsMappingActionPerformed(evt);
+                btnPelFarActionPerformed(evt);
             }
         });
 
         btnKerohanian.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/applications-office.png"))); // NOI18N
-        btnKerohanian.setText("Kerohanian");
+        btnKerohanian.setText("10 Besar Penyakit Ralan Dan Ranap");
         btnKerohanian.setIconTextGap(0);
         btnKerohanian.setName("btnKerohanian"); // NOI18N
         btnKerohanian.setPreferredSize(new java.awt.Dimension(200, 90));
         btnKerohanian.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnKerohanianActionPerformed(evt);
+            }
+        });
+
+        btnMyLimsMapping.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/applications-office.png"))); // NOI18N
+        btnMyLimsMapping.setText("10 Besar Penyakit Ralan Dan Ranap");
+        btnMyLimsMapping.setIconTextGap(0);
+        btnMyLimsMapping.setName("btnMyLimsMapping"); // NOI18N
+        btnMyLimsMapping.setPreferredSize(new java.awt.Dimension(200, 90));
+        btnMyLimsMapping.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMyLimsMappingActionPerformed(evt);
             }
         });
 
@@ -6211,7 +6224,6 @@ public class frmUtama extends javax.swing.JFrame {
         jMenu1.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jMenu1.setIconTextGap(3);
         jMenu1.setName("jMenu1"); // NOI18N
-        jMenu1.setOpaque(false);
         jMenu1.setPreferredSize(new java.awt.Dimension(80, 28));
 
         MnLogin.setBackground(new java.awt.Color(255, 255, 254));
@@ -6279,7 +6291,6 @@ public class frmUtama extends javax.swing.JFrame {
         jMenu5.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jMenu5.setIconTextGap(3);
         jMenu5.setName("jMenu5"); // NOI18N
-        jMenu5.setOpaque(false);
         jMenu5.setPreferredSize(new java.awt.Dimension(127, 28));
 
         MnBelumDatang1.setBackground(new java.awt.Color(255, 255, 254));
@@ -6369,7 +6380,6 @@ public class frmUtama extends javax.swing.JFrame {
         jMenu6.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jMenu6.setIconTextGap(3);
         jMenu6.setName("jMenu6"); // NOI18N
-        jMenu6.setOpaque(false);
         jMenu6.setPreferredSize(new java.awt.Dimension(89, 28));
 
         MnRekapBulanan1.setBackground(new java.awt.Color(255, 255, 254));
@@ -6638,7 +6648,6 @@ public class frmUtama extends javax.swing.JFrame {
         jMenu7.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jMenu7.setIconTextGap(3);
         jMenu7.setName("jMenu7"); // NOI18N
-        jMenu7.setOpaque(false);
         jMenu7.setPreferredSize(new java.awt.Dimension(138, 28));
 
         MnAnjungan.setBackground(new java.awt.Color(255, 255, 254));
@@ -6742,7 +6751,6 @@ public class frmUtama extends javax.swing.JFrame {
         jMenu4.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jMenu4.setIconTextGap(3);
         jMenu4.setName("jMenu4"); // NOI18N
-        jMenu4.setOpaque(false);
         jMenu4.setPreferredSize(new java.awt.Dimension(124, 28));
         jMenu4.addMenuListener(new javax.swing.event.MenuListener() {
             public void menuCanceled(javax.swing.event.MenuEvent evt) {
@@ -12133,29 +12141,38 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_btnFrekuensiRalanDanRanapActionPerformed
 
-    private void btnMyLimsMappingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMyLimsMappingActionPerformed
+    private void btnPelFarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPelFarActionPerformed
         isTutup();
-        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        MyLimsMapping ktginventaris=new MyLimsMapping(this,false);
-        ktginventaris.isCek();
-        ktginventaris.setSize(PanelUtama.getWidth(),PanelUtama.getHeight());
-        ktginventaris.setLocationRelativeTo(PanelUtama);
-        ktginventaris.setVisible(true);
         DlgHome.dispose();
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        DlgPelayananFarmasi aplikasi=new DlgPelayananFarmasi(this,false);
+        aplikasi.setSize(PanelUtama.getWidth(), PanelUtama.getHeight());
+        aplikasi.setLocationRelativeTo(PanelUtama);
+        aplikasi.setVisible(true);
         this.setCursor(Cursor.getDefaultCursor());
-    }//GEN-LAST:event_btnMyLimsMappingActionPerformed
+    }//GEN-LAST:event_btnPelFarActionPerformed
 
     private void btnKerohanianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKerohanianActionPerformed
         isTutup();
-        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        InformasiKerohanian roh=new InformasiKerohanian(this,false);
-        roh.isCek();
-        roh.setSize(PanelUtama.getWidth(),PanelUtama.getHeight());
-        roh.setLocationRelativeTo(PanelUtama);
-        roh.setVisible(true);
         DlgHome.dispose();
-        this.setCursor(Cursor.getDefaultCursor());         // TODO add your handling code here:
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        DlgPermintaanKerohanian aplikasi=new DlgPermintaanKerohanian(this,false);
+        aplikasi.setSize(PanelUtama.getWidth(), PanelUtama.getHeight());
+        aplikasi.setLocationRelativeTo(PanelUtama);
+        aplikasi.setVisible(true);
+        this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_btnKerohanianActionPerformed
+
+    private void btnMyLimsMappingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMyLimsMappingActionPerformed
+        isTutup();
+        DlgHome.dispose();
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        MyLimsMapping aplikasi=new MyLimsMapping(this,false);
+        aplikasi.setSize(PanelUtama.getWidth(), PanelUtama.getHeight());
+        aplikasi.setLocationRelativeTo(PanelUtama);
+        aplikasi.setVisible(true);
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_btnMyLimsMappingActionPerformed
 
     /**
     * @param args the command line arguments
@@ -12390,6 +12407,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private widget.ButtonBig btnPaymentPoint;
     private widget.ButtonBig btnPaymentPoint2;
     private widget.ButtonBig btnPegawai;
+    private widget.ButtonBig btnPelFar;
     private widget.ButtonBig btnPelayananPenunjang;
     private widget.ButtonBig btnPemakaianAirPDAM;
     private widget.ButtonBig btnPemasukanLain;
@@ -13261,6 +13279,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
                 Panelmenu.add(btnHibahObatBHP);
                 Panelmenu.add(btnLapStokOp);
                 Panelmenu.add(btnLapPelFar);
+                Panelmenu.add(btnPelFar);
                 jmlmenu++;
             }
 
@@ -15109,6 +15128,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             Panelmenu.add(btnHibahObatBHP);
             Panelmenu.add(btnLapStokOp);
             Panelmenu.add(btnLapPelFar);
+            Panelmenu.add(btnPelFar);
             jmlmenu++;
         }
 
@@ -17047,6 +17067,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
                 Panelmenu.add(btnHibahObatBHP);
                 Panelmenu.add(btnLapStokOp);
                 Panelmenu.add(btnLapPelFar);
+                Panelmenu.add(btnPelFar);
                 jmlmenu++;
             }                
         }

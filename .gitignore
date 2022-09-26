@@ -1,4 +1,6 @@
-setting/
-dist/setting
+setting/database.xml
 build/*
+src/setting/database.xml
+build/
+/dist/
 src/setting/database.xml

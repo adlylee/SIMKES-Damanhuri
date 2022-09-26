@@ -263,6 +263,16 @@ public class DlgObatPeresep extends javax.swing.JDialog {
         nmdokter.setEditable(false);
         nmdokter.setName("nmdokter"); // NOI18N
         nmdokter.setPreferredSize(new java.awt.Dimension(203, 23));
+        nmdokter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nmdokterActionPerformed(evt);
+            }
+        });
+        nmdokter.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                nmdokterKeyPressed(evt);
+            }
+        });
         panelisi4.add(nmdokter);
 
         BtnSeek2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
@@ -590,6 +600,14 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
     private void BtnSeek3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnSeek3KeyPressed
         //Valid.pindah(evt,DTPCari2,TCari);
     }//GEN-LAST:event_BtnSeek3KeyPressed
+
+    private void nmdokterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nmdokterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nmdokterActionPerformed
+
+    private void nmdokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nmdokterKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nmdokterKeyPressed
 
     /**
     * @param args the command line arguments
