@@ -56,7 +56,7 @@ public final class DlgPembayaranRanap extends javax.swing.JDialog {
              Service=0,ttlLaborat=0,ttlRadiologi=0,ttlOperasi=0,ttlObat=0,ttlRanap_Dokter=0,ttlRanap_Paramedis=0,ttlRalan_Dokter=0,
              ttlRalan_Paramedis=0,ttlTambahan=0,ttlPotongan=0,ttlKamar=0,ttlRegistrasi=0,ttlHarian=0,ttlRetur_Obat=0,ttlResep_Pulang=0,ttlService=0;
     private String sqlps2="select sum(totalbiaya) from billing where no_rawat=? and status=? ",dokterranap,sqlpsdokter;
-    private int row=0,j;
+    private int row=0,j , jml = 0;
     
     /** Creates new form DlgLhtBiaya
      * @param parent
@@ -241,6 +241,8 @@ public final class DlgPembayaranRanap extends javax.swing.JDialog {
         Tgl2 = new widget.Tanggal();
         BtnAll = new widget.Button();
         BtnCari1 = new widget.Button();
+        jLabel11 = new javax.swing.JLabel();
+        LCount1 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         LCount = new javax.swing.JLabel();
         BtnPrint = new widget.Button();
@@ -385,6 +387,22 @@ public final class DlgPembayaranRanap extends javax.swing.JDialog {
             }
         });
         panelGlass5.add(BtnCari1);
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(70, 70, 70));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel11.setText("Jumlah :");
+        jLabel11.setName("jLabel11"); // NOI18N
+        jLabel11.setPreferredSize(new java.awt.Dimension(50, 23));
+        panelGlass5.add(jLabel11);
+
+        LCount1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        LCount1.setForeground(new java.awt.Color(70, 70, 70));
+        LCount1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        LCount1.setText("0");
+        LCount1.setName("LCount1"); // NOI18N
+        LCount1.setPreferredSize(new java.awt.Dimension(50, 23));
+        panelGlass5.add(LCount1);
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(70, 70, 70));
@@ -841,6 +859,7 @@ private void BtnCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.Button BtnSeek2;
     private widget.Button BtnSeek3;
     private javax.swing.JLabel LCount;
+    private javax.swing.JLabel LCount1;
     private javax.swing.JMenuItem MnBilling;
     private javax.swing.JMenuItem MnLihatDokter;
     private widget.ScrollPane Scroll;
@@ -850,6 +869,7 @@ private void BtnCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.Button btnBangsal;
     private widget.InternalFrame internalFrame1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JPopupMenu jPopupMenu1;
     private widget.TextBox kdbangsal;
     private widget.TextBox kddokter;
@@ -872,21 +892,6 @@ private void BtnCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         Valid.tabelKosong(tabMode);
         try{      
             ps= koneksi.prepareStatement(
-//                "select kamar_inap.no_rawat,reg_periksa.no_rkm_medis,pasien.nm_pasien,kamar_inap.tgl_keluar,penjab.png_jawab,kamar_inap.stts_pulang, "+
-//                "kamar.kd_kamar, bangsal.nm_bangsal "+
-//                "from kamar_inap inner join reg_periksa inner join pasien inner join penjab inner join kamar inner join bangsal left outer join dpjp_ranap "+
-//                "on kamar_inap.no_rawat=reg_periksa.no_rawat and reg_periksa.kd_pj=penjab.kd_pj "+
-//                "and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "+
-//                "and kamar_inap.kd_kamar=kamar.kd_kamar "+
-//                "and kamar.kd_bangsal=bangsal.kd_bangsal and kamar_inap.no_rawat=dpjp_ranap.no_rawat "+
-//                "where kamar_inap.tgl_keluar between ? and ? and reg_periksa.kd_pj like ? and dpjp_ranap.kd_dokter like ? and "+
-//                "reg_periksa.no_rawat not in (select piutang_pasien.no_rawat from piutang_pasien where piutang_pasien.no_rawat=reg_periksa.no_rawat) "+
-//                "GROUP BY kamar_inap.no_rawat order by kamar_inap.tgl_keluar,kamar_inap.jam_keluar");
-//            try {
-//                ps.setString(1,Valid.SetTgl(Tgl1.getSelectedItem()+""));
-//                ps.setString(2,Valid.SetTgl(Tgl2.getSelectedItem()+""));
-//                ps.setString(3,"%"+kdpenjab.getText()+"%");
-//                ps.setString(4,"%"+kddokter.getText()+"%");
                 "select kamar_inap.no_rawat,reg_periksa.no_rkm_medis,pasien.nm_pasien,kamar_inap.tgl_keluar,penjab.png_jawab,kamar_inap.stts_pulang, "+
                 "kamar.kd_kamar, bangsal.nm_bangsal "+
                 "from kamar_inap inner join reg_periksa on kamar_inap.no_rawat=reg_periksa.no_rawat inner join pasien on reg_periksa.no_rkm_medis=pasien.no_rkm_medis "+
@@ -907,7 +912,7 @@ private void BtnCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 ttlRanap_Dokter=0;ttlRanap_Paramedis=0;ttlRalan_Dokter=0;
                 ttlRalan_Paramedis=0;ttlTambahan=0;ttlPotongan=0;ttlKamar=0;
                 ttlRegistrasi=0;ttlHarian=0;ttlRetur_Obat=0;ttlResep_Pulang=0;
-                ttlService=0;
+                ttlService=0;jml=0;
                 while(rs.next()){
 //                    if(!rs.getString("stts_pulang").equals("-")){
 //                    if(!rs.getString("stts_pulang").equals("Pindah Kamar")){
@@ -1300,7 +1305,7 @@ private void BtnCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                             rs.getString("kd_kamar")+" "+rs.getString("nm_bangsal"),"",rs.getString("no_rawat")
                         });
                         all=all+Laborat+Radiologi+Operasi+Obat+Ranap_Dokter+Ranap_Dokter_Paramedis+Ranap_Paramedis+Ralan_Dokter+Ralan_Dokter_Paramedis+Ralan_Paramedis+Tambahan+Potongan+Kamar+Registrasi+Harian+Retur_Obat+Resep_Pulang+Service;
-//                    }}                
+                        jml++;
                 }
                 tabMode.addRow(new Object[]{
                         ">> Total ",":","","","",Valid.SetAngka(ttlRegistrasi),Valid.SetAngka(ttlRanap_Dokter+ttlRanap_Paramedis+ttlRalan_Dokter+ttlRalan_Paramedis),
@@ -1308,6 +1313,7 @@ private void BtnCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                         Valid.SetAngka(ttlTambahan),Valid.SetAngka(ttlKamar+ttlService),Valid.SetAngka(ttlOperasi),Valid.SetAngka(ttlHarian),Valid.SetAngka(all),""
                 });
                 LCount.setText(Valid.SetAngka(all));
+                LCount1.setText(String.valueOf(jml));
             } catch (Exception e) {
                 System.out.println("Notif 1 : "+e);
             } finally{

@@ -352,6 +352,7 @@ import kepegawaian.DlgJadwal;
 import inventory.DlgResepPulang;
 import keuangan.DlgPembayaranPerAKunBayar3;
 import bridging.DlgDataTB;
+import bridging.MyLimsMapping;
 import inventaris.KeslingLimbahB3Medis;
 import inventaris.KeslingPemakaiaanAirPDAM;
 import inventory.DlgKadaluarsaBatch;
@@ -383,6 +384,7 @@ import tranfusidarah.UTDPenyerahanDarah;
 import tranfusidarah.UTDStokDarah;
 import informasi.InformasiKerohanian;
 import informasi.InfoKerohanian;
+import java.awt.geom.RoundRectangle2D;
 import laporan.DlgFrekuensiPenyakitRalanDanRanap;
 
 
@@ -422,7 +424,7 @@ public class frmUtama extends javax.swing.JFrame {
         Passbaru1.setDocument(new batasInput((byte)100).getKata(Passbaru1));
         PassBaru2.setDocument(new batasInput((byte)100).getKata(PassBaru2));
 
-        DlgLogin.setSize(344,201);
+        DlgLogin.setSize(600,310);//<a href="https://www.freepik.com/free-vector/security-background-design_1028145.htm#query=password%20key&position=10&from_view=keyword">Image by GraphiqaStock</a> on Freepik
         DlgLogin.setVisible(false);
         DlgLogin.setLocationRelativeTo(null);
         
@@ -522,14 +524,13 @@ public class frmUtama extends javax.swing.JFrame {
         DlgLogin = new javax.swing.JDialog();
         internalFrame2 = new widget.InternalFrame();
         internalFrame3 = new widget.InternalFrame();
-        panelGlass1 = new usu.widget.glass.PanelGlass();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        edAdmin = new widget.PasswordBox();
-        edPwd = new widget.PasswordBox();
         jLabel6 = new javax.swing.JLabel();
         BtnLogin = new widget.Button();
         BtnCancel = new widget.Button();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        edAdmin = new widget.PasswordBox();
+        edPwd = new widget.PasswordBox();
         WindowInput = new javax.swing.JDialog();
         internalFrame6 = new widget.InternalFrame();
         PassLama = new widget.TextBox();
@@ -914,7 +915,6 @@ public class frmUtama extends javax.swing.JFrame {
         btnLimbahB3Medis = new widget.ButtonBig();
         btn10Obat = new widget.ButtonBig();
         btnMapingDokterDPJP = new widget.ButtonBig();
-        btnRoh = new widget.ButtonBig();
         tanggal = new widget.Tanggal();
         btnDataPenjualan = new widget.ButtonBig();
         btnInputPenjualan = new widget.ButtonBig();
@@ -926,7 +926,6 @@ public class frmUtama extends javax.swing.JFrame {
         btnLapPelFar = new widget.ButtonBig();
         btnPelayananPenunjang = new widget.ButtonBig();
         btnFrekuensiRanapPerDokter = new widget.ButtonBig();
-        BtnToolRoh = new widget.ButtonBig();
         btnMonitoringKunjungan = new widget.ButtonBig();
         btnFrekuensiRalanDanRanap = new widget.ButtonBig();
         btnPelFar = new widget.ButtonBig();
@@ -991,7 +990,6 @@ public class frmUtama extends javax.swing.JFrame {
         MnInfoBed3 = new javax.swing.JMenuItem();
         MnInfoBed4 = new javax.swing.JMenuItem();
         MnInfoBed5 = new javax.swing.JMenuItem();
-        MnInfoBed6 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         MnAnjungan = new javax.swing.JMenuItem();
         jSeparator12 = new javax.swing.JPopupMenu.Separator();
@@ -1014,71 +1012,24 @@ public class frmUtama extends javax.swing.JFrame {
         internalFrame2.setWarnaBawah(new java.awt.Color(244, 244, 255));
         internalFrame2.setLayout(null);
 
-        internalFrame3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(100, 125, 90), 1, true), ":: Silahkan Anda Login ::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 11), new java.awt.Color(50, 50, 50))); // NOI18N
+        internalFrame3.setBorder(null);
         internalFrame3.setName("internalFrame3"); // NOI18N
         internalFrame3.setWarnaAtas(new java.awt.Color(204, 255, 102));
         internalFrame3.setWarnaBawah(new java.awt.Color(237, 237, 250));
         internalFrame3.setLayout(null);
 
-        panelGlass1.setBackground(java.awt.Color.lightGray);
-        panelGlass1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(145, 185, 145)));
-        panelGlass1.setOpaqueImage(false);
-        panelGlass1.setRound(false);
-        panelGlass1.setLayout(null);
-
-        jLabel4.setForeground(new java.awt.Color(60, 60, 60));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel4.setText("ID Admin :");
-        jLabel4.setName("jLabel4"); // NOI18N
-        panelGlass1.add(jLabel4);
-        jLabel4.setBounds(2, 12, 80, 23);
-
-        jLabel5.setForeground(new java.awt.Color(60, 60, 60));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("Password :");
-        jLabel5.setName("jLabel5"); // NOI18N
-        panelGlass1.add(jLabel5);
-        jLabel5.setBounds(2, 40, 80, 23);
-
-        edAdmin.setForeground(new java.awt.Color(60, 60, 60));
-        edAdmin.setToolTipText("Silahkan masukkan ID Admin");
-        edAdmin.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        edAdmin.setName("edAdmin"); // NOI18N
-        edAdmin.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                edAdminKeyPressed(evt);
-            }
-        });
-        panelGlass1.add(edAdmin);
-        edAdmin.setBounds(85, 12, 220, 23);
-
-        edPwd.setForeground(new java.awt.Color(60, 60, 60));
-        edPwd.setToolTipText("Silahkan masukkan password");
-        edPwd.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        edPwd.setName("edPwd"); // NOI18N
-        edPwd.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                edPwdKeyPressed(evt);
-            }
-        });
-        panelGlass1.add(edPwd);
-        edPwd.setBounds(85, 40, 220, 23);
-
-        internalFrame3.add(panelGlass1);
-        panelGlass1.setBounds(-1, 30, 342, 76);
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/LaST (Cobalt) Lock n Gear.png"))); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/1028145_OJZ2LN0 (1).png"))); // NOI18N
         jLabel6.setName("jLabel6"); // NOI18N
         internalFrame3.add(jLabel6);
-        jLabel6.setBounds(120, 5, 135, 145);
+        jLabel6.setBounds(355, 10, 240, 300);
 
-        BtnLogin.setBackground(new java.awt.Color(204, 204, 204));
+        BtnLogin.setBackground(new java.awt.Color(255, 255, 255));
         BtnLogin.setForeground(new java.awt.Color(60, 60, 60));
         BtnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/lock.png"))); // NOI18N
         BtnLogin.setMnemonic('Z');
         BtnLogin.setText("Log-in");
         BtnLogin.setToolTipText("Alt+Z");
-        BtnLogin.setGlassColor(new java.awt.Color(235, 255, 245));
+        BtnLogin.setGlassColor(new java.awt.Color(0, 102, 255));
         BtnLogin.setName("BtnLogin"); // NOI18N
         BtnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1086,7 +1037,7 @@ public class frmUtama extends javax.swing.JFrame {
             }
         });
         internalFrame3.add(BtnLogin);
-        BtnLogin.setBounds(12, 125, 105, 32);
+        BtnLogin.setBounds(50, 220, 105, 32);
 
         BtnCancel.setBackground(new java.awt.Color(255, 255, 255));
         BtnCancel.setForeground(new java.awt.Color(60, 60, 60));
@@ -1102,12 +1053,52 @@ public class frmUtama extends javax.swing.JFrame {
             }
         });
         internalFrame3.add(BtnCancel);
-        BtnCancel.setBounds(222, 125, 105, 32);
+        BtnCancel.setBounds(230, 220, 105, 32);
+
+        jLabel5.setForeground(new java.awt.Color(60, 60, 60));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel5.setText("Password :");
+        jLabel5.setName("jLabel5"); // NOI18N
+        internalFrame3.add(jLabel5);
+        jLabel5.setBounds(30, 150, 80, 23);
+
+        jLabel4.setForeground(new java.awt.Color(60, 60, 60));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel4.setText("Username :");
+        jLabel4.setName("jLabel4"); // NOI18N
+        internalFrame3.add(jLabel4);
+        jLabel4.setBounds(30, 120, 80, 23);
+
+        edAdmin.setForeground(new java.awt.Color(60, 60, 60));
+        edAdmin.setToolTipText("Silahkan masukkan ID Admin");
+        edAdmin.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        edAdmin.setName("edAdmin"); // NOI18N
+        edAdmin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                edAdminKeyPressed(evt);
+            }
+        });
+        internalFrame3.add(edAdmin);
+        edAdmin.setBounds(120, 120, 220, 23);
+
+        edPwd.setForeground(new java.awt.Color(60, 60, 60));
+        edPwd.setToolTipText("Silahkan masukkan password");
+        edPwd.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        edPwd.setName("edPwd"); // NOI18N
+        edPwd.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                edPwdKeyPressed(evt);
+            }
+        });
+        internalFrame3.add(edPwd);
+        edPwd.setBounds(120, 150, 220, 23);
 
         internalFrame2.add(internalFrame3);
-        internalFrame3.setBounds(2, 15, 340, 170);
+        internalFrame3.setBounds(0, 0, 600, 310);
 
         DlgLogin.getContentPane().add(internalFrame2, java.awt.BorderLayout.CENTER);
+
+        DlgLogin.setShape(new RoundRectangle2D.Double(0, 0, 600, 310, 25, 25));
 
         WindowInput.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         WindowInput.setModal(true);
@@ -5631,18 +5622,6 @@ public class frmUtama extends javax.swing.JFrame {
         });
         Panelmenu.add(btnMapingDokterDPJP);
 
-        btnRoh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/checklist.png"))); // NOI18N
-        btnRoh.setText("IGD/UGD");
-        btnRoh.setIconTextGap(0);
-        btnRoh.setName("btnRoh"); // NOI18N
-        btnRoh.setPreferredSize(new java.awt.Dimension(200, 90));
-        btnRoh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRohActionPerformed(evt);
-            }
-        });
-        Panelmenu.add(btnRoh);
-
         scrollPane2.setViewportView(Panelmenu);
 
         panelMenu.add(scrollPane2, java.awt.BorderLayout.CENTER);
@@ -5763,25 +5742,6 @@ public class frmUtama extends javax.swing.JFrame {
         btnFrekuensiRanapPerDokter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFrekuensiRanapPerDokterActionPerformed(evt);
-            }
-        });
-
-        BtnToolRoh.setBackground(new java.awt.Color(255, 255, 255));
-        BtnToolRoh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/home24.png"))); // NOI18N
-        BtnToolRoh.setMnemonic('K');
-        BtnToolRoh.setText("Kerohanian");
-        BtnToolRoh.setToolTipText("Alt+K");
-        BtnToolRoh.setEnabled(false);
-        BtnToolRoh.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        BtnToolRoh.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        BtnToolRoh.setIconTextGap(2);
-        BtnToolRoh.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        BtnToolRoh.setName("BtnToolRoh"); // NOI18N
-        BtnToolRoh.setPreferredSize(new java.awt.Dimension(97, 40));
-        BtnToolRoh.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
-        BtnToolRoh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnToolRohActionPerformed(evt);
             }
         });
 
@@ -6651,21 +6611,6 @@ public class frmUtama extends javax.swing.JFrame {
         });
         jMenu6.add(MnInfoBed5);
 
-        MnInfoBed6.setBackground(new java.awt.Color(255, 255, 254));
-        MnInfoBed6.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        MnInfoBed6.setForeground(new java.awt.Color(90, 120, 80));
-        MnInfoBed6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Preview.png"))); // NOI18N
-        MnInfoBed6.setText("Kerohanian");
-        MnInfoBed6.setIconTextGap(6);
-        MnInfoBed6.setName("MnInfoBed6"); // NOI18N
-        MnInfoBed6.setPreferredSize(new java.awt.Dimension(250, 30));
-        MnInfoBed6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MnInfoBed6ActionPerformed(evt);
-            }
-        });
-        jMenu6.add(MnInfoBed6);
-
         MenuBar.add(jMenu6);
 
         jMenu7.setBackground(new java.awt.Color(20, 0, 20));
@@ -6897,7 +6842,6 @@ public class frmUtama extends javax.swing.JFrame {
                     BtnToolKasir.setEnabled(true); 
                     btnToolIGD.setEnabled(true);
                     BtnToolJualObat.setEnabled(true);
-                    BtnToolRoh.setEnabled(true);
                     btnToolLab.setEnabled(true);
                     btnToolRad.setEnabled(true);
                     btnPermintaanLab.setEnabled(true);
@@ -6951,7 +6895,6 @@ public class frmUtama extends javax.swing.JFrame {
                     btnToolLab.setEnabled(true);
                     btnToolRad.setEnabled(true);
                     BtnToolJualObat.setEnabled(true);
-                    BtnToolRoh.setEnabled(true);
                     btnToolIGD.setEnabled(var.getigd());                     
                     btnLaboratorium.setEnabled(var.getperiksa_lab());
                     btnPeriksaRadiologi.setEnabled(var.getperiksa_radiologi());  
@@ -12150,33 +12093,6 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_btnPelayananPenunjangActionPerformed
 
-    private void MnInfoBed6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnInfoBed6ActionPerformed
-        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        DlgHome.dispose();
-        InfoKerohanian kerohanian =new InfoKerohanian(this,true);
-        kerohanian.setSize(PanelUtama.getWidth(), PanelUtama.getHeight());
-        kerohanian.setLocationRelativeTo(PanelUtama);
-        kerohanian.setVisible(true);
-        this.setCursor(Cursor.getDefaultCursor());
-    }//GEN-LAST:event_MnInfoBed6ActionPerformed
-
-    private void BtnToolRohActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnToolRohActionPerformed
-        btnRohActionPerformed(evt);      
-    }//GEN-LAST:event_BtnToolRohActionPerformed
-
-    private void btnRohActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRohActionPerformed
-        isTutup();
-        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        InformasiKerohanian roh=new InformasiKerohanian(this,false);
-//        roh.emptTeks();
-        roh.isCek();
-        roh.setSize(PanelUtama.getWidth(),PanelUtama.getHeight());
-        roh.setLocationRelativeTo(PanelUtama);
-        roh.setVisible(true);
-        DlgHome.dispose();
-        this.setCursor(Cursor.getDefaultCursor());
-    }//GEN-LAST:event_btnRohActionPerformed
-
     private void btnMonitoringKunjunganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMonitoringKunjunganActionPerformed
         isTutup();
         DlgHome.dispose();
@@ -12234,7 +12150,6 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private widget.ButtonBig BtnToolKamnap;
     private widget.ButtonBig BtnToolKasir;
     private widget.ButtonBig BtnToolReg;
-    private widget.ButtonBig BtnToolRoh;
     private widget.CekBox ChkInput;
     private javax.swing.JDialog DlgHome;
     private javax.swing.JDialog DlgLogin;
@@ -12251,7 +12166,6 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private javax.swing.JMenuItem MnInfoBed3;
     private javax.swing.JMenuItem MnInfoBed4;
     private javax.swing.JMenuItem MnInfoBed5;
-    private javax.swing.JMenuItem MnInfoBed6;
     private javax.swing.JMenuItem MnLogin;
     private javax.swing.JMenuItem MnRekapBulanan;
     private javax.swing.JMenuItem MnRekapBulanan1;
@@ -12395,6 +12309,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private widget.ButtonBig btnKategoriInventaris;
     private widget.ButtonBig btnKegiatanFarmasi;
     private widget.ButtonBig btnKegiatanIlmiah;
+    private widget.ButtonBig btnKerohanian;
     private widget.ButtonBig btnKeterlambatanPresensi;
     private widget.ButtonBig btnKeuntungan;
     private widget.ButtonBig btnKeuntunganObat2;
@@ -12426,6 +12341,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private widget.ButtonBig btnMonitoringKunjungan;
     private widget.ButtonBig btnMutasiBarang;
     private widget.ButtonBig btnMutasiBerkas;
+    private widget.ButtonBig btnMyLimsMapping;
     private widget.ButtonBig btnObat;
     private widget.ButtonBig btnObatPasienPeresep;
     private widget.ButtonBig btnObatPasienRalan;
@@ -12561,7 +12477,6 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private widget.ButtonBig btnRl4asebab;
     private widget.ButtonBig btnRl4b;
     private widget.ButtonBig btnRl4bsebab;
-    private widget.ButtonBig btnRoh;
     private widget.ButtonBig btnRuangInventaris;
     private widget.ButtonBig btnRujukMasuk;
     private widget.ButtonBig btnRujukPasien;
@@ -12696,7 +12611,6 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private javax.swing.JLabel lblStts;
     private javax.swing.JLabel lblTgl;
     private javax.swing.JLabel lblUser;
-    private usu.widget.glass.PanelGlass panelGlass1;
     private usu.widget.glass.PanelGlass panelJudul;
     private widget.InternalFrame panelMenu;
     private widget.panelisi panelisi2;
@@ -13046,7 +12960,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private void setToolbar(){
         if(internalFrame1.getWidth()<(BtnMenu.getWidth()+BtnToolReg.getWidth()+btnToolIGD.getWidth()+
                 btnToolLab.getWidth()+
-                btnToolRad.getWidth()+BtnToolJualObat.getWidth()+BtnToolRoh.getWidth()+BtnToolKamnap.getWidth()+
+                btnToolRad.getWidth()+BtnToolJualObat.getWidth()+BtnToolKamnap.getWidth()+
                 BtnToolKasir.getWidth()+BtnLog.getWidth()+BtnClose.getWidth()+8)){
             internalFrame1.setSize(new Dimension(PanelUtama.getWidth(),90));
         }else{
@@ -14390,6 +14304,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             if(var.getmapping_poli_bpjs()==true){
                 Panelmenu.add(btnMapingPoliBPJS);
                 Panelmenu.add(btnMapingDokterDPJP);
+                Panelmenu.add(btnMyLimsMapping);
                 jmlmenu++;
             }
 
@@ -14612,7 +14527,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
 
             if(var.getpasien_meninggal()==true){
                 Panelmenu.add(btnPasienMati);
-                Panelmenu.add(btnRoh);
+                Panelmenu.add(btnKerohanian);
                 jmlmenu++;
             }
 
@@ -14627,7 +14542,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             }
             
             if(var.getdata_HAIs()==true){
-                Panelmenu.add(btnDataHAIs); 
+                Panelmenu.add(btnDataHAIs);  
                 jmlmenu++;
             }
             
@@ -16225,6 +16140,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         if(var.getmapping_poli_bpjs()==true){
             Panelmenu.add(btnMapingPoliBPJS);
             Panelmenu.add(btnMapingDokterDPJP);
+            Panelmenu.add(btnMyLimsMapping);
             jmlmenu++;
         }
 
@@ -16446,7 +16362,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
 
         if(var.getpasien_meninggal()==true){
             Panelmenu.add(btnPasienMati);
-            Panelmenu.add(btnRoh);
+            Panelmenu.add(btnKerohanian);
             jmlmenu++;
         }
 
@@ -18582,6 +18498,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             if(btnMapingPoliBPJS.getText().toLowerCase().trim().contains(TCari.getText().toLowerCase().trim())){
                 Panelmenu.add(btnMapingPoliBPJS);
                 Panelmenu.add(btnMapingDokterDPJP);
+                Panelmenu.add(btnMyLimsMapping);
                 jmlmenu++;
             }                
         }
@@ -18891,7 +18808,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         if(var.getpasien_meninggal()==true){
             if(btnPasienMati.getText().toLowerCase().trim().contains(TCari.getText().toLowerCase().trim())){
                 Panelmenu.add(btnPasienMati);
-                Panelmenu.add(btnRoh);
+                Panelmenu.add(btnKerohanian);
                 jmlmenu++;
             }
         }

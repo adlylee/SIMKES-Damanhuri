@@ -51,7 +51,7 @@ public final class MyLimsTransaksi extends javax.swing.JDialog {
     private Connection koneksi=koneksiDB.condb();
     private BPJSCekReferensiPropinsi propinsi = new BPJSCekReferensiPropinsi(null, false);
     private int i = 0,row = 0,r = 0;
-    private SirsApi api = new SirsApi();
+    private MyLimsApi api = new MyLimsApi();
     private String URL = "", link = "", token,requestJson,tanggal = "",jam ="";
     private PreparedStatement ps,ps2,ps3,ps4,psrekening,ps5;
     private ResultSet rs,rs2,rs3,rs5,rsrekening;
@@ -75,7 +75,7 @@ public final class MyLimsTransaksi extends javax.swing.JDialog {
         this.setLocation(10, 2);
         setSize(628, 674);
 
-        tabMode = new DefaultTableModel(null, new String[]{"No.", "Id Pasien", "Nama Pasien","No RM", "No Lab","Ruang","Dokter","Keterangan"}) {
+        tabMode = new DefaultTableModel(null, new String[]{"No.", "Id Pasien", "Nama Pasien","No RM","Tanggal", "No Lab","Ruang","Dokter","Keterangan"}) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
                 return false;
@@ -87,7 +87,7 @@ public final class MyLimsTransaksi extends javax.swing.JDialog {
         tbKamar.setPreferredScrollableViewportSize(new Dimension(500, 500));
         tbKamar.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 8; i++) {
+        for (i = 0; i < 9; i++) {
             TableColumn column = tbKamar.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(30);
@@ -98,18 +98,20 @@ public final class MyLimsTransaksi extends javax.swing.JDialog {
             } else if (i == 3) {
                 column.setPreferredWidth(50);
             } else if (i == 4) {
-                column.setPreferredWidth(100);
+                column.setPreferredWidth(140);
             } else if (i == 5) {
                 column.setPreferredWidth(120);
             } else if (i == 6) {
                 column.setPreferredWidth(140);
             } else if (i == 7) {
                 column.setPreferredWidth(180);
+            } else if (i == 8) {
+                column.setPreferredWidth(180);
             }
         }
         tbKamar.setDefaultRenderer(Object.class, new WarnaTable());
         
-        tabMode1 = new DefaultTableModel(null, new String[]{"P","No.", "Pemeriksaan", "Hasil","Rujukan", "Satuan", "Keterangan"}) {
+        tabMode1 = new DefaultTableModel(null, new String[]{"P","No.", "Kode", "Pemeriksaan", "Hasil","Rujukan", "Satuan", "Keterangan"}) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
                 boolean a = false;
@@ -119,7 +121,7 @@ public final class MyLimsTransaksi extends javax.swing.JDialog {
                 return a;
             }
             Class[] types = new Class[] {
-                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, 
+                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, 
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
              };
              @Override
@@ -133,14 +135,14 @@ public final class MyLimsTransaksi extends javax.swing.JDialog {
         tbKamar1.setPreferredScrollableViewportSize(new Dimension(500, 500));
         tbKamar1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 7; i++) {
+        for (i = 0; i < 8; i++) {
             TableColumn column = tbKamar1.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(30);
             } else if (i == 1) {
                 column.setPreferredWidth(30);
             } else if (i == 2) {
-                column.setPreferredWidth(150);
+                column.setPreferredWidth(70);
             } else if (i == 3) {
                 column.setPreferredWidth(300);
             } else if (i == 4) {
@@ -148,6 +150,8 @@ public final class MyLimsTransaksi extends javax.swing.JDialog {
             } else if (i == 5) {
                 column.setPreferredWidth(100);
             } else if (i == 6) {
+                column.setPreferredWidth(100);
+            } else if (i == 7) {
                 column.setPreferredWidth(100);
             }
         }
@@ -386,7 +390,7 @@ public final class MyLimsTransaksi extends javax.swing.JDialog {
             try {
                 if(tbKamar.getSelectedRow()!= -1){
                     this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                    tampilHasil(tbKamar.getValueAt(tbKamar.getSelectedRow(),4).toString());
+                    tampilHasil(tbKamar.getValueAt(tbKamar.getSelectedRow(),5).toString());
                     this.setCursor(Cursor.getDefaultCursor());
                 }
             } catch (java.lang.NullPointerException e) {
@@ -404,40 +408,35 @@ public final class MyLimsTransaksi extends javax.swing.JDialog {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         row=tabMode1.getRowCount();
+        Boolean status = false;
         for(r=0;r<row;r++){ 
             try {
                 if(tbKamar1.getValueAt(r,0).toString().equals("true")){
                     try {
-                        ps = koneksi.prepareStatement("SELECT kd_jenis_prw FROM periksa_lab WHERE no_rawat = ? AND tgl_periksa = ? AND jam = ? ");
+                        ps = koneksi.prepareStatement("SELECT kd_jenis_prw,id_template FROM mapping_lab_mylims WHERE kdlab = ?");
                         try {
-                            ps.setString(1, noRawat.toString());
-                            ps.setString(2, tanggal);
-                            ps.setString(3, jam);
+                            ps.setString(1, tbKamar1.getValueAt(r,2).toString());
                             rs = ps.executeQuery();
-                            while (rs.next()) {
-                                ps2 = koneksi.prepareStatement("SELECT id_template FROM template_laboratorium WHERE kd_jenis_prw = ? AND Pemeriksaan = ? ");
-                                try {
-                                    ps2.setString(1, rs.getString("kd_jenis_prw"));
-                                    ps2.setString(2, tbKamar1.getValueAt(r,2).toString());
-                                    rs2 = ps2.executeQuery();
-                                    while (rs2.next()) {                                        
-                                        System.out.println(noRawat.toString()+","+rs.getString("kd_jenis_prw")+","+tanggal+","+jam+","+rs2.getString("id_template")+","+tbKamar1.getValueAt(r,3).toString()+","+tbKamar1.getValueAt(r,4).toString()+","+tbKamar1.getValueAt(r,6).toString()
-                                        +"0,0,0,0,0,0,0,0");
-                                    }
-                                } catch (Exception e) {
-                                    System.out.println("Error rs2 "+e);
-                                }
+                            while (rs.next()) { 
+                                Sequel.menyimpan("detail_periksa_lab", "'"+noRawat.getText()+"','"+rs.getString("kd_jenis_prw")+"','"+tanggal+"','"+jam+"','"+rs.getString("id_template")+"','"+tbKamar1.getValueAt(r,4).toString()+"','"+tbKamar1.getValueAt(r,5).toString()+"','"+tbKamar1.getValueAt(r,7).toString()+"','0','0','0','0','0','0','0','0'");
+                                status = true;
                             }
                         } catch (Exception e) {
                             System.out.println("Error rs "+e);
+                            status = false;
                         }
                     } catch (Exception e) {
                         System.out.println("Error awal "+e);
+                        status = false;
                     }
                 }
             } catch (Exception e) {
                 System.out.println("Error true false "+e);
+                status = false;
             }    
+        }
+        if(status != false){
+            JOptionPane.showMessageDialog(null, "Berhasil Simpan");
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -486,7 +485,7 @@ public final class MyLimsTransaksi extends javax.swing.JDialog {
             headers.add("Content-Type","application/json");
             headers.add("Authorization", "Bearer " + token);
             requestEntity = new HttpEntity(headers);
-            URL = "http://192.198.2.1:777/api/v1/cekup";
+            URL = "http://192.168.0.11:777/api/v1/cekup";
             requestJson = "{"
                         + "\"method\":\"getTransaksi\","
                         + "\"from\":\"" + Valid.SetTgl(Tgl1.getSelectedItem()+"")+ "\""
@@ -507,7 +506,7 @@ public final class MyLimsTransaksi extends javax.swing.JDialog {
                                 || list.path("nama").asText().toLowerCase().contains(Kabupaten.getText().toLowerCase()) 
                                 || list.path("recmed").asText().toLowerCase().contains(Kabupaten.getText().toLowerCase())) {
                             tabMode.addRow(new Object[]{
-                                i + ".", list.path("id").asText(), list.path("nama").asText().trim(), list.path("recmed").asText().trim(), list.path("no_lab").asText().trim(), list.path("ruang").asText().trim(), list.path("dokter").asText().trim(), list.path("ket").asText().trim()
+                                i + ".", list.path("id").asText(), list.path("nama").asText().trim(), list.path("recmed").asText().trim(),list.path("tgl").asText().trim(), list.path("no_lab").asText().trim(), list.path("ruang").asText().trim(), list.path("dokter").asText().trim(), list.path("ket").asText().trim()
                             });
                         }
                         i++;
@@ -533,7 +532,7 @@ public final class MyLimsTransaksi extends javax.swing.JDialog {
             headers.add("Content-Type","application/json");
             headers.add("Authorization", "Bearer " + token);
             requestEntity = new HttpEntity(headers);
-            URL = "http://192.198.2.1:777/api/v1/cekup";
+            URL = "http://192.168.0.11:777/api/v1/cekup";
             requestJson = "{"
                         + "\"method\":\"getCekup\","
                         + "\"nolab\":\"" + nolab + "\""
@@ -551,7 +550,7 @@ public final class MyLimsTransaksi extends javax.swing.JDialog {
                     i = 1;
                     for (JsonNode list : response) {
                             tabMode1.addRow(new Object[]{
-                                true,i + ".", list.path("pemeriksaan").asText().trim(), list.path("hasil").asText().trim(), list.path("rujukan").asText().trim(), list.path("satuan").asText().trim(), list.path("ket").asText().trim()
+                                true,i + ".",list.path("kode").asText().trim(), list.path("pemeriksaan").asText().trim(), list.path("hasil").asText().trim(), list.path("rujukan").asText().trim(), list.path("satuan").asText().trim(), list.path("ket").asText().trim()
                             });
 //                        }
                         i++;
