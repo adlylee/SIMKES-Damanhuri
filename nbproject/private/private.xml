@@ -1,28 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-<<<<<<< HEAD
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/Github/SIMKES-Khanza/src/keuangan/DlgBilingRalan.java</file>
-            <file>file:/D:/Github/SIMKES-Khanza/src/permintaan/DlgBookingRegistrasi.java</file>
-            <file>file:/D:/Github/SIMKES-Khanza/src/inventory/DlgCariPemesanan.java</file>
-            <file>file:/D:/Github/SIMKES-Khanza/src/simrskhanza/DlgPelayananFarmasi.java</file>
-=======
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="3">
-        <file>
-            <url>file:/Users/keuangan/Library/Caches/NetBeans/12.0/jshell/junk/console.jsh</url>
-            <bookmark id="3">
-                <name/>
-                <line>0</line>
-                <key/>
-            </bookmark>
-        </file>
         <file>
             <url>src/simrskhanza/DlgCariPeriksaRadiologi.java</url>
             <bookmark id="2">
                 <name/>
                 <line>1824</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>file:/Users/keuangan/Library/Caches/NetBeans/12.0/jshell/junk/console.jsh</url>
+            <bookmark id="3">
+                <name/>
+                <line>0</line>
                 <key/>
             </bookmark>
         </file>
@@ -33,6 +24,7 @@
             <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/simrskhanza/DlgKamarInap.java</file>
             <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/fungsi/sekuel.java</file>
             <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/fungsi/validasi.java</file>
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/simrskhanza/DlgPelayananFarmasi.java</file>
             <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/simrskhanza/DlgReg.java</file>
             <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/bridging/MyLimsApi.java</file>
             <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/bridging/MyLimsMapping.java</file>
@@ -45,10 +37,11 @@
             <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/setting/DlgUpdateUser.java</file>
             <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/bridging/BPJSDataSEP.java</file>
             <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/fungsi/var.java</file>
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/inventory/DlgCariObat4.java</file>
             <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/bridging/MyLimsTransaksi.java</file>
             <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/fungsi/koneksiDB.java</file>
             <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/bridging/LimsApi.java</file>
->>>>>>> 4497ee4bedfba4fcee25823b26cdc13a30250310
+            <file>file:/Users/keuangan/Documents/SIMKES_1_FEB/src/inventory/DlgDaftarPermintaanResep.java</file>
         </group>
     </open-files>
 </project-private>

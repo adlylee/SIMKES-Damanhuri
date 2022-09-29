@@ -5771,7 +5771,7 @@ public class frmUtama extends javax.swing.JFrame {
         });
 
         btnPelFar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/applications-office.png"))); // NOI18N
-        btnPelFar.setText("10 Besar Penyakit Ralan Dan Ranap");
+        btnPelFar.setText("Pelayanan Farmasi");
         btnPelFar.setIconTextGap(0);
         btnPelFar.setName("btnPelFar"); // NOI18N
         btnPelFar.setPreferredSize(new java.awt.Dimension(200, 90));
@@ -5782,7 +5782,7 @@ public class frmUtama extends javax.swing.JFrame {
         });
 
         btnKerohanian.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/applications-office.png"))); // NOI18N
-        btnKerohanian.setText("10 Besar Penyakit Ralan Dan Ranap");
+        btnKerohanian.setText("Kerohanian");
         btnKerohanian.setIconTextGap(0);
         btnKerohanian.setName("btnKerohanian"); // NOI18N
         btnKerohanian.setPreferredSize(new java.awt.Dimension(200, 90));
@@ -5793,7 +5793,7 @@ public class frmUtama extends javax.swing.JFrame {
         });
 
         btnMyLimsMapping.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/applications-office.png"))); // NOI18N
-        btnMyLimsMapping.setText("10 Besar Penyakit Ralan Dan Ranap");
+        btnMyLimsMapping.setText("My Lims Mapping");
         btnMyLimsMapping.setIconTextGap(0);
         btnMyLimsMapping.setName("btnMyLimsMapping"); // NOI18N
         btnMyLimsMapping.setPreferredSize(new java.awt.Dimension(200, 90));
@@ -6224,6 +6224,7 @@ public class frmUtama extends javax.swing.JFrame {
         jMenu1.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jMenu1.setIconTextGap(3);
         jMenu1.setName("jMenu1"); // NOI18N
+        jMenu1.setOpaque(false);
         jMenu1.setPreferredSize(new java.awt.Dimension(80, 28));
 
         MnLogin.setBackground(new java.awt.Color(255, 255, 254));
@@ -6291,6 +6292,7 @@ public class frmUtama extends javax.swing.JFrame {
         jMenu5.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jMenu5.setIconTextGap(3);
         jMenu5.setName("jMenu5"); // NOI18N
+        jMenu5.setOpaque(false);
         jMenu5.setPreferredSize(new java.awt.Dimension(127, 28));
 
         MnBelumDatang1.setBackground(new java.awt.Color(255, 255, 254));
@@ -6380,6 +6382,7 @@ public class frmUtama extends javax.swing.JFrame {
         jMenu6.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jMenu6.setIconTextGap(3);
         jMenu6.setName("jMenu6"); // NOI18N
+        jMenu6.setOpaque(false);
         jMenu6.setPreferredSize(new java.awt.Dimension(89, 28));
 
         MnRekapBulanan1.setBackground(new java.awt.Color(255, 255, 254));
@@ -6648,6 +6651,7 @@ public class frmUtama extends javax.swing.JFrame {
         jMenu7.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jMenu7.setIconTextGap(3);
         jMenu7.setName("jMenu7"); // NOI18N
+        jMenu7.setOpaque(false);
         jMenu7.setPreferredSize(new java.awt.Dimension(138, 28));
 
         MnAnjungan.setBackground(new java.awt.Color(255, 255, 254));
@@ -6751,6 +6755,7 @@ public class frmUtama extends javax.swing.JFrame {
         jMenu4.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jMenu4.setIconTextGap(3);
         jMenu4.setName("jMenu4"); // NOI18N
+        jMenu4.setOpaque(false);
         jMenu4.setPreferredSize(new java.awt.Dimension(124, 28));
         jMenu4.addMenuListener(new javax.swing.event.MenuListener() {
             public void menuCanceled(javax.swing.event.MenuEvent evt) {
@@ -12156,7 +12161,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         isTutup();
         DlgHome.dispose();
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        DlgPermintaanKerohanian aplikasi=new DlgPermintaanKerohanian(this,false);
+        InformasiKerohanian aplikasi=new InformasiKerohanian(this,false);
         aplikasi.setSize(PanelUtama.getWidth(), PanelUtama.getHeight());
         aplikasi.setLocationRelativeTo(PanelUtama);
         aplikasi.setVisible(true);

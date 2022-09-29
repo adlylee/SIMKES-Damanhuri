@@ -688,24 +688,23 @@ public class DlgPelayananFarmasi extends javax.swing.JDialog {
 
     public void tampil() {
         Valid.tabelKosong(tabMode);
-        try {
-            int jumlah = 0;
+        try {           
             LocalDate startDate = LocalDate.parse(Valid.SetTgl(DTPCari1.getSelectedItem() + ""));
             LocalDate endDate = LocalDate.parse(Valid.SetTgl(DTPCari2.getSelectedItem() + ""));
             for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
                 String visite = "", kons = "";
+                int jumlah = 0;
 //                ps = koneksi.prepareStatement("select count(distinct no_rawat) as jlh from kamar_inap where tgl_masuk>=? AND tgl_keluar <=? group by no_rawat");
                 ps = koneksi.prepareStatement("select count(kamar_inap.no_rawat) as jlh from kamar_inap inner join " +
                         "kamar inner join bangsal on kamar_inap.kd_kamar=kamar.kd_kamar and " +
-                        "kamar.kd_bangsal=bangsal.kd_bangsal where bangsal.nm_bangsal like ? and " +
-                        "kamar_inap.tgl_masuk >=? AND kamar_inap.tgl_keluar <=? group by kamar_inap.tgl_masuk");
+                        "kamar.kd_bangsal=bangsal.kd_bangsal where kamar.kd_bangsal like ? and " +
+                        "kamar_inap.tgl_masuk <=? AND kamar_inap.tgl_keluar >=? group by kamar_inap.tgl_masuk");
                 ps2 = koneksi.prepareStatement("select count(pemeriksaan_ranap.no_rawat) as visite from pemeriksaan_ranap join pegawai on "+
                         "pegawai.nik=pemeriksaan_ranap.nip where pegawai.bidang='Ikhtiyar' and pemeriksaan_ranap.tgl_perawatan=? "+
                         "group by pemeriksaan_ranap.tgl_perawatan");
                 ps3 = koneksi.prepareStatement("select count(distinct no_rawat) as kons from resep_pulang where tanggal=? group by tanggal");
                 try {
-                    jumlah = 0;
-                    ps.setString(1, "%" + nmbangsal.getText().trim() + "%");
+                    ps.setString(1, "%" + kdbangsal.getText() + "%");
                     ps.setString(2, date.toString());
                     ps.setString(3, date.toString());
                     ps2.setString(1, date.toString());
