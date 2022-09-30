@@ -12156,7 +12156,8 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         isTutup();
         DlgHome.dispose();
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        DlgPermintaanKerohanian aplikasi=new DlgPermintaanKerohanian(this,false);
+        InformasiKerohanian aplikasi=new InformasiKerohanian(this,false);
+//        DlgPermintaanKerohanian aplikasi=new DlgPermintaanKerohanian(this,false);
         aplikasi.setSize(PanelUtama.getWidth(), PanelUtama.getHeight());
         aplikasi.setLocationRelativeTo(PanelUtama);
         aplikasi.setVisible(true);

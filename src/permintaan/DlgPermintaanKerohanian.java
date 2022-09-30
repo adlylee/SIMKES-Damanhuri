@@ -19,6 +19,7 @@ import fungsi.koneksiDB;
 import fungsi.sekuel;
 import fungsi.validasi;
 import fungsi.var;
+import informasi.InformasiKerohanian;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -643,13 +644,13 @@ public final class DlgPermintaanKerohanian extends javax.swing.JDialog {
 
 private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCariActionPerformed
     this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));  
-//    DlgCariPermintaanKerohanian form=new DlgCariPermintaanKerohanian(null,false);
-//    form.isCek();
-//    form.setPasien(TNoRw.getText());
-//    form.setSize(this.getWidth(),this.getHeight());
-//    form.setLocationRelativeTo(this);
-//    form.setVisible(true);
-//    this.setCursor(Cursor.getDefaultCursor());
+    InformasiKerohanian form=new InformasiKerohanian(null,false);
+    form.isCek();
+    form.setPasien(TNoRw.getText());
+    form.setSize(this.getWidth(),this.getHeight());
+    form.setLocationRelativeTo(this);
+    form.setVisible(true);
+    this.setCursor(Cursor.getDefaultCursor());
 }//GEN-LAST:event_BtnCariActionPerformed
 
     private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChkInputActionPerformed
@@ -810,17 +811,17 @@ private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
         if(TNoRw.getText().equals("")||TNoRM.getText().equals("")||TPasien.getText().equals("")){
             Valid.textKosong(TNoRw,"Pasien");
         }else if(KdPtg.getText().equals("")||NmPtg.getText().equals("")){
-            Valid.textKosong(KdPtg,"Petugas");
+            Valid.textKosong(KdPtg,"Perujuk");
         }else if(tabMode.getRowCount()==0){
             Valid.textKosong(TCariPeriksa,"Data Permintaan");
         }else if(jml==0){
             Valid.textKosong(TCariPeriksa,"Data Permintaan");
         }else{
             
-            Sequel.queryu("delete from temporary_permintaan_radiologi");
+            Sequel.queryu("delete from temporary_permintaan_kerohanian");
             for(i=0;i<tbPemeriksaan.getRowCount();i++){ 
                 if(tbPemeriksaan.getValueAt(i,0).toString().equals("true")){
-                    Sequel.menyimpan("temporary_permintaan_radiologi","?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?",38,new String[]{
+                    Sequel.menyimpan("temporary_permintaan_kerohanian","?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?",38,new String[]{
                         "0",tbPemeriksaan.getValueAt(i,1).toString(),
                         tbPemeriksaan.getValueAt(i,2).toString(),"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""
                     });
@@ -850,8 +851,8 @@ private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
             param.put("emailrs",var.getemailrs());   
             param.put("logo",Sequel.cariGambar("select logo from setting")); 
             
-            Valid.MyReport("rptPermintaanRadiologi.jrxml","report","::[ Permintaan Radiologi ]::",
-                "select no, temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9, temp10, temp11, temp12, temp13, temp14, temp14, temp15, temp16 from temporary_permintaan_radiologi order by no asc",param);            
+            Valid.MyReport("rptPermintaanKerohanian.jrxml","report","::[ Permintaan Kerohanian ]::",
+                "select no, temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9, temp10, temp11, temp12, temp13, temp14, temp14, temp15, temp16 from temporary_permintaan_kerohanian order by no asc",param);            
 //            ChkJln.setSelected(false);
         }
         this.setCursor(Cursor.getDefaultCursor());

@@ -10,6 +10,7 @@
  */
 package tranfusidarah;
 
+import bridging.BridgingWA;
 import fungsi.WarnaTable;
 import fungsi.batasInput;
 import fungsi.koneksiDB;
@@ -58,16 +59,16 @@ public final class UTDDonor extends javax.swing.JDialog {
     private final DefaultTableModel tabModeMedis, tabModeNonMedis, tabModeTranfusi, tabModeTotalDonor;
     private sekuel Sequel = new sekuel();
     private validasi Valid = new validasi();
-    private PreparedStatement ps, ps2, pstranfusi, pscekmedis, psceknonmedis , psTotal, psTotalLk, psTotalPr, psUmur1, psUmur2, psUmur3, psUmur4, psUmur5,
-                                psOpos, psOneg, psApos, psAneg, psBpos, psBneg, psABpos, psABneg;
-    private ResultSet rs, rs2, rstranfusi ,rsTotal, rsTotalLk, rsTotalPr, rsUmur1, rsUmur2, rsUmur3, rsUmur4, rsUmur5,
-                        rsOpos, rsOneg, rsApos, rsAneg, rsBpos, rsBneg, rsABpos, rsABneg;
+    private PreparedStatement ps, ps2, pstranfusi, pscekmedis, psceknonmedis, psTotal, psTotalLk, psTotalPr, psUmur1, psUmur2, psUmur3, psUmur4, psUmur5,
+            psOpos, psOneg, psApos, psAneg, psBpos, psBneg, psABpos, psABneg;
+    private ResultSet rs, rs2, rstranfusi, rsTotal, rsTotalLk, rsTotalPr, rsUmur1, rsUmur2, rsUmur3, rsUmur4, rsUmur5,
+            rsOpos, rsOneg, rsApos, rsAneg, rsBpos, rsBneg, rsABpos, rsABneg;
     private Connection koneksi = koneksiDB.condb();
     private DlgCariPetugas petugas = new DlgCariPetugas(null, false);
     private int jml = 0, i = 0, row = 0, index = 0, pilih = 0;
     private String[] kodebarang, namabarang, jumlah, satuan, stokasal, hbeli, total, printTotal;
-    private String totaldonor, totallk, totalpr, umur1, umur2, umur3, umur4, umur5, 
-            opos, oneg, apos, aneg, bpos, bneg, abpos, abneg;
+    private String totaldonor, totallk, totalpr, umur1, umur2, umur3, umur4, umur5,
+            opos, oneg, apos, aneg, bpos, bneg, abpos, abneg, reminder;
     private SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
     private String aktifkan = "",
             sqlpscekmedis = "select utd_penggunaan_medis_donor.kode_brng,databarang.nama_brng,utd_penggunaan_medis_donor.jml,utd_penggunaan_medis_donor.harga,"
@@ -75,7 +76,10 @@ public final class UTDDonor extends javax.swing.JDialog {
             + "on utd_penggunaan_medis_donor.kode_brng=databarang.kode_brng where utd_penggunaan_medis_donor.no_donor=?",
             sqlpsceknonmedis = "select utd_penggunaan_penunjang_donor.kode_brng,ipsrsbarang.nama_brng,utd_penggunaan_penunjang_donor.jml,utd_penggunaan_penunjang_donor.harga,"
             + "utd_penggunaan_penunjang_donor.total,ipsrsbarang.kode_sat from utd_penggunaan_penunjang_donor inner join ipsrsbarang "
-            + "on utd_penggunaan_penunjang_donor.kode_brng=ipsrsbarang.kode_brng where utd_penggunaan_penunjang_donor.no_donor=?";
+            + "on utd_penggunaan_penunjang_donor.kode_brng=ipsrsbarang.kode_brng where utd_penggunaan_penunjang_donor.no_donor=?",
+            hari = Sequel.cariIsi("select datediff(now(),tanggal) as hari from utd_donor");
+    private BridgingWA kirimwa = new BridgingWA();
+    private double lk = 0, pr = 0;
 
     /**
      * Creates new form DlgPenyakit
@@ -83,7 +87,7 @@ public final class UTDDonor extends javax.swing.JDialog {
      * @param parent
      * @param modal
      */
-     public UTDDonor(java.awt.Frame parent, boolean modal) {
+    public UTDDonor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocation(10, 2);
@@ -229,11 +233,11 @@ public final class UTDDonor extends javax.swing.JDialog {
             }
         }
         tbTranfusiDarah.setDefaultRenderer(Object.class, new WarnaTable());
-        
+
         //Total Donor
         tabModeTotalDonor = new DefaultTableModel(null, new Object[]{
             "Total Donasi Darah", "Donasi Darah Laki-laki", "Donasi Darah Wanita", "17 Tahun", "18-24 Tahun",
-            "25-44 Tahun", "45-64 Tahun", ">= 65 Tahun", 
+            "25-44 Tahun", "45-64 Tahun", ">= 65 Tahun",
             "O resus (+)", "O resus (-)", "A resus (+)", "A resus (-)", "B resus (+)", "B resus (-)",
             "AB resus (+)", "B resus (-)"
         }) {
@@ -242,11 +246,11 @@ public final class UTDDonor extends javax.swing.JDialog {
                 return false;
             }
         };
-        
+
         tbTotalDonor.setModel(tabModeTotalDonor);
         tbTotalDonor.setPreferredScrollableViewportSize(new Dimension(800, 800));
         tbTotalDonor.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        
+
         for (i = 0; i < 16; i++) {
             TableColumn column = tbTotalDonor.getColumnModel().getColumn(i);
             if (i == 0) {
@@ -284,7 +288,6 @@ public final class UTDDonor extends javax.swing.JDialog {
             }
         }
         tbTotalDonor.setDefaultRenderer(Object.class, new WarnaTable());
-
 
         petugas.addWindowListener(new WindowListener() {
             @Override
@@ -330,7 +333,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         TCari.setDocument(new batasInput((byte) 100).getKata(TCari));
         TCariMedis.setDocument(new batasInput((byte) 100).getKata(TCariMedis));
         TCariNonMedis.setDocument(new batasInput((byte) 100).getKata(TCariNonMedis));
-        
+
         NomorDonor.setDocument(new batasInput((byte) 15).getKata(NomorDonor));
         NamaPendonor.setDocument(new batasInput((byte) 60).getKata(NamaPendonor));
         Umur.setDocument(new batasInput((byte) 4).getOnlyAngka(Umur));
@@ -527,6 +530,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         BtnAll = new widget.Button();
         BtnBatal = new widget.Button();
         BtnKeluar = new widget.Button();
+        BtnWA = new widget.Button();
         panelGlass9 = new widget.panelisi();
         jLabel20 = new widget.Label();
         TanggalCari1 = new widget.Tanggal();
@@ -979,7 +983,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelisi4.add(label32);
         label32.setBounds(260, 10, 57, 23);
 
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "04-07-2022" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "27-09-2022" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy");
         Tanggal.setName("Tanggal"); // NOI18N
         Tanggal.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1329,7 +1333,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelisi4.add(label33);
         label33.setBounds(12, 70, 90, 23);
 
-        tgl_lahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "04-07-2022" }));
+        tgl_lahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "27-09-2022" }));
         tgl_lahir.setDisplayFormat("dd-MM-yyyy");
         tgl_lahir.setName("tgl_lahir"); // NOI18N
         tgl_lahir.addItemListener(new java.awt.event.ItemListener() {
@@ -1591,6 +1595,24 @@ public final class UTDDonor extends javax.swing.JDialog {
         });
         panelGlass8.add(BtnKeluar);
 
+        BtnWA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/edit_f2.png"))); // NOI18N
+        BtnWA.setMnemonic('G');
+        BtnWA.setText("Kirim WA");
+        BtnWA.setToolTipText("Alt+G");
+        BtnWA.setName("BtnWA"); // NOI18N
+        BtnWA.setPreferredSize(new java.awt.Dimension(100, 30));
+        BtnWA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnWAActionPerformed(evt);
+            }
+        });
+        BtnWA.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnWAKeyPressed(evt);
+            }
+        });
+        panelGlass8.add(BtnWA);
+
         jPanel1.add(panelGlass8, java.awt.BorderLayout.CENTER);
 
         panelGlass9.setName("panelGlass9"); // NOI18N
@@ -1603,7 +1625,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelGlass9.add(jLabel20);
 
         TanggalCari1.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "04-07-2022" }));
+        TanggalCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "27-09-2022" }));
         TanggalCari1.setDisplayFormat("dd-MM-yyyy");
         TanggalCari1.setName("TanggalCari1"); // NOI18N
         TanggalCari1.setOpaque(false);
@@ -1617,7 +1639,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelGlass9.add(jLabel21);
 
         TanggalCari2.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "04-07-2022" }));
+        TanggalCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "27-09-2022" }));
         TanggalCari2.setDisplayFormat("dd-MM-yyyy");
         TanggalCari2.setName("TanggalCari2"); // NOI18N
         TanggalCari2.setOpaque(false);
@@ -1844,7 +1866,7 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
             tampilNonMedis();
         } else {
             tampilTotalDonor();
-        }
+        };
     }//GEN-LAST:event_TabRawatMouseClicked
 
     private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpanActionPerformed
@@ -2317,7 +2339,7 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     }//GEN-LAST:event_TCariKeyPressed
 
     private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCariActionPerformed
-        if(TabRawat.getSelectedIndex()==1){
+        if (TabRawat.getSelectedIndex() == 1) {
             tampil();
         }
 //       // aktifkan = "";
@@ -3008,7 +3030,7 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
 
     private void ScrollMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ScrollMouseClicked
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_ScrollMouseClicked
 
     private void tbTotalDonorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTotalDonorMouseClicked
@@ -3038,6 +3060,17 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     private void nikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nikActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nikActionPerformed
+
+    private void BtnWAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnWAActionPerformed
+        System.out.println(hari);    
+        if (tbTranfusiDarah.getValueAt(i, 0).toString().equals("true")) {
+            kirimwa.sendwaUTD(tbTranfusiDarah.getValueAt(i, 3).toString(), tbTranfusiDarah.getValueAt(i, 4).toString(), tbTranfusiDarah.getValueAt(i, 5).toString(), tbTranfusiDarah.getValueAt(i, 9).toString());
+        }
+    }//GEN-LAST:event_BtnWAActionPerformed
+
+    private void BtnWAKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnWAKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnWAKeyPressed
 
     /**
      * @param args the command line arguments
@@ -3071,6 +3104,7 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     private widget.Button BtnKeluar;
     private widget.Button BtnPrint;
     private widget.Button BtnSimpan;
+    private widget.Button BtnWA;
     private widget.ComboBox Dinas;
     private widget.ComboBox GolonganDarah;
     private widget.ComboBox HBSAg;
@@ -3177,7 +3211,7 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
 
     private void tampil() {
         Valid.tabelKosong(tabModeTranfusi);
-        try { 
+        try {
             pstranfusi = koneksi.prepareStatement(
                     "select * from utd_donor where tanggal between ? and ? and no_donor like ? or "
                     + "tanggal between ? and ? and nama like ? or "
@@ -3342,7 +3376,7 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
                         }
                     }
                 }
-                
+
             } catch (Exception e) {
                 System.out.println(e);
             } finally {
@@ -3356,7 +3390,7 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
         } catch (Exception e) {
             System.out.println("Notifikasi : " + e);
         }
-        LCount.setText(""+tabModeTranfusi.getRowCount());
+        LCount.setText("" + tabModeTranfusi.getRowCount());
     }
 
     private void tampilCari() {
@@ -3406,7 +3440,7 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
         } catch (Exception e) {
             System.out.println("Notifikasi : " + e);
         }
-        LCount.setText(""+tabModeTranfusi.getRowCount());
+        LCount.setText("" + tabModeTranfusi.getRowCount());
     }
 
     private void tampilMedis() {
@@ -3559,13 +3593,13 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
             System.out.println("Notifikasi : " + e);
         }
     }
-    
-    private void tampilTotalDonor(){
+
+    private void tampilTotalDonor() {
         Valid.tabelKosong(tabModeTotalDonor);
         try {
             psTotal = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ?");
             psTotalLk = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND jk='L'");
-            psTotalPr = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND jk='P'"); 
+            psTotalPr = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND jk='P'");
             psUmur1 = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE umur=17 AND tanggal BETWEEN ? AND ?");
             psUmur2 = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE umur BETWEEN 18 AND 24 AND tanggal BETWEEN ? AND ?");
             psUmur3 = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE umur BETWEEN 25 AND 44 AND tanggal BETWEEN ? AND ?");
@@ -3612,7 +3646,7 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
                 psABpos.setString(2, Valid.SetTgl(TanggalCari2.getSelectedItem() + ""));
                 psABneg.setString(1, Valid.SetTgl(TanggalCari1.getSelectedItem() + ""));
                 psABneg.setString(2, Valid.SetTgl(TanggalCari2.getSelectedItem() + ""));
-                
+
                 rsTotal = psTotal.executeQuery();
                 rsTotalLk = psTotalLk.executeQuery();
                 rsTotalPr = psTotalPr.executeQuery();
@@ -3632,10 +3666,10 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
                 while (rsTotal.next()) {
                     totaldonor = rsTotal.getString("jumlah");
                 }
-                while (rsTotalLk.next()) {                    
+                while (rsTotalLk.next()) {
                     totallk = rsTotalLk.getString("jumlah");
                 }
-                while (rsTotalPr.next()) {                    
+                while (rsTotalPr.next()) {
                     totalpr = rsTotalPr.getString("jumlah");
                 }
                 while (rsUmur1.next()) {
@@ -3653,37 +3687,36 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
                 while (rsUmur5.next()) {
                     umur5 = rsUmur5.getString("jumlah");
                 }
-                while (rsOpos.next()) {                    
+                while (rsOpos.next()) {
                     opos = rsOpos.getString("jumlah");
                 }
                 while (rsOneg.next()) {
                     oneg = rsOneg.getString("jumlah");
                 }
-                while (rsApos.next()) {                    
+                while (rsApos.next()) {
                     apos = rsApos.getString("jumlah");
                 }
-                while (rsAneg.next()) {                    
+                while (rsAneg.next()) {
                     aneg = rsAneg.getString("jumlah");
                 }
-                while (rsBpos.next()) {                    
+                while (rsBpos.next()) {
                     bpos = rsBpos.getString("jumlah");
                 }
-                while (rsBneg.next()) {                    
+                while (rsBneg.next()) {
                     bneg = rsBneg.getString("jumlah");
                 }
-                while (rsABpos.next()) {                    
+                while (rsABpos.next()) {
                     abpos = rsABpos.getString("jumlah");
                 }
-                while (rsABneg.next()) {                    
+                while (rsABneg.next()) {
                     abneg = rsABneg.getString("jumlah");
                 }
-            } catch (Exception e) {            
+            } catch (Exception e) {
             }
             tabModeTotalDonor.addRow(new Object[]{
-                    totaldonor, totallk, totalpr, umur1, umur2, umur3, umur4, umur5, opos, oneg, apos, aneg, bpos, bneg, abpos, abneg
+                totaldonor, totallk, totalpr, umur1, umur2, umur3, umur4, umur5, opos, oneg, apos, aneg, bpos, bneg, abpos, abneg
             });
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
         }
         LCount.setText("0");
     }
@@ -3789,7 +3822,7 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     public JTable getTable() {
         return tbTranfusiDarah;
     }
-    
+
     public void isCek() {
         BtnSimpan.setEnabled(var.getutd_donor());
         BtnHapus.setEnabled(var.getutd_donor());

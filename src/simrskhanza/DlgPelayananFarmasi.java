@@ -698,7 +698,7 @@ public class DlgPelayananFarmasi extends javax.swing.JDialog {
                 ps = koneksi.prepareStatement("select count(kamar_inap.no_rawat) as jlh from kamar_inap inner join " +
                         "kamar inner join bangsal on kamar_inap.kd_kamar=kamar.kd_kamar and " +
                         "kamar.kd_bangsal=bangsal.kd_bangsal where bangsal.nm_bangsal like ? and " +
-                        "kamar_inap.tgl_masuk >=? AND kamar_inap.tgl_keluar <=? group by kamar_inap.tgl_masuk");
+                        "kamar_inap.tgl_masuk <=? AND kamar_inap.tgl_keluar >=? group by kamar_inap.tgl_masuk");
                 ps2 = koneksi.prepareStatement("select count(pemeriksaan_ranap.no_rawat) as visite from pemeriksaan_ranap join pegawai on "+
                         "pegawai.nik=pemeriksaan_ranap.nip where pegawai.bidang='Ikhtiyar' and pemeriksaan_ranap.tgl_perawatan=? "+
                         "group by pemeriksaan_ranap.tgl_perawatan");

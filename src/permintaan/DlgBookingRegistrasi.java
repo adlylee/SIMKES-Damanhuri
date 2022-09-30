@@ -433,6 +433,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         BtnEdit = new widget.Button();
         BtnKeluar = new widget.Button();
         BtnEdit1 = new widget.Button();
+        BtnEdit2 = new widget.Button();
         panelGlass10 = new widget.panelisi();
         jLabel6 = new widget.Label();
         TCari = new widget.TextBox();
@@ -700,6 +701,24 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         });
         panelGlass8.add(BtnEdit1);
 
+        BtnEdit2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/edit_f2.png"))); // NOI18N
+        BtnEdit2.setMnemonic('G');
+        BtnEdit2.setText("WA Batal");
+        BtnEdit2.setToolTipText("Alt+G");
+        BtnEdit2.setName("BtnEdit2"); // NOI18N
+        BtnEdit2.setPreferredSize(new java.awt.Dimension(100, 30));
+        BtnEdit2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEdit2ActionPerformed(evt);
+            }
+        });
+        BtnEdit2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnEdit2KeyPressed(evt);
+            }
+        });
+        panelGlass8.add(BtnEdit2);
+
         jPanel3.add(panelGlass8, java.awt.BorderLayout.PAGE_END);
 
         panelGlass10.setName("panelGlass10"); // NOI18N
@@ -764,7 +783,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         R2.setPreferredSize(new java.awt.Dimension(125, 23));
         panelCari.add(R2);
 
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "11-03-2019" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-09-2022" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -787,7 +806,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         jLabel22.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel22);
 
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "11-03-2019" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-09-2022" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -809,7 +828,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         R3.setPreferredSize(new java.awt.Dimension(135, 23));
         panelCari.add(R3);
 
-        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "11-03-2019" }));
+        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-09-2022" }));
         DTPCari3.setDisplayFormat("dd-MM-yyyy");
         DTPCari3.setName("DTPCari3"); // NOI18N
         DTPCari3.setOpaque(false);
@@ -832,7 +851,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         jLabel25.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel25);
 
-        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "11-03-2019" }));
+        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-09-2022" }));
         DTPCari4.setDisplayFormat("dd-MM-yyyy");
         DTPCari4.setName("DTPCari4"); // NOI18N
         DTPCari4.setOpaque(false);
@@ -916,7 +935,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         TPasien.setBounds(151, 10, 311, 23);
 
         TanggalBooking.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalBooking.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "11-03-2019 07:55:40" }));
+        TanggalBooking.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-09-2022 12:10:49" }));
         TanggalBooking.setDisplayFormat("dd-MM-yyyy hh:mm:ss");
         TanggalBooking.setName("TanggalBooking"); // NOI18N
         TanggalBooking.setOpaque(false);
@@ -996,7 +1015,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         jLabel14.setBounds(506, 40, 70, 23);
 
         TanggalPeriksa.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalPeriksa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "11-03-2019 07:55:40" }));
+        TanggalPeriksa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-09-2022 12:10:49" }));
         TanggalPeriksa.setDisplayFormat("dd-MM-yyyy hh:mm:ss");
         TanggalPeriksa.setName("TanggalPeriksa"); // NOI18N
         TanggalPeriksa.setOpaque(false);
@@ -1537,6 +1556,18 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnEdit1KeyPressed
 
+    private void BtnEdit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEdit2ActionPerformed
+        for(i=0;i<tbObat.getRowCount();i++){ 
+            if(tbObat.getValueAt(i,0).toString().equals("true")){
+                kirimwa.sendWaBatal(tbObat.getValueAt(i,3).toString(),tbObat.getValueAt(i,4).toString(),tbObat.getValueAt(i,5).toString(),tbObat.getValueAt(i,9).toString());
+            }
+        }
+    }//GEN-LAST:event_BtnEdit2ActionPerformed
+
+    private void BtnEdit2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnEdit2KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnEdit2KeyPressed
+
     /**
     * @param args the command line arguments
     */
@@ -1560,6 +1591,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.Button BtnDokter;
     private widget.Button BtnEdit;
     private widget.Button BtnEdit1;
+    private widget.Button BtnEdit2;
     private widget.Button BtnHapus;
     private widget.Button BtnKeluar;
     private widget.Button BtnPasien;
