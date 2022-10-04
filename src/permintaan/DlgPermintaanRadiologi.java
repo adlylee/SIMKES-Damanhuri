@@ -434,7 +434,7 @@ public final class DlgPermintaanRadiologi extends javax.swing.JDialog {
         PanelInput.add(jLabel9);
         jLabel9.setBounds(0, 42, 92, 23);
 
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "19-07-2022" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-07-2022" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy");
         Tanggal.setName("Tanggal"); // NOI18N
         Tanggal.setOpaque(false);
@@ -476,6 +476,11 @@ public final class DlgPermintaanRadiologi extends javax.swing.JDialog {
         ChkJln.setBounds(384, 72, 23, 23);
 
         KodePerujuk.setName("KodePerujuk"); // NOI18N
+        KodePerujuk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                KodePerujukActionPerformed(evt);
+            }
+        });
         KodePerujuk.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 KodePerujukKeyPressed(evt);
@@ -907,6 +912,10 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     private void TNoPermintaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TNoPermintaanActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TNoPermintaanActionPerformed
+
+    private void KodePerujukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KodePerujukActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_KodePerujukActionPerformed
 
     /**
     * @param args the command line arguments

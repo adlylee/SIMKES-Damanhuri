@@ -678,7 +678,38 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
 
     private void BtnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPrintActionPerformed
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        BtnCariActionPerformed(evt);
+        if (tabMode.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Maaf, data sudah habis. Tidak ada data yang bisa anda print...!!!!");
+            TCari.requestFocus();
+        } else if (tabMode.getRowCount() != 0) {
 
+            Sequel.queryu("delete from temporary_permintaan_kerohanian");
+            int row = tabMode.getRowCount();
+            for (int i = 0; i < row; i++) {
+                Sequel.menyimpan("temporary_permintaan_kerohanian", "'0','"
+                        + tabMode.getValueAt(i, 0).toString() + "','"
+                        + tabMode.getValueAt(i, 1).toString() + "','"
+                        + tabMode.getValueAt(i, 2).toString() + "','"
+                        + tabMode.getValueAt(i, 3).toString() + "','"
+                        + tabMode.getValueAt(i, 4).toString() + "','"
+                        + tabMode.getValueAt(i, 5).toString() + "','"
+                        + tabMode.getValueAt(i, 6).toString() + "','"
+                        + tabMode.getValueAt(i, 7).toString() + "','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''", "Kerohanian");
+            }
+            Sequel.menyimpan("temporary_permintaan_kerohanian", "'0','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''", "Kerohanian");
+
+            Map<String, Object> param = new HashMap<>();
+            param.put("namars", var.getnamars());
+            param.put("alamatrs", var.getalamatrs());
+            param.put("kotars", var.getkabupatenrs());
+            param.put("propinsirs", var.getpropinsirs());
+            param.put("kontakrs", var.getkontakrs());
+            param.put("emailrs", var.getemailrs());
+            param.put("logo", Sequel.cariGambar("select logo from setting"));
+            Valid.MyReport("rptLapPermintaankerohanian.jrxml", "report", "::[ Data Permintaan Kerohanian ]::",
+                    "select no, temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9, temp10, temp11, temp12, temp13, temp14, temp14, temp15, temp16 from temporary_permintaan_kerohanian order by no asc", param);
+        }
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_BtnPrintActionPerformed
 
@@ -830,52 +861,11 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private void MnCetakKerohanianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnCetakKerohanianActionPerformed
         if (tbKerohanian.getSelectedRow() != -1) {
             this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            if (tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 0).toString().trim().equals("")) {
-                Valid.textKosong(TCari, "No.Permintaan");
-            } else {
-
-                Sequel.queryu("delete from temporary_permintaan_kerohanian");
-                try {
-                    ps2 = koneksi.prepareStatement(
-                            "select permintaan_pemeriksaan_kerohanian.kd_rh, jns_kerohanian.nama_rh from "
-                            + "permintaan_pemeriksaan_kerohanian inner join jns_kerohanian on "
-                            + "permintaan_pemeriksaan_kerohanian.kd_rh=jns_kerohanian.kd_rh "
-                            + "where permintaan_pemeriksaan_kerohanian.noorder=?");
-                    try {
-                        ps2.setString(1, tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 0).toString());
-                        rs2 = ps2.executeQuery();
-                        while (rs2.next()) {
-                            Sequel.menyimpan("temporary_permintaan_kerohanian", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", 38, new String[]{
-                                "0", rs2.getString("kd_rh"), rs2.getString("nama_rh"), "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
-                            });
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Notif 2 : " + e);
-                    } finally {
-                        if (rs2 != null) {
-                            rs2.close();
-                        }
-                        if (ps2 != null) {
-                            ps2.close();
-                        }
-                    }
-                } catch (Exception e) {
-                    System.out.println("Notif : " + e);
-                }
-
+            if (tabMode.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "Maaf, data sudah habis. Tidak ada data yang bisa anda print...!!!!");
+                BtnAll.requestFocus();
+            } else if (tabMode.getRowCount() != 0) {
                 Map<String, Object> param = new HashMap<>();
-                param.put("noperiksa", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 0).toString());
-                norm = Sequel.cariIsi("select no_rkm_medis from reg_periksa where no_rawat=? ", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString());
-                param.put("norm", norm);
-                param.put("namapasien", Sequel.cariIsi("select nm_pasien from pasien where no_rkm_medis=? ", norm));
-                param.put("lahir", Sequel.cariIsi("select DATE_FORMAT(tgl_lahir,'%d-%m-%Y') from pasien where no_rkm_medis=? ", norm));
-                param.put("noktp", Sequel.cariIsi("select no_ktp from pasien where no_rkm_medis=?", norm));
-                param.put("jkel", Sequel.cariIsi("select if(jk='L','Laki-laki','Perempuan') as jk from pasien where no_rkm_medis=? ", norm));
-                param.put("agama", Sequel.cariIsi("select agama from pasien where no_rkm_medis=?", norm));
-                param.put("kamar", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 3).toString());
-                param.put("petugas", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 6).toString());
-                param.put("tanggal", Valid.SetTgl3(tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 4).toString()));
-                param.put("keterangan", Sequel.cariIsi("select keterangan from permintaan_kerohanian,reg_periksa where permintaan_kerohanian.no_rawat=reg_periksa.no_rawat and permintaan_kerohanian.no_rawat=?", norm));
                 param.put("namars", var.getnamars());
                 param.put("alamatrs", var.getalamatrs());
                 param.put("kotars", var.getkabupatenrs());
@@ -883,14 +873,20 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 param.put("kontakrs", var.getkontakrs());
                 param.put("emailrs", var.getemailrs());
                 param.put("logo", Sequel.cariGambar("select logo from setting"));
-
-                Valid.MyReport("rptPermintaanKerohanian.jrxml", "report", "::[ Permintaan Kerohanian ]::",
-                        "select no, temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9, temp10, temp11, temp12, temp13, temp14, temp14, temp15, temp16 from temporary_permintaan_kerohanian order by no asc", param);
+                Valid.MyReport("rptPermintaankerohanian.jrxml", "report", "::[ Data Permintaan Kerohanian ]::", "select permintaan_kerohanian.noorder, pasien.no_rkm_medis,pasien.nm_pasien,"
+                        + "pasien.tgl_lahir,pasien.no_ktp,pasien.jk,pasien.agama,bangsal.nm_bangsal, jns_kerohanian.nama_rh, permintaan_kerohanian.perujuk, permintaan_kerohanian.petugas "
+                        + "from permintaan_kerohanian inner join permintaan_pemeriksaan_kerohanian inner join jns_kerohanian inner join reg_periksa inner join pasien inner join kamar "
+                        + "inner join bangsal on permintaan_kerohanian.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and "
+                        + "permintaan_kerohanian.noorder=permintaan_pemeriksaan_kerohanian.noorder and permintaan_pemeriksaan_kerohanian.kd_rh=jns_kerohanian.kd_rh "
+                        + "and permintaan_kerohanian.kd_kamar=kamar.kd_kamar and kamar.kd_bangsal=bangsal.kd_bangsal where "
+                        + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between '" + Valid.SetTgl(Tgl1.getSelectedItem() + "") + "' and '" + Valid.SetTgl(Tgl2.getSelectedItem() + "") + "' and permintaan_kerohanian.petugas like '%" + CrPetugas.getText() + "%' and bangsal.nm_bangsal like '%" + CrKamar.getText() + "%' and permintaan_kerohanian.noorder like '%" + TCari.getText() + "%' or "
+                        + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between '" + Valid.SetTgl(Tgl1.getSelectedItem() + "") + "' and '" + Valid.SetTgl(Tgl2.getSelectedItem() + "") + "' and permintaan_kerohanian.petugas like '%" + CrPetugas.getText() + "%' and bangsal.nm_bangsal like '%" + CrKamar.getText() + "%' and permintaan_kerohanian.no_rawat like '%" + TCari.getText() + "%' or "
+                        + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between '" + Valid.SetTgl(Tgl1.getSelectedItem() + "") + "' and '" + Valid.SetTgl(Tgl2.getSelectedItem() + "") + "' and permintaan_kerohanian.petugas like '%" + CrPetugas.getText() + "%' and bangsal.nm_bangsal like '%" + CrKamar.getText() + "%' and reg_periksa.no_rkm_medis like '%" + TCari.getText() + "%' or "
+                        + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between '" + Valid.SetTgl(Tgl1.getSelectedItem() + "") + "' and '" + Valid.SetTgl(Tgl2.getSelectedItem() + "") + "' and permintaan_kerohanian.petugas like '%" + CrPetugas.getText() + "%' and bangsal.nm_bangsal like '%" + CrKamar.getText() + "%' and pasien.nm_pasien like '%" + TCari.getText() + "%' or "
+                        + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between '" + Valid.SetTgl(Tgl1.getSelectedItem() + "") + "' and '" + Valid.SetTgl(Tgl2.getSelectedItem() + "") + "' and permintaan_kerohanian.petugas like '%" + CrPetugas.getText() + "%' and bangsal.nm_bangsal like '%" + CrKamar.getText() + "%' and permintaan_kerohanian.petugas like '%" + TCari.getText() + "%' or "
+                        + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between '" + Valid.SetTgl(Tgl1.getSelectedItem() + "") + "' and '" + Valid.SetTgl(Tgl2.getSelectedItem() + "") + "' and permintaan_kerohanian.petugas like '%" + CrPetugas.getText() + "%' and bangsal.nm_bangsal like '%" + CrKamar.getText() + "%' and permintaan_kerohanian.keterangan like '%" + TCari.getText() + "%' order by permintaan_kerohanian.noorder", param);
             }
             this.setCursor(Cursor.getDefaultCursor());
-        } else {
-            JOptionPane.showMessageDialog(null, "Maaf, silahkan pilih data permintaan...!!!!");
-            TCari.requestFocus();
         }
     }//GEN-LAST:event_MnCetakKerohanianActionPerformed
 
@@ -976,7 +972,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                     + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between ? and ? and petugas.nama like ? and bangsal.nm_bangsal like ? and pasien.nm_pasien like ? or "
                     + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between ? and ? and petugas.nama like ? and bangsal.nm_bangsal like ? and permintaan_kerohanian.petugas like ? or "
                     + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between ? and ? and petugas.nama like ? and bangsal.nm_bangsal like ? and permintaan_kerohanian.keterangan like ? "
-                    + "group by permintaan_kerohanian.noorder; ");
+                    + "group by permintaan_kerohanian.noorder");
             try {
                 ps.setString(1, Valid.SetTgl(Tgl1.getSelectedItem() + ""));
                 ps.setString(2, Valid.SetTgl(Tgl2.getSelectedItem() + ""));
