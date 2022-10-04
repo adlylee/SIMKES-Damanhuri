@@ -1,7 +1,5 @@
 package informasi;
 
-import permintaan.*;
-import fungsi.BackgroundMusic;
 import fungsi.WarnaTable;
 import fungsi.batasInput;
 import fungsi.koneksiDB;
@@ -10,32 +8,21 @@ import fungsi.validasi;
 import fungsi.var;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import kepegawaian.DlgCariDokter;
 import kepegawaian.DlgCariPetugas;
 import simrskhanza.DlgCariBangsal;
-import simrskhanza.DlgCariPoli;
-import simrskhanza.DlgPeriksaRadiologi;
 
 public class InformasiKerohanian extends javax.swing.JDialog {
 

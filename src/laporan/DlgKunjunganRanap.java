@@ -1612,7 +1612,7 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                             "where diagnosa_pasien.no_rawat=? and diagnosa_pasien.kd_penyakit=? limit 1");
                     try {                                    
                         ps2.setString(1,rs.getString("no_rawat"));
-                        ps2.setString(2,"%"+TCari.getText().trim()+"%");
+                        ps2.setString(2,TCari.getText().trim());
                         rs2=ps2.executeQuery();
                         if(rs2.next()){
                             kddiagnosa=rs2.getString(1);
