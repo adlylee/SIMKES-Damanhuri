@@ -10,6 +10,7 @@
  */
 package tranfusidarah;
 
+import bridging.BPJSSPRI;
 import bridging.BridgingWA;
 import fungsi.WarnaTable;
 import fungsi.batasInput;
@@ -60,9 +61,9 @@ public final class UTDDonor extends javax.swing.JDialog {
     private sekuel Sequel = new sekuel();
     private validasi Valid = new validasi();
     private PreparedStatement ps, ps2, pstranfusi, pscekmedis, psceknonmedis, psTotal, psTotalLk, psTotalPr, psUmur1, psUmur2, psUmur3, psUmur4, psUmur5,
-            psOpos, psOneg, psApos, psAneg, psBpos, psBneg, psABpos, psABneg;
+            psOpos, psOneg, psApos, psAneg, psBpos, psBneg, psABpos, psABneg, ps3, ps4;
     private ResultSet rs, rs2, rstranfusi, rsTotal, rsTotalLk, rsTotalPr, rsUmur1, rsUmur2, rsUmur3, rsUmur4, rsUmur5,
-            rsOpos, rsOneg, rsApos, rsAneg, rsBpos, rsBneg, rsABpos, rsABneg;
+            rsOpos, rsOneg, rsApos, rsAneg, rsBpos, rsBneg, rsABpos, rsABneg, rs3, rs4;
     private Connection koneksi = koneksiDB.condb();
     private DlgCariPetugas petugas = new DlgCariPetugas(null, false);
     private int jml = 0, i = 0, row = 0, index = 0, pilih = 0;
@@ -76,10 +77,9 @@ public final class UTDDonor extends javax.swing.JDialog {
             + "on utd_penggunaan_medis_donor.kode_brng=databarang.kode_brng where utd_penggunaan_medis_donor.no_donor=?",
             sqlpsceknonmedis = "select utd_penggunaan_penunjang_donor.kode_brng,ipsrsbarang.nama_brng,utd_penggunaan_penunjang_donor.jml,utd_penggunaan_penunjang_donor.harga,"
             + "utd_penggunaan_penunjang_donor.total,ipsrsbarang.kode_sat from utd_penggunaan_penunjang_donor inner join ipsrsbarang "
-            + "on utd_penggunaan_penunjang_donor.kode_brng=ipsrsbarang.kode_brng where utd_penggunaan_penunjang_donor.no_donor=?",
-            hari = Sequel.cariIsi("select datediff(now(),tanggal) as hari from utd_donor");
+            + "on utd_penggunaan_penunjang_donor.kode_brng=ipsrsbarang.kode_brng where utd_penggunaan_penunjang_donor.no_donor=?";
     private BridgingWA kirimwa = new BridgingWA();
-    private double lk = 0, pr = 0;
+//    private int hari;
 
     /**
      * Creates new form DlgPenyakit
@@ -3062,10 +3062,51 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     }//GEN-LAST:event_nikActionPerformed
 
     private void BtnWAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnWAActionPerformed
-        System.out.println(hari);    
-        if (tbTranfusiDarah.getValueAt(i, 0).toString().equals("true")) {
-            kirimwa.sendwaUTD(tbTranfusiDarah.getValueAt(i, 3).toString(), tbTranfusiDarah.getValueAt(i, 4).toString(), tbTranfusiDarah.getValueAt(i, 5).toString(), tbTranfusiDarah.getValueAt(i, 9).toString());
-        }
+//        try {
+//            ps3 = koneksi.prepareStatement("select * from utd_donor");
+//            ps4= koneksi.prepareStatement("select datediff(now(),tanggal) as hari from utd_donor limit 1");
+//            try {
+////                        ps.setString(1, TNoRM.getText());
+//                rs3 = ps3.executeQuery();
+//                rs4 = ps4.executeQuery();
+//                while (rs3.next()) {
+//                    if (rs3.getString("jk").equals("P")||rs4.getInt("hari")>90) {
+//                        System.out.println("P");
+//                    } else if (rs3.getString("jk").equals("L")||rs4.getInt("hari")>76) {
+//                        System.out.println("L");
+//                    }
+//                }
+//            } catch (Exception e) {
+//                System.out.println("Notifikasi : " + e);
+//            } finally {
+//                if (rs != null) {
+//                    rs.close();
+//                }
+//                if (ps != null) {
+//                    ps.close();
+//                }
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Notif : " + e);
+//        }
+
+//        if (Sequel.cariIsi("SELECT jk FROM utd_donor ").equals("L")) {
+//            hari = Sequel.cariInteger("select datediff(now(),tanggal) as hari from utd_donor");
+//            if (hari >= 76) {
+//                System.out.println("print L");
+//                
+//            }
+//        }
+//        if (Sequel.cariIsi("SELECT jk FROM utd_donor ").equals("P")) {
+//            hari = Sequel.cariInteger("select datediff(now(),tanggal) as hari from utd_donor");
+//            if (hari>=90) {
+//                System.out.println("print P");
+//            }
+//        }
+//        kirimwa.sendwaUTD(tbTranfusiDarah.getValueAt(i, 3).toString(), tbTranfusiDarah.getValueAt(i, 4).toString(), tbTranfusiDarah.getValueAt(i, 5).toString(), tbTranfusiDarah.getValueAt(i, 9).toString());
+//            if (Sequel.cariIsi("select nama, jk, datediff(now(),tanggal) as hari from utd_donor where jk='P' ")) {
+//            
+//        }
     }//GEN-LAST:event_BtnWAActionPerformed
 
     private void BtnWAKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnWAKeyPressed

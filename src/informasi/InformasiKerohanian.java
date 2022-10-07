@@ -1,5 +1,6 @@
 package informasi;
 
+import bridging.BridgingWA;
 import permintaan.*;
 import fungsi.BackgroundMusic;
 import fungsi.WarnaTable;
@@ -49,6 +50,7 @@ public class InformasiKerohanian extends javax.swing.JDialog {
     private DlgCariPetugas petugas = new DlgCariPetugas(null, false);
     private DlgCariBangsal ruang = new DlgCariBangsal(null, false);
     private String norm = "";
+    private BridgingWA kirimwa = new BridgingWA();
 
     /**
      * Creates new form DlgProgramStudi
@@ -62,11 +64,24 @@ public class InformasiKerohanian extends javax.swing.JDialog {
 
         WindowAmbilPetugas.setSize(530, 80);
         tabMode = new DefaultTableModel(null, new Object[]{
-            "No.Permintaan", "No.Rawat", "Pasien", "Kamar", "Tgl.Permintaan", "Perujuk", "Petugas", "Keterangan"
-        }) {
+            "P", "No.Permintaan", "No.Rawat", "Pasien", "Kamar", "Tgl.Permintaan", "Perujuk", "Petugas", "Keterangan"}) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
-                return false;
+                boolean a = false;
+                if (colIndex == 0) {
+                    a = true;
+                }
+                return a;
+            }
+            Class[] types = new Class[]{
+                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class,
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+
+            @Override
+            public Class getColumnClass(int columnIndex) {
+                return types[columnIndex];
             }
         };
         tbKerohanian.setModel(tabMode);
@@ -74,23 +89,25 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         tbKerohanian.setPreferredScrollableViewportSize(new Dimension(800, 800));
         tbKerohanian.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 8; i++) {
+        for (i = 0; i < 9; i++) {
             TableColumn column = tbKerohanian.getColumnModel().getColumn(i);
             if (i == 0) {
-                column.setPreferredWidth(100);
+                column.setPreferredWidth(20);
             } else if (i == 1) {
-                column.setPreferredWidth(105);
+                column.setPreferredWidth(100);
             } else if (i == 2) {
-                column.setPreferredWidth(300);
+                column.setPreferredWidth(105);
             } else if (i == 3) {
-                column.setPreferredWidth(110);
+                column.setPreferredWidth(300);
             } else if (i == 4) {
-                column.setPreferredWidth(75);
+                column.setPreferredWidth(110);
             } else if (i == 5) {
-                column.setPreferredWidth(150);
+                column.setPreferredWidth(75);
             } else if (i == 6) {
                 column.setPreferredWidth(150);
             } else if (i == 7) {
+                column.setPreferredWidth(150);
+            } else if (i == 8) {
                 column.setPreferredWidth(80);
             }
         }
@@ -248,6 +265,7 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         jLabel10 = new widget.Label();
         LCount = new widget.Label();
         BtnKeluar = new widget.Button();
+        BtnKirimWA = new widget.Button();
         scrollPane1 = new widget.ScrollPane();
         tbKerohanian = new widget.Table();
 
@@ -579,6 +597,24 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         });
         panelisi1.add(BtnKeluar);
 
+        BtnKirimWA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/edit_f2.png"))); // NOI18N
+        BtnKirimWA.setMnemonic('G');
+        BtnKirimWA.setText("Kirim WA");
+        BtnKirimWA.setToolTipText("Alt+G");
+        BtnKirimWA.setName("BtnKirimWA"); // NOI18N
+        BtnKirimWA.setPreferredSize(new java.awt.Dimension(100, 30));
+        BtnKirimWA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnKirimWAActionPerformed(evt);
+            }
+        });
+        BtnKirimWA.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnKirimWAKeyPressed(evt);
+            }
+        });
+        panelisi1.add(BtnKirimWA);
+
         jPanel2.add(panelisi1, java.awt.BorderLayout.PAGE_END);
 
         internalFrame1.add(jPanel2, java.awt.BorderLayout.PAGE_END);
@@ -747,6 +783,9 @@ private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 tampil();
             }
         }
+    } else {
+        JOptionPane.showMessageDialog(null, "Maaf, silahkan pilih data permintaan...!!!!");
+        TCari.requestFocus();
     }
  }//GEN-LAST:event_BtnHapusActionPerformed
 
@@ -900,6 +939,18 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         }
     }//GEN-LAST:event_tbKerohanianMouseReleased
 
+    private void BtnKirimWAKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnKirimWAKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnKirimWAKeyPressed
+
+    private void BtnKirimWAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnKirimWAActionPerformed
+        for (i = 0; i < tbKerohanian.getRowCount(); i++) {
+            if (tbKerohanian.getValueAt(i, 0).toString().equals("true")) {
+                kirimwa.sendwaKerohanian(tbKerohanian.getValueAt(i, 3).toString(), tbKerohanian.getValueAt(i, 5).toString(), tbKerohanian.getValueAt(i, 4).toString());
+            }
+        }
+    }//GEN-LAST:event_BtnKirimWAActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -923,6 +974,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.Button BtnHapus;
     private widget.Button BtnHasil;
     private widget.Button BtnKeluar;
+    private widget.Button BtnKirimWA;
     private widget.Button BtnPrint;
     private widget.Button BtnSeek4;
     private widget.Button BtnSimpan4;
@@ -1006,8 +1058,8 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 ps.setString(30, "%" + TCari.getText() + "%");
                 rs = ps.executeQuery();
                 while (rs.next()) {
-                    tabMode.addRow(new String[]{
-                        rs.getString("noorder"), rs.getString("no_rawat"), rs.getString("no_rkm_medis") + " " + rs.getString("nm_pasien"), rs.getString("kd_kamar") + " " + rs.getString("nm_bangsal"),
+                    tabMode.addRow(new Object[]{
+                        false, rs.getString("noorder"), rs.getString("no_rawat"), rs.getString("no_rkm_medis") + " " + rs.getString("nm_pasien"), rs.getString("kd_kamar") + " " + rs.getString("nm_bangsal"),
                         rs.getString("tgl_permintaan"), rs.getString("nama"), rs.getString("petugas"), rs.getString("keterangan")
                     });
                     ps2 = koneksi.prepareStatement(
@@ -1019,7 +1071,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                         rs2 = ps2.executeQuery();
                         while (rs2.next()) {
                             tabMode.addRow(new Object[]{
-                                "", "", rs2.getString("nama_rh"), "", "", "", "", ""
+                                false, "", "", rs2.getString("nama_rh"), "", "", "", "", ""
                             });
                         }
                     } catch (Exception e) {

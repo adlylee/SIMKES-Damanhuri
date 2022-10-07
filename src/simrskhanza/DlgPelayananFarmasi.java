@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -42,7 +43,7 @@ public class DlgPelayananFarmasi extends javax.swing.JDialog {
     private validasi Valid = new validasi();
     private PreparedStatement ps, ps2, ps3;
     private ResultSet rs, rs2, rs3;
-    private int i = 0, r;
+    private int i = 0, r, visite = 0, pio = 0, kons = 0, meso = 0;
     private SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
     private DlgCariBangsal bangsal = new DlgCariBangsal(null, false);
 
@@ -76,17 +77,17 @@ public class DlgPelayananFarmasi extends javax.swing.JDialog {
         for (i = 0; i < 6; i++) {
             TableColumn column = tbPelayanan.getColumnModel().getColumn(i);
             if (i == 0) {
-                column.setPreferredWidth(120);
+                column.setPreferredWidth(100);
             } else if (i == 1) {
-                column.setPreferredWidth(250);
+                column.setPreferredWidth(100);
             } else if (i == 2) {
-                column.setPreferredWidth(120);
+                column.setPreferredWidth(80);
             } else if (i == 3) {
-                column.setPreferredWidth(120);
+                column.setPreferredWidth(70);
             } else if (i == 4) {
-                column.setPreferredWidth(120);
+                column.setPreferredWidth(80);
             } else if (i == 5) {
-                column.setPreferredWidth(150);
+                column.setPreferredWidth(70);
             }
         }
         tbPelayanan.setDefaultRenderer(Object.class, new WarnaTable());
@@ -465,10 +466,10 @@ public class DlgPelayananFarmasi extends javax.swing.JDialog {
             TCari.requestFocus();
         } else if (tabMode.getRowCount() != 0) {
 
-            Sequel.queryu("delete from temporary_gizi");
+            Sequel.queryu("delete from temporary_pelayanan_farmasi");
             int row = tabMode.getRowCount();
             for (int i = 0; i < row; i++) {
-                Sequel.menyimpan("temporary_gizi", "'0','"
+                Sequel.menyimpan("temporary_pelayanan_farmasi", "'0','"
                         + tabMode.getValueAt(i, 0).toString() + "','"
                         + tabMode.getValueAt(i, 1).toString() + "','"
                         + tabMode.getValueAt(i, 2).toString() + "','"
@@ -477,7 +478,7 @@ public class DlgPelayananFarmasi extends javax.swing.JDialog {
                         + tabMode.getValueAt(i, 5).toString() + "','"
                         + tabMode.getValueAt(i, 5).toString() + "','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''", "Transaksi Penerimaan");
             }
-            Sequel.menyimpan("temporary_gizi", "'0','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''", "Transaksi Penerimaan");
+//            Sequel.menyimpan("temporary_pelayanan_farmasi", "'0','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''", "Transaksi Penerimaan");
 
             Map<String, Object> param = new HashMap<>();
             param.put("namars", var.getnamars());
@@ -487,8 +488,8 @@ public class DlgPelayananFarmasi extends javax.swing.JDialog {
             param.put("kontakrs", var.getkontakrs());
             param.put("emailrs", var.getemailrs());
             param.put("logo", Sequel.cariGambar("select logo from setting"));
-            Valid.MyReport("rptDiet.jrxml", "report", "::[ Data Pemberian Obat ]::",
-                    "select no, temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9, temp10, temp11, temp12, temp13, temp14 from temporary_gizi order by no asc", param);
+            Valid.MyReport("rptPelayananFarmasi.jrxml", "report", "::[ Pelayanan Farmasi ]::",
+                    "select no, temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9, temp10, temp11, temp12, temp13, temp14 from temporary_pelayanan_farmasi order by no asc", param);
         }
         this.setCursor(Cursor.getDefaultCursor());
 }//GEN-LAST:event_BtnPrintActionPerformed
@@ -525,6 +526,7 @@ public class DlgPelayananFarmasi extends javax.swing.JDialog {
 
     private void BtnAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAllActionPerformed
         TCari.setText("");
+        emptTeks();
         tampil();
 }//GEN-LAST:event_BtnAllActionPerformed
 
@@ -571,57 +573,11 @@ public class DlgPelayananFarmasi extends javax.swing.JDialog {
     }//GEN-LAST:event_BtnSeek2KeyPressed
 
     private void MnLabelDietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnLabelDietActionPerformed
-//        if(TPasien.getText().trim().equals("")){
-//            JOptionPane.showMessageDialog(null,"Maaf, Silahkan anda pilih dulu pasien...!!!");
-//        }else{
-//            Map<String, Object> param = new HashMap<>();
-//            param.put("namars",var.getnamars());
-//            param.put("alamatrs",var.getalamatrs());
-//            param.put("kotars",var.getkabupatenrs());
-//            param.put("propinsirs",var.getpropinsirs());
-//            param.put("kontakrs",var.getkontakrs());
-//            param.put("emailrs",var.getemailrs());
-//            param.put("logo",Sequel.cariGambar("select logo from setting"));
-//            Valid.MyReport("rptLabelDiet.jrxml","report","::[ Label Diet ]::",
-//                "select detail_beri_diet.no_rawat,reg_periksa.no_rkm_medis,pasien.nm_pasien,pasien.tgl_lahir, " +
-//                "concat(detail_beri_diet.kd_kamar,', ',bangsal.nm_bangsal),detail_beri_diet.tanggal,detail_beri_diet.waktu,diet.nama_diet " +
-//                "from detail_beri_diet inner join reg_periksa inner join pasien inner join diet inner join kamar inner join bangsal " +
-//                "on detail_beri_diet.no_rawat=reg_periksa.no_rawat " +
-//                "and detail_beri_diet.kd_kamar=kamar.kd_kamar "+
-//                "and kamar.kd_bangsal=bangsal.kd_bangsal "+
-//                "and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "+
-//                "and detail_beri_diet.kd_diet=diet.kd_diet " +
-//                "where detail_beri_diet.tanggal='"+Valid.SetTgl(DTPTgl.getSelectedItem()+"")+"' and detail_beri_diet.waktu='"+cmbJam.getSelectedItem()+"' "+
-//                "and detail_beri_diet.no_rawat='"+TNoRw.getText()+"' and diet.nama_diet='"+NmDiet.getText()+"'",param);
-//        }
+
     }//GEN-LAST:event_MnLabelDietActionPerformed
 
     private void MnLabelDiet1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnLabelDiet1ActionPerformed
-//        if(tabMode.getRowCount()==0){
-//            JOptionPane.showMessageDialog(null,"Maaf, data sudah habis. Tidak ada data yang bisa anda print...!!!!");
-//            BtnBatal.requestFocus();
-//        }else if(tabMode.getRowCount()!=0){
-//            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-//            Map<String, Object> param = new HashMap<>();
-//            param.put("namars",var.getnamars());
-//            param.put("alamatrs",var.getalamatrs());
-//            param.put("kotars",var.getkabupatenrs());
-//            param.put("propinsirs",var.getpropinsirs());
-//            param.put("kontakrs",var.getkontakrs());
-//            param.put("emailrs",var.getemailrs());
-//            param.put("logo",Sequel.cariGambar("select logo from setting"));
-//            Valid.MyReport("rptLabelDiet.jrxml","report","::[ Label Diet ]::",
-//                "select detail_beri_diet.no_rawat,reg_periksa.no_rkm_medis,pasien.nm_pasien,pasien.tgl_lahir, " +
-//                "concat(detail_beri_diet.kd_kamar,', ',bangsal.nm_bangsal),detail_beri_diet.tanggal,detail_beri_diet.waktu,diet.nama_diet " +
-//                "from detail_beri_diet inner join reg_periksa inner join pasien inner join diet inner join kamar inner join bangsal " +
-//                "on detail_beri_diet.no_rawat=reg_periksa.no_rawat and detail_beri_diet.kd_kamar=kamar.kd_kamar "+
-//                "and kamar.kd_bangsal=bangsal.kd_bangsal and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and detail_beri_diet.kd_diet=diet.kd_diet " +
-//                "where detail_beri_diet.tanggal between '"+Valid.SetTgl(DTPCari1.getSelectedItem()+"")+"' and '"+Valid.SetTgl(DTPCari2.getSelectedItem()+"")+"' and detail_beri_diet.waktu like '%"+cmbJamCari.getSelectedItem().toString().replaceAll("Semua","").trim()+"%' and bangsal.nm_bangsal like '%"+NmBangsalCari.getText().trim()+"%' and detail_beri_diet.no_rawat like '%"+TCari.getText().trim()+"%' or "+
-//                "detail_beri_diet.tanggal between '"+Valid.SetTgl(DTPCari1.getSelectedItem()+"")+"' and '"+Valid.SetTgl(DTPCari2.getSelectedItem()+"")+"' and detail_beri_diet.waktu like '%"+cmbJamCari.getSelectedItem().toString().replaceAll("Semua","").trim()+"%' and bangsal.nm_bangsal like '%"+NmBangsalCari.getText().trim()+"%' and reg_periksa.no_rkm_medis like '%"+TCari.getText().trim()+"%' or "+
-//                "detail_beri_diet.tanggal between '"+Valid.SetTgl(DTPCari1.getSelectedItem()+"")+"' and '"+Valid.SetTgl(DTPCari2.getSelectedItem()+"")+"' and detail_beri_diet.waktu like '%"+cmbJamCari.getSelectedItem().toString().replaceAll("Semua","").trim()+"%' and bangsal.nm_bangsal like '%"+NmBangsalCari.getText().trim()+"%' and pasien.nm_pasien like '%"+TCari.getText().trim()+"%' "+
-//                "order by bangsal.nm_bangsal,diet.nama_diet",param);
-//            this.setCursor(Cursor.getDefaultCursor());
-//        }
+
     }//GEN-LAST:event_MnLabelDiet1ActionPerformed
 
     private void nmbangsalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nmbangsalActionPerformed
@@ -688,23 +644,21 @@ public class DlgPelayananFarmasi extends javax.swing.JDialog {
 
     public void tampil() {
         Valid.tabelKosong(tabMode);
-        try {           
+        try {
             LocalDate startDate = LocalDate.parse(Valid.SetTgl(DTPCari1.getSelectedItem() + ""));
             LocalDate endDate = LocalDate.parse(Valid.SetTgl(DTPCari2.getSelectedItem() + ""));
             for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
-                String visite = "", kons = "";
                 int jumlah = 0;
-//                ps = koneksi.prepareStatement("select count(distinct no_rawat) as jlh from kamar_inap where tgl_masuk>=? AND tgl_keluar <=? group by no_rawat");
-                ps = koneksi.prepareStatement("select count(kamar_inap.no_rawat) as jlh from kamar_inap inner join " +
-                        "kamar inner join bangsal on kamar_inap.kd_kamar=kamar.kd_kamar and " +
-                        "kamar.kd_bangsal=bangsal.kd_bangsal where bangsal.nm_bangsal like ? and " +
-                        "kamar_inap.tgl_masuk <=? AND kamar_inap.tgl_keluar >=? and kamar_inap.tgl_keluar <> '0000-00-00' group by kamar_inap.tgl_masuk");
-                ps2 = koneksi.prepareStatement("select count(pemeriksaan_ranap.no_rawat) as visite from pemeriksaan_ranap join pegawai on "+
-                        "pegawai.nik=pemeriksaan_ranap.nip where pegawai.bidang='Ikhtiyar' and pemeriksaan_ranap.tgl_perawatan=? "+
-                        "group by pemeriksaan_ranap.tgl_perawatan");
+                ps = koneksi.prepareStatement("select count(kamar_inap.no_rawat) as jlh from kamar_inap inner join "
+                        + "kamar inner join bangsal on kamar_inap.kd_kamar=kamar.kd_kamar and "
+                        + "kamar.kd_bangsal=bangsal.kd_bangsal where bangsal.nm_bangsal like ? and "
+                        + "kamar_inap.tgl_masuk <=? AND kamar_inap.tgl_keluar >=? and kamar_inap.tgl_keluar <> '0000-00-00' group by kamar_inap.tgl_masuk");
+                ps2 = koneksi.prepareStatement("select count(pemeriksaan_ranap.no_rawat) as visite from pemeriksaan_ranap join pegawai on "
+                        + "pegawai.nik=pemeriksaan_ranap.nip where pegawai.bidang='Ikhtiyar' and pemeriksaan_ranap.tgl_perawatan=? "
+                        + "group by pemeriksaan_ranap.tgl_perawatan");
                 ps3 = koneksi.prepareStatement("select count(distinct no_rawat) as kons from resep_pulang where tanggal=? group by tanggal");
                 try {
-                    ps.setString(1, "%" + kdbangsal.getText() + "%");
+                    ps.setString(1, "%" + nmbangsal.getText() + "%");
                     ps.setString(2, date.toString());
                     ps.setString(3, date.toString());
                     ps2.setString(1, date.toString());
@@ -712,17 +666,21 @@ public class DlgPelayananFarmasi extends javax.swing.JDialog {
                     rs = ps.executeQuery();
                     rs2 = ps2.executeQuery();
                     rs3 = ps3.executeQuery();
+                    visite = 0;
+                    pio = 0;
+                    kons = 0;
+                    meso = 0;
                     while (rs.next()) {
                         jumlah = rs.getInt("jlh") + jumlah;
                     }
                     while (rs2.next()) {
-                        visite = rs2.getString("visite");
+                        visite = rs2.getInt("visite");
                     }
                     while (rs3.next()) {
-                        kons = rs3.getString("kons");
+                        kons = rs3.getInt("kons");
                     }
                     tabMode.addRow(new Object[]{
-                        date, jumlah, visite, "", kons, ""
+                        date, jumlah, visite, pio, kons, meso
                     });
                 } catch (Exception e) {
                     System.out.println("Notif : " + e);
@@ -736,23 +694,9 @@ public class DlgPelayananFarmasi extends javax.swing.JDialog {
 
     public void emptTeks() {
         nmbangsal.setText("");
+        kdbangsal.setText("");
     }
 
-//    private void getData() {
-//        if(tbPelayanan.getSelectedRow()!= -1){
-//            TNoRw.setText(tbPelayanan.getValueAt(tbPelayanan.getSelectedRow(),0).toString()); 
-//            isRawat();            
-//            cmbJam.setSelectedItem(tbPelayanan.getValueAt(tbPelayanan.getSelectedRow(),4).toString());
-//            NmDiet.setText(tbPelayanan.getValueAt(tbPelayanan.getSelectedRow(),5).toString());
-//            KdDiet.setText(Sequel.cariString("select kd_diet from diet where nama_diet='"+tbPelayanan.getValueAt(tbPelayanan.getSelectedRow(),5).toString()+"'"));
-//            Valid.SetTgl(DTPTgl,tbPelayanan.getValueAt(tbPelayanan.getSelectedRow(),3).toString());
-//        }
-//    }
-//    private void isRawat() {
-//         Sequel.cariIsi("select pasien.nm_pasien from reg_periksa inner join pasien "+
-//                        "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis where reg_periksa.no_rawat=? ",TPasien,TNoRw.getText());
-//         Sequel.cariIsi("select kd_kamar from kamar_inap where no_rawat=? order by tgl_masuk desc limit 1",Kamar,TNoRw.getText());
-//    }
     public void setNoRm(String norwt, Date tgl1, Date tgl2) {
         TCari.setText(norwt);
         DTPCari1.setDate(tgl1);
