@@ -383,10 +383,8 @@ import tranfusidarah.UTDPenunjangRusak;
 import tranfusidarah.UTDPenyerahanDarah;
 import tranfusidarah.UTDStokDarah;
 import informasi.InformasiKerohanian;
-import informasi.InfoKerohanian;
 import java.awt.geom.RoundRectangle2D;
 import laporan.DlgFrekuensiPenyakitRalanDanRanap;
-import permintaan.DlgPermintaanKerohanian;
 
 
 /**
