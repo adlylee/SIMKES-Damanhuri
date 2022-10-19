@@ -708,8 +708,4 @@ public class DlgPelayananFarmasi extends javax.swing.JDialog {
 //        BtnHapus.setEnabled(var.getdiet_pasien());
         BtnPrint.setEnabled(var.getdiet_pasien());
     }
-
-//select count(no_rawat) from kamar_inap where tgl_masuk >= 2022-02-02 AND tgl_keluar <= '2022-02-03' group by tgl_masuk;
-//select count(kamar_inap.no_rawat) as jlh from kamar_inap inner join kamar inner join bangsal on kamar_inap.kd_kamar=kamar.kd_kamar and kamar.kd_bangsal=bangsal.kd_bangsal where bangsal.kd_bangsal like '%b0010%' and kamar_inap.tgl_masuk >='2022-02-01' AND kamar_inap.tgl_keluar <='2022-02-01' group by kamar_inap.no_rawat;
-//select kamar_inap.no_rawat, kamar_inap.tgl_masuk, kamar_inap.tgl_keluar, count(kamar_inap.no_rawat) as jlh from kamar_inap inner join kamar inner join bangsal on kamar_inap.kd_kamar=kamar.kd_kamar and kamar.kd_bangsal=bangsal.kd_bangsal where bangsal.kd_bangsal like '%%' and kamar_inap.tgl_masuk >='2022-02-02' AND kamar_inap.tgl_keluar <='2022-02-05' and tgl_keluar <> '0000-00-00' group by kamar_inap.no_rawat;
 }
