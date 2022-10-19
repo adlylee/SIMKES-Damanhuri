@@ -79,34 +79,34 @@ public class BridgingWA {
         return new RestTemplate(factory);
     }
 
-    public String sendWa(String no_rkm_medis, String nama,String tanggal,String poli){
+    public String sendWa(String no_rkm_medis, String nama, String tanggal, String poli) {
         try {
-            message = "Assalamualaikum "+nama+". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai .\n" +
-                " Handak behabar dan meingatakan pian, kalau nya BESOK tanggal "+tanggal+" pian ada JADWAL PERIKSA ke "+poli+" di Rumah Sakit H. Damanhuri Barabai . Pian bisa datang LANGSUNG ke ANJUNGAN PASIEN MANDIRI (APM) ." +
-                " Pastikan RUJUKAN BPJS pian masih berlaku. Jika sudah habis, maka mintalah rujukan kembali untuk berobat ke Rumah Sakit.Terima kasih \\n \\nWassalamualaikum\n" +
-                " Daftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US";
-            number = Sequel.cariIsi("SELECT no_tlp FROM pasien WHERE no_rkm_medis = "+no_rkm_medis);
+            message = "Assalamualaikum " + nama + ". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai .\n"
+                    + " Handak behabar dan meingatakan pian, kalau nya BESOK tanggal " + tanggal + " pian ada JADWAL PERIKSA ke " + poli + " di Rumah Sakit H. Damanhuri Barabai . Pian bisa datang LANGSUNG ke ANJUNGAN PASIEN MANDIRI (APM) ."
+                    + " Pastikan RUJUKAN BPJS pian masih berlaku. Jika sudah habis, maka mintalah rujukan kembali untuk berobat ke Rumah Sakit.Terima kasih \\n \\nWassalamualaikum\n"
+                    + " Daftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US";
+            number = Sequel.cariIsi("SELECT no_tlp FROM pasien WHERE no_rkm_medis = " + no_rkm_medis);
             token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'token'");
             urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'server'");
             sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'phonenumber'");
-            requestJson = "type=text&sender="+sender+"&number="+number+"&message="+message+"&api_key="+token;
+            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message + "&api_key=" + token;
             System.out.println("PostField : " + requestJson);
             requestEntity = new HttpEntity(requestJson);
-            url = urlApi+"/wagateway/kirimpesan";	
+            url = urlApi + "/wagateway/kirimpesan";
             root = mapper.readTree(getRest().exchange(url, HttpMethod.POST, requestEntity, String.class).getBody());
             System.out.println(root);
             token = root.path("message").asText();
             nameNode = root.path("data");
-            if(root.path("status").asText().equals("true")){ 
+            if (root.path("status").asText().equals("true")) {
                 reurn = "Sukses";
-            }else {
-                JOptionPane.showMessageDialog(null,nameNode.path("message").asText());                
+            } else {
+                JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
             }
         } catch (HeadlessException | IOException | KeyManagementException | NoSuchAlgorithmException | RestClientException ex) {
-            System.out.println("Notifikasi : "+ex);
+            System.out.println("Notifikasi : " + ex);
             System.out.println(url);
-            if(ex.toString().contains("UnknownHostException")){
-                JOptionPane.showMessageDialog(null,"Koneksi ke server Kemenkes terputus...!");
+            if (ex.toString().contains("UnknownHostException")) {
+                JOptionPane.showMessageDialog(null, "Koneksi ke server Kemenkes terputus...!");
             }
         }
         return token;
@@ -144,18 +144,47 @@ public class BridgingWA {
         }
         return token;
     }
-    
-        public String sendwaUTD(String no_rkm_medis, String nama, String tanggal, String poli) {
+
+    public String sendwaUTD(String no_rkm_medis, String nama) {
         try {
-            message = "Assalamualaikum " + nama + ". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai .\n"
-                    + " Handak mahabar akan kalaunya JADWAL PERIKSA ke " + poli + ", dipindah jadi tanggal " + tanggal + " karena Dokter " + poli + " berhalangan hadir. \n"
-                    + " Terkait dengan habar di atas, kami ucapkan permohonan maaf dan terima kasih atas kepercayaan pian berobat di RSUD H. Damanhuri. \nTerima kasih \\n \\nWassalamualaikum\n"
-                    + " Daftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US";
-            number = Sequel.cariIsi("SELECT no_tlp FROM pasien WHERE no_rkm_medis = " + no_rkm_medis);
+            message = "Assalamu'alaikum " + nama + "\n";
+            number = Sequel.cariIsi("SELECT no_telp FROM utd_donor where nama = " + nama);
             token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'token'");
             urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'server'");
             sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'phonenumber'");
             requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message + "&api_key=" + token;
+            System.out.println("PostField : " + requestJson);
+            requestEntity = new HttpEntity(requestJson);
+            url = urlApi + "/wagateway/kirimpesan";
+            root = mapper.readTree(getRest().exchange(url, HttpMethod.POST, requestEntity, String.class).getBody());
+            System.out.println(root);
+            token = root.path("message").asText();
+            nameNode = root.path("data");
+            if (root.path("status").asText().equals("true")) {
+                reurn = "Sukses";
+            } else {
+                JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
+            }
+        } catch (HeadlessException | IOException | KeyManagementException | NoSuchAlgorithmException | RestClientException ex) {
+            System.out.println("Notifikasi : " + ex);
+            System.out.println(url);
+            if (ex.toString().contains("UnknownHostException")) {
+                JOptionPane.showMessageDialog(null, "Koneksi ke server Kemenkes terputus...!");
+            }
+        }
+        return token;
+    }
+
+    public String sendwaKerohanian(String nama, String tanggal, String kamar) {
+        try {
+            message = "Pemberitahuan Permintaan Kerohanian.\n\n"
+                    + "Pasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal + "";
+//            number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='198011042005012011'");
+//            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'token'");
+            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'server'");
+            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'phonenumber'");
+            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message;
+//                    + "&api_key=" + token;
             System.out.println("PostField : " + requestJson);
             requestEntity = new HttpEntity(requestJson);
             url = urlApi + "/wagateway/kirimpesan";

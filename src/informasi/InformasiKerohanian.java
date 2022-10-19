@@ -1,5 +1,7 @@
 package informasi;
-
+import bridging.BridgingWA;
+import permintaan.*;
+import fungsi.BackgroundMusic;
 import fungsi.WarnaTable;
 import fungsi.batasInput;
 import fungsi.koneksiDB;
@@ -36,6 +38,7 @@ public class InformasiKerohanian extends javax.swing.JDialog {
     private DlgCariPetugas petugas = new DlgCariPetugas(null, false);
     private DlgCariBangsal ruang = new DlgCariBangsal(null, false);
     private String norm = "";
+    private BridgingWA kirimwa = new BridgingWA();
 
     /**
      * Creates new form DlgProgramStudi
@@ -49,11 +52,24 @@ public class InformasiKerohanian extends javax.swing.JDialog {
 
         WindowAmbilPetugas.setSize(530, 80);
         tabMode = new DefaultTableModel(null, new Object[]{
-            "No.Permintaan", "No.Rawat", "Pasien", "Kamar", "Tgl.Permintaan", "Perujuk", "Petugas", "Keterangan"
-        }) {
+            "P", "No.Permintaan", "No.Rawat", "Pasien", "Kamar", "Tgl.Permintaan", "Perujuk", "Petugas", "Keterangan"}) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
-                return false;
+                boolean a = false;
+                if (colIndex == 0) {
+                    a = true;
+                }
+                return a;
+            }
+            Class[] types = new Class[]{
+                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class,
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+
+            @Override
+            public Class getColumnClass(int columnIndex) {
+                return types[columnIndex];
             }
         };
         tbKerohanian.setModel(tabMode);
@@ -61,23 +77,25 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         tbKerohanian.setPreferredScrollableViewportSize(new Dimension(800, 800));
         tbKerohanian.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 8; i++) {
+        for (i = 0; i < 9; i++) {
             TableColumn column = tbKerohanian.getColumnModel().getColumn(i);
             if (i == 0) {
-                column.setPreferredWidth(100);
+                column.setPreferredWidth(20);
             } else if (i == 1) {
-                column.setPreferredWidth(105);
+                column.setPreferredWidth(100);
             } else if (i == 2) {
-                column.setPreferredWidth(300);
+                column.setPreferredWidth(105);
             } else if (i == 3) {
-                column.setPreferredWidth(110);
+                column.setPreferredWidth(300);
             } else if (i == 4) {
-                column.setPreferredWidth(75);
+                column.setPreferredWidth(165);
             } else if (i == 5) {
-                column.setPreferredWidth(150);
+                column.setPreferredWidth(80);
             } else if (i == 6) {
                 column.setPreferredWidth(150);
             } else if (i == 7) {
+                column.setPreferredWidth(180);
+            } else if (i == 8) {
                 column.setPreferredWidth(80);
             }
         }
@@ -235,6 +253,7 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         jLabel10 = new widget.Label();
         LCount = new widget.Label();
         BtnKeluar = new widget.Button();
+        BtnKirimWA = new widget.Button();
         scrollPane1 = new widget.ScrollPane();
         tbKerohanian = new widget.Table();
 
@@ -277,7 +296,7 @@ public class InformasiKerohanian extends javax.swing.JDialog {
             }
         });
         internalFrame5.add(BtnCloseIn4);
-        BtnCloseIn4.setBounds(410, 30, 100, 30);
+        BtnCloseIn4.setBounds(435, 30, 100, 30);
 
         BtnSimpan4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/save-16x16.png"))); // NOI18N
         BtnSimpan4.setMnemonic('S');
@@ -290,14 +309,15 @@ public class InformasiKerohanian extends javax.swing.JDialog {
             }
         });
         internalFrame5.add(BtnSimpan4);
-        BtnSimpan4.setBounds(305, 30, 100, 30);
+        BtnSimpan4.setBounds(330, 30, 100, 30);
 
         jLabel26.setText("Petugas :");
         jLabel26.setName("jLabel26"); // NOI18N
         internalFrame5.add(jLabel26);
         jLabel26.setBounds(6, 32, 100, 23);
 
-        cmbPetugas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "A", "B", "C" }));
+        cmbPetugas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "Aminuddin, AMK", "dr. Riyan Maulana, Sp.An.", "Dwi Meiliyana, M.Psi., Psikolog.", "Ervi Ridha Pratiwi, SKM", "Fatimah, AMK", "Ika Moralina, AMK", "M. Rahman Hidayat, S.Farm., Apt.", "M. Hidayatullah, AMK", "Untung Rusiman" }));
+        cmbPetugas.setToolTipText("");
         cmbPetugas.setName("cmbPetugas"); // NOI18N
         cmbPetugas.setPreferredSize(new java.awt.Dimension(120, 23));
         cmbPetugas.addActionListener(new java.awt.event.ActionListener() {
@@ -306,7 +326,7 @@ public class InformasiKerohanian extends javax.swing.JDialog {
             }
         });
         internalFrame5.add(cmbPetugas);
-        cmbPetugas.setBounds(110, 32, 130, 23);
+        cmbPetugas.setBounds(110, 32, 200, 23);
 
         WindowAmbilPetugas.getContentPane().add(internalFrame5, java.awt.BorderLayout.CENTER);
 
@@ -314,14 +334,14 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
             }
             public void windowDeactivated(java.awt.event.WindowEvent evt) {
                 formWindowDeactivated(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
@@ -566,6 +586,24 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         });
         panelisi1.add(BtnKeluar);
 
+        BtnKirimWA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/edit_f2.png"))); // NOI18N
+        BtnKirimWA.setMnemonic('G');
+        BtnKirimWA.setText("Kirim WA");
+        BtnKirimWA.setToolTipText("Alt+G");
+        BtnKirimWA.setName("BtnKirimWA"); // NOI18N
+        BtnKirimWA.setPreferredSize(new java.awt.Dimension(100, 30));
+        BtnKirimWA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnKirimWAActionPerformed(evt);
+            }
+        });
+        BtnKirimWA.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnKirimWAKeyPressed(evt);
+            }
+        });
+        panelisi1.add(BtnKirimWA);
+
         jPanel2.add(panelisi1, java.awt.BorderLayout.PAGE_END);
 
         internalFrame1.add(jPanel2, java.awt.BorderLayout.PAGE_END);
@@ -675,14 +713,14 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
             int row = tabMode.getRowCount();
             for (int i = 0; i < row; i++) {
                 Sequel.menyimpan("temporary_permintaan_kerohanian", "'0','"
-                        + tabMode.getValueAt(i, 0).toString() + "','"
                         + tabMode.getValueAt(i, 1).toString() + "','"
                         + tabMode.getValueAt(i, 2).toString() + "','"
                         + tabMode.getValueAt(i, 3).toString() + "','"
                         + tabMode.getValueAt(i, 4).toString() + "','"
                         + tabMode.getValueAt(i, 5).toString() + "','"
                         + tabMode.getValueAt(i, 6).toString() + "','"
-                        + tabMode.getValueAt(i, 7).toString() + "','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''", "Kerohanian");
+                        + tabMode.getValueAt(i, 7).toString() + "','"
+                        + tabMode.getValueAt(i, 8).toString() + "','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''", "Kerohanian");
             }
             Sequel.menyimpan("temporary_permintaan_kerohanian", "'0','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''", "Kerohanian");
 
@@ -724,16 +762,19 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
 
 private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHapusActionPerformed
     if (tbKerohanian.getSelectedRow() != -1) {
-        if (tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 0).toString().trim().equals("")) {
+        if (tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString().trim().equals("")) {
             Valid.textKosong(TCari, "No.Permintaan");
         } else {
-            if (Sequel.cariInteger("select count(noorder) from permintaan_pemeriksaan_kerohanian where and noorder=?", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 0).toString()) > 0) {
+            if (Sequel.cariInteger("select count(noorder) from permintaan_pemeriksaan_kerohanian where and noorder=?", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString()) > 0) {
 //                JOptionPane.showMessageDialog(null, "Maaf, Tidak boleh dihapus karena sudah ada tindakan yang sudah dibayar.\nSilahkan hubungi kasir...!!!!");
             } else {
-                Sequel.meghapus("permintaan_kerohanian", "noorder", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 0).toString());
+                Sequel.meghapus("permintaan_kerohanian", "noorder", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString());
                 tampil();
             }
         }
+    } else {
+        JOptionPane.showMessageDialog(null, "Maaf, silahkan pilih data permintaan...!!!!");
+        TCari.requestFocus();
     }
  }//GEN-LAST:event_BtnHapusActionPerformed
 
@@ -751,7 +792,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
 
     private void BtnHasilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHasilActionPerformed
         if (tbKerohanian.getSelectedRow() != -1) {
-            if (tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 0).toString().trim().equals("")) {
+            if (tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString().trim().equals("")) {
                 Valid.textKosong(TCari, "No.Permintaan");
             } else {
                 this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -775,11 +816,11 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
 
     private void BtnSimpan4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpan4ActionPerformed
         if (tbKerohanian.getSelectedRow() != -1) {
-            if (tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 0).toString().trim().equals("")) {
+            if (tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString().trim().equals("")) {
                 Valid.textKosong(cmbPetugas, "No.Permintaan");
             } else {
                 Sequel.mengedit("permintaan_kerohanian", "noorder=?", "petugas=?", 2, new String[]{
-                    cmbPetugas.getSelectedItem().toString(), tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 0).toString()
+                    cmbPetugas.getSelectedItem().toString(), tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString()
                 });
                 tampil();
                 WindowAmbilPetugas.dispose();
@@ -861,17 +902,17 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 param.put("emailrs", var.getemailrs());
                 param.put("logo", Sequel.cariGambar("select logo from setting"));
                 Valid.MyReport("rptPermintaankerohanian.jrxml", "report", "::[ Data Permintaan Kerohanian ]::", "select permintaan_kerohanian.noorder, pasien.no_rkm_medis,pasien.nm_pasien,"
-                        + "pasien.tgl_lahir,pasien.no_ktp,pasien.jk,pasien.agama,bangsal.nm_bangsal, jns_kerohanian.nama_rh, permintaan_kerohanian.perujuk, permintaan_kerohanian.petugas from "
-                        + "permintaan_kerohanian inner join permintaan_pemeriksaan_kerohanian inner join jns_kerohanian inner join reg_periksa inner join kamar_inap inner join pasien inner join "
-                        + "kamar inner join bangsal on permintaan_kerohanian.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rawat=kamar_inap.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "
+                        + "pasien.tgl_lahir,pasien.no_ktp,pasien.jk,pasien.agama,bangsal.nm_bangsal, jns_kerohanian.nama_rh, petugas.nama, permintaan_kerohanian.petugas from permintaan_kerohanian "
+                        + "inner join permintaan_pemeriksaan_kerohanian inner join petugas inner join jns_kerohanian inner join reg_periksa inner join kamar_inap inner join pasien inner join kamar "
+                        + "inner join bangsal  on permintaan_kerohanian.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rawat=kamar_inap.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "
                         + "and permintaan_kerohanian.noorder=permintaan_pemeriksaan_kerohanian.noorder and permintaan_pemeriksaan_kerohanian.kd_rh=jns_kerohanian.kd_rh and "
-                        + "permintaan_kerohanian.kd_kamar=kamar.kd_kamar and kamar.kd_bangsal=bangsal.kd_bangsal where"
-                        + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between '" + Valid.SetTgl(Tgl1.getSelectedItem() + "") + "' and '" + Valid.SetTgl(Tgl2.getSelectedItem() + "") + "' and permintaan_kerohanian.petugas like '%" + CrPetugas.getText() + "%' and bangsal.nm_bangsal like '%" + CrKamar.getText() + "%' and permintaan_kerohanian.noorder like '%" + TCari.getText() + "%' or "
-                        + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between '" + Valid.SetTgl(Tgl1.getSelectedItem() + "") + "' and '" + Valid.SetTgl(Tgl2.getSelectedItem() + "") + "' and permintaan_kerohanian.petugas like '%" + CrPetugas.getText() + "%' and bangsal.nm_bangsal like '%" + CrKamar.getText() + "%' and permintaan_kerohanian.no_rawat like '%" + TCari.getText() + "%' or "
-                        + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between '" + Valid.SetTgl(Tgl1.getSelectedItem() + "") + "' and '" + Valid.SetTgl(Tgl2.getSelectedItem() + "") + "' and permintaan_kerohanian.petugas like '%" + CrPetugas.getText() + "%' and bangsal.nm_bangsal like '%" + CrKamar.getText() + "%' and reg_periksa.no_rkm_medis like '%" + TCari.getText() + "%' or "
-                        + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between '" + Valid.SetTgl(Tgl1.getSelectedItem() + "") + "' and '" + Valid.SetTgl(Tgl2.getSelectedItem() + "") + "' and permintaan_kerohanian.petugas like '%" + CrPetugas.getText() + "%' and bangsal.nm_bangsal like '%" + CrKamar.getText() + "%' and pasien.nm_pasien like '%" + TCari.getText() + "%' or "
-                        + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between '" + Valid.SetTgl(Tgl1.getSelectedItem() + "") + "' and '" + Valid.SetTgl(Tgl2.getSelectedItem() + "") + "' and permintaan_kerohanian.petugas like '%" + CrPetugas.getText() + "%' and bangsal.nm_bangsal like '%" + CrKamar.getText() + "%' and permintaan_kerohanian.petugas like '%" + TCari.getText() + "%' or "
-                        + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between '" + Valid.SetTgl(Tgl1.getSelectedItem() + "") + "' and '" + Valid.SetTgl(Tgl2.getSelectedItem() + "") + "' and permintaan_kerohanian.petugas like '%" + CrPetugas.getText() + "%' and bangsal.nm_bangsal like '%" + CrKamar.getText() + "%' and permintaan_kerohanian.keterangan like '%" + TCari.getText() + "%' order by permintaan_kerohanian.noorder", param);
+                        + "permintaan_kerohanian.kd_kamar=kamar.kd_kamar and kamar.kd_bangsal=bangsal.kd_bangsal and permintaan_kerohanian.perujuk=petugas.nip where "
+                        + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between '" + Valid.SetTgl(Tgl1.getSelectedItem() + "") + "' and '" + Valid.SetTgl(Tgl2.getSelectedItem() + "") + "' and permintaan_kerohanian.petugas like '%" + CrPetugas.getText() + "%' and bangsal.nm_bangsal like '%" + CrKamar.getText() + "%' and (permintaan_kerohanian.noorder like '%" + TCari.getText() + "%' or "
+                        + "permintaan_kerohanian.no_rawat like '%" + TCari.getText() + "%' or "
+                        + "reg_periksa.no_rkm_medis like '%" + TCari.getText() + "%' or "
+                        + "pasien.nm_pasien like '%" + TCari.getText() + "%' or "
+                        + "permintaan_kerohanian.petugas like '%" + TCari.getText() + "%' or "
+                        + "permintaan_kerohanian.keterangan like '%" + TCari.getText() + "%') order by permintaan_kerohanian.noorder", param);
             }
             this.setCursor(Cursor.getDefaultCursor());
         }
@@ -886,6 +927,18 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             jPopupMenu1.show(evt.getComponent(), evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_tbKerohanianMouseReleased
+
+    private void BtnKirimWAKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnKirimWAKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnKirimWAKeyPressed
+
+    private void BtnKirimWAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnKirimWAActionPerformed
+        for (i = 0; i < tbKerohanian.getRowCount(); i++) {
+            if (tbKerohanian.getValueAt(i, 1).toString().equals("true")) {
+                kirimwa.sendwaKerohanian(tbKerohanian.getValueAt(i, 3).toString(), tbKerohanian.getValueAt(i, 5).toString(), tbKerohanian.getValueAt(i, 4).toString());
+            }
+        }
+    }//GEN-LAST:event_BtnKirimWAActionPerformed
 
     /**
      * @param args the command line arguments
@@ -910,6 +963,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.Button BtnHapus;
     private widget.Button BtnHasil;
     private widget.Button BtnKeluar;
+    private widget.Button BtnKirimWA;
     private widget.Button BtnPrint;
     private widget.Button BtnSeek4;
     private widget.Button BtnSimpan4;
@@ -953,48 +1007,28 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                     + "inner join kamar_inap on permintaan_kerohanian.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "
                     + "and permintaan_kerohanian.noorder=permintaan_pemeriksaan_kerohanian.noorder and permintaan_kerohanian.perujuk=petugas.nip and "
                     + "kamar.kd_bangsal=bangsal.kd_bangsal and reg_periksa.no_rawat=kamar_inap.no_rawat and permintaan_kerohanian.kd_kamar=kamar.kd_kamar where "
-                    + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between ? and ? and petugas.nama like ? and bangsal.nm_bangsal like ? and permintaan_kerohanian.noorder like ? or "
-                    + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between ? and ? and petugas.nama like ? and bangsal.nm_bangsal like ? and permintaan_kerohanian.no_rawat like ? or "
-                    + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between ? and ? and petugas.nama like ? and bangsal.nm_bangsal like ? and reg_periksa.no_rkm_medis like ? or "
-                    + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between ? and ? and petugas.nama like ? and bangsal.nm_bangsal like ? and pasien.nm_pasien like ? or "
-                    + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between ? and ? and petugas.nama like ? and bangsal.nm_bangsal like ? and permintaan_kerohanian.petugas like ? or "
-                    + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between ? and ? and petugas.nama like ? and bangsal.nm_bangsal like ? and permintaan_kerohanian.keterangan like ? "
-                    + "group by permintaan_kerohanian.noorder");
+                    + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between ? and ? and petugas.nama like ? and bangsal.nm_bangsal like ? and (permintaan_kerohanian.noorder like ? or "
+                    + "permintaan_kerohanian.no_rawat like ? or "
+                    + "reg_periksa.no_rkm_medis like ? or "
+                    + "pasien.nm_pasien like ? or "
+                    + "permintaan_kerohanian.petugas like ? or "
+                    + "permintaan_kerohanian.keterangan like ?) "
+                    + "group by permintaan_kerohanian.noorder order by permintaan_kerohanian.noorder");
             try {
                 ps.setString(1, Valid.SetTgl(Tgl1.getSelectedItem() + ""));
                 ps.setString(2, Valid.SetTgl(Tgl2.getSelectedItem() + ""));
                 ps.setString(3, "%" + CrPetugas.getText().trim() + "%");
                 ps.setString(4, "%" + CrKamar.getText().trim() + "%");
                 ps.setString(5, "%" + TCari.getText() + "%");
-                ps.setString(6, Valid.SetTgl(Tgl1.getSelectedItem() + ""));
-                ps.setString(7, Valid.SetTgl(Tgl2.getSelectedItem() + ""));
-                ps.setString(8, "%" + CrPetugas.getText().trim() + "%");
-                ps.setString(9, "%" + CrKamar.getText().trim() + "%");
+                ps.setString(6, "%" + TCari.getText() + "%");
+                ps.setString(7, "%" + TCari.getText() + "%");
+                ps.setString(8, "%" + TCari.getText() + "%");
+                ps.setString(9, "%" + TCari.getText() + "%");
                 ps.setString(10, "%" + TCari.getText() + "%");
-                ps.setString(11, Valid.SetTgl(Tgl1.getSelectedItem() + ""));
-                ps.setString(12, Valid.SetTgl(Tgl2.getSelectedItem() + ""));
-                ps.setString(13, "%" + CrPetugas.getText().trim() + "%");
-                ps.setString(14, "%" + CrKamar.getText().trim() + "%");
-                ps.setString(15, "%" + TCari.getText() + "%");
-                ps.setString(16, Valid.SetTgl(Tgl1.getSelectedItem() + ""));
-                ps.setString(17, Valid.SetTgl(Tgl2.getSelectedItem() + ""));
-                ps.setString(18, "%" + CrPetugas.getText().trim() + "%");
-                ps.setString(19, "%" + CrKamar.getText().trim() + "%");
-                ps.setString(20, "%" + TCari.getText() + "%");
-                ps.setString(21, Valid.SetTgl(Tgl1.getSelectedItem() + ""));
-                ps.setString(22, Valid.SetTgl(Tgl2.getSelectedItem() + ""));
-                ps.setString(23, "%" + CrPetugas.getText().trim() + "%");
-                ps.setString(24, "%" + CrKamar.getText().trim() + "%");
-                ps.setString(25, "%" + TCari.getText() + "%");
-                ps.setString(26, Valid.SetTgl(Tgl1.getSelectedItem() + ""));
-                ps.setString(27, Valid.SetTgl(Tgl2.getSelectedItem() + ""));
-                ps.setString(28, "%" + CrPetugas.getText().trim() + "%");
-                ps.setString(29, "%" + CrKamar.getText().trim() + "%");
-                ps.setString(30, "%" + TCari.getText() + "%");
                 rs = ps.executeQuery();
                 while (rs.next()) {
-                    tabMode.addRow(new String[]{
-                        rs.getString("noorder"), rs.getString("no_rawat"), rs.getString("no_rkm_medis") + " " + rs.getString("nm_pasien"), rs.getString("kd_kamar") + " " + rs.getString("nm_bangsal"),
+                    tabMode.addRow(new Object[]{
+                        false, rs.getString("noorder"), rs.getString("no_rawat"), rs.getString("no_rkm_medis") + " " + rs.getString("nm_pasien"), rs.getString("kd_kamar") + " " + rs.getString("nm_bangsal"),
                         rs.getString("tgl_permintaan"), rs.getString("nama"), rs.getString("petugas"), rs.getString("keterangan")
                     });
                     ps2 = koneksi.prepareStatement(
@@ -1006,7 +1040,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                         rs2 = ps2.executeQuery();
                         while (rs2.next()) {
                             tabMode.addRow(new Object[]{
-                                "", "", rs2.getString("nama_rh"), "", "", "", "", ""
+                                false, "", "", rs2.getString("nama_rh"), "", "", "", "", ""
                             });
                         }
                     } catch (Exception e) {
@@ -1040,7 +1074,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private void getData() {
         Kd2.setText("");
         if (tbKerohanian.getSelectedRow() != -1) {
-            Kd2.setText(tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 0).toString());
+            Kd2.setText(tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString());
         }
     }
 

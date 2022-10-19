@@ -1010,7 +1010,7 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     private widget.Table tbDokter2;
     // End of variables declaration//GEN-END:variables
 
-    private void tampil() {
+        private void tampil() {
        Valid.tabelKosong(tabMode);
         try{     
             ps=koneksi.prepareStatement("select ipsrspengeluaran.tanggal,ipsrspengeluaran.no_keluar,ipsrspengeluaran.keterangan,ipsrspengeluaran.nip,petugas.nama "+
