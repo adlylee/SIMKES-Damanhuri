@@ -2231,8 +2231,8 @@ private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                         + "jns_perawatan_lab.kso,jns_perawatan_lab.menejemen,penjab.png_jawab, "
                         + "SUBSTRING(jns_perawatan_lab.nm_perawatan,1,6) "
                         + "from jns_perawatan_lab inner join penjab on penjab.kd_pj=jns_perawatan_lab.kd_pj where "
-                        //                        + "jns_perawatan_lab.kd_jenis_prw not in ('J000018','J000019','J000020','J000021','J000023','J000024','J000025','J000038','J000051','J000054','J000058','J000062','J000063','J000064','J000069','J000070','J000078','J000082','J000084','J000167','J000179') and "
-                        + "SUBSTRING(jns_perawatan_lab.nm_perawatan,1,6) !='(Cito)' and jns_perawatan_lab.total_byr !='0' and jns_perawatan_lab.status='1' and (jns_perawatan_lab.kd_pj=? or jns_perawatan_lab.kd_pj='-') and jns_perawatan_lab.kd_jenis_prw like ? or "
+                        + //                        + "jns_perawatan_lab.kd_jenis_prw not in ('J000018','J000019','J000020','J000021','J000023','J000024','J000025','J000038','J000051','J000054','J000058','J000062','J000063','J000064','J000069','J000070','J000078','J000082','J000084','J000167','J000179') and "
+                        "SUBSTRING(jns_perawatan_lab.nm_perawatan,1,6) !='(Cito)' and jns_perawatan_lab.total_byr !='0' and jns_perawatan_lab.status='1' and (jns_perawatan_lab.kd_pj=? or jns_perawatan_lab.kd_pj='-') and jns_perawatan_lab.kd_jenis_prw like ? or "
                         //                        + "jns_perawatan_lab.kd_jenis_prw not in ('J000018','J000019','J000020','J000021','J000023','J000024','J000025','J000038','J000051','J000054','J000058','J000062','J000063','J000064','J000069','J000070','J000078','J000082','J000084','J000167','J000179') and "
                         + "SUBSTRING(jns_perawatan_lab.nm_perawatan,1,6) !='(Cito)' and jns_perawatan_lab.total_byr !='0' and jns_perawatan_lab.status='1' and (jns_perawatan_lab.kd_pj=? or jns_perawatan_lab.kd_pj='-') and jns_perawatan_lab.nm_perawatan like ? "
                         + "order by jns_perawatan_lab.kd_jenis_prw");
