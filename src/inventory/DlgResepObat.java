@@ -2322,6 +2322,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 Sequel.cariIsi("select no_rkm_medis from reg_periksa where no_rawat=? ",TNoRm,TNoRw.getText());
                 Sequel.cariIsi("select nm_pasien from pasien where no_rkm_medis=? ",TPasien,TNoRm.getText());
                 Sequel.cariIsi("select kd_dokter from resep_obat where no_resep=?",KdDokter,NoResep.getText());
+                Sequel.cariIsi("select kd_dokter from resep_dokter_pulang where no_resep=?",KdDokter,NoResep.getText());
 //                if(Sequel.cariIsi("select kd_dokter from resep_obat where no_resep=?",NoResep.getText()) == ""){
 //                    Sequel.cariIsi("select kd_dokter from resep_dokter_pulang where no_resep=?",KdDokter,NoResep.getText());
 //                }
