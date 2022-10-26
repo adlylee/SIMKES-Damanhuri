@@ -2761,7 +2761,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                     + " kamar.kd_bangsal from resep_dokter_pulang inner join resep_pulang inner join reg_periksa inner join pasien inner join dokter inner join bangsal inner join kamar inner join kamar_inap "
                     + " on resep_pulang.no_rawat=reg_periksa.no_rawat and resep_pulang.no_resep=resep_dokter_pulang.no_resep and kamar.kd_bangsal=bangsal.kd_bangsal and reg_periksa.no_rawat=kamar_inap.no_rawat and kamar_inap.kd_kamar=kamar.kd_kamar "
                     + " and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and resep_dokter_pulang.kd_dokter=dokter.kd_dokter where "
-                    + " resep_dokter_pulang.tgl_perawatan between ? and ? and dokter.nm_dokter like ? and bangsal.nm_bangsal like ? and ( resep_pulang.no_resep like ? or "
+                    + " kamar_inap.stts_pulang='-' and resep_dokter_pulang.tgl_perawatan between ? and ? and dokter.nm_dokter like ? and bangsal.nm_bangsal like ? and ( resep_pulang.no_resep like ? or "
                     + " resep_pulang.no_rawat like ? or "
                     + " pasien.no_rkm_medis like ? or "
                     + " pasien.nm_pasien like ? or "

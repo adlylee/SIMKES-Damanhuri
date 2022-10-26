@@ -145,7 +145,7 @@ public class BridgingWA {
         return token;
     }
 
-    public String sendwaUTD(String no_rkm_medis, String nama) {
+    public String sendwaUTD(String nama, String no_telp) {
         try {
             message = "Assalamu'alaikum " + nama + "\n";
             number = Sequel.cariIsi("SELECT no_telp FROM utd_donor where nama = " + nama);
