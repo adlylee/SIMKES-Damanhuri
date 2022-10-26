@@ -3064,38 +3064,38 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     }//GEN-LAST:event_nikActionPerformed
 
     private void BtnWAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnWAActionPerformed
-//        try {
-//            ps3 = koneksi.prepareStatement("select nama, no_telp, jk, datediff(now(),tanggal) as hari from utd_donor limit 10");
-//            try {
-//                rs3 = ps3.executeQuery();
-//                while (rs3.next()) {
-//                    if (rs3.getString("jk").equals("L")) {
-//                        if (rs3.getInt("hari") >= 76) {
-//                            System.out.println(rs3.getString("jk"));
-//                            kirimwa.sendwaUTD(rs3.getString("nama"));
-//                        }
-//                    }
-//                    if (rs3.getString("jk").equals("P")) {
-//                        if (rs3.getInt("hari") >= 90) {
-//                            System.out.println(rs3.getString("jk"));
-//                            kirimwa.sendwaUTD(rs3.getString("nama"));
-//                        }
-//                    }
-//
-//                }
-//            } catch (Exception e) {
-//                System.out.println("Notifikasi : " + e);
-//            } finally {
-//                if (rs3 != null) {
-//                    rs3.close();
-//                }
-//                if (ps3 != null) {
-//                    ps3.close();
-//                }
-//            }
-//        } catch (Exception e) {
-//            System.out.println("Notif : " + e);
-//        }
+        try {
+            ps3 = koneksi.prepareStatement("select nama, no_telp, jk, datediff(now(),tanggal) as hari from utd_donor limit 10");
+            try {
+                rs3 = ps3.executeQuery();
+                while (rs3.next()) {
+                    if (rs3.getString("jk").equals("L")) {
+                        if (rs3.getInt("hari") >= 76) {
+                            System.out.println(rs3.getString("jk"));
+                            kirimwa.sendwaUTD(rs3.getString("nama"), rs3.getString("no_telp"));
+                        }
+                    }
+                    else if (rs3.getString("jk").equals("P")) {
+                        if (rs3.getInt("hari") >= 90) {
+                            System.out.println(rs3.getString("jk"));
+                            kirimwa.sendwaUTD(rs3.getString("nama"), rs3.getString("no_telp"));
+                        }
+                    }
+
+                }
+            } catch (Exception e) {
+                System.out.println("Notifikasi : " + e);
+            } finally {
+                if (rs3 != null) {
+                    rs3.close();
+                }
+                if (ps3 != null) {
+                    ps3.close();
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Notif : " + e);
+        }
     }//GEN-LAST:event_BtnWAActionPerformed
 
     private void BtnWAKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnWAKeyPressed

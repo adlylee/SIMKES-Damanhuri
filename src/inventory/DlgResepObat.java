@@ -51,8 +51,8 @@ public final class DlgResepObat extends javax.swing.JDialog {
     private Connection koneksi = koneksiDB.condb();
     private sekuel Sequel = new sekuel();
     private validasi Valid = new validasi();
-    private PreparedStatement ps, ps2, psracikan, pspulang, ps2pulang, psudd, pspanjang, psdokter;
-    private ResultSet rs, rs2, rsracikan, rspulang, rs2pulang, rsudd, rspanjang, rsdokter;
+    private PreparedStatement ps, ps2, psracikan, pspulang, ps2pulang, psudd, pspanjang;
+    private ResultSet rs, rs2, rsracikan, rspulang, rs2pulang, rsudd, rspanjang;
     public DlgCariDokter dokter = new DlgCariDokter(null, false);
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private Date date = new Date();
@@ -61,7 +61,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
     private Properties prop = new Properties();
     private DlgAturanPakai aturanpakai = new DlgAturanPakai(null, false);
     private int i = 0, pilihan = 0;
-    private String kamar = "", namakamar = "", noresep = "";
+    private String kamar = "", namakamar = "";
 
 //private frmUtama id = new frmUtama(null,false); 
     /**
@@ -1541,6 +1541,13 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                         "select resep_obat.no_resep,resep_obat.tgl_perawatan,resep_obat.jam,"
                         + "resep_obat.no_rawat,pasien.no_rkm_medis,pasien.nm_pasien,obat_racikan.nama_racik,"
                         + "obat_racikan.aturan_pakai,obat_racikan.jml_dr,metode_racik.nm_racik "
+                        + "if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)=' Pagi'),'06:00', "
+                        + "if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)='Siang'),'14:00', "
+                        + "if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)=' Sore'),'18:00', "
+                        + "if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)='Malam'),'21:00', "
+                        + "if(LEFT(resep_pulang.dosis,1)='2','06:00  18:00', "
+                        + "if(LEFT(resep_pulang.dosis,1)='3','06:00  14:00  21:00', "
+                        + "if(LEFT(resep_pulang.dosis,1)='4','06:00  14:00  18:00  21:00',' '))))))) as waktu_pakai "
                         + "from resep_obat inner join reg_periksa inner join pasien inner join "
                         + "obat_racikan inner join metode_racik on resep_obat.no_rawat=reg_periksa.no_rawat "
                         + "and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "
@@ -2381,6 +2388,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         cmbJam.setSelectedItem(jam);
         cmbMnt.setSelectedItem(menit);
         cmbDtk.setSelectedItem(detik);
+        setDokterPeresep();
         ChkInput.setSelected(true);
         this.status = status;
         isForm();
@@ -2545,9 +2553,9 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                         rspulang.getString("no_rawat") + " " + rspulang.getString("no_rkm_medis") + " " + rspulang.getString("nm_pasien"),
                         rspulang.getString("nm_dokter"), "Pulang"
                     });
-                    tabMode.addRow(new String[]{"", "Nama Obat", "Jumlah x Harga = Total", "Aturan Pakai"});
+                    tabMode.addRow(new String[]{"", "Nama Obat", "Jumlah x Harga + Tuslah = Total", "Aturan Pakai"});
                     ps2pulang = koneksi.prepareStatement("select databarang.kode_brng,databarang.nama_brng,resep_pulang.jml_barang,"
-                            + "resep_pulang.harga,resep_pulang.total from "
+                            + "resep_pulang.tuslah,resep_pulang.harga,resep_pulang.total from "
                             + "resep_pulang inner join databarang on resep_pulang.kode_brng=databarang.kode_brng "
                             + "where resep_pulang.tanggal=? and resep_pulang.no_rawat=? "
                             + "order by databarang.kode_brng");
@@ -2558,7 +2566,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                         total = 0;
                         while (rs2pulang.next()) {
                             tabMode.addRow(new String[]{
-                                "", rs2pulang.getString("nama_brng"), rs2pulang.getString("jml_barang") + "  x  " + Valid.SetAngka(rs2pulang.getDouble("harga"))
+                                "", rs2pulang.getString("nama_brng"), rs2pulang.getString("jml_barang") + "  x  " + Valid.SetAngka(rs2pulang.getDouble("harga")) + "  +  " + Valid.SetAngka(rs2pulang.getDouble("tuslah"))
                                 + " = " + Valid.SetAngka(rs2pulang.getDouble("total")),
                                 Sequel.cariIsi("select dosis from resep_pulang where tanggal='" + rspulang.getString("tanggal")
                                 + "' and no_rawat='" + rspulang.getString("no_rawat") + "' and kode_brng='" + rs2pulang.getString("kode_brng") + "'"), ""
@@ -2740,4 +2748,8 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         return j;
     }
 
+    public void setDokterPeresep() {
+        KdDokter.setText(Sequel.cariIsi("select resep_dokter_pulang.kd_dokter from resep_pulang inner join resep_dokter_pulang on resep_pulang.no_resep=resep_dokter_pulang.no_resep where resep_pulang.no_rawat=?", TNoRw.getText()));
+        NmDokter.setText(Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?", KdDokter.getText()));
+    }
 }

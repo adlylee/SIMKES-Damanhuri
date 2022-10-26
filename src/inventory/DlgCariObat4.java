@@ -802,7 +802,7 @@ public final class DlgCariObat4 extends javax.swing.JDialog {
         jLabel5.setBounds(4, 10, 68, 23);
 
         DTPTgl.setForeground(new java.awt.Color(50, 70, 50));
-        DTPTgl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "17-10-2022" }));
+        DTPTgl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-10-2022" }));
         DTPTgl.setDisplayFormat("dd-MM-yyyy");
         DTPTgl.setName("DTPTgl"); // NOI18N
         DTPTgl.setOpaque(false);
@@ -1399,6 +1399,12 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                                         * (Double.parseDouble(tbObat.getValueAt(i, 1).toString()) / carikapasitas.getDouble(1)))),
                                         "Ranap", kdgudang.getText(), tbObat.getValueAt(i, 16).toString()
                                     }) == true) {
+                                        if (Sequel.mengedittf("resep_pulang", "no_rawat=? and kode_brng=?", "jml_barang=?,tuslah=?,total=?", 5, new String[]{
+                                            tbObat.getValueAt(i, 1).toString(), tbObat.getValueAt(i, 9).toString(), "" + (Double.parseDouble(tbObat.getValueAt(i, 8).toString())
+                                            + Double.parseDouble(tbObat.getValueAt(i, 9).toString()) + (Double.parseDouble(tbObat.getValueAt(i, 6).toString())
+                                            * Double.parseDouble(tbObat.getValueAt(i, 1).toString()))), TNoRw.getText(), tbObat.getValueAt(i, 2).toString()
+                                        }) == true) {
+                                        }
                                         ttljual = ttljual + Double.parseDouble(tbObat.getValueAt(i, 8).toString())
                                                 + Double.parseDouble(tbObat.getValueAt(i, 9).toString()) + (Double.parseDouble(tbObat.getValueAt(i, 6).toString())
                                                 * (Double.parseDouble(tbObat.getValueAt(i, 1).toString()) / carikapasitas.getDouble(1)));
@@ -1448,6 +1454,14 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                                         * Double.parseDouble(tbObat.getValueAt(i, 1).toString()))),
                                         "Ranap", kdgudang.getText(), tbObat.getValueAt(i, 16).toString()
                                     }) == true) {
+                                        if (Sequel.mengedittf("resep_pulang", "no_rawat=? and kode_brng=?", "jml_barang=?,tuslah=?,total=?", 5, new String[]{
+                                            tbObat.getValueAt(i, 1).toString(), tbObat.getValueAt(i, 9).toString(), "" + (Double.parseDouble(tbObat.getValueAt(i, 8).toString())
+                                            + Double.parseDouble(tbObat.getValueAt(i, 9).toString()) + (Double.parseDouble(tbObat.getValueAt(i, 6).toString())
+                                            * Double.parseDouble(tbObat.getValueAt(i, 1).toString()))), TNoRw.getText(), tbObat.getValueAt(i, 2).toString()
+                                        }) == true) {
+                                        }
+                                    }
+                                    {
                                         ttljual = ttljual + Double.parseDouble(tbObat.getValueAt(i, 8).toString())
                                                 + Double.parseDouble(tbObat.getValueAt(i, 9).toString()) + (Double.parseDouble(tbObat.getValueAt(i, 6).toString())
                                                 * Double.parseDouble(tbObat.getValueAt(i, 1).toString()));
@@ -1506,11 +1520,21 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                                 * Double.parseDouble(tbObat.getValueAt(i, 1).toString()))),
                                 "Ranap", kdgudang.getText(), tbObat.getValueAt(i, 16).toString()
                             }) == true) {
+                                if (Sequel.mengedittf("resep_pulang", "no_rawat=? and kode_brng=?", "jml_barang=?,tuslah=?,total=?", 5, new String[]{
+                                    tbObat.getValueAt(i, 1).toString(), tbObat.getValueAt(i, 9).toString(), "" + (Double.parseDouble(tbObat.getValueAt(i, 8).toString())
+                                    + Double.parseDouble(tbObat.getValueAt(i, 9).toString()) + (Double.parseDouble(tbObat.getValueAt(i, 6).toString())
+                                    * Double.parseDouble(tbObat.getValueAt(i, 1).toString()))), TNoRw.getText(), tbObat.getValueAt(i, 2).toString()
+                                }) == true) {
+                                }
+                            }
+                            {
+
                                 ttljual = ttljual + Double.parseDouble(tbObat.getValueAt(i, 8).toString())
                                         + Double.parseDouble(tbObat.getValueAt(i, 9).toString()) + (Double.parseDouble(tbObat.getValueAt(i, 6).toString())
                                         * Double.parseDouble(tbObat.getValueAt(i, 1).toString()));
                                 ttlhpp = ttlhpp + (Double.parseDouble(tbObat.getValueAt(i, 12).toString())
                                         * Double.parseDouble(tbObat.getValueAt(i, 1).toString()));
+
                                 if (!tbObat.getValueAt(i, 13).toString().equals("")) {
                                     Sequel.menyimpan("aturan_pakai", "?,?,?,?,?", 5, new String[]{
                                         Valid.SetTgl(DTPTgl.getSelectedItem() + ""), cmbJam.getSelectedItem() + ":" + cmbMnt.getSelectedItem() + ":" + cmbDtk.getSelectedItem(), TNoRw.getText(), tbObat.getValueAt(i, 2).toString(), tbObat.getValueAt(i, 13).toString()
@@ -1641,8 +1665,7 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                     resep.setLocationRelativeTo(internalFrame1);
                     resep.emptTeks();
                     resep.isCek();
-                    resep.setNoRm(TNoRw.getText(), DTPTgl.getDate(), DTPTgl.getDate(), cmbJam.getSelectedItem().toString(), cmbMnt.getSelectedItem().toString(), cmbDtk.getSelectedItem().toString(),"");
-//                    resep.setDokterPeresep(NoResep.getText());
+                    resep.setNoRm(TNoRw.getText(), DTPTgl.getDate(), DTPTgl.getDate(), cmbJam.getSelectedItem().toString(), cmbMnt.getSelectedItem().toString(), cmbDtk.getSelectedItem().toString(), "");
                     resep.tampil();
                     //resep.setAlwaysOnTop(true);
                     resep.dokter.setAlwaysOnTop(true);
@@ -1726,7 +1749,7 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
             resep.setLocationRelativeTo(internalFrame1);
             resep.emptTeks();
             resep.isCek();
-            resep.setNoRm(TNoRw.getText(), DTPTgl.getDate(), DTPTgl.getDate(), cmbJam.getSelectedItem().toString(), cmbMnt.getSelectedItem().toString(), cmbDtk.getSelectedItem().toString(),"");
+            resep.setNoRm(TNoRw.getText(), DTPTgl.getDate(), DTPTgl.getDate(), cmbJam.getSelectedItem().toString(), cmbMnt.getSelectedItem().toString(), cmbDtk.getSelectedItem().toString(), "");
             resep.tampil();
             resep.setVisible(true);
         }
@@ -1891,7 +1914,7 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
                                         Valid.SetAngka8((Double.parseDouble(tbObatRacikan.getValueAt(tbObatRacikan.getSelectedRow(), 4).toString())
                                                 * Double.parseDouble(tbDetailObatRacikan.getValueAt(tbDetailObatRacikan.getSelectedRow(), 9).toString()))
                                                 / Double.parseDouble(tbDetailObatRacikan.getValueAt(tbDetailObatRacikan.getSelectedRow(), 8).toString()), 1),
-                                         tbDetailObatRacikan.getSelectedRow(), 10);
+                                        tbDetailObatRacikan.getSelectedRow(), 10);
                             } catch (Exception e) {
                                 tbDetailObatRacikan.setValueAt(0, tbDetailObatRacikan.getSelectedRow(), 10);
                                 tbDetailObatRacikan.setValueAt(0, tbDetailObatRacikan.getSelectedRow(), 11);

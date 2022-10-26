@@ -145,15 +145,14 @@ public class BridgingWA {
         return token;
     }
 
-    public String sendwaUTD(String nama) {
+    public String sendwaUTD(String nama, String no_telp) {
         try {
             message = "Assalamu'alaikum " + nama + "\n";
             number = Sequel.cariIsi("SELECT no_telp FROM utd_donor where nama = " + nama);
-//            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'token'");
+            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'token'");
             urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'server'");
             sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'phonenumber'");
-            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message ;
-//                    + "&api_key=" + token;
+            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message + "&api_key=" + token;
             System.out.println("PostField : " + requestJson);
             requestEntity = new HttpEntity(requestJson);
             url = urlApi + "/wagateway/kirimpesan";
@@ -180,7 +179,7 @@ public class BridgingWA {
         try {
             message = "Pemberitahuan Permintaan Kerohanian.\n\n"
                     + "Pasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal + "";
-            number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='198011042005012011'");
+//            number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='198011042005012011'");
 //            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'token'");
             urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'server'");
             sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'phonenumber'");
