@@ -4,3 +4,4 @@ src/setting/database.xml
 build/
 /dist/
 src/setting/database.xml
+/nbproject/*

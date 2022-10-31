@@ -297,7 +297,7 @@ public class DlgPembelianIPSRS extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Transaksi Pengadaan Barang Non Medis dan Penunjang ( Lab & RO ) ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Transaksi Pembelian Barang Non Medis dan Penunjang ( Lab & RO ) ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -727,8 +727,19 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                 tbDokter.getValueAt(i,0).toString(),tbDokter.getValueAt(i,4).toString(),tbDokter.getValueAt(i,5).toString(),
                                 tbDokter.getValueAt(i,6).toString(),tbDokter.getValueAt(i,7).toString(),tbDokter.getValueAt(i,8).toString()
                             })==true){
-                                Sequel.mengedit("ipsrsbarang","kode_brng=?","stok=stok+?",2,new String[]{
-                                    tbDokter.getValueAt(i,0).toString(),tbDokter.getValueAt(i,1).toString()
+                                int jmlStok = Sequel.cariInteger("SELECT COUNT(stok) FROM ipsrsgudang WHERE kode_brng='"+tbDokter.getValueAt(i,1).toString()+"' AND stok > 0 ORDER BY tgl_beli ASC LIMIT 1");
+                                if (jmlStok < 1) {
+                                    Sequel.mengedit("ipsrsbarang","kode_brng=?","stok=stok+?,harga=?",3,new String[]{
+                                        tbDokter.getValueAt(i,0).toString(),tbDokter.getValueAt(i,1).toString(),tbDokter.getValueAt(i,4).toString()
+                                    });
+                                } else {
+                                    Sequel.mengedit("ipsrsbarang","kode_brng=?","stok=stok+?",2,new String[]{
+                                        tbDokter.getValueAt(i,0).toString(),tbDokter.getValueAt(i,1).toString()
+                                    });
+                                }
+                                Sequel.menyimpan("ipsrsgudang", "?,?,?,?,?,?",6,new String[]{
+                                    autoNomorBatch(tbDokter.getValueAt(i,1).toString()),NoFaktur.getText(),tbDokter.getValueAt(i,1).toString(),
+                                    Valid.SetTgl(TglBeli.getSelectedItem()+""),tbDokter.getValueAt(i,0).toString(),tbDokter.getValueAt(i,4).toString()
                                 });
                             }                                
                         }                
@@ -1150,6 +1161,10 @@ private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_faktur,3),signed)),0) from ipsrspembelian where tgl_beli='"+Valid.SetTgl(TglBeli.getSelectedItem()+"")+"' ",
                 "PI"+TglBeli.getSelectedItem().toString().substring(8,10)+TglBeli.getSelectedItem().toString().substring(3,5)+TglBeli.getSelectedItem().toString().substring(0,2),3,NoFaktur); 
     }
-
+    
+    public String autoNomorBatch(String kode_brng) {
+        String no_batch = Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_batch,3),signed)),0) from ipsrsgudang where tgl_beli='"+Valid.SetTgl(TglBeli.getSelectedItem()+"")+"' AND kode_brng = '"+kode_brng+"'",TglBeli.getSelectedItem().toString().substring(8,10)+TglBeli.getSelectedItem().toString().substring(3,5)+TglBeli.getSelectedItem().toString().substring(0,2)+kode_brng,3); 
+        return no_batch;
+    }
  
 }
