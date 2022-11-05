@@ -1,40 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="184" pageHeight="141" orientation="Landscape" columnWidth="172" leftMargin="5" rightMargin="7" topMargin="3" bottomMargin="7">
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 3.7.5  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="184" pageHeight="140" orientation="Landscape" columnWidth="172" leftMargin="5" rightMargin="7" topMargin="3" bottomMargin="7">
 	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
-	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageWidth" value="mm"/>
-	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="ireport.y" value="40"/>
 	<queryString>
 		<![CDATA[select resep_obat.no_resep,resep_obat.tgl_perawatan,resep_obat.jam, 
-resep_obat.no_rawat,pasien.no_rkm_medis,pasien.nm_pasien,databarang.nama_brng,databarang.expire,
-aturan_pakai.aturan,detail_pemberian_obat.jml,kodesatuan.satuan,
-if((LEFT(aturan_pakai.aturan,1)='1' and RIGHT(aturan_pakai.aturan,5)=' Pagi'),'06:00',
-if((LEFT(aturan_pakai.aturan,1)='1' and RIGHT(aturan_pakai.aturan,5)='Siang'),'14:00',
-if((LEFT(aturan_pakai.aturan,1)='1' and RIGHT(aturan_pakai.aturan,5)=' Sore'),'18:00',
-if((LEFT(aturan_pakai.aturan,1)='1' and RIGHT(aturan_pakai.aturan,5)='Malam'),'21:00',
-if(LEFT(aturan_pakai.aturan,1)='2','06:00  18:00',
-if(LEFT(aturan_pakai.aturan,1)='3','06:00  14:00  21:00',
-if(LEFT(aturan_pakai.aturan,1)='4','06:00  14:00  18:00  21:00',' '))))))) as waktu_pakai 
-from resep_obat inner join reg_periksa inner join pasien inner join 
-aturan_pakai inner join databarang inner join detail_pemberian_obat 
-inner join kodesatuan on resep_obat.no_rawat=reg_periksa.no_rawat 
-and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and 
-databarang.kode_brng=aturan_pakai.kode_brng and 
-detail_pemberian_obat.kode_brng=databarang.kode_brng 
-and resep_obat.no_rawat=aturan_pakai.no_rawat and 
-resep_obat.tgl_perawatan=aturan_pakai.tgl_perawatan and 
-resep_obat.jam=aturan_pakai.jam and resep_obat.no_rawat=detail_pemberian_obat.no_rawat 
-and resep_obat.tgl_perawatan=detail_pemberian_obat.tgl_perawatan and 
-resep_obat.jam=detail_pemberian_obat.jam and kodesatuan.kode_sat=databarang.kode_sat 
-where resep_obat.no_resep='202003110001' and aturan_pakai.aturan<>'']]>
+		resep_obat.no_rawat,pasien.no_rkm_medis,pasien.nm_pasien,databarang.nama_brng,databarang.expire,
+		aturan_pakai.aturan,detail_pemberian_obat.jml,kodesatuan.satuan,
+		if((LEFT(aturan_pakai.aturan,1)='1' and RIGHT(aturan_pakai.aturan,5)=' Pagi'),'06:00',
+		if((LEFT(aturan_pakai.aturan,1)='1' and RIGHT(aturan_pakai.aturan,5)='Siang'),'14:00',
+		if((LEFT(aturan_pakai.aturan,1)='1' and RIGHT(aturan_pakai.aturan,5)=' Sore'),'18:00',
+		if((LEFT(aturan_pakai.aturan,1)='1' and RIGHT(aturan_pakai.aturan,5)='Malam'),'21:00',
+		if(LEFT(aturan_pakai.aturan,1)='2','06:00  18:00',
+		if(LEFT(aturan_pakai.aturan,1)='3','06:00  14:00  21:00',
+		if(LEFT(aturan_pakai.aturan,1)='4','06:00  14:00  18:00  21:00',' '))))))) as waktu_pakai,obat_bud.bud 
+		from resep_obat inner join reg_periksa inner join pasien inner join 
+		aturan_pakai inner join databarang inner join detail_pemberian_obat inner join obat_bud
+		inner join kodesatuan on resep_obat.no_rawat=reg_periksa.no_rawat 
+		and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and 
+		databarang.kode_brng=aturan_pakai.kode_brng and 
+		detail_pemberian_obat.kode_brng=databarang.kode_brng 
+		and resep_obat.no_rawat=aturan_pakai.no_rawat and 
+		resep_obat.tgl_perawatan=aturan_pakai.tgl_perawatan and 
+		resep_obat.jam=aturan_pakai.jam and resep_obat.no_rawat=detail_pemberian_obat.no_rawat 
+		and resep_obat.tgl_perawatan=detail_pemberian_obat.tgl_perawatan and 
+		resep_obat.jam=detail_pemberian_obat.jam and kodesatuan.kode_sat=databarang.kode_sat
+		and obat_bud.no_resep=resep_obat.no_resep and obat_bud.kode_brng=aturan_pakai.kode_brng and obat_bud.kode_brng=databarang.kode_brng and obat_bud.kode_brng=detail_pemberian_obat.kode_brng
+		where resep_obat.no_resep='202003110001' and aturan_pakai.aturan<>'']]>
 	</queryString>
 	<field name="no_resep" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -71,10 +64,10 @@ where resep_obat.no_resep='202003110001' and aturan_pakai.aturan<>'']]>
 	</field>
 	<field name="waktu_pakai" class="java.lang.String"/>
 	<background>
-		<band splitType="Stretch"/>
+		<band/>
 	</background>
 	<detail>
-		<band height="118" splitType="Stretch">
+		<band height="121">
 			<line>
 				<reportElement x="1" y="0" width="172" height="1" forecolor="#006666"/>
 				<graphicElement>
@@ -82,45 +75,45 @@ where resep_obat.no_resep='202003110001' and aturan_pakai.aturan<>'']]>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="1" y="12" width="172" height="1" forecolor="#006666"/>
+				<reportElement x="1" y="20" width="172" height="1" forecolor="#006666"/>
 				<graphicElement>
 					<pen lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement mode="Transparent" x="3" y="13" width="169" height="9"/>
+				<reportElement mode="Transparent" x="3" y="21" width="169" height="9"/>
 				<textElement textAlignment="Center" lineSpacing="Single">
 					<font fontName="Tahoma" size="6"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["No. "+$F{no_resep}+" Tgl. "+$F{tgl_perawatan}+" "+$F{jam}]]></textFieldExpression>
 			</textField>
 			<line direction="BottomUp">
-				<reportElement x="0" y="0" width="1" height="117" forecolor="#006666"/>
+				<reportElement x="0" y="0" width="1" height="118" forecolor="#006666"/>
 				<graphicElement>
 					<pen lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="2" y="22" width="25" height="8"/>
+				<reportElement x="2" y="30" width="25" height="8"/>
 				<textElement textAlignment="Left" lineSpacing="Single">
 					<font fontName="Tahoma" size="6"/>
 				</textElement>
 				<text><![CDATA[No. RM]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="117" width="172" height="1" forecolor="#006666"/>
+				<reportElement x="0" y="117" width="174" height="1" forecolor="#006666"/>
 				<graphicElement>
 					<pen lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 			<line direction="BottomUp">
-				<reportElement x="173" y="0" width="1" height="117" forecolor="#006666"/>
+				<reportElement x="173" y="0" width="1" height="118" forecolor="#006666"/>
 				<graphicElement>
 					<pen lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="2" y="29" width="25" height="8"/>
+				<reportElement x="2" y="37" width="25" height="8"/>
 				<textElement textAlignment="Left" lineSpacing="Single">
 					<font fontName="Tahoma" size="6"/>
 				</textElement>
@@ -131,101 +124,94 @@ where resep_obat.no_resep='202003110001' and aturan_pakai.aturan<>'']]>
 				<textElement textAlignment="Center" lineSpacing="Single">
 					<font fontName="Tahoma" size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[INSTALASI FARMASI]]></text>
+				<text><![CDATA[INSTALASI FARMASI RSHD BARABAI]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="27" y="22" width="4" height="8"/>
+				<reportElement x="27" y="30" width="4" height="8"/>
 				<textElement textAlignment="Left" lineSpacing="Single">
 					<font fontName="Tahoma" size="6"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="27" y="29" width="4" height="8"/>
+				<reportElement x="27" y="37" width="4" height="8"/>
 				<textElement textAlignment="Left" lineSpacing="Single">
 					<font fontName="Tahoma" size="6"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="30" y="22" width="127" height="8"/>
+				<reportElement x="30" y="30" width="127" height="8"/>
 				<textElement lineSpacing="Single">
-					<font fontName="Tahoma" size="6"/>
+					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{no_rkm_medis}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="30" y="29" width="141" height="8"/>
+				<reportElement x="30" y="37" width="141" height="8"/>
 				<textElement lineSpacing="Single">
-					<font fontName="Tahoma" size="6"/>
+					<font fontName="Tahoma" size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{nm_pasien}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="1" y="50" width="171" height="1" forecolor="#006666"/>
+				<reportElement x="1" y="58" width="171" height="1" forecolor="#006666"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement stretchType="RelativeToTallestObject" x="1" y="51" width="172" height="29"/>
+				<reportElement stretchType="RelativeToTallestObject" x="1" y="59" width="172" height="29"/>
 				<textElement textAlignment="Center" lineSpacing="Single">
-					<font fontName="Tahoma" size="12" isBold="false"/>
+					<font fontName="Tahoma" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{aturan}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="2" y="37" width="132" height="14"/>
+				<reportElement x="2" y="45" width="132" height="14"/>
 				<textElement lineSpacing="Single">
-					<font fontName="Tahoma" size="11" isBold="false"/>
+					<font fontName="Tahoma" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{nama_brng}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="133" y="37" width="38" height="14"/>
+				<reportElement x="133" y="45" width="38" height="14"/>
 				<textElement textAlignment="Right" lineSpacing="Single">
-					<font fontName="Tahoma" size="11" isBold="false"/>
+					<font fontName="Tahoma" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{jml}+" "+$F{satuan}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="2" y="80" width="88" height="9"/>
+				<reportElement x="2" y="88" width="88" height="9"/>
 				<textElement textAlignment="Left" lineSpacing="Single">
 					<font fontName="Tahoma" size="7" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Waktu pakai pukul :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="99" width="171" height="9"/>
+				<reportElement x="2" y="107" width="171" height="9"/>
 				<textElement textAlignment="Left" lineSpacing="Single">
 					<font fontName="Tahoma" size="7"/>
 				</textElement>
-				<text><![CDATA[Penyimpanan : Suhu ruangan / lemari pendingin]]></text>
+				<text><![CDATA[Penyimpanan : Suhu Ruangan/Lemari Pendingin]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="2" y="107" width="64" height="11"/>
-				<textElement textAlignment="Left" lineSpacing="Single">
-					<font fontName="Tahoma" size="8"/>
-				</textElement>
-				<text><![CDATA[Tgl. Kadaluarsa :]]></text>
-			</staticText>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="65" y="107" width="96" height="11"/>
-				<textElement lineSpacing="Single">
-					<font fontName="Tahoma" size="8" isBold="true"/>
-				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{expire}]]></textFieldExpression>
-			</textField>
 			<textField>
-				<reportElement x="3" y="88" width="168" height="11"/>
+				<reportElement x="3" y="96" width="168" height="11"/>
 				<textElement textAlignment="Center" lineSpacing="Single">
 					<font fontName="Tahoma" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{waktu_pakai}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="2" y="1" width="170" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" lineSpacing="Single">
+					<font fontName="Tahoma" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[APOTEK DEPO RAWAT JALAN : 0811-5186-100]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<summary>
-		<band splitType="Stretch"/>
+		<band/>
 	</summary>
 </jasperReport>

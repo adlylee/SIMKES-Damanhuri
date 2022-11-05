@@ -1972,8 +1972,12 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                         + "if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)='Malam'),'21:00', "
                         + "if(LEFT(resep_pulang.dosis,1)='2','06:00  18:00', "
                         + "if(LEFT(resep_pulang.dosis,1)='3','06:00  14:00  21:00', "
-                        + "if(LEFT(resep_pulang.dosis,1)='4','06:00  14:00  18:00  21:00',' '))))))) as waktu_pakai "
-                        + "from resep_pulang inner join reg_periksa inner join pasien inner join databarang inner join kodesatuan on resep_pulang.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and databarang.kode_brng=resep_pulang.kode_brng and resep_pulang.no_rawat=reg_periksa.no_rawat and kodesatuan.kode_sat=databarang.kode_sat where resep_pulang.no_resep='" + NoResep.getText() + "' and resep_pulang.dosis<>''", param);
+                        + "if(LEFT(resep_pulang.dosis,1)='4','06:00  14:00  18:00  21:00',' '))))))) as waktu_pakai,obat_bud.bud "
+                        + "from resep_pulang inner join reg_periksa inner join pasien inner join databarang inner join obat_bud inner join kodesatuan "
+                        + "on resep_pulang.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and databarang.kode_brng=resep_pulang.kode_brng "
+                        + "and resep_pulang.no_rawat=reg_periksa.no_rawat and kodesatuan.kode_sat=databarang.kode_sat "
+                        + "and obat_bud.no_resep=resep_pulang.no_resep and obat_bud.kode_brng=databarang.kode_brng "
+                        + "where resep_pulang.no_resep='" + NoResep.getText() + "' and resep_pulang.dosis<>''", param);
                 param.put("no_resep", NoResep.getText());
             }
             this.setCursor(Cursor.getDefaultCursor());
