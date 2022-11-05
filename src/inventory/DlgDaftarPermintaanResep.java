@@ -1993,6 +1993,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         JOptionPane.showMessageDialog(rootPane, "Resep sudah tervalidasi ..!!");
                     } else {
                         Sequel.meghapus("resep_pulang", "no_resep", NoResep);
+                        Sequel.meghapus("obat_bud", "no_resep", NoResep);
                         TeksKosong();
                         tampil5();
                     }
