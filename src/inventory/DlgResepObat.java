@@ -1503,6 +1503,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             // param.put("kontakrs",var.getkontakrs());
             // param.put("emailrs",var.getemailrs());   
             // param.put("logo",Sequel.cariGambar("select logo from setting")); 
+            param.put("bud", Sequel.cariIsi("select bud from obat_bud where no_resep=?", NoResep.getText()));
             if (Sequel.cariInteger(
                     "select count(*) from resep_obat inner join "
                     + "aturan_pakai on resep_obat.no_rawat=aturan_pakai.no_rawat and "
@@ -1517,9 +1518,9 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                         + "if((LEFT(aturan_pakai.aturan,1)='1' and RIGHT(aturan_pakai.aturan,5)='Malam'),'21:00', "
                         + "if(LEFT(aturan_pakai.aturan,1)='2','06:00  18:00', "
                         + "if(LEFT(aturan_pakai.aturan,1)='3','06:00  14:00  21:00', "
-                        + "if(LEFT(aturan_pakai.aturan,1)='4','06:00  14:00  18:00  21:00',' '))))))) as waktu_pakai,obat_bud.bud  "
+                        + "if(LEFT(aturan_pakai.aturan,1)='4','06:00  14:00  18:00  21:00',' '))))))) as waktu_pakai "
                         + "from resep_obat inner join reg_periksa inner join pasien inner join "
-                        + "aturan_pakai inner join databarang inner join detail_pemberian_obat inner join obat_bud "
+                        + "aturan_pakai inner join databarang inner join detail_pemberian_obat "
                         + "inner join kodesatuan on resep_obat.no_rawat=reg_periksa.no_rawat  "
                         + "and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and "
                         + "databarang.kode_brng=aturan_pakai.kode_brng and "
@@ -1529,7 +1530,6 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                         + "resep_obat.jam=aturan_pakai.jam and resep_obat.no_rawat=detail_pemberian_obat.no_rawat "
                         + "and resep_obat.tgl_perawatan=detail_pemberian_obat.tgl_perawatan and "
                         + "resep_obat.jam=detail_pemberian_obat.jam and kodesatuan.kode_sat=databarang.kode_sat "
-                        + "and obat_bud.no_resep=resep_obat.no_resep and obat_bud.kode_brng=aturan_pakai.kode_brng and obat_bud.kode_brng=databarang.kode_brng and obat_bud.kode_brng=detail_pemberian_obat.kode_brng "
                         + "where resep_obat.no_resep='" + NoResep.getText() + "' and aturan_pakai.aturan<>''", param);
             }
 
