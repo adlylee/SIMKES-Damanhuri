@@ -44,6 +44,7 @@ public class DlgInputStokIPSRS extends javax.swing.JDialog {
     private double ttl=0,y=0,kurang=0;
     private int jml=0,i=0,index=0;
     private String[] real,kodebarang,namabarang,kategori,satuan;
+    private String jenis;
     private double[] hargabeli,stok,selisih,nomihilang;
     private WarnaTable2 warna=new WarnaTable2();
 
@@ -482,8 +483,19 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                         tbDokter.getValueAt(i,1).toString(),tbDokter.getValueAt(i,5).toString(),Valid.SetTgl(Tgl.getSelectedItem()+""),tbDokter.getValueAt(i,6).toString(),
                                         tbDokter.getValueAt(i,0).toString(),tbDokter.getValueAt(i,7).toString(),tbDokter.getValueAt(i,8).toString(),catatan.getText()
                                     })==true){
-                                    Sequel.mengedit3("ipsrsbarang","kode_brng=?","stok=?",2,new String[]{
-                                        tbDokter.getValueAt(i,0).toString(),tbDokter.getValueAt(i,1).toString()
+                                    int jmlStok = Sequel.cariInteger("SELECT COUNT(stok) FROM ipsrsgudang WHERE kode_brng='"+tbDokter.getValueAt(i,1).toString()+"' AND stok > 0 ORDER BY tgl_beli ASC LIMIT 1");
+                                    if (jmlStok < 1) {
+                                        Sequel.mengedit3("ipsrsbarang","kode_brng=?","stok=?,harga=?",3,new String[]{
+                                            tbDokter.getValueAt(i,0).toString(),tbDokter.getValueAt(i,5).toString(),tbDokter.getValueAt(i,1).toString()
+                                        });
+                                    } else {
+                                        Sequel.mengedit3("ipsrsbarang","kode_brng=?","stok=?",2,new String[]{
+                                            tbDokter.getValueAt(i,0).toString(),tbDokter.getValueAt(i,1).toString()
+                                        });
+                                    }
+                                    Sequel.menyimpan("ipsrsgudang", "?,?,?,?,?,?",6,new String[]{
+                                        autoNomorBatch(tbDokter.getValueAt(i,1).toString()),"Opname",tbDokter.getValueAt(i,1).toString(),
+                                        Valid.SetTgl(Tgl.getSelectedItem()+""),tbDokter.getValueAt(i,0).toString(),tbDokter.getValueAt(i,5).toString()
                                     });
                                 }
                             }
@@ -663,12 +675,22 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                     hargabeli[i],stok[i],selisih[i],nomihilang[i]
                 });
             }
+            if (var.getkode().equals("Admin Utama")) {
             pstampil=koneksi.prepareStatement("select ipsrsbarang.kode_brng, ipsrsbarang.nama_brng,ipsrsjenisbarang.nm_jenis, ipsrsbarang.kode_sat, "+
                 "ipsrsbarang.harga,ipsrsbarang.stok from ipsrsbarang inner join ipsrsjenisbarang on ipsrsbarang.jenis=ipsrsjenisbarang.kd_jenis "+
                 " where ipsrsbarang.status='1' and ipsrsbarang.kode_brng like ? or "+
                 " ipsrsbarang.status='1' and ipsrsbarang.nama_brng like ? or "+
                 " ipsrsbarang.status='1' and ipsrsbarang.kode_sat like ? or "+
                 " ipsrsbarang.status='1' and ipsrsjenisbarang.nm_jenis like ? order by ipsrsbarang.nama_brng");
+            } else {
+                jenis = Sequel.buangChar(Sequel.cariStringArray("SELECT kd_jenis FROM ipsrs_setpj WHERE nik="+var.getkode()));
+                pstampil=koneksi.prepareStatement("select ipsrsbarang.kode_brng, ipsrsbarang.nama_brng,ipsrsjenisbarang.nm_jenis, ipsrsbarang.kode_sat, "+
+                "ipsrsbarang.harga,ipsrsbarang.stok from ipsrsbarang inner join ipsrsjenisbarang on ipsrsbarang.jenis=ipsrsjenisbarang.kd_jenis "+
+                " where ipsrsbarang.jenis IN ("+jenis+") AND ipsrsbarang.status='1' and ipsrsbarang.kode_brng like ? or "+
+                " ipsrsbarang.jenis IN ("+jenis+") AND ipsrsbarang.status='1' and ipsrsbarang.nama_brng like ? or "+
+                " ipsrsbarang.jenis IN ("+jenis+") AND ipsrsbarang.status='1' and ipsrsbarang.kode_sat like ? or "+
+                " ipsrsbarang.jenis IN ("+jenis+") AND ipsrsbarang.status='1' and ipsrsjenisbarang.nm_jenis like ? order by ipsrsbarang.nama_brng");
+            }
             try {
                 pstampil.setString(1,"%"+TCari.getText().trim()+"%");
                 pstampil.setString(2,"%"+TCari.getText().trim()+"%");
@@ -747,6 +769,11 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
          
     public void isCek(){
          BtnSimpan.setEnabled(var.getstok_opname_logistik());   
+    }
+    
+    public String autoNomorBatch(String kode_brng) {
+        String no_batch = Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_batch,3),signed)),0) from ipsrsgudang where tgl_beli='"+Valid.SetTgl(Tgl.getSelectedItem()+"")+"' AND kode_brng = '"+kode_brng+"'",Tgl.getSelectedItem().toString().substring(8,10)+Tgl.getSelectedItem().toString().substring(3,5)+Tgl.getSelectedItem().toString().substring(0,2)+kode_brng,3); 
+        return no_batch;
     }
 
 }

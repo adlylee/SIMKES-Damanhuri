@@ -502,7 +502,7 @@ public class DlgPemesananIPSRS extends javax.swing.JDialog {
         panelisi1.add(label17);
         label17.setBounds(340, 0, 40, 30);
 
-        tppn.setText("10");
+        tppn.setText("11");
         tppn.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tppn.setName("tppn"); // NOI18N
         tppn.setPreferredSize(new java.awt.Dimension(80, 23));
@@ -795,7 +795,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                 int jmlStok = Sequel.cariInteger("SELECT COUNT(stok) FROM ipsrsgudang WHERE kode_brng='"+tbDokter.getValueAt(i,1).toString()+"' AND stok > 0 ORDER BY tgl_beli ASC LIMIT 1");
                                 if (jmlStok < 1) {
                                     Sequel.mengedit("ipsrsbarang","kode_brng=?","stok=stok+?,harga=?",3,new String[]{
-                                        tbDokter.getValueAt(i,0).toString(),tbDokter.getValueAt(i,1).toString(),tbDokter.getValueAt(i,4).toString()
+                                        tbDokter.getValueAt(i,0).toString(),tbDokter.getValueAt(i,4).toString(),tbDokter.getValueAt(i,1).toString()
                                     });
                                 } else {
                                     Sequel.mengedit("ipsrsbarang","kode_brng=?","stok=stok+?",2,new String[]{
@@ -1241,7 +1241,7 @@ private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     public void isCek(){
         autoNomor();
         TCari.requestFocus();
-        tppn.setText("10");
+        tppn.setText("11");
         Meterai.setText("0");
         if(var.getjml2()>=1){
             kdptg.setEditable(false);

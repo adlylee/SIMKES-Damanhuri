@@ -23,20 +23,14 @@ import fungsi.sekuel;
 import fungsi.validasi;
 import java.awt.Cursor;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Properties;
 import javax.swing.JOptionPane;
-import javax.swing.event.DocumentEvent;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 
 /**
  *
@@ -52,7 +46,7 @@ public final class MyLimsTransaksi extends javax.swing.JDialog {
     private BPJSCekReferensiPropinsi propinsi = new BPJSCekReferensiPropinsi(null, false);
     private int i = 0,row = 0,r = 0;
     private MyLimsApi api = new MyLimsApi();
-    private String URL = "", link = "", token,requestJson,tanggal = "",jam ="";
+    private String URL = "", link = "", token,requestJson,tanggal = "",jam ="" , tindakan = "";
     private PreparedStatement ps,ps2,ps3,ps4,psrekening,ps5;
     private ResultSet rs,rs2,rs3,rs5,rsrekening;
     private HttpHeaders headers;
@@ -413,7 +407,7 @@ public final class MyLimsTransaksi extends javax.swing.JDialog {
             try {
                 if(tbKamar1.getValueAt(r,0).toString().equals("true")){
                     try {
-                        ps = koneksi.prepareStatement("SELECT kd_jenis_prw,id_template FROM mapping_lab_mylims WHERE kdlab = ?");
+                        ps = koneksi.prepareStatement("SELECT kd_jenis_prw,id_template FROM mapping_lab_mylims WHERE kdlab = ? AND kd_jenis_prw IN ("+tindakan+")");
                         try {
                             ps.setString(1, tbKamar1.getValueAt(r,2).toString());
                             rs = ps.executeQuery();
@@ -579,6 +573,8 @@ public final class MyLimsTransaksi extends javax.swing.JDialog {
     }
 
     public void setPasien(String norawat,String nomr,String tanggallab,String jamlab){
+        tindakan = Sequel.buangChar(Sequel.cariStringArray("SELECT kd_jenis_prw FROM periksa_lab WHERE no_rawat='"+norawat+"' AND tgl_periksa='"+tanggallab+"' AND jam='"+jamlab+"'"));
+        System.out.println(tindakan);
         tanggal = "";
         jam = "";
         tanggal = tanggallab;

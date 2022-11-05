@@ -16,7 +16,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
@@ -36,9 +35,9 @@ public class DlgPengeluaranIPSRS extends javax.swing.JDialog {
     private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
     private DlgCariPengeluaranIpsrs form = new DlgCariPengeluaranIpsrs(null, false);
     private int jml = 0, i = 0, row = 0, index = 0;
-    private double ttl, keluar ,hargaDouble , totalDouble , sisaStok , sisa = 0, permintaanJml , dilayani = 0;
+    private double ttl, keluar ,hargaDouble , totalDouble , sisaStok , sisa = 0, sisakurang, permintaanJml , dilayani = 0;
     private String[] kodebarang, namabarang, satuan, jumlah, stok, harga, total;
-    private String hargaString , totalString , dilayaniString;
+    private String hargaString , totalString , dilayaniString , jenis;
     private WarnaTable2 warna = new WarnaTable2();
     public boolean tampilkanpermintaan = true;
 
@@ -257,7 +256,7 @@ public class DlgPengeluaranIPSRS extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Transaksi Stok Keluar Barang Non Medis dan Penunjang ( Lab & RO ) ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Transaksi Stok Keluar Barang Non Medis dan Penunjang ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -558,13 +557,15 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                         permintaanJml = sisa;
                                     }
                                     sisaStok = Sequel.cariInteger("SELECT stok FROM ipsrsgudang WHERE kode_brng='" + tbDokter.getValueAt(i, 1).toString() + "' AND stok > 0 ORDER BY tgl_beli ASC LIMIT 1");
-                                    sisa = permintaanJml - sisaStok;
-                                    if (sisa < 0) {
+                                    sisakurang = permintaanJml - sisaStok;
+                                    if (sisakurang < 0) {
                                         dilayani = permintaanJml;
+                                        sisa = 0;
                                     } else {
-                                        dilayani = permintaanJml - sisa;
+                                        dilayani = permintaanJml - sisakurang;
+                                        sisa = sisakurang;
                                     }
-                                    System.out.println(sisa);
+                                    System.out.println(sisa+" "+sisakurang);
                                     try{
                                         ps=koneksi.prepareStatement("SELECT harga , no_batch FROM ipsrsgudang WHERE kode_brng='"+tbDokter.getValueAt(i,1).toString()+"' AND stok > 0 ORDER BY tgl_beli ASC LIMIT 1");
                                         try{  
@@ -824,15 +825,21 @@ private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
             tabMode.addRow(new Object[]{jumlah[i], kodebarang[i], namabarang[i], satuan[i], stok[i], harga[i], total[i]});
         }
         try {
+            
+            if (var.getkode().equals("Admin Utama")) {
             ps = koneksi.prepareStatement("select ipsrsbarang.kode_brng, concat(ipsrsbarang.nama_brng,' (',ipsrsbarang.jenis,')'),ipsrsbarang.kode_sat,stok, "
                     + " ipsrsbarang.harga from ipsrsbarang where ipsrsbarang.kode_brng like ? or "
-                    + " ipsrsbarang.nama_brng like ? or "
-                    + " ipsrsbarang.jenis like ? order by ipsrsbarang.nama_brng");
-
+                    + " ipsrsbarang.nama_brng like ? order by ipsrsbarang.nama_brng");
+            } else {
+            jenis = Sequel.buangChar(Sequel.cariStringArray("SELECT kd_jenis FROM ipsrs_setpj WHERE nik="+var.getkode()));
+            ps = koneksi.prepareStatement("select ipsrsbarang.kode_brng, concat(ipsrsbarang.nama_brng,' (',ipsrsbarang.jenis,')'),ipsrsbarang.kode_sat,stok, "
+                + " ipsrsbarang.harga from ipsrsbarang where "
+                + " ipsrsbarang.jenis IN ("+jenis+") AND ( ipsrsbarang.kode_brng like ? or "
+                + " ipsrsbarang.nama_brng like ? ) order by ipsrsbarang.nama_brng");
+            }
             try {
                 ps.setString(1, "%" + TCari.getText().trim() + "%");
                 ps.setString(2, "%" + TCari.getText().trim() + "%");
-                ps.setString(3, "%" + TCari.getText().trim() + "%");
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     tabMode.addRow(new Object[]{"", rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), "0"});

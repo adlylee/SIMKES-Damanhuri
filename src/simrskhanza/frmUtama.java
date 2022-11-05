@@ -86,6 +86,7 @@ import setting.DlgSetHarga;
 import setting.DlgBiayaSekaliMasuk;
 import setting.DlgAdmin;
 import setting.DlgBiayaHarian;
+import setting.DlgSetPenjabBNM;
 import inventory.DlgSuplier;
 import kepegawaian.DlgBarcode;
 import fungsi.batasInput;
@@ -930,6 +931,7 @@ public class frmUtama extends javax.swing.JFrame {
         btnPelFar = new widget.ButtonBig();
         btnKerohanian = new widget.ButtonBig();
         btnMyLimsMapping = new widget.ButtonBig();
+        btnSetPenjabBNM = new widget.ButtonBig();
         internalFrame1 = new widget.InternalFrame();
         BtnMenu = new widget.ButtonBig();
         jSeparator4 = new javax.swing.JSeparator();
@@ -5631,7 +5633,7 @@ public class frmUtama extends javax.swing.JFrame {
 
         tanggal.setEditable(false);
         tanggal.setForeground(new java.awt.Color(50, 70, 50));
-        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26/09/2022" }));
+        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "29/09/2022" }));
         tanggal.setDisplayFormat("dd/MM/yyyy");
         tanggal.setName("tanggal"); // NOI18N
         tanggal.setOpaque(false);
@@ -5798,6 +5800,17 @@ public class frmUtama extends javax.swing.JFrame {
         btnMyLimsMapping.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMyLimsMappingActionPerformed(evt);
+            }
+        });
+
+        btnSetPenjabBNM.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/if_package_utilities_3557.png"))); // NOI18N
+        btnSetPenjabBNM.setText("Set Penjab Barang Non Medis");
+        btnSetPenjabBNM.setIconTextGap(0);
+        btnSetPenjabBNM.setName("btnSetPenjabBNM"); // NOI18N
+        btnSetPenjabBNM.setPreferredSize(new java.awt.Dimension(200, 90));
+        btnSetPenjabBNM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSetPenjabBNMActionPerformed(evt);
             }
         });
 
@@ -12177,6 +12190,17 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_btnMyLimsMappingActionPerformed
 
+    private void btnSetPenjabBNMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSetPenjabBNMActionPerformed
+        isTutup();
+        DlgHome.dispose();
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        DlgSetPenjabBNM aplikasi=new DlgSetPenjabBNM(this,false);
+        aplikasi.setSize(PanelUtama.getWidth(), PanelUtama.getHeight());
+        aplikasi.setLocationRelativeTo(PanelUtama);
+        aplikasi.setVisible(true);
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_btnSetPenjabBNMActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -12546,6 +12570,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private widget.ButtonBig btnSetObatRanap;
     private widget.ButtonBig btnSetOtoRalan;
     private widget.ButtonBig btnSetPenjab;
+    private widget.ButtonBig btnSetPenjabBNM;
     private widget.ButtonBig btnSetupAplikasi;
     private widget.ButtonBig btnSetupEmbalase;
     private widget.ButtonBig btnSetupHarga;
@@ -14751,6 +14776,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
 
             if(var.getsetup_pjlab()==true){
                 Panelmenu.add(btnSetPenjab);
+                Panelmenu.add(btnSetPenjabBNM);
                 jmlmenu++;
             }
 
@@ -16584,6 +16610,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
 
         if(var.getsetup_pjlab()==true){
             Panelmenu.add(btnSetPenjab);
+            Panelmenu.add(btnSetPenjabBNM);
             jmlmenu++;
         }
 
@@ -19097,6 +19124,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         if(var.getsetup_pjlab()==true){
             if(btnSetPenjab.getText().toLowerCase().trim().contains(TCari.getText().toLowerCase().trim())){
                 Panelmenu.add(btnSetPenjab);
+                Panelmenu.add(btnSetPenjabBNM);
                 jmlmenu++;
             }                
         }

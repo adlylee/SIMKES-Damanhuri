@@ -37,7 +37,8 @@ public class DlgPembelianIPSRS extends javax.swing.JDialog {
     private DlgCariPembelianIpsrs form=new DlgCariPembelianIpsrs(null,false);
     private double saldoawal=0,mutasi=0,ttl=0,y=0,w=0,ttldisk=0,sbttl=0,ppn=0,meterai=0;
     private int jml=0,i=0,row=0,index=0;
-    private String[] kodebarang,namabarang,satuan;
+    private String[] kodebarang,namabarang,satuan ;
+    private String jenis;
     private double[] harga,jumlah,subtotal,diskon,besardiskon,jmltotal;
     private WarnaTable2 warna=new WarnaTable2();
 
@@ -297,7 +298,7 @@ public class DlgPembelianIPSRS extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Transaksi Pembelian Barang Non Medis dan Penunjang ( Lab & RO ) ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Transaksi Pembelian Barang Non Medis dan Penunjang ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -492,7 +493,7 @@ public class DlgPembelianIPSRS extends javax.swing.JDialog {
         panelisi1.add(label17);
         label17.setBounds(340, 0, 40, 30);
 
-        tppn.setText("10");
+        tppn.setText("11");
         tppn.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tppn.setName("tppn"); // NOI18N
         tppn.setPreferredSize(new java.awt.Dimension(80, 23));
@@ -576,6 +577,12 @@ public class DlgPembelianIPSRS extends javax.swing.JDialog {
 
         TglBeli.setDisplayFormat("dd-MM-yyyy");
         TglBeli.setName("TglBeli"); // NOI18N
+        TglBeli.setOpaque(false);
+        TglBeli.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                TglBeliItemStateChanged(evt);
+            }
+        });
         TglBeli.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 TglBeliKeyPressed(evt);
@@ -728,10 +735,12 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                 tbDokter.getValueAt(i,6).toString(),tbDokter.getValueAt(i,7).toString(),tbDokter.getValueAt(i,8).toString()
                             })==true){
                                 int jmlStok = Sequel.cariInteger("SELECT COUNT(stok) FROM ipsrsgudang WHERE kode_brng='"+tbDokter.getValueAt(i,1).toString()+"' AND stok > 0 ORDER BY tgl_beli ASC LIMIT 1");
-                                if (jmlStok < 1) {
+                                System.out.println(jmlStok);
+                                if (jmlStok == 0) {
                                     Sequel.mengedit("ipsrsbarang","kode_brng=?","stok=stok+?,harga=?",3,new String[]{
-                                        tbDokter.getValueAt(i,0).toString(),tbDokter.getValueAt(i,1).toString(),tbDokter.getValueAt(i,4).toString()
+                                        tbDokter.getValueAt(i,0).toString(),tbDokter.getValueAt(i,4).toString(),tbDokter.getValueAt(i,1).toString()
                                     });
+                                    System.out.println("Ubah Harga");
                                 } else {
                                     Sequel.mengedit("ipsrsbarang","kode_brng=?","stok=stok+?",2,new String[]{
                                         tbDokter.getValueAt(i,0).toString(),tbDokter.getValueAt(i,1).toString()
@@ -796,6 +805,7 @@ private void TCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TCa
 
 private void BtnCari1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCari1ActionPerformed
         tampil();
+        autoNomor();
 }//GEN-LAST:event_BtnCari1ActionPerformed
 
 private void BtnCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnCari1KeyPressed
@@ -959,6 +969,10 @@ private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         }
     }//GEN-LAST:event_MeteraiKeyPressed
 
+    private void TglBeliItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_TglBeliItemStateChanged
+        autoNomor();
+    }//GEN-LAST:event_TglBeliItemStateChanged
+
     /**
     * @param args the command line arguments
     */
@@ -1065,14 +1079,19 @@ private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
             tabMode.addRow(new Object[]{jumlah[i],kodebarang[i],namabarang[i],satuan[i],harga[i],subtotal[i],diskon[i],besardiskon[i],jmltotal[i]});
         }
         try{
+            if (var.getkode().equals("Admin Utama")) {
             ps=koneksi.prepareStatement("select ipsrsbarang.kode_brng, concat(ipsrsbarang.nama_brng,' (',ipsrsbarang.jenis,')'),ipsrsbarang.kode_sat,ipsrsbarang.harga "+
                     " from ipsrsbarang where ipsrsbarang.kode_brng like ? or "+
-                    " ipsrsbarang.nama_brng like ? or "+
-                    " ipsrsbarang.jenis like ? order by ipsrsbarang.nama_brng");
+                    " ipsrsbarang.nama_brng like ? order by ipsrsbarang.nama_brng");
+            } else {
+                jenis = Sequel.buangChar(Sequel.cariStringArray("SELECT kd_jenis FROM ipsrs_setpj WHERE nik="+var.getkode()));
+                ps=koneksi.prepareStatement("select ipsrsbarang.kode_brng, concat(ipsrsbarang.nama_brng,' (',ipsrsbarang.jenis,')'),ipsrsbarang.kode_sat,ipsrsbarang.harga "+
+                    " from ipsrsbarang where ipsrsbarang.jenis IN ("+jenis+") AND ( ipsrsbarang.kode_brng like ? or "+
+                    " ipsrsbarang.nama_brng like ? ) order by ipsrsbarang.nama_brng");
+            }
             try{   
                 ps.setString(1,"%"+TCari.getText().trim()+"%");
                 ps.setString(2,"%"+TCari.getText().trim()+"%");
-                ps.setString(3,"%"+TCari.getText().trim()+"%");
                 rs=ps.executeQuery();
                 while(rs.next()){
                     tabMode.addRow(new Object[]{"",rs.getString(1),rs.getString(2),rs.getString(3),rs.getDouble(4),0,0,0,0});
@@ -1145,7 +1164,7 @@ private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     public void isCek(){
         autoNomor();
         TCari.requestFocus();
-        tppn.setText("10");
+        tppn.setText("11");
         Meterai.setText("0");
         if(var.getjml2()>=1){
             kdptg.setEditable(false);
