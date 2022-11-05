@@ -3389,7 +3389,7 @@ private void JeniskelasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
                         psobat.setString(11,"%"+TCari.getText().trim()+"%");
                         rsobat=psobat.executeQuery();
                         while(rsobat.next()){
-                            budcari = "-";
+                            budcari = "";
                             psbud = koneksi.prepareStatement(
                                     "select no_resep, kode_brng, bud from obat_bud where no_resep=? and kode_brng=?");
                             try {
@@ -3541,7 +3541,7 @@ private void JeniskelasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
                         psobat.setString(10,"%"+TCari.getText().trim()+"%");
                         rsobat=psobat.executeQuery();
                         while(rsobat.next()){
-                            budcari = "-";
+                            budcari = "";
                             psbud = koneksi.prepareStatement(
                                     "select no_resep, kode_brng, bud from obat_bud where no_resep=? and kode_brng=?");
                             try {
@@ -3614,7 +3614,7 @@ private void JeniskelasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
                 psobat.setString(1,no_resep);
                 rsobat=psobat.executeQuery();
                 while(rsobat.next()){
-                    budcari = "-";
+                    budcari = "";
                     psbud = koneksi.prepareStatement(
                                     "select no_resep, kode_brng, bud from obat_bud where no_resep=? and kode_brng=?");
                             try {
