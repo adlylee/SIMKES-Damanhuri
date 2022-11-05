@@ -1951,6 +1951,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         JOptionPane.showMessageDialog(rootPane, "Resep sudah tervalidasi ..!!");
                     } else {
                         Sequel.meghapus("resep_obat", "no_resep", NoResep);
+                        Sequel.meghapus("obat_bud", "no_resep", NoResep);
                         TeksKosong();
                         tampil();
                     }
@@ -1971,6 +1972,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         JOptionPane.showMessageDialog(rootPane, "Resep sudah tervalidasi ..!!");
                     } else {
                         Sequel.meghapus("resep_obat", "no_resep", NoResep);
+                        Sequel.meghapus("obat_bud", "no_resep", NoResep);
                         TeksKosong();
                         tampil3();
                     }

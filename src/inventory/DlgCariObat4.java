@@ -1582,7 +1582,7 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                             tbObatRacikan.getValueAt(i, 5).toString(), tbObatRacikan.getValueAt(i, 6).toString()
                         });
                     }
-                }
+                    }
 
                 Valid.tabelKosong(tabModeObatRacikan);
 
@@ -3330,7 +3330,7 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     }
 
     public void tampilobat2(String no_resep) {
-        this.noresep = no_resep;
+    this.noresep = no_resep;
         try {
             Valid.tabelKosong(tabMode);
             Valid.tabelKosong(tabModeObatRacikan);
