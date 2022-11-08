@@ -8,6 +8,8 @@ import fungsi.koneksiDB;
 import fungsi.sekuel;
 import fungsi.validasi;
 import fungsi.var;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.Dimension;
@@ -28,6 +30,7 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.text.Document;
@@ -89,13 +92,47 @@ public class DlgCariPeriksaLab extends javax.swing.JDialog {
                 column.setPreferredWidth(200);
             }
         }
-        tbDokter.setDefaultRenderer(Object.class, new WarnaTable());
-            tabMode2=new DefaultTableModel(null,new Object[]{
-                "No.Rawat","Pasien","Tgl.Periksa","Jam","Pemeriksaan",
-                "Item Pemeriksaan","Hasil","Satuan","Nilai Rujukan","Keterangan",
-                "Ruang","Petugas","Dokter Perujuk","Penanggung Jawab"
-            }){
-              @Override public boolean isCellEditable(int rowIndex, int colIndex){return false;}
+        tbDokter.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+
+                String keterangan = (String) table.getModel().getValueAt(row, 6);
+                
+                switch (keterangan) {
+                    case "H":
+                        setBackground(new Color(255, 152, 152));
+                        setForeground(Color.WHITE);
+                        break;
+                    case "L":
+                        setBackground(new Color(102, 178, 255));
+                        setForeground(Color.WHITE);
+                        break;
+                    default:
+                        if (row % 2 == 1) {
+                            setForeground(Color.BLACK);
+                            setBackground(new Color(226, 234, 248));
+                        } else {
+                            setForeground(Color.BLACK);
+                            setBackground(new Color(255, 255, 255));
+                        }   break;
+                }
+                
+                
+                if (isSelected) {
+                    setForeground(Color.RED);
+                }
+                return this;
+            }
+        });
+        tabMode2=new DefaultTableModel(null,new Object[]{
+            "No.Rawat","Pasien","Tgl.Periksa","Jam","Pemeriksaan",
+            "Item Pemeriksaan","Hasil","Satuan","Nilai Rujukan","Keterangan",
+            "Ruang","Petugas","Dokter Perujuk","Penanggung Jawab"
+        }){
+          @Override public boolean isCellEditable(int rowIndex, int colIndex){return false;}
         };
         tbDokter2.setModel(tabMode2);
 

@@ -248,7 +248,6 @@ public final class DlgRekapDiet extends javax.swing.JDialog {
         internalFrame1.add(panelGlass5, java.awt.BorderLayout.PAGE_END);
 
         getContentPane().add(internalFrame1, java.awt.BorderLayout.CENTER);
-        internalFrame1.getAccessibleContext().setAccessibleName("::[ Rekap Diet Pasien ]::");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

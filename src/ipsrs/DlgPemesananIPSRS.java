@@ -502,7 +502,7 @@ public class DlgPemesananIPSRS extends javax.swing.JDialog {
         panelisi1.add(label17);
         label17.setBounds(340, 0, 40, 30);
 
-        tppn.setText("10");
+        tppn.setText("11");
         tppn.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tppn.setName("tppn"); // NOI18N
         tppn.setPreferredSize(new java.awt.Dimension(80, 23));
@@ -792,8 +792,19 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                 tbDokter.getValueAt(i,0).toString(),tbDokter.getValueAt(i,4).toString(),tbDokter.getValueAt(i,5).toString(),
                                 tbDokter.getValueAt(i,6).toString(),tbDokter.getValueAt(i,7).toString(),tbDokter.getValueAt(i,8).toString()
                             })==true){
-                                Sequel.mengedit("ipsrsbarang","kode_brng=?","stok=stok+?",2,new String[]{
-                                    tbDokter.getValueAt(i,0).toString(),tbDokter.getValueAt(i,1).toString()
+                                int jmlStok = Sequel.cariInteger("SELECT COUNT(stok) FROM ipsrsgudang WHERE kode_brng='"+tbDokter.getValueAt(i,1).toString()+"' AND stok > 0 ORDER BY tgl_beli ASC LIMIT 1");
+                                if (jmlStok < 1) {
+                                    Sequel.mengedit("ipsrsbarang","kode_brng=?","stok=stok+?,harga=?",3,new String[]{
+                                        tbDokter.getValueAt(i,0).toString(),tbDokter.getValueAt(i,4).toString(),tbDokter.getValueAt(i,1).toString()
+                                    });
+                                } else {
+                                    Sequel.mengedit("ipsrsbarang","kode_brng=?","stok=stok+?",2,new String[]{
+                                        tbDokter.getValueAt(i,0).toString(),tbDokter.getValueAt(i,1).toString()
+                                    });
+                                }
+                                Sequel.menyimpan("ipsrsgudang", "?,?,?,?,?,?",6,new String[]{
+                                    autoNomorBatch(tbDokter.getValueAt(i,1).toString()),NoFaktur.getText(),tbDokter.getValueAt(i,1).toString(),
+                                    Valid.SetTgl(TglPesan.getSelectedItem()+""),tbDokter.getValueAt(i,0).toString(),tbDokter.getValueAt(i,4).toString()
                                 });
                             }
                         }                
@@ -1230,7 +1241,7 @@ private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     public void isCek(){
         autoNomor();
         TCari.requestFocus();
-        tppn.setText("10");
+        tppn.setText("11");
         Meterai.setText("0");
         if(var.getjml2()>=1){
             kdptg.setEditable(false);
@@ -1244,6 +1255,11 @@ private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     
     private void autoNomor() {
         Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_faktur,3),signed)),0) from ipsrspemesanan where tgl_pesan='"+Valid.SetTgl(TglPesan.getSelectedItem()+"")+"'","PNM"+TglPesan.getSelectedItem().toString().substring(8,10)+TglPesan.getSelectedItem().toString().substring(3,5)+TglPesan.getSelectedItem().toString().substring(0,2),3,NoFaktur); 
+    }
+    
+    public String autoNomorBatch(String kode_brng) {
+        String no_batch = Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_batch,3),signed)),0) from ipsrsgudang where tgl_beli='"+Valid.SetTgl(TglPesan.getSelectedItem()+"")+"' AND kode_brng = '"+kode_brng+"'",TglPesan.getSelectedItem().toString().substring(8,10)+TglPesan.getSelectedItem().toString().substring(3,5)+TglPesan.getSelectedItem().toString().substring(0,2)+kode_brng,3); 
+        return no_batch;
     }
 
     public void tampil(String noorder) {
