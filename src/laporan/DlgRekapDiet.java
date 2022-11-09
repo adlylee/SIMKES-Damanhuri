@@ -63,7 +63,7 @@ public final class DlgRekapDiet extends javax.swing.JDialog {
         this.setLocation(8, 1);
         setSize(885, 674);
 
-        Object[] rowRwJlDr = {"No.", "Nama", "Jumlah Pasien"};
+        Object[] rowRwJlDr = {"", "", ""};
         tabMode = new DefaultTableModel(null, rowRwJlDr) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -103,9 +103,6 @@ public final class DlgRekapDiet extends javax.swing.JDialog {
         Scroll = new widget.ScrollPane();
         tbLaporan = new widget.Table();
         panelGlass5 = new widget.panelisi();
-        label11 = new widget.Label();
-        Tgl1 = new widget.Tanggal();
-        jLabel8 = new widget.Label();
         jLabel6 = new widget.Label();
         TCari = new widget.TextBox();
         BtnCari = new widget.Button();
@@ -142,20 +139,6 @@ public final class DlgRekapDiet extends javax.swing.JDialog {
         panelGlass5.setName("panelGlass5"); // NOI18N
         panelGlass5.setPreferredSize(new java.awt.Dimension(55, 55));
         panelGlass5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 9));
-
-        label11.setText("Tanggal :");
-        label11.setName("label11"); // NOI18N
-        label11.setPreferredSize(new java.awt.Dimension(50, 23));
-        panelGlass5.add(label11);
-
-        Tgl1.setDisplayFormat("dd-MM-yyyy");
-        Tgl1.setName("Tgl1"); // NOI18N
-        Tgl1.setPreferredSize(new java.awt.Dimension(90, 23));
-        panelGlass5.add(Tgl1);
-
-        jLabel8.setName("jLabel8"); // NOI18N
-        jLabel8.setPreferredSize(new java.awt.Dimension(30, 23));
-        panelGlass5.add(jLabel8);
 
         jLabel6.setText("Key Word :");
         jLabel6.setName("jLabel6"); // NOI18N
@@ -260,10 +243,10 @@ public final class DlgRekapDiet extends javax.swing.JDialog {
             TCari.requestFocus();
         } else if (tabMode.getRowCount() != 0) {
 
-            Sequel.queryu("delete from temporary_rekap_diet");
+            Sequel.queryu("delete from temporary");
             int row = tabMode.getRowCount();
             for (int i = 0; i < row; i++) {
-                Sequel.menyimpan("temporary_rekap_diet", "'0','"
+                Sequel.menyimpan("temporary", "'0','"
                         + tabMode.getValueAt(i, 0).toString() + "','"
                         + tabMode.getValueAt(i, 1).toString() + "','"
                         + tabMode.getValueAt(i, 2).toString() + "','"
@@ -277,10 +260,10 @@ public final class DlgRekapDiet extends javax.swing.JDialog {
             param.put("propinsirs", var.getpropinsirs());
             param.put("kontakrs", var.getkontakrs());
             param.put("emailrs", var.getemailrs());
-            param.put("tanggal", Tgl1.getDate());
+//            param.put("tanggal", Tgl1.getDate());
             param.put("logo", Sequel.cariGambar("select logo from setting"));
             Valid.MyReport("rptRekapDiet.jrxml", "report", "::[ Rekap Diet Pasien ]::",
-                    "select no, temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9, temp10, temp11, temp12, temp13, temp14 from temporary_rekap_diet order by no asc", param);
+                    "select no, temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9, temp10, temp11, temp12, temp13, temp14 from temporary order by no asc", param);
         }
         this.setCursor(Cursor.getDefaultCursor());
 }//GEN-LAST:event_BtnPrintActionPerformed
@@ -374,12 +357,9 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
     private widget.Button BtnPrint;
     private widget.ScrollPane Scroll;
     private widget.TextBox TCari;
-    private widget.Tanggal Tgl1;
     private widget.InternalFrame internalFrame1;
     private widget.Label jLabel6;
     private widget.Label jLabel7;
-    private widget.Label jLabel8;
-    private widget.Label label11;
     private widget.panelisi panelGlass5;
     private widget.Table tbLaporan;
     // End of variables declaration//GEN-END:variables
@@ -390,15 +370,14 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
         try {
             ps = koneksi.prepareStatement(
                     "select bangsal.nm_bangsal from kamar_inap inner join kamar inner join bangsal on kamar_inap.kd_kamar=kamar.kd_kamar and kamar.kd_bangsal=bangsal.kd_bangsal "
-                    + "where " + kamar + " and kamar_inap.tgl_keluar < ? and bangsal.nm_bangsal like ? group by bangsal.nm_bangsal order by bangsal.nm_bangsal");
+                    + "where " + kamar + " and bangsal.nm_bangsal like ? group by bangsal.nm_bangsal order by bangsal.nm_bangsal");
             try {
-                ps.setString(1, Valid.SetTgl(Tgl1.getSelectedItem() + ""));
-                ps.setString(2, "%" + TCari.getText().trim() + "%");
+                ps.setString(1, "%" + TCari.getText().trim() + "%");
                 rs = ps.executeQuery();
                 ttlbangsal = 0;
                 ttlptm = 0;
                 i = 1;
-                tabMode.addRow(new String[]{"", "Ruang Perawatan", ""});
+                tabMode.addRow(new String[]{"No.", "Ruang Perawatan", "Jumlah Pasien"});
                 while (rs.next()) {
                     bangsal = Sequel.cariInteger("select count(kamar_inap.no_rawat), kamar_inap.no_rawat from kamar_inap inner join kamar inner join bangsal on kamar_inap.kd_kamar=kamar.kd_kamar and kamar.kd_bangsal=bangsal.kd_bangsal where " + kamar + " and bangsal.nm_bangsal like ?", rs.getString(1));
                     tabMode.addRow(new String[]{
@@ -409,15 +388,14 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
 
                 ps2 = koneksi.prepareStatement(
                         "select diet.nama_diet from kamar_inap inner join detail_beri_diet inner join diet on kamar_inap.no_rawat=detail_beri_diet.no_rawat and detail_beri_diet.kd_diet=diet.kd_diet "
-                        + "where " + kamar + " and kamar_inap.tgl_keluar < ? and diet.nama_diet like ? group by diet.nama_diet order by diet.nama_diet");
+                        + "where " + kamar + " and diet.nama_diet like ? group by diet.nama_diet order by diet.nama_diet");
                 try {
-                    ps2.setString(1, Valid.SetTgl(Tgl1.getSelectedItem() + ""));
-                    ps2.setString(2, "%" + TCari.getText().trim() + "%");
+                    ps2.setString(1, "%" + TCari.getText().trim() + "%");
                     rs2 = ps2.executeQuery();
                     i = 1;
                     ttldiet = 0;
                     tabMode.addRow(new String[]{"", "", ""});
-                    tabMode.addRow(new String[]{"", "Jenis Diet", ""});
+                    tabMode.addRow(new String[]{"No.", "Jenis Diet", "Jumlah Diet"});
                     while (rs2.next()) {
                         diet = Sequel.cariInteger("select count(detail_beri_diet.no_rawat) from kamar_inap inner join detail_beri_diet inner join diet on kamar_inap.no_rawat=detail_beri_diet.no_rawat and detail_beri_diet.kd_diet=diet.kd_diet where " + kamar + " and diet.nama_diet=?", rs2.getString(1));
                         tabMode.addRow(new String[]{

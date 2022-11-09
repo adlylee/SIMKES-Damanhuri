@@ -221,7 +221,7 @@
 			<textField>
 				<reportElement x="33" y="110" width="100" height="10"/>
 				<textElement lineSpacing="Single">
-					<font size="8"/>
+					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[($P{bud}.equals("") ? "-" : $P{bud})]]></textFieldExpression>
 			</textField>
