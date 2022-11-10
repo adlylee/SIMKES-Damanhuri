@@ -114,8 +114,8 @@ public class DlgSirkulasiNonMedis extends javax.swing.JDialog {
             public void windowClosed(WindowEvent e) {
                 if(var.getform().equals("DlgSirkulasiBarang")){
                     if(barang.getTable().getSelectedRow()!= -1){                   
-                        kdbar.setText(barang.getTable().getValueAt(barang.getTable().getSelectedRow(),1).toString());                    
-                        nmbar.setText(barang.getTable().getValueAt(barang.getTable().getSelectedRow(),2).toString());
+                        kdbar.setText(barang.getTable().getValueAt(barang.getTable().getSelectedRow(),0).toString());                    
+                        nmbar.setText(barang.getTable().getValueAt(barang.getTable().getSelectedRow(),1).toString());
                     }  
                     kdbar.requestFocus();
                 }
@@ -545,7 +545,6 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         "kodesatuan.satuan,ipsrsbarang.stok,(ipsrsbarang.stok*ipsrsbarang.harga) as aset "+
                         "from ipsrsbarang inner join kodesatuan on ipsrsbarang.kode_sat=kodesatuan.kode_sat "+
                         "where ipsrsbarang.nama_brng like ? and ipsrsbarang.kode_brng like ? or "+
-                        "ipsrsbarang.nama_brng like ? and ipsrsbarang.nama_brng like ? or "+
                         "ipsrsbarang.nama_brng like ? and kodesatuan.satuan like ? "+
                         " order by ipsrsbarang.kode_brng");
             try {
@@ -554,8 +553,6 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 ps.setString(2,"%"+TCari.getText().trim()+"%");
                 ps.setString(3,"%"+nmbar.getText()+"%");
                 ps.setString(4,"%"+TCari.getText().trim()+"%");
-                ps.setString(5,"%"+nmbar.getText()+"%");
-                ps.setString(6,"%"+TCari.getText().trim()+"%");
                 rs=ps.executeQuery();            
                 while(rs.next()){
                     totalbeli=0;jumlahbeli=0;totalpesan=0;jumlahpesan=0;jumlahkeluar=0;
