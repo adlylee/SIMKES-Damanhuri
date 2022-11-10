@@ -1548,15 +1548,14 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                         + "if((LEFT(obat_racikan.aturan_pakai,1)='1' and RIGHT(obat_racikan.aturan_pakai,5)='Malam'),'21:00',"
                         + "if(LEFT(obat_racikan.aturan_pakai,1)='2','06:00  18:00',"
                         + "if(LEFT(obat_racikan.aturan_pakai,1)='3','06:00  14:00  21:00',"
-                        + "if(LEFT(obat_racikan.aturan_pakai,1)='4','06:00  14:00  18:00  21:00',' '))))))) as waktu_pakai, obat_bud.bud  "
+                        + "if(LEFT(obat_racikan.aturan_pakai,1)='4','06:00  14:00  18:00  21:00',' '))))))) as waktu_pakai "
                         + "from resep_obat inner join reg_periksa inner join pasien inner join "
-                        + "obat_racikan inner join obat_bud inner join metode_racik on resep_obat.no_rawat=reg_periksa.no_rawat "
+                        + "obat_racikan inner join metode_racik on resep_obat.no_rawat=reg_periksa.no_rawat "
                         + "and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "
                         + "and obat_racikan.kd_racik=metode_racik.kd_racik "
                         + "and resep_obat.no_rawat=obat_racikan.no_rawat and "
                         + "resep_obat.tgl_perawatan=obat_racikan.tgl_perawatan and "
                         + "resep_obat.jam=obat_racikan.jam and resep_obat.no_rawat=obat_racikan.no_rawat "
-                        + "and obat_bud.no_resep=resep_obat.no_resep and obat_bud.kode_brng=obat_racikan.kd_racik "
                         + "where resep_obat.no_resep='" + NoResep.getText() + "'", param);
             }
             this.setCursor(Cursor.getDefaultCursor());
@@ -1959,6 +1958,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         } else if (!(TPasien.getText().trim().equals(""))) {
             this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             Map<String, Object> param = new HashMap<>();
+            param.put("bud", Sequel.cariIsi("select bud from obat_bud where no_resep=?", NoResep.getText()));
             if (Sequel.cariInteger(
                     "select count(*)from resep_pulang inner join reg_periksa on "
                     + "resep_pulang.no_rawat=reg_periksa.no_rawat WHERE no_resep=? and dosis<>'';", NoResep.getText()) > 0) {
@@ -1972,11 +1972,10 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                         + "if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)='Malam'),'21:00', "
                         + "if(LEFT(resep_pulang.dosis,1)='2','06:00  18:00', "
                         + "if(LEFT(resep_pulang.dosis,1)='3','06:00  14:00  21:00', "
-                        + "if(LEFT(resep_pulang.dosis,1)='4','06:00  14:00  18:00  21:00',' '))))))) as waktu_pakai,obat_bud.bud "
-                        + "from resep_pulang inner join reg_periksa inner join pasien inner join databarang inner join obat_bud inner join kodesatuan "
+                        + "if(LEFT(resep_pulang.dosis,1)='4','06:00  14:00  18:00  21:00',' '))))))) as waktu_pakai "
+                        + "from resep_pulang inner join reg_periksa inner join pasien inner join databarang inner join kodesatuan "
                         + "on resep_pulang.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and databarang.kode_brng=resep_pulang.kode_brng "
                         + "and resep_pulang.no_rawat=reg_periksa.no_rawat and kodesatuan.kode_sat=databarang.kode_sat "
-                        + "and obat_bud.no_resep=resep_pulang.no_resep and obat_bud.kode_brng=databarang.kode_brng "
                         + "where resep_pulang.no_resep='" + NoResep.getText() + "' and resep_pulang.dosis<>''", param);
                 param.put("no_resep", NoResep.getText());
             }
