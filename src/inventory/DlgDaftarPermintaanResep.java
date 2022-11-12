@@ -7,6 +7,8 @@ import fungsi.koneksiDB;
 import fungsi.sekuel;
 import fungsi.validasi;
 import fungsi.var;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -28,6 +30,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import kepegawaian.DlgCariDokter;
@@ -109,7 +112,35 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
                 column.setMaxWidth(0);
             }
         }
-        tbResepRalan.setDefaultRenderer(Object.class, new WarnaTable());
+        
+        tbResepRalan.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+
+                String stts_rawat = (String) table.getModel().getValueAt(row, 7);
+                
+                if ("Sudah Terlayani".equals(stts_rawat)) {
+                    setBackground(new Color(255, 178, 102));
+                    setForeground(Color.BLACK);
+                } else {
+                    if (row % 2 == 1) {
+                        setForeground(Color.BLACK);
+                        setBackground(new Color(226, 234, 248));
+                    } else {
+                        setForeground(Color.BLACK);
+                        setBackground(new Color(255, 255, 255));
+                    }
+                }
+                
+                if (isSelected) {
+                    setForeground(Color.RED);
+                }
+                return this;
+            }
+        });
 
         tabMode2 = new DefaultTableModel(null, new Object[]{
             "No.Resep", "Tgl.Resep", "Poli/Unit", "Status", "Pasien", "Dokter Peresep"

@@ -2120,7 +2120,7 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                             Sequel.menyimpan("obat_bud","?,?,?,?,?",5,new String[]{
                                 noresep,tbObatRacikan.getValueAt(i, 2).toString(),Sequel.cariIsi("select current_date()"),
                                 Sequel.cariIsi("select current_time()"),tbObatRacikan.getValueAt(i,7).toString()
-                            }); 
+                            });
                         }else{
                             Sequel.menyimpan("obat_bud","?,?,?,?,?",5,new String[]{
                                 noresep,tbObatRacikan.getValueAt(i, 2).toString(),Sequel.cariIsi("select current_date()"),
@@ -2211,7 +2211,7 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                 } catch (Exception ex) {
                     System.out.println(ex);                
                 }
-            }                
+            }                   
         }
 }//GEN-LAST:event_BtnSimpanActionPerformed
 

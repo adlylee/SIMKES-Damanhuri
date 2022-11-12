@@ -576,9 +576,9 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                                 dilayaniString = String.valueOf(dilayani);
                                                 hargaString = String.valueOf(hargaDouble);
                                                 totalString = String.valueOf(totalDouble);
-                                                Sequel.menyimpan("ipsrsdetailpengeluaran", "?,?,?,?,?,?", "Transaksi Pengeluaran", 6, new String[]{
+                                                Sequel.menyimpan("ipsrsdetailpengeluaran", "?,?,?,?,?,?,?", "Transaksi Pengeluaran", 7, new String[]{
                                                     NoKeluar.getText(), tbDokter.getValueAt(i, 1).toString(), tbDokter.getValueAt(i, 3).toString(),
-                                                    dilayaniString, hargaString, totalString
+                                                    dilayaniString, hargaString, totalString, rs.getString("no_batch")
                                                 });
                                                 Sequel.mengedit("ipsrsbarang", "kode_brng=?", "stok=stok-?,harga=?", 3, new String[]{
                                                     dilayaniString, hargaString, tbDokter.getValueAt(i, 1).toString()

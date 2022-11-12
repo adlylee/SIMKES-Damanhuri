@@ -1241,10 +1241,6 @@ public class DlgUpdateUser extends javax.swing.JDialog {
                         tabMode.addRow(new Object[]{false,"[E]Sirkulasi Non Medis",rs.getBoolean("sirkulasi_non_medis")});
                     }
                     
-                    if("[E]Sirkulasi Non Medis 2".toLowerCase().contains(TCari.getText().toLowerCase())){
-                        tabMode.addRow(new Object[]{false,"[E]Sirkulasi Non Medis 2",rs.getBoolean("sirkulasi_non_medis")});
-                    }
-                    
                     if("[E]Retur Ke Suplier Non Medis".toLowerCase().contains(TCari.getText().toLowerCase())){
                         tabMode.addRow(new Object[]{false,"[E]Retur Ke Suplier Non Medis",rs.getBoolean("ipsrs_returbeli")});
                     }
@@ -4186,10 +4182,6 @@ public class DlgUpdateUser extends javax.swing.JDialog {
 
             if("[E]Sirkulasi Non Medis".equals(tbUser.getValueAt(i,1).toString())){
                 Sequel.mengedit("user","id_user=AES_ENCRYPT('"+TKd.getText()+"','nur')","sirkulasi_non_medis='"+tbUser.getValueAt(i,2).toString()+"'");
-            }
-            
-            if("[E]Sirkulasi Non Medis 2".equals(tbUser.getValueAt(i,1).toString())){
-                Sequel.mengedit("user","id_user=AES_ENCRYPT('"+TKd.getText()+"','nur')","sirkulasi_non_medis2='"+tbUser.getValueAt(i,2).toString()+"'");
             }
             
             if("[E]Retur Ke Suplier Non Medis".equals(tbUser.getValueAt(i,1).toString())){

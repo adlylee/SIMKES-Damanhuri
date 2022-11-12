@@ -934,6 +934,7 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                  Sequel.mengedit("ipsrsbarang","kode_brng=?","stok=stok-?",2,new String[]{
                         rs2.getString("jumlah"),rs2.getString("kode_brng")
                  });
+                 Sequel.meghapus("ipsrsgudang", "no_faktur", rs.getString(1));
              }
              Sequel.queryu("delete from tampjurnal");
              Sequel.menyimpan("tampjurnal","?,?,?,?","Rekening",4,new String[]{
