@@ -31,10 +31,13 @@ public class DlgSirkulasiNonMedis extends javax.swing.JDialog {
     private Jurnal jur=new Jurnal();
     private Connection koneksi=koneksiDB.condb();
     private Dimension screen=Toolkit.getDefaultToolkit().getScreenSize(); 
-    private double ttltotalbeli=0,totalbeli=0,stok=0,aset=0,ttlaset=0,jumlahbeli=0,ttltotalpesan=0,totalpesan=0,jumlahpesan=0,jumlahkeluar,totalkeluar,ttltotalkeluar;
+    private double ttltotalbeli=0,totalbeli=0,stok=0,aset=0,ttlaset=0,jumlahbeli=0
+            ,ttltotalpesan=0,totalpesan=0,jumlahpesan=0,stokbyfaktur=0,hargabyfaktur=0,stokgetbyfaktur=0,hargagetbyfaktur=0
+            ,stokpostbyfaktur=0,hargapostbyfaktur=0,
+            jumlahkeluar,totalkeluar,ttltotalkeluar;
     private DlgBarangIPSRS barang=new DlgBarangIPSRS(null,false);
-    private PreparedStatement ps,ps2;
-    private ResultSet rs,rs2;
+    private PreparedStatement ps,ps2,ps3;
+    private ResultSet rs,rs2,rs3;
 
     /** 
      * @param parent
@@ -114,8 +117,8 @@ public class DlgSirkulasiNonMedis extends javax.swing.JDialog {
             public void windowClosed(WindowEvent e) {
                 if(var.getform().equals("DlgSirkulasiBarang")){
                     if(barang.getTable().getSelectedRow()!= -1){                   
-                        kdbar.setText(barang.getTable().getValueAt(barang.getTable().getSelectedRow(),1).toString());                    
-                        nmbar.setText(barang.getTable().getValueAt(barang.getTable().getSelectedRow(),2).toString());
+                        kdbar.setText(barang.getTable().getValueAt(barang.getTable().getSelectedRow(),0).toString());                    
+                        nmbar.setText(barang.getTable().getValueAt(barang.getTable().getSelectedRow(),1).toString());
                     }  
                     kdbar.requestFocus();
                 }
@@ -545,7 +548,6 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         "kodesatuan.satuan,ipsrsbarang.stok,(ipsrsbarang.stok*ipsrsbarang.harga) as aset "+
                         "from ipsrsbarang inner join kodesatuan on ipsrsbarang.kode_sat=kodesatuan.kode_sat "+
                         "where ipsrsbarang.nama_brng like ? and ipsrsbarang.kode_brng like ? or "+
-                        "ipsrsbarang.nama_brng like ? and ipsrsbarang.nama_brng like ? or "+
                         "ipsrsbarang.nama_brng like ? and kodesatuan.satuan like ? "+
                         " order by ipsrsbarang.kode_brng");
             try {
@@ -554,8 +556,6 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 ps.setString(2,"%"+TCari.getText().trim()+"%");
                 ps.setString(3,"%"+nmbar.getText()+"%");
                 ps.setString(4,"%"+TCari.getText().trim()+"%");
-                ps.setString(5,"%"+nmbar.getText()+"%");
-                ps.setString(6,"%"+TCari.getText().trim()+"%");
                 rs=ps.executeQuery();            
                 while(rs.next()){
                     totalbeli=0;jumlahbeli=0;totalpesan=0;jumlahpesan=0;jumlahkeluar=0;
@@ -574,7 +574,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         ps2.setString(2,Valid.SetTgl(Tgl1.getSelectedItem()+""));
                         ps2.setString(3,Valid.SetTgl(Tgl2.getSelectedItem()+""));
                         rs2=ps2.executeQuery();
-                        if(rs2.next()){                    
+                        if(rs2.next()){
                             jumlahbeli=rs2.getDouble(1);
                             totalbeli=rs2.getDouble(2);
                         }
@@ -646,7 +646,88 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                            Valid.SetAngka(jumlahbeli),Valid.SetAngka(totalbeli),
                            Valid.SetAngka(jumlahpesan),Valid.SetAngka(totalpesan),
                            Valid.SetAngka(jumlahkeluar),Valid.SetAngka(totalkeluar)
-                        }); 
+                        });
+                        ps3=koneksi.prepareStatement("select stok, harga , no_faktur , no_batch "+
+                        " from ipsrsgudang "+
+                        " where ipsrsgudang.kode_brng=? and ipsrsgudang.tgl_beli "+
+                        " between ? and ? ");
+                        try {
+                            ps3.setString(1,rs.getString(1));
+                            ps3.setString(2,Valid.SetTgl(Tgl1.getSelectedItem()+""));
+                            ps3.setString(3,Valid.SetTgl(Tgl2.getSelectedItem()+""));
+                            rs3=ps3.executeQuery();
+                            while(rs3.next()){
+                                hargabyfaktur=0;stokbyfaktur=0;stokgetbyfaktur=0;hargagetbyfaktur=0;stokpostbyfaktur=0;hargapostbyfaktur=0;
+                                ps2=koneksi.prepareStatement("select ipsrsdetailbeli.jumlah, ipsrsdetailbeli.harga "+
+                                    " from ipsrsdetailbeli "+
+                                    " where ipsrsdetailbeli.no_faktur=? ");
+                                try {
+                                    ps2.setString(1,rs3.getString("no_faktur"));
+                                    rs2=ps2.executeQuery();
+                                    if(rs2.next()){
+                                        stokbyfaktur=rs2.getDouble(1);
+                                        hargabyfaktur=rs2.getDouble(2);
+                                    }
+                                } catch (Exception e) {
+                                    System.out.println("Notifikasi Detail Beli : "+e);
+                                } finally{
+                                    if(rs2!=null){
+                                        rs2.close();
+                                    }
+                                    if(ps2!=null){
+                                        ps2.close();
+                                    }
+                                }
+                                ps2=koneksi.prepareStatement("select ipsrsdetailpesan.jumlah, ipsrsdetailpesan.harga "+
+                                    " from ipsrsdetailpesan "+
+                                    " where ipsrsdetailpesan.no_faktur=? ");
+                                try {
+                                    ps2.setString(1,rs3.getString("no_faktur"));
+                                    rs2=ps2.executeQuery();
+                                    if(rs2.next()){
+                                        stokgetbyfaktur=rs2.getDouble(1);
+                                        hargagetbyfaktur=rs2.getDouble(2);
+                                    }
+                                } catch (Exception e) {
+                                    System.out.println("Notifikasi Detail Beli : "+e);
+                                } finally{
+                                    if(rs2!=null){
+                                        rs2.close();
+                                    }
+                                    if(ps2!=null){
+                                        ps2.close();
+                                    }
+                                }
+                                ps2=koneksi.prepareStatement("select ipsrsdetailpengeluaran.jumlah, ipsrsdetailpengeluaran.harga "+
+                                    " from ipsrsdetailpengeluaran "+
+                                    " where ipsrsdetailpengeluaran.no_batch=? ");
+                                try {
+                                    ps2.setString(1,rs3.getString("no_batch"));
+                                    rs2=ps2.executeQuery();
+                                    if(rs2.next()){
+                                        stokpostbyfaktur=rs2.getDouble(1);
+                                        hargapostbyfaktur=rs2.getDouble(2);
+                                    }
+                                } catch (Exception e) {
+                                    System.out.println("Notifikasi Detail Beli : "+e);
+                                } finally{
+                                    if(rs2!=null){
+                                        rs2.close();
+                                    }
+                                    if(ps2!=null){
+                                        ps2.close();
+                                    }
+                                }
+                                tabMode.addRow(new Object[]{"",rs.getString(2),
+                                    "",Valid.SetAngka(rs3.getDouble(1)),Valid.SetAngka(rs3.getDouble(2)),
+                                    Valid.SetAngka(stokbyfaktur),Valid.SetAngka(hargabyfaktur),
+                                    Valid.SetAngka(stokgetbyfaktur),Valid.SetAngka(hargagetbyfaktur),
+                                    Valid.SetAngka(stokpostbyfaktur),Valid.SetAngka(hargapostbyfaktur),
+                                });
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Notifikasi Detail Beli : "+e);
+                        } 
                         ttltotalbeli=ttltotalbeli+totalbeli;
                         ttltotalpesan=ttltotalpesan+totalpesan;
                         ttlaset=ttlaset+aset;

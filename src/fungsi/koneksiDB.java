@@ -46,14 +46,16 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" +
-                        "    Version 28.04.2022 [ 1.0.5 ] [Activated] GO RAWAT INAP E-RM \n"+
+                        "    Version 11.11.2022 [ 1.0.7 ] [Activated] GO AKREDITASI \n"+
+                        "                                                                           \n"+
+                        "    RSUD H. Damanhuri Barabai . SMART , GREEN , AND FRIENDLY HOSPITAL      \n"+
                         "                                                                           \n"+
                         "    * Known Bug :                                                           \n"+
-                        "       - Laporan diet belum fix                                            \n"+
-                        "       - Nama poli di resep                                           \n"+
+                        "       - Rekap Diet                                            \n"+
+                        "       - Resep BUD                                           \n"+
                         "                                                                       \n"+
                         "    * Changelog :                                                       \n"+
-                        "       - Billing Rawat Inap                                              \n"+
+                        "       - Bridging LIMS                                              \n"+
                         "                                                                       \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);
