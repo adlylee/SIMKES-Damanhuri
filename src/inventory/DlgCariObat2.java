@@ -67,9 +67,9 @@ public final class DlgCariObat2 extends javax.swing.JDialog {
     private int jml=0,i=0,z=0,row=0;
     private boolean[] pilih; 
     private double[] jumlah,harga,eb,ts,stok,beli,kapasitas,kandungan;
-    private String[] no,kodebarang,namabarang,kodesatuan,letakbarang,namajenis,industri,aturan,kategori,golongan,nobatch,nofaktur,kadaluarsa,bud;
+    private String[] no,kodebarang,namabarang,kodesatuan,letakbarang,namajenis,industri,aturan,kategori,golongan,nobatch,nofaktur,kadaluarsa;
     private DlgBarang barang=new DlgBarang(null,false);
-    private String signa1="1",signa2="1",kdObatSK="",requestJson="",nokunjungan="",URL="",otorisasi,sql="",no_batchcari="", tgl_kadaluarsacari="", no_fakturcari="",aktifkanbatch="no",aktifpcare="no",noresep="",Suspen_Piutang_Obat_Ranap="",Obat_Ranap="",HPP_Obat_Rawat_Inap="",Persediaan_Obat_Rawat_Inap="",budcari="-";
+    private String signa1="1",signa2="1",kdObatSK="",requestJson="",nokunjungan="",URL="",otorisasi,sql="",no_batchcari="", tgl_kadaluarsacari="", no_fakturcari="",aktifkanbatch="no",aktifpcare="no",noresep="",Suspen_Piutang_Obat_Ranap="",Obat_Ranap="",HPP_Obat_Rawat_Inap="",Persediaan_Obat_Rawat_Inap="",budcari="-", bud="";
     private WarnaTable2 warna=new WarnaTable2();
     private DlgCariBangsal caribangsal=new DlgCariBangsal(null,false);
     public DlgAturanPakai aturanpakai=new DlgAturanPakai(null,false);
@@ -1355,15 +1355,11 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                                                     Valid.SetTgl(DTPTgl.getSelectedItem()+""),cmbJam.getSelectedItem()+":"+cmbMnt.getSelectedItem()+":"+cmbDtk.getSelectedItem(),TNoRw.getText(),tbObat.getValueAt(i,2).toString(),tbObat.getValueAt(i,13).toString()
                                                 }); 
                                             }
-                                            if(!tbObat.getValueAt(i,19).toString().equals("")){
+                                        bud = (tbObat.getValueAt(i, 19).toString().equals("")) ? "-" : (tbObat.getValueAt(i, 19).toString());
+                                        if(!tbObat.getValueAt(i,19).toString().equals("")){
                                                 Sequel.menyimpan("obat_bud","?,?,?,?,?",5,new String[]{
                                                     noresep,tbObat.getValueAt(i, 2).toString(),Sequel.cariIsi("select current_date()"),
-                                                    Sequel.cariIsi("select current_time()"),tbObat.getValueAt(i,19).toString()
-                                                }); 
-                                            }else{
-                                                Sequel.menyimpan("obat_bud","?,?,?,?,?",5,new String[]{
-                                                    noresep,tbObat.getValueAt(i, 2).toString(),Sequel.cariIsi("select current_date()"),
-                                                    Sequel.cariIsi("select current_time()"),"-"
+                                                    Sequel.cariIsi("select current_time()"),bud
                                                 }); 
                                             }                                         
                                             Trackobat.catatRiwayat(tbObat.getValueAt(i,2).toString(),0,(Double.parseDouble(tbObat.getValueAt(i,1).toString())/carikapasitas.getDouble(1)),"Pemberian Obat",var.getkode(),kdgudang.getText(),"Simpan");
@@ -1415,15 +1411,11 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                                                     Valid.SetTgl(DTPTgl.getSelectedItem()+""),cmbJam.getSelectedItem()+":"+cmbMnt.getSelectedItem()+":"+cmbDtk.getSelectedItem(),TNoRw.getText(),tbObat.getValueAt(i,2).toString(),tbObat.getValueAt(i,13).toString()
                                                 });
                                             }
+                                            bud = (tbObat.getValueAt(i, 19).toString().equals("")) ? "-" : (tbObat.getValueAt(i, 19).toString());
                                             if(!tbObat.getValueAt(i,19).toString().equals("")){
                                                 Sequel.menyimpan("obat_bud","?,?,?,?,?",5,new String[]{
                                                     noresep,tbObat.getValueAt(i, 2).toString(),Sequel.cariIsi("select current_date()"),
-                                                    Sequel.cariIsi("select current_time()"),tbObat.getValueAt(i,19).toString()
-                                                }); 
-                                            }else{
-                                                Sequel.menyimpan("obat_bud","?,?,?,?,?",5,new String[]{
-                                                    noresep,tbObat.getValueAt(i, 2).toString(),Sequel.cariIsi("select current_date()"),
-                                                    Sequel.cariIsi("select current_time()"),"-"
+                                                    Sequel.cariIsi("select current_time()"), bud
                                                 }); 
                                             }                                            
                                             Trackobat.catatRiwayat(tbObat.getValueAt(i,2).toString(),0,Double.parseDouble(tbObat.getValueAt(i,1).toString()),"Pemberian Obat",var.getkode(),kdgudang.getText(),"Simpan");
@@ -1484,16 +1476,12 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                                             Valid.SetTgl(DTPTgl.getSelectedItem()+""),cmbJam.getSelectedItem()+":"+cmbMnt.getSelectedItem()+":"+cmbDtk.getSelectedItem(),TNoRw.getText(),tbObat.getValueAt(i,2).toString(),tbObat.getValueAt(i,13).toString()
                                         });
                                     }        
+                                    bud = (tbObat.getValueAt(i, 19).toString().equals("")) ? "-" : (tbObat.getValueAt(i, 19).toString());
                                     if(!tbObat.getValueAt(i,19).toString().equals("")){
                                         Sequel.menyimpan("obat_bud","?,?,?,?,?",5,new String[]{
                                             noresep,tbObat.getValueAt(i, 2).toString(),Sequel.cariIsi("select current_date()"),
-                                            Sequel.cariIsi("select current_time()"),tbObat.getValueAt(i,19).toString()
+                                            Sequel.cariIsi("select current_time()"), bud
                                         }); 
-                                    }else{
-                                        Sequel.menyimpan("obat_bud","?,?,?,?,?",5,new String[]{
-                                            noresep,tbObat.getValueAt(i, 2).toString(),Sequel.cariIsi("select current_date()"),
-                                            Sequel.cariIsi("select current_time()"),"-"
-                                        });
                                     }
                                     Trackobat.catatRiwayat(tbObat.getValueAt(i,2).toString(),0,Double.parseDouble(tbObat.getValueAt(i,1).toString()),"Pemberian Obat",var.getkode(),kdgudang.getText(),"Simpan");
                                     Sequel.menyimpan("gudangbarang","'"+tbObat.getValueAt(i,2).toString()+"','"+kdgudang.getText()+"','-"+Double.parseDouble(tbObat.getValueAt(i,1).toString())+"'", 
@@ -1537,16 +1525,12 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                                tbObatRacikan.getValueAt(i,5).toString(),tbObatRacikan.getValueAt(i,6).toString()
                             });
                         }
+                        bud = (tbObatRacikan.getValueAt(i, 7).toString().equals("")) ? "-" : (tbObatRacikan.getValueAt(i, 7).toString());
                         if(!tbObatRacikan.getValueAt(i,7).toString().equals("")){
                             Sequel.menyimpan("obat_bud","?,?,?,?,?",5,new String[]{
                                 noresep,tbObatRacikan.getValueAt(i, 2).toString(),Sequel.cariIsi("select current_date()"),
-                                Sequel.cariIsi("select current_time()"),tbObatRacikan.getValueAt(i,7).toString()
+                                Sequel.cariIsi("select current_time()"), bud
                             }); 
-                        }else{
-                            Sequel.menyimpan("obat_bud","?,?,?,?,?",5,new String[]{
-                                noresep,tbObatRacikan.getValueAt(i, 2).toString(),Sequel.cariIsi("select current_date()"),
-                                Sequel.cariIsi("select current_time()"),"-"
-                            });
                         }
                     }
 
