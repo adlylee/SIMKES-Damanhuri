@@ -3064,20 +3064,20 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
 
     private void BtnWAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnWAActionPerformed
         try {
-            ps3 = koneksi.prepareStatement("select nama, no_telp, jk, tanggal, datediff(now(),tanggal) as hari from utd_donor order by tanggal desc");
+            ps3 = koneksi.prepareStatement("select nama, no_telp, jk, tanggal, datediff(now(),tanggal) as hari from utd_donor where no_donor = '220209012' order by tanggal desc");
             try {
                 rs3 = ps3.executeQuery();
                 while (rs3.next()) {
-                    if (rs3.getString("jk").equals("L")) {
-                        if (rs3.getInt("hari") >= 76) {
+//                    if (rs3.getString("jk").equals("L")) {
+//                        if (rs3.getInt("hari") >= 76) {
                             kirimwa.sendwaUTD(rs3.getString("nama"), rs3.getString("no_telp"));
-                        }
-                    }
-                    if (rs3.getString("jk").equals("P")) {
-                        if (rs3.getInt("hari") >= 90) {
-                            kirimwa.sendwaUTD(rs3.getString("nama"), rs3.getString("no_telp"));
-                        }
-                    }
+//                        }
+//                    }
+//                    if (rs3.getString("jk").equals("P")) {
+//                        if (rs3.getInt("hari") >= 90) {
+//                            kirimwa.sendwaUTD(rs3.getString("nama"), rs3.getString("no_telp"));
+//                        }
+//                    }
                 }
             } catch (Exception e) {
                 System.out.println("Notifikasi : " + e);

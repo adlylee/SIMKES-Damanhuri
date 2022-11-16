@@ -2,10 +2,8 @@ package bridging;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fungsi.koneksiDB;
 import fungsi.sekuel;
 import java.awt.HeadlessException;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
@@ -23,7 +21,6 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -75,6 +72,7 @@ public class BridgingWA {
         SSLSocketFactory sslFactory = new SSLSocketFactory(sslContext, SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
         Scheme scheme = new Scheme("https", 443, sslFactory);
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+        factory.setReadTimeout(2000);
         factory.getHttpClient().getConnectionManager().getSchemeRegistry().register(scheme);
         return new RestTemplate(factory);
     }
@@ -150,12 +148,13 @@ public class BridgingWA {
             message = "Assalamualaikum " + nama + ". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai .\n"
                     + "Handak mehabar akan bahwa pian sudah bisa melakukan donor darah kembali. Silakan datang ke Unit Transfusi Darah di Rumah Sakit H. Damanhuri Barabai."
                     + "\nTerima kasih. Wassalamualaikum";
-            number = Sequel.cariIsi("SELECT no_telp FROM utd_donor where nama = '" + nama+"'");
-//            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'token'");
-            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'server'");
-            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'phonenumber'");
-            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message;
-//                    + "&api_key=" + token;
+//            message = "test";
+//            number = Sequel.cariIsi("SELECT no_telp FROM utd_donor where nama = '" + nama+"'");
+            token = "628115167345";
+            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'");
+            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_phonenumber'");
+            requestJson = "type=text&sender=" + sender + "&number=6282149099444&message=" + message
+                    + "&api_key=" + token;
             System.out.println("PostField : " + requestJson);
             requestEntity = new HttpEntity(requestJson);
             url = urlApi + "/wagateway/kirimpesan";
@@ -184,8 +183,8 @@ public class BridgingWA {
                     + "Pasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal + "";
             number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='198011042005012011'");
 //            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'token'");
-            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'server'");
-            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'phonenumber'");
+            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'");
+            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_phonenumber'");
             requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message;
 //                    + "&api_key=" + token;
             System.out.println("PostField : " + requestJson);
