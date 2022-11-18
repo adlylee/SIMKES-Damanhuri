@@ -4,7 +4,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fungsi.sekuel;
 import java.awt.HeadlessException;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.MessageDigest;
@@ -21,7 +26,11 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -29,7 +38,7 @@ public class BridgingWA {
 
     private static final Properties prop = new Properties();
     private sekuel Sequel = new sekuel();
-    private String Key, pass, url, token, requestJson, urlApi = "", sender = "", number = "", message = "", reurn = "";
+    private String Key, pass, url, token, requestJson, urlApi = "", sender = "", number = "", message = "", reurn = "", USER_AGENT = "Mozilla/5.0";;
     private HttpHeaders headers;
     private HttpEntity requestEntity;
     private ObjectMapper mapper = new ObjectMapper();
@@ -37,8 +46,8 @@ public class BridgingWA {
     private JsonNode nameNode;
     private JsonNode response;
 
-    public String getHmac() {
-        try {
+    public String getHmac() {        
+        try {                    
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] hashInBytes = md.digest(pass.getBytes(StandardCharsets.UTF_8));
 
@@ -46,11 +55,11 @@ public class BridgingWA {
             for (byte b : hashInBytes) {
                 sb.append(String.format("%02x", b));
             }
-            Key = sb.toString();
+            Key=sb.toString();            
         } catch (Exception ex) {
-            System.out.println("Notifikasi : " + ex);
+            System.out.println("Notifikasi : "+ex);
         }
-        return Key;
+	return Key;
     }
 
     public RestTemplate getRest() throws NoSuchAlgorithmException, KeyManagementException {
@@ -89,9 +98,21 @@ public class BridgingWA {
             sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'phonenumber'");
             requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message + "&api_key=" + token;
             System.out.println("PostField : " + requestJson);
-            requestEntity = new HttpEntity(requestJson);
             url = urlApi + "/wagateway/kirimpesan";
-            root = mapper.readTree(getRest().exchange(url, HttpMethod.POST, requestEntity, String.class).getBody());
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+            MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
+            map.add("type", "text");
+            map.add("sender", sender);
+            map.add("number", number);
+            map.add("api_key", token);
+            map.add("message", message);
+
+            HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+
+            ResponseEntity<String> response = new RestTemplate().postForEntity( url, request , String.class );
+            root = mapper.readTree(response.getBody());
             System.out.println(root);
             token = root.path("message").asText();
             nameNode = root.path("data");
@@ -100,7 +121,7 @@ public class BridgingWA {
             } else {
                 JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
             }
-        } catch (HeadlessException | IOException | KeyManagementException | NoSuchAlgorithmException | RestClientException ex) {
+        } catch (Exception ex) {
             System.out.println("Notifikasi : " + ex);
             System.out.println(url);
             if (ex.toString().contains("UnknownHostException")) {
@@ -148,30 +169,51 @@ public class BridgingWA {
             message = "Assalamualaikum " + nama + ". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai .\n"
                     + "Handak mehabar akan bahwa pian sudah bisa melakukan donor darah kembali. Silakan datang ke Unit Transfusi Darah di Rumah Sakit H. Damanhuri Barabai."
                     + "\nTerima kasih. Wassalamualaikum";
-//            message = "test";
-//            number = Sequel.cariIsi("SELECT no_telp FROM utd_donor where nama = '" + nama+"'");
-            token = "628115167345";
-            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'");
+
+            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'")+"/wagateway/kirimpesan";
             sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_phonenumber'");
-            requestJson = "type=text&sender=" + sender + "&number=6282149099444&message=" + message
-                    + "&api_key=" + token;
+            requestJson = "type=text&sender=" + sender + "&number="+no_telp+"&message=" + message;
             System.out.println("PostField : " + requestJson);
-            requestEntity = new HttpEntity(requestJson);
-            url = urlApi + "/wagateway/kirimpesan";
-            root = mapper.readTree(getRest().exchange(url, HttpMethod.POST, requestEntity, String.class).getBody());
-            System.out.println(root);
-            token = root.path("message").asText();
-            nameNode = root.path("data");
-            if (root.path("status").asText().equals("true")) {
-                reurn = "Sukses";
+
+            URL obj = new URL(urlApi);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", USER_AGENT);
+            con.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
+            con.setRequestProperty( "charset", "utf-8");
+
+            // For POST only - START
+            con.setDoOutput(true);
+            OutputStreamWriter os = new OutputStreamWriter(con.getOutputStream());
+            os.write(requestJson);
+            os.flush();
+            os.close();
+            // For POST only - END
+
+            int responseCode = con.getResponseCode();
+            System.out.println("POST Response Code :: " + responseCode);
+
+            if (responseCode == HttpURLConnection.HTTP_OK) { //success
+                BufferedReader in = new BufferedReader(new InputStreamReader(
+                                con.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                // print result
+                System.out.println(response.toString());
             } else {
-                JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
+                System.out.println("POST request not worked");
             }
-        } catch (HeadlessException | IOException | KeyManagementException | NoSuchAlgorithmException | RestClientException ex) {
+        } catch (Exception ex) {
             System.out.println("Notifikasi : " + ex);
             System.out.println(url);
             if (ex.toString().contains("UnknownHostException")) {
-                JOptionPane.showMessageDialog(null, "Koneksi ke server Kemenkes terputus...!");
+                JOptionPane.showMessageDialog(null, "Koneksi ke server WA terputus...!");
             }
         }
         return token;
