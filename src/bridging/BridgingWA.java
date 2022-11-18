@@ -2,11 +2,14 @@ package bridging;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fungsi.koneksiDB;
 import fungsi.sekuel;
 import java.awt.HeadlessException;
-import java.io.FileInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.MessageDigest;
@@ -24,7 +27,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -32,7 +38,7 @@ public class BridgingWA {
 
     private static final Properties prop = new Properties();
     private sekuel Sequel = new sekuel();
-    private String Key, pass, url, token, requestJson, urlApi = "", sender = "", number = "", message = "", reurn = "";
+    private String Key, pass, url, token, requestJson, urlApi = "", sender = "", number = "", message = "", reurn = "", USER_AGENT = "Mozilla/5.0";;
     private HttpHeaders headers;
     private HttpEntity requestEntity;
     private ObjectMapper mapper = new ObjectMapper();
@@ -40,8 +46,8 @@ public class BridgingWA {
     private JsonNode nameNode;
     private JsonNode response;
 
-    public String getHmac() {
-        try {
+    public String getHmac() {        
+        try {                    
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] hashInBytes = md.digest(pass.getBytes(StandardCharsets.UTF_8));
 
@@ -49,11 +55,11 @@ public class BridgingWA {
             for (byte b : hashInBytes) {
                 sb.append(String.format("%02x", b));
             }
-            Key = sb.toString();
+            Key=sb.toString();            
         } catch (Exception ex) {
-            System.out.println("Notifikasi : " + ex);
+            System.out.println("Notifikasi : "+ex);
         }
-        return Key;
+	return Key;
     }
 
     public RestTemplate getRest() throws NoSuchAlgorithmException, KeyManagementException {
@@ -75,6 +81,7 @@ public class BridgingWA {
         SSLSocketFactory sslFactory = new SSLSocketFactory(sslContext, SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
         Scheme scheme = new Scheme("https", 443, sslFactory);
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+        factory.setReadTimeout(2000);
         factory.getHttpClient().getConnectionManager().getSchemeRegistry().register(scheme);
         return new RestTemplate(factory);
     }
@@ -91,9 +98,21 @@ public class BridgingWA {
             sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'phonenumber'");
             requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message + "&api_key=" + token;
             System.out.println("PostField : " + requestJson);
-            requestEntity = new HttpEntity(requestJson);
             url = urlApi + "/wagateway/kirimpesan";
-            root = mapper.readTree(getRest().exchange(url, HttpMethod.POST, requestEntity, String.class).getBody());
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+            MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
+            map.add("type", "text");
+            map.add("sender", sender);
+            map.add("number", number);
+            map.add("api_key", token);
+            map.add("message", message);
+
+            HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+
+            ResponseEntity<String> response = new RestTemplate().postForEntity( url, request , String.class );
+            root = mapper.readTree(response.getBody());
             System.out.println(root);
             token = root.path("message").asText();
             nameNode = root.path("data");
@@ -102,7 +121,7 @@ public class BridgingWA {
             } else {
                 JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
             }
-        } catch (HeadlessException | IOException | KeyManagementException | NoSuchAlgorithmException | RestClientException ex) {
+        } catch (Exception ex) {
             System.out.println("Notifikasi : " + ex);
             System.out.println(url);
             if (ex.toString().contains("UnknownHostException")) {
@@ -147,32 +166,54 @@ public class BridgingWA {
 
     public String sendwaUTD(String nama, String no_telp) {
         try {
-            message = "Assalamualaikum wr. wb " + nama + ". \nKami dari Unit Transfusi Darah RSUD H.DAMANHURI BARABAI.\n"
-                    + "Mengingatkan bahwa Bapak/Ibu sudah dapat melakukan donor darah kembali karena waktu untuk donor darah sudah sampai.\n"
-                    + "Kami tunggu ya kedatangannya. Terima kasih.\nWassalamualaikum\n";
-            number = Sequel.cariIsi("SELECT no_telp FROM utd_donor where nama = '" + nama+"'");
-//            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'token'");
-            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'server'");
-            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'phonenumber'");
-            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message;
-//                    + "&api_key=" + token;
+            message = "Assalamualaikum wr.wb " + nama + ". \nKami dari Unit Transfusi Darah RSUD H.DAMANHURI BARABAI\n"
+                    + "Mengingatkan bahwa Bapak/Ibu sudah dapat melakukan donor darah kembali karena waktu untuk donor darah sudah sampai."
+                    + "\nKami tunggu ya kedatangannya.\nTerima kasih. Wassalamualaikum";
+
+            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'")+"/wagateway/kirimpesan";
+            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_phonenumber'");
+            requestJson = "type=text&sender=" + sender + "&number="+no_telp+"&message=" + message;
             System.out.println("PostField : " + requestJson);
-            requestEntity = new HttpEntity(requestJson);
-            url = urlApi + "/wagateway/kirimpesan";
-            root = mapper.readTree(getRest().exchange(url, HttpMethod.POST, requestEntity, String.class).getBody());
-            System.out.println(root);
-            token = root.path("message").asText();
-            nameNode = root.path("data");
-            if (root.path("status").asText().equals("true")) {
-                reurn = "Sukses";
+
+            URL obj = new URL(urlApi);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", USER_AGENT);
+            con.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
+            con.setRequestProperty( "charset", "utf-8");
+
+            // For POST only - START
+            con.setDoOutput(true);
+            OutputStreamWriter os = new OutputStreamWriter(con.getOutputStream());
+            os.write(requestJson);
+            os.flush();
+            os.close();
+            // For POST only - END
+
+            int responseCode = con.getResponseCode();
+            System.out.println("POST Response Code :: " + responseCode);
+
+            if (responseCode == HttpURLConnection.HTTP_OK) { //success
+                BufferedReader in = new BufferedReader(new InputStreamReader(
+                                con.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                // print result
+                System.out.println(response.toString());
             } else {
-                JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
+                System.out.println("POST request not worked");
             }
-        } catch (HeadlessException | IOException | KeyManagementException | NoSuchAlgorithmException | RestClientException ex) {
+        } catch (Exception ex) {
             System.out.println("Notifikasi : " + ex);
             System.out.println(url);
             if (ex.toString().contains("UnknownHostException")) {
-                JOptionPane.showMessageDialog(null, "Koneksi ke server Kemenkes terputus...!");
+                JOptionPane.showMessageDialog(null, "Koneksi ke server WA terputus...!");
             }
         }
         return token;
@@ -184,8 +225,8 @@ public class BridgingWA {
                     + "Pasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal + "";
             number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='198011042005012011'");
 //            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'token'");
-            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'server'");
-            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'phonenumber'");
+            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'");
+            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_phonenumber'");
             requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message;
 //                    + "&api_key=" + token;
             System.out.println("PostField : " + requestJson);

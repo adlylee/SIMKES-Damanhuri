@@ -984,9 +984,14 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelisi4.add(label32);
         label32.setBounds(260, 10, 57, 23);
 
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "27-09-2022" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "18-11-2022" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy");
         Tanggal.setName("Tanggal"); // NOI18N
+        Tanggal.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                TanggalItemStateChanged(evt);
+            }
+        });
         Tanggal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 TanggalKeyPressed(evt);
@@ -1334,7 +1339,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelisi4.add(label33);
         label33.setBounds(12, 70, 90, 23);
 
-        tgl_lahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "27-09-2022" }));
+        tgl_lahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "18-11-2022" }));
         tgl_lahir.setDisplayFormat("dd-MM-yyyy");
         tgl_lahir.setName("tgl_lahir"); // NOI18N
         tgl_lahir.addItemListener(new java.awt.event.ItemListener() {
@@ -1626,7 +1631,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelGlass9.add(jLabel20);
 
         TanggalCari1.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "27-09-2022" }));
+        TanggalCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "18-11-2022" }));
         TanggalCari1.setDisplayFormat("dd-MM-yyyy");
         TanggalCari1.setName("TanggalCari1"); // NOI18N
         TanggalCari1.setOpaque(false);
@@ -1640,7 +1645,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelGlass9.add(jLabel21);
 
         TanggalCari2.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "27-09-2022" }));
+        TanggalCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "18-11-2022" }));
         TanggalCari2.setDisplayFormat("dd-MM-yyyy");
         TanggalCari2.setName("TanggalCari2"); // NOI18N
         TanggalCari2.setOpaque(false);
@@ -1938,7 +1943,8 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
                 tampil();
                 emptTeks();
             } else {
-                autoNomer();
+//                autoNomer();
+                isNumber();
                 if (Sequel.menyimpantf("utd_donor", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "Nomor Donor", 25, new String[]{
                     NomorDonor.getText(), NamaPendonor.getText(), Valid.SetTgl(Tanggal.getSelectedItem() + ""),
                     Dinas.getSelectedItem().toString(), JK.getSelectedItem().toString().substring(0, 1), Umur.getText(),
@@ -2365,7 +2371,8 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
 
     private void TanggalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TanggalKeyPressed
         Valid.pindah(evt, NomorDonor, Dinas);
-        autoNomer();
+//        autoNomer();
+        isNumber();
     }//GEN-LAST:event_TanggalKeyPressed
 
     private void AlamatKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_AlamatKeyPressed
@@ -3064,18 +3071,20 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
 
     private void BtnWAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnWAActionPerformed
         try {
-            ps3 = koneksi.prepareStatement("select nama, no_telp, jk, tanggal, datediff(now(),tanggal) as hari from utd_donor order by tanggal desc");
+            ps3 = koneksi.prepareStatement("select nama, no_telp, jk, tanggal, datediff(now(),tanggal) as hari from utd_donor order by tanggal desc limit 5");
             try {
                 rs3 = ps3.executeQuery();
                 while (rs3.next()) {
                     if (rs3.getString("jk").equals("L")) {
                         if (rs3.getInt("hari") >= 76) {
                             kirimwa.sendwaUTD(rs3.getString("nama"), rs3.getString("no_telp"));
+                            System.out.println("kirim");
                         }
                     }
                     if (rs3.getString("jk").equals("P")) {
                         if (rs3.getInt("hari") >= 90) {
                             kirimwa.sendwaUTD(rs3.getString("nama"), rs3.getString("no_telp"));
+                            System.out.println("kirim 2");
                         }
                     }
                 }
@@ -3097,6 +3106,10 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     private void BtnWAKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnWAKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnWAKeyPressed
+
+    private void TanggalItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_TanggalItemStateChanged
+        isNumber();
+    }//GEN-LAST:event_TanggalItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -3748,7 +3761,8 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     }
 
     public void emptTeks() {
-        autoNomer();
+//        autoNomer();
+        isNumber();
         NamaPendonor.setText("");
         Umur.setText("");
         Alamat.setText("");
@@ -3798,43 +3812,43 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     }
 
     private void autoNomer() {
-        String nomer_string;
-//        int nomer;
-        int norut = 0;
-        String sql;
-        try {
-            sql = "select ifnull(MAX(CONVERT(RIGHT(no_donor,3),signed)),0) from utd_donor where tanggal='" + Valid.SetTgl(Tanggal.getSelectedItem() + "") + "'";
-            ps = koneksi.prepareStatement(sql);
-            try {
-                rs = ps.executeQuery();
-                while (rs.next()) {
-                    norut = Integer.parseInt(rs.getString(1)) + 1;
-                }
-            } catch (SQLException e) {
-                System.out.println("Notifikasi : " + e);
-            } finally {
-                if (rs != null) {
-                    rs.close();
-                }
-
-                if (ps != null) {
-                    ps.close();
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Notifikasi : " + e);
-        }
-        String str = String.format("%03d", norut);
-        DateFormat df = new SimpleDateFormat("yy"); // Just the year, with 2 digits
-        String year = df.format(new Date());
-        DateFormat mm = new SimpleDateFormat("MM"); // Just the year, with 2 digits
-        String month = mm.format(new Date());
-        DateFormat dd = new SimpleDateFormat("dd"); // Just the year, with 2 digits
-        String day = dd.format(new Date());
-        nomer_string = year + month + day + str;
-//        nomer = Integer.parseInt(nomer_string);
-        NomorDonor.setText(nomer_string);
-//        return nomer;
+//        String nomer_string;
+////        int nomer;
+//        int norut = 0;
+//        String sql;
+//        try {
+//            sql = "select ifnull(MAX(CONVERT(RIGHT(no_donor,3),signed)),0) from utd_donor where tanggal='" + Valid.SetTgl(Tanggal.getSelectedItem() + "") + "'";
+//            ps = koneksi.prepareStatement(sql);
+//            try {
+//                rs = ps.executeQuery();
+//                while (rs.next()) {
+//                    norut = Integer.parseInt(rs.getString(1)) + 1;
+//                }
+//            } catch (SQLException e) {
+//                System.out.println("Notifikasi : " + e);
+//            } finally {
+//                if (rs != null) {
+//                    rs.close();
+//                }
+//
+//                if (ps != null) {
+//                    ps.close();
+//                }
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("Notifikasi : " + e);
+//        }
+//        String str = String.format("%03d", norut);
+//        DateFormat df = new SimpleDateFormat("yy"); // Just the year, with 2 digits
+//        String year = df.format(new Date());
+//        DateFormat mm = new SimpleDateFormat("MM"); // Just the year, with 2 digits
+//        String month = mm.format(new Date());
+//        DateFormat dd = new SimpleDateFormat("dd"); // Just the year, with 2 digits
+//        String day = dd.format(new Date());
+//        nomer_string = year + month + day + str;
+////        nomer = Integer.parseInt(nomer_string);
+//        NomorDonor.setText(nomer_string);
+////        return nomer;
     }
 
     public JTextField getTextField() {
@@ -3860,5 +3874,10 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
         ppHapusBHPNonMedis.setEnabled(var.getutd_donor());
         ppCekal.setEnabled(var.getutd_cekal_darah());
         printWB.setEnabled(var.getutd_cekal_darah());
+    }
+
+    private void isNumber() {
+        Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_donor,3),signed)),0) from utd_donor where tanggal like '%"+Valid.SetTgl(Tanggal.getSelectedItem()+"")+"%'",dateformat.format(Tanggal.getDate()).substring(2,4)
+                +dateformat.format(Tanggal.getDate()).substring(5,7)+dateformat.format(Tanggal.getDate()).substring(8,10),3,NomorDonor); 
     }
 }

@@ -95,7 +95,6 @@ public final class DlgIGD extends javax.swing.JDialog {
             status = "Baru", alamatperujuk = "-", umur = "0", sttsumur = "Th", IPPRINTERTRACER = "",
             validasiregistrasi = Sequel.cariIsi("select wajib_closing_kasir from set_validasi_registrasi"),
             validasicatatan = Sequel.cariIsi("select tampilkan_catatan from set_validasi_catatan");
-    
 
     /**
      * Creates new form DlgReg
@@ -200,7 +199,7 @@ public final class DlgIGD extends javax.swing.JDialog {
                 column.setPreferredWidth(80);
             } else if (i == 24) {
                 column.setPreferredWidth(90);
-            } 
+            }
         }
         tbPetugas.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
@@ -214,7 +213,7 @@ public final class DlgIGD extends javax.swing.JDialog {
                 String tanggal = (String) table.getModel().getValueAt(row, 3);
                 String jam = (String) table.getModel().getValueAt(row, 4);
                 String tgljam = tanggal+' '+jam;
-                
+
                 if (var.getkode().equals("igdponek") || var.getkode().equals("unit01")) {
                     if (compareDates(tgljam) == false && "Belum".equals(stts_rawat)){
                         setBackground(new Color(255, 102, 102));
@@ -257,7 +256,7 @@ public final class DlgIGD extends javax.swing.JDialog {
                         }
                     }
                 }
-                
+
                 if (isSelected) {
                     setForeground(Color.RED);
                 }
@@ -3664,7 +3663,7 @@ public final class DlgIGD extends javax.swing.JDialog {
                     }
                 }
                 if (ChkTracker.isSelected() == true) {
-                    
+
                 }
                 emptTeks();
                 tampil();
@@ -6770,7 +6769,7 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
             }
         }
     }
-    
+
     public void cekSep() {
         String sep = "";
         for (int j = 0; j < tbPetugas.getRowCount(); j++) {
@@ -6808,13 +6807,13 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
             TNoRw.getText(), "-"
         });
     }
-    
+
     public boolean compareDates(String d1) {
         Boolean status = false;
         LocalDateTime currentDate = LocalDateTime.now();
         LocalDateTime currentDateMinus6Months = currentDate.minusHours(2);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            // 2021-03-26
+        // 2021-03-26
 //        System.out.println("currentDate: " + currentDate);
 
         // 2020-09-26

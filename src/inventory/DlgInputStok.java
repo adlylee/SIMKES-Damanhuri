@@ -875,8 +875,8 @@ private void BtnGudangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                 });
             }
 
-            pstampil = koneksi.prepareStatement("select databarang.kode_brng, databarang.nama_brng,jenis.nama, databarang.kode_sat, "
-                    + "databarang.h_beli from databarang inner join jenis on databarang.kdjns=jenis.kdjns "
+            pstampil = koneksi.prepareStatement("select databarang.kode_brng, databarang.nama_brng,jenis.nama, databarang.kode_sat, kategori_barang.nama as katnama, "
+                    + "databarang.h_beli from databarang inner join jenis on databarang.kdjns=jenis.kdjns inner join kategori_barang ON databarang.kode_kategori=kategori_barang.kode "
                     + " where databarang.status='1' and databarang.kode_brng like ? or "
                     + " databarang.status='1' and databarang.nama_brng like ? or "
                     + " databarang.status='1' and databarang.kode_sat like ? or "
@@ -890,8 +890,8 @@ private void BtnGudangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                 while (rstampil.next()) {
                     tabMode.addRow(new Object[]{"", rstampil.getString("kode_brng"),
                         rstampil.getString("nama_brng"),
+                        rstampil.getString("katnama"),
                         rstampil.getString("nama"),
-                        rstampil.getString("kode_sat"),
                         rstampil.getDouble("h_beli"), 0, 0, 0});
                 }
             } catch (Exception e) {
