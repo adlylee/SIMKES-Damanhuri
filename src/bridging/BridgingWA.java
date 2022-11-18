@@ -147,9 +147,9 @@ public class BridgingWA {
 
     public String sendwaUTD(String nama, String no_telp) {
         try {
-            message = "Assalamualaikum " + nama + ". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai .\n"
-                    + "Handak mehabar akan bahwa pian sudah bisa melakukan donor darah kembali. Silakan datang ke Unit Transfusi Darah di Rumah Sakit H. Damanhuri Barabai."
-                    + "\nTerima kasih. Wassalamualaikum";
+            message = "Assalamualaikum wr. wb " + nama + ". \nKami dari Unit Transfusi Darah RSUD H.DAMANHURI BARABAI.\n"
+                    + "Mengingatkan bahwa Bapak/Ibu sudah dapat melakukan donor darah kembali karena waktu untuk donor darah sudah sampai.\n"
+                    + "Kami tunggu ya kedatangannya. Terima kasih.\nWassalamualaikum\n";
             number = Sequel.cariIsi("SELECT no_telp FROM utd_donor where nama = '" + nama+"'");
 //            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'token'");
             urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'server'");
