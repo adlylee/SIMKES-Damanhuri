@@ -13,22 +13,18 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<parameter name="bud" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select resep_pulang.no_resep, resep_pulang.tanggal, resep_pulang.jam, resep_pulang.no_rawat, pasien.no_rkm_medis, 
-		pasien.nm_pasien, databarang.nama_brng, databarang.expire,resep_pulang.dosis, resep_pulang.jml_barang, 
-		kodesatuan.satuan,
-		if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)=' Pagi'),'06:00',
-		if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)='Siang'),'14:00',
-		if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)=' Sore'),'18:00', 
-		if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)='Malam'),'21:00', 
-		if(LEFT(resep_pulang.dosis,1)='2','06:00  18:00', if(LEFT(resep_pulang.dosis,1)='3','06:00  14:00  21:00', 
-		if(LEFT(resep_pulang.dosis,1)='4','06:00  14:00  18:00  21:00',' '))))))) as waktu_pakai
-		from resep_pulang inner join reg_periksa inner join pasien inner join databarang inner join 
-		kodesatuan on resep_pulang.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and 
-		databarang.kode_brng=resep_pulang.kode_brng and resep_pulang.no_rawat=reg_periksa.no_rawat and 
-		kodesatuan.kode_sat=databarang.kode_sat 
-		where resep_pulang.no_resep='202203240001' and resep_pulang.dosis<>'']]>
+		<![CDATA[select resep_pulang.no_resep, resep_pulang.tanggal, resep_pulang.jam, resep_pulang.no_rawat,  
+pasien.no_rkm_medis, pasien.nm_pasien, databarang.nama_brng, databarang.expire,
+resep_pulang.dosis, resep_pulang.jml_barang, kodesatuan.satuan,
+if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)=' Pagi'),'06:00', 
+if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)='Siang'),'14:00',
+if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)=' Sore'),'18:00',
+if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)='Malam'),'21:00',
+if(LEFT(resep_pulang.dosis,1)='2','06:00  18:00',
+if(LEFT(resep_pulang.dosis,1)='3','06:00  14:00  21:00',
+if(LEFT(resep_pulang.dosis,1)='4','06:00  14:00  18:00  21:00',' '))))))) as waktu_pakai 
+from resep_pulang inner join reg_periksa inner join pasien inner join databarang inner join kodesatuan on resep_pulang.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and databarang.kode_brng=resep_pulang.kode_brng and resep_pulang.no_rawat=reg_periksa.no_rawat and kodesatuan.kode_sat=databarang.kode_sat where resep_pulang.no_resep='202003110001' and resep_pulang.dosis<>'']]>
 	</queryString>
 	<field name="no_resep" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -68,7 +64,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="131" splitType="Stretch">
+		<band height="118" splitType="Stretch">
 			<line>
 				<reportElement x="1" y="0" width="172" height="1" forecolor="#006666"/>
 				<graphicElement>
@@ -82,16 +78,14 @@
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement mode="Transparent" x="2" y="21" width="169" height="9"/>
+				<reportElement mode="Transparent" x="3" y="21" width="169" height="9"/>
 				<textElement textAlignment="Center" lineSpacing="Single">
 					<font fontName="Tahoma" size="6"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["No. "+$F{no_resep}+" Tgl. "+$F{tanggal}+" "+$F{jam}]]></textFieldExpression>
 			</textField>
 			<line direction="BottomUp">
-				<reportElement x="0" y="0" width="1" height="130" forecolor="#006666">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
+				<reportElement x="0" y="0" width="1" height="117" forecolor="#006666"/>
 				<graphicElement>
 					<pen lineStyle="Solid"/>
 				</graphicElement>
@@ -104,15 +98,13 @@
 				<text><![CDATA[No. RM]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="130" width="172" height="1" forecolor="#006666"/>
+				<reportElement x="0" y="117" width="172" height="1" forecolor="#006666"/>
 				<graphicElement>
 					<pen lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 			<line direction="BottomUp">
-				<reportElement x="172" y="0" width="1" height="131" forecolor="#006666">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
+				<reportElement x="173" y="0" width="1" height="117" forecolor="#006666"/>
 				<graphicElement>
 					<pen lineStyle="Solid"/>
 				</graphicElement>
@@ -168,21 +160,21 @@
 			<textField>
 				<reportElement stretchType="RelativeToTallestObject" x="1" y="61" width="172" height="29"/>
 				<textElement textAlignment="Center" lineSpacing="Single">
-					<font fontName="Tahoma" size="11" isBold="true"/>
+					<font fontName="Tahoma" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{dosis}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="2" y="45" width="132" height="14"/>
-				<textElement textAlignment="Left" lineSpacing="Single">
-					<font fontName="Tahoma" size="9" isBold="true"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Tahoma" size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{nama_brng}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="133" y="45" width="38" height="14"/>
 				<textElement textAlignment="Right" lineSpacing="Single">
-					<font fontName="Tahoma" size="9" isBold="true"/>
+					<font fontName="Tahoma" size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{jml_barang}]]></textFieldExpression>
 			</textField>
@@ -214,22 +206,6 @@
 				</textElement>
 				<text><![CDATA[APOTEK DEPO RAWAT INAP : 0811-5129-200]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="2" y="117" width="24" height="9"/>
-				<textElement textAlignment="Left" lineSpacing="Single">
-					<font fontName="Tahoma" size="7" isUnderline="false" isStrikeThrough="false"/>
-				</textElement>
-				<text><![CDATA[BUD :]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="21" y="117" width="150" height="9">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement lineSpacing="Single">
-					<font fontName="Tahoma" size="7"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[($P{bud}.equals("") ? "-" : $P{bud})]]></textFieldExpression>
-			</textField>
 		</band>
 	</detail>
 	<summary>
