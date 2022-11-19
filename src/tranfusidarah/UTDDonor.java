@@ -3078,13 +3078,11 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
                     if (rs3.getString("jk").equals("L")) {
                         if (rs3.getInt("hari") >= 76) {
                             kirimwa.sendwaUTD(rs3.getString("nama"), rs3.getString("no_telp"));
-                            System.out.println("kirim");
                         }
                     }
                     if (rs3.getString("jk").equals("P")) {
                         if (rs3.getInt("hari") >= 90) {
                             kirimwa.sendwaUTD(rs3.getString("nama"), rs3.getString("no_telp"));
-                            System.out.println("kirim 2");
                         }
                     }
                 }
@@ -3849,7 +3847,7 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
 ////        nomer = Integer.parseInt(nomer_string);
 //        NomorDonor.setText(nomer_string);
 ////        return nomer;
-    }
+                }
 
     public JTextField getTextField() {
         return NomorDonor;

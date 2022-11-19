@@ -63,7 +63,7 @@ public final class DlgRekapDiet extends javax.swing.JDialog {
         this.setLocation(8, 1);
         setSize(885, 674);
 
-        Object[] rowRwJlDr = {"", "", ""};
+        Object[] rowRwJlDr = {"No.", "Ruang Perawatan", "Jumlah Pasien"};
         tabMode = new DefaultTableModel(null, rowRwJlDr) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -82,6 +82,7 @@ public final class DlgRekapDiet extends javax.swing.JDialog {
             } else if (i == 1) {
                 column.setPreferredWidth(250);
             } else if (i == 2) {
+                column.setPreferredWidth(90);
             }
         }
         tbLaporan.setDefaultRenderer(Object.class, new WarnaTable());
@@ -377,7 +378,7 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                 ttlbangsal = 0;
                 ttlptm = 0;
                 i = 1;
-                tabMode.addRow(new String[]{"No.", "Ruang Perawatan", "Jumlah Pasien"});
+//                tabMode.addRow(new String[]{"No.", "Ruang Perawatan", "Jumlah Pasien"});
                 while (rs.next()) {
                     bangsal = Sequel.cariInteger("select count(kamar_inap.no_rawat), kamar_inap.no_rawat from kamar_inap inner join kamar inner join bangsal on kamar_inap.kd_kamar=kamar.kd_kamar and kamar.kd_bangsal=bangsal.kd_bangsal where " + kamar + " and bangsal.nm_bangsal like ?", rs.getString(1));
                     tabMode.addRow(new String[]{
@@ -395,7 +396,7 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                     i = 1;
                     ttldiet = 0;
                     tabMode.addRow(new String[]{"", "", ""});
-                    tabMode.addRow(new String[]{"No.", "Jenis Diet", "Jumlah Diet"});
+                    tabMode.addRow(new String[]{" No.", "                              Jenis Diet", "     Jumlah Diet"});
                     while (rs2.next()) {
                         diet = Sequel.cariInteger("select count(detail_beri_diet.no_rawat) from kamar_inap inner join detail_beri_diet inner join diet on kamar_inap.no_rawat=detail_beri_diet.no_rawat and detail_beri_diet.kd_diet=diet.kd_diet where " + kamar + " and diet.nama_diet=?", rs2.getString(1));
                         tabMode.addRow(new String[]{

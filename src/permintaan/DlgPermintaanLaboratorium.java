@@ -61,7 +61,7 @@ public final class DlgPermintaanLaboratorium extends javax.swing.JDialog {
     private double ttl=0,item=0;
     private final Properties prop = new Properties();
     
-
+    
     /** Creates new form DlgPerawatan
      * @param parent
      * @param modal */
@@ -465,10 +465,15 @@ public final class DlgPermintaanLaboratorium extends javax.swing.JDialog {
         Pemeriksaan.setBounds(95, 100, 410, 23);
 
         Tanggal.setForeground(new java.awt.Color(50, 70, 50));
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "08-01-2020" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-10-2022" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy");
         Tanggal.setName("Tanggal"); // NOI18N
         Tanggal.setOpaque(false);
+        Tanggal.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                TanggalItemStateChanged(evt);
+            }
+        });
         Tanggal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 TanggalKeyPressed(evt);
@@ -1062,6 +1067,10 @@ private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             Valid.pindah(evt, BtnPrint,BtnKeluar);
         }
     }//GEN-LAST:event_BtnCariKeyPressed
+
+    private void TanggalItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_TanggalItemStateChanged
+        autoNomor();
+    }//GEN-LAST:event_TanggalItemStateChanged
 
     /**
     * @param args the command line arguments
