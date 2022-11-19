@@ -1503,47 +1503,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             // param.put("kontakrs",var.getkontakrs());
             // param.put("emailrs",var.getemailrs());   
             // param.put("logo",Sequel.cariGambar("select logo from setting"));
-            try {
-            ps = koneksi.prepareStatement(
-                    "select * from obat_bud");
-            try {
-                rs = ps.executeQuery();
-                while (rs.next()) {
-                    ps2 = koneksi.prepareStatement(
-                            "select bud from obat_bud where no_resep=? and kode_brng=?");
-                    try {
-                        ps2.setString(1, rs.getString("no_resep"));
-                        ps2.setString(2, rs.getString(kode_brng));
-                        System.out.println("kode: "+rs.getString(kode_brng));
-                        rs2 = ps2.executeQuery();
-                        while (rs2.next()) {
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Notif 2 : " + e);
-                    } finally {
-                        if (rs2 != null) {
-                            rs2.close();
-                        }
-                        if (ps2 != null) {
-                            ps2.close();
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                System.out.println(e);
-            } finally {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Notifikasi : " + e);
-        }
-    
-    
+          
             param.put("bud", Sequel.cariIsi("select bud from obat_bud where no_resep=?", NoResep.getText()));
             if (Sequel.cariInteger(
                     "select count(*) from resep_obat inner join "

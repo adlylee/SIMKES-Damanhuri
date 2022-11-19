@@ -23,7 +23,14 @@
 	<parameter name="nomor" class="java.lang.String"/>
 	<parameter name="logo" class="java.io.InputStream"/>
 	<queryString>
-		<![CDATA[select permintaan_kerohanian.noorder, pasien.no_rkm_medis,pasien.nm_pasien,pasien.tgl_lahir,pasien.no_ktp,pasien.jk,pasien.agama,bangsal.nm_bangsal, jns_kerohanian.nama_rh, petugas.nama, permintaan_kerohanian.petugas from permintaan_kerohanian inner join permintaan_pemeriksaan_kerohanian inner join petugas inner join jns_kerohanian inner join reg_periksa inner join kamar_inap inner join pasien inner join kamar inner join bangsal  on permintaan_kerohanian.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rawat=kamar_inap.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and permintaan_kerohanian.noorder=permintaan_pemeriksaan_kerohanian.noorder and permintaan_pemeriksaan_kerohanian.kd_rh=jns_kerohanian.kd_rh and permintaan_kerohanian.kd_kamar=kamar.kd_kamar and kamar.kd_bangsal=bangsal.kd_bangsal and permintaan_kerohanian.perujuk=petugas.nip wherekamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' group by permintaan_kerohanian.noorder]]>
+		<![CDATA[select permintaan_kerohanian.noorder, pasien.no_rkm_medis, pasien.nm_pasien,
+		pasien.tgl_lahir,pasien.no_ktp,pasien.jk,pasien.agama,bangsal.nm_bangsal, jns_kerohanian.nama_rh, 
+		petugas.nama, permintaan_kerohanian.petugas from permintaan_kerohanian inner join permintaan_pemeriksaan_kerohanian 
+		inner join petugas inner join jns_kerohanian inner join reg_periksa inner join kamar_inap inner join pasien inner join kamar 
+		inner join bangsal  on permintaan_kerohanian.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rawat=kamar_inap.no_rawat 
+		and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and permintaan_kerohanian.noorder=permintaan_pemeriksaan_kerohanian.noorder 
+		and permintaan_pemeriksaan_kerohanian.kd_rh=jns_kerohanian.kd_rh and permintaan_kerohanian.kd_kamar=kamar.kd_kamar 
+		and kamar.kd_bangsal=bangsal.kd_bangsal and permintaan_kerohanian.perujuk=petugas.nip wherekamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' group by permintaan_kerohanian.noorder]]>
 	</queryString>
 	<field name="no_rkm_medis" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -79,7 +86,7 @@
 				<text><![CDATA[Nama]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="2" y="706" width="136" height="16" forecolor="#000000" backcolor="#F0F0DC"/>
+				<reportElement mode="Transparent" x="2" y="688" width="136" height="16" forecolor="#000000" backcolor="#F0F0DC"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Bookman Old Style" size="12" isBold="true" isItalic="true"/>
 				</textElement>
@@ -93,7 +100,7 @@
 				<text><![CDATA[Petunjuk  pengisian :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="1" y="340" width="554" height="35" forecolor="#000000" backcolor="#F0F0DC"/>
+				<reportElement mode="Transparent" x="1" y="315" width="554" height="35" forecolor="#000000" backcolor="#F0F0DC"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Bookman Old Style" size="12" isBold="false"/>
 				</textElement>
@@ -150,367 +157,388 @@
 					Bukti kunjungan diisi oleh petugas rohani.
 
 					]]></text>
-				</staticText>
-				<staticText>
-					<reportElement mode="Transparent" x="3" y="123" width="17" height="77" forecolor="#000000" backcolor="#F0F0DC"/>
-					<textElement textAlignment="Justified" verticalAlignment="Top" lineSpacing="Single">
-						<font fontName="Bookman Old Style" size="12" isBold="false"/>
-					</textElement>
-					<text><![CDATA[1.
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="3" y="123" width="17" height="77" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[1.
 						2.
 
 						3.
 						4.]]></text>
-					</staticText>
-					<line>
-						<reportElement x="1" y="197" width="553" height="1"/>
-					</line>
-					<staticText>
-						<reportElement mode="Transparent" x="3" y="195" width="247" height="25" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement textAlignment="Justified" verticalAlignment="Middle" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false"/>
-						</textElement>
-						<text><![CDATA[Saya yang bertanda tangan dibawah ini :]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="22" y="247" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement verticalAlignment="Middle" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false"/>
-						</textElement>
-						<text><![CDATA[Tanggal Lahir]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="22" y="269" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement verticalAlignment="Middle" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false"/>
-						</textElement>
-						<text><![CDATA[Jenis Kelamin]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="22" y="292" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement verticalAlignment="Middle" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false"/>
-						</textElement>
-						<text><![CDATA[Alamat]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="22" y="315" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement verticalAlignment="Middle" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false"/>
-						</textElement>
-						<text><![CDATA[NIK]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="135" y="224" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement verticalAlignment="Middle" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false"/>
-						</textElement>
-						<text><![CDATA[:]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="135" y="247" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement verticalAlignment="Middle" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false"/>
-						</textElement>
-						<text><![CDATA[:]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="135" y="269" width="135" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement verticalAlignment="Middle" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false"/>
-						</textElement>
-						<text><![CDATA[: Laki-laki/Perempuan]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="135" y="292" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement verticalAlignment="Middle" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false"/>
-						</textElement>
-						<text><![CDATA[:]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="135" y="315" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement verticalAlignment="Middle" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false"/>
-						</textElement>
-						<text><![CDATA[:]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="22" y="377" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement verticalAlignment="Middle" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false"/>
-						</textElement>
-						<text><![CDATA[No. RM]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="22" y="400" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement verticalAlignment="Middle" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false"/>
-						</textElement>
-						<text><![CDATA[Nama Pasien]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="22" y="422" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement verticalAlignment="Middle" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false"/>
-						</textElement>
-						<text><![CDATA[Tanggal Lahir]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="22" y="445" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement verticalAlignment="Middle" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false"/>
-						</textElement>
-						<text><![CDATA[NIK]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="22" y="468" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement verticalAlignment="Middle" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false"/>
-						</textElement>
-						<text><![CDATA[Jenis Kelamin]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="22" y="491" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement verticalAlignment="Middle" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false"/>
-						</textElement>
-						<text><![CDATA[Agama]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="22" y="514" width="113" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement verticalAlignment="Middle" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false"/>
-						</textElement>
-						<text><![CDATA[Dirawat di Ruang]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="22" y="537" width="188" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement verticalAlignment="Middle" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false"/>
-						</textElement>
-						<text><![CDATA[Meminta Pelayanan Kerohanian]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="1" y="580" width="554" height="35" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement textAlignment="Justified" verticalAlignment="Top" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false"/>
-						</textElement>
-						<text><![CDATA[Demikian surat permohonan permintaan pelayanan kerohanian ini saya buat, atas perhatian nya diucapkan terima kasih.]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="80" y="642" width="149" height="19" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false" isItalic="false"/>
-						</textElement>
-						<text><![CDATA[Petugas Ruangan]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="320" y="641" width="149" height="19" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false" isItalic="false"/>
-						</textElement>
-						<text><![CDATA[Pemohon]]></text>
-					</staticText>
-					<line>
-						<reportElement x="1" y="704" width="553" height="1"/>
-					</line>
-					<staticText>
-						<reportElement mode="Transparent" x="1" y="722" width="554" height="49" forecolor="#000000" backcolor="#F0F0DC"/>
-						<textElement textAlignment="Justified" verticalAlignment="Top" lineSpacing="Single">
-							<font fontName="Bookman Old Style" size="12" isBold="false"/>
-						</textElement>
-						<text><![CDATA[Saya yang bertanda tangan di bawah ini :
+			</staticText>
+			<line>
+				<reportElement x="1" y="197" width="553" height="1"/>
+			</line>
+			<staticText>
+				<reportElement mode="Transparent" x="3" y="195" width="247" height="25" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Saya yang bertanda tangan dibawah ini :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="22" y="247" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Tanggal Lahir]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="22" y="269" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Jenis Kelamin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="22" y="292" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Alamat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="135" y="224" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="135" y="247" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="135" y="269" width="135" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[: Laki-laki/Perempuan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="135" y="292" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="22" y="345" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[No. RM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="22" y="368" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Nama Pasien]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="22" y="390" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Tanggal Lahir]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="22" y="413" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[NIK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="22" y="436" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Jenis Kelamin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="22" y="459" width="94" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Agama]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="22" y="482" width="113" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Dirawat di Ruang]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="22" y="505" width="188" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Meminta Pelayanan Kerohanian]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="1" y="571" width="554" height="35" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Demikian surat permohonan permintaan pelayanan kerohanian ini saya buat, atas perhatian nya diucapkan terima kasih.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="80" y="624" width="149" height="19" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Petugas Ruangan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="320" y="623" width="149" height="19" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Pemohon]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="686" width="553" height="1"/>
+			</line>
+			<staticText>
+				<reportElement mode="Transparent" x="1" y="704" width="554" height="49" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Saya yang bertanda tangan di bawah ini :
 							Nama Petugas Rohani :
 							Telah melaksanakan kegiatan kerohanian yang telah diminta, berupa :]]></text>
-						</staticText>
-						<staticText>
-							<reportElement mode="Transparent" x="326" y="808" width="56" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
-							<textElement textAlignment="Left" verticalAlignment="Middle" lineSpacing="Single">
-								<font fontName="Bookman Old Style" size="12" isBold="false"/>
-							</textElement>
-							<text><![CDATA[Barabai,]]></text>
-						</staticText>
-						<staticText>
-							<reportElement mode="Transparent" x="458" y="808" width="30" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
-							<textElement textAlignment="Left" verticalAlignment="Middle" lineSpacing="Single">
-								<font fontName="Bookman Old Style" size="12" isBold="false"/>
-							</textElement>
-							<text><![CDATA[Jam]]></text>
-						</staticText>
-						<staticText>
-							<reportElement mode="Transparent" x="164" y="811" width="159" height="19" forecolor="#000000" backcolor="#F0F0DC"/>
-							<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="Single">
-								<font fontName="Bookman Old Style" size="12" isBold="false" isItalic="false"/>
-							</textElement>
-							<text><![CDATA[Petugas Ruangan]]></text>
-						</staticText>
-						<staticText>
-							<reportElement mode="Transparent" x="326" y="826" width="225" height="19" forecolor="#000000" backcolor="#F0F0DC"/>
-							<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="Single">
-								<font fontName="Bookman Old Style" size="12" isBold="false" isItalic="false"/>
-							</textElement>
-							<text><![CDATA[Petugas Rohani]]></text>
-						</staticText>
-						<staticText>
-							<reportElement mode="Transparent" x="2" y="811" width="162" height="19" forecolor="#000000" backcolor="#F0F0DC"/>
-							<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="Single">
-								<font fontName="Bookman Old Style" size="12" isBold="false" isItalic="false"/>
-							</textElement>
-							<text><![CDATA[Pasien/Keluarga Pasien]]></text>
-						</staticText>
-						<line>
-							<reportElement x="1" y="809" width="553" height="1"/>
-						</line>
-						<line>
-							<reportElement x="1" y="894" width="553" height="1"/>
-						</line>
-						<line>
-							<reportElement x="553" y="810" width="1" height="85"/>
-						</line>
-						<line>
-							<reportElement x="1" y="810" width="1" height="85"/>
-						</line>
-						<line>
-							<reportElement x="164" y="810" width="1" height="85"/>
-						</line>
-						<line>
-							<reportElement x="323" y="810" width="1" height="85"/>
-						</line>
-						<textField>
-							<reportElement x="0" y="31" width="553" height="14"/>
-							<textElement textAlignment="Center" lineSpacing="Single">
-								<font fontName="Arial" size="9"/>
-							</textElement>
-							<textFieldExpression class="java.lang.String"><![CDATA[$P{alamatrs}+" 71314 Telepon : (0517) 41779 - 41118"]]></textFieldExpression>
-						</textField>
-						<image scaleImage="FillFrame" onErrorType="Blank">
-							<reportElement x="0" y="-4" width="51" height="57"/>
-							<imageExpression class="java.io.InputStream"><![CDATA[$P{logo}]]></imageExpression>
-						</image>
-						<image scaleImage="FillFrame" onErrorType="Blank">
-							<reportElement x="480" y="2" width="73" height="45"/>
-							<imageExpression class="java.lang.String"><![CDATA["setting/logo-rshd.png"]]></imageExpression>
-						</image>
-						<staticText>
-							<reportElement mode="Transparent" x="285" y="683" width="220" height="19" forecolor="#000000" backcolor="#F0F0DC"/>
-							<textElement textAlignment="Center" verticalAlignment="Bottom" lineSpacing="Single">
-								<font fontName="Bookman Old Style" size="12" isBold="false" isItalic="false"/>
-							</textElement>
-							<text><![CDATA[(                                      )]]></text>
-						</staticText>
-						<textField>
-							<reportElement x="215" y="379" width="263" height="20"/>
-							<textElement verticalAlignment="Middle" lineSpacing="Single">
-								<font fontName="Bookman Old Style" size="11"/>
-							</textElement>
-							<textFieldExpression class="java.lang.String"><![CDATA[": "+$F{no_rkm_medis}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement x="215" y="402" width="335" height="20"/>
-							<textElement verticalAlignment="Middle" lineSpacing="Single">
-								<font fontName="Bookman Old Style" size="11"/>
-							</textElement>
-							<textFieldExpression class="java.lang.String"><![CDATA[": "+$F{nm_pasien}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement x="215" y="446" width="335" height="20"/>
-							<textElement verticalAlignment="Middle" lineSpacing="Single">
-								<font fontName="Bookman Old Style" size="11"/>
-							</textElement>
-							<textFieldExpression class="java.lang.String"><![CDATA[": "+$F{no_ktp}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement x="215" y="542" width="335" height="38"/>
-							<textElement verticalAlignment="Top" lineSpacing="Single">
-								<font fontName="Bookman Old Style" size="11"/>
-							</textElement>
-							<textFieldExpression class="java.lang.String"><![CDATA[": "+$F{nama_rh}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement x="215" y="469" width="335" height="20"/>
-							<textElement verticalAlignment="Middle" lineSpacing="Single">
-								<font fontName="Bookman Old Style" size="11"/>
-							</textElement>
-							<textFieldExpression class="java.lang.String"><![CDATA[": "+$F{jk}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement x="215" y="492" width="335" height="20"/>
-							<textElement verticalAlignment="Middle" lineSpacing="Single">
-								<font fontName="Bookman Old Style" size="11"/>
-							</textElement>
-							<textFieldExpression class="java.lang.String"><![CDATA[": "+$F{agama}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement x="215" y="516" width="335" height="20"/>
-							<textElement verticalAlignment="Middle" lineSpacing="Single">
-								<font fontName="Bookman Old Style" size="11"/>
-							</textElement>
-							<textFieldExpression class="java.lang.String"><![CDATA[": "+$F{nm_bangsal}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement x="1" y="763" width="554" height="44"/>
-							<textElement verticalAlignment="Top" lineSpacing="Single">
-								<font fontName="Bookman Old Style" size="11"/>
-							</textElement>
-							<textFieldExpression class="java.lang.String"><![CDATA[$F{nama_rh}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement x="40" y="683" width="230" height="20"/>
-							<textElement textAlignment="Center" verticalAlignment="Bottom" lineSpacing="Single">
-								<font fontName="Bookman Old Style" size="11"/>
-							</textElement>
-							<textFieldExpression class="java.lang.String"><![CDATA["("+$F{nama}+")"]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement x="142" y="733" width="329" height="20"/>
-							<textElement verticalAlignment="Middle" lineSpacing="Single">
-								<font fontName="Bookman Old Style" size="11"/>
-							</textElement>
-							<textFieldExpression class="java.lang.String"><![CDATA[$F{petugas}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement x="325" y="873" width="228" height="20"/>
-							<textElement textAlignment="Center" verticalAlignment="Bottom" lineSpacing="Single">
-								<font fontName="Bookman Old Style" size="11"/>
-							</textElement>
-							<textFieldExpression class="java.lang.String"><![CDATA[$F{petugas}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement x="164" y="873" width="158" height="20"/>
-							<textElement textAlignment="Center" verticalAlignment="Bottom" lineSpacing="Single">
-								<font fontName="Bookman Old Style" size="11"/>
-							</textElement>
-							<textFieldExpression class="java.lang.String"><![CDATA[$F{nama}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement x="2" y="873" width="162" height="20"/>
-							<textElement textAlignment="Center" verticalAlignment="Bottom" lineSpacing="Single">
-								<font fontName="Bookman Old Style" size="11"/>
-							</textElement>
-							<textFieldExpression class="java.lang.String"><![CDATA[$F{nm_pasien}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement x="215" y="424" width="268" height="20"/>
-							<textElement verticalAlignment="Middle" lineSpacing="Single">
-								<font fontName="Bookman Old Style" size="11"/>
-							</textElement>
-							<textFieldExpression class="java.lang.String"><![CDATA[": "+$F{tgl_lahir}]]></textFieldExpression>
-						</textField>
-						<textField pattern="MM/dd/yyyy" isBlankWhenNull="true">
-							<reportElement mode="Transparent" x="271" y="610" width="165" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
-							<textElement textAlignment="Right" verticalAlignment="Middle" lineSpacing="Single" markup="none">
-								<font fontName="Bookman Old Style" size="12" isBold="false"/>
-							</textElement>
-							<textFieldExpression class="java.lang.String"><![CDATA["Barabai,"+new Date()]]></textFieldExpression>
-						</textField>
-						<textField pattern="HH:mm:ss" isBlankWhenNull="true">
-							<reportElement mode="Transparent" x="443" y="610" width="110" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
-							<textElement textAlignment="Left" verticalAlignment="Middle" lineSpacing="Single" markup="none">
-								<font fontName="Bookman Old Style" size="12" isBold="false"/>
-							</textElement>
-							<textFieldExpression class="java.lang.String"><![CDATA["Jam"+new Date()]]></textFieldExpression>
-						</textField>
-					</band>
-				</title>
-			</jasperReport>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="164" y="811" width="167" height="19" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Petugas Ruangan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="334" y="826" width="218" height="19" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Petugas Rohani]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="2" y="811" width="162" height="19" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Pasien/Keluarga Pasien]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="809" width="553" height="1"/>
+			</line>
+			<line>
+				<reportElement x="1" y="894" width="553" height="1"/>
+			</line>
+			<line>
+				<reportElement x="553" y="810" width="1" height="85"/>
+			</line>
+			<line>
+				<reportElement x="1" y="810" width="1" height="85"/>
+			</line>
+			<line>
+				<reportElement x="164" y="810" width="1" height="85"/>
+			</line>
+			<line>
+				<reportElement x="332" y="810" width="1" height="85"/>
+			</line>
+			<textField>
+				<reportElement x="0" y="31" width="553" height="14"/>
+				<textElement textAlignment="Center" lineSpacing="Single">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{alamatrs}+" 71314 Telepon : (0517) 41779 - 41118"]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="0" y="-4" width="51" height="57"/>
+				<imageExpression class="java.io.InputStream"><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="480" y="2" width="73" height="45"/>
+				<imageExpression class="java.lang.String"><![CDATA["setting/logo-rshd.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement mode="Transparent" x="285" y="665" width="220" height="19" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[(                                      )]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="215" y="347" width="263" height="20"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[": "+$F{no_rkm_medis}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="215" y="370" width="335" height="20"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[": "+$F{nm_pasien}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="215" y="414" width="335" height="20"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[": "+$F{no_ktp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="215" y="510" width="335" height="59"/>
+				<textElement verticalAlignment="Top" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[": "+$F{nama_rh}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="215" y="437" width="335" height="20"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[": "+($F{jk}.toLowerCase().equals("p") ?    "PEREMPUAN":"LAKI-LAKI")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="215" y="460" width="335" height="20"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[": "+$F{agama}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="215" y="484" width="335" height="20"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[": "+$F{nm_bangsal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="747" width="554" height="60"/>
+				<textElement verticalAlignment="Top" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nama_rh}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="665" width="230" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["("+$F{nama}+")"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="142" y="715" width="329" height="20"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{petugas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="334" y="873" width="219" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{petugas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="164" y="860" width="166" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nama}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="860" width="162" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nm_pasien}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="345" y="603" width="76" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" lineSpacing="Single" markup="none">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="284" y="604" width="59" height="19" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Barabai,]]></text>
+			</staticText>
+			<textField pattern="HH:mm:ss" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="454" y="603" width="76" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" lineSpacing="Single" markup="none">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="419" y="604" width="32" height="19" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Jam]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="222" y="390" width="190" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single" markup="none">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{tgl_lahir}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="215" y="389" width="12" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="387" y="809" width="76" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" lineSpacing="Single" markup="none">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="326" y="810" width="59" height="19" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Barabai,]]></text>
+			</staticText>
+			<textField pattern="HH:mm:ss" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="496" y="809" width="76" height="22" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" lineSpacing="Single" markup="none">
+					<font fontName="Bookman Old Style" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="461" y="811" width="32" height="19" forecolor="#000000" backcolor="#F0F0DC"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Bookman Old Style" size="12" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Jam]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>

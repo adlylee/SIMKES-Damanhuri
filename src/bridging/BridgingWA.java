@@ -167,9 +167,9 @@ public class BridgingWA {
 
     public String sendwaUTD(String nama, String no_telp) {
         try {
-            message = "Assalamualaikum " + nama + ". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai .\n"
-                    + "Handak mehabar akan bahwa pian sudah bisa melakukan donor darah kembali. Silakan datang ke Unit Transfusi Darah di Rumah Sakit H. Damanhuri Barabai."
-                    + "\nTerima kasih. Wassalamualaikum";
+            message = "Assalamualaikum wr.wb " + nama + ". \nKami dari Unit Transfusi Darah RSUD H.DAMANHURI BARABAI\n"
+                    + "Mengingatkan bahwa Bapak/Ibu sudah dapat melakukan donor darah kembali karena waktu untuk donor darah sudah sampai."
+                    + "\nKami tunggu ya kedatangannya.\nTerima kasih. Wassalamualaikum";
 
             urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'") + "/wagateway/kirimpesan";
             sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_phonenumber'");
