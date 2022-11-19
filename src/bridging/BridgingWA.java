@@ -38,7 +38,8 @@ public class BridgingWA {
 
     private static final Properties prop = new Properties();
     private sekuel Sequel = new sekuel();
-    private String Key, pass, url, token, requestJson, urlApi = "", sender = "", number = "", message = "", reurn = "", USER_AGENT = "Mozilla/5.0";;
+    private String Key, pass, url, token, requestJson, urlApi = "", sender = "", number = "", message = "", reurn = "", USER_AGENT = "Mozilla/5.0";
+    ;
     private HttpHeaders headers;
     private HttpEntity requestEntity;
     private ObjectMapper mapper = new ObjectMapper();
@@ -46,8 +47,8 @@ public class BridgingWA {
     private JsonNode nameNode;
     private JsonNode response;
 
-    public String getHmac() {        
-        try {                    
+    public String getHmac() {
+        try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] hashInBytes = md.digest(pass.getBytes(StandardCharsets.UTF_8));
 
@@ -55,11 +56,11 @@ public class BridgingWA {
             for (byte b : hashInBytes) {
                 sb.append(String.format("%02x", b));
             }
-            Key=sb.toString();            
+            Key = sb.toString();
         } catch (Exception ex) {
-            System.out.println("Notifikasi : "+ex);
+            System.out.println("Notifikasi : " + ex);
         }
-	return Key;
+        return Key;
     }
 
     public RestTemplate getRest() throws NoSuchAlgorithmException, KeyManagementException {
@@ -102,7 +103,7 @@ public class BridgingWA {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-            MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
+            MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
             map.add("type", "text");
             map.add("sender", sender);
             map.add("number", number);
@@ -111,7 +112,7 @@ public class BridgingWA {
 
             HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
 
-            ResponseEntity<String> response = new RestTemplate().postForEntity( url, request , String.class );
+            ResponseEntity<String> response = new RestTemplate().postForEntity(url, request, String.class);
             root = mapper.readTree(response.getBody());
             System.out.println(root);
             token = root.path("message").asText();
@@ -170,17 +171,17 @@ public class BridgingWA {
                     + "Handak mehabar akan bahwa pian sudah bisa melakukan donor darah kembali. Silakan datang ke Unit Transfusi Darah di Rumah Sakit H. Damanhuri Barabai."
                     + "\nTerima kasih. Wassalamualaikum";
 
-            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'")+"/wagateway/kirimpesan";
+            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'") + "/wagateway/kirimpesan";
             sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_phonenumber'");
-            requestJson = "type=text&sender=" + sender + "&number="+no_telp+"&message=" + message;
+            requestJson = "type=text&sender=" + sender + "&number=" + no_telp + "&message=" + message;
             System.out.println("PostField : " + requestJson);
 
             URL obj = new URL(urlApi);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("User-Agent", USER_AGENT);
-            con.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
-            con.setRequestProperty( "charset", "utf-8");
+            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            con.setRequestProperty("charset", "utf-8");
 
             // For POST only - START
             con.setDoOutput(true);
@@ -195,7 +196,7 @@ public class BridgingWA {
 
             if (responseCode == HttpURLConnection.HTTP_OK) { //success
                 BufferedReader in = new BufferedReader(new InputStreamReader(
-                                con.getInputStream()));
+                        con.getInputStream()));
                 String inputLine;
                 StringBuffer response = new StringBuffer();
 

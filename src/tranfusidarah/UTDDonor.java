@@ -3070,7 +3070,7 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
                 while (rs3.next()) {
                     if (rs3.getString("jk").equals("L")) {
                         if (rs3.getInt("hari") >= 76) {
-                            kirimwa.sendwaUTD(rs3.getString("nama"), rs3.getString("no_telp"));
+                            kirimwa.sendwaUTD(rs3.getString("nama"), "08214909444");
                         }
                     }
                     if (rs3.getString("jk").equals("P")) {
