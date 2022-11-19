@@ -465,7 +465,7 @@ public final class DlgPermintaanLaboratorium extends javax.swing.JDialog {
         Pemeriksaan.setBounds(95, 100, 410, 23);
 
         Tanggal.setForeground(new java.awt.Color(50, 70, 50));
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-10-2022" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "18-11-2022" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy");
         Tanggal.setName("Tanggal"); // NOI18N
         Tanggal.setOpaque(false);
@@ -576,6 +576,7 @@ public final class DlgPermintaanLaboratorium extends javax.swing.JDialog {
         PanelInput.add(jLabel4);
         jLabel4.setBounds(550, 100, 98, 23);
 
+        TNoPermintaan.setEditable(false);
         TNoPermintaan.setHighlighter(null);
         TNoPermintaan.setName("TNoPermintaan"); // NOI18N
         TNoPermintaan.addKeyListener(new java.awt.event.KeyAdapter() {

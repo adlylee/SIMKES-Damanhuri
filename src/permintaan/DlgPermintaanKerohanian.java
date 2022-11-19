@@ -435,10 +435,15 @@ public final class DlgPermintaanKerohanian extends javax.swing.JDialog {
         PanelInput.add(jLabel9);
         jLabel9.setBounds(0, 42, 92, 23);
 
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "14-10-2022" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "19-11-2022" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy");
         Tanggal.setName("Tanggal"); // NOI18N
         Tanggal.setOpaque(false);
+        Tanggal.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                TanggalItemStateChanged(evt);
+            }
+        });
         Tanggal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 TanggalKeyPressed(evt);
@@ -484,6 +489,7 @@ public final class DlgPermintaanKerohanian extends javax.swing.JDialog {
         PanelInput.add(jLabel4);
         jLabel4.setBounds(195, 72, 90, 23);
 
+        TNoPermintaan.setEditable(false);
         TNoPermintaan.setHighlighter(null);
         TNoPermintaan.setName("TNoPermintaan"); // NOI18N
         TNoPermintaan.addActionListener(new java.awt.event.ActionListener() {
@@ -826,6 +832,10 @@ private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     private void TKdKamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TKdKamarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TKdKamarActionPerformed
+
+    private void TanggalItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_TanggalItemStateChanged
+        autoNomor();
+    }//GEN-LAST:event_TanggalItemStateChanged
 
     /**
      * @param args the command line arguments
