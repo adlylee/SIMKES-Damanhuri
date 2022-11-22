@@ -2794,47 +2794,4 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         KdDokter.setText(Sequel.cariIsi("select resep_dokter_pulang.kd_dokter from resep_pulang inner join resep_dokter_pulang on resep_pulang.no_resep=resep_dokter_pulang.no_resep where resep_pulang.no_rawat=?", TNoRw.getText()));
         NmDokter.setText(Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?", KdDokter.getText()));
     }
-
-    public void tampilresep(String kode_brng) {
-        this.kode_brng = kode_brng;
-        try {
-            ps = koneksi.prepareStatement(
-                    "select * from obat_bud");
-            try {
-                rs = ps.executeQuery();
-                while (rs.next()) {
-                    ps2 = koneksi.prepareStatement(
-                            "select bud from obat_bud where no_resep=? and kode_brng=?");
-                    try {
-                        ps2.setString(1, rs.getString("no_resep"));
-                        ps2.setString(2, rs.getString(kode_brng));
-                        System.out.println("kode: " + rs.getString(kode_brng));
-                        rs2 = ps2.executeQuery();
-                        while (rs2.next()) {
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Notif 2 : " + e);
-                    } finally {
-                        if (rs2 != null) {
-                            rs2.close();
-                        }
-                        if (ps2 != null) {
-                            ps2.close();
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                System.out.println(e);
-            } finally {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Notifikasi : " + e);
-        }
-    }
 }
