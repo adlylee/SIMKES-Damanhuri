@@ -223,32 +223,83 @@ public class BridgingWA {
     public String sendwaKerohanian(String nama, String tanggal, String kamar) {
         try {
             message = "Pemberitahuan Permintaan Kerohanian.\n\n"
-                    + "Pasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal + "";
-            number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='198011042005012011'");
-//            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'token'");
-            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'");
+                    + "Pasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal +"";
+            number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='07012092022813042'");
+            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'")+"/wagateway/kirimpesan";
             sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_phonenumber'");
-            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message;
-//                    + "&api_key=" + token;
+            requestJson = "type=text&sender=" + sender + "&number="+number+"&message=" + message;
             System.out.println("PostField : " + requestJson);
-            requestEntity = new HttpEntity(requestJson);
-            url = urlApi + "/wagateway/kirimpesan";
-            root = mapper.readTree(getRest().exchange(url, HttpMethod.POST, requestEntity, String.class).getBody());
-            System.out.println(root);
-            token = root.path("message").asText();
-            nameNode = root.path("data");
-            if (root.path("status").asText().equals("true")) {
-                reurn = "Sukses";
+
+            URL obj = new URL(urlApi);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", USER_AGENT);
+            con.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
+            con.setRequestProperty( "charset", "utf-8");
+
+            // For POST only - START
+            con.setDoOutput(true);
+            OutputStreamWriter os = new OutputStreamWriter(con.getOutputStream());
+            os.write(requestJson);
+            os.flush();
+            os.close();
+            // For POST only - END
+
+            int responseCode = con.getResponseCode();
+            System.out.println("POST Response Code :: " + responseCode);
+
+            if (responseCode == HttpURLConnection.HTTP_OK) { //success
+                BufferedReader in = new BufferedReader(new InputStreamReader(
+                                con.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                // print result
+                System.out.println(response.toString());
             } else {
-                JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
+                System.out.println("POST request not worked");
             }
-        } catch (HeadlessException | IOException | KeyManagementException | NoSuchAlgorithmException | RestClientException ex) {
+        } catch (Exception ex) {
             System.out.println("Notifikasi : " + ex);
             System.out.println(url);
             if (ex.toString().contains("UnknownHostException")) {
-                JOptionPane.showMessageDialog(null, "Koneksi ke server Kemenkes terputus...!");
+                JOptionPane.showMessageDialog(null, "Koneksi ke server WA terputus...!");
             }
         }
         return token;
+//        try {
+//            message = "Pemberitahuan Permintaan Kerohanian.\n\n"
+//                    + "Pasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal + "";
+//            number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='07012092022813042'");
+////            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'token'");
+//            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'");
+//            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_phonenumber'");
+//            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message;
+////                    + "&api_key=" + token;
+//            System.out.println("PostField : " + requestJson);
+//            requestEntity = new HttpEntity(requestJson);
+//            url = urlApi + "/wagateway/kirimpesan";
+//            root = mapper.readTree(getRest().exchange(url, HttpMethod.POST, requestEntity, String.class).getBody());
+//            System.out.println(root);
+//            token = root.path("message").asText();
+//            nameNode = root.path("data");
+//            if (root.path("status").asText().equals("true")) {
+//                reurn = "Sukses";
+//            } else {
+//                JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
+//            }
+//        } catch (HeadlessException | IOException | KeyManagementException | NoSuchAlgorithmException | RestClientException ex) {
+//            System.out.println("Notifikasi : " + ex);
+//            System.out.println(url);
+//            if (ex.toString().contains("UnknownHostException")) {
+//                JOptionPane.showMessageDialog(null, "Koneksi ke server Kemenkes terputus...!");
+//            }
+//        }
+//        return token;
     }
 }
