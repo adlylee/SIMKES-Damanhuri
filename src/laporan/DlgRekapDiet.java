@@ -63,7 +63,7 @@ public final class DlgRekapDiet extends javax.swing.JDialog {
         this.setLocation(8, 1);
         setSize(885, 674);
 
-        Object[] rowRwJlDr = {"No.", "Ruang Perawatan", "Jumlah Pasien"};
+        Object[] rowRwJlDr = {"NO.", "RUANG PERAWATAN", "JUMLAH PASIEN"};
         tabMode = new DefaultTableModel(null, rowRwJlDr) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -396,7 +396,7 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                     i = 1;
                     ttldiet = 0;
                     tabMode.addRow(new String[]{"", "", ""});
-                    tabMode.addRow(new String[]{" No.", "                              Jenis Diet", "     Jumlah Diet"});
+                    tabMode.addRow(new String[]{" NO.", "                              JENIS DIET", "    JUMLAH DIET"});
                     while (rs2.next()) {
                         diet = Sequel.cariInteger("select count(detail_beri_diet.no_rawat) from kamar_inap inner join detail_beri_diet inner join diet on kamar_inap.no_rawat=detail_beri_diet.no_rawat and detail_beri_diet.kd_diet=diet.kd_diet where " + kamar + " and diet.nama_diet=?", rs2.getString(1));
                         tabMode.addRow(new String[]{
