@@ -38,7 +38,8 @@ public class BridgingWA {
 
     private static final Properties prop = new Properties();
     private sekuel Sequel = new sekuel();
-    private String Key, pass, url, token, requestJson, urlApi = "", sender = "", number = "", message = "", reurn = "", USER_AGENT = "Mozilla/5.0";;
+    private String Key, pass, url, token, requestJson, urlApi = "", sender = "", number = "", message = "", reurn = "", USER_AGENT = "Mozilla/5.0";
+    ;
     private HttpHeaders headers;
     private HttpEntity requestEntity;
     private ObjectMapper mapper = new ObjectMapper();
@@ -46,8 +47,8 @@ public class BridgingWA {
     private JsonNode nameNode;
     private JsonNode response;
 
-    public String getHmac() {        
-        try {                    
+    public String getHmac() {
+        try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] hashInBytes = md.digest(pass.getBytes(StandardCharsets.UTF_8));
 
@@ -55,11 +56,11 @@ public class BridgingWA {
             for (byte b : hashInBytes) {
                 sb.append(String.format("%02x", b));
             }
-            Key=sb.toString();            
+            Key = sb.toString();
         } catch (Exception ex) {
-            System.out.println("Notifikasi : "+ex);
+            System.out.println("Notifikasi : " + ex);
         }
-	return Key;
+        return Key;
     }
 
     public RestTemplate getRest() throws NoSuchAlgorithmException, KeyManagementException {
@@ -90,7 +91,7 @@ public class BridgingWA {
         try {
             message = "Assalamualaikum " + nama + ". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai .\n"
                     + " Handak behabar dan meingatakan pian, kalau nya BESOK tanggal " + tanggal + " pian ada JADWAL PERIKSA ke " + poli + " di Rumah Sakit H. Damanhuri Barabai . Pian bisa datang LANGSUNG ke ANJUNGAN PASIEN MANDIRI (APM) ."
-                    + " Pastikan RUJUKAN BPJS pian masih berlaku. Jika sudah habis, maka mintalah rujukan kembali untuk berobat ke Rumah Sakit.Terima kasih \\n \\nWassalamualaikum\n"
+                    + " Pastikan RUJUKAN BPJS pian masih berlaku. Jika sudah habis, maka mintalah rujukan kembali untuk berobat ke Rumah Sakit.Terima kasih \n \nWassalamualaikum\n"
                     + " Daftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US";
             number = Sequel.cariIsi("SELECT no_tlp FROM pasien WHERE no_rkm_medis = " + no_rkm_medis);
             token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'token'");
@@ -102,7 +103,7 @@ public class BridgingWA {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-            MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
+            MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
             map.add("type", "text");
             map.add("sender", sender);
             map.add("number", number);
@@ -111,7 +112,7 @@ public class BridgingWA {
 
             HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
 
-            ResponseEntity<String> response = new RestTemplate().postForEntity( url, request , String.class );
+            ResponseEntity<String> response = new RestTemplate().postForEntity(url, request, String.class);
             root = mapper.readTree(response.getBody());
             System.out.println(root);
             token = root.path("message").asText();
@@ -170,17 +171,17 @@ public class BridgingWA {
                     + "Mengingatkan bahwa Bapak/Ibu sudah dapat melakukan donor darah kembali karena waktu untuk donor darah sudah sampai."
                     + "\nKami tunggu ya kedatangannya.\nTerima kasih. Wassalamualaikum";
 
-            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'")+"/wagateway/kirimpesan";
+            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'") + "/wagateway/kirimpesan";
             sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_phonenumber'");
-            requestJson = "type=text&sender=" + sender + "&number="+no_telp+"&message=" + message;
+            requestJson = "type=text&sender=" + sender + "&number=" + no_telp + "&message=" + message;
             System.out.println("PostField : " + requestJson);
 
             URL obj = new URL(urlApi);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("User-Agent", USER_AGENT);
-            con.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
-            con.setRequestProperty( "charset", "utf-8");
+            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            con.setRequestProperty("charset", "utf-8");
 
             // For POST only - START
             con.setDoOutput(true);
@@ -195,7 +196,7 @@ public class BridgingWA {
 
             if (responseCode == HttpURLConnection.HTTP_OK) { //success
                 BufferedReader in = new BufferedReader(new InputStreamReader(
-                                con.getInputStream()));
+                        con.getInputStream()));
                 String inputLine;
                 StringBuffer response = new StringBuffer();
 
@@ -222,19 +223,19 @@ public class BridgingWA {
     public String sendwaKerohanian(String nama, String tanggal, String kamar) {
         try {
             message = "Pemberitahuan Permintaan Kerohanian.\n\n"
-                    + "Pasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal +"";
+                    + "Pasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal + "";
             number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='07012092022813042'");
-            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'")+"/wagateway/kirimpesan";
+            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'") + "/wagateway/kirimpesan";
             sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_phonenumber'");
-            requestJson = "type=text&sender=" + sender + "&number="+number+"&message=" + message;
+            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message;
             System.out.println("PostField : " + requestJson);
 
             URL obj = new URL(urlApi);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("User-Agent", USER_AGENT);
-            con.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
-            con.setRequestProperty( "charset", "utf-8");
+            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            con.setRequestProperty("charset", "utf-8");
 
             // For POST only - START
             con.setDoOutput(true);
@@ -249,7 +250,7 @@ public class BridgingWA {
 
             if (responseCode == HttpURLConnection.HTTP_OK) { //success
                 BufferedReader in = new BufferedReader(new InputStreamReader(
-                                con.getInputStream()));
+                        con.getInputStream()));
                 String inputLine;
                 StringBuffer response = new StringBuffer();
 
@@ -271,34 +272,5 @@ public class BridgingWA {
             }
         }
         return token;
-//        try {
-//            message = "Pemberitahuan Permintaan Kerohanian.\n\n"
-//                    + "Pasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal + "";
-//            number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='07012092022813042'");
-////            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'token'");
-//            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'");
-//            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_phonenumber'");
-//            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message;
-////                    + "&api_key=" + token;
-//            System.out.println("PostField : " + requestJson);
-//            requestEntity = new HttpEntity(requestJson);
-//            url = urlApi + "/wagateway/kirimpesan";
-//            root = mapper.readTree(getRest().exchange(url, HttpMethod.POST, requestEntity, String.class).getBody());
-//            System.out.println(root);
-//            token = root.path("message").asText();
-//            nameNode = root.path("data");
-//            if (root.path("status").asText().equals("true")) {
-//                reurn = "Sukses";
-//            } else {
-//                JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
-//            }
-//        } catch (HeadlessException | IOException | KeyManagementException | NoSuchAlgorithmException | RestClientException ex) {
-//            System.out.println("Notifikasi : " + ex);
-//            System.out.println(url);
-//            if (ex.toString().contains("UnknownHostException")) {
-//                JOptionPane.showMessageDialog(null, "Koneksi ke server Kemenkes terputus...!");
-//            }
-//        }
-//        return token;
     }
 }

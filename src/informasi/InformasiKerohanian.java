@@ -1,4 +1,5 @@
 package informasi;
+
 import bridging.BridgingWA;
 import permintaan.*;
 import fungsi.BackgroundMusic;
@@ -37,7 +38,7 @@ public class InformasiKerohanian extends javax.swing.JDialog {
     private ResultSet rs, rs2;
     private DlgCariPetugas petugas = new DlgCariPetugas(null, false);
     private DlgCariBangsal ruang = new DlgCariBangsal(null, false);
-    private String norm = "", NoRawat = "", NoPermintaan = "", Perujuk = "",Petugas="", TglPermintaan = "", Kamar = "", JamPermintaan = "", Ket="";
+    private String norm = "", NoRawat = "", NoPermintaan = "", Perujuk = "", Petugas = "", TglPermintaan = "", Kamar = "", JamPermintaan = "", Ket = "";
     private BridgingWA kirimwa = new BridgingWA();
 
     /**
@@ -938,7 +939,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 param.put("pengirim", Perujuk);
                 param.put("petugas", Petugas);
                 param.put("keterangan", Ket);
-                param.put("tanggal", Valid.SetTgl3(TglPermintaan)); 
+                param.put("tanggal", Valid.SetTgl3(TglPermintaan));
                 param.put("alamat", Sequel.cariIsi("select concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab) as alamat from pasien inner join kelurahan inner join kecamatan inner join kabupaten on pasien.kd_kel=kelurahan.kd_kel and pasien.kd_kec=kecamatan.kd_kec and pasien.kd_kab=kabupaten.kd_kab where no_rkm_medis=? ", norm));
                 param.put("jam", JamPermintaan);
                 param.put("namars", var.getnamars());
@@ -975,9 +976,13 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     }//GEN-LAST:event_BtnKirimWAKeyPressed
 
     private void BtnKirimWAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnKirimWAActionPerformed
-        for (i = 0; i < tbKerohanian.getRowCount(); i++) {
-            if (tbKerohanian.getValueAt(i, 0).toString().equals("true")) {
-                kirimwa.sendwaKerohanian(tbKerohanian.getValueAt(i, 3).toString(), tbKerohanian.getValueAt(i, 5).toString(), tbKerohanian.getValueAt(i, 4).toString());
+        if (tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString().trim().equals("")) {
+            Valid.textKosong(TCari, "No.Permintaan");
+        } else {
+            for (i = 0; i < tbKerohanian.getRowCount(); i++) {
+                if (tbKerohanian.getValueAt(i, 0).toString().equals("true")) {
+                    kirimwa.sendwaKerohanian(tbKerohanian.getValueAt(i, 3).toString(), tbKerohanian.getValueAt(i, 5).toString(), tbKerohanian.getValueAt(i, 4).toString());
+                }
             }
         }
     }//GEN-LAST:event_BtnKirimWAActionPerformed
