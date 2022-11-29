@@ -39,22 +39,6 @@ public class BridgingWA {
     private JsonNode nameNode;
     private JsonNode response;
 
-    public String getHmac() {
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] hashInBytes = md.digest(pass.getBytes(StandardCharsets.UTF_8));
-
-            StringBuilder sb = new StringBuilder();
-            for (byte b : hashInBytes) {
-                sb.append(String.format("%02x", b));
-            }
-            Key = sb.toString();
-        } catch (Exception ex) {
-            System.out.println("Notifikasi : " + ex);
-        }
-        return Key;
-    }
-
     public RestTemplate getRest() throws NoSuchAlgorithmException, KeyManagementException {
         SSLContext sslContext = SSLContext.getInstance("SSL");
         javax.net.ssl.TrustManager[] trustManagers = {
