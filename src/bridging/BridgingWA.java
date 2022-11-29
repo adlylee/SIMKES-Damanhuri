@@ -3,9 +3,7 @@ package bridging;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fungsi.sekuel;
-import java.awt.HeadlessException;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -25,13 +23,7 @@ import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 public class BridgingWA {
@@ -197,7 +189,7 @@ public class BridgingWA {
         }
     }
 
-    public String sendwaUTD(String nama, String no_telp) {
+    public void sendwaUTD(String nama, String no_telp) {
         try {
             message = "Assalamualaikum wr.wb " + nama + ". \nKami dari Unit Transfusi Darah RSUD H.DAMANHURI BARABAI\n"
                     + "Mengingatkan bahwa Bapak/Ibu sudah dapat melakukan donor darah kembali karena waktu untuk donor darah sudah sampai."
@@ -205,7 +197,7 @@ public class BridgingWA {
 
             urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'") + "/wagateway/kirimpesan";
             sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_phonenumber'");
-            requestJson = "type=text&sender=" + sender + "&number=082149099444&message=" + message;
+            requestJson = "type=text&sender=" + sender + "&number="+no_telp+"&message=" + message;
             System.out.println("PostField : " + requestJson);
 
             URL obj = new URL(urlApi);
@@ -249,10 +241,9 @@ public class BridgingWA {
                 JOptionPane.showMessageDialog(null, "Koneksi ke server WA terputus...!");
             }
         }
-        return response.toString();
     }
 
-    public String sendwaKerohanian(String nama, String tanggal, String kamar) {
+    public void sendwaKerohanian(String nama, String tanggal, String kamar) {
         try {
             message = "Pemberitahuan Permintaan Kerohanian.\n\n"
                     + "Pasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal +"";
@@ -303,6 +294,5 @@ public class BridgingWA {
                 JOptionPane.showMessageDialog(null, "Koneksi ke server WA terputus...!");
             }
         }
-        return token;
     }
 }

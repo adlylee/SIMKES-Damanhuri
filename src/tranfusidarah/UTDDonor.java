@@ -3076,7 +3076,7 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
             LocalDate d2 = LocalDate.now().minusMonths(4);
             String tgl = d.toString();
             String tgl2 = d2.toString();
-            String query = "select nama, no_telp, jk, tanggal, datediff(now(),tanggal) as hari from utd_donor where tanggal < '"+tgl+"' and tanggal > '"+tgl2+"' order by tanggal ASC limit 2";
+            String query = "select nama, no_telp, jk, tanggal, datediff(now(),tanggal) as hari from utd_donor where tanggal < '"+tgl+"' and tanggal > '"+tgl2+"' order by tanggal ASC";
             ps3 = koneksi.prepareStatement(query);
             try {
                 rs3 = ps3.executeQuery();
