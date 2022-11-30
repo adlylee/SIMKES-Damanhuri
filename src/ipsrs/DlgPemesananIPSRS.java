@@ -37,6 +37,7 @@ public class DlgPemesananIPSRS extends javax.swing.JDialog {
     private DlgCariPemesananIpsrs form=new DlgCariPemesananIpsrs(null,false);
     private double saldoawal=0,mutasi=0,ttl=0,y=0,w=0,ttldisk=0,sbttl=0,ppn=0,meterai=0;
     private int jml=0,i=0,row=0,index=0;
+    private String jenis;
     private String[] kodebarang,namabarang,satuan;
     private double[] harga,jumlah,subtotal,diskon,besardiskon,jmltotal;
     private WarnaTable2 warna=new WarnaTable2();
@@ -1162,14 +1163,19 @@ private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
             tabMode.addRow(new Object[]{jumlah[i],kodebarang[i],namabarang[i],satuan[i],harga[i],subtotal[i],diskon[i],besardiskon[i],jmltotal[i]});
         }
         try{
-            ps=koneksi.prepareStatement("select ipsrsbarang.kode_brng, concat(ipsrsbarang.nama_brng,' (',ipsrsbarang.jenis,')'),ipsrsbarang.kode_sat,ipsrsbarang.harga "+
-                    " from ipsrsbarang where ipsrsbarang.kode_brng like ? or "+
-                    " ipsrsbarang.nama_brng like ? or "+
-                    " ipsrsbarang.jenis like ? order by ipsrsbarang.nama_brng");
+            if (var.getkode().equals("Admin Utama")) {
+                ps=koneksi.prepareStatement("select ipsrsbarang.kode_brng, concat(ipsrsbarang.nama_brng,' (',ipsrsbarang.jenis,')'),ipsrsbarang.kode_sat,ipsrsbarang.harga "+
+                    " from ipsrsbarang where ipsrsbarang.status='1' and ( ipsrsbarang.kode_brng like ? or "+
+                    " ipsrsbarang.nama_brng like ? ) order by ipsrsbarang.nama_brng");
+            } else {
+                jenis = Sequel.buangChar(Sequel.cariStringArray("SELECT kd_jenis FROM ipsrs_setpj WHERE nik="+var.getkode()));
+                ps=koneksi.prepareStatement("select ipsrsbarang.kode_brng, concat(ipsrsbarang.nama_brng,' (',ipsrsbarang.jenis,')'),ipsrsbarang.kode_sat,ipsrsbarang.harga "+
+                    " from ipsrsbarang where ipsrsbarang.status='1' and ipsrsbarang.jenis IN ("+jenis+") AND ( ipsrsbarang.kode_brng like ? or "+
+                    " ipsrsbarang.nama_brng like ? ) order by ipsrsbarang.nama_brng");
+            }
             try{   
                 ps.setString(1,"%"+TCari.getText().trim()+"%");
                 ps.setString(2,"%"+TCari.getText().trim()+"%");
-                ps.setString(3,"%"+TCari.getText().trim()+"%");
                 rs=ps.executeQuery();
                 while(rs.next()){
                     tabMode.addRow(new Object[]{"",rs.getString(1),rs.getString(2),rs.getString(3),rs.getDouble(4),0,0,0,0});

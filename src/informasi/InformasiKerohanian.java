@@ -1133,9 +1133,9 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     }
 
     public void isCek() {
-        BtnHasil.setEnabled(var.getperiksa_radiologi());
-        BtnHapus.setEnabled(var.getpermintaan_radiologi());
-        BtnPrint.setEnabled(var.getpermintaan_radiologi());
+        BtnHasil.setEnabled(var.getpasien_meninggal());
+//        BtnHapus.setEnabled(var.getpermintaan_radiologi());
+//        BtnPrint.setEnabled(var.getpermintaan_radiologi());
     }
 
     public void setPasien(String pasien) {

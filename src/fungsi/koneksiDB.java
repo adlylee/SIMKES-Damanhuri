@@ -46,7 +46,7 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" +
-                        "    Version 11.11.2022 [ 1.0.7 ] [Activated] GO AKREDITASI \n"+
+                        "    Version 24.11.2022 [ 1.0.9 ] [Activated] GO AKREDITASI \n"+
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai . SMART , GREEN , AND FRIENDLY HOSPITAL      \n"+
                         "                                                                           \n"+
@@ -55,7 +55,7 @@ public final class koneksiDB {
                         "       - Resep BUD                                           \n"+
                         "                                                                       \n"+
                         "    * Changelog :                                                       \n"+
-                        "       - Bridging LIMS                                              \n"+
+                        "       - Edukasi Pasien                                              \n"+
                         "                                                                       \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);

@@ -30,14 +30,14 @@ public class DlgPengeluaranIPSRS extends javax.swing.JDialog {
     private validasi Valid = new validasi();
     private Jurnal jur = new Jurnal();
     private Connection koneksi = koneksiDB.condb();
-    private PreparedStatement ps;
-    private ResultSet rs;
+    private PreparedStatement ps, psstok;
+    private ResultSet rs, rsstok;
     private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
     private DlgCariPengeluaranIpsrs form = new DlgCariPengeluaranIpsrs(null, false);
-    private int jml = 0, i = 0, row = 0, index = 0;
-    private double ttl, keluar ,hargaDouble , totalDouble , sisaStok , sisa = 0, sisakurang, permintaanJml , dilayani = 0;
+    private int jml = 0, i = 0, row = 0, index = 0, kolom = 0;
+    private double ttl, keluar, hargaDouble, totalDouble, sisaStok, sisa = 0, sisakurang, permintaanJml, dilayani = 0, stokbarang = 0, y = 0;
     private String[] kodebarang, namabarang, satuan, jumlah, stok, harga, total;
-    private String hargaString , totalString , dilayaniString , jenis;
+    private String hargaString, totalString, dilayaniString, jenis;
     private WarnaTable2 warna = new WarnaTable2();
     public boolean tampilkanpermintaan = true;
 
@@ -550,7 +550,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         jml = tbDokter.getRowCount();
                         for (i = 0; i < jml; i++) {
                             if (Valid.SetAngka(tbDokter.getValueAt(i, 0).toString()) > 0) {
-                                do {   
+                                do {
                                     if (sisa == 0) {
                                         permintaanJml = Integer.valueOf(tbDokter.getValueAt(i, 0).toString());
                                     } else {
@@ -565,12 +565,12 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                         dilayani = permintaanJml - sisakurang;
                                         sisa = sisakurang;
                                     }
-                                    System.out.println(sisa+" "+sisakurang);
-                                    try{
-                                        ps=koneksi.prepareStatement("SELECT harga , no_batch FROM ipsrsgudang WHERE kode_brng='"+tbDokter.getValueAt(i,1).toString()+"' AND stok > 0 ORDER BY tgl_beli ASC LIMIT 1");
-                                        try{  
-                                            rs=ps.executeQuery();
-                                            while(rs.next()){
+                                    System.out.println(sisa + " " + sisakurang);
+                                    try {
+                                        ps = koneksi.prepareStatement("SELECT harga , no_batch FROM ipsrsgudang WHERE kode_brng='" + tbDokter.getValueAt(i, 1).toString() + "' AND stok > 0 ORDER BY tgl_beli ASC LIMIT 1");
+                                        try {
+                                            rs = ps.executeQuery();
+                                            while (rs.next()) {
                                                 hargaDouble = rs.getDouble("harga");
                                                 totalDouble = hargaDouble * dilayani;
                                                 dilayaniString = String.valueOf(dilayani);
@@ -583,15 +583,15 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                                 Sequel.mengedit("ipsrsbarang", "kode_brng=?", "stok=stok-?,harga=?", 3, new String[]{
                                                     dilayaniString, hargaString, tbDokter.getValueAt(i, 1).toString()
                                                 });
-                                                Sequel.mengedit("ipsrsgudang","kode_brng=? AND no_batch=?","stok=stok-?",3,new String[]{
-                                                    dilayaniString, tbDokter.getValueAt(i,1).toString(), rs.getString("no_batch")
+                                                Sequel.mengedit("ipsrsgudang", "kode_brng=? AND no_batch=?", "stok=stok-?", 3, new String[]{
+                                                    dilayaniString, tbDokter.getValueAt(i, 1).toString(), rs.getString("no_batch")
                                                 });
-                                            } 
-                                        }catch(Exception e){
+                                            }
+                                        } catch (Exception e) {
                                             System.out.println(e);
-                                        }                               
-                                    }catch(SQLException e){
-                                        System.out.println("Notifikasi : "+e);
+                                        }
+                                    } catch (SQLException e) {
+                                        System.out.println("Notifikasi : " + e);
                                     }
                                 } while (sisa > 0);
                             }
@@ -825,17 +825,17 @@ private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
             tabMode.addRow(new Object[]{jumlah[i], kodebarang[i], namabarang[i], satuan[i], stok[i], harga[i], total[i]});
         }
         try {
-            
+
             if (var.getkode().equals("Admin Utama")) {
-            ps = koneksi.prepareStatement("select ipsrsbarang.kode_brng, concat(ipsrsbarang.nama_brng,' (',ipsrsbarang.jenis,')'),ipsrsbarang.kode_sat,stok, "
-                    + " ipsrsbarang.harga from ipsrsbarang where ipsrsbarang.kode_brng like ? or "
-                    + " ipsrsbarang.nama_brng like ? order by ipsrsbarang.nama_brng");
+                ps = koneksi.prepareStatement("select ipsrsbarang.kode_brng, concat(ipsrsbarang.nama_brng,' (',ipsrsbarang.jenis,')'),ipsrsbarang.kode_sat,stok, "
+                        + " ipsrsbarang.harga from ipsrsbarang where ipsrsbarang.status='1' and ( ipsrsbarang.kode_brng like ? or "
+                        + " ipsrsbarang.nama_brng like ?) order by ipsrsbarang.nama_brng");
             } else {
-            jenis = Sequel.buangChar(Sequel.cariStringArray("SELECT kd_jenis FROM ipsrs_setpj WHERE nik="+var.getkode()));
-            ps = koneksi.prepareStatement("select ipsrsbarang.kode_brng, concat(ipsrsbarang.nama_brng,' (',ipsrsbarang.jenis,')'),ipsrsbarang.kode_sat,stok, "
-                + " ipsrsbarang.harga from ipsrsbarang where "
-                + " ipsrsbarang.jenis IN ("+jenis+") AND ( ipsrsbarang.kode_brng like ? or "
-                + " ipsrsbarang.nama_brng like ? ) order by ipsrsbarang.nama_brng");
+                jenis = Sequel.buangChar(Sequel.cariStringArray("SELECT kd_jenis FROM ipsrs_setpj WHERE nik=" + var.getkode()));
+                ps = koneksi.prepareStatement("select ipsrsbarang.kode_brng, concat(ipsrsbarang.nama_brng,' (',ipsrsbarang.jenis,')'),ipsrsbarang.kode_sat,stok, "
+                        + " ipsrsbarang.harga from ipsrsbarang where ipsrsbarang.status='1' and "
+                        + " ipsrsbarang.jenis IN (" + jenis + ") AND ( ipsrsbarang.kode_brng like ? or "
+                        + " ipsrsbarang.nama_brng like ? ) order by ipsrsbarang.nama_brng");
             }
             try {
                 ps.setString(1, "%" + TCari.getText().trim() + "%");
@@ -875,19 +875,58 @@ private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private void getData() {
         row = tbDokter.getSelectedRow();
         if (row != -1) {
-            ttl = 0;
-            keluar = 0;
-            jml = tbDokter.getRowCount();
-            for (i = 0; i < jml; i++) {
-                if (!tbDokter.getValueAt(i, 6).toString().isEmpty()) {
-                    keluar = Double.parseDouble(tbDokter.getValueAt(i, 6).toString());
-                } else if (tbDokter.getValueAt(i, 6).toString().isEmpty()) {
-                    keluar = 0;
+            try {
+                if (Valid.SetAngka(tabMode.getValueAt(row, 0).toString()) > 0) {
+                    try {
+                        stokbarang = 0;
+                        psstok = koneksi.prepareStatement("select ifnull(stok,'0') from ipsrsbarang where kode_brng=?");
+                        try {
+                            psstok.setString(1, tbDokter.getValueAt(row, 1).toString());
+                            rsstok = psstok.executeQuery();
+                            if (rsstok.next()) {
+                                stokbarang = rsstok.getDouble(1);
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Notifikasi : " + e);
+                        } finally {
+                            if (rsstok != null) {
+                                rsstok.close();
+                            }
+                            if (psstok != null) {
+                                psstok.close();
+                            }
+                        }
+
+                        y = 0;
+                        try {
+                            y = Double.parseDouble(tabMode.getValueAt(row, 0).toString());
+                        } catch (Exception e) {
+                            y = 0;
+                        }
+                        if (stokbarang < y) {
+                            JOptionPane.showMessageDialog(rootPane, "Maaf stok tidak mencukupi..!!");
+                            tbDokter.setValueAt("", row, 0);
+                        }
+                    } catch (Exception e) {
+                        tbDokter.setValueAt(0, row, 4);
+                    }
+
                 }
-                ttl = ttl + keluar;
+            } catch (Exception e) {
             }
-            LTotal.setText(Valid.SetAngka(ttl));
         }
+        ttl = 0;
+        keluar = 0;
+        jml = tbDokter.getRowCount();
+        for (i = 0; i < jml; i++) {
+            if (!tbDokter.getValueAt(i, 6).toString().isEmpty()) {
+                keluar = Double.parseDouble(tbDokter.getValueAt(i, 6).toString());
+            } else if (tbDokter.getValueAt(i, 6).toString().isEmpty()) {
+                keluar = 0;
+            }
+            ttl = ttl + keluar;
+        }
+        LTotal.setText(Valid.SetAngka(ttl));
     }
 
     private void autoNomor() {
