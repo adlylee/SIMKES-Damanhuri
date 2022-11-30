@@ -47,7 +47,7 @@ import simrskhanza.frmUtama;
  */
 public final class DlgResepObat extends javax.swing.JDialog {
 
-    private final DefaultTableModel tabMode, tabmodeUbahRacikan, tabmodeUbahRacikan2, tabmodeUdd;
+    private final DefaultTableModel tabMode, tabmodeUbahRacikan, tabmodeUbahRacikan2, tabmodeUdd, tabmodeBud;
     private Connection koneksi = koneksiDB.condb();
     private sekuel Sequel = new sekuel();
     private validasi Valid = new validasi();
@@ -57,11 +57,11 @@ public final class DlgResepObat extends javax.swing.JDialog {
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private Date date = new Date();
     private String now = dateFormat.format(date), lembarobat = "", status = "", queryCari = "", querypjg = "", kode_brng = "";
-    private double total = 0, jumlahtotal = 0,totalpulang = 0, jumlahtotalpulang = 0;
+    private double total = 0, jumlahtotal = 0, totalpulang = 0, jumlahtotalpulang = 0;
     private Properties prop = new Properties();
     private DlgAturanPakai aturanpakai = new DlgAturanPakai(null, false);
     private int i = 0, pilihan = 0;
-    private String kamar = "", namakamar = "" , query , querypulang;
+    private String kamar = "", namakamar = "", query, querypulang;
 
 //private frmUtama id = new frmUtama(null,false); 
     /**
@@ -230,6 +230,52 @@ public final class DlgResepObat extends javax.swing.JDialog {
         }
         tbTambahan2.setDefaultRenderer(Object.class, new WarnaTable());
 
+        tabmodeBud = new DefaultTableModel(null, new Object[]{
+            "Tgl.Rawat", "Jam Rawat", "No.Rawat", "No Resep", "No Rekam Medis", "Nama Pasien", "Nama Barang", "BUD"
+        }) {
+            @Override
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                boolean a = false;
+                if (colIndex == 7) {
+                    a = true;
+                }
+                return a;
+            }
+        };
+        tbTambahan3.setModel(tabmodeBud);
+
+        //tbObat.setDefaultRenderer(Object.class, new WarnaTable(panelJudul.getBackground(),tbObat.getBackground()));
+        tbTambahan3.setPreferredScrollableViewportSize(new Dimension(500, 500));
+        tbTambahan3.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        for (i = 0; i < 8; i++) {
+            TableColumn column = tbTambahan3.getColumnModel().getColumn(i);
+            if (i == 0) {
+                column.setPreferredWidth(90);
+            } else if (i == 1) {
+                column.setMinWidth(0);
+                column.setMaxWidth(0);
+            } else if (i == 2) {
+                column.setMinWidth(0);
+                column.setMaxWidth(0);
+            } else if (i == 3) {
+                column.setMinWidth(0);
+                column.setMaxWidth(0);
+            } else if (i == 8) {
+                column.setMinWidth(0);
+                column.setMaxWidth(0);
+            } else if (i == 4) {
+                column.setPreferredWidth(60);
+            } else if (i == 5) {
+                column.setPreferredWidth(220);
+            } else if (i == 6) {
+                column.setPreferredWidth(220);
+            } else {
+                column.setPreferredWidth(140);
+            }
+        }
+        tbTambahan3.setDefaultRenderer(Object.class, new WarnaTable());
+
         TNoRw.setDocument(new batasInput((byte) 17).getKata(TNoRw));
         KdDokter.setDocument(new batasInput((byte) 20).getKata(KdDokter));
         NoResep.setDocument(new batasInput((byte) 14).getKata(NoResep));
@@ -362,6 +408,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         ppUbahAturanPakai = new javax.swing.JMenuItem();
         ppUbahAturanPakai1 = new javax.swing.JMenuItem();
         ppResepPulang = new javax.swing.JMenuItem();
+        ppResepObatBUD = new javax.swing.JMenuItem();
         WindowInput3 = new javax.swing.JDialog();
         internalFrame4 = new widget.InternalFrame();
         scrollPane1 = new widget.ScrollPane();
@@ -389,6 +436,15 @@ public final class DlgResepObat extends javax.swing.JDialog {
         NoResepUbah2 = new widget.TextBox();
         BtnPrint1 = new widget.Button();
         BtnKeluar3 = new widget.Button();
+        WindowInput6 = new javax.swing.JDialog();
+        internalFrame7 = new widget.InternalFrame();
+        scrollPane4 = new widget.ScrollPane();
+        tbTambahan3 = new widget.Table();
+        panelisi4 = new widget.panelisi();
+        label18 = new widget.Label();
+        NoResepUbah3 = new widget.TextBox();
+        BtnPrint2 = new widget.Button();
+        BtnKeluar4 = new widget.Button();
         internalFrame1 = new widget.InternalFrame();
         Scroll = new widget.ScrollPane();
         tbResep = new widget.Table();
@@ -594,12 +650,32 @@ public final class DlgResepObat extends javax.swing.JDialog {
         });
         Popup2.add(ppResepPulang);
 
+        ppResepObatBUD.setBackground(new java.awt.Color(255, 255, 254));
+        ppResepObatBUD.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        ppResepObatBUD.setForeground(new java.awt.Color(70, 70, 70));
+        ppResepObatBUD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        ppResepObatBUD.setText("Cetak Aturan Pakai BUD");
+        ppResepObatBUD.setToolTipText("");
+        ppResepObatBUD.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        ppResepObatBUD.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        ppResepObatBUD.setIconTextGap(8);
+        ppResepObatBUD.setName("ppResepObatBUD"); // NOI18N
+        ppResepObatBUD.setPreferredSize(new java.awt.Dimension(225, 25));
+        ppResepObatBUD.setVerifyInputWhenFocusTarget(false);
+        ppResepObatBUD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ppResepObatBUDActionPerformed(evt);
+            }
+        });
+        Popup2.add(ppResepObatBUD);
+        ppResepObatBUD.getAccessibleContext().setAccessibleName("Cetak Aturan Pakai BUD");
+
         WindowInput3.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         WindowInput3.setName("WindowInput3"); // NOI18N
         WindowInput3.setUndecorated(true);
         WindowInput3.setResizable(false);
 
-        internalFrame4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Ubah Aturan Pakai Obat Umum ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Ubah Aturan Pakai Obat Umum ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame4.setName("internalFrame4"); // NOI18N
         internalFrame4.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -682,7 +758,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         WindowInput4.setUndecorated(true);
         WindowInput4.setResizable(false);
 
-        internalFrame5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Ubah Aturan Pakai Obat Racik ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Ubah Aturan Pakai Obat Racik ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame5.setName("internalFrame5"); // NOI18N
         internalFrame5.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -765,7 +841,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         WindowInput5.setUndecorated(true);
         WindowInput5.setResizable(false);
 
-        internalFrame6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Aturan Pakai UDD ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Aturan Pakai UDD ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame6.setName("internalFrame6"); // NOI18N
         internalFrame6.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -848,6 +924,94 @@ public final class DlgResepObat extends javax.swing.JDialog {
 
         WindowInput5.getContentPane().add(internalFrame6, java.awt.BorderLayout.CENTER);
 
+        WindowInput6.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        WindowInput6.setName("WindowInput6"); // NOI18N
+        WindowInput6.setUndecorated(true);
+        WindowInput6.setResizable(false);
+
+        internalFrame7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Aturan Pakai BUD ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame7.setName("internalFrame7"); // NOI18N
+        internalFrame7.setLayout(new java.awt.BorderLayout(1, 1));
+
+        scrollPane4.setName("scrollPane4"); // NOI18N
+        scrollPane4.setOpaque(true);
+
+        tbTambahan3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        tbTambahan3.setToolTipText("Silahkan klik untuk memilih data yang mau diedit ataupun dihapus");
+        tbTambahan3.setName("tbTambahan3"); // NOI18N
+        tbTambahan3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tbTambahan3KeyPressed(evt);
+            }
+        });
+        scrollPane4.setViewportView(tbTambahan3);
+
+        internalFrame7.add(scrollPane4, java.awt.BorderLayout.CENTER);
+
+        panelisi4.setName("panelisi4"); // NOI18N
+        panelisi4.setPreferredSize(new java.awt.Dimension(100, 56));
+        panelisi4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 9));
+
+        label18.setText("No.Resep :");
+        label18.setName("label18"); // NOI18N
+        label18.setPreferredSize(new java.awt.Dimension(60, 23));
+        panelisi4.add(label18);
+
+        NoResepUbah3.setEditable(false);
+        NoResepUbah3.setName("NoResepUbah3"); // NOI18N
+        NoResepUbah3.setPreferredSize(new java.awt.Dimension(150, 23));
+        NoResepUbah3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                NoResepUbah3KeyPressed(evt);
+            }
+        });
+        panelisi4.add(NoResepUbah3);
+
+        BtnPrint2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/b_print.png"))); // NOI18N
+        BtnPrint2.setMnemonic('T');
+        BtnPrint2.setText("Cetak");
+        BtnPrint2.setToolTipText("Alt+T");
+        BtnPrint2.setName("BtnPrint2"); // NOI18N
+        BtnPrint2.setPreferredSize(new java.awt.Dimension(100, 30));
+        BtnPrint2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnPrint2ActionPerformed(evt);
+            }
+        });
+        BtnPrint2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnPrint2KeyPressed(evt);
+            }
+        });
+        panelisi4.add(BtnPrint2);
+
+        BtnKeluar4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/exit.png"))); // NOI18N
+        BtnKeluar4.setMnemonic('K');
+        BtnKeluar4.setText("Keluar");
+        BtnKeluar4.setToolTipText("Alt+K");
+        BtnKeluar4.setName("BtnKeluar4"); // NOI18N
+        BtnKeluar4.setPreferredSize(new java.awt.Dimension(100, 30));
+        BtnKeluar4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnKeluar4ActionPerformed(evt);
+            }
+        });
+        panelisi4.add(BtnKeluar4);
+
+        internalFrame7.add(panelisi4, java.awt.BorderLayout.PAGE_END);
+
+        WindowInput6.getContentPane().add(internalFrame7, java.awt.BorderLayout.CENTER);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
@@ -857,7 +1021,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Resep Obat ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Resep Obat ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -2130,6 +2294,41 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         // TODO add your handling code here:
     }//GEN-LAST:event_ChkRspPlgActionPerformed
 
+    private void ppResepObatBUDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppResepObatBUDActionPerformed
+        if (tabMode.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Maaf, data sudah habis...!!!!");
+            TNoRw.requestFocus();
+        } else if (TPasien.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Maaf, Klik No Resep untuk ubah aturan pakai...!!!!");
+        } else if (!(TPasien.getText().trim().equals(""))) {
+            NoResepUbah3.setText(NoResep.getText());
+            tampilresepBud();
+            WindowInput6.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
+            WindowInput6.setLocationRelativeTo(internalFrame1);
+            WindowInput6.setVisible(true);
+        }
+    }//GEN-LAST:event_ppResepObatBUDActionPerformed
+
+    private void tbTambahan3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbTambahan3KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbTambahan3KeyPressed
+
+    private void NoResepUbah3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NoResepUbah3KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NoResepUbah3KeyPressed
+
+    private void BtnPrint2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPrint2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnPrint2ActionPerformed
+
+    private void BtnPrint2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnPrint2KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnPrint2KeyPressed
+
+    private void BtnKeluar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnKeluar4ActionPerformed
+        WindowInput6.dispose();
+    }//GEN-LAST:event_BtnKeluar4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2155,8 +2354,10 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.Button BtnKeluar1;
     private widget.Button BtnKeluar2;
     private widget.Button BtnKeluar3;
+    private widget.Button BtnKeluar4;
     private widget.Button BtnPrint;
     private widget.Button BtnPrint1;
+    private widget.Button BtnPrint2;
     private widget.Button BtnSimpan;
     private widget.Button BtnSimpan3;
     private widget.Button BtnSimpan4;
@@ -2174,6 +2375,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.TextBox NoResepUbah;
     private widget.TextBox NoResepUbah1;
     private widget.TextBox NoResepUbah2;
+    private widget.TextBox NoResepUbah3;
     private javax.swing.JPanel PanelInput;
     private javax.swing.JPopupMenu Popup2;
     private widget.ScrollPane Scroll;
@@ -2184,6 +2386,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JDialog WindowInput3;
     private javax.swing.JDialog WindowInput4;
     private javax.swing.JDialog WindowInput5;
+    private javax.swing.JDialog WindowInput6;
     private widget.Button btnDokter;
     private widget.ComboBox cmbDtk;
     private widget.ComboBox cmbJam;
@@ -2192,6 +2395,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.InternalFrame internalFrame4;
     private widget.InternalFrame internalFrame5;
     private widget.InternalFrame internalFrame6;
+    private widget.InternalFrame internalFrame7;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private widget.Label jLabel11;
@@ -2207,27 +2411,32 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.Label label15;
     private widget.Label label16;
     private widget.Label label17;
+    private widget.Label label18;
     private widget.panelisi panelGlass8;
     private widget.panelisi panelGlass9;
     private widget.panelisi panelisi1;
     private widget.panelisi panelisi2;
     private widget.panelisi panelisi3;
+    private widget.panelisi panelisi4;
     private javax.swing.JMenuItem ppLembarObat;
     private javax.swing.JMenuItem ppLembarObat1;
     private javax.swing.JMenuItem ppResepObat;
     private javax.swing.JMenuItem ppResepObat1;
     private javax.swing.JMenuItem ppResepObat2;
     private javax.swing.JMenuItem ppResepObat3;
+    private javax.swing.JMenuItem ppResepObatBUD;
     private javax.swing.JMenuItem ppResepPulang;
     private javax.swing.JMenuItem ppUbahAturanPakai;
     private javax.swing.JMenuItem ppUbahAturanPakai1;
     private widget.ScrollPane scrollPane1;
     private widget.ScrollPane scrollPane2;
     private widget.ScrollPane scrollPane3;
+    private widget.ScrollPane scrollPane4;
     private widget.Table tbResep;
     private widget.Table tbTambahan;
     private widget.Table tbTambahan1;
     private widget.Table tbTambahan2;
+    private widget.Table tbTambahan3;
     // End of variables declaration//GEN-END:variables
 
     public void tampil() {
@@ -2237,7 +2446,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             tampilResepList();
         }
     }
-    
+
     public void emptTeks() {
         KdDokter.setText("");
         NmDokter.setText("");
@@ -2409,8 +2618,8 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             System.out.println("Notif : " + e);
         }
     }
-    
-    public void tampilResepList(){
+
+    public void tampilResepList() {
         Valid.tabelKosong(tabMode);
         try {
             query = "select resep_obat.no_resep,resep_obat.tgl_perawatan,resep_obat.jam,"
@@ -2846,4 +3055,8 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         KdDokter.setText(Sequel.cariIsi("select resep_dokter_pulang.kd_dokter from resep_pulang inner join resep_dokter_pulang on resep_pulang.no_resep=resep_dokter_pulang.no_resep where resep_pulang.no_rawat=?", TNoRw.getText()));
         NmDokter.setText(Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?", KdDokter.getText()));
     }
-}
+    
+    public void tampilresepBud(){
+
+    }
+    }

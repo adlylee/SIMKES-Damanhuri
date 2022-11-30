@@ -751,7 +751,7 @@ private void StokKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Stok
             pstampil=koneksi.prepareStatement("select ipsrsopname.kode_brng, ipsrsbarang.nama_brng,ipsrsopname.h_beli, ipsrsbarang.kode_sat, ipsrsopname.tanggal, ipsrsopname.stok, "+
                      "ipsrsopname.real, ipsrsopname.selisih, (ipsrsopname.real*ipsrsopname.h_beli) as totalreal,ipsrsopname.nomihilang, ipsrsopname.keterangan "+
                      "from ipsrsopname inner join ipsrsbarang on ipsrsopname.kode_brng=ipsrsbarang.kode_brng "+
-                     "where ipsrsopname.tanggal between ? and ? and ipsrsopname.kode_brng like ? or "+
+                     "where ipsrsbarang.status='1' and ipsrsopname.tanggal between ? and ? and ipsrsopname.kode_brng like ? or "+
                      "ipsrsopname.tanggal between ? and ? and ipsrsbarang.nama_brng like ? or "+
                      "ipsrsopname.tanggal between ? and ? and ipsrsopname.kode_brng like ? or "+
                      "ipsrsopname.tanggal between ? and ? and ipsrsbarang.kode_sat like ? or "+ 
