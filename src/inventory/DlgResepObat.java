@@ -51,12 +51,12 @@ public final class DlgResepObat extends javax.swing.JDialog {
     private Connection koneksi = koneksiDB.condb();
     private sekuel Sequel = new sekuel();
     private validasi Valid = new validasi();
-    private PreparedStatement ps, ps2, psracikan, pspulang, ps2pulang, psudd, pspanjang, psbud;
-    private ResultSet rs, rs2, rsracikan, rspulang, rs2pulang, rsudd, rspanjang, rsbud;
+    private PreparedStatement ps, ps2, psracikan, pspulang, ps2pulang, psudd, pspanjang, ps3, psbud, psbud2;
+    private ResultSet rs, rs2, rsracikan, rspulang, rs2pulang, rsudd, rspanjang, rs3, rsbud, rsbud2;
     public DlgCariDokter dokter = new DlgCariDokter(null, false);
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private Date date = new Date();
-    private String now = dateFormat.format(date), lembarobat = "", status = "", queryCari = "", querypjg = "", kode_brng = "";
+    private String now = dateFormat.format(date), lembarobat = "", status = "", queryCari = "", querypjg = "", kode_brng = "", queryCari2 = "", querypjg2 = "", bud="", budcari;
     private double total = 0, jumlahtotal = 0, totalpulang = 0, jumlahtotalpulang = 0;
     private Properties prop = new Properties();
     private DlgAturanPakai aturanpakai = new DlgAturanPakai(null, false);
@@ -231,12 +231,13 @@ public final class DlgResepObat extends javax.swing.JDialog {
         tbTambahan2.setDefaultRenderer(Object.class, new WarnaTable());
 
         tabmodeBud = new DefaultTableModel(null, new Object[]{
-            "Tgl.Rawat", "Jam Rawat", "No.Rawat", "No Resep", "No Rekam Medis", "Nama Pasien", "Nama Barang", "BUD"
+            "Tgl.Rawat", "Jam Rawat", "No.Rawat", "No Resep", "No Rekam Medis", "Nama Pasien", "Kode Barang",
+            "Nama Barang", "BUD", "Expire", "Aturan Pakai", "Jumlah", "Satuan", "Waktu Pakai"
         }) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
                 boolean a = false;
-                if (colIndex == 7) {
+                if (colIndex == 8) {
                     a = true;
                 }
                 return a;
@@ -248,30 +249,23 @@ public final class DlgResepObat extends javax.swing.JDialog {
         tbTambahan3.setPreferredScrollableViewportSize(new Dimension(500, 500));
         tbTambahan3.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 8; i++) {
+        for (i = 0; i < 14; i++) {
             TableColumn column = tbTambahan3.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(90);
-            } else if (i == 1) {
-                column.setMinWidth(0);
-                column.setMaxWidth(0);
-            } else if (i == 2) {
-                column.setMinWidth(0);
-                column.setMaxWidth(0);
-            } else if (i == 3) {
-                column.setMinWidth(0);
-                column.setMaxWidth(0);
-            } else if (i == 8) {
-                column.setMinWidth(0);
-                column.setMaxWidth(0);
             } else if (i == 4) {
                 column.setPreferredWidth(60);
             } else if (i == 5) {
                 column.setPreferredWidth(220);
             } else if (i == 6) {
+                column.setPreferredWidth(90);
+            } else if (i == 7) {
                 column.setPreferredWidth(220);
-            } else {
+            } else if (i == 8) {
                 column.setPreferredWidth(140);
+            } else {
+                column.setMinWidth(0);
+                column.setMaxWidth(0);
             }
         }
         tbTambahan3.setDefaultRenderer(Object.class, new WarnaTable());
@@ -443,6 +437,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         panelisi4 = new widget.panelisi();
         label18 = new widget.Label();
         NoResepUbah3 = new widget.TextBox();
+        BtnSimpan5 = new widget.Button();
         BtnPrint2 = new widget.Button();
         BtnKeluar4 = new widget.Button();
         internalFrame1 = new widget.InternalFrame();
@@ -977,6 +972,19 @@ public final class DlgResepObat extends javax.swing.JDialog {
         });
         panelisi4.add(NoResepUbah3);
 
+        BtnSimpan5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/save-16x16.png"))); // NOI18N
+        BtnSimpan5.setMnemonic('S');
+        BtnSimpan5.setText("Simpan");
+        BtnSimpan5.setToolTipText("Alt+S");
+        BtnSimpan5.setName("BtnSimpan5"); // NOI18N
+        BtnSimpan5.setPreferredSize(new java.awt.Dimension(100, 30));
+        BtnSimpan5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSimpan5ActionPerformed(evt);
+            }
+        });
+        panelisi4.add(BtnSimpan5);
+
         BtnPrint2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/b_print.png"))); // NOI18N
         BtnPrint2.setMnemonic('T');
         BtnPrint2.setText("Cetak");
@@ -1188,7 +1196,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         panelGlass9.add(jLabel19);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22-11-2022" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "29-11-2022" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -1202,7 +1210,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         panelGlass9.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22-11-2022" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "29-11-2022" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -1369,7 +1377,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         jLabel8.setBounds(0, 42, 95, 23);
 
         DTPBeri.setForeground(new java.awt.Color(50, 70, 50));
-        DTPBeri.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22-11-2022" }));
+        DTPBeri.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "29-11-2022" }));
         DTPBeri.setDisplayFormat("dd-MM-yyyy");
         DTPBeri.setName("DTPBeri"); // NOI18N
         DTPBeri.setOpaque(false);
@@ -1709,7 +1717,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             // param.put("emailrs",var.getemailrs());   
             // param.put("logo",Sequel.cariGambar("select logo from setting"));
 
-            param.put("bud", Sequel.cariIsi("select bud from obat_bud where no_resep=?", NoResep.getText()));
+//            param.put("bud", Sequel.cariIsi("select bud from obat_bud where no_resep=?", NoResep.getText()));
             if (Sequel.cariInteger(
                     "select count(*) from resep_obat inner join "
                     + "aturan_pakai on resep_obat.no_rawat=aturan_pakai.no_rawat and "
@@ -2318,7 +2326,46 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }//GEN-LAST:event_NoResepUbah3KeyPressed
 
     private void BtnPrint2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPrint2ActionPerformed
-        // TODO add your handling code here:
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        BtnCariActionPerformed(evt);
+        if (tabmodeBud.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Maaf, data sudah habis. Tidak ada data yang bisa anda print...!!!!");
+            TCari.requestFocus();
+        } else if (tabmodeBud.getRowCount() != 0) {
+            Sequel.queryu("delete from temporary_resep");
+            int row = tabmodeBud.getRowCount();
+            for (int i = 0; i < row; i++) {
+                Sequel.menyimpan("temporary_resep", "'0','"
+                        + tabmodeBud.getValueAt(i, 0).toString() + "','"
+                        + tabmodeBud.getValueAt(i, 1).toString() + "','"
+                        + tabmodeBud.getValueAt(i, 2).toString() + "','"
+                        + tabmodeBud.getValueAt(i, 3).toString() + "','"
+                        + tabmodeBud.getValueAt(i, 4).toString() + "','"
+                        + tabmodeBud.getValueAt(i, 5).toString() + "','"
+                        + tabmodeBud.getValueAt(i, 6).toString() + "','"
+                        + tabmodeBud.getValueAt(i, 7).toString() + "','"
+                        + tabmodeBud.getValueAt(i, 8).toString() + "','"
+                        + tabmodeBud.getValueAt(i, 9).toString() + "','"
+                        + tabmodeBud.getValueAt(i, 10).toString() + "','"
+                        + tabmodeBud.getValueAt(i, 11).toString() + "','"
+                        + tabmodeBud.getValueAt(i, 12).toString() + "','"
+                        + tabmodeBud.getValueAt(i, 13).toString() + "','"
+                        + "','','','','','','','','','','','','','','','','','','','','','',''", "Transaksi Pembelian");
+            }
+            Map<String, Object> param = new HashMap<>();
+            param.put("namars", var.getnamars());
+            param.put("alamatrs", var.getalamatrs());
+            param.put("kotars", var.getkabupatenrs());
+            param.put("propinsirs", var.getpropinsirs());
+            param.put("kontakrs", var.getkontakrs());
+            param.put("emailrs", var.getemailrs());
+            param.put("logo", Sequel.cariGambar("select logo from setting"));
+            param.put("noresep", NoResepUbah3.getText());
+            param.put("bud", Sequel.cariIsi("select bud from obat_bud where no_resep=?", NoResep.getText()));
+            Valid.MyReport("rptItemResepBud.jrxml", "report", "::[ Aturan Pakai BUD ]::",
+                    "select no, temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9, temp10, temp11, temp12, temp13, temp14 from temporary_resep WHERE temp4 = " + NoResepUbah3.getText() + " order by no asc", param);
+        }
+        this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_BtnPrint2ActionPerformed
 
     private void BtnPrint2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnPrint2KeyPressed
@@ -2328,6 +2375,24 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private void BtnKeluar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnKeluar4ActionPerformed
         WindowInput6.dispose();
     }//GEN-LAST:event_BtnKeluar4ActionPerformed
+
+    private void BtnSimpan5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpan5ActionPerformed
+        if (NoResepUbah3.getText().trim().equals("") || (tbTambahan3.getRowCount() <= 0)) {
+            Valid.textKosong(NoResepUbah3, "Data");
+        } else {
+            for (i = 0; i < tbTambahan3.getRowCount(); i++) {
+                Sequel.queryu2("delete from obat_bud where no_resep=? and kode_brng=?", 2, new String[]{
+                    tbTambahan3.getValueAt(i, 3).toString(), tbTambahan3.getValueAt(i, 6).toString()
+                });
+                budcari = (tbTambahan3.getValueAt(i, 8).toString().equals("")) ? "-" : (tbTambahan3.getValueAt(i, 8).toString());
+                Sequel.menyimpan("obat_bud", "?,?,?,?,?", 5, new String[]{
+                    tbTambahan3.getValueAt(i, 3).toString(), tbTambahan3.getValueAt(i, 6).toString(),
+                    Sequel.cariIsi("select current_date()"), Sequel.cariIsi("select current_time()"), budcari
+                });
+            }
+            tampilresepBud();
+        }
+    }//GEN-LAST:event_BtnSimpan5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2361,6 +2426,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.Button BtnSimpan;
     private widget.Button BtnSimpan3;
     private widget.Button BtnSimpan4;
+    private widget.Button BtnSimpan5;
     private widget.CekBox ChkInput;
     private widget.CekBox ChkRM;
     private widget.CekBox ChkRspPlg;
@@ -3055,8 +3121,106 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         KdDokter.setText(Sequel.cariIsi("select resep_dokter_pulang.kd_dokter from resep_pulang inner join resep_dokter_pulang on resep_pulang.no_resep=resep_dokter_pulang.no_resep where resep_pulang.no_rawat=?", TNoRw.getText()));
         NmDokter.setText(Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?", KdDokter.getText()));
     }
-    
-    public void tampilresepBud(){
 
+    public void tampilresepBud() {
+        Valid.tabelKosong(tabmodeBud);
+        try {
+            try {
+                querypjg2 = "SELECT length(etiket.waktu_pakai) - length(replace(etiket.waktu_pakai,',','')) + 1 AS panjang , etiket.kode_brng AS kode FROM ( SELECT databarang.kode_brng,"
+                        + "if((LEFT(aturan_pakai.aturan,1)='1' and RIGHT(aturan_pakai.aturan,5)=' Pagi'),'06:00',"
+                        + "if((LEFT(aturan_pakai.aturan,1)='1' and RIGHT(aturan_pakai.aturan,5)='Siang'),'14:00',"
+                        + "if((LEFT(aturan_pakai.aturan,1)='1' and RIGHT(aturan_pakai.aturan,5)=' Sore'),'18:00',"
+                        + "if((LEFT(aturan_pakai.aturan,1)='1' and RIGHT(aturan_pakai.aturan,5)='Malam'),'21:00',"
+                        + "if(LEFT(aturan_pakai.aturan,1)='1','06:00',"
+                        + "if(LEFT(aturan_pakai.aturan,1)='2','06:00,18:00',"
+                        + "if(LEFT(aturan_pakai.aturan,1)='3','06:00,14:00,21:00',"
+                        + "if(LEFT(aturan_pakai.aturan,1)='4','06:00,14:00,18:00,21:00',' ')))))))) as waktu_pakai "
+                        + "from resep_obat inner join "
+                        + "aturan_pakai inner join databarang inner join detail_pemberian_obat "
+                        + "on "
+                        + "databarang.kode_brng=aturan_pakai.kode_brng and "
+                        + "detail_pemberian_obat.kode_brng=databarang.kode_brng "
+                        + "and resep_obat.no_rawat=aturan_pakai.no_rawat and "
+                        + "resep_obat.tgl_perawatan=aturan_pakai.tgl_perawatan and "
+                        + "resep_obat.jam=aturan_pakai.jam and resep_obat.no_rawat=detail_pemberian_obat.no_rawat "
+                        + "and resep_obat.tgl_perawatan=detail_pemberian_obat.tgl_perawatan and "
+                        + "resep_obat.jam=detail_pemberian_obat.jam "
+                        + "where resep_obat.no_resep=? and aturan_pakai.aturan<>'') as etiket";
+                ps3 = koneksi.prepareStatement(
+                        querypjg2
+                );
+                ps3.setString(1, NoResepUbah3.getText());
+                rs3 = ps3.executeQuery();
+                while (rs3.next()) {
+                    queryCari2
+                            = "select resep_obat.no_resep,resep_obat.tgl_perawatan,resep_obat.jam, "
+                            + "resep_obat.no_rawat,pasien.no_rkm_medis,pasien.nm_pasien,databarang.kode_brng,databarang.nama_brng, databarang.expire, "
+                            + "aturan_pakai.aturan,detail_pemberian_obat.jml,kodesatuan.satuan, "
+                            + "if((LEFT(aturan_pakai.aturan,1)='1' and RIGHT(aturan_pakai.aturan,5)=' Pagi'),'06:00', "
+                            + "if((LEFT(aturan_pakai.aturan,1)='1' and RIGHT(aturan_pakai.aturan,5)='Siang'),'14:00', "
+                            + "if((LEFT(aturan_pakai.aturan,1)='1' and RIGHT(aturan_pakai.aturan,5)=' Sore'),'18:00', "
+                            + "if((LEFT(aturan_pakai.aturan,1)='1' and RIGHT(aturan_pakai.aturan,5)='Malam'),'21:00', "
+                            + "if(LEFT(aturan_pakai.aturan,1)='2','06:00  18:00', "
+                            + "if(LEFT(aturan_pakai.aturan,1)='3','06:00  14:00  21:00', "
+                            + "if(LEFT(aturan_pakai.aturan,1)='4','06:00  14:00  18:00  21:00',' '))))))) as waktu_pakai "
+                            + "from resep_obat inner join reg_periksa inner join pasien inner join "
+                            + "aturan_pakai inner join databarang inner join detail_pemberian_obat "
+                            + "inner join kodesatuan on resep_obat.no_rawat=reg_periksa.no_rawat  "
+                            + "and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and "
+                            + "databarang.kode_brng=aturan_pakai.kode_brng and "
+                            + "detail_pemberian_obat.kode_brng=databarang.kode_brng "
+                            + "and resep_obat.no_rawat=aturan_pakai.no_rawat and "
+                            + "resep_obat.tgl_perawatan=aturan_pakai.tgl_perawatan and "
+                            + "resep_obat.jam=aturan_pakai.jam and resep_obat.no_rawat=detail_pemberian_obat.no_rawat "
+                            + "and resep_obat.tgl_perawatan=detail_pemberian_obat.tgl_perawatan and "
+                            + "resep_obat.jam=detail_pemberian_obat.jam and kodesatuan.kode_sat=databarang.kode_sat "
+                            + "where resep_obat.no_resep=? AND databarang.kode_brng=? and aturan_pakai.aturan<>''";
+                    psbud = koneksi.prepareStatement(
+                            queryCari2
+                    );
+                    psbud.setString(1, NoResepUbah3.getText());
+                    psbud.setString(2, rs3.getString("kode"));
+                    rsbud = psbud.executeQuery();
+                    while (rsbud.next()) {
+                        bud="";
+                        psbud2 = koneksi.prepareStatement(
+                                "select bud from obat_bud where no_resep=? and kode_brng=?");
+                        try {
+                            psbud2.setString(1, rsbud.getString("no_resep"));
+                            psbud2.setString(2, rsbud.getString("kode_brng"));
+                            rsbud2 = psbud2.executeQuery();
+                            while (rsbud2.next()) {
+                                bud = rsbud2.getString("bud");
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Notif : " + e);
+                        } finally {
+                            if (rsbud2 != null) {
+                                rsbud2.close();
+                            }
+                            if (psbud2 != null) {
+                                psbud2.close();
+                            }
+                        }
+                        tabmodeBud.addRow(new String[]{
+                            rsbud.getString("tgl_perawatan"), rsbud.getString("jam"), rsbud.getString("no_rawat"), rsbud.getString("no_resep"),
+                            rsbud.getString("no_rkm_medis"), rsbud.getString("nm_pasien"), rsbud.getString("kode_brng"), rsbud.getString("nama_brng"), bud,
+                            rsbud.getString("expire"), rsbud.getString("aturan"), rsbud.getString("jml"), rsbud.getString("satuan"), rsbud.getString("waktu_pakai")
+                        });
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("Notif : " + e);
+            } finally {
+                if (rs3 != null) {
+                    rs3.close();
+                }
+                if (ps3 != null) {
+                    ps3.close();
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Notif 2: " + e);
+        }
     }
-    }
+}

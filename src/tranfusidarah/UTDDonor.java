@@ -69,7 +69,7 @@ public final class UTDDonor extends javax.swing.JDialog {
     private int jml = 0, i = 0, row = 0, index = 0, pilih = 0, inthari = 0;
     private String[] kodebarang, namabarang, jumlah, satuan, stokasal, hbeli, total, printTotal;
     private String totaldonor, totallk, totalpr, umur1, umur2, umur3, umur4, umur5,
-            opos, oneg, apos, aneg, bpos, bneg, abpos, abneg, reminder;
+            opos, oneg, apos, aneg, bpos, bneg, abpos, abneg;
     private SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
     private String aktifkan = "",
             sqlpscekmedis = "select utd_penggunaan_medis_donor.kode_brng,databarang.nama_brng,utd_penggunaan_medis_donor.jml,utd_penggunaan_medis_donor.harga,"
@@ -3086,7 +3086,7 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
                         if (rs3.getInt("hari") >= 76) {
                             if(rs3.getString("no_telp").length() > 11){
                                 System.out.println("Mulai Mengirim WA");
-                                kirimwa.sendwaUTD(rs3.getString("nama"), rs3.getString("no_telp"));    
+                                kirimwa.sendwaUTD(rs3.getString("nama"), rs3.getString("no_telp"), rs3.getString("tanggal"));    
                             } 
                         }
                     }
@@ -3094,7 +3094,7 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
                         if (rs3.getInt("hari") >= 90) {
                             if(rs3.getString("no_telp").length() > 11){
                                 System.out.println("Mulai Mengirim WA");
-                                kirimwa.sendwaUTD(rs3.getString("nama"), rs3.getString("no_telp"));    
+                                kirimwa.sendwaUTD(rs3.getString("nama"), rs3.getString("no_telp"), rs3.getString("tanggal"));    
                             }   
                         }
                     }
@@ -3112,6 +3112,7 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
         } catch (Exception e) {
             System.out.println("Notif : " + e);
         }
+        JOptionPane.showMessageDialog(null,"Proses kirim whatsapp selesai...");
     }//GEN-LAST:event_BtnWAActionPerformed
 
     private void BtnWAKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnWAKeyPressed
