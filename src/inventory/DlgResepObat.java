@@ -51,12 +51,12 @@ public final class DlgResepObat extends javax.swing.JDialog {
     private Connection koneksi = koneksiDB.condb();
     private sekuel Sequel = new sekuel();
     private validasi Valid = new validasi();
-    private PreparedStatement ps, ps2, psracikan, pspulang, ps2pulang, psudd, pspanjang, ps3, psbud, psbud2;
-    private ResultSet rs, rs2, rsracikan, rspulang, rs2pulang, rsudd, rspanjang, rs3, rsbud, rsbud2;
+    private PreparedStatement ps, ps2, psracikan, pspulang, ps2pulang, psudd, pspanjang, ps3, ps4, psobat, psracik, psbud, psbud2;
+    private ResultSet rs, rs2, rsracikan, rspulang, rs2pulang, rsudd, rspanjang, rs3, rs4, rsobat, rsracik, rsbud, rsbud2;
     public DlgCariDokter dokter = new DlgCariDokter(null, false);
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private Date date = new Date();
-    private String now = dateFormat.format(date), lembarobat = "", status = "", queryCari = "", querypjg = "", kode_brng = "", queryCari2 = "", querypjg2 = "", bud="", budcari;
+    private String now = dateFormat.format(date), lembarobat = "", status = "", queryCari = "", querypjg = "", kode_brng = "", queryCari2 = "", querypjg2 = "", queryCari3 = "", querypjg3 = "", bud = "", budcari;
     private double total = 0, jumlahtotal = 0, totalpulang = 0, jumlahtotalpulang = 0;
     private Properties prop = new Properties();
     private DlgAturanPakai aturanpakai = new DlgAturanPakai(null, false);
@@ -2310,7 +2310,11 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             JOptionPane.showMessageDialog(null, "Maaf, Klik No Resep untuk ubah aturan pakai...!!!!");
         } else if (!(TPasien.getText().trim().equals(""))) {
             NoResepUbah3.setText(NoResep.getText());
-            tampilresepBud();
+            if (ChkRspPlg.isSelected() == true) {
+                tampilresepBudPulang();
+            } else {
+                tampilresepBud();
+            }
             WindowInput6.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
             WindowInput6.setLocationRelativeTo(internalFrame1);
             WindowInput6.setVisible(true);
@@ -2362,8 +2366,13 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             param.put("logo", Sequel.cariGambar("select logo from setting"));
             param.put("noresep", NoResepUbah3.getText());
             param.put("bud", Sequel.cariIsi("select bud from obat_bud where no_resep=?", NoResep.getText()));
-            Valid.MyReport("rptItemResepBud.jrxml", "report", "::[ Aturan Pakai BUD ]::",
-                    "select no, temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9, temp10, temp11, temp12, temp13, temp14 from temporary_resep WHERE temp4 = " + NoResepUbah3.getText() + " order by no asc", param);
+            if (ChkRspPlg.isSelected() == true) {
+                Valid.MyReport("rptItemResepBudPulang.jrxml", "report", "::[ Aturan Pakai BUD ]::",
+                        "select no, temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9, temp10, temp11, temp12, temp13, temp14 from temporary_resep WHERE temp4 = " + NoResepUbah3.getText() + " order by no asc", param);
+            } else {
+                Valid.MyReport("rptItemResepBud.jrxml", "report", "::[ Aturan Pakai BUD ]::",
+                        "select no, temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9, temp10, temp11, temp12, temp13, temp14 from temporary_resep WHERE temp4 = " + NoResepUbah3.getText() + " order by no asc", param);
+            }
         }
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_BtnPrint2ActionPerformed
@@ -2381,16 +2390,20 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             Valid.textKosong(NoResepUbah3, "Data");
         } else {
             for (i = 0; i < tbTambahan3.getRowCount(); i++) {
-                Sequel.queryu2("delete from obat_bud where no_resep=? and kode_brng=?", 2, new String[]{
-                    tbTambahan3.getValueAt(i, 3).toString(), tbTambahan3.getValueAt(i, 6).toString()
+                Sequel.queryu2("delete from obat_bud where no_resep=? and kode_brng=? and nama_brng=?", 3, new String[]{
+                    tbTambahan3.getValueAt(i, 3).toString(), tbTambahan3.getValueAt(i, 6).toString(), tbTambahan3.getValueAt(i, 7).toString()
                 });
                 budcari = (tbTambahan3.getValueAt(i, 8).toString().equals("")) ? "-" : (tbTambahan3.getValueAt(i, 8).toString());
-                Sequel.menyimpan("obat_bud", "?,?,?,?,?", 5, new String[]{
-                    tbTambahan3.getValueAt(i, 3).toString(), tbTambahan3.getValueAt(i, 6).toString(),
+                Sequel.menyimpan("obat_bud", "?,?,?,?,?,?", 6, new String[]{
+                    tbTambahan3.getValueAt(i, 3).toString(), tbTambahan3.getValueAt(i, 6).toString(), tbTambahan3.getValueAt(i, 7).toString(),
                     Sequel.cariIsi("select current_date()"), Sequel.cariIsi("select current_time()"), budcari
                 });
             }
-            tampilresepBud();
+            if (ChkRspPlg.isSelected() == true) {
+                tampilresepBudPulang();
+            } else {
+                tampilresepBud();
+            }
         }
     }//GEN-LAST:event_BtnSimpan5ActionPerformed
 
@@ -2562,7 +2575,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         cmbDtk.setSelectedItem(detik);
         setDokterPeresep();
         ChkInput.setSelected(true);
-        ChkRspPlg.setSelected(true);
+        ChkRspPlg.setSelected(false);
         this.status = status;
         isForm();
     }
@@ -3175,37 +3188,201 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                             + "and resep_obat.tgl_perawatan=detail_pemberian_obat.tgl_perawatan and "
                             + "resep_obat.jam=detail_pemberian_obat.jam and kodesatuan.kode_sat=databarang.kode_sat "
                             + "where resep_obat.no_resep=? AND databarang.kode_brng=? and aturan_pakai.aturan<>''";
-                    psbud = koneksi.prepareStatement(
+                    psobat = koneksi.prepareStatement(
                             queryCari2
                     );
-                    psbud.setString(1, NoResepUbah3.getText());
-                    psbud.setString(2, rs3.getString("kode"));
-                    rsbud = psbud.executeQuery();
-                    while (rsbud.next()) {
-                        bud="";
-                        psbud2 = koneksi.prepareStatement(
+                    psobat.setString(1, NoResepUbah3.getText());
+                    psobat.setString(2, rs3.getString("kode"));
+                    rsobat = psobat.executeQuery();
+                    while (rsobat.next()) {
+                        bud = "";
+                        psbud = koneksi.prepareStatement(
                                 "select bud from obat_bud where no_resep=? and kode_brng=?");
                         try {
-                            psbud2.setString(1, rsbud.getString("no_resep"));
-                            psbud2.setString(2, rsbud.getString("kode_brng"));
-                            rsbud2 = psbud2.executeQuery();
-                            while (rsbud2.next()) {
-                                bud = rsbud2.getString("bud");
+                            psbud.setString(1, rsobat.getString("no_resep"));
+                            psbud.setString(2, rsobat.getString("kode_brng"));
+                            rsbud = psbud.executeQuery();
+                            while (rsbud.next()) {
+                                bud = rsbud.getString("bud");
                             }
                         } catch (Exception e) {
                             System.out.println("Notif : " + e);
                         } finally {
-                            if (rsbud2 != null) {
-                                rsbud2.close();
+                            if (rsbud != null) {
+                                rsbud.close();
                             }
-                            if (psbud2 != null) {
-                                psbud2.close();
+                            if (psbud != null) {
+                                psbud.close();
                             }
                         }
                         tabmodeBud.addRow(new String[]{
-                            rsbud.getString("tgl_perawatan"), rsbud.getString("jam"), rsbud.getString("no_rawat"), rsbud.getString("no_resep"),
-                            rsbud.getString("no_rkm_medis"), rsbud.getString("nm_pasien"), rsbud.getString("kode_brng"), rsbud.getString("nama_brng"), bud,
-                            rsbud.getString("expire"), rsbud.getString("aturan"), rsbud.getString("jml"), rsbud.getString("satuan"), rsbud.getString("waktu_pakai")
+                            rsobat.getString("tgl_perawatan"), rsobat.getString("jam"), rsobat.getString("no_rawat"), rsobat.getString("no_resep"),
+                            rsobat.getString("no_rkm_medis"), rsobat.getString("nm_pasien"), rsobat.getString("kode_brng"), rsobat.getString("nama_brng"), bud,
+                            rsobat.getString("expire"), rsobat.getString("aturan"), rsobat.getString("jml"), rsobat.getString("satuan"), rsobat.getString("waktu_pakai")
+                        });
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("Notif : " + e);
+            } finally {
+                if (rs3 != null) {
+                    rs3.close();
+                }
+                if (ps3 != null) {
+                    ps3.close();
+                }
+            }
+
+            querypjg3 = "SELECT length(etiket.waktu_pakai) - length(replace(etiket.waktu_pakai,',','')) + 1 AS panjang , etiket.kd_racik AS kode, etiket.nama_racik as nama FROM ( SELECT obat_racikan.kd_racik,obat_racikan.nama_racik, "
+                    + "if((LEFT(obat_racikan.aturan_pakai,1)='1' and RIGHT(obat_racikan.aturan_pakai,5)=' Pagi'),'06:00', "
+                    + "if((LEFT(obat_racikan.aturan_pakai,1)='1' and RIGHT(obat_racikan.aturan_pakai,5)='Siang'),'14:00', "
+                    + "if((LEFT(obat_racikan.aturan_pakai,1)='1' and RIGHT(obat_racikan.aturan_pakai,5)=' Sore'),'18:00', "
+                    + "if((LEFT(obat_racikan.aturan_pakai,1)='1' and RIGHT(obat_racikan.aturan_pakai,5)='Malam'),'21:00', "
+                    + "if(LEFT(obat_racikan.aturan_pakai,1)='2','06:00  18:00', "
+                    + "if(LEFT(obat_racikan.aturan_pakai,1)='3','06:00  14:00  21:00', "
+                    + "if(LEFT(obat_racikan.aturan_pakai,1)='4','06:00  14:00  18:00  21:00',' '))))))) as waktu_pakai   "
+                    + "from resep_obat inner join reg_periksa inner join pasien inner join "
+                    + "obat_racikan inner join metode_racik on resep_obat.no_rawat=reg_periksa.no_rawat  "
+                    + "and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "
+                    + "and obat_racikan.kd_racik=metode_racik.kd_racik "
+                    + "and resep_obat.no_rawat=obat_racikan.no_rawat and "
+                    + "resep_obat.tgl_perawatan=obat_racikan.tgl_perawatan and "
+                    + "resep_obat.jam=obat_racikan.jam "
+                    + "where resep_obat.no_resep=? and obat_racikan.aturan_pakai<>'') as etiket";
+            ps4 = koneksi.prepareStatement(
+                    querypjg3
+            );
+            ps4.setString(1, NoResepUbah3.getText());
+            rs4 = ps4.executeQuery();
+            while (rs4.next()) {
+                queryCari3
+                        = "select resep_obat.no_resep,resep_obat.tgl_perawatan,resep_obat.jam, "
+                        + "resep_obat.no_rawat,pasien.no_rkm_medis,pasien.nm_pasien,obat_racikan.nama_racik, "
+                        + "obat_racikan.aturan_pakai,obat_racikan.jml_dr,obat_racikan.kd_racik,metode_racik.nm_racik, "
+                        + "if((LEFT(obat_racikan.aturan_pakai,1)='1' and RIGHT(obat_racikan.aturan_pakai,5)=' Pagi'),'06:00', "
+                        + "if((LEFT(obat_racikan.aturan_pakai,1)='1' and RIGHT(obat_racikan.aturan_pakai,5)='Siang'),'14:00', "
+                        + "if((LEFT(obat_racikan.aturan_pakai,1)='1' and RIGHT(obat_racikan.aturan_pakai,5)=' Sore'),'18:00', "
+                        + "if((LEFT(obat_racikan.aturan_pakai,1)='1' and RIGHT(obat_racikan.aturan_pakai,5)='Malam'),'21:00', "
+                        + "if(LEFT(obat_racikan.aturan_pakai,1)='2','06:00  18:00', "
+                        + "if(LEFT(obat_racikan.aturan_pakai,1)='3','06:00  14:00  21:00', "
+                        + "if(LEFT(obat_racikan.aturan_pakai,1)='4','06:00  14:00  18:00  21:00',' '))))))) as waktu_pakai "
+                        + "from resep_obat inner join reg_periksa inner join pasien inner join "
+                        + "obat_racikan inner join metode_racik on resep_obat.no_rawat=reg_periksa.no_rawat "
+                        + "and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "
+                        + "and obat_racikan.kd_racik=metode_racik.kd_racik "
+                        + "and resep_obat.no_rawat=obat_racikan.no_rawat and "
+                        + "resep_obat.tgl_perawatan=obat_racikan.tgl_perawatan and "
+                        + "resep_obat.jam=obat_racikan.jam and resep_obat.no_rawat=obat_racikan.no_rawat "
+                        + "where resep_obat.no_resep=? and obat_racikan.kd_racik=? and obat_racikan.nama_racik=? and obat_racikan.aturan_pakai<>''";
+                psracik = koneksi.prepareStatement(
+                        queryCari3
+                );
+                psracik.setString(1, NoResepUbah3.getText());
+                psracik.setString(2, rs4.getString("kode"));
+                psracik.setString(3, rs4.getString("nama"));
+                rsracik = psracik.executeQuery();
+                while (rsracik.next()) {
+                    bud = "";
+                    psbud = koneksi.prepareStatement(
+                            "select bud from obat_bud where no_resep=? and kode_brng=? and nama_brng=?");
+                    try {
+                        psbud.setString(1, rsracik.getString("no_resep"));
+                        psbud.setString(2, rsracik.getString("kd_racik"));
+                        psbud.setString(3, rsracik.getString("nama_racik"));
+                        rsbud = psbud.executeQuery();
+                        while (rsbud.next()) {
+                            bud = rsbud.getString("bud");
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Notif : " + e);
+                    } finally {
+                        if (rsbud != null) {
+                            rsbud.close();
+                        }
+                        if (psbud != null) {
+                            psbud.close();
+                        }
+                    }
+                    tabmodeBud.addRow(new String[]{
+                        rsracik.getString("tgl_perawatan"), rsracik.getString("jam"), rsracik.getString("no_rawat"), rsracik.getString("no_resep"),
+                        rsracik.getString("no_rkm_medis"), rsracik.getString("nm_pasien"), rsracik.getString("kd_racik"), rsracik.getString("nama_racik"), bud,
+                        "", rsracik.getString("aturan_pakai"), rsracik.getString("jml_dr"), rsracik.getString("nm_racik"), rsracik.getString("waktu_pakai")
+                    });
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Notif 2: " + e);
+        }
+    }
+
+    public void tampilresepBudPulang() {
+        Valid.tabelKosong(tabmodeBud);
+        try {
+            try {
+                querypjg2 = "SELECT length(etiket.waktu_pakai) - length(replace(etiket.waktu_pakai,',','')) + 1 AS panjang , etiket.kode_brng AS kode FROM ( SELECT resep_pulang.kode_brng, "
+                        + "if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)=' Pagi'),'06:00', "
+                        + "if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)='Siang'),'14:00', "
+                        + "if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)=' Sore'),'18:00', "
+                        + "if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)='Malam'),'21:00', "
+                        + "if(LEFT(resep_pulang.dosis,1)='2','06:00  18:00', "
+                        + "if(LEFT(resep_pulang.dosis,1)='3','06:00  14:00  21:00', "
+                        + "if(LEFT(resep_pulang.dosis,1)='4','06:00  14:00  18:00  21:00',' '))))))) as waktu_pakai "
+                        + "from resep_pulang inner join reg_periksa inner join pasien inner join databarang inner join kodesatuan on "
+                        + "resep_pulang.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and "
+                        + "databarang.kode_brng=resep_pulang.kode_brng and resep_pulang.no_rawat=reg_periksa.no_rawat and kodesatuan.kode_sat=databarang.kode_sat "
+                        + "where resep_pulang.no_resep=? and resep_pulang.dosis<>'') as etiket";
+                ps3 = koneksi.prepareStatement(
+                        querypjg2
+                );
+                ps3.setString(1, NoResepUbah3.getText());
+                rs3 = ps3.executeQuery();
+                while (rs3.next()) {
+                    queryCari2
+                            = "select resep_pulang.no_resep, resep_pulang.tanggal, resep_pulang.jam, resep_pulang.no_rawat, "
+                            + "pasien.no_rkm_medis, pasien.nm_pasien, databarang.kode_brng, databarang.nama_brng, databarang.expire,"
+                            + "resep_pulang.dosis, resep_pulang.jml_barang, kodesatuan.satuan,"
+                            + "if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)=' Pagi'),'06:00', "
+                            + "if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)='Siang'),'14:00', "
+                            + "if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)=' Sore'),'18:00', "
+                            + "if((LEFT(resep_pulang.dosis,1)='1' and RIGHT(resep_pulang.dosis,5)='Malam'),'21:00', "
+                            + "if(LEFT(resep_pulang.dosis,1)='2','06:00  18:00', "
+                            + "if(LEFT(resep_pulang.dosis,1)='3','06:00  14:00  21:00', "
+                            + "if(LEFT(resep_pulang.dosis,1)='4','06:00  14:00  18:00  21:00',' '))))))) as waktu_pakai "
+                            + "from resep_pulang inner join reg_periksa inner join pasien inner join databarang inner join kodesatuan "
+                            + "on resep_pulang.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and databarang.kode_brng=resep_pulang.kode_brng "
+                            + "and resep_pulang.no_rawat=reg_periksa.no_rawat and kodesatuan.kode_sat=databarang.kode_sat "
+                            + "where resep_pulang.no_resep=? and databarang.kode_brng=? and resep_pulang.dosis<>''";
+                    psobat = koneksi.prepareStatement(
+                            queryCari2
+                    );
+                    psobat.setString(1, NoResepUbah3.getText());
+                    psobat.setString(2, rs3.getString("kode"));
+                    rsobat = psobat.executeQuery();
+                    while (rsobat.next()) {
+                        bud = "";
+                        psbud = koneksi.prepareStatement(
+                                "select bud from obat_bud where no_resep=? and kode_brng=?");
+                        try {
+                            psbud.setString(1, rsobat.getString("no_resep"));
+                            psbud.setString(2, rsobat.getString("kode_brng"));
+                            rsbud = psbud.executeQuery();
+                            while (rsbud.next()) {
+                                bud = rsbud.getString("bud");
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Notif : " + e);
+                        } finally {
+                            if (rsbud != null) {
+                                rsbud.close();
+                            }
+                            if (psbud != null) {
+                                psbud.close();
+                            }
+                        }
+                        tabmodeBud.addRow(new String[]{
+                            rsobat.getString("tanggal"), rsobat.getString("jam"), rsobat.getString("no_rawat"), rsobat.getString("no_resep"),
+                            rsobat.getString("no_rkm_medis"), rsobat.getString("nm_pasien"), rsobat.getString("kode_brng"), rsobat.getString("nama_brng"), bud,
+                            rsobat.getString("expire"), rsobat.getString("dosis"), rsobat.getString("jml_barang"), rsobat.getString("satuan"), rsobat.getString("waktu_pakai")
                         });
                     }
                 }
