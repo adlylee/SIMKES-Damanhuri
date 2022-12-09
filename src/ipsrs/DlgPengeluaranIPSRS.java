@@ -823,7 +823,7 @@ private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         Valid.tabelKosong(tabMode);
         for (i = 0; i < jml; i++) {
             tabMode.addRow(new Object[]{jumlah[i], kodebarang[i], namabarang[i], satuan[i], stok[i], harga[i], total[i]});
-        }
+        } 
         try {
 
             if (var.getkode().equals("Admin Utama")) {

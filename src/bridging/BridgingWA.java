@@ -173,15 +173,15 @@ public class BridgingWA {
         }
     }
 
-    public void sendwaUTD(String nama, String no_telp) {
+    public void sendwaUTD(String nama, String no_telp, String tanggal) {
         try {
             message = "Assalamualaikum wr.wb " + nama + ". \nKami dari Unit Transfusi Darah RSUD H.DAMANHURI BARABAI\n"
-                    + "Mengingatkan bahwa Bapak/Ibu sudah dapat melakukan donor darah kembali karena waktu untuk donor darah sudah sampai."
-                    + "\nKami tunggu ya kedatangannya.\nTerima kasih. Wassalamualaikum";
+                    + "Mengingatkan bahwa Bapak/Ibu telah melakukan donor darah pada tanggal " + tanggal + " dan sudah dapat melakukan donor darah "
+                    + "kembali karena waktu untuk donor darah sudah sampai. \nKami tunggu ya kedatangannya.\nTerima kasih. Wassalamualaikum";
 
             urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'") + "/wagateway/kirimpesan";
             sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_phonenumber'");
-            requestJson = "type=text&sender=" + sender + "&number="+no_telp+"&message=" + message;
+            requestJson = "type=text&sender=" + sender + "&number=" + no_telp + "&message=" + message;
             System.out.println("PostField : " + requestJson);
 
             URL obj = new URL(urlApi);
@@ -231,7 +231,7 @@ public class BridgingWA {
         try {
             message = "Pemberitahuan Permintaan Kerohanian.\n\n"
                     + "Pasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal + "";
-            number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='07012092022813042'");
+            number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='198011042005012011'");
             urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'") + "/wagateway/kirimpesan";
             sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_phonenumber'");
             requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message;

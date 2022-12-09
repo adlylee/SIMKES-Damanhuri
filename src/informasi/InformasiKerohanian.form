@@ -266,32 +266,32 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="widget.TextBox" name="CrPetugas">
+                <Component class="widget.TextBox" name="CrPerujuk">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
-                    <Property name="name" type="java.lang.String" value="CrPetugas" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="CrPerujuk" noResource="true"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[257, 23]"/>
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CrPetugasActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CrPerujukActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="widget.Button" name="btnPetugas">
+                <Component class="widget.Button" name="btnPerujuk">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/picture/190.png"/>
                     </Property>
                     <Property name="mnemonic" type="int" value="54"/>
                     <Property name="toolTipText" type="java.lang.String" value="ALt+6"/>
-                    <Property name="name" type="java.lang.String" value="btnPetugas" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="btnPerujuk" noResource="true"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[28, 23]"/>
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPetugasActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPerujukActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="widget.Label" name="jLabel16">
@@ -470,7 +470,7 @@
                     <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="BtnHapusKeyPressed"/>
                   </Events>
                 </Component>
-                <Component class="widget.Button" name="BtnHasil">
+                <Component class="widget.Button" name="BtnPetugas">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/picture/file-edit-16x16.png"/>
@@ -478,14 +478,14 @@
                     <Property name="mnemonic" type="int" value="80"/>
                     <Property name="text" type="java.lang.String" value="Petugas"/>
                     <Property name="toolTipText" type="java.lang.String" value="Alt+P"/>
-                    <Property name="name" type="java.lang.String" value="BtnHasil" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="BtnPetugas" noResource="true"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[100, 30]"/>
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnHasilActionPerformed"/>
-                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="BtnHasilKeyPressed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnPetugasActionPerformed"/>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="BtnPetugasKeyPressed"/>
                   </Events>
                 </Component>
                 <Component class="widget.Button" name="BtnAll">
