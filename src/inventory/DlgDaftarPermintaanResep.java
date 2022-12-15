@@ -112,7 +112,7 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
                 column.setMaxWidth(0);
             }
         }
-        
+
         tbResepRalan.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table,
@@ -121,9 +121,16 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
                 super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
                 String stts_rawat = (String) table.getModel().getValueAt(row, 7);
-                
+                String norawat = (String) table.getModel().getValueAt(row, 3);
+                String poli = (String) table.getModel().getValueAt(row, 9);
+                String tglresep = (String) table.getModel().getValueAt(row, 1);
+                int hitung = Sequel.cariInteger("SELECT COUNT('" + norawat + "') FROM resep_obat WHERE no_rawat='" + norawat + "' AND tgl_peresepan='" + tglresep + "'");
+              
                 if ("Sudah Terlayani".equals(stts_rawat)) {
                     setBackground(new Color(255, 178, 102));
+                    setForeground(Color.BLACK);
+                } else if ("Belum Terlayani".equals(stts_rawat) && poli.startsWith("POLI") && norawat.equals(norawat) && hitung > 1) {
+                    setBackground(new Color(161, 242, 148));
                     setForeground(Color.BLACK);
                 } else {
                     if (row % 2 == 1) {
@@ -134,7 +141,7 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
                         setBackground(new Color(255, 255, 255));
                     }
                 }
-                
+
                 if (isSelected) {
                     setForeground(Color.RED);
                 }
@@ -150,13 +157,16 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
                 return false;
             }
         };
+
         tbDetailResepRalan.setModel(tabMode2);
 
         //tbObat.setDefaultRenderer(Object.class, new WarnaTable(panelJudul.getBackground(),tbObat.getBackground()));
-        tbDetailResepRalan.setPreferredScrollableViewportSize(new Dimension(500, 500));
+        tbDetailResepRalan.setPreferredScrollableViewportSize(
+                new Dimension(500, 500));
         tbDetailResepRalan.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0;
+                i < 6; i++) {
             TableColumn column = tbDetailResepRalan.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(75);
@@ -172,7 +182,9 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
                 column.setPreferredWidth(190);
             }
         }
-        tbDetailResepRalan.setDefaultRenderer(Object.class, new WarnaTable());
+
+        tbDetailResepRalan.setDefaultRenderer(Object.class,
+                new WarnaTable());
 
         tabMode3 = new DefaultTableModel(null, new Object[]{
             "No.Resep", "Tgl.Peresepan", "Jam Peresepan", "No.Rawat", "No.RM",
@@ -183,13 +195,16 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
                 return false;
             }
         };
+
         tbResepRanap.setModel(tabMode3);
 
         //tbObat.setDefaultRenderer(Object.class, new WarnaTable(panelJudul.getBackground(),tbObat.getBackground()));
-        tbResepRanap.setPreferredScrollableViewportSize(new Dimension(500, 500));
+        tbResepRanap.setPreferredScrollableViewportSize(
+                new Dimension(500, 500));
         tbResepRanap.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0;
+                i < 11; i++) {
             TableColumn column = tbResepRanap.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(75);
@@ -217,7 +232,9 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
                 column.setMaxWidth(0);
             }
         }
-        tbResepRanap.setDefaultRenderer(Object.class, new WarnaTable());
+
+        tbResepRanap.setDefaultRenderer(Object.class,
+                new WarnaTable());
 
         tabMode4 = new DefaultTableModel(null, new Object[]{
             "No.Resep", "Tgl.Resep", "Ruang/Kamar", "Status", "Pasien", "Dokter Peresep"
@@ -227,13 +244,16 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
                 return false;
             }
         };
+
         tbDetailResepRanap.setModel(tabMode4);
 
         //tbObat.setDefaultRenderer(Object.class, new WarnaTable(panelJudul.getBackground(),tbObat.getBackground()));
-        tbDetailResepRanap.setPreferredScrollableViewportSize(new Dimension(500, 500));
+        tbDetailResepRanap.setPreferredScrollableViewportSize(
+                new Dimension(500, 500));
         tbDetailResepRanap.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0;
+                i < 6; i++) {
             TableColumn column = tbDetailResepRanap.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(75);
@@ -249,7 +269,9 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
                 column.setPreferredWidth(190);
             }
         }
-        tbDetailResepRanap.setDefaultRenderer(Object.class, new WarnaTable());
+
+        tbDetailResepRanap.setDefaultRenderer(Object.class,
+                new WarnaTable());
 
         tabMode5 = new DefaultTableModel(null, new Object[]{
             "No.Resep", "Tgl.Peresepan", "Jam Peresepan", "No.Rawat", "No.RM",
@@ -260,13 +282,16 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
                 return false;
             }
         };
+
         tbResepPulang.setModel(tabMode5);
 
         //tbObat.setDefaultRenderer(Object.class, new WarnaTable(panelJudul.getBackground(),tbObat.getBackground()));
-        tbResepPulang.setPreferredScrollableViewportSize(new Dimension(500, 500));
+        tbResepPulang.setPreferredScrollableViewportSize(
+                new Dimension(500, 500));
         tbResepPulang.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0;
+                i < 11; i++) {
             TableColumn column = tbResepPulang.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(75);
@@ -294,7 +319,9 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
                 column.setMaxWidth(0);
             }
         }
-        tbResepPulang.setDefaultRenderer(Object.class, new WarnaTable());
+
+        tbResepPulang.setDefaultRenderer(Object.class,
+                new WarnaTable());
 
         tabMode6 = new DefaultTableModel(null, new Object[]{
             "No.Resep", "Tgl.Resep", "Ruang/Kamar", "Status", "Pasien", "Dokter Peresep"
@@ -304,13 +331,16 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
                 return false;
             }
         };
+
         tbDetailResepPulang.setModel(tabMode6);
 
         //tbObat.setDefaultRenderer(Object.class, new WarnaTable(panelJudul.getBackground(),tbObat.getBackground()));
-        tbDetailResepPulang.setPreferredScrollableViewportSize(new Dimension(500, 500));
+        tbDetailResepPulang.setPreferredScrollableViewportSize(
+                new Dimension(500, 500));
         tbDetailResepPulang.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0;
+                i < 6; i++) {
             TableColumn column = tbDetailResepPulang.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(75);
@@ -326,8 +356,10 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
                 column.setPreferredWidth(190);
             }
         }
-        tbDetailResepPulang.setDefaultRenderer(Object.class, new WarnaTable());
-        
+
+        tbDetailResepPulang.setDefaultRenderer(Object.class,
+                new WarnaTable());
+
         tabMode7 = new DefaultTableModel(null, new Object[]{
             "No.Resep", "Tgl.Peresepan", "Jam Peresepan", "No.Rawat", "No.RM",
             "Pasien", "Dokter Peresep", "Status", "Kode Dokter", "Ruang/Kamar", "Kode Bangsal"
@@ -337,13 +369,16 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
                 return false;
             }
         };
+
         tbResepGabung.setModel(tabMode7);
 
         //tbObat.setDefaultRenderer(Object.class, new WarnaTable(panelJudul.getBackground(),tbObat.getBackground()));
-        tbResepGabung.setPreferredScrollableViewportSize(new Dimension(500, 500));
+        tbResepGabung.setPreferredScrollableViewportSize(
+                new Dimension(500, 500));
         tbResepGabung.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0;
+                i < 11; i++) {
             TableColumn column = tbResepGabung.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(75);
@@ -371,7 +406,9 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
                 column.setMaxWidth(0);
             }
         }
-        tbResepGabung.setDefaultRenderer(Object.class, new WarnaTable());
+
+        tbResepGabung.setDefaultRenderer(Object.class,
+                new WarnaTable());
 
         tabMode8 = new DefaultTableModel(null, new Object[]{
             "No.Resep", "Tgl.Resep", "Ruang/Kamar", "Status", "Pasien", "Dokter Peresep"
@@ -381,13 +418,16 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
                 return false;
             }
         };
+
         tbDetailResepGabung.setModel(tabMode8);
 
         //tbObat.setDefaultRenderer(Object.class, new WarnaTable(panelJudul.getBackground(),tbObat.getBackground()));
-        tbDetailResepGabung.setPreferredScrollableViewportSize(new Dimension(500, 500));
+        tbDetailResepGabung.setPreferredScrollableViewportSize(
+                new Dimension(500, 500));
         tbDetailResepGabung.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0;
+                i < 6; i++) {
             TableColumn column = tbDetailResepGabung.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(75);
@@ -403,10 +443,15 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
                 column.setPreferredWidth(190);
             }
         }
-        tbDetailResepGabung.setDefaultRenderer(Object.class, new WarnaTable());
 
-        TCari.setDocument(new batasInput((byte) 100).getKata(TCari));
-        if (koneksiDB.cariCepat().equals("aktif")) {
+        tbDetailResepGabung.setDefaultRenderer(Object.class,
+                new WarnaTable());
+
+        TCari.setDocument(
+                new batasInput((byte) 100).getKata(TCari)
+        );
+        if (koneksiDB.cariCepat()
+                .equals("aktif")) {
             TCari.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
                 @Override
                 public void insertUpdate(DocumentEvent e) {
@@ -431,48 +476,60 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
             });
         }
 
-        dlgobt.addWindowListener(new WindowListener() {
+        dlgobt.addWindowListener(
+                new WindowListener() {
             @Override
-            public void windowOpened(WindowEvent e) {
+            public void windowOpened(WindowEvent e
+            ) {
             }
 
             @Override
-            public void windowClosing(WindowEvent e) {
+            public void windowClosing(WindowEvent e
+            ) {
             }
 
             @Override
-            public void windowClosed(WindowEvent e) {
+            public void windowClosed(WindowEvent e
+            ) {
                 tampil();
             }
 
             @Override
-            public void windowIconified(WindowEvent e) {
+            public void windowIconified(WindowEvent e
+            ) {
             }
 
             @Override
-            public void windowDeiconified(WindowEvent e) {
+            public void windowDeiconified(WindowEvent e
+            ) {
             }
 
             @Override
-            public void windowActivated(WindowEvent e) {
+            public void windowActivated(WindowEvent e
+            ) {
             }
 
             @Override
-            public void windowDeactivated(WindowEvent e) {
+            public void windowDeactivated(WindowEvent e
+            ) {
             }
         });
 
-        dokter.addWindowListener(new WindowListener() {
+        dokter.addWindowListener(
+                new WindowListener() {
             @Override
-            public void windowOpened(WindowEvent e) {;
+            public void windowOpened(WindowEvent e
+            ) {;
             }
 
             @Override
-            public void windowClosing(WindowEvent e) {
+            public void windowClosing(WindowEvent e
+            ) {
             }
 
             @Override
-            public void windowClosed(WindowEvent e) {
+            public void windowClosed(WindowEvent e
+            ) {
                 if (dokter.getTable().getSelectedRow() != -1) {
                     if (TabPilihRawat.getSelectedIndex() == 0) {
                         CrDokter.setText(dokter.getTable().getValueAt(dokter.getTable().getSelectedRow(), 1).toString());
@@ -485,33 +542,41 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
             }
 
             @Override
-            public void windowIconified(WindowEvent e) {
+            public void windowIconified(WindowEvent e
+            ) {
             }
 
             @Override
-            public void windowDeiconified(WindowEvent e) {
+            public void windowDeiconified(WindowEvent e
+            ) {
             }
 
             @Override
-            public void windowActivated(WindowEvent e) {
+            public void windowActivated(WindowEvent e
+            ) {
             }
 
             @Override
-            public void windowDeactivated(WindowEvent e) {
+            public void windowDeactivated(WindowEvent e
+            ) {
             }
         });
 
-        poli.addWindowListener(new WindowListener() {
+        poli.addWindowListener(
+                new WindowListener() {
             @Override
-            public void windowOpened(WindowEvent e) {
+            public void windowOpened(WindowEvent e
+            ) {
             }
 
             @Override
-            public void windowClosing(WindowEvent e) {
+            public void windowClosing(WindowEvent e
+            ) {
             }
 
             @Override
-            public void windowClosed(WindowEvent e) {
+            public void windowClosed(WindowEvent e
+            ) {
                 if (poli.getTable().getSelectedRow() != -1) {
                     CrPoli.setText(poli.getTable().getValueAt(poli.getTable().getSelectedRow(), 1).toString());
                     CrPoli.requestFocus();
@@ -519,33 +584,41 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
             }
 
             @Override
-            public void windowIconified(WindowEvent e) {
+            public void windowIconified(WindowEvent e
+            ) {
             }
 
             @Override
-            public void windowDeiconified(WindowEvent e) {
+            public void windowDeiconified(WindowEvent e
+            ) {
             }
 
             @Override
-            public void windowActivated(WindowEvent e) {
+            public void windowActivated(WindowEvent e
+            ) {
             }
 
             @Override
-            public void windowDeactivated(WindowEvent e) {
+            public void windowDeactivated(WindowEvent e
+            ) {
             }
         });
 
-        ruang.addWindowListener(new WindowListener() {
+        ruang.addWindowListener(
+                new WindowListener() {
             @Override
-            public void windowOpened(WindowEvent e) {
+            public void windowOpened(WindowEvent e
+            ) {
             }
 
             @Override
-            public void windowClosing(WindowEvent e) {
+            public void windowClosing(WindowEvent e
+            ) {
             }
 
             @Override
-            public void windowClosed(WindowEvent e) {
+            public void windowClosed(WindowEvent e
+            ) {
                 if (ruang.getTable().getSelectedRow() != -1) {
                     Kamar.setText(ruang.getTable().getValueAt(ruang.getTable().getSelectedRow(), 1).toString());
                     Kamar.requestFocus();
@@ -553,19 +626,23 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
             }
 
             @Override
-            public void windowIconified(WindowEvent e) {
+            public void windowIconified(WindowEvent e
+            ) {
             }
 
             @Override
-            public void windowDeiconified(WindowEvent e) {
+            public void windowDeiconified(WindowEvent e
+            ) {
             }
 
             @Override
-            public void windowActivated(WindowEvent e) {
+            public void windowActivated(WindowEvent e
+            ) {
             }
 
             @Override
-            public void windowDeactivated(WindowEvent e) {
+            public void windowDeactivated(WindowEvent e
+            ) {
             }
         });
 
@@ -580,7 +657,8 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
             formalarm = "ralan + ranap";
         }
 
-        if (alarm.equals("yes")) {
+        if (alarm.equals(
+                "yes")) {
             jam();
         }
     }
