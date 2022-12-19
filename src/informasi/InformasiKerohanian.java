@@ -14,11 +14,13 @@ import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
@@ -38,7 +40,7 @@ public class InformasiKerohanian extends javax.swing.JDialog {
     private ResultSet rs, rs2;
     private DlgCariPetugas petugas = new DlgCariPetugas(null, false);
     private DlgCariBangsal ruang = new DlgCariBangsal(null, false);
-    private String norm = "", NoRawat = "", NoPermintaan = "", Perujuk = "", Petugas = "", TglPermintaan = "", Kamar = "", JamPermintaan = "", Ket = "";
+    private String norm = "", NoRawat = "", NoPermintaan = "", Perujuk = "", Petugas = "", TglPermintaan = "", Kamar = "", JamPermintaan = "", Ket = "", namapetugas = "";
     private BridgingWA kirimwa = new BridgingWA();
 
     /**
@@ -141,8 +143,8 @@ public class InformasiKerohanian extends javax.swing.JDialog {
             public void windowClosed(WindowEvent e) {
                 if (var.getform().equals("InformasiKerohanian")) {
                     if (petugas.getTable().getSelectedRow() != -1) {
-                        CrPetugas.setText(petugas.getTable().getValueAt(petugas.getTable().getSelectedRow(), 1).toString());
-                        CrPetugas.requestFocus();
+                        CrPerujuk.setText(petugas.getTable().getValueAt(petugas.getTable().getSelectedRow(), 1).toString());
+                        CrPerujuk.requestFocus();
                     }
                 }
             }
@@ -233,8 +235,8 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         panelGlass10 = new widget.panelisi();
         jLabel14 = new widget.Label();
-        CrPetugas = new widget.TextBox();
-        btnPetugas = new widget.Button();
+        CrPerujuk = new widget.TextBox();
+        btnPerujuk = new widget.Button();
         jLabel16 = new widget.Label();
         CrKamar = new widget.TextBox();
         BtnSeek4 = new widget.Button();
@@ -248,7 +250,7 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         BtnCari = new widget.Button();
         panelisi1 = new widget.panelisi();
         BtnHapus = new widget.Button();
-        BtnHasil = new widget.Button();
+        BtnPetugas = new widget.Button();
         BtnAll = new widget.Button();
         BtnPrint = new widget.Button();
         jLabel10 = new widget.Label();
@@ -363,27 +365,27 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         jLabel14.setPreferredSize(new java.awt.Dimension(55, 23));
         panelGlass10.add(jLabel14);
 
-        CrPetugas.setEditable(false);
-        CrPetugas.setName("CrPetugas"); // NOI18N
-        CrPetugas.setPreferredSize(new java.awt.Dimension(257, 23));
-        CrPetugas.addActionListener(new java.awt.event.ActionListener() {
+        CrPerujuk.setEditable(false);
+        CrPerujuk.setName("CrPerujuk"); // NOI18N
+        CrPerujuk.setPreferredSize(new java.awt.Dimension(257, 23));
+        CrPerujuk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CrPetugasActionPerformed(evt);
+                CrPerujukActionPerformed(evt);
             }
         });
-        panelGlass10.add(CrPetugas);
+        panelGlass10.add(CrPerujuk);
 
-        btnPetugas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
-        btnPetugas.setMnemonic('6');
-        btnPetugas.setToolTipText("ALt+6");
-        btnPetugas.setName("btnPetugas"); // NOI18N
-        btnPetugas.setPreferredSize(new java.awt.Dimension(28, 23));
-        btnPetugas.addActionListener(new java.awt.event.ActionListener() {
+        btnPerujuk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
+        btnPerujuk.setMnemonic('6');
+        btnPerujuk.setToolTipText("ALt+6");
+        btnPerujuk.setName("btnPerujuk"); // NOI18N
+        btnPerujuk.setPreferredSize(new java.awt.Dimension(28, 23));
+        btnPerujuk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPetugasActionPerformed(evt);
+                btnPerujukActionPerformed(evt);
             }
         });
-        panelGlass10.add(btnPetugas);
+        panelGlass10.add(btnPerujuk);
 
         jLabel16.setText("Kamar :");
         jLabel16.setName("jLabel16"); // NOI18N
@@ -504,23 +506,23 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         });
         panelisi1.add(BtnHapus);
 
-        BtnHasil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/file-edit-16x16.png"))); // NOI18N
-        BtnHasil.setMnemonic('P');
-        BtnHasil.setText("Petugas");
-        BtnHasil.setToolTipText("Alt+P");
-        BtnHasil.setName("BtnHasil"); // NOI18N
-        BtnHasil.setPreferredSize(new java.awt.Dimension(100, 30));
-        BtnHasil.addActionListener(new java.awt.event.ActionListener() {
+        BtnPetugas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/file-edit-16x16.png"))); // NOI18N
+        BtnPetugas.setMnemonic('P');
+        BtnPetugas.setText("Petugas");
+        BtnPetugas.setToolTipText("Alt+P");
+        BtnPetugas.setName("BtnPetugas"); // NOI18N
+        BtnPetugas.setPreferredSize(new java.awt.Dimension(100, 30));
+        BtnPetugas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnHasilActionPerformed(evt);
+                BtnPetugasActionPerformed(evt);
             }
         });
-        BtnHasil.addKeyListener(new java.awt.event.KeyAdapter() {
+        BtnPetugas.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                BtnHasilKeyPressed(evt);
+                BtnPetugasKeyPressed(evt);
             }
         });
-        panelisi1.add(BtnHasil);
+        panelisi1.add(BtnPetugas);
 
         BtnAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Search-16x16.png"))); // NOI18N
         BtnAll.setMnemonic('M');
@@ -689,7 +691,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
     }//GEN-LAST:event_BtnCariKeyPressed
 
     private void BtnAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAllActionPerformed
-        CrPetugas.setText("");
+        CrPerujuk.setText("");
         CrKamar.setText("");
         tampil();
     }//GEN-LAST:event_BtnAllActionPerformed
@@ -789,10 +791,10 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         tampil();
-//        BtnKirimWA.hide();
+        isCek();
     }//GEN-LAST:event_formWindowOpened
 
-    private void BtnHasilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHasilActionPerformed
+    private void BtnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPetugasActionPerformed
         if (tbKerohanian.getSelectedRow() != -1) {
             if (tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString().trim().equals("")) {
                 Valid.textKosong(TCari, "No.Permintaan");
@@ -806,11 +808,11 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             JOptionPane.showMessageDialog(null, "Maaf, silahkan pilih data permintaan...!!!!");
             TCari.requestFocus();
         }
-    }//GEN-LAST:event_BtnHasilActionPerformed
+    }//GEN-LAST:event_BtnPetugasActionPerformed
 
-    private void BtnHasilKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnHasilKeyPressed
+    private void BtnPetugasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnPetugasKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_BtnHasilKeyPressed
+    }//GEN-LAST:event_BtnPetugasKeyPressed
 
     private void BtnCloseIn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCloseIn4ActionPerformed
         WindowAmbilPetugas.dispose();
@@ -833,14 +835,14 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         }
     }//GEN-LAST:event_BtnSimpan4ActionPerformed
 
-    private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPetugasActionPerformed
+    private void btnPerujukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerujukActionPerformed
         var.setform("InformasiKerohanian");
         petugas.isCek();
         petugas.TCari.requestFocus();
         petugas.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
         petugas.setLocationRelativeTo(internalFrame1);
         petugas.setVisible(true);
-    }//GEN-LAST:event_btnPetugasActionPerformed
+    }//GEN-LAST:event_btnPerujukActionPerformed
 
     private void BtnSeek4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSeek4ActionPerformed
         ruang.isCek();
@@ -876,9 +878,9 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         }
     }//GEN-LAST:event_tbKerohanianKeyPressed
 
-    private void CrPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrPetugasActionPerformed
+    private void CrPerujukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrPerujukActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_CrPetugasActionPerformed
+    }//GEN-LAST:event_CrPerujukActionPerformed
 
     private void CrKamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrKamarActionPerformed
         // TODO add your handling code here:
@@ -1008,14 +1010,14 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.Button BtnCari;
     private widget.Button BtnCloseIn4;
     private widget.Button BtnHapus;
-    private widget.Button BtnHasil;
     private widget.Button BtnKeluar;
     private widget.Button BtnKirimWA;
+    private widget.Button BtnPetugas;
     private widget.Button BtnPrint;
     private widget.Button BtnSeek4;
     private widget.Button BtnSimpan4;
     private widget.TextBox CrKamar;
-    private widget.TextBox CrPetugas;
+    private widget.TextBox CrPerujuk;
     private widget.TextBox Kd2;
     private widget.Label LCount;
     private javax.swing.JMenuItem MnCetakKerohanian;
@@ -1023,7 +1025,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.Tanggal Tgl1;
     private widget.Tanggal Tgl2;
     private javax.swing.JDialog WindowAmbilPetugas;
-    private widget.Button btnPetugas;
+    private widget.Button btnPerujuk;
     private widget.ComboBox cmbPetugas;
     private widget.InternalFrame internalFrame1;
     private widget.InternalFrame internalFrame5;
@@ -1064,7 +1066,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             try {
                 ps.setString(1, Valid.SetTgl(Tgl1.getSelectedItem() + ""));
                 ps.setString(2, Valid.SetTgl(Tgl2.getSelectedItem() + ""));
-                ps.setString(3, "%" + CrPetugas.getText().trim() + "%");
+                ps.setString(3, "%" + CrPerujuk.getText().trim() + "%");
                 ps.setString(4, "%" + CrKamar.getText().trim() + "%");
                 ps.setString(5, "%" + TCari.getText() + "%");
                 ps.setString(6, "%" + TCari.getText() + "%");
@@ -1133,9 +1135,14 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     }
 
     public void isCek() {
-        BtnHasil.setEnabled(var.getpasien_meninggal());
-//        BtnHapus.setEnabled(var.getpermintaan_radiologi());
-//        BtnPrint.setEnabled(var.getpermintaan_radiologi());
+//        BtnPetugas.setEnabled(var.getpasien_meninggal());
+        BtnHapus.setEnabled(var.getpasien_meninggal());
+        BtnPrint.setEnabled(var.getpasien_meninggal());
+        if(var.getkode().equals("Admin Utama") || var.getkode().equals("198011042005012011")){
+            BtnPetugas.setEnabled(true);
+        }else{
+            BtnPetugas.setEnabled(false);
+        }
     }
 
     public void setPasien(String pasien) {

@@ -4,7 +4,6 @@
 	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="40"/>
-	<parameter name="bud" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select resep_obat.no_resep,resep_obat.tgl_perawatan,resep_obat.jam, 
 		resep_obat.no_rawat,pasien.no_rkm_medis,pasien.nm_pasien,databarang.nama_brng,databarang.expire,
@@ -211,20 +210,6 @@
 				</textElement>
 				<text><![CDATA[APOTEK DEPO RAWAT JALAN : 0811-5186-100]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="3" y="110" width="28" height="9"/>
-				<textElement textAlignment="Left" lineSpacing="Single">
-					<font fontName="Tahoma" size="7" isBold="false"/>
-				</textElement>
-				<text><![CDATA[BUD : ]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="33" y="110" width="100" height="10"/>
-				<textElement lineSpacing="Single">
-					<font fontName="Tahoma" size="8"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[($P{bud}.equals("") ? "-" : $P{bud})]]></textFieldExpression>
-			</textField>
 		</band>
 	</detail>
 	<summary>
