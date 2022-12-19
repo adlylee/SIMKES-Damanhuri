@@ -5,3 +5,4 @@ build/
 /dist/
 src/setting/database.xml
 /nbproject/*
+nbproject/private/private.properties
