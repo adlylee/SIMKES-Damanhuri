@@ -120,9 +120,9 @@ public class BridgingWA {
 
     public void sendWaBatal(String no_rkm_medis, String nama, String tanggal, String poli) {
         try {
-            message = "Assalamualaikum " + nama + ". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai .\n"
-                    + " Handak mahabar akan kalaunya JADWAL PERIKSA ke " + poli + ", dipindah jadi tanggal " + tanggal + " karena Dokter " + poli + " berhalangan hadir. \n"
-                    + " Terkait dengan habar di atas, kami ucapkan permohonan maaf dan terima kasih atas kepercayaan pian berobat di RSUD H. Damanhuri. \nTerima kasih \\n \\nWassalamualaikum\n"
+            message = "Assalamualaikum " + nama + ". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai.\n"
+                    + " Handak mahabar akan bahwa JADWAL PERIKSA sebelumnya dibatalkan karena dokter berhalangan hadir, dan dipindah menjadi tanggal " + tanggal + " ke " + poli + ". \n"
+                    + " Terkait dengan habar di atas, kami ucapkan permohonan maaf dan terima kasih atas kepercayaan pian berobat di RSUD H. Damanhuri. \nTerima kasih. Wassalamualaikum.\n"
                     + " Daftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US";
             number = Sequel.cariIsi("SELECT no_tlp FROM pasien WHERE no_rkm_medis = " + no_rkm_medis);
             urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'") + "/wagateway/kirimpesan";

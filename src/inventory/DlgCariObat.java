@@ -657,6 +657,7 @@ public final class DlgCariObat extends javax.swing.JDialog {
         BtnSeek5 = new widget.Button();
         BtnTambah1 = new widget.Button();
         BtnHapus = new widget.Button();
+        BtnSimpan = new widget.Button();
         label13 = new widget.Label();
         jLabel9 = new widget.Label();
         CmbPaket = new widget.ComboBox();
@@ -664,7 +665,6 @@ public final class DlgCariObat extends javax.swing.JDialog {
         BtnCari1 = new widget.Button();
         label14 = new widget.Label();
         BtnKeluar = new widget.Button();
-        BtnSimpan = new widget.Button();
         FormInput = new widget.PanelBiasa();
         jLabel5 = new widget.Label();
         LTotal = new widget.Label();
@@ -784,7 +784,7 @@ public final class DlgCariObat extends javax.swing.JDialog {
         KdPj.setName("KdPj"); // NOI18N
 
         DTPTgl.setForeground(new java.awt.Color(50, 70, 50));
-        DTPTgl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "11-11-2022" }));
+        DTPTgl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "19-11-2022" }));
         DTPTgl.setDisplayFormat("dd-MM-yyyy");
         DTPTgl.setName("DTPTgl"); // NOI18N
         DTPTgl.setOpaque(false);
@@ -1196,6 +1196,18 @@ public final class DlgCariObat extends javax.swing.JDialog {
         });
         panelisi3.add(BtnHapus);
 
+        BtnSimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/save-16x16.png"))); // NOI18N
+        BtnSimpan.setMnemonic('S');
+        BtnSimpan.setToolTipText("Alt+S");
+        BtnSimpan.setName("BtnSimpan"); // NOI18N
+        BtnSimpan.setPreferredSize(new java.awt.Dimension(28, 23));
+        BtnSimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSimpanActionPerformed(evt);
+            }
+        });
+        panelisi3.add(BtnSimpan);
+
         label13.setName("label13"); // NOI18N
         label13.setPreferredSize(new java.awt.Dimension(65, 23));
         panelisi3.add(label13);
@@ -1268,18 +1280,6 @@ public final class DlgCariObat extends javax.swing.JDialog {
             }
         });
         panelisi3.add(BtnKeluar);
-
-        BtnSimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/save-16x16.png"))); // NOI18N
-        BtnSimpan.setMnemonic('S');
-        BtnSimpan.setToolTipText("Alt+S");
-        BtnSimpan.setName("BtnSimpan"); // NOI18N
-        BtnSimpan.setPreferredSize(new java.awt.Dimension(28, 23));
-        BtnSimpan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnSimpanActionPerformed(evt);
-            }
-        });
-        panelisi3.add(BtnSimpan);
 
         internalFrame1.add(panelisi3, java.awt.BorderLayout.PAGE_END);
 
