@@ -118,51 +118,62 @@ public class BridgingWA {
         }
     }
 
-    public void sendWaBatal(String no_rkm_medis, String nama, String tanggal, String poli) {
+    public void sendWaBatal(String no_rkm_medis, String nama, String tanggal, String polidari, String polike) {
         try {
-            message = "Assalamualaikum " + nama + ". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai.\n"
-                    + " Handak mahabar akan bahwa JADWAL PERIKSA sebelumnya dibatalkan karena dokter berhalangan hadir, dan dipindah menjadi tanggal " + tanggal + " ke " + poli + ". \n"
-                    + " Terkait dengan habar di atas, kami ucapkan permohonan maaf dan terima kasih atas kepercayaan pian berobat di RSUD H. Damanhuri. \nTerima kasih. Wassalamualaikum.\n"
+            message = "Assalamualaikum " + nama + ". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai .\n"
+                    + " Handak mahabar akan kalaunya JADWAL PERIKSA ke " + polidari + " sebelumnya dibatalkan, karena Dokter berhalangan hadir. "
+                    + " Dan dipindah jadi tanggal " + tanggal + " ke " + polike + ". \n"
+                    + " Terkait dengan habar di atas, kami ucapkan permohonan maaf dan terima kasih atas kepercayaan pian berobat di RSUD H. Damanhuri. \nTerima kasih \n \nWassalamualaikum\n"
                     + " Daftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US";
             number = Sequel.cariIsi("SELECT no_tlp FROM pasien WHERE no_rkm_medis = " + no_rkm_medis);
             urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'") + "/wagateway/kirimpesan";
             sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_phonenumber'");
-            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message;
-            System.out.println("PostField : " + requestJson);
 
-            URL obj = new URL(urlApi);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-            con.setRequestMethod("POST");
-            con.setRequestProperty("User-Agent", USER_AGENT);
-            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            con.setRequestProperty("charset", "utf-8");
-
-            // For POST only - START
-            con.setDoOutput(true);
-            OutputStreamWriter os = new OutputStreamWriter(con.getOutputStream());
-            os.write(requestJson);
-            os.flush();
-            os.close();
-            // For POST only - END
-
-            int responseCode = con.getResponseCode();
-            System.out.println("POST Response Code :: " + responseCode);
-
-            if (responseCode == HttpURLConnection.HTTP_OK) { //success
-                BufferedReader in = new BufferedReader(new InputStreamReader(
-                        con.getInputStream()));
-                String inputLine;
-                StringBuffer response = new StringBuffer();
-
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                in.close();
-
-                // print result
-                System.out.println(response.toString());
+            if (number.equals("")) {
+                System.out.println("Nomor telepon kosong !!!");
             } else {
-                System.out.println("POST request not worked");
+                requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message;
+                //System.out.println("PostField : " + requestJson);
+                System.out.println("                  \n                 ");
+                System.out.println("Mengirim Pesan ............");
+
+                URL obj = new URL(urlApi);
+                HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+                con.setRequestMethod("POST");
+                con.setRequestProperty("User-Agent", USER_AGENT);
+                con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                con.setRequestProperty("charset", "utf-8");
+
+                // For POST only - START
+                con.setDoOutput(true);
+                OutputStreamWriter os = new OutputStreamWriter(con.getOutputStream());
+                os.write(requestJson);
+                os.flush();
+                os.close();
+                // For POST only - END
+
+                int responseCode = con.getResponseCode();
+                System.out.println("POST Response Code :: " + responseCode);
+
+                if (responseCode == HttpURLConnection.HTTP_OK) { //success
+                    BufferedReader in = new BufferedReader(new InputStreamReader(
+                            con.getInputStream()));
+                    String inputLine;
+                    StringBuffer response = new StringBuffer();
+
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
+
+                    // print result
+                    System.out.println(response.toString());
+                    System.out.println("\n");
+                    System.out.println("Pesan Berhasil Dikirim . ");
+                } else {
+                    System.out.println("POST request not worked");
+                }
+                System.out.println("----------------- -------------------");
             }
         } catch (Exception ex) {
             System.out.println("Notifikasi : " + ex);

@@ -22,6 +22,7 @@ import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import kepegawaian.DlgCariPetugas;
 import keuangan.Jurnal;
 
 public class DlgSirkulasiNonMedis extends javax.swing.JDialog {
@@ -38,6 +39,7 @@ public class DlgSirkulasiNonMedis extends javax.swing.JDialog {
     private DlgBarangIPSRS barang=new DlgBarangIPSRS(null,false);
     private PreparedStatement ps,ps2,ps3;
     private ResultSet rs,rs2,rs3;
+    public  DlgCariPetugas petugas=new DlgCariPetugas(null,false);
 
     /** 
      * @param parent
@@ -148,6 +150,28 @@ public class DlgSirkulasiNonMedis extends javax.swing.JDialog {
             public void keyReleased(KeyEvent e) {}
         });
         
+        petugas.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {;}
+            @Override
+            public void windowClosing(WindowEvent e) {}
+            @Override
+            public void windowClosed(WindowEvent e) {
+                if(petugas.getTable().getSelectedRow()!= -1){                    
+                    kdptg.setText(petugas.getTable().getValueAt(petugas.getTable().getSelectedRow(),0).toString());
+                    nmptg.setText(petugas.getTable().getValueAt(petugas.getTable().getSelectedRow(),1).toString());
+                    kdptg.requestFocus();
+                }                
+            }
+            @Override
+            public void windowIconified(WindowEvent e) {}
+            @Override
+            public void windowDeiconified(WindowEvent e) {}
+            @Override
+            public void windowActivated(WindowEvent e) {}
+            @Override
+            public void windowDeactivated(WindowEvent e) {}
+        });
      
     }    
     /** This method is called from within the constructor to
@@ -172,6 +196,10 @@ public class DlgSirkulasiNonMedis extends javax.swing.JDialog {
         kdbar = new widget.TextBox();
         nmbar = new widget.TextBox();
         btnBarang = new widget.Button();
+        label19 = new widget.Label();
+        kdptg = new widget.TextBox();
+        nmptg = new widget.TextBox();
+        btnPetugas = new widget.Button();
         panelisi1 = new widget.panelisi();
         label10 = new widget.Label();
         TCari = new widget.TextBox();
@@ -273,6 +301,38 @@ public class DlgSirkulasiNonMedis extends javax.swing.JDialog {
             }
         });
         panelisi4.add(btnBarang);
+
+        label19.setText("Petugas :");
+        label19.setName("label19"); // NOI18N
+        label19.setPreferredSize(new java.awt.Dimension(85, 23));
+        panelisi4.add(label19);
+
+        kdptg.setEditable(false);
+        kdptg.setName("kdptg"); // NOI18N
+        kdptg.setPreferredSize(new java.awt.Dimension(80, 23));
+        kdptg.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                kdptgKeyPressed(evt);
+            }
+        });
+        panelisi4.add(kdptg);
+
+        nmptg.setEditable(false);
+        nmptg.setName("nmptg"); // NOI18N
+        nmptg.setPreferredSize(new java.awt.Dimension(207, 23));
+        panelisi4.add(nmptg);
+
+        btnPetugas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
+        btnPetugas.setMnemonic('1');
+        btnPetugas.setToolTipText("Alt+1");
+        btnPetugas.setName("btnPetugas"); // NOI18N
+        btnPetugas.setPreferredSize(new java.awt.Dimension(28, 23));
+        btnPetugas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPetugasActionPerformed(evt);
+            }
+        });
+        panelisi4.add(btnPetugas);
 
         internalFrame1.add(panelisi4, java.awt.BorderLayout.PAGE_START);
 
@@ -501,6 +561,17 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
         
     }//GEN-LAST:event_formWindowOpened
 
+    private void kdptgKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kdptgKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_kdptgKeyPressed
+
+    private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPetugasActionPerformed
+        petugas.isCek();
+        petugas.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
+        petugas.setLocationRelativeTo(internalFrame1);
+        petugas.setVisible(true);
+    }//GEN-LAST:event_btnPetugasActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -527,14 +598,18 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
     private widget.Tanggal Tgl1;
     private widget.Tanggal Tgl2;
     private widget.Button btnBarang;
+    private widget.Button btnPetugas;
     private widget.InternalFrame internalFrame1;
     private widget.TextBox kdbar;
+    private widget.TextBox kdptg;
     private widget.Label label10;
     private widget.Label label11;
     private widget.Label label17;
     private widget.Label label18;
+    private widget.Label label19;
     private widget.Label label9;
     private widget.TextBox nmbar;
+    private widget.TextBox nmptg;
     private widget.panelisi panelisi1;
     private widget.panelisi panelisi4;
     private widget.ScrollPane scrollPane1;
@@ -546,16 +621,19 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
        try{   
             ps=koneksi.prepareStatement("select ipsrsbarang.kode_brng,ipsrsbarang.nama_brng, "+
                         "kodesatuan.satuan,ipsrsbarang.stok,(ipsrsbarang.stok*ipsrsbarang.harga) as aset "+
-                        "from ipsrsbarang inner join kodesatuan on ipsrsbarang.kode_sat=kodesatuan.kode_sat "+
-                        "where ipsrsbarang.nama_brng like ? and ipsrsbarang.kode_brng like ? or "+
-                        "ipsrsbarang.nama_brng like ? and kodesatuan.satuan like ? "+
+                        "from ipsrsbarang inner join ipsrsjenisbarang inner join  pegawai inner join ipsrs_setpj inner join kodesatuan on ipsrsbarang.kode_sat=kodesatuan.kode_sat "+
+                        "and ipsrsbarang.jenis=ipsrsjenisbarang.kd_jenis and ipsrsbarang.jenis=ipsrs_setpj.kd_jenis and pegawai.nik=ipsrs_setpj.nik "+
+                        "where ipsrsbarang.nama_brng like ? and pegawai.nik like ? and ipsrsbarang.kode_brng like ? or "+
+                        "ipsrsbarang.nama_brng like ? and pegawai.nik like ? and kodesatuan.satuan like ? "+
                         " order by ipsrsbarang.kode_brng");
             try {
                 ttltotalbeli=0;ttltotalpesan=0;ttltotalkeluar=0;ttlaset=0;
                 ps.setString(1,"%"+nmbar.getText()+"%");
-                ps.setString(2,"%"+TCari.getText().trim()+"%");
-                ps.setString(3,"%"+nmbar.getText()+"%");
-                ps.setString(4,"%"+TCari.getText().trim()+"%");
+                ps.setString(2,"%"+kdptg.getText()+"%");
+                ps.setString(3,"%"+TCari.getText().trim()+"%");
+                ps.setString(4,"%"+nmbar.getText()+"%");
+                ps.setString(5,"%"+kdptg.getText()+"%");
+                ps.setString(6,"%"+TCari.getText().trim()+"%");
                 rs=ps.executeQuery();            
                 while(rs.next()){
                     totalbeli=0;jumlahbeli=0;totalpesan=0;jumlahpesan=0;jumlahkeluar=0;
@@ -757,6 +835,18 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
     
     
     public void isCek(){
+        if (var.getjml2()>=1) {
+            kdptg.setText(var.getkode());
+            Sequel.cariIsi("select nama from petugas where nip=?",nmptg,kdptg.getText());
+        }else{
+            kdptg.setText("");
+            nmptg.setText("");
+        }
+        if(var.getkode().equals("Admin Utama")){
+            btnPetugas.setEnabled(true);
+        }else{
+            btnPetugas.setEnabled(false);
+        }
          BtnPrint.setEnabled(var.getsirkulasi_non_medis());
     }
     

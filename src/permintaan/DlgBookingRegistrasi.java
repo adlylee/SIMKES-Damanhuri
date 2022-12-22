@@ -10,18 +10,11 @@ import fungsi.validasi;
 import fungsi.var;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,8 +23,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.X509TrustManager;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
@@ -39,14 +30,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import kepegawaian.DlgCariDokter;
 import kepegawaian.DlgCariDokter2;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 import simrskhanza.DlgCariPoli;
 import simrskhanza.DlgCariPoli2;
 import simrskhanza.DlgPasien;
@@ -71,6 +56,10 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
     private DlgCariDokter2 dokter2=new DlgCariDokter2(null,false);
     private DlgCariPoli poli=new DlgCariPoli(null,false);
     private DlgCariPoli2 poli2=new DlgCariPoli2(null,false);
+    private DlgCariPoli poli3=new DlgCariPoli(null,false);
+    private DlgCariPoli poli4=new DlgCariPoli(null,false);
+    private DlgCariPoli2 poli5=new DlgCariPoli2(null,false);
+    private DlgCariPoli2 poli6=new DlgCariPoli2(null,false);
     private DlgPasien pasien=new DlgPasien(null,false);
     private String aktifjadwal="",URUTNOREG="",status="",no_rawat="",umur="",sttsumur="";
     private JsonNode root, nameNode ,response;
@@ -87,6 +76,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
     public DlgBookingRegistrasi(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        WindowBatalWhatsapp.setSize(500, 144);
 
         tabMode=new DefaultTableModel(null,new Object[]{
                 "P","Tgl.Booking","Jam Booking","No.RM","Nama Pasien","Tgl.Periksa","Kode Dokter",
@@ -320,6 +310,94 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
             public void windowDeactivated(WindowEvent e) {}
         }); 
         
+        poli3.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {}
+            @Override
+            public void windowClosing(WindowEvent e) {}
+            @Override
+            public void windowClosed(WindowEvent e) {
+                if(poli3.getTable().getSelectedRow()!= -1){                    
+                    KdPoli1.setText(poli3.getTable().getValueAt(poli3.getTable().getSelectedRow(),0).toString());
+                    NmPoli1.setText(poli3.getTable().getValueAt(poli3.getTable().getSelectedRow(),1).toString());
+                }   
+            }
+            @Override
+            public void windowIconified(WindowEvent e) {}
+            @Override
+            public void windowDeiconified(WindowEvent e) {}
+            @Override
+            public void windowActivated(WindowEvent e) {}
+            @Override
+            public void windowDeactivated(WindowEvent e) {}
+        });
+        
+        poli5.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {}
+            @Override
+            public void windowClosing(WindowEvent e) {}
+            @Override
+            public void windowClosed(WindowEvent e) {
+                if(poli5.getTable().getSelectedRow()!= -1){                    
+                    KdPoli1.setText(poli5.getTable().getValueAt(poli5.getTable().getSelectedRow(),0).toString());
+                    NmPoli1.setText(poli5.getTable().getValueAt(poli5.getTable().getSelectedRow(),1).toString());
+                }    
+            }
+            @Override
+            public void windowIconified(WindowEvent e) {}
+            @Override
+            public void windowDeiconified(WindowEvent e) {}
+            @Override
+            public void windowActivated(WindowEvent e) {}
+            @Override
+            public void windowDeactivated(WindowEvent e) {}
+        });
+        
+        poli4.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {}
+            @Override
+            public void windowClosing(WindowEvent e) {}
+            @Override
+            public void windowClosed(WindowEvent e) {
+                if(poli4.getTable().getSelectedRow()!= -1){                    
+                    KdPoli2.setText(poli4.getTable().getValueAt(poli4.getTable().getSelectedRow(),0).toString());
+                    NmPoli2.setText(poli4.getTable().getValueAt(poli4.getTable().getSelectedRow(),1).toString());
+                }   
+            }
+            @Override
+            public void windowIconified(WindowEvent e) {}
+            @Override
+            public void windowDeiconified(WindowEvent e) {}
+            @Override
+            public void windowActivated(WindowEvent e) {}
+            @Override
+            public void windowDeactivated(WindowEvent e) {}
+        });
+        
+        poli6.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {}
+            @Override
+            public void windowClosing(WindowEvent e) {}
+            @Override
+            public void windowClosed(WindowEvent e) {
+                if(poli6.getTable().getSelectedRow()!= -1){                    
+                    KdPoli2.setText(poli6.getTable().getValueAt(poli6.getTable().getSelectedRow(),0).toString());
+                    NmPoli2.setText(poli6.getTable().getValueAt(poli6.getTable().getSelectedRow(),1).toString());
+                }    
+            }
+            @Override
+            public void windowIconified(WindowEvent e) {}
+            @Override
+            public void windowDeiconified(WindowEvent e) {}
+            @Override
+            public void windowActivated(WindowEvent e) {}
+            @Override
+            public void windowDeactivated(WindowEvent e) {}
+        });
+        
         pasien.addWindowListener(new WindowListener() {
             @Override
             public void windowOpened(WindowEvent e) {}
@@ -420,6 +498,18 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         Popup = new javax.swing.JPopupMenu();
         ppBersihkan = new javax.swing.JMenuItem();
         ppSemua = new javax.swing.JMenuItem();
+        WindowBatalWhatsapp = new javax.swing.JDialog();
+        internalFrame7 = new widget.InternalFrame();
+        BtnCloseIn6 = new widget.Button();
+        BtnSimpan6 = new widget.Button();
+        jLabel12 = new widget.Label();
+        KdPoli1 = new widget.TextBox();
+        NmPoli1 = new widget.TextBox();
+        BtnPoli1 = new widget.Button();
+        jLabel13 = new widget.Label();
+        KdPoli2 = new widget.TextBox();
+        NmPoli2 = new widget.TextBox();
+        BtnPoli2 = new widget.Button();
         internalFrame1 = new widget.InternalFrame();
         Scroll = new widget.ScrollPane();
         tbObat = new widget.Table();
@@ -513,6 +603,111 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         });
         Popup.add(ppSemua);
 
+        WindowBatalWhatsapp.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        WindowBatalWhatsapp.setName("WindowBatalWhatsapp"); // NOI18N
+        WindowBatalWhatsapp.setUndecorated(true);
+        WindowBatalWhatsapp.setResizable(false);
+
+        internalFrame7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Pemindahan Jadwal Poliklinik ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame7.setName("internalFrame7"); // NOI18N
+        internalFrame7.setLayout(null);
+
+        BtnCloseIn6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/cross.png"))); // NOI18N
+        BtnCloseIn6.setMnemonic('U');
+        BtnCloseIn6.setText("Tutup");
+        BtnCloseIn6.setToolTipText("Alt+U");
+        BtnCloseIn6.setName("BtnCloseIn6"); // NOI18N
+        BtnCloseIn6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCloseIn6ActionPerformed(evt);
+            }
+        });
+        internalFrame7.add(BtnCloseIn6);
+        BtnCloseIn6.setBounds(310, 100, 100, 30);
+
+        BtnSimpan6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/delete-16x16.png"))); // NOI18N
+        BtnSimpan6.setMnemonic('S');
+        BtnSimpan6.setText("Kirim WA Batal");
+        BtnSimpan6.setToolTipText("Alt+S");
+        BtnSimpan6.setName("BtnSimpan6"); // NOI18N
+        BtnSimpan6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSimpan6ActionPerformed(evt);
+            }
+        });
+        internalFrame7.add(BtnSimpan6);
+        BtnSimpan6.setBounds(40, 100, 150, 30);
+
+        jLabel12.setText("Dari Unit/Poli :");
+        jLabel12.setName("jLabel12"); // NOI18N
+        internalFrame7.add(jLabel12);
+        jLabel12.setBounds(0, 30, 90, 23);
+
+        KdPoli1.setEditable(false);
+        KdPoli1.setHighlighter(null);
+        KdPoli1.setName("KdPoli1"); // NOI18N
+        internalFrame7.add(KdPoli1);
+        KdPoli1.setBounds(110, 30, 70, 23);
+
+        NmPoli1.setEditable(false);
+        NmPoli1.setHighlighter(null);
+        NmPoli1.setName("NmPoli1"); // NOI18N
+        internalFrame7.add(NmPoli1);
+        NmPoli1.setBounds(180, 30, 263, 23);
+
+        BtnPoli1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
+        BtnPoli1.setMnemonic('X');
+        BtnPoli1.setToolTipText("Alt+X");
+        BtnPoli1.setName("BtnPoli1"); // NOI18N
+        BtnPoli1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnPoli1ActionPerformed(evt);
+            }
+        });
+        BtnPoli1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnPoli1KeyPressed(evt);
+            }
+        });
+        internalFrame7.add(BtnPoli1);
+        BtnPoli1.setBounds(440, 30, 28, 23);
+
+        jLabel13.setText("Ke Unit/Poli :");
+        jLabel13.setName("jLabel13"); // NOI18N
+        internalFrame7.add(jLabel13);
+        jLabel13.setBounds(20, 60, 70, 23);
+
+        KdPoli2.setEditable(false);
+        KdPoli2.setHighlighter(null);
+        KdPoli2.setName("KdPoli2"); // NOI18N
+        internalFrame7.add(KdPoli2);
+        KdPoli2.setBounds(110, 60, 70, 23);
+
+        NmPoli2.setEditable(false);
+        NmPoli2.setHighlighter(null);
+        NmPoli2.setName("NmPoli2"); // NOI18N
+        internalFrame7.add(NmPoli2);
+        NmPoli2.setBounds(180, 60, 263, 23);
+
+        BtnPoli2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
+        BtnPoli2.setMnemonic('X');
+        BtnPoli2.setToolTipText("Alt+X");
+        BtnPoli2.setName("BtnPoli2"); // NOI18N
+        BtnPoli2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnPoli2ActionPerformed(evt);
+            }
+        });
+        BtnPoli2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnPoli2KeyPressed(evt);
+            }
+        });
+        internalFrame7.add(BtnPoli2);
+        BtnPoli2.setBounds(440, 60, 28, 23);
+
+        WindowBatalWhatsapp.getContentPane().add(internalFrame7, java.awt.BorderLayout.CENTER);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
@@ -522,7 +717,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Booking Registrasi ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Booking Registrasi ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -783,7 +978,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         R2.setPreferredSize(new java.awt.Dimension(125, 23));
         panelCari.add(R2);
 
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-09-2022" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "12-12-2022" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -806,7 +1001,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         jLabel22.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel22);
 
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-09-2022" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "12-12-2022" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -828,7 +1023,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         R3.setPreferredSize(new java.awt.Dimension(135, 23));
         panelCari.add(R3);
 
-        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-09-2022" }));
+        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "12-12-2022" }));
         DTPCari3.setDisplayFormat("dd-MM-yyyy");
         DTPCari3.setName("DTPCari3"); // NOI18N
         DTPCari3.setOpaque(false);
@@ -851,7 +1046,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         jLabel25.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel25);
 
-        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-09-2022" }));
+        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "12-12-2022" }));
         DTPCari4.setDisplayFormat("dd-MM-yyyy");
         DTPCari4.setName("DTPCari4"); // NOI18N
         DTPCari4.setOpaque(false);
@@ -935,7 +1130,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         TPasien.setBounds(151, 10, 311, 23);
 
         TanggalBooking.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalBooking.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-09-2022 12:10:49" }));
+        TanggalBooking.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "12-12-2022 01:06:24" }));
         TanggalBooking.setDisplayFormat("dd-MM-yyyy hh:mm:ss");
         TanggalBooking.setName("TanggalBooking"); // NOI18N
         TanggalBooking.setOpaque(false);
@@ -1015,7 +1210,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         jLabel14.setBounds(506, 40, 70, 23);
 
         TanggalPeriksa.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalPeriksa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-09-2022 12:10:49" }));
+        TanggalPeriksa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "12-12-2022 01:06:24" }));
         TanggalPeriksa.setDisplayFormat("dd-MM-yyyy hh:mm:ss");
         TanggalPeriksa.setName("TanggalPeriksa"); // NOI18N
         TanggalPeriksa.setOpaque(false);
@@ -1559,7 +1754,8 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private void BtnEdit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEdit2ActionPerformed
         for(i=0;i<tbObat.getRowCount();i++){ 
             if(tbObat.getValueAt(i,0).toString().equals("true")){
-                kirimwa.sendWaBatal(tbObat.getValueAt(i,3).toString(),tbObat.getValueAt(i,4).toString(),tbObat.getValueAt(i,5).toString(),tbObat.getValueAt(i,9).toString());
+                WindowBatalWhatsapp.setLocationRelativeTo(internalFrame1);
+                WindowBatalWhatsapp.setVisible(true);
             }
         }
     }//GEN-LAST:event_BtnEdit2ActionPerformed
@@ -1567,6 +1763,72 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private void BtnEdit2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnEdit2KeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnEdit2KeyPressed
+
+    private void BtnCloseIn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCloseIn6ActionPerformed
+        WindowBatalWhatsapp.dispose();
+    }//GEN-LAST:event_BtnCloseIn6ActionPerformed
+
+    private void BtnSimpan6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpan6ActionPerformed
+        for(i=0;i<tbObat.getRowCount();i++){ 
+            if(tbObat.getValueAt(i,0).toString().equals("true")){
+                kirimwa.sendWaBatal(tbObat.getValueAt(i,3).toString(),tbObat.getValueAt(i,4).toString(),tbObat.getValueAt(i,5).toString(),NmPoli1.getText(),NmPoli2.getText());        
+            }
+        }
+    }//GEN-LAST:event_BtnSimpan6ActionPerformed
+
+    private void BtnPoli1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPoli1ActionPerformed
+        if(aktifjadwal.equals("aktif")){
+            if(var.getkode().equals("Admin Utama")){
+                poli3.isCek();        
+                poli3.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
+                poli3.setLocationRelativeTo(internalFrame1);
+                poli3.setVisible(true);
+            }else{
+                poli5.isCek();                     
+                poli5.SetHari(TanggalPeriksa.getDate());
+                poli5.tampil(); 
+                poli5.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
+                poli5.setLocationRelativeTo(internalFrame1);
+                poli5.setVisible(true);
+            }                
+        }else{
+            poli3.isCek();        
+            poli3.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
+            poli3.setLocationRelativeTo(internalFrame1);
+            poli3.setVisible(true);
+        }
+    }//GEN-LAST:event_BtnPoli1ActionPerformed
+
+    private void BtnPoli1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnPoli1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnPoli1KeyPressed
+
+    private void BtnPoli2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPoli2ActionPerformed
+        if(aktifjadwal.equals("aktif")){
+            if(var.getkode().equals("Admin Utama")){
+                poli4.isCek();        
+                poli4.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
+                poli4.setLocationRelativeTo(internalFrame1);
+                poli4.setVisible(true);
+            }else{
+                poli6.isCek();                     
+                poli6.SetHari(TanggalPeriksa.getDate());
+                poli6.tampil(); 
+                poli6.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
+                poli6.setLocationRelativeTo(internalFrame1);
+                poli6.setVisible(true);
+            }                
+        }else{
+            poli4.isCek();        
+            poli4.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
+            poli4.setLocationRelativeTo(internalFrame1);
+            poli4.setVisible(true);
+        }
+    }//GEN-LAST:event_BtnPoli2ActionPerformed
+
+    private void BtnPoli2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnPoli2KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnPoli2KeyPressed
 
     /**
     * @param args the command line arguments
@@ -1588,6 +1850,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.Button BtnAll;
     private widget.Button BtnBatal;
     private widget.Button BtnCari;
+    private widget.Button BtnCloseIn6;
     private widget.Button BtnDokter;
     private widget.Button BtnEdit;
     private widget.Button BtnEdit1;
@@ -1596,8 +1859,11 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.Button BtnKeluar;
     private widget.Button BtnPasien;
     private widget.Button BtnPoli;
+    private widget.Button BtnPoli1;
+    private widget.Button BtnPoli2;
     private widget.Button BtnPrint;
     private widget.Button BtnSimpan;
+    private widget.Button BtnSimpan6;
     private widget.CekBox ChkInput;
     private widget.Tanggal DTPCari1;
     private widget.Tanggal DTPCari2;
@@ -1606,10 +1872,14 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.PanelBiasa FormInput;
     private widget.TextBox KdDokter;
     private widget.TextBox KdPoli;
+    private widget.TextBox KdPoli1;
+    private widget.TextBox KdPoli2;
     private widget.TextBox Kuota;
     private widget.Label LCount;
     private widget.TextBox NmDokter;
     private widget.TextBox NmPoli;
+    private widget.TextBox NmPoli1;
+    private widget.TextBox NmPoli2;
     private widget.TextBox NoReg;
     private javax.swing.JPanel PanelInput;
     private javax.swing.JPopupMenu Popup;
@@ -1621,11 +1891,15 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.TextBox TPasien;
     private widget.Tanggal TanggalBooking;
     private widget.Tanggal TanggalPeriksa;
+    private javax.swing.JDialog WindowBatalWhatsapp;
     private widget.Button btnPenjab;
     private javax.swing.ButtonGroup buttonGroup1;
     private widget.InternalFrame internalFrame1;
+    private widget.InternalFrame internalFrame7;
     private widget.Label jLabel10;
     private widget.Label jLabel11;
+    private widget.Label jLabel12;
+    private widget.Label jLabel13;
     private widget.Label jLabel14;
     private widget.Label jLabel18;
     private widget.Label jLabel19;
