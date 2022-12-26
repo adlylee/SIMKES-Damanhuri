@@ -623,8 +623,8 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         "kodesatuan.satuan,ipsrsbarang.stok,(ipsrsbarang.stok*ipsrsbarang.harga) as aset "+
                         "from ipsrsbarang inner join ipsrsjenisbarang inner join  pegawai inner join ipsrs_setpj inner join kodesatuan on ipsrsbarang.kode_sat=kodesatuan.kode_sat "+
                         "and ipsrsbarang.jenis=ipsrsjenisbarang.kd_jenis and ipsrsbarang.jenis=ipsrs_setpj.kd_jenis and pegawai.nik=ipsrs_setpj.nik "+
-                        "where ipsrsbarang.nama_brng like ? and pegawai.nik like ? and ipsrsbarang.kode_brng like ? or "+
-                        "ipsrsbarang.nama_brng like ? and pegawai.nik like ? and kodesatuan.satuan like ? "+
+                        "where ipsrs_setpj.status='1' and ipsrsbarang.nama_brng like ? and pegawai.nik like ? and ipsrsbarang.kode_brng like ? or "+
+                        "ipsrs_setpj.status='1' and ipsrsbarang.nama_brng like ? and pegawai.nik like ? and kodesatuan.satuan like ? "+
                         " order by ipsrsbarang.kode_brng");
             try {
                 ttltotalbeli=0;ttltotalpesan=0;ttltotalkeluar=0;ttlaset=0;

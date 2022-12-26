@@ -814,7 +814,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 param.put("umur", Sequel.cariIsi("select umur from pasien where no_rkm_medis=?", norm));
                 param.put("lahir", Sequel.cariIsi("select DATE_FORMAT(tgl_lahir,'%d-%m-%Y') from pasien where no_rkm_medis=? ", norm));
                 // param.put("pengirim",tbRadiologiRanap.getValueAt(tbRadiologiRanap.getSelectedRow(),10).toString());
-                param.put("pengirim", tbTransfusi.getValueAt(tbTransfusi.getSelectedRow(), 7).toString());//Sequel.cariIsi("select dokter.nm_dokter from reg_periksa, dokter where reg_periksa.kd_dokter=dokter.kd_dokter and reg_periksa.no_rawat=? ", tbRadiologiRanap.getValueAt(tbRadiologiRanap.getSelectedRow(),12).toString()));
+                param.put("pengirim", tbTransfusi.getValueAt(tbTransfusi.getSelectedRow(), 10).toString());//Sequel.cariIsi("select dokter.nm_dokter from reg_periksa, dokter where reg_periksa.kd_dokter=dokter.kd_dokter and reg_periksa.no_rawat=? ", tbRadiologiRanap.getValueAt(tbRadiologiRanap.getSelectedRow(),12).toString()));
                 param.put("tanggal", Valid.SetTgl3(tbTransfusi.getValueAt(tbTransfusi.getSelectedRow(), 4).toString()));
                 param.put("alamat", Sequel.cariIsi("select concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab) as alamat from pasien inner join kelurahan inner join kecamatan inner join kabupaten on pasien.kd_kel=kelurahan.kd_kel and pasien.kd_kec=kecamatan.kd_kec and pasien.kd_kab=kabupaten.kd_kab where no_rkm_medis=? ", norm));
                 param.put("diagnosa1", Sequel.cariIsi("select diagnosa_awal from kamar_inap where no_rawat=? ", tbTransfusi.getValueAt(tbTransfusi.getSelectedRow(), 1).toString()));

@@ -1168,7 +1168,7 @@ private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
                     " from ipsrsbarang where ipsrsbarang.status='1' and ( ipsrsbarang.kode_brng like ? or "+
                     " ipsrsbarang.nama_brng like ? ) order by ipsrsbarang.nama_brng");
             } else {
-                jenis = Sequel.buangChar(Sequel.cariStringArray("SELECT kd_jenis FROM ipsrs_setpj WHERE nik="+var.getkode()));
+                jenis = Sequel.buangChar(Sequel.cariStringArray("SELECT kd_jenis FROM ipsrs_setpj WHERE nik="+var.getkode()+ " and status='1'"));
                 ps=koneksi.prepareStatement("select ipsrsbarang.kode_brng, concat(ipsrsbarang.nama_brng,' (',ipsrsbarang.jenis,')'),ipsrsbarang.kode_sat,ipsrsbarang.harga "+
                     " from ipsrsbarang where ipsrsbarang.status='1' and ipsrsbarang.jenis IN ("+jenis+") AND ( ipsrsbarang.kode_brng like ? or "+
                     " ipsrsbarang.nama_brng like ? ) order by ipsrsbarang.nama_brng");

@@ -50,7 +50,7 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
     private DlgCariObat4 dlgobt4 = new DlgCariObat4(null, false);
     private String bangsal = "", aktifkanparsial = "no", kamar = "", alarm = "",
             formalarm = "", nol_detik, detik, NoResep = "", TglPeresepan = "", JamPeresepan = "",
-            NoRawat = "", NoRM = "", Pasien = "", DokterPeresep = "", Status = "", KodeDokter = "", Ruang = "", KodeRuang = "";
+            NoRawat = "", NoRM = "", Pasien = "", DokterPeresep = "", Status = "", KodeDokter = "", Ruang = "", KodeRuang = "", JnsBayar = "";
     private final Properties prop = new Properties();
     private DlgCariDokter dokter = new DlgCariDokter(null, false);
     private DlgCariPoli poli = new DlgCariPoli(null, false);
@@ -71,7 +71,7 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
 
         tabMode = new DefaultTableModel(null, new Object[]{
             "No.Resep", "Tgl.Peresepan", "Jam Peresepan", "No.Rawat", "No.RM",
-            "Pasien", "Dokter Peresep", "Status", "Kode Dokter", "Poli/Unit", "Kode Poli"
+            "Pasien", "Dokter Peresep", "Status", "Kode Dokter", "Poli/Unit", "Kode Poli","Jenis Bayar"
         }) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -84,7 +84,7 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
         tbResepRalan.setPreferredScrollableViewportSize(new Dimension(500, 500));
         tbResepRalan.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < 12; i++) {
             TableColumn column = tbResepRalan.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(75);
@@ -110,6 +110,8 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
             } else if (i == 10) {
                 column.setMinWidth(0);
                 column.setMaxWidth(0);
+            }else if (i == 11) {
+                column.setPreferredWidth(80);
             }
         }
 
@@ -188,7 +190,7 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
 
         tabMode3 = new DefaultTableModel(null, new Object[]{
             "No.Resep", "Tgl.Peresepan", "Jam Peresepan", "No.Rawat", "No.RM",
-            "Pasien", "Dokter Peresep", "Status", "Kode Dokter", "Ruang/Kamar", "Kode Bangsal"
+            "Pasien", "Dokter Peresep", "Status", "Kode Dokter", "Ruang/Kamar", "Kode Bangsal","Jenis Bayar"
         }) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -204,7 +206,7 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
         tbResepRanap.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         for (int i = 0;
-                i < 11; i++) {
+                i < 12; i++) {
             TableColumn column = tbResepRanap.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(75);
@@ -230,6 +232,8 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
             } else if (i == 10) {
                 column.setMinWidth(0);
                 column.setMaxWidth(0);
+            } else if (i == 11) {
+                column.setPreferredWidth(80);
             }
         }
 
@@ -2301,9 +2305,9 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
             ps = koneksi.prepareStatement("select resep_obat.no_resep,resep_obat.tgl_peresepan,resep_obat.jam_peresepan,"
                     + " resep_obat.no_rawat,pasien.no_rkm_medis,pasien.nm_pasien,resep_obat.kd_dokter,dokter.nm_dokter, "
                     + " if(resep_obat.jam_peresepan=resep_obat.jam,'Belum Terlayani','Sudah Terlayani') as status,poliklinik.nm_poli,  "
-                    + " reg_periksa.kd_poli from resep_obat inner join reg_periksa inner join pasien inner join dokter inner join poliklinik "
+                    + " reg_periksa.kd_poli,penjab.png_jawab from resep_obat inner join reg_periksa inner join pasien inner join penjab inner join dokter inner join poliklinik "
                     + " on resep_obat.no_rawat=reg_periksa.no_rawat and reg_periksa.kd_poli=poliklinik.kd_poli "
-                    + " and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and resep_obat.kd_dokter=dokter.kd_dokter where "
+                    + " and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and resep_obat.kd_dokter=dokter.kd_dokter and reg_periksa.kd_pj=penjab.kd_pj where "
                     + " resep_obat.status='ralan' and resep_obat.tgl_perawatan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and resep_obat.no_resep like ? or "
                     + " resep_obat.status='ralan' and resep_obat.tgl_perawatan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and resep_obat.no_rawat like ? or "
                     + " resep_obat.status='ralan' and resep_obat.tgl_perawatan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and pasien.no_rkm_medis like ? or "
@@ -2340,7 +2344,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                     tabMode.addRow(new String[]{
                         rs.getString("no_resep"), rs.getString("tgl_peresepan"), rs.getString("jam_peresepan"), rs.getString("no_rawat"),
                         rs.getString("no_rkm_medis"), rs.getString("nm_pasien"), rs.getString("nm_dokter"), rs.getString("status"),
-                        rs.getString("kd_dokter"), rs.getString("nm_poli"), rs.getString("kd_poli")
+                        rs.getString("kd_dokter"), rs.getString("nm_poli"), rs.getString("kd_poli"),rs.getString("png_jawab")
                     });
                 }
 
@@ -2394,6 +2398,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
             KodeDokter = tbResepRanap.getValueAt(tbResepRanap.getSelectedRow(), 8).toString();
             Ruang = tbResepRanap.getValueAt(tbResepRanap.getSelectedRow(), 9).toString();
             KodeRuang = tbResepRanap.getValueAt(tbResepRanap.getSelectedRow(), 10).toString();
+            JnsBayar = tbResepRanap.getValueAt(tbResepRanap.getSelectedRow(), 11).toString();
         }
     }
 
@@ -2668,9 +2673,9 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
             ps = koneksi.prepareStatement("select resep_obat.no_resep,resep_obat.tgl_peresepan,resep_obat.jam_peresepan,"
                     + " resep_obat.no_rawat,pasien.no_rkm_medis,pasien.nm_pasien,resep_obat.kd_dokter,dokter.nm_dokter, "
                     + " if(resep_obat.jam_peresepan=resep_obat.jam,'Belum Terlayani','Sudah Terlayani') as status,bangsal.nm_bangsal,  "
-                    + " kamar.kd_bangsal from resep_obat inner join reg_periksa inner join pasien inner join dokter inner join bangsal inner join kamar inner join kamar_inap "
+                    + " kamar.kd_bangsal,penjab.png_jawab from resep_obat inner join reg_periksa inner join pasien inner join dokter inner join bangsal inner join kamar inner join kamar_inap inner join penjab "
                     + " on resep_obat.no_rawat=reg_periksa.no_rawat and kamar.kd_bangsal=bangsal.kd_bangsal and reg_periksa.no_rawat=kamar_inap.no_rawat and kamar_inap.kd_kamar=kamar.kd_kamar "
-                    + " and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and resep_obat.kd_dokter=dokter.kd_dokter where "
+                    + " and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and resep_obat.kd_dokter=dokter.kd_dokter and reg_periksa.kd_pj=penjab.kd_pj where "
                     + " kamar_inap.stts_pulang='-' and resep_obat.status='ranap' and resep_obat.tgl_perawatan between ? and ? and dokter.nm_dokter like ? and bangsal.nm_bangsal like ? and resep_obat.no_resep like ? or "
                     + " kamar_inap.stts_pulang='-' and resep_obat.status='ranap' and resep_obat.tgl_perawatan between ? and ? and dokter.nm_dokter like ? and bangsal.nm_bangsal like ? and resep_obat.no_rawat like ? or "
                     + " kamar_inap.stts_pulang='-' and resep_obat.status='ranap' and resep_obat.tgl_perawatan between ? and ? and dokter.nm_dokter like ? and bangsal.nm_bangsal like ? and pasien.no_rkm_medis like ? or "
@@ -2707,7 +2712,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                     tabMode3.addRow(new String[]{
                         rs.getString("no_resep"), rs.getString("tgl_peresepan"), rs.getString("jam_peresepan"), rs.getString("no_rawat"),
                         rs.getString("no_rkm_medis"), rs.getString("nm_pasien"), rs.getString("nm_dokter"), rs.getString("status"),
-                        rs.getString("kd_dokter"), rs.getString("nm_bangsal"), rs.getString("kd_bangsal")
+                        rs.getString("kd_dokter"), rs.getString("nm_bangsal"), rs.getString("kd_bangsal"), rs.getString("png_jawab")
                     });
                 }
 
