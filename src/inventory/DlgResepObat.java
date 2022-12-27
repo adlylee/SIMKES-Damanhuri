@@ -2569,6 +2569,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                         JOptionPane.showMessageDialog(null, "Koneksi ke server text to speech terputus...!");
                     }
                 }
+                emptTeks();
             }
         }
 

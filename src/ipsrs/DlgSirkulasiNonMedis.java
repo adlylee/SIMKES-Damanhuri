@@ -544,6 +544,8 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
         TCari.setText("");
         kdbar.setText("");
         nmbar.setText("");
+        kdptg.setText("");
+        nmptg.setText("");
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR)); 
         prosesCari();
         this.setCursor(Cursor.getDefaultCursor());
@@ -835,18 +837,6 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
     
     
     public void isCek(){
-        if (var.getjml2()>=1) {
-            kdptg.setText(var.getkode());
-            Sequel.cariIsi("select nama from petugas where nip=?",nmptg,kdptg.getText());
-        }else{
-            kdptg.setText("");
-            nmptg.setText("");
-        }
-        if(var.getkode().equals("Admin Utama")){
-            btnPetugas.setEnabled(true);
-        }else{
-            btnPetugas.setEnabled(false);
-        }
          BtnPrint.setEnabled(var.getsirkulasi_non_medis());
     }
     
