@@ -683,7 +683,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                 " ipsrsbarang.status='1' and ipsrsbarang.kode_sat like ? or "+
                 " ipsrsbarang.status='1' and ipsrsjenisbarang.nm_jenis like ? order by ipsrsbarang.nama_brng");
             } else {
-                jenis = Sequel.buangChar(Sequel.cariStringArray("SELECT kd_jenis FROM ipsrs_setpj WHERE nik="+var.getkode()));
+                jenis = Sequel.buangChar(Sequel.cariStringArray("SELECT kd_jenis FROM ipsrs_setpj WHERE nik="+var.getkode()+ " and status='1'"));
                 pstampil=koneksi.prepareStatement("select ipsrsbarang.kode_brng, ipsrsbarang.nama_brng,ipsrsjenisbarang.nm_jenis, ipsrsbarang.kode_sat, "+
                 "ipsrsbarang.harga,ipsrsbarang.stok from ipsrsbarang inner join ipsrsjenisbarang on ipsrsbarang.jenis=ipsrsjenisbarang.kd_jenis "+
                 " where ipsrsbarang.jenis IN ("+jenis+") AND ipsrsbarang.status='1' and ipsrsbarang.kode_brng like ? or "+

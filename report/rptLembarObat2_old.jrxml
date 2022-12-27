@@ -62,10 +62,8 @@
 	<parameter name="peresep" class="java.lang.String"/>
 	<parameter name="kamar" class="java.lang.String"/>
 	<parameter name="namakamar" class="java.lang.String"/>
-	<parameter name="noresep" class="java.lang.String"/>
 	<parameter name="tanggal" class="java.lang.String"/>
-	<parameter name="noantrian" class="java.lang.String"/>
-
+	<parameter name="noresep" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select no, temp1, temp2, temp3, temp4, temp5 from temporary_resep order by no asc]]>
 	</queryString>
@@ -305,35 +303,6 @@
 				</textElement>
 				<text><![CDATA[Alamat]]></text>
 			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="500" y="82" width="50" height="8"/>
-				<textElement verticalAlignment="Top" lineSpacing="Single">
-					<font fontName="Tahoma" size="5"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[($P{noantrian}.equals("") ? "" : "No. Antrian Apotek")]]></textFieldExpression>
-			</textField>			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="508" y="88" width="50" height="8"/>
-				<textElement verticalAlignment="Top" lineSpacing="Single">
-					<font fontName="Tahoma" size="5"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[($P{noantrian}.equals("") ? "" : "Rawat Jalan")]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="493" y="45" width="60" height="45"/>
-				<textElement verticalAlignment="Top" lineSpacing="Single">
-					<font fontName="Segoe UI Black" size="31"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[($P{noantrian}.equals("") ? "" : $P{noantrian})]]></textFieldExpression>
-			</textField>
-			<frame>
-				<reportElement x="490" y="49" width="61" height="48">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<box>
-					<pen lineWidth="0.5"/>
-				</box>
-			</frame>
 		</band>
 	</title>
 	<pageHeader>

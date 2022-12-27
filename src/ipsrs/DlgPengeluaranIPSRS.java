@@ -36,10 +36,11 @@ public class DlgPengeluaranIPSRS extends javax.swing.JDialog {
     private DlgCariPengeluaranIpsrs form = new DlgCariPengeluaranIpsrs(null, false);
     private int jml = 0, i = 0, row = 0, index = 0, kolom = 0;
     private double ttl, keluar, hargaDouble, totalDouble, sisaStok, sisa = 0, sisakurang, permintaanJml, dilayani = 0, stokbarang = 0, y = 0;
-    private String[] kodebarang, namabarang, satuan, jumlah, stok, harga, total;
+    private String[] kodebarang, namabarang, satuan, stok, harga, total;
     private String hargaString, totalString, dilayaniString, jenis;
     private WarnaTable2 warna = new WarnaTable2();
     public boolean tampilkanpermintaan = true;
+    private double[] jumlah;
 
     /**
      * Creates new form DlgProgramStudi
@@ -552,7 +553,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                             if (Valid.SetAngka(tbDokter.getValueAt(i, 0).toString()) > 0) {
                                 do {
                                     if (sisa == 0) {
-                                        permintaanJml = Integer.valueOf(tbDokter.getValueAt(i, 0).toString());
+                                        permintaanJml = Double.valueOf(tbDokter.getValueAt(i, 0).toString());
                                     } else {
                                         permintaanJml = sisa;
                                     }
@@ -803,14 +804,14 @@ private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         kodebarang = new String[jml];
         namabarang = new String[jml];
         satuan = new String[jml];
-        jumlah = new String[jml];
+        jumlah = new double[jml];
         stok = new String[jml];
         harga = new String[jml];
         total = new String[jml];
         index = 0;
         for (i = 0; i < row; i++) {
             if (!tbDokter.getValueAt(i, 0).toString().equals("")) {
-                jumlah[index] = tbDokter.getValueAt(i, 0).toString();
+                jumlah[index] = Double.parseDouble(tbDokter.getValueAt(i, 0).toString());
                 kodebarang[index] = tbDokter.getValueAt(i, 1).toString();
                 namabarang[index] = tbDokter.getValueAt(i, 2).toString();
                 satuan[index] = tbDokter.getValueAt(i, 3).toString();
@@ -823,7 +824,7 @@ private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         Valid.tabelKosong(tabMode);
         for (i = 0; i < jml; i++) {
             tabMode.addRow(new Object[]{jumlah[i], kodebarang[i], namabarang[i], satuan[i], stok[i], harga[i], total[i]});
-        } 
+        }
         try {
 
             if (var.getkode().equals("Admin Utama")) {
@@ -831,7 +832,7 @@ private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
                         + " ipsrsbarang.harga from ipsrsbarang where ipsrsbarang.status='1' and ( ipsrsbarang.kode_brng like ? or "
                         + " ipsrsbarang.nama_brng like ?) order by ipsrsbarang.nama_brng");
             } else {
-                jenis = Sequel.buangChar(Sequel.cariStringArray("SELECT kd_jenis FROM ipsrs_setpj WHERE nik=" + var.getkode()));
+                jenis = Sequel.buangChar(Sequel.cariStringArray("SELECT kd_jenis FROM ipsrs_setpj WHERE nik=" + var.getkode()+ " and status='1'"));
                 ps = koneksi.prepareStatement("select ipsrsbarang.kode_brng, concat(ipsrsbarang.nama_brng,' (',ipsrsbarang.jenis,')'),ipsrsbarang.kode_sat,stok, "
                         + " ipsrsbarang.harga from ipsrsbarang where ipsrsbarang.status='1' and "
                         + " ipsrsbarang.jenis IN (" + jenis + ") AND ( ipsrsbarang.kode_brng like ? or "

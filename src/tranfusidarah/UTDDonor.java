@@ -61,15 +61,15 @@ public final class UTDDonor extends javax.swing.JDialog {
     private sekuel Sequel = new sekuel();
     private validasi Valid = new validasi();
     private PreparedStatement ps, ps2, pstranfusi, pscekmedis, psceknonmedis, psTotal, psTotalLk, psTotalPr, psUmur1, psUmur2, psUmur3, psUmur4, psUmur5,
-            psOpos, psOneg, psApos, psAneg, psBpos, psBneg, psABpos, psABneg, ps3, ps4;
+            psOpos, psOneg, psApos, psAneg, psBpos, psBneg, psABpos, psABneg, ps3, psjenisdb, psjenisdp, psjenisds;
     private ResultSet rs, rs2, rstranfusi, rsTotal, rsTotalLk, rsTotalPr, rsUmur1, rsUmur2, rsUmur3, rsUmur4, rsUmur5,
-            rsOpos, rsOneg, rsApos, rsAneg, rsBpos, rsBneg, rsABpos, rsABneg, rs3, rs4;
+            rsOpos, rsOneg, rsApos, rsAneg, rsBpos, rsBneg, rsABpos, rsABneg, rs3, rsjenisdb, rsjenisdp, rsjenisds;
     private Connection koneksi = koneksiDB.condb();
     private DlgCariPetugas petugas = new DlgCariPetugas(null, false);
     private int jml = 0, i = 0, row = 0, index = 0, pilih = 0, inthari = 0;
     private String[] kodebarang, namabarang, jumlah, satuan, stokasal, hbeli, total, printTotal;
     private String totaldonor, totallk, totalpr, umur1, umur2, umur3, umur4, umur5,
-            opos, oneg, apos, aneg, bpos, bneg, abpos, abneg;
+            opos, oneg, apos, aneg, bpos, bneg, abpos, abneg, jenisdb, jenisdp, jenisds;
     private SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
     private String aktifkan = "",
             sqlpscekmedis = "select utd_penggunaan_medis_donor.kode_brng,databarang.nama_brng,utd_penggunaan_medis_donor.jml,utd_penggunaan_medis_donor.harga,"
@@ -237,7 +237,7 @@ public final class UTDDonor extends javax.swing.JDialog {
 
         //Total Donor
         tabModeTotalDonor = new DefaultTableModel(null, new Object[]{
-            "Total Donasi Darah", "Donasi Darah Laki-laki", "Donasi Darah Wanita", "17 Tahun", "18-24 Tahun",
+            "Total Donasi Darah", "Donasi Darah (lk)", "Donasi Darah (pr)", "DB","DP","DS","17 Tahun", "18-24 Tahun",
             "25-44 Tahun", "45-64 Tahun", ">= 65 Tahun",
             "O resus (+)", "O resus (-)", "A resus (+)", "A resus (-)", "B resus (+)", "B resus (-)",
             "AB resus (+)", "B resus (-)"
@@ -252,41 +252,23 @@ public final class UTDDonor extends javax.swing.JDialog {
         tbTotalDonor.setPreferredScrollableViewportSize(new Dimension(800, 800));
         tbTotalDonor.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 16; i++) {
+        for (i = 0; i < 17; i++) {
             TableColumn column = tbTotalDonor.getColumnModel().getColumn(i);
             if (i == 0) {
-                column.setPreferredWidth(120);
+                column.setPreferredWidth(100);
             } else if (i == 1) {
-                column.setPreferredWidth(120);
+                column.setPreferredWidth(100);
             } else if (i == 2) {
-                column.setPreferredWidth(120);
+                column.setPreferredWidth(100);
             } else if (i == 3) {
-                column.setPreferredWidth(70);
+                column.setPreferredWidth(45);
             } else if (i == 4) {
-                column.setPreferredWidth(80);
+                column.setPreferredWidth(45);
             } else if (i == 5) {
-                column.setPreferredWidth(80);
-            } else if (i == 6) {
-                column.setPreferredWidth(80);
-            } else if (i == 7) {
-                column.setPreferredWidth(80);
-            } else if (i == 8) {
-                column.setPreferredWidth(75);
-            } else if (i == 9) {
-                column.setPreferredWidth(75);
-            } else if (i == 10) {
-                column.setPreferredWidth(75);
-            } else if (i == 11) {
-                column.setPreferredWidth(75);
-            } else if (i == 12) {
-                column.setPreferredWidth(75);
-            } else if (i == 13) {
-                column.setPreferredWidth(75);
-            } else if (i == 14) {
-                column.setPreferredWidth(75);
-            } else if (i == 15) {
-                column.setPreferredWidth(75);
-            }
+                column.setPreferredWidth(45);
+            } else {
+                column.setPreferredWidth(70);
+            } 
         }
         tbTotalDonor.setDefaultRenderer(Object.class, new WarnaTable());
 
@@ -984,7 +966,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelisi4.add(label32);
         label32.setBounds(260, 10, 57, 23);
 
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "18-11-2022" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "15-12-2022" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy");
         Tanggal.setName("Tanggal"); // NOI18N
         Tanggal.addItemListener(new java.awt.event.ItemListener() {
@@ -1137,7 +1119,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelisi4.add(jLabel12);
         jLabel12.setBounds(190, 230, 70, 23);
 
-        JenisBag.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SB", "DB", "TB", "QB" }));
+        JenisBag.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SB", "DB", "TB", "QB", "P" }));
         JenisBag.setName("JenisBag"); // NOI18N
         JenisBag.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1339,7 +1321,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelisi4.add(label33);
         label33.setBounds(12, 70, 90, 23);
 
-        tgl_lahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "18-11-2022" }));
+        tgl_lahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "15-12-2022" }));
         tgl_lahir.setDisplayFormat("dd-MM-yyyy");
         tgl_lahir.setName("tgl_lahir"); // NOI18N
         tgl_lahir.addItemListener(new java.awt.event.ItemListener() {
@@ -1631,7 +1613,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelGlass9.add(jLabel20);
 
         TanggalCari1.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "18-11-2022" }));
+        TanggalCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "15-12-2022" }));
         TanggalCari1.setDisplayFormat("dd-MM-yyyy");
         TanggalCari1.setName("TanggalCari1"); // NOI18N
         TanggalCari1.setOpaque(false);
@@ -1645,7 +1627,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelGlass9.add(jLabel21);
 
         TanggalCari2.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "18-11-2022" }));
+        TanggalCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "15-12-2022" }));
         TanggalCari2.setDisplayFormat("dd-MM-yyyy");
         TanggalCari2.setName("TanggalCari2"); // NOI18N
         TanggalCari2.setOpaque(false);
@@ -2348,7 +2330,12 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCariActionPerformed
         if (TabRawat.getSelectedIndex() == 1) {
             tampil();
-        }
+        } else if (TabRawat.getSelectedIndex() == 0) {
+            tampilMedis();
+            tampilNonMedis();
+        } else {
+            tampilTotalDonor();
+        };
 //       // aktifkan = "";
 //        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 //        if (TabRawat.getSelectedIndex()==1){
@@ -3648,15 +3635,15 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     private void tampilTotalDonor() {
         Valid.tabelKosong(tabModeTotalDonor);
         try {
-            psTotal = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ?");
-            psTotalLk = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND jk='L'");
-            psTotalPr = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND jk='P'");
-            psUmur1 = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE umur=17 AND tanggal BETWEEN ? AND ?");
-            psUmur2 = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE umur BETWEEN 18 AND 24 AND tanggal BETWEEN ? AND ?");
-            psUmur3 = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE umur BETWEEN 25 AND 44 AND tanggal BETWEEN ? AND ?");
-            psUmur4 = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE umur BETWEEN 45 AND 64 AND tanggal BETWEEN ? AND ?");
-            psUmur5 = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE umur>=65 AND tanggal BETWEEN ? AND ?");
-            psOpos = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='O' AND resus='(+)'");
+            psTotal = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ?");
+            psTotalLk = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND jk='L'");
+            psTotalPr = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND jk='P'");
+            psUmur1 = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE umur=17 AND tanggal BETWEEN ? AND ?");
+            psUmur2 = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE umur BETWEEN 18 AND 24 AND tanggal BETWEEN ? AND ?");
+            psUmur3 = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE umur BETWEEN 25 AND 44 AND tanggal BETWEEN ? AND ?");
+            psUmur4 = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE umur BETWEEN 45 AND 64 AND tanggal BETWEEN ? AND ?");
+            psUmur5 = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE umur>=65 AND tanggal BETWEEN ? AND ?");
+            psOpos = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='O' AND resus='(+)'");
             psOneg = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='O' AND resus='(-)'");
             psApos = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='A' AND resus='(+)'");
             psAneg = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='A' AND resus='(-)'");
@@ -3664,6 +3651,9 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
             psBneg = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='B' AND resus='(-)'");
             psABpos = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='AB' AND resus='(+)'");
             psABneg = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='AB' AND resus='(-)'");
+            psjenisdb = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE jenis_bag='DB' and tanggal BETWEEN ? AND ?");
+            psjenisdp = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE jenis_bag='DP' and tanggal BETWEEN ? AND ?");
+            psjenisds = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE jenis_bag='DS' and tanggal BETWEEN ? AND ?");
             try {
                 psTotal.setString(1, Valid.SetTgl(TanggalCari1.getSelectedItem() + ""));
                 psTotal.setString(2, Valid.SetTgl(TanggalCari2.getSelectedItem() + ""));
@@ -3697,6 +3687,12 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
                 psABpos.setString(2, Valid.SetTgl(TanggalCari2.getSelectedItem() + ""));
                 psABneg.setString(1, Valid.SetTgl(TanggalCari1.getSelectedItem() + ""));
                 psABneg.setString(2, Valid.SetTgl(TanggalCari2.getSelectedItem() + ""));
+                psjenisdb.setString(1, Valid.SetTgl(TanggalCari1.getSelectedItem() + ""));
+                psjenisdb.setString(2, Valid.SetTgl(TanggalCari2.getSelectedItem() + ""));
+                psjenisdp.setString(1, Valid.SetTgl(TanggalCari1.getSelectedItem() + ""));
+                psjenisdp.setString(2, Valid.SetTgl(TanggalCari2.getSelectedItem() + ""));
+                psjenisds.setString(1, Valid.SetTgl(TanggalCari1.getSelectedItem() + ""));
+                psjenisds.setString(2, Valid.SetTgl(TanggalCari2.getSelectedItem() + ""));
 
                 rsTotal = psTotal.executeQuery();
                 rsTotalLk = psTotalLk.executeQuery();
@@ -3714,6 +3710,9 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
                 rsBneg = psBneg.executeQuery();
                 rsABpos = psABpos.executeQuery();
                 rsABneg = psABneg.executeQuery();
+                rsjenisdb = psjenisdb.executeQuery();
+                rsjenisdp = psjenisdp.executeQuery();
+                rsjenisds = psjenisds.executeQuery();
                 while (rsTotal.next()) {
                     totaldonor = rsTotal.getString("jumlah");
                 }
@@ -3762,10 +3761,19 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
                 while (rsABneg.next()) {
                     abneg = rsABneg.getString("jumlah");
                 }
+                while (rsjenisdb.next()) {
+                    jenisdb = rsjenisdb.getString("jumlah");
+                }
+                while (rsjenisdp.next()) {
+                    jenisdp = rsjenisdp.getString("jumlah");
+                }
+                while (rsjenisds.next()) {
+                    jenisds = rsjenisds.getString("jumlah");
+                }
             } catch (Exception e) {
             }
             tabModeTotalDonor.addRow(new Object[]{
-                totaldonor, totallk, totalpr, umur1, umur2, umur3, umur4, umur5, opos, oneg, apos, aneg, bpos, bneg, abpos, abneg
+                totaldonor, totallk, totalpr, jenisdb, jenisdp, jenisds, umur1, umur2, umur3, umur4, umur5, opos, oneg, apos, aneg, bpos, bneg, abpos, abneg
             });
         } catch (Exception e) {
         }
@@ -3886,6 +3894,12 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
         ppHapusBHPNonMedis.setEnabled(var.getutd_donor());
         ppCekal.setEnabled(var.getutd_cekal_darah());
         printWB.setEnabled(var.getutd_cekal_darah());
+        if(var.getkode().equals("Admin Utama")){
+            BtnWA.setEnabled(true);
+        }else{
+            BtnWA.setEnabled(false);
+        }
+
     }
 
     private void isNumber() {

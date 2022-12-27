@@ -518,6 +518,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         BtnSimpan = new widget.Button();
         BtnBatal = new widget.Button();
         BtnHapus = new widget.Button();
+        BtnEdit3 = new widget.Button();
         BtnPrint = new widget.Button();
         BtnAll = new widget.Button();
         BtnEdit = new widget.Button();
@@ -608,7 +609,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         WindowBatalWhatsapp.setUndecorated(true);
         WindowBatalWhatsapp.setResizable(false);
 
-        internalFrame7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Pemindahan Jadwal Poliklinik ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Pemindahan Jadwal Poliklinik ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame7.setName("internalFrame7"); // NOI18N
         internalFrame7.setLayout(null);
 
@@ -717,7 +718,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Booking Registrasi ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Booking Registrasi ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -805,6 +806,24 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
             }
         });
         panelGlass8.add(BtnHapus);
+
+        BtnEdit3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/inventaris.png"))); // NOI18N
+        BtnEdit3.setMnemonic('G');
+        BtnEdit3.setText("Ganti");
+        BtnEdit3.setToolTipText("Alt+G");
+        BtnEdit3.setName("BtnEdit3"); // NOI18N
+        BtnEdit3.setPreferredSize(new java.awt.Dimension(100, 30));
+        BtnEdit3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEdit3ActionPerformed(evt);
+            }
+        });
+        BtnEdit3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnEdit3KeyPressed(evt);
+            }
+        });
+        panelGlass8.add(BtnEdit3);
 
         BtnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/b_print.png"))); // NOI18N
         BtnPrint.setMnemonic('T');
@@ -1830,6 +1849,43 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnPoli2KeyPressed
 
+    private void BtnEdit3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEdit3ActionPerformed
+        if(TNoRM.getText().trim().equals("")||TPasien.getText().trim().equals("")){
+            Valid.textKosong(TNoRM,"pasien");
+        }else if(NmDokter.getText().trim().equals("")||KdDokter.getText().trim().equals("")){
+            Valid.textKosong(KdDokter,"Operator");
+        }else if(NmPoli.getText().trim().equals("")||NmPoli.getText().trim().equals("")){
+            Valid.textKosong(KdPoli,"Operasi");
+        }else if(kdpnj.getText().trim().equals("")||nmpnj.getText().trim().equals("")){
+            Valid.textKosong(kdpnj,"Cara Bayar");
+        }else if(NoReg.getText().trim().equals("")){
+            Valid.textKosong(NoReg,"No.Antri");
+        }else{
+            if(var.getkode().equals("Admin Utama")){
+                isEditBooking();
+            }else{
+                if(aktifjadwal.equals("aktif")){
+                    if(Sequel.cariInteger("select count(no_rkm_medis) from booking_registrasi where kd_dokter='"+KdDokter.getText()+"' and tanggal_periksa='"+Valid.SetTgl(TanggalPeriksa.getSelectedItem()+"")+"' ")>=kuota){
+                        JOptionPane.showMessageDialog(null,"Eiiits, Kuota registrasi penuh..!!!");
+                        TCari.requestFocus();
+                    }else{
+                        isEditBooking();
+                    }                    
+                }else{
+                    isEditBooking();
+                } 
+            }                                       
+        }
+    }//GEN-LAST:event_BtnEdit3ActionPerformed
+
+    private void BtnEdit3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnEdit3KeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+            BtnEditActionPerformed(null);
+        } else {
+            Valid.pindah(evt, BtnHapus, BtnKeluar);
+        }
+    }//GEN-LAST:event_BtnEdit3KeyPressed
+
     /**
     * @param args the command line arguments
     */
@@ -1855,6 +1911,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.Button BtnEdit;
     private widget.Button BtnEdit1;
     private widget.Button BtnEdit2;
+    private widget.Button BtnEdit3;
     private widget.Button BtnHapus;
     private widget.Button BtnKeluar;
     private widget.Button BtnPasien;
@@ -2109,6 +2166,16 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
            })==true){
             emptTeks();
             tampil();
+        } 
+    }
+    
+    private void isEditBooking() {
+        if(Sequel.mengedittf("booking_registrasi","no_rkm_medis=? and tanggal_periksa=?","tanggal_periksa=?,kd_dokter=?,kd_poli=?",5,new String[]{
+            Valid.SetTgl(TanggalPeriksa.getSelectedItem()+""),KdDokter.getText(),
+            KdPoli.getText(),tabMode.getValueAt(tbObat.getSelectedRow(),3).toString(),tabMode.getValueAt(tbObat.getSelectedRow(),5).toString()
+        })==true){
+                emptTeks();
+                tampil();
         } 
     }
 }

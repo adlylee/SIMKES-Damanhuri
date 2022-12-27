@@ -59,7 +59,7 @@ public final class DlgLaporanStokOpname extends javax.swing.JDialog {
         setSize(885,674);
 
         Object[] rowRwJlDr={"No.","Nama Barang","Satuan","Stok Awal","Penerimaan",
-                            "Persediaan","Pengeluaran","Total Stok","Harga Satuan",
+                            "Persediaan","Pengeluaran","Sisa Stok Akhir","Harga Satuan",
                             "Total Harga","Pemakaian Rata - Rata","Ketersediaan Stok"};
         tabMode=new DefaultTableModel(null,rowRwJlDr){
               @Override public boolean isCellEditable(int rowIndex, int colIndex){return false;}

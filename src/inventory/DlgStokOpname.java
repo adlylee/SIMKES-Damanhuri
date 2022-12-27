@@ -831,7 +831,8 @@ private void StokKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Stok
         try{     
             pstampil=koneksi.prepareStatement("select opname.kode_brng, databarang.nama_brng,opname.h_beli, databarang.kode_sat, opname.tanggal, opname.stok, "+
                      "opname.real, opname.selisih, (opname.real*opname.h_beli) as totalreal,opname.nomihilang, opname.keterangan, bangsal.kd_bangsal, bangsal.nm_bangsal , kategori_barang.nama "+
-                     "from opname inner join databarang inner join bangsal inner join kategori_barang inner join "+
+                     "from opname inner join databarang inner join bangsal inner join kategori_barang " +
+//                    + "inner join "+
                      "on opname.kode_brng=databarang.kode_brng and opname.kd_bangsal=bangsal.kd_bangsal AND databarang.kode_kategori=kategori_barang.kode "+
                      "where opname.tanggal between ? and ? and opname.kode_brng like ? or "+
                      "opname.tanggal between ? and ? and databarang.nama_brng like ? or "+
