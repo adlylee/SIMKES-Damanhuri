@@ -240,7 +240,7 @@ public final class UTDDonor extends javax.swing.JDialog {
             "Total Donasi Darah", "Donasi Darah (lk)", "Donasi Darah (pr)", "DB","DP","DS","17 Tahun", "18-24 Tahun",
             "25-44 Tahun", "45-64 Tahun", ">= 65 Tahun",
             "O resus (+)", "O resus (-)", "A resus (+)", "A resus (-)", "B resus (+)", "B resus (-)",
-            "AB resus (+)", "B resus (-)"
+            "AB resus (+)", "AB resus (-)"
         }) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -2082,8 +2082,8 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
 //            Valid.textKosong(NomorBag,"Nomor Bag");
         } else if (NomorTelp.getText().trim().equals("")) {
             Valid.textKosong(NomorTelp, "Nomor Telepon");
-        } else if (KodePetugasAftap.getText().trim().equals("") || NamaPetugasAftap.getText().trim().equals("")) {
-            Valid.textKosong(KodePetugasAftap, "Petugas Aftap");
+//        } else if (KodePetugasAftap.getText().trim().equals("") || NamaPetugasAftap.getText().trim().equals("")) {
+//            Valid.textKosong(KodePetugasAftap, "Petugas Aftap");
 //        } else if (KodePetugasUSaring.getText().trim().equals("") || NamaPetugasUSaring.getText().trim().equals("")) {
 //            Valid.textKosong(KodePetugasUSaring, "Petugas Uji Saring");
         } else if (tabModeTranfusi.getRowCount() == 0) {
@@ -3644,16 +3644,16 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
             psUmur4 = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE umur BETWEEN 45 AND 64 AND tanggal BETWEEN ? AND ?");
             psUmur5 = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE umur>=65 AND tanggal BETWEEN ? AND ?");
             psOpos = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='O' AND resus='(+)'");
-            psOneg = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='O' AND resus='(-)'");
-            psApos = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='A' AND resus='(+)'");
-            psAneg = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='A' AND resus='(-)'");
-            psBpos = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='B' AND resus='(+)'");
-            psBneg = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='B' AND resus='(-)'");
-            psABpos = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='AB' AND resus='(+)'");
-            psABneg = koneksi.prepareStatement("SELECT COUNT(DISTINCT(nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='AB' AND resus='(-)'");
-            psjenisdb = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE jenis_bag='DB' and tanggal BETWEEN ? AND ?");
-            psjenisdp = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE jenis_bag='DP' and tanggal BETWEEN ? AND ?");
-            psjenisds = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE jenis_bag='DS' and tanggal BETWEEN ? AND ?");
+            psOneg = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='O' AND resus='(-)'");
+            psApos = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='A' AND resus='(+)'");
+            psAneg = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='A' AND resus='(-)'");
+            psBpos = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='B' AND resus='(+)'");
+            psBneg = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='B' AND resus='(-)'");
+            psABpos = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='AB' AND resus='(+)'");
+            psABneg = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE tanggal BETWEEN ? AND ? AND golongan_darah='AB' AND resus='(-)'");
+            psjenisdb = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE jenis_donor='DB' and tanggal BETWEEN ? AND ?");
+            psjenisdp = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE jenis_donor='DP' and tanggal BETWEEN ? AND ?");
+            psjenisds = koneksi.prepareStatement("SELECT COUNT((nik)) as jumlah FROM utd_donor WHERE jenis_donor='DS' and tanggal BETWEEN ? AND ?");
             try {
                 psTotal.setString(1, Valid.SetTgl(TanggalCari1.getSelectedItem() + ""));
                 psTotal.setString(2, Valid.SetTgl(TanggalCari2.getSelectedItem() + ""));

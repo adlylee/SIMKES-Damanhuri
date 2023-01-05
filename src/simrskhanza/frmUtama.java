@@ -387,6 +387,7 @@ import tranfusidarah.UTDStokDarah;
 import informasi.InformasiKerohanian;
 import java.awt.geom.RoundRectangle2D;
 import laporan.DlgFrekuensiPenyakitRalanDanRanap;
+import permintaan.DlgCariPermintaanUTD;
 
 
 /**
@@ -934,6 +935,7 @@ public class frmUtama extends javax.swing.JFrame {
         btnMyLimsMapping = new widget.ButtonBig();
         btnSetPenjabBNM = new widget.ButtonBig();
         btnRekapDiet = new widget.ButtonBig();
+        btnUTDPermintaan = new widget.ButtonBig();
         internalFrame1 = new widget.InternalFrame();
         BtnMenu = new widget.ButtonBig();
         jSeparator4 = new javax.swing.JSeparator();
@@ -1111,7 +1113,7 @@ public class frmUtama extends javax.swing.JFrame {
         WindowInput.setUndecorated(true);
         WindowInput.setResizable(false);
 
-        internalFrame6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Ubah Password ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Ubah Password ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame6.setName("internalFrame6"); // NOI18N
         internalFrame6.setLayout(null);
 
@@ -1190,7 +1192,7 @@ public class frmUtama extends javax.swing.JFrame {
         DlgHome.setUndecorated(true);
         DlgHome.setResizable(false);
 
-        panelMenu.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 225, 205)), "::[ Menu Utama ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(60, 60, 60))); // NOI18N
+        panelMenu.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 225, 205)), "::[ Menu Utama ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(60, 60, 60))); // NOI18N
         panelMenu.setName("panelMenu"); // NOI18N
         panelMenu.setPreferredSize(new java.awt.Dimension(2412, 3653));
         panelMenu.setLayout(new java.awt.BorderLayout(1, 1));
@@ -5826,6 +5828,17 @@ public class frmUtama extends javax.swing.JFrame {
             }
         });
 
+        btnUTDPermintaan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/applications-office.png"))); // NOI18N
+        btnUTDPermintaan.setText("Permintaan UTD\n");
+        btnUTDPermintaan.setIconTextGap(0);
+        btnUTDPermintaan.setName("btnUTDPermintaan"); // NOI18N
+        btnUTDPermintaan.setPreferredSize(new java.awt.Dimension(200, 90));
+        btnUTDPermintaan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUTDPermintaanActionPerformed(evt);
+            }
+        });
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("::[ Khanza SIMKES 2019 ]::");
         setBackground(new java.awt.Color(153, 255, 153));
@@ -6247,7 +6260,6 @@ public class frmUtama extends javax.swing.JFrame {
         jMenu1.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jMenu1.setIconTextGap(3);
         jMenu1.setName("jMenu1"); // NOI18N
-        jMenu1.setOpaque(false);
         jMenu1.setPreferredSize(new java.awt.Dimension(80, 28));
 
         MnLogin.setBackground(new java.awt.Color(255, 255, 254));
@@ -6315,7 +6327,6 @@ public class frmUtama extends javax.swing.JFrame {
         jMenu5.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jMenu5.setIconTextGap(3);
         jMenu5.setName("jMenu5"); // NOI18N
-        jMenu5.setOpaque(false);
         jMenu5.setPreferredSize(new java.awt.Dimension(127, 28));
 
         MnBelumDatang1.setBackground(new java.awt.Color(255, 255, 254));
@@ -6405,7 +6416,6 @@ public class frmUtama extends javax.swing.JFrame {
         jMenu6.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jMenu6.setIconTextGap(3);
         jMenu6.setName("jMenu6"); // NOI18N
-        jMenu6.setOpaque(false);
         jMenu6.setPreferredSize(new java.awt.Dimension(89, 28));
 
         MnRekapBulanan1.setBackground(new java.awt.Color(255, 255, 254));
@@ -6674,7 +6684,6 @@ public class frmUtama extends javax.swing.JFrame {
         jMenu7.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jMenu7.setIconTextGap(3);
         jMenu7.setName("jMenu7"); // NOI18N
-        jMenu7.setOpaque(false);
         jMenu7.setPreferredSize(new java.awt.Dimension(138, 28));
 
         MnAnjungan.setBackground(new java.awt.Color(255, 255, 254));
@@ -6778,7 +6787,6 @@ public class frmUtama extends javax.swing.JFrame {
         jMenu4.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jMenu4.setIconTextGap(3);
         jMenu4.setName("jMenu4"); // NOI18N
-        jMenu4.setOpaque(false);
         jMenu4.setPreferredSize(new java.awt.Dimension(124, 28));
         jMenu4.addMenuListener(new javax.swing.event.MenuListener() {
             public void menuCanceled(javax.swing.event.MenuEvent evt) {
@@ -12224,6 +12232,17 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_btnSetPenjabBNMActionPerformed1
 
+    private void btnUTDPermintaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUTDPermintaanActionPerformed
+        isTutup();
+        DlgHome.dispose();
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        DlgCariPermintaanUTD aplikasi=new DlgCariPermintaanUTD(this,false);
+        aplikasi.setSize(PanelUtama.getWidth(), PanelUtama.getHeight());
+        aplikasi.setLocationRelativeTo(PanelUtama);
+        aplikasi.setVisible(true);
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_btnUTDPermintaanActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -12660,6 +12679,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private widget.ButtonBig btnUTDPemisahanDarah;
     private widget.ButtonBig btnUTDPenunjangRusak;
     private widget.ButtonBig btnUTDPenyerahanDarah;
+    private widget.ButtonBig btnUTDPermintaan;
     private widget.ButtonBig btnUTDStokDarah;
     private widget.ButtonBig btnUser;
     private widget.ButtonBig btnVakum;
@@ -14729,6 +14749,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
 
             if(var.getutd_penyerahan_darah()==true){
                 Panelmenu.add(btnUTDPenyerahanDarah); 
+                Panelmenu.add(btnUTDPermintaan); 
                 jmlmenu++;
             } 
         }else if(cmbMenu.getSelectedIndex()==11){
@@ -16565,6 +16586,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
 
         if(var.getutd_penyerahan_darah()==true){
             Panelmenu.add(btnUTDPenyerahanDarah); 
+            Panelmenu.add(btnUTDPermintaan); 
             jmlmenu++;
         } 
 
@@ -19053,6 +19075,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         if(var.getutd_penyerahan_darah()==true){
             if(btnUTDPenyerahanDarah.getText().toLowerCase().trim().contains(TCari.getText().toLowerCase().trim())){
                 Panelmenu.add(btnUTDPenyerahanDarah); 
+                Panelmenu.add(btnUTDPermintaan); 
                 jmlmenu++;
             }                
         } 
