@@ -67,7 +67,7 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
         Object[] row={
             "P","No.Kantung","Komponen","G.D.","Rhesus","Aftap","Kadaluarsa",
             "Asal Darah","Status","Jasa Sarana","Paket BHP",
-            "KSO","Manajemen","Biaya"};
+            "KSO","Manajemen","Biaya","No.Reg Kantung"};
         tabMode=new DefaultTableModel(null,row){
             @Override public boolean isCellEditable(int rowIndex, int colIndex){
                 boolean a = false;
@@ -82,7 +82,7 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
                 java.lang.String.class,java.lang.String.class,java.lang.String.class,
                 java.lang.String.class,java.lang.String.class,java.lang.String.class,
                 java.lang.String.class,java.lang.String.class,java.lang.String.class,
-                java.lang.String.class,java.lang.Double.class
+                java.lang.String.class,java.lang.Double.class,java.lang.String.class
             };
             @Override
             public Class getColumnClass(int columnIndex) {
@@ -94,7 +94,7 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
         tbDarah.setPreferredScrollableViewportSize(new Dimension(800,800));
         tbDarah.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 14; i++) {
+        for (i = 0; i < 15; i++) {
             TableColumn column = tbDarah.getColumnModel().getColumn(i);
             if(i==0){
                 column.setPreferredWidth(22);
@@ -112,7 +112,7 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
                 column.setPreferredWidth(75);
             }else if((i==7)||(i==13)){
                 column.setPreferredWidth(90);
-            }else if((i==8)||(i==9)||(i==10)||(i==11)||(i==12)){
+            }else if((i==8)||(i==9)||(i==10)||(i==11)||(i==12)||(i==14)){
                 column.setMinWidth(0);
                 column.setMaxWidth(0);
             }
@@ -1280,14 +1280,14 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                     for(i=0;i<tbDarah.getRowCount();i++){ 
                         if(tbDarah.getValueAt(i,0).toString().equals("true")){
                             if(Sequel.menyimpantf("utd_penyerahan_darah_detail","?,?,?,?,?,?,?","No.Kantung",7,new String[]{
-                                nopenyerahan.getText(),tbDarah.getValueAt(i,1).toString(),tbDarah.getValueAt(i,9).toString(),
+                                nopenyerahan.getText(),tbDarah.getValueAt(i,14).toString(),tbDarah.getValueAt(i,9).toString(),
                                 tbDarah.getValueAt(i,10).toString(),tbDarah.getValueAt(i,11).toString(),
                                 tbDarah.getValueAt(i,12).toString(),tbDarah.getValueAt(i,13).toString()
                                })==false){
                                 tbDarah.setValueAt(false,i,0); 
                                 getData();
                             }else{
-                                Sequel.mengedit("utd_stok_darah","no_kantong='"+tbDarah.getValueAt(i,1).toString()+"'","status='Diambil'");
+                                Sequel.mengedit("utd_stok_darah","no_bag='"+tbDarah.getValueAt(i,1).toString()+"'","status='Diambil'");
                                 tbDarah.setValueAt(false,i,0); 
                             }
                         }
@@ -1949,7 +1949,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                     "utd_stok_darah.asal_darah,utd_stok_darah.status,"+
                     "utd_komponen_darah.jasa_sarana,utd_komponen_darah.paket_bhp,"+
                     "utd_komponen_darah.kso,utd_komponen_darah.manajemen,"+
-                    "utd_komponen_darah.total "+
+                    "utd_komponen_darah.total, utd_stok_darah.no_kantong "+
                     "from utd_komponen_darah inner join utd_stok_darah "+
                     "on utd_stok_darah.kode_komponen=utd_komponen_darah.kode where "+
                     "utd_stok_darah.status='Ada' and utd_stok_darah.golongan_darah=? and utd_stok_darah.resus=? and utd_stok_darah.no_kantong like ? or "+
@@ -1973,7 +1973,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                         rsdarah.getString(4),rsdarah.getString(5),rsdarah.getString(6),
                         rsdarah.getString(7),rsdarah.getString(8),rsdarah.getDouble(9),
                         rsdarah.getDouble(10),rsdarah.getDouble(11),rsdarah.getDouble(12),
-                        rsdarah.getDouble(13)
+                        rsdarah.getDouble(13),rsdarah.getString(14)
                     });
                 }
             } catch (Exception e) {

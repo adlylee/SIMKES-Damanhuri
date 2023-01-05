@@ -2081,11 +2081,11 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
 //        }else if(NomorBag.getText().trim().equals("")){
 //            Valid.textKosong(NomorBag,"Nomor Bag");
         } else if (NomorTelp.getText().trim().equals("")) {
-            Valid.textKosong(NomorTelp, "Nomor Selang");
+            Valid.textKosong(NomorTelp, "Nomor Telepon");
         } else if (KodePetugasAftap.getText().trim().equals("") || NamaPetugasAftap.getText().trim().equals("")) {
             Valid.textKosong(KodePetugasAftap, "Petugas Aftap");
-        } else if (KodePetugasUSaring.getText().trim().equals("") || NamaPetugasUSaring.getText().trim().equals("")) {
-            Valid.textKosong(KodePetugasUSaring, "Petugas Uji Saring");
+//        } else if (KodePetugasUSaring.getText().trim().equals("") || NamaPetugasUSaring.getText().trim().equals("")) {
+//            Valid.textKosong(KodePetugasUSaring, "Petugas Uji Saring");
         } else if (tabModeTranfusi.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "Maaf, data sudah habis...!!!!");
             TCari.requestFocus();
