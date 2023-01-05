@@ -91,7 +91,8 @@ public class DlgBarang extends javax.swing.JDialog {
             "Hrg.Beli(Rp)", "Ralan(Rp)", "Ranap K1(Rp)", "Ranap K2(Rp)", "Ranap K3(Rp)",
             "Kelas Utama/BPJS(Rp)", "Ranap VIP(Rp)", "Ranap VVIP(Rp)", "Beli Luar(Rp)",
             "Jual Bebas(Rp)", "Karyawan(Rp)", "Stok Minimal", "Kode Jenis", "Nama Jenis", "Kapasitas",
-            "Kadaluwarsa","Kode I.F.","Industri Farmasi","Kode Kategori","Kategori","Kode Golongan","Golongan"
+            "Kadaluwarsa","Kode I.F.","Industri Farmasi","Kode Kategori","Kategori","Kode Golongan","Golongan",
+            "Stok Gudang","Stok Rajal","Stok Ranap","Stok IGD"
         }) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -108,7 +109,8 @@ public class DlgBarang extends javax.swing.JDialog {
                 java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class,
                 java.lang.Double.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
                 java.lang.Double.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, 
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
+                java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
             };
 
             @Override
@@ -121,7 +123,7 @@ public class DlgBarang extends javax.swing.JDialog {
         tbDokter.setPreferredScrollableViewportSize(new Dimension(800, 800));
         tbDokter.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 28; i++) {
+        for (i = 0; i < 32; i++) {
             TableColumn column = tbDokter.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(20);
@@ -183,6 +185,8 @@ public class DlgBarang extends javax.swing.JDialog {
                 column.setMaxWidth(0);
             } else if (i == 27) {
                 column.setPreferredWidth(120);
+            } else {
+                column.setPreferredWidth(90);
             }
         }
         tbDokter.setDefaultRenderer(Object.class, new WarnaTable());        
@@ -477,6 +481,7 @@ public class DlgBarang extends javax.swing.JDialog {
         ppStok = new javax.swing.JMenuItem();
         ppStok2 = new javax.swing.JMenuItem();
         MnRestore = new javax.swing.JMenuItem();
+        ppStok1 = new javax.swing.JMenuItem();
         internalFrame1 = new widget.InternalFrame();
         jPanel2 = new javax.swing.JPanel();
         panelisi2 = new widget.panelisi();
@@ -639,6 +644,23 @@ public class DlgBarang extends javax.swing.JDialog {
             }
         });
         Popup.add(MnRestore);
+
+        ppStok1.setBackground(new java.awt.Color(255, 255, 254));
+        ppStok1.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        ppStok1.setForeground(new java.awt.Color(70, 70, 70));
+        ppStok1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        ppStok1.setText("Tampilkan Stok Depo");
+        ppStok1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        ppStok1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        ppStok1.setIconTextGap(8);
+        ppStok1.setName("ppStok1"); // NOI18N
+        ppStok1.setPreferredSize(new java.awt.Dimension(200, 25));
+        ppStok1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ppStok1ActionPerformed(evt);
+            }
+        });
+        Popup.add(ppStok1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -1333,7 +1355,7 @@ public class DlgBarang extends javax.swing.JDialog {
         karyawan.setBounds(660, 192, 110, 23);
 
         DTPExpired.setForeground(new java.awt.Color(50, 70, 50));
-        DTPExpired.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "11-03-2019" }));
+        DTPExpired.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "28-12-2022" }));
         DTPExpired.setDisplayFormat("dd-MM-yyyy");
         DTPExpired.setName("DTPExpired"); // NOI18N
         DTPExpired.setOpaque(false);
@@ -2346,6 +2368,10 @@ private void KapasitasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
         // TODO add your handling code here:
     }//GEN-LAST:event_kdkategoriActionPerformed
 
+    private void ppStok1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppStok1ActionPerformed
+        tampil5();
+    }//GEN-LAST:event_ppStok1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2438,6 +2464,7 @@ private void KapasitasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
     private javax.swing.JMenuItem ppBarcode;
     private javax.swing.JMenuItem ppBarcodeItem;
     private javax.swing.JMenuItem ppStok;
+    private javax.swing.JMenuItem ppStok1;
     private javax.swing.JMenuItem ppStok2;
     private widget.TextBox ralan;
     private widget.ScrollPane scrollPane1;
@@ -2492,7 +2519,8 @@ private void KapasitasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
                             rs.getString("kode_kategori"),
                             rs.getString("kategori"),
                             rs.getString("kode_golongan"),
-                            rs.getString("golongan")
+                            rs.getString("golongan"),
+                            0,0,0,0   
                         });
                     }
                     LCount.setText("" + tabMode.getRowCount());
@@ -2648,7 +2676,8 @@ private void KapasitasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
                         rs.getString("kode_kategori"),
                         rs.getString("kategori"),
                         rs.getString("kode_golongan"),
-                        rs.getString("golongan")
+                        rs.getString("golongan"),
+                        0,0,0,0
                     });
                     
                     ps2 = koneksi.prepareStatement("select kd_bangsal,nm_bangsal from bangsal");
@@ -2753,7 +2782,8 @@ private void KapasitasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
                         rs.getString("kode_kategori"),
                         rs.getString("kategori"),
                         rs.getString("kode_golongan"),
-                        rs.getString("golongan")
+                        rs.getString("golongan"),
+                        0,0,0,0
                     });
                     stokgudang = 0;
                     ps3 = koneksi.prepareStatement("select stok from gudangbarang where kode_brng=? and kd_bangsal=?");
@@ -2866,6 +2896,74 @@ private void KapasitasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
             tampil();
         }    
             
+    }
+    
+    private void tampil5() {
+        Valid.tabelKosong(tabMode);
+        try {
+            ps = koneksi.prepareStatement(sql);
+            try {
+                ps.setString(1, "%" + TCari.getText().trim() + "%");
+                ps.setString(2, "%" + TCari.getText().trim() + "%");
+                ps.setString(3, "%" + TCari.getText().trim() + "%");
+                ps.setString(4, "%" + TCari.getText().trim() + "%");
+                ps.setString(5, "%" + TCari.getText().trim() + "%");
+                ps.setString(6, "%" + TCari.getText().trim() + "%");
+                ps.setString(7, "%" + TCari.getText().trim() + "%");
+                ps.setString(8, "%" + TCari.getText().trim() + "%");
+                ps.setString(9, "%" + TCari.getText().trim() + "%");
+                ps.setString(10, "%" + TCari.getText().trim() + "%");
+                ps.setString(11, "%" + TCari.getText().trim() + "%");
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    tabMode.addRow(new Object[]{
+                        false, rs.getString("kode_brng"),
+                        rs.getString("nama_brng"),
+                        rs.getString("kode_sat"),
+                        rs.getString("satuan"),
+                        rs.getString("letak_barang"),
+                        rs.getDouble("h_beli"),
+                        rs.getDouble("ralan"),
+                        rs.getDouble("kelas1"),
+                        rs.getDouble("kelas2"),
+                        rs.getDouble("kelas3"),
+                        rs.getDouble("utama"),
+                        rs.getDouble("vip"),
+                        rs.getDouble("vvip"),
+                        rs.getDouble("beliluar"),
+                        rs.getDouble("jualbebas"),
+                        rs.getDouble("karyawan"),
+                        rs.getString("stokminimal"),
+                        rs.getString("kdjns"),
+                        rs.getString("nama"),
+                        rs.getDouble("kapasitas"),
+                        rs.getString("expire"),
+                        rs.getString("kode_industri"),
+                        rs.getString("nama_industri"),
+                        rs.getString("kode_kategori"),
+                        rs.getString("kategori"),
+                        rs.getString("kode_golongan"),
+                        rs.getString("golongan"),
+                        cariStok(rs.getString("kode_brng"), "B0002"),cariStok(rs.getString("kode_brng"), "B0014"),
+                        cariStok(rs.getString("kode_brng"), "B0001"),cariStok(rs.getString("kode_brng"), "B0018")
+                    });
+                     
+                }
+                rs.last();
+                LCount.setText("" + rs.getRow());
+            } catch (Exception e) {
+                System.out.println("Notifikasi : " + e);
+            } finally{
+                if(rs != null){
+                    rs.close();
+                }                
+                if(ps != null){
+                    ps.close();
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Notifikasi : " + e);
+        }
     }
 
     public void emptTeks() {
@@ -3075,6 +3173,12 @@ private void KapasitasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
         }else{
             MnRestore.setEnabled(false);
         } 
+    }
+    
+    public double cariStok(String kode_brng,String lokasi){
+        double stok = 0;
+        stok = Sequel.cariIsiAngka("SELECT stok FROM gudangbarang WHERE kode_brng='"+kode_brng+"' AND kd_bangsal='"+lokasi+"'");
+        return stok;
     }
 
 }
