@@ -133,7 +133,7 @@ public class BridgingWA {
                 System.out.println("Nomor telepon kosong !!!");
             } else {
                 requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message;
-                //System.out.println("PostField : " + requestJson);
+                System.out.println("PostField : " + requestJson);
                 System.out.println("                  \n                 ");
                 System.out.println("Mengirim Pesan ............");
 

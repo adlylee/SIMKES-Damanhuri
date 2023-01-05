@@ -47,10 +47,10 @@ public class DlgInputStok extends javax.swing.JDialog {
     private ResultSet rstampil, rsstok;
     private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
     private DlgCariBangsal bangsal = new DlgCariBangsal(null, false);
-    private double ttl = 0, y = 0, stokbarang = 0, kurang = 0;
+    private double ttl = 0, y = 0, stokbarang = 0, kurang = 0, ttl2 = 0, y2 = 0;
     private int jml = 0, i = 0, index = 0;
     private String[] real, kodebarang, namabarang, kategori, satuan;
-    private double[] hargabeli, stok, selisih, nomihilang;
+    private double[] hargabeli, stok, selisih, nomihilang, lebih, nomilebih;
     private WarnaTable2 warna = new WarnaTable2();
     private boolean aktif = false;
 
@@ -71,8 +71,9 @@ public class DlgInputStok extends javax.swing.JDialog {
             "Satuan",
             "Harga",
             "Stok",
-            "Selisih",
-            "Nominal Hilang(Rp)"};
+            "Hilang",
+            "Nominal Hilang(Rp)",
+            "Lebih","Nominal Lebih(Rp)"};
         tabMode = new DefaultTableModel(null, row) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -85,7 +86,7 @@ public class DlgInputStok extends javax.swing.JDialog {
             Class[] types = new Class[]{
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class,
                 java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class,
-                java.lang.Double.class
+                java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
             };
 
             @Override
@@ -98,7 +99,7 @@ public class DlgInputStok extends javax.swing.JDialog {
         tbDokter.setPreferredScrollableViewportSize(new Dimension(800, 800));
         tbDokter.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 9; i++) {
+        for (i = 0; i < 11; i++) {
             TableColumn column = tbDokter.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(42);
@@ -117,6 +118,10 @@ public class DlgInputStok extends javax.swing.JDialog {
             } else if (i == 7) {
                 column.setPreferredWidth(42);
             } else if (i == 8) {
+                column.setPreferredWidth(105);
+            } else if (i == 9) {
+                column.setPreferredWidth(42);
+            } else if (i == 10) {
                 column.setPreferredWidth(105);
             }
         }
@@ -212,6 +217,8 @@ public class DlgInputStok extends javax.swing.JDialog {
         BtnSimpan = new widget.Button();
         label10 = new widget.Label();
         LTotal = new widget.Label();
+        label12 = new widget.Label();
+        LTotal1 = new widget.Label();
         BtnCari = new widget.Button();
         BtnKeluar = new widget.Button();
         panelisi5 = new widget.panelisi();
@@ -354,7 +361,7 @@ public class DlgInputStok extends javax.swing.JDialog {
         });
         panelisi1.add(BtnSimpan);
 
-        label10.setText("Total :");
+        label10.setText(" Hilang:");
         label10.setName("label10"); // NOI18N
         label10.setPreferredSize(new java.awt.Dimension(90, 23));
         panelisi1.add(label10);
@@ -364,6 +371,17 @@ public class DlgInputStok extends javax.swing.JDialog {
         LTotal.setName("LTotal"); // NOI18N
         LTotal.setPreferredSize(new java.awt.Dimension(125, 23));
         panelisi1.add(LTotal);
+
+        label12.setText("Lebih:");
+        label12.setName("label12"); // NOI18N
+        label12.setPreferredSize(new java.awt.Dimension(90, 23));
+        panelisi1.add(label12);
+
+        LTotal1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        LTotal1.setText("0");
+        LTotal1.setName("LTotal1"); // NOI18N
+        LTotal1.setPreferredSize(new java.awt.Dimension(125, 23));
+        panelisi1.add(LTotal1);
 
         BtnCari.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Search-16x16.png"))); // NOI18N
         BtnCari.setMnemonic('C');
@@ -601,11 +619,12 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                     if (!tbDokter.getValueAt(i, 0).toString().equals("")) {
                         try {
                             if (Valid.SetAngka(tbDokter.getValueAt(i, 0).toString()) >= 0) {
-                                jml = Sequel.cariInteger("SELECT COUNT(kode_brng) FROM opname WHERE tanggal='" + Valid.SetTgl(Tgl.getSelectedItem() + "") + "' AND kode_brng = '" + tbDokter.getValueAt(i, 1).toString() + "'");
+                                jml = Sequel.cariInteger("SELECT COUNT(kode_brng) FROM opname WHERE tanggal='" + Valid.SetTgl(Tgl.getSelectedItem() + "") + "' AND kode_brng = '" + tbDokter.getValueAt(i, 1).toString() + "' and kd_bangsal='"+kdgudang.getText()+"'");
                                 if (jml < 1) {
-                                    if (Sequel.menyimpantf("opname", "?,?,?,?,?,?,?,?,?", "Stok Opname", 9, new String[]{
+                                    if (Sequel.menyimpantf("opname", "?,?,?,?,?,?,?,?,?,?,?", "Stok Opname", 11, new String[]{
                                         tbDokter.getValueAt(i, 1).toString(), tbDokter.getValueAt(i, 5).toString(), Valid.SetTgl(Tgl.getSelectedItem() + ""), tbDokter.getValueAt(i, 6).toString(),
-                                        tbDokter.getValueAt(i, 0).toString(), tbDokter.getValueAt(i, 7).toString(), tbDokter.getValueAt(i, 8).toString(), catatan.getText(), kdgudang.getText()}) == true) {
+                                        tbDokter.getValueAt(i, 0).toString(), tbDokter.getValueAt(i, 7).toString(), tbDokter.getValueAt(i, 8).toString(), catatan.getText(), kdgudang.getText(),
+                                        tbDokter.getValueAt(i, 9).toString(), tbDokter.getValueAt(i, 10).toString()}) == true) {
 
                                         Trackobat.catatRiwayat(tbDokter.getValueAt(i, 1).toString(), Valid.SetAngka(tbDokter.getValueAt(i, 0).toString()), 0, "Opname", var.getkode(), kdgudang.getText(), "Simpan");
                                         Sequel.menyimpan("gudangbarang", "'" + tbDokter.getValueAt(i, 1).toString() + "','" + kdgudang.getText() + "','" + tbDokter.getValueAt(i, 0).toString() + "'",
@@ -811,6 +830,7 @@ private void BtnGudangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     private widget.Button BtnSimpan;
     private widget.TextBox Kd2;
     private widget.Label LTotal;
+    private widget.Label LTotal1;
     private javax.swing.JPopupMenu Popup;
     private widget.TextBox TCari;
     private widget.Tanggal Tgl;
@@ -820,6 +840,7 @@ private void BtnGudangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     private widget.TextBox kdgudang;
     private widget.Label label10;
     private widget.Label label11;
+    private widget.Label label12;
     private widget.Label label18;
     private widget.Label label21;
     private widget.Label label9;
@@ -850,6 +871,8 @@ private void BtnGudangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             stok = new double[jml];
             selisih = new double[jml];
             nomihilang = new double[jml];
+            lebih = new double[jml];
+            nomilebih = new double[jml];
 
             index = 0;
             for (i = 0; i < tbDokter.getRowCount(); i++) {
@@ -863,6 +886,8 @@ private void BtnGudangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                     stok[index] = Double.parseDouble(tbDokter.getValueAt(i, 6).toString());
                     selisih[index] = Double.parseDouble(tbDokter.getValueAt(i, 7).toString());
                     nomihilang[index] = Double.parseDouble(tbDokter.getValueAt(i, 8).toString());
+                    lebih[index] = Double.parseDouble(tbDokter.getValueAt(i, 9).toString());
+                    nomilebih[index] = Double.parseDouble(tbDokter.getValueAt(i, 10).toString());
                     index++;
                 }
             }
@@ -871,7 +896,7 @@ private void BtnGudangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             for (i = 0; i < jml; i++) {
                 tabMode.addRow(new Object[]{
                     real[i], kodebarang[i], namabarang[i], kategori[i], satuan[i],
-                    hargabeli[i], stok[i], selisih[i], nomihilang[i]
+                    hargabeli[i], stok[i], selisih[i], nomihilang[i], lebih[i], nomilebih[i]
                 });
             }
 
@@ -892,7 +917,7 @@ private void BtnGudangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                         rstampil.getString("nama_brng"),
                         rstampil.getString("katnama"),
                         rstampil.getString("nama"),
-                        rstampil.getDouble("h_beli"), 0, 0, 0});
+                        rstampil.getDouble("h_beli"), 0, 0, 0, 0, 0});
                 }
             } catch (Exception e) {
                 System.out.println("Notif : " + e);
@@ -949,14 +974,18 @@ private void BtnGudangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
 
                         if (kurang > 0) {
                             tbDokter.setValueAt(kurang, tbDokter.getSelectedRow(), 7);
+                            tbDokter.setValueAt(0, tbDokter.getSelectedRow(), 9);
                         } else {
                             tbDokter.setValueAt(0, tbDokter.getSelectedRow(), 7);
+                            tbDokter.setValueAt((kurang*-1), tbDokter.getSelectedRow(), 9);
                         }
 
                         if (kurang > 0) {
                             tbDokter.setValueAt(kurang * Double.parseDouble(tbDokter.getValueAt(tbDokter.getSelectedRow(), 5).toString()), tbDokter.getSelectedRow(), 8);
+                            tbDokter.setValueAt(0, tbDokter.getSelectedRow(), 10);
                         } else {
                             tbDokter.setValueAt(0, tbDokter.getSelectedRow(), 8);
+                            tbDokter.setValueAt(kurang * -1 * Double.parseDouble(tbDokter.getValueAt(tbDokter.getSelectedRow(), 5).toString()), tbDokter.getSelectedRow(), 10);
                         }
                     }
                 } catch (Exception e) {
@@ -964,16 +993,26 @@ private void BtnGudangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             }
 
             ttl = 0;
-            y = 0;
+            ttl2 = 0;
             for (i = 0; i < tbDokter.getRowCount(); i++) {
+                y = 0;
                 try {
                     y = Double.parseDouble(tbDokter.getValueAt(i, 8).toString());
                 } catch (Exception e) {
                     y = 0;
                 }
                 ttl = ttl + y;
+            
+                y2 = 0;
+                try {
+                    y2 = Double.parseDouble(tbDokter.getValueAt(i, 10).toString());
+                } catch (Exception e) {
+                    y2 = 0;
+                }
+                ttl2 = ttl2 + y2;
             }
             LTotal.setText(Valid.SetAngka(ttl));
+            LTotal1.setText(Valid.SetAngka(ttl2));
         }
     }
 
