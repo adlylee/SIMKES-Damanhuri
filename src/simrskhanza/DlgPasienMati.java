@@ -829,21 +829,22 @@ public class DlgPasienMati extends javax.swing.JDialog {
                 param.put("propinsirs",var.getpropinsirs());
                 param.put("kontakrs",var.getkontakrs());
                 param.put("emailrs",var.getemailrs());   
-                param.put("logo",Sequel.cariGambar("select logo from setting")); 
+                param.put("logo",Sequel.cariGambar("select logo from setting"));
+                String tgl = " tanggal between '" + Valid.SetTgl(DTPCari1.getSelectedItem() + "") + "' and '" + Valid.SetTgl(DTPCari2.getSelectedItem() + "") + "' ";
                 Valid.MyReport("rptPasienMati.jrxml","report","::[ Data Pasien Meninggal ]::",
                         "select tanggal,jam,pasien_mati.no_rkm_medis,nm_pasien, "+
                         "jk,tmp_lahir,tgl_lahir,gol_darah,stts_nikah, "+
                         "agama,keterangan,temp_meninggal,icd1,icd2,icd3,icd4 from pasien_mati,pasien where "+
-                         sql+"and tanggal like '%"+TCari.getText().trim()+"%' or "+
-                         sql+"and pasien_mati.no_rkm_medis like '%"+TCari.getText().trim()+"%' or "+
-                         sql+"and nm_pasien like '%"+TCari.getText().trim()+"%' or "+
-                         sql+"and jk like '%"+TCari.getText().trim()+"%' or "+
-                         sql+"and tmp_lahir like '%"+TCari.getText().trim()+"%' or "+
-                         sql+"and gol_darah like '%"+TCari.getText().trim()+"%' or "+
-                         sql+"and stts_nikah like '%"+TCari.getText().trim()+"%' or "+
-                         sql+"and agama like '%"+TCari.getText().trim()+"%' or "+
-                         sql+"and keterangan like '%"+TCari.getText().trim()+"%' "+
-                         " order by tanggal ",param);            
+                         sql+" and "+tgl+"and tanggal like '%"+TCari.getText().trim()+"%' or "+
+                         sql+" and "+tgl+"and pasien_mati.no_rkm_medis like '%"+TCari.getText().trim()+"%' or "+
+                         sql+" and "+tgl+"and nm_pasien like '%"+TCari.getText().trim()+"%' or "+
+                         sql+" and "+tgl+"and jk like '%"+TCari.getText().trim()+"%' or "+
+                         sql+" and "+tgl+"and tmp_lahir like '%"+TCari.getText().trim()+"%' or "+
+                         sql+" and "+tgl+"and gol_darah like '%"+TCari.getText().trim()+"%' or "+
+                         sql+" and "+tgl+"and stts_nikah like '%"+TCari.getText().trim()+"%' or "+
+                         sql+" and "+tgl+"and agama like '%"+TCari.getText().trim()+"%' or "+
+                         sql+" and "+tgl+"and keterangan like '%"+TCari.getText().trim()+"%' "+
+                    " order by tanggal ",param);  
         }
         this.setCursor(Cursor.getDefaultCursor());
 }//GEN-LAST:event_BtnPrintActionPerformed

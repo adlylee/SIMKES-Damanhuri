@@ -92,7 +92,7 @@ public class DlgBarang extends javax.swing.JDialog {
             "Kelas Utama/BPJS(Rp)", "Ranap VIP(Rp)", "Ranap VVIP(Rp)", "Beli Luar(Rp)",
             "Jual Bebas(Rp)", "Karyawan(Rp)", "Stok Minimal", "Kode Jenis", "Nama Jenis", "Kapasitas",
             "Kadaluwarsa","Kode I.F.","Industri Farmasi","Kode Kategori","Kategori","Kode Golongan","Golongan",
-            "Stok Gudang","Stok Rajal","Stok Ranap","Stok IGD"
+            "Stok Gudang","Stok Rajal","Stok Ranap","Stok IGD", "Total Stok Depo"
         }) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -110,7 +110,8 @@ public class DlgBarang extends javax.swing.JDialog {
                 java.lang.Double.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
                 java.lang.Double.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, 
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
-                java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class,
+                java.lang.Double.class
             };
 
             @Override
@@ -123,7 +124,7 @@ public class DlgBarang extends javax.swing.JDialog {
         tbDokter.setPreferredScrollableViewportSize(new Dimension(800, 800));
         tbDokter.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 32; i++) {
+        for (i = 0; i < 33; i++) {
             TableColumn column = tbDokter.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(20);
@@ -185,8 +186,10 @@ public class DlgBarang extends javax.swing.JDialog {
                 column.setMaxWidth(0);
             } else if (i == 27) {
                 column.setPreferredWidth(120);
+            } else if (i == 32) {
+                column.setPreferredWidth(100);
             } else {
-                column.setPreferredWidth(90);
+                column.setPreferredWidth(75);
             }
         }
         tbDokter.setDefaultRenderer(Object.class, new WarnaTable());        
@@ -2520,7 +2523,7 @@ private void KapasitasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
                             rs.getString("kategori"),
                             rs.getString("kode_golongan"),
                             rs.getString("golongan"),
-                            0,0,0,0   
+                            0,0,0,0,0   
                         });
                     }
                     LCount.setText("" + tabMode.getRowCount());
@@ -2677,7 +2680,7 @@ private void KapasitasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
                         rs.getString("kategori"),
                         rs.getString("kode_golongan"),
                         rs.getString("golongan"),
-                        0,0,0,0
+                        0,0,0,0,0
                     });
                     
                     ps2 = koneksi.prepareStatement("select kd_bangsal,nm_bangsal from bangsal");
@@ -2783,7 +2786,7 @@ private void KapasitasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
                         rs.getString("kategori"),
                         rs.getString("kode_golongan"),
                         rs.getString("golongan"),
-                        0,0,0,0
+                        0,0,0,0,0
                     });
                     stokgudang = 0;
                     ps3 = koneksi.prepareStatement("select stok from gudangbarang where kode_brng=? and kd_bangsal=?");
@@ -2916,6 +2919,11 @@ private void KapasitasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
                 ps.setString(11, "%" + TCari.getText().trim() + "%");
                 rs = ps.executeQuery();
                 while (rs.next()) {
+                    Double stokgudang = cariStok(rs.getString("kode_brng"), "B0002");
+                    Double stokrajal = cariStok(rs.getString("kode_brng"), "B0014");
+                    Double stokranap = cariStok(rs.getString("kode_brng"), "B0001");
+                    Double stokigd = cariStok(rs.getString("kode_brng"), "B0018");
+                    Double total = stokgudang + stokrajal + stokranap + stokigd;
                     tabMode.addRow(new Object[]{
                         false, rs.getString("kode_brng"),
                         rs.getString("nama_brng"),
@@ -2944,8 +2952,7 @@ private void KapasitasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
                         rs.getString("kategori"),
                         rs.getString("kode_golongan"),
                         rs.getString("golongan"),
-                        cariStok(rs.getString("kode_brng"), "B0002"),cariStok(rs.getString("kode_brng"), "B0014"),
-                        cariStok(rs.getString("kode_brng"), "B0001"),cariStok(rs.getString("kode_brng"), "B0018")
+                        stokgudang, stokrajal, stokranap, stokigd, total
                     });
                      
                 }
