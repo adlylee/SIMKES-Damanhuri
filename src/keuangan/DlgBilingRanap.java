@@ -5212,6 +5212,11 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                 BtnNota.setVisible(false);
             }
         }
+        if(var.getkode().equals("Admin Utama")){
+            MnHapusTagihan.setEnabled(true);
+        }else{
+            MnHapusTagihan.setEnabled(false);
+        } 
 
     }
 

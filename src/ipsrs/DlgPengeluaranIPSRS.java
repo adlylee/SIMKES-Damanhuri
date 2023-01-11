@@ -35,7 +35,7 @@ public class DlgPengeluaranIPSRS extends javax.swing.JDialog {
     private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
     private DlgCariPengeluaranIpsrs form = new DlgCariPengeluaranIpsrs(null, false);
     private int jml = 0, i = 0, row = 0, index = 0, kolom = 0;
-    private double ttl, keluar, hargaDouble, totalDouble, sisaStok, sisa = 0, sisakurang, permintaanJml, dilayani = 0, stokbarang = 0, y = 0;
+    private double ttl, keluar, hargaDouble, totalDouble, sisaStok, sisa = 0,stoksetelahkurang, sisakurang, permintaanJml, dilayani = 0, stokbarang = 0, y = 0;
     private String[] kodebarang, namabarang, satuan, stok, harga, total;
     private String hargaString, totalString, dilayaniString, jenis;
     private WarnaTable2 warna = new WarnaTable2();
@@ -566,25 +566,26 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                         dilayani = permintaanJml - sisakurang;
                                         sisa = sisakurang;
                                     }
-                                    System.out.println(sisa + " " + sisakurang);
+                                    //System.out.println(sisa + " " + sisakurang);
                                     try {
-                                        ps = koneksi.prepareStatement("SELECT harga , no_batch FROM ipsrsgudang WHERE kode_brng='" + tbDokter.getValueAt(i, 1).toString() + "' AND stok > 0 ORDER BY tgl_beli ASC LIMIT 1");
+                                        ps = koneksi.prepareStatement("SELECT harga , no_batch , stok FROM ipsrsgudang WHERE kode_brng='" + tbDokter.getValueAt(i, 1).toString() + "' AND stok > 0 ORDER BY tgl_beli ASC LIMIT 1");
                                         try {
                                             rs = ps.executeQuery();
                                             while (rs.next()) {
                                                 hargaDouble = rs.getDouble("harga");
+                                                stoksetelahkurang = rs.getDouble("stok") - dilayani;
                                                 totalDouble = hargaDouble * dilayani;
-                                                dilayaniString = String.valueOf(dilayani);
+                                                dilayaniString = String.valueOf(stoksetelahkurang);
                                                 hargaString = String.valueOf(hargaDouble);
                                                 totalString = String.valueOf(totalDouble);
                                                 Sequel.menyimpan("ipsrsdetailpengeluaran", "?,?,?,?,?,?,?", "Transaksi Pengeluaran", 7, new String[]{
                                                     NoKeluar.getText(), tbDokter.getValueAt(i, 1).toString(), tbDokter.getValueAt(i, 3).toString(),
                                                     dilayaniString, hargaString, totalString, rs.getString("no_batch")
                                                 });
-                                                Sequel.mengedit("ipsrsbarang", "kode_brng=?", "stok=stok-?,harga=?", 3, new String[]{
+                                                Sequel.mengedit("ipsrsbarang", "kode_brng=?", "stok=?,harga=?", 3, new String[]{
                                                     dilayaniString, hargaString, tbDokter.getValueAt(i, 1).toString()
                                                 });
-                                                Sequel.mengedit("ipsrsgudang", "kode_brng=? AND no_batch=?", "stok=stok-?", 3, new String[]{
+                                                Sequel.mengedit("ipsrsgudang", "kode_brng=? AND no_batch=?", "stok=?", 3, new String[]{
                                                     dilayaniString, tbDokter.getValueAt(i, 1).toString(), rs.getString("no_batch")
                                                 });
                                             }

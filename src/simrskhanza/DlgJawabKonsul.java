@@ -512,6 +512,9 @@ public class DlgJawabKonsul extends javax.swing.JDialog {
         //Tkdpoli.setText(kdpoli);
         TPoli.setText(poli);
         TCatatanKonsul.setText(catatankonsul);
+        TPemeriksaan.setText(Sequel.cariIsi("SELECT pemeriksaan FROM rujukan_internal_poli_detail WHERE no_rawat=?", norw));
+        TDiagnosa.setText(Sequel.cariIsi("SELECT diagnosa FROM rujukan_internal_poli_detail WHERE no_rawat=?", norw));
+        TSaran.setText(Sequel.cariIsi("SELECT saran FROM rujukan_internal_poli_detail WHERE no_rawat=?", norw));
    }
     
     
