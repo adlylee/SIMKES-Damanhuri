@@ -35,8 +35,7 @@ public class DlgSirkulasiNonMedis extends javax.swing.JDialog {
     private Connection koneksi = koneksiDB.condb();
     private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
     private double ttltotalbeli = 0, totalbeli = 0, stok = 0, aset = 0, ttlaset = 0, jumlahbeli = 0, stok_awal = 0, harga_awal = 0, ttltotalpesan = 0, totalpesan = 0, jumlahpesan = 0, stokbyfaktur = 0, hargabyfaktur = 0, stokgetbyfaktur = 0, hargagetbyfaktur = 0, stokpostbyfaktur = 0, hargapostbyfaktur = 0, saldo_awal = 0, saldo_akhir = 0,
-            jumlahkeluar, totalkeluar, ttltotalkeluar;
-    private DlgBarangIPSRS barang = new DlgBarangIPSRS(null, false);
+            jumlahkeluar, totalkeluar, ttltotalkeluar, ttlmasuk=0,stokmasuk =0;
     private PreparedStatement ps, ps2, ps3, ps4;
     private ResultSet rs, rs2, rs3, rs4;
     public DlgCariPetugas petugas = new DlgCariPetugas(null, false);
@@ -49,8 +48,8 @@ public class DlgSirkulasiNonMedis extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-        Object[] row = {"Kode Barang", "Nama Barang", "Satuan", "Saldo Awal", "Stok Awal", "Harga(Rp)", "Pengadaan", "Pengadaan(Rp)",
-            "Penerimaan", "Penerimaan(Rp)", "Stok Keluar", "Stok Keluar(Rp)", "Saldo Akhir"};
+        Object[] row = {"Kode Barang", "Nama Barang", "Satuan", "Saldo Awal", "Stok Awal", "Harga", "Stok Masuk", "Saldo Masuk",
+            "Stok Keluar", "Saldo Keluar", "Saldo Akhir"};
         tabMode = new DefaultTableModel(null, row) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -62,34 +61,44 @@ public class DlgSirkulasiNonMedis extends javax.swing.JDialog {
         tbDokter.setPreferredScrollableViewportSize(new Dimension(800, 800));
         tbDokter.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (int i = 0; i < 13; i++) {
+        for (int i = 0; i < 11; i++) {
             TableColumn column = tbDokter.getColumnModel().getColumn(i);
-            if (i == 0) {
-                column.setPreferredWidth(90);
-            } else if (i == 1) {
-                column.setPreferredWidth(250);
-            } else if (i == 2) {
-                column.setPreferredWidth(70);
-            } else if (i == 3) {
-                column.setPreferredWidth(100);
-            } else if (i == 4) {
-                column.setPreferredWidth(50);
-            } else if (i == 5) {
-                column.setPreferredWidth(100);
-            } else if (i == 6) {
-                column.setPreferredWidth(70);
-            } else if (i == 7) {
-                column.setPreferredWidth(100);
-            } else if (i == 8) {
-                column.setPreferredWidth(70);
-            } else if (i == 9) {
-                column.setPreferredWidth(100);
-            } else if (i == 10) {
-                column.setPreferredWidth(70);
-            } else if (i == 11) {
-                column.setPreferredWidth(100);
-            } else if (i == 12) {
-                column.setPreferredWidth(100);
+            switch (i) {
+                case 0:
+                    column.setPreferredWidth(90);
+                    break;
+                case 1:
+                    column.setPreferredWidth(250);
+                    break;
+                case 2:
+                    column.setPreferredWidth(70);
+                    break;
+                case 3:
+                    column.setPreferredWidth(100);
+                    break;
+                case 4:
+                    column.setPreferredWidth(70);
+                    break;
+                case 5:
+                    column.setPreferredWidth(100);
+                    break;
+                case 6:
+                    column.setPreferredWidth(70);
+                    break;
+                case 7:
+                    column.setPreferredWidth(100);
+                    break;
+                case 8:
+                    column.setPreferredWidth(70);
+                    break;
+                case 9:
+                    column.setPreferredWidth(100);
+                    break;
+                case 10:
+                    column.setPreferredWidth(100);
+                    break;
+                default:
+                    break;
             }
         }
         tbDokter.setDefaultRenderer(Object.class, new WarnaTable());
@@ -120,65 +129,11 @@ public class DlgSirkulasiNonMedis extends javax.swing.JDialog {
             });
         }
 
-        barang.addWindowListener(new WindowListener() {
-            @Override
-            public void windowOpened(WindowEvent e) {
-            }
-
-            @Override
-            public void windowClosing(WindowEvent e) {
-            }
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-                if (var.getform().equals("DlgSirkulasiBarang")) {
-                    if (barang.getTable().getSelectedRow() != -1) {
-                        kdbar.setText(barang.getTable().getValueAt(barang.getTable().getSelectedRow(), 0).toString());
-                        nmbar.setText(barang.getTable().getValueAt(barang.getTable().getSelectedRow(), 1).toString());
-                    }
-                    kdbar.requestFocus();
-                }
-            }
-
-            @Override
-            public void windowIconified(WindowEvent e) {
-            }
-
-            @Override
-            public void windowDeiconified(WindowEvent e) {
-            }
-
-            @Override
-            public void windowActivated(WindowEvent e) {
-            }
-
-            @Override
-            public void windowDeactivated(WindowEvent e) {
-            }
-        });
-
-        barang.getTable().addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (var.getform().equals("DlgSirkulasiBarang")) {
-                    if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                        barang.dispose();
-                    }
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
+        
 
         petugas.addWindowListener(new WindowListener() {
             @Override
-            public void windowOpened(WindowEvent e) {;
+            public void windowOpened(WindowEvent e) {
             }
 
             @Override
@@ -231,10 +186,6 @@ public class DlgSirkulasiNonMedis extends javax.swing.JDialog {
         Tgl1 = new widget.Tanggal();
         label18 = new widget.Label();
         Tgl2 = new widget.Tanggal();
-        label17 = new widget.Label();
-        kdbar = new widget.TextBox();
-        nmbar = new widget.TextBox();
-        btnBarang = new widget.Button();
         label19 = new widget.Label();
         kdptg = new widget.TextBox();
         nmptg = new widget.TextBox();
@@ -309,37 +260,6 @@ public class DlgSirkulasiNonMedis extends javax.swing.JDialog {
         Tgl2.setName("Tgl2"); // NOI18N
         Tgl2.setPreferredSize(new java.awt.Dimension(110, 23));
         panelisi4.add(Tgl2);
-
-        label17.setText("Barang :");
-        label17.setName("label17"); // NOI18N
-        label17.setPreferredSize(new java.awt.Dimension(85, 23));
-        panelisi4.add(label17);
-
-        kdbar.setName("kdbar"); // NOI18N
-        kdbar.setPreferredSize(new java.awt.Dimension(80, 23));
-        kdbar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                kdbarKeyPressed(evt);
-            }
-        });
-        panelisi4.add(kdbar);
-
-        nmbar.setEditable(false);
-        nmbar.setName("nmbar"); // NOI18N
-        nmbar.setPreferredSize(new java.awt.Dimension(207, 23));
-        panelisi4.add(nmbar);
-
-        btnBarang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
-        btnBarang.setMnemonic('1');
-        btnBarang.setToolTipText("Alt+1");
-        btnBarang.setName("btnBarang"); // NOI18N
-        btnBarang.setPreferredSize(new java.awt.Dimension(28, 23));
-        btnBarang.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBarangActionPerformed(evt);
-            }
-        });
-        panelisi4.add(btnBarang);
 
         label19.setText("Petugas :");
         label19.setName("label19"); // NOI18N
@@ -557,34 +477,8 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
         }
     }//GEN-LAST:event_BtnCariKeyPressed
 
-    private void kdbarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kdbarKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
-            Sequel.cariIsi("select nama_brng from ipsrsbarang where kode_brng=?", nmbar, kdbar.getText());
-        } else if (evt.getKeyCode() == KeyEvent.VK_PAGE_UP) {
-            Sequel.cariIsi("select nama_brng from ipsrsbarang where kode_brng=?", nmbar, kdbar.getText());
-            TCari.requestFocus();
-        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            Sequel.cariIsi("select nama_brng from ipsrsbarang where kode_brng=?", nmbar, kdbar.getText());
-            TCari.requestFocus();
-        } else if (evt.getKeyCode() == KeyEvent.VK_UP) {
-            btnBarangActionPerformed(null);
-        }
-    }//GEN-LAST:event_kdbarKeyPressed
-
-    private void btnBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBarangActionPerformed
-        var.setform("DlgSirkulasiBarang");
-        barang.emptTeks();
-        barang.isCek();
-        barang.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
-        barang.setLocationRelativeTo(internalFrame1);
-        barang.setAlwaysOnTop(false);
-        barang.setVisible(true);
-    }//GEN-LAST:event_btnBarangActionPerformed
-
     private void BtnAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAllActionPerformed
         TCari.setText("");
-        kdbar.setText("");
-        nmbar.setText("");
         kdptg.setText("");
         nmptg.setText("");
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -640,18 +534,14 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
     private widget.TextBox TCari;
     private widget.Tanggal Tgl1;
     private widget.Tanggal Tgl2;
-    private widget.Button btnBarang;
     private widget.Button btnPetugas;
     private widget.InternalFrame internalFrame1;
-    private widget.TextBox kdbar;
     private widget.TextBox kdptg;
     private widget.Label label10;
     private widget.Label label11;
-    private widget.Label label17;
     private widget.Label label18;
     private widget.Label label19;
     private widget.Label label9;
-    private widget.TextBox nmbar;
     private widget.TextBox nmptg;
     private widget.panelisi panelisi1;
     private widget.panelisi panelisi4;
@@ -672,8 +562,8 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                             + "kodesatuan.satuan,ipsrsbarang.stok,(ipsrsbarang.stok*ipsrsbarang.harga) as aset, ipsrsbarang.jenis "
                             + "from ipsrsbarang inner join ipsrsjenisbarang inner join kodesatuan on ipsrsbarang.kode_sat=kodesatuan.kode_sat "
                             + "and ipsrsbarang.jenis=ipsrsjenisbarang.kd_jenis "
-                            + "where ipsrsbarang.jenis like ? and ipsrsbarang.nama_brng like ? and ipsrsbarang.kode_brng like ? or "
-                            + "ipsrsbarang.jenis like ? and ipsrsbarang.nama_brng like ? and kodesatuan.satuan like ? "
+                            + "where ipsrsbarang.jenis like ? and ipsrsbarang.kode_brng like ? or "
+                            + "ipsrsbarang.jenis like ? and kodesatuan.satuan like ? "
                             + " order by ipsrsbarang.kode_brng");
                     try {
                         ttltotalbeli = 0;
@@ -683,11 +573,9 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         saldo_awal = 0;
                         saldo_akhir = 0;
                         ps.setString(1, "%" + rs4.getString("kd_jenis") + "%");
-                        ps.setString(2, "%" + nmbar.getText() + "%");
-                        ps.setString(3, "%" + TCari.getText().trim() + "%");
-                        ps.setString(4, "%" + rs4.getString("kd_jenis") + "%");
-                        ps.setString(5, "%" + nmbar.getText() + "%");
-                        ps.setString(6, "%" + TCari.getText().trim() + "%");
+                        ps.setString(2, "%" + TCari.getText().trim() + "%");
+                        ps.setString(3, "%" + rs4.getString("kd_jenis") + "%");
+                        ps.setString(4, "%" + TCari.getText().trim() + "%");
                         rs = ps.executeQuery();
                         while (rs.next()) {
                             totalbeli = 0;
@@ -829,7 +717,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
 
                             if ((aset > 0) || (jumlahbeli > 0) || (jumlahpesan > 0) || (jumlahkeluar > 0)) {
                                 tabMode.addRow(new Object[]{rs.getString(1), rs.getString(2) + " (" + rs.getString(6) + ")",
-                                    rs.getString(3), "", Valid.SetAngka(stok_awal), Valid.SetAngka(harga_awal), "", "", "", "", "", "", ""
+                                    rs.getString(3), "", Valid.SetAngka(stok_awal), Valid.SetAngka(harga_awal), "", "", "", "", ""
 //                           Valid.SetAngka(jumlahbeli),Valid.SetAngka(totalbeli),
 //                           Valid.SetAngka(jumlahpesan),Valid.SetAngka(totalpesan),
 //                           Valid.SetAngka(jumlahkeluar),Valid.SetAngka(totalkeluar)
@@ -851,6 +739,8 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                         hargagetbyfaktur = 0;
                                         stokpostbyfaktur = 0;
                                         hargapostbyfaktur = 0;
+                                        ttlmasuk = 0;
+                                        stokmasuk = 0;
                                         ps2 = koneksi.prepareStatement("select ipsrsdetailbeli.jumlah, (ipsrsdetailbeli.jumlah * ipsrsdetailbeli.harga) as ttl "
                                                 + " from ipsrsdetailbeli "
                                                 + " where ipsrsdetailbeli.no_faktur=? and ipsrsdetailbeli.kode_brng=?");
@@ -913,13 +803,13 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                                 ps2.close();
                                             }
                                         }
+                                        ttlmasuk = hargabyfaktur + hargagetbyfaktur;
+                                        stokmasuk = stokbyfaktur + stokgetbyfaktur;
                                         tabMode.addRow(new Object[]{"", rs.getString(2),
                                             "", "", Valid.SetAngka(rs3.getDouble(1)), Valid.SetAngka(rs3.getDouble(2)),
-                                            Valid.SetAngka(stokbyfaktur), Valid.SetAngka(hargabyfaktur),
-                                            Valid.SetAngka(stokgetbyfaktur), Valid.SetAngka(hargagetbyfaktur),
-                                            Valid.SetAngka(stokpostbyfaktur), Valid.SetAngka(hargapostbyfaktur),});
-                                        ttltotalbeli = ttltotalbeli + hargabyfaktur;
-                                        ttltotalpesan = ttltotalpesan + hargagetbyfaktur;
+                                            Valid.SetAngka(stokmasuk), Valid.SetAngka(ttlmasuk),
+                                            Valid.SetAngka(stokpostbyfaktur), Valid.SetAngka(hargapostbyfaktur),""});
+                                        ttltotalbeli = ttltotalbeli + ttlmasuk;
                                         ttltotalkeluar = ttltotalkeluar + hargapostbyfaktur;
                                     }
                                 } catch (Exception e) {
@@ -929,13 +819,13 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
 //                        ttltotalpesan=ttltotalpesan+totalpesan+hargagetbyfaktur;
 //                        ttlaset=ttlaset+aset;
 //                        ttltotalkeluar=ttltotalkeluar+totalkeluar+hargapostbyfaktur;
-                                saldo_akhir = saldo_awal + ttltotalbeli + ttltotalpesan;
+                                saldo_akhir = saldo_awal + ttltotalbeli;
                                 saldo_akhir = saldo_akhir - ttltotalkeluar;
                             }
                         }
                         tabMode.addRow(new Object[]{"", "", "", "", "", "", "", "", "", "", "", ""});
-                        tabMode.addRow(new Object[]{"<>>----", "Total :", "", Valid.SetAngka(saldo_awal), "", "", "",
-                            Valid.SetAngka(ttltotalbeli), "", Valid.SetAngka(ttltotalpesan), "", Valid.SetAngka(ttltotalkeluar), Valid.SetAngka(saldo_akhir)
+                        tabMode.addRow(new Object[]{"<>>>>>", "Total :", "", Valid.SetAngka(saldo_awal), "", "", "",
+                            Valid.SetAngka(ttltotalbeli), "", Valid.SetAngka(ttltotalkeluar), Valid.SetAngka(saldo_akhir)
                         });
                         tabMode.addRow(new Object[]{"", "", "", "", "", "", "", "", "", "", "", ""});
                     } catch (Exception e) {
