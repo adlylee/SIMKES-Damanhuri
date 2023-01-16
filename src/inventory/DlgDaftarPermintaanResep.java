@@ -237,8 +237,35 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
             }
         }
 
-        tbResepRanap.setDefaultRenderer(Object.class,
-                new WarnaTable());
+        tbResepRanap.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+
+                String stts_rawat = (String) table.getModel().getValueAt(row, 7);
+                String norawat = (String) table.getModel().getValueAt(row, 3);
+              
+                if ("Sudah Terlayani".equals(stts_rawat)) {
+                    setBackground(new Color(255, 178, 102));
+                    setForeground(Color.BLACK);
+                } else {
+                    if (row % 2 == 1) {
+                        setForeground(Color.BLACK);
+                        setBackground(new Color(226, 234, 248));
+                    } else {
+                        setForeground(Color.BLACK);
+                        setBackground(new Color(255, 255, 255));
+                    }
+                }
+
+                if (isSelected) {
+                    setForeground(Color.RED);
+                }
+                return this;
+            }
+        });
 
         tabMode4 = new DefaultTableModel(null, new Object[]{
             "No.Resep", "Tgl.Resep", "Ruang/Kamar", "Status", "Pasien", "Dokter Peresep"
