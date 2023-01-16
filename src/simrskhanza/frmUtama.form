@@ -490,7 +490,7 @@
                         <StringItem index="0" value="[A] Registrasi, Tagihan Ranap &amp; Ralan, Pelayanan &amp; Billing Pasien"/>
                         <StringItem index="1" value="[C] Presensi, Manajemen &amp; Penggajian Pegawai Rumah Sakit"/>
                         <StringItem index="2" value="[D] Transaksi Inventory Obat, BHP Medis, Alat Kesehatan Pasien"/>
-                        <StringItem index="3" value="[E] Transaksi Inventory Barang Non Medis dan Penunjang ( Lab &amp; RO )"/>
+                        <StringItem index="3" value="[E] Transaksi Inventory Barang Non Medis"/>
                         <StringItem index="4" value="[F] Aset, Inventaris Barang Rumah Sakit &amp; Instalasi Kesehatan Lingkungan"/>
                         <StringItem index="5" value="[H] Olah Data Tagihan Rawat Inap &amp; Rawat Jalan"/>
                         <StringItem index="6" value="[I] Olah Data Penyakit, Laporan DKK, Laporal RL &amp; Laporan Internal Rumah Sakit"/>
@@ -6414,7 +6414,7 @@
         </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="1">
-            <StringItem index="0" value="28/12/2022"/>
+            <StringItem index="0" value="15/01/2023"/>
           </StringArray>
         </Property>
         <Property name="displayFormat" type="java.lang.String" value="dd/MM/yyyy"/>
@@ -6705,6 +6705,22 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUTDPermintaanActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="widget.ButtonBig" name="btnSetSubAkun">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/48x48/applications-office.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Pengaturan Sub Akun Rekening"/>
+        <Property name="iconTextGap" type="int" value="0"/>
+        <Property name="name" type="java.lang.String" value="btnSetSubAkun" noResource="true"/>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[200, 90]"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSetSubAkunActionPerformed"/>
       </Events>
     </Component>
     <Menu class="widget.MenuBar" name="MenuBar">

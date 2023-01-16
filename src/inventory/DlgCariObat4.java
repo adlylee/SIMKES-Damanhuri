@@ -1667,7 +1667,7 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                     resep.setLocationRelativeTo(internalFrame1);
                     resep.emptTeks();
                     resep.isCek();
-                    resep.setNoRm(TNoRw.getText(), DTPTgl.getDate(), DTPTgl.getDate(), cmbJam.getSelectedItem().toString(), cmbMnt.getSelectedItem().toString(), cmbDtk.getSelectedItem().toString(), "");
+                    resep.setNoRm(TNoRw.getText(), DTPTgl.getDate(), DTPTgl.getDate(), cmbJam.getSelectedItem().toString(), cmbMnt.getSelectedItem().toString(), cmbDtk.getSelectedItem().toString(), "pulang");
                     resep.tampil();
                     //resep.setAlwaysOnTop(true);
                     resep.dokter.setAlwaysOnTop(true);
@@ -1751,7 +1751,7 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
             resep.setLocationRelativeTo(internalFrame1);
             resep.emptTeks();
             resep.isCek();
-            resep.setNoRm(TNoRw.getText(), DTPTgl.getDate(), DTPTgl.getDate(), cmbJam.getSelectedItem().toString(), cmbMnt.getSelectedItem().toString(), cmbDtk.getSelectedItem().toString(), "");
+            resep.setNoRm(TNoRw.getText(), DTPTgl.getDate(), DTPTgl.getDate(), cmbJam.getSelectedItem().toString(), cmbMnt.getSelectedItem().toString(), cmbDtk.getSelectedItem().toString(), "pulang");
             resep.tampil();
             resep.setVisible(true);
         }

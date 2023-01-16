@@ -4634,8 +4634,13 @@ private void MnPeriksaLabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
                 BtnNota.setVisible(true);
             }else{
                 BtnNota.setVisible(false);
-            }            
+            }           
         }
+        if(var.getkode().equals("Admin Utama")){
+            MnHapusTagihan.setEnabled(true);
+        }else{
+            MnHapusTagihan.setEnabled(false);
+        } 
     } 
     
     public void isKembali(){
