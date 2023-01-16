@@ -40,7 +40,7 @@ public class DlgSirkulasiBarang3 extends javax.swing.JDialog {
                    ttltotalretjual=0,totalretjual=0,jumlahretjual=0,ttltotalretpiut=0,totalretpiut=0,jumlahretpiut=0,
                    jumlahpasin=0,totalpasien=0,ttltotalpasien=0,stok=0,aset=0,ttlaset=0,jumlahrespulang=0,totalrespulang=0,
                    ttltotalrespulang=0,jumlahmutasimasuk=0,jumlahmutasikeluar=0,totalmutasimasuk=0,totalmutasikeluar=0,
-                   ttltotalmutasimasuk=0,ttltotalmutasikeluar=0;
+                   ttltotalmutasimasuk=0,ttltotalmutasikeluar=0,saldo_awal=0,saldo_akhir=0;
     private DlgBarang barang=new DlgBarang(null,false);
     private PreparedStatement ps,ps2;
     private ResultSet rs,rs2;
@@ -860,6 +860,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
     private void prosesCari() {
        Valid.tabelKosong(tabMode);      
        try{   
+            saldo_awal = Sequel.cariIsiAngka("SELECT saldo_awal FROM rekeningtahun WHERE kd_rek = '11070101'");
             ps=koneksi.prepareStatement("select databarang.kode_brng,databarang.nama_brng, "+
                         "kodesatuan.satuan from databarang inner join kodesatuan   "+
                         "on databarang.kode_sat=kodesatuan.kode_sat "+
@@ -1220,7 +1221,9 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         ttltotalmutasimasuk=ttltotalmutasimasuk+totalmutasimasuk;
                         ttltotalmutasikeluar=ttltotalmutasikeluar+totalmutasikeluar;
                     }
-                }   
+                }
+                saldo_akhir = saldo_awal + ttltotalbeli + ttltotalpesan + ttltotalretjual;
+                saldo_akhir = saldo_akhir - ttltotaljual - ttltotalkeluar - ttltotalpasien - ttltotalrespulang;
                 tabMode.addRow(new Object[]{"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""}); 
                 tabMode.addRow(new Object[]{"<>>","Total :","","",Valid.SetAngka(ttlaset),"",
                    Valid.SetAngka(ttltotalbeli),"",Valid.SetAngka(ttltotalpesan),"",
@@ -1230,6 +1233,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                    Valid.SetAngka(ttltotalutd),"",Valid.SetAngka(ttltotalkeluar),"",
                    Valid.SetAngka(ttltotalrespulang),"",Valid.SetAngka(ttltotalmutasimasuk),"",Valid.SetAngka(ttltotalmutasikeluar)
                 }); 
+                tabMode.addRow(new Object[]{"","Saldo Awal :","","",Valid.SetAngka(saldo_awal),"","Saldo Akhir :","",Valid.SetAngka(saldo_akhir),"","","","","","","","","","","","","","","","","","","","","",""}); 
             } catch (Exception e) {
                 System.out.println("Notifikasi Data Barang : "+e);
             } finally{

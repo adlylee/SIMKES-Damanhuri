@@ -87,7 +87,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
     private BPJSCekReferensiPropinsi propinsi = new BPJSCekReferensiPropinsi(null, false);
     private BPJSCekReferensiKabupaten kabupaten = new BPJSCekReferensiKabupaten(null, false);
     private BPJSCekReferensiKecamatan kecamatan = new BPJSCekReferensiKecamatan(null, false);
-    private String prb = "", no_peserta = "", link = "", requestJson, URL = "", jkel = "", duplikat = "",
+    private String prb = "", no_peserta = "", link = "", requestJson, URL = "", jkel = "", duplikat = "",cekdulu = "",
             user = "", penjamin = "", jasaraharja = "", BPJS = "", Taspen = "", Asabri = "", kddokter = "", dpjplayananbpjs = "",
             tglkkl = "0000-00-00", antrian = "", klsRawat = "", dpjlayan = "", sep2tambah = "", penjaminan = "", kdppkrujukan = "", nmppkrujukan = "";
     private HttpHeaders headers;
@@ -4337,6 +4337,34 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             if (no_peserta.trim().equals("")) {
                 JOptionPane.showMessageDialog(null, "Pasien tidak mempunyai kepesertaan BPJS");
                 dispose();
+            } else if (cekdulu.equals("No")){
+                BtnSimpan.setEnabled(false);
+                cekViaBPJSKartu.tampil(no_peserta);
+                TPasien.setText(cekViaBPJSKartu.nama);
+                TglLahir.setText(cekViaBPJSKartu.tglLahir);
+                JK.setText(cekViaBPJSKartu.sex);
+                NoKartu.setText(no_peserta);
+                JenisPeserta.setText(cekViaBPJSKartu.jenisPesertaketerangan);
+                Status.setText(cekViaBPJSKartu.statusPesertaketerangan);
+                KdPpkRujukan.setText(cekViaBPJSKartu.provUmumkdProvider);
+                kdppkrujukan = cekViaBPJSKartu.provUmumkdProvider;
+                nmppkrujukan = cekViaBPJSKartu.provUmumnmProvider;
+                NmPpkRujukan.setText(cekViaBPJSKartu.provUmumnmProvider);
+                if (cekViaBPJSKartu.hakKelaskode.equals("1")) {
+                    Kelas.setSelectedIndex(0);
+                } else if (cekViaBPJSKartu.hakKelaskode.equals("2")) {
+                    Kelas.setSelectedIndex(1);
+                } else if (cekViaBPJSKartu.hakKelaskode.equals("3")) {
+                    Kelas.setSelectedIndex(2);
+                }
+
+                if (cekViaBPJSKartu.mrnoTelepon == null) {
+                    NoTelp.setText(cekViaBPJSKartu.mrnoTelepon);
+                } else {
+                    Sequel.cariIsi("select no_tlp from pasien where no_rkm_medis=? ", NoTelp, TNoRM.getText());
+                }
+                prb = cekViaBPJSKartu.informasiprolanisPRB.replaceAll("null", "");
+                NoRujukan.requestFocus();
             } else {
                 cekViaBPJSKartu.tampil(no_peserta);
                 if (cekViaBPJSKartu.informasi.equals("OK")) {
@@ -6639,6 +6667,18 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         NmPoli.setText(Sequel.cariIsi("select nm_poli_bpjs from maping_poli_bpjs where kd_poli_bpjs=?", KdPoli.getText()));
         JenisPelayanan.setSelectedItem(status);
         JenisPelayananItemStateChanged(null);
+        isRawat();
+    }
+    
+    public void setNoRmNonCek(String norwt, Date tgl1, String status, String kdpoli, String namapoli,String info) {
+        TNoRw.setText(norwt);
+        TCari.setText(norwt);
+        TCari1.setText(norwt);
+        KdPoli.setText(Sequel.cariIsi("select kd_poli_bpjs from maping_poli_bpjs where kd_poli_rs=?", kdpoli));
+        NmPoli.setText(Sequel.cariIsi("select nm_poli_bpjs from maping_poli_bpjs where kd_poli_bpjs=?", KdPoli.getText()));
+        JenisPelayanan.setSelectedItem(status);
+        JenisPelayananItemStateChanged(null);
+        cekdulu = info;
         isRawat();
     }
 
