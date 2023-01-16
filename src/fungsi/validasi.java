@@ -882,7 +882,7 @@ public final class validasi {
         }
     }
 
-    public void pindah(java.awt.event.KeyEvent evt,JDateTimePicker kiri,JTextField kanan){
+   public void pindah(java.awt.event.KeyEvent evt,JDateTimePicker kiri,JTextField kanan){
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
             kanan.requestFocus();
         }else if(evt.getKeyCode()==KeyEvent.VK_PAGE_UP){
@@ -1138,6 +1138,5 @@ public final class validasi {
             return Math.round(number);
         }
     }
-
-       
+    
 }

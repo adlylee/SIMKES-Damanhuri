@@ -344,6 +344,7 @@ public final class DlgPeriksaRadiologi extends javax.swing.JDialog {
         Jk = new widget.TextBox();
         Umur = new widget.TextBox();
         Alamat = new widget.TextBox();
+        Penjab1 = new widget.TextBox();
         internalFrame1 = new widget.InternalFrame();
         panelGlass8 = new widget.panelisi();
         BtnSimpan = new widget.Button();
@@ -402,6 +403,8 @@ public final class DlgPeriksaRadiologi extends javax.swing.JDialog {
         panelisi7 = new widget.panelisi();
         label12 = new widget.Label();
         TJudul = new widget.TextBox();
+        label13 = new widget.Label();
+        TKlinis = new widget.TextBox();
         panelisi6 = new widget.panelisi();
         label11 = new widget.Label();
         label14 = new widget.Label();
@@ -432,6 +435,15 @@ public final class DlgPeriksaRadiologi extends javax.swing.JDialog {
         Alamat.setEditable(false);
         Alamat.setHighlighter(null);
         Alamat.setName("Alamat"); // NOI18N
+
+        Penjab1.setEditable(false);
+        Penjab1.setFocusTraversalPolicyProvider(true);
+        Penjab1.setName("Penjab1"); // NOI18N
+        Penjab1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                Penjab1KeyPressed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -661,7 +673,7 @@ public final class DlgPeriksaRadiologi extends javax.swing.JDialog {
 
         Tanggal.setEditable(false);
         Tanggal.setForeground(new java.awt.Color(50, 70, 50));
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-04-2019" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-01-2023" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy");
         Tanggal.setName("Tanggal"); // NOI18N
         Tanggal.setOpaque(false);
@@ -988,23 +1000,49 @@ public final class DlgPeriksaRadiologi extends javax.swing.JDialog {
 
         panelisi7.setBorder(null);
         panelisi7.setName("panelisi7"); // NOI18N
-        panelisi7.setPreferredSize(new java.awt.Dimension(100, 38));
-        panelisi7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 4, 9));
+        panelisi7.setPreferredSize(new java.awt.Dimension(100, 85));
+        panelisi7.setLayout(null);
 
-        label12.setText("Judul : ");
+        label12.setText("Judul :");
+        label12.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         label12.setName("label12"); // NOI18N
         label12.setPreferredSize(new java.awt.Dimension(48, 23));
         panelisi7.add(label12);
+        label12.setBounds(4, 8, 48, 23);
 
         TJudul.setToolTipText("Alt+C");
         TJudul.setName("TJudul"); // NOI18N
         TJudul.setPreferredSize(new java.awt.Dimension(300, 23));
+        TJudul.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TJudulActionPerformed(evt);
+            }
+        });
         TJudul.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 TJudulKeyPressed(evt);
             }
         });
         panelisi7.add(TJudul);
+        TJudul.setBounds(58, 8, 300, 23);
+
+        label13.setText("Klinis :");
+        label13.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        label13.setName("label13"); // NOI18N
+        label13.setPreferredSize(new java.awt.Dimension(48, 23));
+        panelisi7.add(label13);
+        label13.setBounds(4, 38, 48, 23);
+
+        TKlinis.setToolTipText("Alt+C");
+        TKlinis.setName("TKlinis"); // NOI18N
+        TKlinis.setPreferredSize(new java.awt.Dimension(300, 23));
+        TKlinis.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                TKlinisKeyPressed(evt);
+            }
+        });
+        panelisi7.add(TKlinis);
+        TKlinis.setBounds(58, 38, 300, 40);
 
         jPanel4.add(panelisi7, java.awt.BorderLayout.PAGE_START);
 
@@ -1488,6 +1526,7 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
             param.put("saran",TSaran.getText());
             param.put("kesan",TKesan.getText());
             param.put("logo",Sequel.cariGambar("select logo from setting"));
+            param.put("klinis",TKlinis.getText());
 
             pilihan = (String)JOptionPane.showInputDialog(null,"Silahkan pilih hasil pemeriksaan..!","Hasil Pemeriksaan",JOptionPane.QUESTION_MESSAGE,null,new Object[]{"Pasien IGD","Pasien Rawat Jalan", "Pasien Rawat Inap", "Pasien Dari Luar"},"Pasien IGD");
             switch (pilihan) {
@@ -1526,6 +1565,18 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     private void TCariPeriksaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TCariPeriksaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TCariPeriksaActionPerformed
+
+    private void TKlinisKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKlinisKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TKlinisKeyPressed
+
+    private void TJudulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TJudulActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TJudulActionPerformed
+
+    private void Penjab1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Penjab1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Penjab1KeyPressed
 
     private void TJudulKeyPressed(java.awt.event.KeyEvent evt) {
         // TODO add your handling code here:
@@ -1583,6 +1634,7 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     private widget.TextBox NmPtg;
     private widget.PanelBiasa PanelInput;
     private widget.TextBox Penjab;
+    private widget.TextBox Penjab1;
     private widget.ScrollPane Scroll;
     private widget.ScrollPane Scroll2;
     private widget.ScrollPane Scroll3;
@@ -1590,6 +1642,7 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     private widget.TextBox TCariPeriksa;
     private widget.TextBox TJudul;
     private widget.TextArea TKesan;
+    private widget.TextBox TKlinis;
     private widget.TextBox TNoRM;
     private widget.TextBox TNoRw;
     private widget.TextBox TPasien;
@@ -1616,6 +1669,7 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     private widget.Label label10;
     private widget.Label label11;
     private widget.Label label12;
+    private widget.Label label13;
     private widget.Label label14;
     private widget.Label label9;
     private widget.panelisi panelGlass8;
@@ -1794,6 +1848,7 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
         TJudul.setText("");
         TSaran.setText("");
         TKesan.setText("");
+        TKlinis.setText("");
     }
 
     private void tampil2() {
@@ -1952,6 +2007,7 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
         Sequel.cariIsi("select jk from pasien where no_rkm_medis=? ",Jk,TNoRM.getText());
         Sequel.cariIsi("select umur from pasien where no_rkm_medis=?",Umur,TNoRM.getText());
         Sequel.cariIsi("select concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab) as alamat from pasien inner join kelurahan inner join kecamatan inner join kabupaten on pasien.kd_kel=kelurahan.kd_kel and pasien.kd_kec=kecamatan.kd_kec and pasien.kd_kab=kabupaten.kd_kab where no_rkm_medis=? ",Alamat,TNoRM.getText());
+        Sequel.cariIsi("select klinis from diagnosa_pasien_klinis where noorder=?",TKlinis,noorder);
     }
 
     private void jam(){
@@ -2184,7 +2240,10 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
                     CmbJam.getSelectedItem()+":"+CmbMenit.getSelectedItem()+":"+CmbDetik.getSelectedItem(),
                     TJudul.getText(),TSaran.getText(),TKesan.getText()
                 });
-
+                Sequel.menyimpan("diagnosa_pasien_klinis","?,?","No.Permintaan",2,new String[]{
+                    noorder,TKlinis.getText()
+                });
+                
             }
             if(!noorder.equals("")){
                 Sequel.mengedit("permintaan_radiologi","noorder=?","tgl_hasil=?,jam_hasil=?",3,new String[]{
