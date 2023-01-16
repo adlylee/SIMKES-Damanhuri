@@ -11,6 +11,9 @@
  */
 package simrskhanza;
 
+import askep.DlgMasalahKeperawatan;
+import askep.DlgPenilaianAwalKeperawatan;
+import askep.DlgRencanaKeperawatan;
 import permintaan.DlgBookingOperasi;
 import kepegawaian.DlgCariDokter;
 import inventory.DlgResepObat;
@@ -647,6 +650,8 @@ public final class DlgIGD extends javax.swing.JDialog {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPopupMenu1 = new javax.swing.JPopupMenu();
+        MnAssesment = new javax.swing.JMenu();
+        MnAssesmentAwalKep = new javax.swing.JMenuItem();
         MnPermintaan = new javax.swing.JMenu();
         MnJadwalOperasi = new javax.swing.JMenuItem();
         MnSKDPBPJS = new javax.swing.JMenuItem();
@@ -856,6 +861,36 @@ public final class DlgIGD extends javax.swing.JDialog {
 
         jPopupMenu1.setName("jPopupMenu1"); // NOI18N
 
+        MnAssesment.setBackground(new java.awt.Color(250, 255, 245));
+        MnAssesment.setForeground(new java.awt.Color(70, 70, 70));
+        MnAssesment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        MnAssesment.setText("Assesment");
+        MnAssesment.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        MnAssesment.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        MnAssesment.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        MnAssesment.setIconTextGap(5);
+        MnAssesment.setName("MnAssesment"); // NOI18N
+        MnAssesment.setPreferredSize(new java.awt.Dimension(250, 26));
+
+        MnAssesmentAwalKep.setBackground(new java.awt.Color(255, 255, 254));
+        MnAssesmentAwalKep.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        MnAssesmentAwalKep.setForeground(new java.awt.Color(70, 70, 70));
+        MnAssesmentAwalKep.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        MnAssesmentAwalKep.setText("Assesment Awal Keperawatan");
+        MnAssesmentAwalKep.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        MnAssesmentAwalKep.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        MnAssesmentAwalKep.setIconTextGap(5);
+        MnAssesmentAwalKep.setName("MnAssesmentAwalKep"); // NOI18N
+        MnAssesmentAwalKep.setPreferredSize(new java.awt.Dimension(240, 26));
+        MnAssesmentAwalKep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnAssesmentAwalKepActionPerformed(evt);
+            }
+        });
+        MnAssesment.add(MnAssesmentAwalKep);
+
+        jPopupMenu1.add(MnAssesment);
+
         MnPermintaan.setBackground(new java.awt.Color(250, 255, 245));
         MnPermintaan.setForeground(new java.awt.Color(70, 70, 70));
         MnPermintaan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
@@ -905,7 +940,7 @@ public final class DlgIGD extends javax.swing.JDialog {
         MnPermintaanLab.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         MnPermintaanLab.setForeground(new java.awt.Color(70, 70, 70));
         MnPermintaanLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
-        MnPermintaanLab.setText("Pemeriksaan Lab");
+        MnPermintaanLab.setText("Permintaan Lab");
         MnPermintaanLab.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         MnPermintaanLab.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         MnPermintaanLab.setIconTextGap(5);
@@ -917,12 +952,13 @@ public final class DlgIGD extends javax.swing.JDialog {
             }
         });
         MnPermintaan.add(MnPermintaanLab);
+        MnPermintaanLab.getAccessibleContext().setAccessibleName("Permintaan Lab");
 
         MnPermintaanRadiologi.setBackground(new java.awt.Color(255, 255, 254));
         MnPermintaanRadiologi.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         MnPermintaanRadiologi.setForeground(new java.awt.Color(70, 70, 70));
         MnPermintaanRadiologi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
-        MnPermintaanRadiologi.setText("Pemeriksaan Radiologi");
+        MnPermintaanRadiologi.setText("Permintaan Radiologi");
         MnPermintaanRadiologi.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         MnPermintaanRadiologi.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         MnPermintaanRadiologi.setIconTextGap(5);
@@ -934,6 +970,7 @@ public final class DlgIGD extends javax.swing.JDialog {
             }
         });
         MnPermintaan.add(MnPermintaanRadiologi);
+        MnPermintaanRadiologi.getAccessibleContext().setAccessibleName("Permintaan Radiologi");
 
         jPopupMenu1.add(MnPermintaan);
 
@@ -2551,7 +2588,7 @@ public final class DlgIGD extends javax.swing.JDialog {
 
         TglSakit1.setEditable(false);
         TglSakit1.setForeground(new java.awt.Color(50, 70, 50));
-        TglSakit1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-08-2022" }));
+        TglSakit1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "14-01-2023" }));
         TglSakit1.setDisplayFormat("dd-MM-yyyy");
         TglSakit1.setName("TglSakit1"); // NOI18N
         TglSakit1.setOpaque(false);
@@ -2599,7 +2636,7 @@ public final class DlgIGD extends javax.swing.JDialog {
 
         TglSakit2.setEditable(false);
         TglSakit2.setForeground(new java.awt.Color(50, 70, 50));
-        TglSakit2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-08-2022" }));
+        TglSakit2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "14-01-2023" }));
         TglSakit2.setDisplayFormat("dd-MM-yyyy");
         TglSakit2.setName("TglSakit2"); // NOI18N
         TglSakit2.setOpaque(false);
@@ -3082,7 +3119,7 @@ public final class DlgIGD extends javax.swing.JDialog {
         panelGlass7.add(jLabel15);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-08-2022" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "14-01-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -3096,7 +3133,7 @@ public final class DlgIGD extends javax.swing.JDialog {
         panelGlass7.add(jLabel17);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-08-2022" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "14-01-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -3189,7 +3226,7 @@ public final class DlgIGD extends javax.swing.JDialog {
         jLabel9.setBounds(165, 72, 36, 23);
 
         DTPReg.setForeground(new java.awt.Color(50, 70, 50));
-        DTPReg.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-08-2022" }));
+        DTPReg.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "14-01-2023" }));
         DTPReg.setDisplayFormat("dd-MM-yyyy");
         DTPReg.setName("DTPReg"); // NOI18N
         DTPReg.setOpaque(false);
@@ -6094,6 +6131,29 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
         isNumber();
     }//GEN-LAST:event_DTPRegItemStateChanged
 
+    private void MnAssesmentAwalKepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnAssesmentAwalKepActionPerformed
+        if (tabMode.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Maaf, table masih kosong...!!!!");
+            TNoReg.requestFocus();
+        } else if (TPasien.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu dengan menklik data pada table...!!!");
+            tbPetugas.requestFocus();
+        } else {
+            if (tbPetugas.getSelectedRow() != -1) {
+                if (Sequel.cariInteger("select count(no_rawat) from kamar_inap where no_rawat=?", TNoRw.getText()) > 0) {
+                    JOptionPane.showMessageDialog(null, "Maaf, Pasien sudah masuk Kamar Inap. Gunakan billing Ranap..!!!");
+                } else {
+                    DlgPenilaianAwalKeperawatan form = new DlgPenilaianAwalKeperawatan(null, false);
+                    form.setNoRm(TNoRw.getText(), DTPCari2.getDate());
+                    form.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
+                    form.setLocationRelativeTo(internalFrame1);
+                    form.setVisible(true);
+                    this.setCursor(Cursor.getDefaultCursor());
+                }
+            }
+        }
+    }//GEN-LAST:event_MnAssesmentAwalKepActionPerformed
+
     /**
      * @data args the command line arguments
      */
@@ -6153,6 +6213,8 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
     private widget.Label LabelCatatan;
     private javax.swing.JMenu MenuInputData;
     private javax.swing.JMenuItem MnAnak;
+    private javax.swing.JMenu MnAssesment;
+    private javax.swing.JMenuItem MnAssesmentAwalKep;
     private javax.swing.JMenuItem MnBarcode;
     private javax.swing.JMenuItem MnBarcode1;
     private javax.swing.JMenuItem MnBarcode2;
