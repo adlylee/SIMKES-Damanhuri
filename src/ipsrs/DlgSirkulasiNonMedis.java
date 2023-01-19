@@ -427,7 +427,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
             param.put("emailrs", var.getemailrs());
             param.put("logo", Sequel.cariGambar("select logo from setting"));
             this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            Valid.MyReport("rptSirkulasiNonMedis.jrxml", "report", "::[ Sirkulasi Barang Non Medis]::",
+            Valid.MyReport("rptSirkulasiNonMedis.jrxml", "report", "::[ Stock Off Name Barang Non Medis]::",
                     "select * from temporary order by no asc", param);
             this.setCursor(Cursor.getDefaultCursor());
         }

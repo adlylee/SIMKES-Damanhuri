@@ -5212,7 +5212,7 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                 BtnNota.setVisible(false);
             }
         }
-        if(var.getkode().equals("Admin Utama")){
+        if(var.getkode().equals("Admin Utama") || var.getkode().equals("kasir1")){
             MnHapusTagihan.setEnabled(true);
         }else{
             MnHapusTagihan.setEnabled(false);

@@ -82,6 +82,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
     private BPJSCekReferensiPoli poli = new BPJSCekReferensiPoli(null, false);
     private BPJSCekNoKartu cekViaBPJSKartu = new BPJSCekNoKartu();
     private BPJSCekReferensiDokterDPJP dokter = new BPJSCekReferensiDokterDPJP(null, false);
+    private BPJSCekReferensiDokterDPJP dokter1 = new BPJSCekReferensiDokterDPJP(null, false);
     private BPJSSuratKontrol skdp = new BPJSSuratKontrol(null, false);
     private BPJSSPRI skdp2 = new BPJSSPRI(null, false);
     private BPJSCekReferensiPropinsi propinsi = new BPJSCekReferensiPropinsi(null, false);
@@ -937,6 +938,58 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     dokter.dispose();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+        
+        dokter1.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                if (dokter1.getTable().getSelectedRow() != -1) {
+                    KdDPJP.setText(dokter1.getTable().getValueAt(dokter1.getTable().getSelectedRow(), 1).toString());
+                    NmDPJP.setText(dokter1.getTable().getValueAt(dokter1.getTable().getSelectedRow(), 2).toString());
+                    KdDPJP.requestFocus();
+                }
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+        });
+
+        dokter1.getTable().addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    dokter1.dispose();
                 }
             }
 
@@ -5242,10 +5295,10 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSKDPActionPerformed
 
     private void btnDPJPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDPJPActionPerformed
-        dokter.setPoli(KdPoli.getText(), NmPoli.getText());
-        dokter.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
-        dokter.setLocationRelativeTo(internalFrame1);
-        dokter.setVisible(true);
+        dokter1.setPoli(KdPoli.getText(), NmPoli.getText());
+        dokter1.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
+        dokter1.setLocationRelativeTo(internalFrame1);
+        dokter1.setVisible(true);
     }//GEN-LAST:event_btnDPJPActionPerformed
 
     private void btnDPJPKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnDPJPKeyPressed

@@ -54,7 +54,7 @@ public final class BPJSCariSuratKontrol extends javax.swing.JDialog {
     private validasi Valid = new validasi();
     private int i = 0;
     private BPJSApi api = new BPJSApi();
-    private String URL = "", link = "", utc = "", requestJson = "", user = "", page;
+    private String URL = "", link = "", utc = "", requestJson = "", user = "", page,tahun;
     private HttpHeaders headers;
     private HttpEntity requestEntity;
     private ObjectMapper mapper = new ObjectMapper();
@@ -170,6 +170,8 @@ public final class BPJSCariSuratKontrol extends javax.swing.JDialog {
         Dokter = new widget.TextBox();
         jLabel37 = new widget.Label();
         Status = new widget.ComboBox();
+        jLabel38 = new widget.Label();
+        cmbTahun = new widget.ComboBox();
         BtnCari = new widget.Button();
         jLabel17 = new widget.Label();
         BtnKeluar = new widget.Button();
@@ -247,6 +249,19 @@ public final class BPJSCariSuratKontrol extends javax.swing.JDialog {
             }
         });
         panelGlass6.add(Status);
+
+        jLabel38.setText("Tahun :");
+        jLabel38.setName("jLabel38"); // NOI18N
+        panelGlass6.add(jLabel38);
+
+        cmbTahun.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2020", "2021", "2022", "2023", "2024", "2025" }));
+        cmbTahun.setName("cmbTahun"); // NOI18N
+        cmbTahun.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cmbTahunKeyPressed(evt);
+            }
+        });
+        panelGlass6.add(cmbTahun);
 
         BtnCari.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/accept.png"))); // NOI18N
         BtnCari.setMnemonic('6');
@@ -349,6 +364,10 @@ public final class BPJSCariSuratKontrol extends javax.swing.JDialog {
 
     }//GEN-LAST:event_StatusKeyPressed
 
+    private void cmbTahunKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmbTahunKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbTahunKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -374,10 +393,12 @@ public final class BPJSCariSuratKontrol extends javax.swing.JDialog {
     private widget.ScrollPane Scroll;
     private widget.ComboBox Status;
     private widget.TextBox TanggalKontrol;
+    private widget.ComboBox cmbTahun;
     private widget.InternalFrame internalFrame1;
     private widget.Label jLabel16;
     private widget.Label jLabel17;
     private widget.Label jLabel37;
+    private widget.Label jLabel38;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private widget.panelisi panelGlass6;
@@ -387,6 +408,7 @@ public final class BPJSCariSuratKontrol extends javax.swing.JDialog {
     public void tampil() {
         try {
             page = Status.getSelectedItem().toString();
+            tahun = cmbTahun.getSelectedItem().toString();
             headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("X-Cons-ID", koneksiDB.ConsIdBpjs());
@@ -395,7 +417,7 @@ public final class BPJSCariSuratKontrol extends javax.swing.JDialog {
             headers.add("user_key", koneksiDB.UserKeyBpjs());
             requestEntity = new HttpEntity(headers);
             if (Dokter.getText().length() == 13) {
-                root = mapper.readTree(api.getRest().exchange(URL + "ListRencanaKontrol/Bulan/" + page + "/Tahun/2022/Nokartu/" + Dokter.getText() + "/filter/1", HttpMethod.GET, requestEntity, String.class).getBody());
+                root = mapper.readTree(api.getRest().exchange(URL + "ListRencanaKontrol/Bulan/" + page + "/Tahun/"+tahun+"/Nokartu/" + Dokter.getText() + "/filter/1", HttpMethod.GET, requestEntity, String.class).getBody());
                 nameNode = root.path("metaData");
                 System.out.println("code : " + nameNode.path("code").asText());
                 System.out.println("message : " + nameNode.path("message").asText());
