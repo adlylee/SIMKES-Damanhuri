@@ -1401,10 +1401,10 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                                         * (Double.parseDouble(tbObat.getValueAt(i, 1).toString()) / carikapasitas.getDouble(1)))),
                                         "Ranap", kdgudang.getText(), tbObat.getValueAt(i, 16).toString()
                                     }) == true) {
-                                        if (Sequel.mengedittf("resep_pulang", "no_rawat=? and kode_brng=?", "jml_barang=?,tuslah=?,total=?", 5, new String[]{
+                                        if (Sequel.mengedittf("resep_pulang", "no_rawat=? and kode_brng=?", "jml_barang=?,tuslah=?,total=?,dosis=?", 6, new String[]{
                                             tbObat.getValueAt(i, 1).toString(), tbObat.getValueAt(i, 9).toString(), "" + (Double.parseDouble(tbObat.getValueAt(i, 8).toString())
                                             + Double.parseDouble(tbObat.getValueAt(i, 9).toString()) + (Double.parseDouble(tbObat.getValueAt(i, 6).toString())
-                                            * Double.parseDouble(tbObat.getValueAt(i, 1).toString()))), TNoRw.getText(), tbObat.getValueAt(i, 2).toString()
+                                            * Double.parseDouble(tbObat.getValueAt(i, 1).toString()))),tbObat.getValueAt(i, 13).toString(), TNoRw.getText(), tbObat.getValueAt(i, 2).toString()
                                         }) == true) {
                                         }
                                         ttljual = ttljual + Double.parseDouble(tbObat.getValueAt(i, 8).toString())
@@ -1456,10 +1456,10 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                                         * Double.parseDouble(tbObat.getValueAt(i, 1).toString()))),
                                         "Ranap", kdgudang.getText(), tbObat.getValueAt(i, 16).toString()
                                     }) == true) {
-                                        if (Sequel.mengedittf("resep_pulang", "no_rawat=? and kode_brng=?", "jml_barang=?,tuslah=?,total=?", 5, new String[]{
+                                        if (Sequel.mengedittf("resep_pulang", "no_rawat=? and kode_brng=?", "jml_barang=?,tuslah=?,total=?,dosis=?", 6, new String[]{
                                             tbObat.getValueAt(i, 1).toString(), tbObat.getValueAt(i, 9).toString(), "" + (Double.parseDouble(tbObat.getValueAt(i, 8).toString())
                                             + Double.parseDouble(tbObat.getValueAt(i, 9).toString()) + (Double.parseDouble(tbObat.getValueAt(i, 6).toString())
-                                            * Double.parseDouble(tbObat.getValueAt(i, 1).toString()))), TNoRw.getText(), tbObat.getValueAt(i, 2).toString()
+                                            * Double.parseDouble(tbObat.getValueAt(i, 1).toString()))),tbObat.getValueAt(i, 13).toString() , TNoRw.getText(), tbObat.getValueAt(i, 2).toString()
                                         }) == true) {
                                         }
                                     }
@@ -1522,10 +1522,10 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                                 * Double.parseDouble(tbObat.getValueAt(i, 1).toString()))),
                                 "Ranap", kdgudang.getText(), tbObat.getValueAt(i, 16).toString()
                             }) == true) {
-                                if (Sequel.mengedittf("resep_pulang", "no_rawat=? and kode_brng=?", "jml_barang=?,tuslah=?,total=?", 5, new String[]{
+                                if (Sequel.mengedittf("resep_pulang", "no_rawat=? and kode_brng=?", "jml_barang=?,tuslah=?,total=?,dosis=?", 6, new String[]{
                                     tbObat.getValueAt(i, 1).toString(), tbObat.getValueAt(i, 9).toString(), "" + (Double.parseDouble(tbObat.getValueAt(i, 8).toString())
                                     + Double.parseDouble(tbObat.getValueAt(i, 9).toString()) + (Double.parseDouble(tbObat.getValueAt(i, 6).toString())
-                                    * Double.parseDouble(tbObat.getValueAt(i, 1).toString()))), TNoRw.getText(), tbObat.getValueAt(i, 2).toString()
+                                    * Double.parseDouble(tbObat.getValueAt(i, 1).toString()))),tbObat.getValueAt(i, 13).toString(), TNoRw.getText(), tbObat.getValueAt(i, 2).toString()
                                 }) == true) {
                                 }
                             }
