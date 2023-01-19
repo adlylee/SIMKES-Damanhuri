@@ -46,7 +46,7 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" +
-                        "    Version 16.01.2023 [ 1.0.9 ] [Activated] GO AKREDITASI \n"+
+                        "    Version 19.01.2023 [ 1.0.9 ] [Activated] GO AKREDITASI \n"+
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai . SMART , GREEN , AND FRIENDLY HOSPITAL      \n"+
                         "                                                                           \n"+
@@ -56,6 +56,8 @@ public final class koneksiDB {
                         "    * Changelog :                                                       \n"+
                         "       - Klinis Radiologi                                              \n"+
                         "       - Sirkulasi Non Medis                                              \n"+
+                        "       - Sirkulasi Medis                                              \n"+
+                        "       - Pasien Lanjutan & Internal Lanjutan                                              \n"+
                         "                                                                       \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);
