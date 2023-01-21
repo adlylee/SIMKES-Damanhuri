@@ -3,22 +3,26 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * DlgBangsal.java
  *
  * Created on May 22, 2010, 9:58:42 PM
  */
-
 package simrskhanza;
+
 import fungsi.WarnaTable;
 import fungsi.batasInput;
 import fungsi.koneksiDB;
 import fungsi.sekuel;
 import fungsi.validasi;
 import fungsi.var;
+import informasi.InformasiTarifRadiologi;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,6 +35,8 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import kepegawaian.DlgCariPegawai;
+import keuangan.DlgJnsPerawatanRadiologi;
 import restore.DlgRestoreBangsal;
 
 /**
@@ -38,99 +44,157 @@ import restore.DlgRestoreBangsal;
  * @author dosen
  */
 public final class DlgHasilPeriksaRad extends javax.swing.JDialog {
+
     private final DefaultTableModel tabMode;
-    private Connection koneksi=koneksiDB.condb();
-    private sekuel Sequel=new sekuel();
-    private validasi Valid=new validasi();
+    private Connection koneksi = koneksiDB.condb();
+    private sekuel Sequel = new sekuel();
+    private validasi Valid = new validasi();
     private PreparedStatement ps;
     private ResultSet rs;
-    private int i=0;
+    private int i = 0;
+    private InformasiTarifRadiologi radiologi=new InformasiTarifRadiologi(null,false);
 
-    /** Creates new form DlgBangsal
+    /**
+     * Creates new form DlgBangsal
+     *
      * @param parent
-     * @param modal */
+     * @param modal
+     */
     public DlgHasilPeriksaRad(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setLocation(10,10);
-        setSize(545,599);
+        this.setLocation(10, 10);
+        setSize(545, 599);
 
-        Object[] row={"P","Judul","Klinis","Interpretasi","Kesan","Saran"};
-        
-        tabMode=new DefaultTableModel(null,row){
-             @Override public boolean isCellEditable(int rowIndex, int colIndex){
+        Object[] row = {"P", "Kode", "Judul", "Klinis", "Interpretasi", "Kesan", "Saran"};
+
+        tabMode = new DefaultTableModel(null, row) {
+            @Override
+            public boolean isCellEditable(int rowIndex, int colIndex) {
                 boolean a = false;
-                if (colIndex==0) {
-                    a=true;
+                if (colIndex == 0) {
+                    a = true;
                 }
                 return a;
-             }
-             Class[] types = new Class[] {
+            }
+            Class[] types = new Class[]{
                 java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class,
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-             };
-             @Override
-             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-             }
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
+                java.lang.Object.class
+            };
+
+            @Override
+            public Class getColumnClass(int columnIndex) {
+                return types[columnIndex];
+            }
         };
 
         tbHasilRad.setModel(tabMode);
         //tampil();
 
         //tbBangsal.setDefaultRenderer(Object.class, new WarnaTable(jPanel2.getBackground(),tbBangsal.getBackground()));
-        tbHasilRad.setPreferredScrollableViewportSize(new Dimension(500,500));
+        tbHasilRad.setPreferredScrollableViewportSize(new Dimension(500, 500));
         tbHasilRad.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 6; i++) {
+        for (i = 0; i < 7; i++) {
             TableColumn column = tbHasilRad.getColumnModel().getColumn(i);
-            if(i==0){
+            if (i == 0) {
                 column.setPreferredWidth(20);
-            }else if(i==1){
+            } else if (i == 1) {
                 column.setPreferredWidth(90);
-            }else if(i==2){
+            } else if (i == 2) {
+                column.setPreferredWidth(90);
+            } else if (i == 3) {
                 column.setPreferredWidth(120);
-            }else if(i==3){
+            } else if (i == 4) {
                 column.setPreferredWidth(300);
-            }else{
+            } else {
                 column.setPreferredWidth(150);
-            }        
+            }
         }
 
         tbHasilRad.setDefaultRenderer(Object.class, new WarnaTable());
 
-        TKlinis.setDocument(new batasInput((byte)30).getKata(TKlinis));
-        TCari.setDocument(new batasInput((byte)100).getKata(TCari));
-        if(koneksiDB.cariCepat().equals("aktif")){
-            TCari.getDocument().addDocumentListener(new javax.swing.event.DocumentListener(){
+        TKlinis.setDocument(new batasInput((byte) 30).getKata(TKlinis));
+        TCari.setDocument(new batasInput((byte) 100).getKata(TCari));
+        if (koneksiDB.cariCepat().equals("aktif")) {
+            TCari.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
                 @Override
                 public void insertUpdate(DocumentEvent e) {
-                    if(TCari.getText().length()>2){
+                    if (TCari.getText().length() > 2) {
                         tampil();
                     }
                 }
+
                 @Override
                 public void removeUpdate(DocumentEvent e) {
-                    if(TCari.getText().length()>2){
+                    if (TCari.getText().length() > 2) {
                         tampil();
                     }
                 }
+
                 @Override
                 public void changedUpdate(DocumentEvent e) {
-                    if(TCari.getText().length()>2){
+                    if (TCari.getText().length() > 2) {
                         tampil();
                     }
                 }
             });
-        } 
+        }
         TKlinis.requestFocus();
+
+        radiologi.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                if(radiologi.getTable().getSelectedRow()!= -1){
+                    KodePeriksa.setText(radiologi.getTable().getValueAt(radiologi.getTable().getSelectedRow(),0).toString());
+                    KodePeriksa.requestFocus();
+                }
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+        });
         
+        radiologi.getTable().addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {}
+            @Override
+            public void keyPressed(KeyEvent e) {
+                    if(e.getKeyCode()==KeyEvent.VK_SPACE){
+                        radiologi.dispose();
+                    }
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {}
+        });
     }
-    
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -170,6 +234,9 @@ public final class DlgHasilPeriksaRad extends javax.swing.JDialog {
         scrollPane3 = new widget.ScrollPane();
         TSaran = new widget.TextArea();
         jLabel9 = new widget.Label();
+        jLabel10 = new widget.Label();
+        KodePeriksa = new widget.TextBox();
+        btnHasilRad = new widget.Button();
 
         jPopupMenu1.setName("jPopupMenu1"); // NOI18N
 
@@ -425,7 +492,7 @@ public final class DlgHasilPeriksaRad extends javax.swing.JDialog {
         jLabel3.setText("Judul :");
         jLabel3.setName("jLabel3"); // NOI18N
         panelGlass8.add(jLabel3);
-        jLabel3.setBounds(0, 12, 85, 23);
+        jLabel3.setBounds(210, 12, 40, 23);
 
         TJudul.setName("TJudul"); // NOI18N
         TJudul.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -434,7 +501,7 @@ public final class DlgHasilPeriksaRad extends javax.swing.JDialog {
             }
         });
         panelGlass8.add(TJudul);
-        TJudul.setBounds(88, 12, 260, 23);
+        TJudul.setBounds(255, 12, 160, 23);
 
         TKlinis.setFocusTraversalPolicyProvider(true);
         TKlinis.setName("TKlinis"); // NOI18N
@@ -444,7 +511,7 @@ public final class DlgHasilPeriksaRad extends javax.swing.JDialog {
             }
         });
         panelGlass8.add(TKlinis);
-        TKlinis.setBounds(88, 42, 260, 23);
+        TKlinis.setBounds(88, 42, 327, 23);
 
         jLabel4.setText("Klinis :");
         jLabel4.setName("jLabel4"); // NOI18N
@@ -466,7 +533,7 @@ public final class DlgHasilPeriksaRad extends javax.swing.JDialog {
         scrollPane1.setViewportView(THasil);
 
         panelGlass8.add(scrollPane1);
-        scrollPane1.setBounds(88, 72, 260, 48);
+        scrollPane1.setBounds(88, 72, 327, 48);
 
         jLabel5.setText("Interpretasi :");
         jLabel5.setName("jLabel5"); // NOI18N
@@ -488,12 +555,12 @@ public final class DlgHasilPeriksaRad extends javax.swing.JDialog {
         scrollPane2.setViewportView(TKesan);
 
         panelGlass8.add(scrollPane2);
-        scrollPane2.setBounds(500, 12, 260, 48);
+        scrollPane2.setBounds(520, 12, 260, 48);
 
         jLabel8.setText("Kesan :");
         jLabel8.setName("jLabel8"); // NOI18N
         panelGlass8.add(jLabel8);
-        jLabel8.setBounds(412, 12, 85, 23);
+        jLabel8.setBounds(432, 12, 85, 23);
 
         scrollPane3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         scrollPane3.setName("scrollPane3"); // NOI18N
@@ -510,12 +577,38 @@ public final class DlgHasilPeriksaRad extends javax.swing.JDialog {
         scrollPane3.setViewportView(TSaran);
 
         panelGlass8.add(scrollPane3);
-        scrollPane3.setBounds(500, 72, 260, 48);
+        scrollPane3.setBounds(520, 72, 260, 48);
 
         jLabel9.setText("Saran :");
         jLabel9.setName("jLabel9"); // NOI18N
         panelGlass8.add(jLabel9);
-        jLabel9.setBounds(412, 72, 85, 23);
+        jLabel9.setBounds(432, 72, 85, 23);
+
+        jLabel10.setText("Kode Periksa :");
+        jLabel10.setName("jLabel10"); // NOI18N
+        panelGlass8.add(jLabel10);
+        jLabel10.setBounds(0, 12, 85, 23);
+
+        KodePeriksa.setName("KodePeriksa"); // NOI18N
+        KodePeriksa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                KodePeriksaKeyPressed(evt);
+            }
+        });
+        panelGlass8.add(KodePeriksa);
+        KodePeriksa.setBounds(88, 12, 85, 23);
+
+        btnHasilRad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
+        btnHasilRad.setMnemonic('2');
+        btnHasilRad.setToolTipText("Alt+2");
+        btnHasilRad.setName("btnHasilRad"); // NOI18N
+        btnHasilRad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHasilRadActionPerformed(evt);
+            }
+        });
+        panelGlass8.add(btnHasilRad);
+        btnHasilRad.setBounds(175, 12, 28, 23);
 
         internalFrame1.add(panelGlass8, java.awt.BorderLayout.PAGE_START);
 
@@ -525,36 +618,36 @@ public final class DlgHasilPeriksaRad extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void TKlinisKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKlinisKeyPressed
-        Valid.pindah(evt,TKlinis,BtnSimpan);
+        Valid.pindah(evt, TKlinis, BtnSimpan);
 }//GEN-LAST:event_TKlinisKeyPressed
 
     private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpanActionPerformed
-        if(TJudul.getText().trim().equals("")){
-            Valid.textKosong(TJudul,"judul");
-        }else if(TKlinis.getText().trim().equals("")){
-            Valid.textKosong(TKlinis,"klinis");
-        }else if(THasil.getText().trim().equals("")){
-            Valid.textKosong(THasil,"hasil");
-        }else if(TKesan.getText().trim().equals("")){
-            Valid.textKosong(TKesan,"kesan");
-        }else if(TSaran.getText().trim().equals("")){
-            Valid.textKosong(TSaran,"saran");
-        }else{
-            if(Sequel.menyimpantf("maping_periksa_rad","?,?,?,?,?,?,?","Judul",7,new String[]{
-                "0",TJudul.getText(),TKlinis.getText(),THasil.getText(),TKesan.getText(),TSaran.getText(),"1"})==true){
+        if (TJudul.getText().trim().equals("")) {
+            Valid.textKosong(TJudul, "judul");
+        } else if (TKlinis.getText().trim().equals("")) {
+            Valid.textKosong(TKlinis, "klinis");
+        } else if (THasil.getText().trim().equals("")) {
+            Valid.textKosong(THasil, "hasil");
+        } else if (TKesan.getText().trim().equals("")) {
+            Valid.textKosong(TKesan, "kesan");
+        } else if (TSaran.getText().trim().equals("")) {
+            Valid.textKosong(TSaran, "saran");
+        } else {
+            if (Sequel.menyimpantf("maping_periksa_rad", "?,?,?,?,?,?,?,?", "Tindakan", 8, new String[]{
+                "0", KodePeriksa.getText(), TJudul.getText(), TKlinis.getText(), THasil.getText(), TKesan.getText(), TSaran.getText(), "1"}) == true) {
                 tampil();
                 emptTeks();
-            }else{
+            } else {
                 TJudul.requestFocus();
-            }            
+            }
         }
 }//GEN-LAST:event_BtnSimpanActionPerformed
 
     private void BtnSimpanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnSimpanKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_SPACE){
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
             BtnSimpanActionPerformed(null);
-        }else{
-            Valid.pindah(evt,TKlinis,BtnBatal);
+        } else {
+            Valid.pindah(evt, TKlinis, BtnBatal);
         }
 }//GEN-LAST:event_BtnSimpanKeyPressed
 
@@ -563,99 +656,105 @@ public final class DlgHasilPeriksaRad extends javax.swing.JDialog {
 }//GEN-LAST:event_BtnBatalActionPerformed
 
     private void BtnBatalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnBatalKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_SPACE){
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
             emptTeks();
-        }else{Valid.pindah(evt, BtnSimpan, BtnHapus);}
+        } else {
+            Valid.pindah(evt, BtnSimpan, BtnHapus);
+        }
 }//GEN-LAST:event_BtnBatalKeyPressed
 
     private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHapusActionPerformed
-        for(i=0;i<tbHasilRad.getRowCount();i++){ 
-            if(tbHasilRad.getValueAt(i,0).toString().equals("true")){
-                Sequel.mengedit("maping_periksa_rad","judul='"+tbHasilRad.getValueAt(i,1).toString()+"'","status='0'");
+        for (i = 0; i < tbHasilRad.getRowCount(); i++) {
+            if (tbHasilRad.getValueAt(i, 0).toString().equals("true")) {
+                Sequel.mengedit("maping_periksa_rad", "judul='" + tbHasilRad.getValueAt(i, 2).toString() + "'", "status='0'");
             }
-        } 
+        }
         tampil();
         emptTeks();
 }//GEN-LAST:event_BtnHapusActionPerformed
 
     private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnHapusKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_SPACE){
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
             BtnHapusActionPerformed(null);
-        }else{
+        } else {
             Valid.pindah(evt, BtnBatal, BtnEdit);
         }
 }//GEN-LAST:event_BtnHapusKeyPressed
 
     private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditActionPerformed
-        if(TKlinis.getText().trim().equals("")){
-            Valid.textKosong(TKlinis,"kode bangsal");
-        }else if(TKlinis.getText().trim().equals("")){
-            Valid.textKosong(TKlinis,"nama bangsal");
-        }else{
-            if(tbHasilRad.getSelectedRow()>-1){
-                Sequel.mengedit("maping_periksa_rad","judul=?","judul=?,klinis=?,interpretasi=?,kesan=?,saran=?",6,new String[]{
-                    TJudul.getText(),TKlinis.getText(),THasil.getText(),TKesan.getText(),TSaran.getText(),tbHasilRad.getValueAt(tbHasilRad.getSelectedRow(), 1).toString()});
-                if(tabMode.getRowCount()!=0){
+        if (TKlinis.getText().trim().equals("")) {
+            Valid.textKosong(TKlinis, "kode bangsal");
+        } else if (TKlinis.getText().trim().equals("")) {
+            Valid.textKosong(TKlinis, "nama bangsal");
+        } else {
+            if (tbHasilRad.getSelectedRow() > -1) {
+                Sequel.mengedit("maping_periksa_rad", "kd_jenis_prw=? and judul=?", "judul=?,klinis=?,interpretasi=?,kesan=?,saran=?", 7, new String[]{
+                    TJudul.getText(), TKlinis.getText(), THasil.getText(), TKesan.getText(), TSaran.getText(),
+                    tbHasilRad.getValueAt(tbHasilRad.getSelectedRow(), 1).toString(), tbHasilRad.getValueAt(tbHasilRad.getSelectedRow(), 2).toString()});
+                if (tabMode.getRowCount() != 0) {
                     tampil();
                 }
                 emptTeks();
-            }            
+            }
         }
 }//GEN-LAST:event_BtnEditActionPerformed
 
     private void BtnEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnEditKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_SPACE){
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
             BtnEditActionPerformed(null);
-        }else{
+        } else {
             Valid.pindah(evt, BtnHapus, BtnKeluar);
         }
 }//GEN-LAST:event_BtnEditKeyPressed
 
     private void BtnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnKeluarActionPerformed
+        radiologi.dispose();
         dispose();
 }//GEN-LAST:event_BtnKeluarActionPerformed
 
     private void BtnKeluarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnKeluarKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_SPACE){
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
             dispose();
-        }else{Valid.pindah(evt,BtnEdit,TCari);}
+        } else {
+            Valid.pindah(evt, BtnEdit, TCari);
+        }
 }//GEN-LAST:event_BtnKeluarKeyPressed
 
     private void BtnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPrintActionPerformed
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        if(! TCari.getText().trim().equals("")){
+        if (!TCari.getText().trim().equals("")) {
             BtnCariActionPerformed(evt);
         }
-        if(tabMode.getRowCount()==0){
-            JOptionPane.showMessageDialog(null,"Maaf, data sudah habis. Tidak ada data yang bisa anda print...!!!!");
+        if (tabMode.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Maaf, data sudah habis. Tidak ada data yang bisa anda print...!!!!");
             BtnBatal.requestFocus();
-        }else if(tabMode.getRowCount()!=0){
-                Map<String, Object> param = new HashMap<>();
-                param.put("parameter","%"+TCari.getText().trim()+"%");     
-                param.put("namars",var.getnamars());
-                param.put("alamatrs",var.getalamatrs());
-                param.put("kotars",var.getkabupatenrs());
-                param.put("propinsirs",var.getpropinsirs());
-                param.put("kontakrs",var.getkontakrs());
-                param.put("emailrs",var.getemailrs());   
-                param.put("logo",Sequel.cariGambar("select logo from setting")); 
-                Valid.MyReport("rptBangsal.jrxml",param,"::[ Laporan Data Kamar ]::");
+        } else if (tabMode.getRowCount() != 0) {
+            Map<String, Object> param = new HashMap<>();
+            param.put("parameter", "%" + TCari.getText().trim() + "%");
+            param.put("namars", var.getnamars());
+            param.put("alamatrs", var.getalamatrs());
+            param.put("kotars", var.getkabupatenrs());
+            param.put("propinsirs", var.getpropinsirs());
+            param.put("kontakrs", var.getkontakrs());
+            param.put("emailrs", var.getemailrs());
+            param.put("logo", Sequel.cariGambar("select logo from setting"));
+            Valid.MyReport("rptBangsal.jrxml", param, "::[ Laporan Data Kamar ]::");
         }
         this.setCursor(Cursor.getDefaultCursor());
 }//GEN-LAST:event_BtnPrintActionPerformed
 
     private void BtnPrintKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnPrintKeyPressed
-        Valid.pindah(evt,BtnEdit,BtnKeluar);
+        Valid.pindah(evt, BtnEdit, BtnKeluar);
 }//GEN-LAST:event_BtnPrintKeyPressed
 
     private void TCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TCariKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             BtnCariActionPerformed(null);
-        }else if(evt.getKeyCode()==KeyEvent.VK_PAGE_DOWN){
+        } else if (evt.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
             BtnCari.requestFocus();
-        }else if(evt.getKeyCode()==KeyEvent.VK_PAGE_UP){
+        } else if (evt.getKeyCode() == KeyEvent.VK_PAGE_UP) {
             BtnKeluar.requestFocus();
-        }else if(evt.getKeyCode()==KeyEvent.VK_UP){
+        } else if (evt.getKeyCode() == KeyEvent.VK_UP) {
             tbHasilRad.requestFocus();
         }
 }//GEN-LAST:event_TCariKeyPressed
@@ -665,9 +764,9 @@ public final class DlgHasilPeriksaRad extends javax.swing.JDialog {
 }//GEN-LAST:event_BtnCariActionPerformed
 
     private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnCariKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_SPACE){
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
             BtnCariActionPerformed(null);
-        }else{
+        } else {
             Valid.pindah(evt, TCari, BtnAll);
         }
 }//GEN-LAST:event_BtnCariKeyPressed
@@ -682,31 +781,31 @@ public final class DlgHasilPeriksaRad extends javax.swing.JDialog {
 }//GEN-LAST:event_BtnAllActionPerformed
 
     private void BtnAllKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnAllKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_SPACE){
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
             TCari.setText("");
             tampil();
-        }else{
+        } else {
             Valid.pindah(evt, BtnCari, TKlinis);
         }
 }//GEN-LAST:event_BtnAllKeyPressed
 
     private void tbHasilRadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHasilRadMouseClicked
-        if(tabMode.getRowCount()!=0){
+        if (tabMode.getRowCount() != 0) {
             try {
                 getData();
             } catch (java.lang.NullPointerException e) {
             }
-           
+
         }
 }//GEN-LAST:event_tbHasilRadMouseClicked
 
     private void tbHasilRadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbHasilRadKeyPressed
-        if(tabMode.getRowCount()!=0){
-            if(evt.getKeyCode()==KeyEvent.VK_SHIFT){
+        if (tabMode.getRowCount() != 0) {
+            if (evt.getKeyCode() == KeyEvent.VK_SHIFT) {
                 TCari.setText("");
                 TCari.requestFocus();
             }
-            
+
         }
 }//GEN-LAST:event_tbHasilRadKeyPressed
 
@@ -716,15 +815,15 @@ public final class DlgHasilPeriksaRad extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowOpened
 
     private void MnRestoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnRestoreActionPerformed
-        DlgRestoreBangsal restore=new DlgRestoreBangsal(null,true);
-        restore.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
+        DlgRestoreBangsal restore = new DlgRestoreBangsal(null, true);
+        restore.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
         restore.setLocationRelativeTo(internalFrame1);
         restore.setVisible(true);
     }//GEN-LAST:event_MnRestoreActionPerformed
 
     private void tbHasilRadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbHasilRadKeyReleased
-        if(tabMode.getRowCount()!=0){
-            if((evt.getKeyCode()==KeyEvent.VK_ENTER)||(evt.getKeyCode()==KeyEvent.VK_UP)||(evt.getKeyCode()==KeyEvent.VK_DOWN)){
+        if (tabMode.getRowCount() != 0) {
+            if ((evt.getKeyCode() == KeyEvent.VK_ENTER) || (evt.getKeyCode() == KeyEvent.VK_UP) || (evt.getKeyCode() == KeyEvent.VK_DOWN)) {
                 try {
                     getData();
                 } catch (java.lang.NullPointerException e) {
@@ -734,7 +833,7 @@ public final class DlgHasilPeriksaRad extends javax.swing.JDialog {
     }//GEN-LAST:event_tbHasilRadKeyReleased
 
     private void TJudulKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TJudulKeyPressed
-        Valid.pindah(evt,TCari,TKlinis,TCari);
+        Valid.pindah(evt, TCari, TKlinis, TCari);
     }//GEN-LAST:event_TJudulKeyPressed
 
     private void THasilKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_THasilKeyPressed
@@ -749,9 +848,24 @@ public final class DlgHasilPeriksaRad extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_TSaranKeyPressed
 
+    private void KodePeriksaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KodePeriksaKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_UP){  
+            btnHasilRadActionPerformed(null);
+        }else{
+            Valid.pindah(evt,TCari,TJudul,TCari);
+        }
+    }//GEN-LAST:event_KodePeriksaKeyPressed
+
+    private void btnHasilRadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHasilRadActionPerformed
+        radiologi.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
+        radiologi.setLocationRelativeTo(internalFrame1);
+        radiologi.setAlwaysOnTop(false);
+        radiologi.setVisible(true);
+    }//GEN-LAST:event_btnHasilRadActionPerformed
+
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
             DlgHasilPeriksaRad dialog = new DlgHasilPeriksaRad(new javax.swing.JFrame(), true);
@@ -774,6 +888,7 @@ public final class DlgHasilPeriksaRad extends javax.swing.JDialog {
     private widget.Button BtnKeluar;
     private widget.Button BtnPrint;
     private widget.Button BtnSimpan;
+    private widget.TextBox KodePeriksa;
     private widget.Label LCount;
     private javax.swing.JMenuItem MnRestore;
     private widget.ScrollPane Scroll;
@@ -783,7 +898,9 @@ public final class DlgHasilPeriksaRad extends javax.swing.JDialog {
     private widget.TextArea TKesan;
     private widget.TextBox TKlinis;
     private widget.TextArea TSaran;
+    private widget.Button btnHasilRad;
     private widget.InternalFrame internalFrame1;
+    private widget.Label jLabel10;
     private widget.Label jLabel3;
     private widget.Label jLabel4;
     private widget.Label jLabel5;
@@ -804,36 +921,37 @@ public final class DlgHasilPeriksaRad extends javax.swing.JDialog {
 
     private void tampil() {
         Valid.tabelKosong(tabMode);
-        try{
-            ps=koneksi.prepareStatement("select * from maping_periksa_rad " +
-                    "where status='1' and (judul like ? or klinis like ?)");
+        try {
+            ps = koneksi.prepareStatement("select * from maping_periksa_rad "
+                    + "where status='1' and (judul like ? or klinis like ?)");
             try {
-                ps.setString(1,"%"+TCari.getText().trim()+"%");
-                ps.setString(2,"%"+TCari.getText().trim()+"%");
-                rs=ps.executeQuery();
-                while(rs.next()){
+                ps.setString(1, "%" + TCari.getText().trim() + "%");
+                ps.setString(2, "%" + TCari.getText().trim() + "%");
+                rs = ps.executeQuery();
+                while (rs.next()) {
                     tabMode.addRow(new Object[]{
-                        false,rs.getString(2),rs.getString(3),
-                        rs.getString(4),rs.getString(5),rs.getString(6)});
+                        false, rs.getString(2), rs.getString(3),
+                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)});
                 }
             } catch (Exception e) {
-                System.out.println("Notif Bangsal : "+e);
-            } finally{
-                if(rs!=null){
+                System.out.println("Notif Bangsal : " + e);
+            } finally {
+                if (rs != null) {
                     rs.close();
                 }
-                if(ps!=null){
+                if (ps != null) {
                     ps.close();
                 }
             }
-                
-        }catch(SQLException e){
-            System.out.println("Notifikasi : "+e);
+
+        } catch (SQLException e) {
+            System.out.println("Notifikasi : " + e);
         }
-        LCount.setText(""+tabMode.getRowCount());
+        LCount.setText("" + tabMode.getRowCount());
     }
 
     public void emptTeks() {
+        KodePeriksa.setText("");
         TJudul.setText("");
         TKlinis.setText("");
         THasil.setText("");
@@ -845,27 +963,28 @@ public final class DlgHasilPeriksaRad extends javax.swing.JDialog {
     }
 
     private void getData() {
-        if(tbHasilRad.getSelectedRow()!= -1){
-            TJudul.setText(tbHasilRad.getValueAt(tbHasilRad.getSelectedRow(),1).toString());
-            TKlinis.setText(tbHasilRad.getValueAt(tbHasilRad.getSelectedRow(),2).toString());
-            THasil.setText(tbHasilRad.getValueAt(tbHasilRad.getSelectedRow(),3).toString());
-            TKesan.setText(tbHasilRad.getValueAt(tbHasilRad.getSelectedRow(),4).toString());
-            TSaran.setText(tbHasilRad.getValueAt(tbHasilRad.getSelectedRow(),5).toString());
+        if (tbHasilRad.getSelectedRow() != -1) {
+            KodePeriksa.setText(tbHasilRad.getValueAt(tbHasilRad.getSelectedRow(), 1).toString());
+            TJudul.setText(tbHasilRad.getValueAt(tbHasilRad.getSelectedRow(), 2).toString());
+            TKlinis.setText(tbHasilRad.getValueAt(tbHasilRad.getSelectedRow(), 3).toString());
+            THasil.setText(tbHasilRad.getValueAt(tbHasilRad.getSelectedRow(), 4).toString());
+            TKesan.setText(tbHasilRad.getValueAt(tbHasilRad.getSelectedRow(), 5).toString());
+            TSaran.setText(tbHasilRad.getValueAt(tbHasilRad.getSelectedRow(), 6).toString());
         }
     }
-    
-    public JTextField getTextField(){
+
+    public JTextField getTextField() {
         return TKlinis;
     }
 
-    public JTable getTable(){
+    public JTable getTable() {
         return tbHasilRad;
     }
-    
-    public void isCek(){
-        if(var.getkode().equals("Admin Utama")){
+
+    public void isCek() {
+        if (var.getkode().equals("Admin Utama")) {
             MnRestore.setEnabled(true);
-        }else{
+        } else {
             MnRestore.setEnabled(false);
         }
     }
