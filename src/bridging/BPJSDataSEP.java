@@ -89,7 +89,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
     private BPJSCekReferensiKabupaten kabupaten = new BPJSCekReferensiKabupaten(null, false);
     private BPJSCekReferensiKecamatan kecamatan = new BPJSCekReferensiKecamatan(null, false);
     private String prb = "", no_peserta = "", link = "", requestJson, URL = "", jkel = "", duplikat = "",cekdulu = "",
-            user = "", penjamin = "", jasaraharja = "", BPJS = "", Taspen = "", Asabri = "", kddokter = "", dpjplayananbpjs = "",
+            user = "", penjamin = "", jasaraharja = "", BPJS = "", Taspen = "", Asabri = "", kddokter = "", dpjplayananbpjs = "",user1 = "",
             tglkkl = "0000-00-00", antrian = "", klsRawat = "", dpjlayan = "", sep2tambah = "", penjaminan = "", kdppkrujukan = "", nmppkrujukan = "";
     private HttpHeaders headers;
     private HttpEntity requestEntity;
@@ -1283,11 +1283,8 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             System.out.println(e);
         }
 
-        try {
-            user = var.getkode().replace(" ", "").substring(0, 9);
-        } catch (Exception e) {
-            user = var.getkode();
-        }
+        user = var.getkode().replace(" ", "").substring(0, 9);
+        user1 = var.getkode();
         jLabel38.setVisible(false);
         TanggalKKL.setVisible(false);
         jLabel36.setVisible(false);
@@ -7131,7 +7128,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
                     NoRujukan.getText(), KdPpkRujukan.getText(), NmPpkRujukan.getText(), KdPPK.getText(), NmPPK.getText(),
                     JenisPelayanan.getSelectedItem().toString().substring(0, 1), Catatan.getText(), KdPenyakit.getText(),
                     NmPenyakit.getText(), KdPoli.getText(), NmPoli.getText(), Kelas.getSelectedItem().toString().substring(0, 1),
-                    LakaLantas.getSelectedItem().toString().substring(0, 1), user, TNoRM.getText(), TPasien.getText(),
+                    LakaLantas.getSelectedItem().toString().substring(0, 1), user1, TNoRM.getText(), TPasien.getText(),
                     TglLahir.getText(), JenisPeserta.getText(), JK.getText(), NoKartu.getText(),
                     "0000-00-00 00:00:00", AsalRujukan.getSelectedItem().toString(), Eksekutif.getSelectedItem().toString(),
                     COB.getSelectedItem().toString(), penjamin, NoTelp.getText(), Katarak.getSelectedItem().toString(),
@@ -7157,7 +7154,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
                         NmPpkRujukan.getText(), KdPPK.getText(), NmPPK.getText(), JenisPelayanan.getSelectedItem().toString().substring(0, 1), Catatan.getText(), KdPenyakit.getText(), NmPenyakit.getText(),
                         KdPoli.getText(), NmPoli.getText(), Kelas.getSelectedItem().toString().substring(0, 1), (Kelas1.getSelectedIndex() > 0 ? Kelas1.getSelectedItem().toString().substring(0, 1) : ""),
                         (cmbPembiayaan.getSelectedIndex() > 0 ? cmbPembiayaan.getSelectedItem().toString().substring(0, 1) : ""), (pnj.getText().equals("") ? "" : pnj.getText()),
-                        LakaLantas.getSelectedItem().toString().substring(0, 1), user, TNoRM.getText(), TPasien.getText(), TglLahir.getText(), JenisPeserta.getText(), JK.getText(), NoKartu.getText(),
+                        LakaLantas.getSelectedItem().toString().substring(0, 1), user1, TNoRM.getText(), TPasien.getText(), TglLahir.getText(), JenisPeserta.getText(), JK.getText(), NoKartu.getText(),
                         "0000-00-00 00:00:00", AsalRujukan.getSelectedItem().toString(), Eksekutif.getSelectedItem().toString(), COB.getSelectedItem().toString(), NoTelp.getText(), Katarak.getSelectedItem().toString(),
                         tglkkl, Keterangan.getText(), Suplesi.getSelectedItem().toString(), NoSEPSuplesi.getText(), KdPropinsi.getText(), NmPropinsi.getText(), KdKabupaten.getText(), NmKabupaten.getText(),
                         KdKecamatan.getText(), NmKecamatan.getText(), NoSKDP.getText(), KdDPJP.getText(), NmDPJP.getText(), cmbKunjungan.getSelectedItem().toString().substring(0, 1),
