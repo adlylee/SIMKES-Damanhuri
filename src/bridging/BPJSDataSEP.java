@@ -1305,6 +1305,8 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         btnPropinsi.setVisible(false);
         btnKabupaten.setVisible(false);
         btnKecamatan.setVisible(false);
+        jLabel49.setVisible(false);
+        NoLp.setVisible(false);
         link = koneksiDB.UrlBpjs();
 
     }

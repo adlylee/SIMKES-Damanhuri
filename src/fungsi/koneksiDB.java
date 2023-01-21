@@ -50,7 +50,7 @@ public final class koneksiDB {
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai                              \n"+
                         "                                                                           \n"+
-                        "    Paripurna ★ ★ ★ ★ ★                                      \n"+
+                        "    Paripurna * * * * *                                  \n"+
                         "                                                                           \n"+
                         "       SMART , GREEN , AND FRIENDLY HOSPITAL                           \n"+
                         "                                                                           \n"+
