@@ -329,6 +329,9 @@ public final class InformasiTarifRadiologi extends javax.swing.JDialog {
         LCount.setText(""+tabMode.getRowCount());
     }
 
+    public JTable getTable(){
+        return tbJnsPerawatan;
+    }
 
     
 }

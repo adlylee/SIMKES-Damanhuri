@@ -278,11 +278,11 @@ public final class DlgPeriksaRadiologi extends javax.swing.JDialog {
             public void windowClosed(WindowEvent e) {
                 if(var.getform().equals("DlgPeriksaRadiologi")){
                     if(radiologi.getTable().getSelectedRow()!= -1){
-                        TJudul.setText(radiologi.getTable().getValueAt(radiologi.getTable().getSelectedRow(),0).toString());
-                        TKlinis.setText(radiologi.getTable().getValueAt(radiologi.getTable().getSelectedRow(),1).toString());
-                        HasilPeriksa.setText(radiologi.getTable().getValueAt(radiologi.getTable().getSelectedRow(),2).toString());
-                        TKesan.setText(radiologi.getTable().getValueAt(radiologi.getTable().getSelectedRow(),3).toString());
-                        TSaran.setText(radiologi.getTable().getValueAt(radiologi.getTable().getSelectedRow(),4).toString());
+                        TJudul.setText(radiologi.getTable().getValueAt(radiologi.getTable().getSelectedRow(),1).toString());
+                        TKlinis.setText(radiologi.getTable().getValueAt(radiologi.getTable().getSelectedRow(),2).toString());
+                        HasilPeriksa.setText(radiologi.getTable().getValueAt(radiologi.getTable().getSelectedRow(),3).toString());
+                        TKesan.setText(radiologi.getTable().getValueAt(radiologi.getTable().getSelectedRow(),4).toString());
+                        TSaran.setText(radiologi.getTable().getValueAt(radiologi.getTable().getSelectedRow(),5).toString());
                     }
                     TJudul.requestFocus();
                 }
@@ -1569,7 +1569,7 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
             param.put("kesan",TKesan.getText());
             param.put("logo",Sequel.cariGambar("select logo from setting"));
             param.put("klinis",TKlinis.getText());
-
+            param.put("perujuk",Sequel.cariIsi("select perujuk from rujuk_masuk where no_rawat=?",TNoRw.getText()));
             pilihan = (String)JOptionPane.showInputDialog(null,"Silahkan pilih hasil pemeriksaan..!","Hasil Pemeriksaan",JOptionPane.QUESTION_MESSAGE,null,new Object[]{"Pasien IGD","Pasien Rawat Jalan", "Pasien Rawat Inap", "Pasien Dari Luar"},"Pasien IGD");
             switch (pilihan) {
                 case "Pasien IGD":

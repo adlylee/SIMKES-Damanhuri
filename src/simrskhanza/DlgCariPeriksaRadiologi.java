@@ -48,6 +48,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
             Utang_Jasa_Medik_Dokter_Radiologi_Ranap="",Beban_Jasa_Medik_Petugas_Radiologi_Ranap="",
             Utang_Jasa_Medik_Petugas_Radiologi_Ranap="",Beban_Kso_Radiologi_Ranap="",Utang_Kso_Radiologi_Ranap="",
             HPP_Persediaan_Radiologi_Rawat_Inap="",Persediaan_BHP_Radiologi_Rawat_Inap="";
+    private DlgCariHasilPeriksaRad radiologi = new DlgCariHasilPeriksaRad(null,false);
 
     /** Creates new form DlgProgramStudi
      * @param parent
@@ -215,6 +216,34 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
             @Override
             public void windowDeactivated(WindowEvent e) {}
         });
+        
+        radiologi.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {}
+            @Override
+            public void windowClosing(WindowEvent e) {}
+            @Override
+            public void windowClosed(WindowEvent e) {
+                if(var.getform().equals("DlgCariPeriksaRadiologi")){
+                    if(radiologi.getTable().getSelectedRow()!= -1){
+                        TJudul.setText(radiologi.getTable().getValueAt(radiologi.getTable().getSelectedRow(),1).toString());
+                        TKlinis.setText(radiologi.getTable().getValueAt(radiologi.getTable().getSelectedRow(),2).toString());
+                        HasilPeriksa.setText(radiologi.getTable().getValueAt(radiologi.getTable().getSelectedRow(),3).toString());
+                        TKesan.setText(radiologi.getTable().getValueAt(radiologi.getTable().getSelectedRow(),4).toString());
+                        TSaran.setText(radiologi.getTable().getValueAt(radiologi.getTable().getSelectedRow(),5).toString());
+                    }
+                    TJudul.requestFocus();
+                }
+            }
+            @Override
+            public void windowIconified(WindowEvent e) {}
+            @Override
+            public void windowDeiconified(WindowEvent e) {}
+            @Override
+            public void windowActivated(WindowEvent e) {}
+            @Override
+            public void windowDeactivated(WindowEvent e) {}
+        });
 
         try {
             psrekening=koneksi.prepareStatement("select * from set_akun_ranap");
@@ -280,6 +309,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         TJudul = new widget.TextBox();
         label19 = new widget.Label();
         TKlinis = new widget.TextBox();
+        btnHasilRad = new widget.Button();
         Scroll3 = new widget.ScrollPane();
         HasilPeriksa = new widget.TextArea();
         Penjab = new widget.TextBox();
@@ -305,6 +335,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         NmPtgUbah = new widget.TextBox();
         btnPetugas1 = new widget.Button();
         NoOrder = new widget.TextBox();
+        Perujuk = new widget.TextBox();
         internalFrame1 = new widget.InternalFrame();
         scrollPane1 = new widget.ScrollPane();
         tbDokter = new widget.Table();
@@ -528,7 +559,6 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         label19.setName("label19"); // NOI18N
         label19.setPreferredSize(new java.awt.Dimension(48, 23));
         panelisi7.add(label19);
-        label19.getAccessibleContext().setAccessibleName("Klinis : ");
 
         TKlinis.setToolTipText("Alt+C");
         TKlinis.setName("TKlinis"); // NOI18N
@@ -539,6 +569,17 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
             }
         });
         panelisi7.add(TKlinis);
+
+        btnHasilRad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
+        btnHasilRad.setMnemonic('2');
+        btnHasilRad.setToolTipText("Alt+2");
+        btnHasilRad.setName("btnHasilRad"); // NOI18N
+        btnHasilRad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHasilRadActionPerformed(evt);
+            }
+        });
+        panelisi7.add(btnHasilRad);
 
         internalFrame6.add(panelisi7, java.awt.BorderLayout.PAGE_START);
 
@@ -714,6 +755,10 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
 
         NoOrder.setName("NoOrder"); // NOI18N
         NoOrder.setPreferredSize(new java.awt.Dimension(207, 23));
+
+        Perujuk.setEditable(false);
+        Perujuk.setHighlighter(null);
+        Perujuk.setName("Perujuk"); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -1554,7 +1599,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             Sequel.cariIsi("select jk from pasien where no_rkm_medis=? ",Jk,NoRM.getText());
             Sequel.cariIsi("select umur from pasien where no_rkm_medis=?",Umur,NoRM.getText());
             Sequel.cariIsi("select alamat from pasien where no_rkm_medis=? ",Alamat,NoRM.getText());
-
+            Sequel.cariIsi("select perujuk from rujuk_masuk where no_rawat=?",Perujuk,Kd2.getText());
             kamar=Sequel.cariIsi("select ifnull(kd_kamar,'') from kamar_inap where no_rawat='"+Kd2.getText()+"' order by tgl_masuk desc limit 1");
             if(!kamar.equals("")){
                 namakamar=kamar+", "+Sequel.cariIsi("select nm_bangsal from bangsal inner join kamar on bangsal.kd_bangsal=kamar.kd_bangsal "+
@@ -1593,6 +1638,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             param.put("kesan",TKesan.getText());
             param.put("logo",Sequel.cariGambar("select logo from setting"));
             param.put("klinis",TKlinis.getText());
+            param.put("perujuk",Perujuk.getText());
             pilihan = (String)JOptionPane.showInputDialog(null,"Silahkan pilih hasil pemeriksaan..!","Hasil Pemeriksaan",JOptionPane.QUESTION_MESSAGE,null,new Object[]{"Pasien IGD","Pasien Rawat Jalan", "Pasien Rawat Inap", "Pasien Dari Luar"},"Pasien IGD");
             switch (pilihan) {
                 case "Pasien IGD":
@@ -1777,6 +1823,15 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         // TODO add your handling code here:
     }//GEN-LAST:event_TKlinisKeyPressed
 
+    private void btnHasilRadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHasilRadActionPerformed
+        var.setform("DlgCariPeriksaRadiologi");
+        radiologi.emptTeks();
+        radiologi.isCek();
+        radiologi.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
+        radiologi.setLocationRelativeTo(internalFrame1);
+        radiologi.setVisible(true);
+    }//GEN-LAST:event_btnHasilRadActionPerformed
+
     private void TJudulKeyPressed(java.awt.event.KeyEvent evt) {
         // TODO add your handling code here:
     }
@@ -1835,6 +1890,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.TextBox NoRM;
     private widget.TextBox NoRawat;
     private widget.TextBox Penjab;
+    private widget.TextBox Perujuk;
     private widget.ScrollPane Scroll3;
     private widget.TextBox TCari;
     private widget.TextBox TJudul;
@@ -1848,6 +1904,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private javax.swing.JDialog WindowHasil;
     private widget.Button btnDokter;
     private widget.Button btnDokterPj;
+    private widget.Button btnHasilRad;
     private widget.Button btnPasien;
     private widget.Button btnPetugas;
     private widget.Button btnPetugas1;
