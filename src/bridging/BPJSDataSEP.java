@@ -1283,7 +1283,11 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             System.out.println(e);
         }
 
-        user = var.getkode().replace(" ", "").substring(0, 9);
+        try {
+            user = var.getkode().replace(" ", "").substring(0, 9);
+        } catch (Exception e){
+            user = var.getkode();
+        }
         user1 = var.getkode();
         jLabel38.setVisible(false);
         TanggalKKL.setVisible(false);
@@ -5023,7 +5027,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
                     tglkkl = Valid.SetTgl(TanggalKKL.getSelectedItem() + "");
                 }
 
-                if (Sequel.menyimpantf("bridging_sep", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "SEP", 44, new String[]{
+                if (Sequel.menyimpantf("bridging_sep", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "SEP", 47, new String[]{
                     NoSEP.getText(), TNoRw.getText(), Valid.SetTgl(TanggalSEP.getSelectedItem() + ""), Valid.SetTgl(TanggalRujuk.getSelectedItem() + ""),
                     NoRujukan.getText(), KdPpkRujukan.getText(), NmPpkRujukan.getText(), KdPPK.getText(), NmPPK.getText(),
                     JenisPelayanan.getSelectedItem().toString().substring(0, 1), Catatan.getText(), KdPenyakit.getText(),
@@ -5031,10 +5035,10 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
                     LakaLantas.getSelectedItem().toString().substring(0, 1), user, TNoRM.getText(), TPasien.getText(),
                     TglLahir.getText(), JenisPeserta.getText(), JK.getText(), NoKartu.getText(),
                     "0000-00-00 00:00:00", AsalRujukan.getSelectedItem().toString(), Eksekutif.getSelectedItem().toString(),
-                    COB.getSelectedItem().toString(), penjamin, NoTelp.getText(), Katarak.getSelectedItem().toString().substring(0, 1),
-                    tglkkl, Keterangan.getText(), Suplesi.getSelectedItem().toString().substring(0, 1),
+                    COB.getSelectedItem().toString(), penjamin, NoTelp.getText(), Katarak.getSelectedItem().toString(),
+                    tglkkl, Keterangan.getText(), NoLp.getText(), Suplesi.getSelectedItem().toString(),
                     NoSEPSuplesi.getText(), KdPropinsi.getText(), NmPropinsi.getText(), KdKabupaten.getText(), NmKabupaten.getText(),
-                    KdKecamatan.getText(), NmKecamatan.getText(), NoSKDP.getText(), KdDPJP.getText(), NmDPJP.getText()
+                    KdKecamatan.getText(), NmKecamatan.getText(), NoSKDP.getText(), KdDPJP.getText(), NmDPJP.getText(), KdDPJPLayan.getText(), NmDPJPLayan.getText()
                 }) == true) {
                     tampil();
                     WindowCariSEP.dispose();
