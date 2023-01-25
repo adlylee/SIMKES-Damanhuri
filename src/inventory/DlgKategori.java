@@ -86,7 +86,7 @@ public final class DlgKategori extends javax.swing.JDialog {
         tbKamar.setDefaultRenderer(Object.class, new WarnaTable());
         
         Kd.setDocument(new batasInput((byte)4).getKata(Kd));
-        Nm.setDocument(new batasInput((byte)30).getKata(Nm));
+        Nm.setDocument(new batasInput((byte)40).getKata(Nm));
         TCari.setDocument(new batasInput((byte)100).getKata(TCari));
         if(koneksiDB.cariCepat().equals("aktif")){
             TCari.getDocument().addDocumentListener(new javax.swing.event.DocumentListener(){
