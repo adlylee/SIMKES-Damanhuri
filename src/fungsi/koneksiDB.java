@@ -46,9 +46,13 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" +
-                        "    Version 19.01.2023 [ 1.0.9 ] [Activated] GO AKREDITASI \n"+
+                        "    Version 21.01.2023 [ 1.0.10 ] [Activated] GO KLAIM DIGITAL \n"+
                         "                                                                           \n"+
-                        "    RSUD H. Damanhuri Barabai . SMART , GREEN , AND FRIENDLY HOSPITAL      \n"+
+                        "    RSUD H. Damanhuri Barabai                              \n"+
+                        "                                                                           \n"+
+                        "    Paripurna * * * * *                                  \n"+
+                        "                                                                           \n"+
+                        "       SMART , GREEN , AND FRIENDLY HOSPITAL                           \n"+
                         "                                                                           \n"+
                         "    * Known Bug :                                                           \n"+
                         "       - Rekap Diet                                            \n"+
@@ -57,7 +61,8 @@ public final class koneksiDB {
                         "       - Klinis Radiologi                                              \n"+
                         "       - Sirkulasi Non Medis                                              \n"+
                         "       - Sirkulasi Medis                                              \n"+
-                        "       - Pasien Lanjutan & Internal Lanjutan                                              \n"+
+                        "       - Pasien Lanjutan & Internal Lanjutan                            \n"+
+                        "       - No LP Kecelakaan                                              \n"+
                         "                                                                       \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);

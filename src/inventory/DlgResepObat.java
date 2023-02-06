@@ -63,6 +63,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
     private DlgAturanPakai aturanpakai = new DlgAturanPakai(null, false);
     private int i = 0, pilihan = 0;
     private String kamar = "", namakamar = "", query, querypulang;
+    private boolean ceksukses = false;
 
 //private frmUtama id = new frmUtama(null,false); 
     /**
@@ -2604,13 +2605,10 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             if (tbResep.getValueAt(tbResep.getSelectedRow(), 1).toString().trim().equals("")) {
                 Valid.textKosong(TCari, "No. Resep");
             } else {
-                if (Sequel.menyimpantf("antrian_apotek", "?,?,?,?,?", "No. Resep", 5, new String[]{
-                    tbResep.getValueAt(tbResep.getSelectedRow(), 1).toString(), tbResep.getValueAt(tbResep.getSelectedRow(), 2).toString().substring(0, 17), NoAntri.getText(), "00:00:00", "00:00:00"
-                }) == true) {
-                    emptTeks();
-                    tampil();
-                    WindowInput7.dispose();
-                }
+                isNoAntrian();
+                emptTeks();
+                tampil();
+                WindowInput7.dispose();
             }
         }
     }//GEN-LAST:event_BtnSimpan7ActionPerformed
@@ -3663,5 +3661,32 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 
     private void autoNomor() {
         Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_antrian,3),signed)),0) from antrian_apotek where tgl_perawatan='" + Valid.SetTgl(DTPCari1.getSelectedItem() + "") + "'", "", 3, NoAntri);
+    }
+
+    private void isNoAntrian() {
+        ceksukses = false;
+
+        if (Sequel.menyimpantf("antrian_apotek", "?,?,?,?,?", "No. Resep", 5, new String[]{
+            tbResep.getValueAt(tbResep.getSelectedRow(), 1).toString(), tbResep.getValueAt(tbResep.getSelectedRow(), 2).toString().substring(0, 17), NoAntri.getText(), "00:00:00", "00:00:00"
+        }) == true) {
+            ceksukses = true;
+        } else {
+            autoNomor();
+            if (Sequel.menyimpantf("antrian_apotek", "?,?,?,?,?", "No. Resep", 5, new String[]{
+                tbResep.getValueAt(tbResep.getSelectedRow(), 1).toString(), tbResep.getValueAt(tbResep.getSelectedRow(), 2).toString().substring(0, 17), NoAntri.getText(), "00:00:00", "00:00:00"
+            }) == true) {
+                ceksukses = true;
+            } else {
+                autoNomor();
+                if (Sequel.menyimpantf("antrian_apotek", "?,?,?,?,?", "No. Resep", 5, new String[]{
+                    tbResep.getValueAt(tbResep.getSelectedRow(), 1).toString(), tbResep.getValueAt(tbResep.getSelectedRow(), 2).toString().substring(0, 17), NoAntri.getText(), "00:00:00", "00:00:00"
+                }) == true) {
+                    ceksukses = true;
+                } else {
+                    TNoAntrian.requestFocus();
+                    autoNomor();
+                }
+            }
+        }
     }
 }
