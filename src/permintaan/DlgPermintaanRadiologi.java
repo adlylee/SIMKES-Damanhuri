@@ -1285,6 +1285,9 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
                         CmbJam.getSelectedItem()+":"+CmbMenit.getSelectedItem()+":"+CmbDetik.getSelectedItem(), 
                         "0000-00-00","00:00:00","0000-00-00","00:00:00",KodePerujuk.getText(),status.replaceAll("R","r")
                     })==true){
+                        Sequel.menyimpan("diagnosa_pasien_klinis","?,?","No.Permintaan",2,new String[]{
+                            TNoPermintaan.getText(),TKlinis.getText()
+                        });
                     for(i=0;i<tbPemeriksaan.getRowCount();i++){ 
                         if(tbPemeriksaan.getValueAt(i,0).toString().equals("true")){
                             Sequel.menyimpan2("permintaan_pemeriksaan_radiologi","?,?,?","pemeriksaan lab",3,new String[]{

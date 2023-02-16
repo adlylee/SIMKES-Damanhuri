@@ -23,8 +23,6 @@
 	<parameter name="noresep" class="java.lang.String"/>
 	<parameter name="kamar" class="java.lang.String"/>
 	<parameter name="namakamar" class="java.lang.String"/>
-	<parameter name="noantrian" class="java.lang.String"/>
-
 	<queryString>
 		<![CDATA[select databarang.kode_brng,databarang.nama_brng,detail_pemberian_obat.jml,
 detail_pemberian_obat.biaya_obat,detail_pemberian_obat.embalase,databarang.kode_sat,
@@ -277,14 +275,6 @@ where detail_pemberian_obat.tgl_perawatan=$P{tanggal} and detail_pemberian_obat.
 				</textElement>
 				<textFieldExpression><![CDATA[$P{noresep}]]></textFieldExpression>
 			</textField>
-						<staticText>
-				<reportElement mode="Transparent" x="450" y="98" width="78" height="10" uuid="30d686b9-2362-44ee-80ea-92f0c580a990"/>
-				<textElement markup="none">
-					<font fontName="Tahoma" size="8"/>
-					<paragraph lineSpacing="Single"/>
-				</textElement>
-				<text><![CDATA[No. Antrian Apotik ]]></text>
-			</staticText>
 		</band>
 	</title>
 	<pageHeader>

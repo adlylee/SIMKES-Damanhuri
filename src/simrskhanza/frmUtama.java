@@ -388,6 +388,7 @@ import tranfusidarah.UTDStokDarah;
 import informasi.InformasiKerohanian;
 import java.awt.geom.RoundRectangle2D;
 import laporan.DlgFrekuensiPenyakitRalanDanRanap;
+import laporan.DlgFrekuensiPenyakitRanapBaru;
 import permintaan.DlgCariPermintaanUTD;
 
 
@@ -940,6 +941,7 @@ public class frmUtama extends javax.swing.JFrame {
         btnRekapDiet = new widget.ButtonBig();
         btnUTDPermintaan = new widget.ButtonBig();
         btnSetSubAkun = new widget.ButtonBig();
+        btnFrekuensiPenyakitRanapBaru = new widget.ButtonBig();
         internalFrame1 = new widget.InternalFrame();
         BtnMenu = new widget.ButtonBig();
         jSeparator4 = new javax.swing.JSeparator();
@@ -1117,7 +1119,7 @@ public class frmUtama extends javax.swing.JFrame {
         WindowInput.setUndecorated(true);
         WindowInput.setResizable(false);
 
-        internalFrame6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Ubah Password ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Ubah Password ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame6.setName("internalFrame6"); // NOI18N
         internalFrame6.setLayout(null);
 
@@ -1196,7 +1198,7 @@ public class frmUtama extends javax.swing.JFrame {
         DlgHome.setUndecorated(true);
         DlgHome.setResizable(false);
 
-        panelMenu.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 225, 205)), "::[ Menu Utama ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(60, 60, 60))); // NOI18N
+        panelMenu.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 225, 205)), "::[ Menu Utama ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(60, 60, 60))); // NOI18N
         panelMenu.setName("panelMenu"); // NOI18N
         panelMenu.setPreferredSize(new java.awt.Dimension(2412, 3653));
         panelMenu.setLayout(new java.awt.BorderLayout(1, 1));
@@ -5641,7 +5643,7 @@ public class frmUtama extends javax.swing.JFrame {
 
         tanggal.setEditable(false);
         tanggal.setForeground(new java.awt.Color(50, 70, 50));
-        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "15/01/2023" }));
+        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "04/02/2023" }));
         tanggal.setDisplayFormat("dd/MM/yyyy");
         tanggal.setName("tanggal"); // NOI18N
         tanggal.setOpaque(false);
@@ -5851,6 +5853,17 @@ public class frmUtama extends javax.swing.JFrame {
         btnSetSubAkun.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSetSubAkunActionPerformed(evt);
+            }
+        });
+
+        btnFrekuensiPenyakitRanapBaru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/applications-office.png"))); // NOI18N
+        btnFrekuensiPenyakitRanapBaru.setText("10 Besar Penyakit Ranap (Dx Masuk)");
+        btnFrekuensiPenyakitRanapBaru.setIconTextGap(0);
+        btnFrekuensiPenyakitRanapBaru.setName("btnFrekuensiPenyakitRanapBaru"); // NOI18N
+        btnFrekuensiPenyakitRanapBaru.setPreferredSize(new java.awt.Dimension(200, 90));
+        btnFrekuensiPenyakitRanapBaru.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFrekuensiPenyakitRanapBaruActionPerformed(evt);
             }
         });
 
@@ -12269,6 +12282,17 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_btnSetSubAkunActionPerformed
 
+    private void btnFrekuensiPenyakitRanapBaruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFrekuensiPenyakitRanapBaruActionPerformed
+        isTutup();
+        DlgHome.dispose();
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        DlgFrekuensiPenyakitRanapBaru aplikasi=new DlgFrekuensiPenyakitRanapBaru(this,false);
+        aplikasi.setSize(PanelUtama.getWidth(), PanelUtama.getHeight());
+        aplikasi.setLocationRelativeTo(PanelUtama);
+        aplikasi.setVisible(true);
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_btnFrekuensiPenyakitRanapBaruActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -12405,6 +12429,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private widget.ButtonBig btnDisplay;
     private widget.ButtonBig btnDisplayApotek;
     private widget.ButtonBig btnDokter;
+    private widget.ButtonBig btnFrekuensiPenyakitRanapBaru;
     private widget.ButtonBig btnFrekuensiRalan;
     private widget.ButtonBig btnFrekuensiRalanDanRanap;
     private widget.ButtonBig btnFrekuensiRanap;
@@ -14038,6 +14063,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
                 Panelmenu.add(btnFrekuensiRanap); 
                 Panelmenu.add(btnFrekuensiRanapPerDokter);
                 Panelmenu.add(btnFrekuensiRalanDanRanap);
+                Panelmenu.add(btnFrekuensiPenyakitRanapBaru);
                 jmlmenu++;
             }
 
@@ -15881,6 +15907,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             Panelmenu.add(btnFrekuensiRanap);
             Panelmenu.add(btnFrekuensiRanapPerDokter);
             Panelmenu.add(btnFrekuensiRalanDanRanap);
+            Panelmenu.add(btnFrekuensiPenyakitRanapBaru);
             jmlmenu++;
         }
 
@@ -18082,6 +18109,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
                 Panelmenu.add(btnFrekuensiRanap);
                 Panelmenu.add(btnFrekuensiRanapPerDokter); 
                 Panelmenu.add(btnFrekuensiRalanDanRanap);
+                Panelmenu.add(btnFrekuensiPenyakitRanapBaru);
                 jmlmenu++;
             }                
         }

@@ -67,7 +67,7 @@ public final class DlgRawatJalan extends javax.swing.JDialog {
     private validasi Valid=new validasi();
     private DlgPasien pasien=new DlgPasien(null,false);
     private DlgCariDokter dokter=new DlgCariDokter(null,false);
-    public  DlgCariPetugas petugas=new DlgCariPetugas(null,false);       
+    public  DlgCariPetugas petugas=new DlgCariPetugas(null,false);
     private PreparedStatement ps,ps2,ps3,ps4,ps5,ps6,pstindakan,psset_tarif;
     private ResultSet rs,rstindakan,rsset_tarif;
     private int i=0,jmlparsial=0,jml=0,index=0;
@@ -1019,6 +1019,7 @@ public final class DlgRawatJalan extends javax.swing.JDialog {
         KdDok3 = new widget.TextBox();
         TDokter3 = new widget.TextBox();
         BtnSeekDokter3 = new widget.Button();
+        BtnCariCatatan = new widget.Button();
         Scroll11 = new widget.ScrollPane();
         tbCatatan = new widget.Table();
         FormInput = new widget.PanelBiasa();
@@ -1307,7 +1308,7 @@ public final class DlgRawatJalan extends javax.swing.JDialog {
         panelGlass9.add(jLabel19);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "23-11-2022" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-02-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -1321,7 +1322,7 @@ public final class DlgRawatJalan extends javax.swing.JDialog {
         panelGlass9.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "23-11-2022" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-02-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -2137,6 +2138,25 @@ public final class DlgRawatJalan extends javax.swing.JDialog {
         panelGlass15.add(BtnSeekDokter3);
         BtnSeekDokter3.setBounds(749, 10, 28, 23);
 
+        BtnCariCatatan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Search-16x16.png"))); // NOI18N
+        BtnCariCatatan.setMnemonic('M');
+        BtnCariCatatan.setText("Cari Catatan Terakhir");
+        BtnCariCatatan.setToolTipText("Alt+M");
+        BtnCariCatatan.setName("BtnCariCatatan"); // NOI18N
+        BtnCariCatatan.setPreferredSize(new java.awt.Dimension(100, 30));
+        BtnCariCatatan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCariCatatanActionPerformed(evt);
+            }
+        });
+        BtnCariCatatan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnCariCatatanKeyPressed(evt);
+            }
+        });
+        panelGlass15.add(BtnCariCatatan);
+        BtnCariCatatan.setBounds(780, 80, 180, 30);
+
         PanelInput3.add(panelGlass15, java.awt.BorderLayout.CENTER);
 
         internalFrame8.add(PanelInput3, java.awt.BorderLayout.PAGE_START);
@@ -2202,7 +2222,7 @@ public final class DlgRawatJalan extends javax.swing.JDialog {
         jLabel23.setBounds(554, 10, 60, 23);
 
         DTPTgl.setForeground(new java.awt.Color(50, 70, 50));
-        DTPTgl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "23-11-2022" }));
+        DTPTgl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-02-2023" }));
         DTPTgl.setDisplayFormat("dd-MM-yyyy");
         DTPTgl.setName("DTPTgl"); // NOI18N
         DTPTgl.setOpaque(false);
@@ -4018,6 +4038,18 @@ private void BtnEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
         // TODO add your handling code here:
     }//GEN-LAST:event_TKeluhan2KeyPressed
 
+    private void BtnCariCatatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCariCatatanActionPerformed
+        tampilCatatanTerakhir();
+    }//GEN-LAST:event_BtnCariCatatanActionPerformed
+
+    private void BtnCariCatatanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnCariCatatanKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_PAGE_DOWN){
+            BtnCariCatatanActionPerformed(null);
+        }else{
+            Valid.pindah(evt, BtnHapus, BtnPrint);
+        }
+    }//GEN-LAST:event_BtnCariCatatanKeyPressed
+
     /**
     * @param args the command line arguments
     */
@@ -4039,6 +4071,7 @@ private void BtnEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
     private widget.Button BtnBatal;
     private widget.Button BtnBerkasDigital;
     private widget.Button BtnCari;
+    private widget.Button BtnCariCatatan;
     private widget.Button BtnCatatan;
     private widget.Button BtnCopyResep;
     private widget.Button BtnEdit;
@@ -5450,5 +5483,44 @@ private void BtnEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
         BtnBatalActionPerformed(null);
         TabRawat.setSelectedIndex(3);
     }
-
-}
+    
+    private void tampilCatatanTerakhir() {
+        Valid.tabelKosong(TabModeCatatan);
+        try{  
+            ps4=koneksi.prepareStatement("select catatan_perawatan.no_rawat,reg_periksa.no_rkm_medis,pasien.nm_pasien,"+
+                    "catatan_perawatan.tanggal,catatan_perawatan.jam,catatan_perawatan.kd_dokter,dokter.nm_dokter,"+
+                    "catatan_perawatan.catatan from pasien inner join reg_periksa inner join catatan_perawatan inner join dokter "+
+                    "on catatan_perawatan.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "+
+                    "and catatan_perawatan.kd_dokter=dokter.kd_dokter where reg_periksa.no_rkm_medis like ? "+
+                    "order by catatan_perawatan.no_rawat desc limit 2"); 
+            try{
+                ps4.setString(1,"%"+TCariPasien.getText()+"%");
+                rs=ps4.executeQuery();
+                while(rs.next()){
+                    TabModeCatatan.addRow(new Object[]{false,rs.getString(1),
+                                   rs.getString(2),
+                                   rs.getString(3),
+                                   rs.getString(4),
+                                   rs.getString(5),
+                                   rs.getString(6),
+                                   rs.getString(7),
+                                   rs.getString(8)
+                    });
+                }
+            } catch (Exception e) {
+                System.out.println("Notifikasi Catatan : "+e);
+            } finally{
+                if(rs!=null){
+                    rs.close();
+                }
+                if(ps4!=null){
+                    ps4.close();
+                }
+            }                  
+        }catch(Exception e){
+            System.out.println("Notifikasi : "+e);
+        }
+        LCount.setText(""+TabModeCatatan.getRowCount());
+    }
+                
+                }

@@ -459,7 +459,6 @@ public final class DlgKunjunganRanap extends javax.swing.JDialog {
         TabRawat.setBackground(new java.awt.Color(255, 255, 254));
         TabRawat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(239, 244, 234)));
         TabRawat.setForeground(new java.awt.Color(70, 70, 70));
-        TabRawat.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         TabRawat.setName("TabRawat"); // NOI18N
         TabRawat.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -546,7 +545,7 @@ public final class DlgKunjunganRanap extends javax.swing.JDialog {
         });
         panelGlass5.add(TCari);
 
-        cmbCari.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Diagnosa", "No Rekam Medis", "Nama" }));
+        cmbCari.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Diagnosa", "No Rekam Medis", "Nama", "Dokter" }));
         cmbCari.setName("cmbCari"); // NOI18N
         cmbCari.setPreferredSize(new java.awt.Dimension(120, 23));
         panelGlass5.add(cmbCari);

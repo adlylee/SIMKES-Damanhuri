@@ -1,9 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+    /*
+ * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package askep;
+
+/*
+ * DlgSpesialis.java
+ *
+ * Created on May 23, 2010, 1:25:13 AM
+ */
+
+package rekammedis;
+
 import fungsi.WarnaTable;
 import fungsi.batasInput;
 import fungsi.koneksiDB;
@@ -22,9 +29,9 @@ import javax.swing.table.TableColumn;
 
 /**
  *
- * @author root
+ * @author dosen
  */
-public class DlgMasalahKeperawatan extends javax.swing.JDialog {
+public class DlgMasterTriasePemeriksaan extends javax.swing.JDialog {
     private final DefaultTableModel tabMode;
     private Connection koneksi=koneksiDB.condb();
     private sekuel Sequel=new sekuel();
@@ -35,12 +42,12 @@ public class DlgMasalahKeperawatan extends javax.swing.JDialog {
     /** Creates new form DlgSpesialis
      * @param parent
      * @param modal */
-    public DlgMasalahKeperawatan(java.awt.Frame parent, boolean modal) {
+    public DlgMasterTriasePemeriksaan(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
 
 
-        Object[] row={"Kode","Masalah Keperawatan"};
+        Object[] row={"Kode","Pemeriksaan"};
         tabMode=new DefaultTableModel(null,row){
               @Override public boolean isCellEditable(int rowIndex, int colIndex){return false;}
         };
@@ -63,8 +70,8 @@ public class DlgMasalahKeperawatan extends javax.swing.JDialog {
         tbSpesialis.setDefaultRenderer(Object.class, new WarnaTable());
 
         TKd.setDocument(new batasInput((byte)3).getKata(TKd));
-        TNm.setDocument(new batasInput((int)100).getKata(TNm));
-        TCari.setDocument(new batasInput((int)100).getKata(TCari));
+        TNm.setDocument(new batasInput((int)150).getKata(TNm));
+        TCari.setDocument(new batasInput((byte)100).getKata(TCari));
         if(koneksiDB.cariCepat().equals("aktif")){
             TCari.getDocument().addDocumentListener(new javax.swing.event.DocumentListener(){
                 @Override
@@ -133,7 +140,7 @@ public class DlgMasalahKeperawatan extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Master Masalah Keperawatan ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(50, 50, 50))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Master Triase Pemeriksaan ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(50,50,50))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -342,10 +349,10 @@ public class DlgMasalahKeperawatan extends javax.swing.JDialog {
         panelGlass7.add(jLabel3);
         jLabel3.setBounds(2, 10, 43, 23);
 
-        jLabel4.setText("Masalah Keperawatan :");
+        jLabel4.setText("Pemeriksaan :");
         jLabel4.setName("jLabel4"); // NOI18N
         panelGlass7.add(jLabel4);
-        jLabel4.setBounds(122, 10, 130, 23);
+        jLabel4.setBounds(122, 10, 100, 23);
 
         TKd.setHighlighter(null);
         TKd.setName("TKd"); // NOI18N
@@ -364,7 +371,7 @@ public class DlgMasalahKeperawatan extends javax.swing.JDialog {
             }
         });
         panelGlass7.add(TNm);
-        TNm.setBounds(255, 10, 260, 23);
+        TNm.setBounds(225, 10, 290, 23);
 
         internalFrame1.add(panelGlass7, java.awt.BorderLayout.PAGE_START);
 
@@ -385,9 +392,9 @@ public class DlgMasalahKeperawatan extends javax.swing.JDialog {
         if(TKd.getText().trim().equals("")){
             Valid.textKosong(TKd,"Kode");
         }else if(TNm.getText().trim().equals("")){
-            Valid.textKosong(TNm,"Masalah");
+            Valid.textKosong(TNm,"Pemeriksaan");
         }else{
-            Sequel.menyimpan("master_masalah_keperawatan","'"+TKd.getText()+"','"+TNm.getText()+"'","Kode");
+            Sequel.menyimpan("master_triase_pemeriksaan","'"+TKd.getText()+"','"+TNm.getText()+"'","Kode");
             tampil();
             emptTeks();
         }
@@ -412,7 +419,7 @@ public class DlgMasalahKeperawatan extends javax.swing.JDialog {
 }//GEN-LAST:event_BtnBatalKeyPressed
 
     private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHapusActionPerformed
-        Valid.hapusTable(tabMode,TKd,"master_masalah_keperawatan","kode_masalah");
+        Valid.hapusTable(tabMode,TKd,"master_triase_pemeriksaan","kode_pemeriksaan");
         tampil();
         emptTeks();
 }//GEN-LAST:event_BtnHapusActionPerformed
@@ -429,10 +436,10 @@ public class DlgMasalahKeperawatan extends javax.swing.JDialog {
         if(TKd.getText().trim().equals("")){
             Valid.textKosong(TKd,"Kode");
         }else if(TNm.getText().trim().equals("")){
-            Valid.textKosong(TNm,"Masalah");
+            Valid.textKosong(TNm,"Pemeriksaan");
         }else{
             if(tbSpesialis.getSelectedRow()> -1){
-                Sequel.mengedit("master_masalah_keperawatan","kode_masalah=?","kode_masalah=?,nama_masalah=?",3,new String[]{
+                Sequel.mengedit("master_triase_pemeriksaan","kode_pemeriksaan=?","kode_pemeriksaan=?,nama_pemeriksaan=?",3,new String[]{
                     TKd.getText(),TNm.getText(),tbSpesialis.getValueAt(tbSpesialis.getSelectedRow(),0).toString()
                 });
                 if(tabMode.getRowCount()!=0){tampil();}
@@ -543,7 +550,7 @@ public class DlgMasalahKeperawatan extends javax.swing.JDialog {
     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
-            DlgMasalahKeperawatan dialog = new DlgMasalahKeperawatan(new javax.swing.JFrame(), true);
+            DlgMasterTriasePemeriksaan dialog = new DlgMasterTriasePemeriksaan(new javax.swing.JFrame(), true);
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -582,7 +589,9 @@ public class DlgMasalahKeperawatan extends javax.swing.JDialog {
     private void tampil() {
         Valid.tabelKosong(tabMode);
         try{
-            ps=koneksi.prepareStatement("select * from master_masalah_keperawatan where master_masalah_keperawatan.kode_masalah like ? or master_masalah_keperawatan.nama_masalah like ? order by master_masalah_keperawatan.kode_masalah");
+//            ps=koneksi.prepareStatement("select * from master_triase_pemeriksaan where master_triase_pemeriksaan.kode_pemeriksaan like ? or master_triase_pemeriksaan.nama_pemeriksaan like ? order by master_triase_pemeriksaan.kode_pemeriksaan");
+            ps=koneksi.prepareStatement("select * from master_triase_igd where master_triase_igd.kd_pemeriksaan like ? or "
+                    + "master_triase_igd.nm_pemeriksaan like ? group by master_triase_igd.kd_pemeriksaan order by master_triase_igd.kd_pemeriksaan");
             try {
                 ps.setString(1,"%"+TCari.getText().trim()+"%");
                 ps.setString(2,"%"+TCari.getText().trim()+"%");
@@ -627,8 +636,8 @@ public class DlgMasalahKeperawatan extends javax.swing.JDialog {
     }
     
     public void isCek(){
-//       BtnSimpan.setEnabled(akses.getmaster_masalah_keperawatan());
-//       BtnHapus.setEnabled(akses.getmaster_masalah_keperawatan());
-//       BtnEdit.setEnabled(akses.getmaster_masalah_keperawatan());
+//       BtnSimpan.setEnabled(var.getmaster_triase_pemeriksaan());
+//       BtnHapus.setEnabled(var.getmaster_triase_pemeriksaan());
+//       BtnEdit.setEnabled(var.getmaster_triase_pemeriksaan());
     }
 }

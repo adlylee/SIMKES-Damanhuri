@@ -246,8 +246,6 @@ public final class DlgPermintaanKerohanian extends javax.swing.JDialog {
         jLabel15 = new widget.Label();
         jLabel4 = new widget.Label();
         TNoPermintaan = new widget.TextBox();
-        jLabel11 = new widget.Label();
-        Ket = new widget.TextBox();
         jLabel5 = new widget.Label();
         TKdKamar = new widget.TextBox();
         jPanel1 = new javax.swing.JPanel();
@@ -378,7 +376,7 @@ public final class DlgPermintaanKerohanian extends javax.swing.JDialog {
 
         FormInput.setName("FormInput"); // NOI18N
         FormInput.setOpaque(false);
-        FormInput.setPreferredSize(new java.awt.Dimension(560, 185));
+        FormInput.setPreferredSize(new java.awt.Dimension(560, 129));
         FormInput.setLayout(new java.awt.BorderLayout(1, 1));
 
         ChkInput.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/143.png"))); // NOI18N
@@ -404,7 +402,7 @@ public final class DlgPermintaanKerohanian extends javax.swing.JDialog {
         FormInput.add(ChkInput, java.awt.BorderLayout.PAGE_END);
 
         PanelInput.setName("PanelInput"); // NOI18N
-        PanelInput.setPreferredSize(new java.awt.Dimension(560, 156));
+        PanelInput.setPreferredSize(new java.awt.Dimension(560, 109));
         PanelInput.setLayout(null);
 
         jLabel3.setText("No.Rawat :");
@@ -435,7 +433,7 @@ public final class DlgPermintaanKerohanian extends javax.swing.JDialog {
         PanelInput.add(jLabel9);
         jLabel9.setBounds(0, 42, 92, 23);
 
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "19-11-2022" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "06-02-2023" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy");
         Tanggal.setName("Tanggal"); // NOI18N
         Tanggal.setOpaque(false);
@@ -504,16 +502,6 @@ public final class DlgPermintaanKerohanian extends javax.swing.JDialog {
         });
         PanelInput.add(TNoPermintaan);
         TNoPermintaan.setBounds(288, 72, 130, 23);
-
-        jLabel11.setText("Keterangan :");
-        jLabel11.setName("jLabel11"); // NOI18N
-        PanelInput.add(jLabel11);
-        jLabel11.setBounds(0, 102, 92, 23);
-
-        Ket.setHighlighter(null);
-        Ket.setName("Ket"); // NOI18N
-        PanelInput.add(Ket);
-        Ket.setBounds(95, 102, 538, 50);
 
         jLabel5.setText("Kode Kamar :");
         jLabel5.setName("jLabel5"); // NOI18N
@@ -674,10 +662,6 @@ private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
         // TODO add your handling code here:
     }//GEN-LAST:event_PenjabKeyPressed
 
-    private void TanggalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TanggalKeyPressed
-        Valid.pindah(evt, KdPtg, TCariPeriksa);
-    }//GEN-LAST:event_TanggalKeyPressed
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
     }//GEN-LAST:event_formWindowOpened
@@ -794,15 +778,25 @@ private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
         }
     }//GEN-LAST:event_BtnCariKeyPressed
 
-    private void KdPtgKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KdPtgKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
-            Sequel.cariIsi("select nama from petugas where nip=?", NmPtg, KdPtg.getText());
-        } else if (evt.getKeyCode() == KeyEvent.VK_UP) {
-            btnPetugasActionPerformed(null);
-        } else {
-            Valid.pindah(evt, TCariPeriksa, Tanggal);
-        }
-    }//GEN-LAST:event_KdPtgKeyPressed
+    private void TCariPeriksaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TCariPeriksaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TCariPeriksaActionPerformed
+
+    private void TKdKamarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKamarKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TKdKamarKeyPressed
+
+    private void TKdKamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TKdKamarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TKdKamarActionPerformed
+
+    private void TNoPermintaanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TNoPermintaanKeyPressed
+        //Valid.pindah(evt,TNoReg,DTPReg);
+    }//GEN-LAST:event_TNoPermintaanKeyPressed
+
+    private void TNoPermintaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TNoPermintaanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TNoPermintaanActionPerformed
 
     private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPetugasActionPerformed
         var.setform("DlgPermintaanKerohanian");
@@ -813,25 +807,19 @@ private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
         petugas.setVisible(true);
     }//GEN-LAST:event_btnPetugasActionPerformed
 
-    private void TCariPeriksaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TCariPeriksaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TCariPeriksaActionPerformed
+    private void KdPtgKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KdPtgKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
+            Sequel.cariIsi("select nama from petugas where nip=?", NmPtg, KdPtg.getText());
+        } else if (evt.getKeyCode() == KeyEvent.VK_UP) {
+            btnPetugasActionPerformed(null);
+        } else {
+            Valid.pindah(evt, TCariPeriksa, Tanggal);
+        }
+    }//GEN-LAST:event_KdPtgKeyPressed
 
-    private void TNoPermintaanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TNoPermintaanKeyPressed
-        //Valid.pindah(evt,TNoReg,DTPReg);
-    }//GEN-LAST:event_TNoPermintaanKeyPressed
-
-    private void TKdKamarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKamarKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TKdKamarKeyPressed
-
-    private void TNoPermintaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TNoPermintaanActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TNoPermintaanActionPerformed
-
-    private void TKdKamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TKdKamarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TKdKamarActionPerformed
+    private void TanggalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TanggalKeyPressed
+        Valid.pindah(evt, KdPtg, TCariPeriksa);
+    }//GEN-LAST:event_TanggalKeyPressed
 
     private void TanggalItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_TanggalItemStateChanged
         autoNomor();
@@ -864,7 +852,6 @@ private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     private javax.swing.JPanel FormInput;
     private widget.TextBox Jk;
     private widget.TextBox KdPtg;
-    private widget.TextBox Ket;
     private widget.TextBox NmPtg;
     private widget.PanelBiasa PanelInput;
     private widget.TextBox Penjab;
@@ -881,7 +868,6 @@ private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     private widget.Button btnPetugas;
     private widget.InternalFrame internalFrame1;
     private widget.Label jLabel10;
-    private widget.Label jLabel11;
     private widget.Label jLabel15;
     private widget.Label jLabel3;
     private widget.Label jLabel4;
@@ -965,7 +951,6 @@ private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     public void emptTeks() {
         KdPtg.setText("");
         NmPtg.setText("");
-        Ket.setText("");
         TCariPeriksa.setText("");
         autoNomor();
     }
@@ -1041,7 +1026,7 @@ private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     private void isForm() {
         if (ChkInput.isSelected() == true) {
             ChkInput.setVisible(false);
-            FormInput.setPreferredSize(new Dimension(WIDTH, 185));
+            FormInput.setPreferredSize(new Dimension(WIDTH, 126));
             PanelInput.setVisible(true);
             ChkInput.setVisible(true);
         } else if (ChkInput.isSelected() == false) {
@@ -1069,7 +1054,7 @@ private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                 //autoNomor();simpan
                 if (Sequel.menyimpantf2("permintaan_kerohanian", "?,?,?,?,?,?,?", "No.Permintaan", 7, new String[]{
                     TNoPermintaan.getText(), TNoRw.getText(), TKdKamar.getText(), Valid.SetTgl(Tanggal.getSelectedItem() + ""),
-                    KdPtg.getText(), "-", Ket.getText()
+                    KdPtg.getText(), "-", ""
                 }) == true) {
                     for (i = 0; i < tbPemeriksaan.getRowCount(); i++) {
                         if (tbPemeriksaan.getValueAt(i, 0).toString().equals("true")) {
