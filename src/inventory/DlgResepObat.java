@@ -1075,7 +1075,6 @@ public final class DlgResepObat extends javax.swing.JDialog {
         internalFrame9.add(jLabel);
         jLabel.setBounds(6, 32, 100, 23);
 
-        NoAntri.setEditable(false);
         NoAntri.setName("NoAntri"); // NOI18N
         NoAntri.setPreferredSize(new java.awt.Dimension(100, 23));
         NoAntri.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1331,7 +1330,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         panelGlass9.add(jLabel19);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-12-2022" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "31-01-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -1345,7 +1344,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         panelGlass9.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-12-2022" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "31-01-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -1512,7 +1511,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         jLabel8.setBounds(0, 42, 95, 23);
 
         DTPBeri.setForeground(new java.awt.Color(50, 70, 50));
-        DTPBeri.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-12-2022" }));
+        DTPBeri.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "31-01-2023" }));
         DTPBeri.setDisplayFormat("dd-MM-yyyy");
         DTPBeri.setName("DTPBeri"); // NOI18N
         DTPBeri.setOpaque(false);
@@ -1672,6 +1671,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         } else if (!(TPasien.getText().trim().equals(""))) {
             Sequel.meghapus("resep_obat", "no_resep", NoResep.getText());
             Sequel.meghapus("resep_dokter", "no_resep", NoResep.getText());
+            Sequel.meghapus("antrian_apotek", "no_resep", NoResep.getText());
             tampil();
             emptTeks();
         }

@@ -589,7 +589,9 @@ public class DlgMasterTriasePemeriksaan extends javax.swing.JDialog {
     private void tampil() {
         Valid.tabelKosong(tabMode);
         try{
-            ps=koneksi.prepareStatement("select * from master_triase_pemeriksaan where master_triase_pemeriksaan.kode_pemeriksaan like ? or master_triase_pemeriksaan.nama_pemeriksaan like ? order by master_triase_pemeriksaan.kode_pemeriksaan");
+//            ps=koneksi.prepareStatement("select * from master_triase_pemeriksaan where master_triase_pemeriksaan.kode_pemeriksaan like ? or master_triase_pemeriksaan.nama_pemeriksaan like ? order by master_triase_pemeriksaan.kode_pemeriksaan");
+            ps=koneksi.prepareStatement("select * from master_triase_igd where master_triase_igd.kd_pemeriksaan like ? or "
+                    + "master_triase_igd.nm_pemeriksaan like ? group by master_triase_igd.kd_pemeriksaan order by master_triase_igd.kd_pemeriksaan");
             try {
                 ps.setString(1,"%"+TCari.getText().trim()+"%");
                 ps.setString(2,"%"+TCari.getText().trim()+"%");
