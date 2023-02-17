@@ -951,13 +951,12 @@
                             </Constraint>
                           </Constraints>
                         </Component>
-                        <Component class="widget.TextBox" name="NmKasus">
+                        <Component class="widget.TextBox" name="TKasus">
                           <Properties>
-                            <Property name="editable" type="boolean" value="false"/>
-                            <Property name="name" type="java.lang.String" value="NmKasus" noResource="true"/>
+                            <Property name="name" type="java.lang.String" value="TKasus" noResource="true"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="NmKasusKeyPressed"/>
+                            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TKasusKeyPressed"/>
                           </Events>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -1586,18 +1585,18 @@
                             </Constraint>
                           </Constraints>
                         </Component>
-                        <Component class="widget.CekBox" name="ChkRspPlg">
+                        <Component class="widget.CekBox" name="chkNontrauma">
                           <Properties>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="null"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Non Trauma"/>
                             <Property name="horizontalAlignment" type="int" value="2"/>
-                            <Property name="name" type="java.lang.String" value="ChkRspPlg" noResource="true"/>
+                            <Property name="name" type="java.lang.String" value="chkNontrauma" noResource="true"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="ChkRspPlgItemStateChanged"/>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ChkRspPlgActionPerformed"/>
+                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="chkNontraumaItemStateChanged"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chkNontraumaActionPerformed"/>
                           </Events>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -1605,18 +1604,18 @@
                             </Constraint>
                           </Constraints>
                         </Component>
-                        <Component class="widget.CekBox" name="ChkRspPlg1">
+                        <Component class="widget.CekBox" name="chkTrauma">
                           <Properties>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="null"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Trauma"/>
                             <Property name="horizontalAlignment" type="int" value="2"/>
-                            <Property name="name" type="java.lang.String" value="ChkRspPlg1" noResource="true"/>
+                            <Property name="name" type="java.lang.String" value="chkTrauma" noResource="true"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="ChkRspPlg1ItemStateChanged"/>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ChkRspPlg1ActionPerformed"/>
+                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="chkTraumaItemStateChanged"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chkTraumaActionPerformed"/>
                           </Events>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -1624,18 +1623,18 @@
                             </Constraint>
                           </Constraints>
                         </Component>
-                        <Component class="widget.CekBox" name="ChkRspPlg2">
+                        <Component class="widget.CekBox" name="chkLainnya">
                           <Properties>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="null"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Lainnya"/>
                             <Property name="horizontalAlignment" type="int" value="2"/>
-                            <Property name="name" type="java.lang.String" value="ChkRspPlg2" noResource="true"/>
+                            <Property name="name" type="java.lang.String" value="chkLainnya" noResource="true"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="ChkRspPlg2ItemStateChanged"/>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ChkRspPlg2ActionPerformed"/>
+                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="chkLainnyaItemStateChanged"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chkLainnyaActionPerformed"/>
                           </Events>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -1643,18 +1642,18 @@
                             </Constraint>
                           </Constraints>
                         </Component>
-                        <Component class="widget.CekBox" name="ChkRspPlg3">
+                        <Component class="widget.CekBox" name="chkLakaTunggal">
                           <Properties>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="null"/>
                             </Property>
-                            <Property name="text" type="java.lang.String" value="Laka Tunggu"/>
+                            <Property name="text" type="java.lang.String" value="Laka Tunggal"/>
                             <Property name="horizontalAlignment" type="int" value="2"/>
-                            <Property name="name" type="java.lang.String" value="ChkRspPlg3" noResource="true"/>
+                            <Property name="name" type="java.lang.String" value="chkLakaTunggal" noResource="true"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="ChkRspPlg3ItemStateChanged"/>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ChkRspPlg3ActionPerformed"/>
+                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="chkLakaTunggalItemStateChanged"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chkLakaTunggalActionPerformed"/>
                           </Events>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -1662,18 +1661,18 @@
                             </Constraint>
                           </Constraints>
                         </Component>
-                        <Component class="widget.CekBox" name="ChkRspPlg4">
+                        <Component class="widget.CekBox" name="chkLakaGanda">
                           <Properties>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="null"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Laka Ganda"/>
                             <Property name="horizontalAlignment" type="int" value="2"/>
-                            <Property name="name" type="java.lang.String" value="ChkRspPlg4" noResource="true"/>
+                            <Property name="name" type="java.lang.String" value="chkLakaGanda" noResource="true"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="ChkRspPlg4ItemStateChanged"/>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ChkRspPlg4ActionPerformed"/>
+                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="chkLakaGandaItemStateChanged"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chkLakaGandaActionPerformed"/>
                           </Events>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
