@@ -52,6 +52,7 @@ public class DlgDpjp extends javax.swing.JDialog {
     private int jml=0,i=0,index=0;
     private String[] kode,nama;
     private boolean[] pilih; 
+    private String jns;
 
     /** Creates new form DlgPemberianObat
      * @param parent
@@ -60,7 +61,7 @@ public class DlgDpjp extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-        Object[] row={"P","Tgl.Rawat","No.Rawat","No.R.M.","Nama Pasien","Kode Dokter","Nama Dokter"};
+        Object[] row={"P","Tgl.Rawat","No.Rawat","No.R.M.","Nama Pasien","Kode Dokter","Nama Dokter","Kategori"};
         TabModePasien=new DefaultTableModel(null,row){
             @Override public boolean isCellEditable(int rowIndex, int colIndex){
                 boolean a = false;
@@ -71,7 +72,7 @@ public class DlgDpjp extends javax.swing.JDialog {
              }
              Class[] types = new Class[] {
                 java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, 
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
              };
              @Override
              public Class getColumnClass(int columnIndex) {
@@ -84,7 +85,7 @@ public class DlgDpjp extends javax.swing.JDialog {
         tbPasien.setPreferredScrollableViewportSize(new Dimension(500,500));
         tbPasien.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 7; i++) {
+        for (i = 0; i < 8; i++) {
             TableColumn column = tbPasien.getColumnModel().getColumn(i);
             if(i==0){
                 column.setPreferredWidth(20);
@@ -100,6 +101,8 @@ public class DlgDpjp extends javax.swing.JDialog {
                 column.setPreferredWidth(90);
             }else if(i==6){
                 column.setPreferredWidth(200);
+            }else if(i==7){
+                column.setPreferredWidth(100);
             }
         }
         tbPasien.setDefaultRenderer(Object.class, new WarnaTable());
@@ -279,6 +282,8 @@ public class DlgDpjp extends javax.swing.JDialog {
         btnTarif = new widget.Button();
         jLabel4 = new widget.Label();
         jLabel5 = new widget.Label();
+        label12 = new widget.Label();
+        Jeniskelas = new widget.ComboBox();
         ChkInput = new widget.CekBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -290,7 +295,7 @@ public class DlgDpjp extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Dokter Penaggung Jawab Pasien Rawat Inap ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Dokter Penanggung Jawab Pasien Rawat Inap ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -454,11 +459,10 @@ public class DlgDpjp extends javax.swing.JDialog {
         panelGlass9.add(jLabel14);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-12-2018" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-02-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
-        DTPCari1.setPreferredSize(new java.awt.Dimension(100, 23));
         panelGlass9.add(DTPCari1);
 
         jLabel19.setText("s.d");
@@ -467,11 +471,10 @@ public class DlgDpjp extends javax.swing.JDialog {
         panelGlass9.add(jLabel19);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-12-2018" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-02-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
-        DTPCari2.setPreferredSize(new java.awt.Dimension(100, 23));
         panelGlass9.add(DTPCari2);
 
         jLabel16.setText("No.RM :");
@@ -659,6 +662,28 @@ public class DlgDpjp extends javax.swing.JDialog {
         FormInput.add(jLabel5);
         jLabel5.setBounds(-2, 72, 80, 23);
 
+        label12.setText("Jenis :");
+        label12.setName("label12"); // NOI18N
+        label12.setPreferredSize(new java.awt.Dimension(50, 23));
+        FormInput.add(label12);
+        label12.setBounds(230, 100, 50, 23);
+
+        Jeniskelas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Utama", "Raber", "PPDS", "Intern" }));
+        Jeniskelas.setName("Jeniskelas"); // NOI18N
+        Jeniskelas.setPreferredSize(new java.awt.Dimension(100, 23));
+        Jeniskelas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                JeniskelasItemStateChanged(evt);
+            }
+        });
+        Jeniskelas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                JeniskelasKeyPressed(evt);
+            }
+        });
+        FormInput.add(Jeniskelas);
+        Jeniskelas.setBounds(290, 100, 150, 23);
+
         PanelInput.add(FormInput, java.awt.BorderLayout.CENTER);
 
         ChkInput.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/143.png"))); // NOI18N
@@ -731,8 +756,8 @@ public class DlgDpjp extends javax.swing.JDialog {
                 koneksi.setAutoCommit(false);
                 for(i=0;i<tbDiagnosa.getRowCount();i++){ 
                     if(tbDiagnosa.getValueAt(i,0).toString().equals("true")){
-                        Sequel.menyimpan("dpjp_ranap","?,?","Dokter",2,new String[]{
-                            TNoRw.getText(),tbDiagnosa.getValueAt(i,1).toString()
+                        Sequel.menyimpan("dpjp_ranap","?,?,?","Dokter",3,new String[]{
+                            TNoRw.getText(),tbDiagnosa.getValueAt(i,1).toString(),Jeniskelas.getSelectedItem().toString()
                         });
                     }                    
                 }
@@ -969,6 +994,14 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         tampildiagnosa();
     }//GEN-LAST:event_formWindowOpened
 
+    private void JeniskelasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JeniskelasItemStateChanged
+        
+    }//GEN-LAST:event_JeniskelasItemStateChanged
+
+    private void JeniskelasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JeniskelasKeyPressed
+        
+    }//GEN-LAST:event_JeniskelasKeyPressed
+
     /**
     * @param args the command line arguments
     */
@@ -1000,6 +1033,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.Tanggal DTPCari2;
     private widget.TextBox Dokter;
     private widget.PanelBiasa FormInput;
+    private widget.ComboBox Jeniskelas;
     private widget.Label LCount;
     private javax.swing.JPanel PanelInput;
     private widget.ScrollPane Scroll;
@@ -1024,6 +1058,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.Label jLabel6;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator5;
+    private widget.Label label12;
     private widget.panelisi panelGlass8;
     private widget.panelisi panelGlass9;
     private widget.Table tbDiagnosa;
@@ -1034,7 +1069,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         Valid.tabelKosong(TabModePasien);
         try{            
             ps2=koneksi.prepareStatement("select reg_periksa.tgl_registrasi,dpjp_ranap.no_rawat,reg_periksa.no_rkm_medis,pasien.nm_pasien,"+
-                    "dpjp_ranap.kd_dokter,dokter.nm_dokter from dpjp_ranap inner join reg_periksa inner join pasien inner join dokter "+
+                    "dpjp_ranap.kd_dokter,dokter.nm_dokter,dpjp_ranap.jenis_dpjp from dpjp_ranap inner join reg_periksa inner join pasien inner join dokter "+
                     "on dpjp_ranap.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "+
                     "and dpjp_ranap.kd_dokter=dokter.kd_dokter "+
                     "where reg_periksa.tgl_registrasi between ? and ? and reg_periksa.no_rkm_medis like ? and reg_periksa.tgl_registrasi like ? or "+
@@ -1071,12 +1106,18 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 ps2.setString(24,"%"+TCari.getText().trim()+"%");  
                 rs=ps2.executeQuery();
                 while(rs.next()){
+                    jns = rs.getString("jenis_dpjp");
+                    if (jns == null) {
+                       jns = "-";
+                    } else {
+                        jns = rs.getString("jenis_dpjp");
+                    }
                     TabModePasien.addRow(new Object[]{false,rs.getString(1),
                                    rs.getString(2),
                                    rs.getString(3),
                                    rs.getString(4),
                                    rs.getString(5),
-                                   rs.getString(6)});
+                                   rs.getString(6),jns});
                 }
             } catch (Exception e) {
                 System.out.println("Notifikasi : "+e);

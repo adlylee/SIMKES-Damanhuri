@@ -46,7 +46,7 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" +
-                        "    Version 21.01.2023 [ 1.0.10 ] [Activated] GO KLAIM DIGITAL \n"+
+                        "    Version 17.02.2023 [ 1.0.13 ] [Activated] GO KLAIM DIGITAL \n"+
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai                              \n"+
                         "                                                                           \n"+
@@ -55,14 +55,11 @@ public final class koneksiDB {
                         "       SMART , GREEN , AND FRIENDLY HOSPITAL                           \n"+
                         "                                                                           \n"+
                         "    * Known Bug :                                                           \n"+
-                        "       - Rekap Diet                                            \n"+
+                        "                                                                       \n"+
                         "                                                                       \n"+
                         "    * Changelog :                                                       \n"+
-                        "       - Klinis Radiologi                                              \n"+
-                        "       - Sirkulasi Non Medis                                              \n"+
-                        "       - Sirkulasi Medis                                              \n"+
-                        "       - Pasien Lanjutan & Internal Lanjutan                            \n"+
-                        "       - No LP Kecelakaan                                              \n"+
+                        "       - Jenis DPJP                                              \n"+
+                        "       - Diet Pasien                                              \n"+
                         "                                                                       \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);

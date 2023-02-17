@@ -7640,7 +7640,7 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
                         dlgro.emptTeks();
                         dlgro.isCek();
                         dlgro.setNoRm(rs2.getString("no_rawat2"), "Ranap");
-                        dlgro.setDokterPerujuk(Sequel.cariIsi("select kd_dokter from dpjp_ranap where no_rawat = ?", tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 0).toString()), tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 18).toString());
+                        dlgro.setDokterPerujuk(Sequel.cariIsi("select kd_dokter from dpjp_ranap where no_rawat = ?", tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 0).toString()));
                         dlgro.setVisible(true);
                         this.setCursor(Cursor.getDefaultCursor());
                     } else {
@@ -7668,7 +7668,7 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
             dlgro.emptTeks();
             dlgro.isCek();
             dlgro.setNoRm(norawat.getText(), "Ranap");
-            dlgro.setDokterPerujuk(Sequel.cariIsi("select kd_dokter from reg_periksa where no_rawat = ?", tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 0).toString()), tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 18).toString());
+            dlgro.setDokterPerujuk(Sequel.cariIsi("select kd_dokter from dpjp_ranap where no_rawat = ?", tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 0).toString()));
             dlgro.setVisible(true);
             this.setCursor(Cursor.getDefaultCursor());
         }

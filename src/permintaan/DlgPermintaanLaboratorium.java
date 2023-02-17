@@ -1246,7 +1246,10 @@ private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private void isRawat(){
         Sequel.cariIsi("select no_rkm_medis from reg_periksa where no_rawat=? ",TNoRM,TNoRw.getText());
         Sequel.cariIsi("select kd_pj from reg_periksa where no_rawat=? ",Penjab,TNoRw.getText());
-        Sequel.cariIsi("select kd_dokter from reg_periksa where no_rawat=? ",KodePerujuk,TNoRw.getText());
+        Sequel.cariIsi("select kd_dokter from dpjp_ranap where no_rawat=? ",KodePerujuk,TNoRw.getText());
+        if(KodePerujuk.getText().equals("")){
+            Sequel.cariIsi("select kd_dokter from reg_periksa where no_rawat=? ",KodePerujuk,TNoRw.getText());   
+        }
         Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=? ",NmPerujuk,KodePerujuk.getText());
         norawatibu=Sequel.cariIsi("select no_rawat from ranap_gabung where no_rawat2=?",TNoRw.getText());
         if(!norawatibu.equals("")){
@@ -1509,9 +1512,9 @@ private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         }
     }
 
-    public void setDokterPerujuk(String kodeperujuk,String namaperujuk){
+    public void setDokterPerujuk(String kodeperujuk){
         KodePerujuk.setText(kodeperujuk);
-        NmPerujuk.setText(namaperujuk);
+        NmPerujuk.setText(Sequel.cariIsi("SELECT nm_dokter FROM dokter WHERE kd_dokter = ?",kodeperujuk));
     }
 
     private void simpan() {

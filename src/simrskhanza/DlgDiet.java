@@ -358,6 +358,7 @@ public class DlgDiet extends javax.swing.JDialog {
         panelGlass7.add(jLabel4);
         jLabel4.setBounds(176, 12, 110, 23);
 
+        TKd.setEnabled(false);
         TKd.setHighlighter(null);
         TKd.setName("TKd"); // NOI18N
         TKd.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -591,7 +592,7 @@ public class DlgDiet extends javax.swing.JDialog {
         TNm.setText("");
         TCari.setText("");
         TKd.requestFocus();
-        Valid.autoNomer("diet","D",2,TKd);
+        Valid.autoNomer("diet","D",3,TKd);
         TKd.requestFocus();
     }
 

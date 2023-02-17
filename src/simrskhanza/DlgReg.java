@@ -73,7 +73,11 @@ import java.awt.Component;
 import permintaan.DlgPermintaanLaboratorium;
 import permintaan.DlgPermintaanRadiologi;
 import java.io.IOException;
+import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import static java.time.temporal.ChronoUnit.DAYS;
 import javax.swing.table.DefaultTableCellRenderer;
 import surat.SuratNapza;
 
@@ -99,7 +103,7 @@ public final class DlgReg extends javax.swing.JDialog {
     private Properties prop = new Properties();
     private ResultSet rs;
     private int pilihan = 0, i = 0, kuota = 0, jmlparsial = 0;
-    private Date cal = new Date();
+    private Date date , date1;
     private boolean ceksukses = false;
     private String nosisrute = "", aktifkanparsial = "no", BASENOREG = "",
             URUTNOREG = "", status = "Baru", order = "reg_periksa.tgl_registrasi,reg_periksa.jam_reg desc", alamatperujuk = "-", aktifjadwal = "", IPPRINTERTRACER = "", umur = "0", sttsumur = "Th",
@@ -5563,9 +5567,14 @@ public final class DlgReg extends javax.swing.JDialog {
 }//GEN-LAST:event_THbngnKeyPressed
 
     private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpanActionPerformed
+        DateTimeFormatter f = DateTimeFormatter.ofPattern( "yyyy-MM-dd" );
         LocalDate today = LocalDate.now();
-        LocalDate reg = LocalDate.parse(Valid.SetTgl(DTPReg.getSelectedItem() + ""));
-        Boolean cekDate = reg.equals(today);
+        LocalDate dateAfter = LocalDate.parse(Valid.SetTgl(DTPReg.getSelectedItem() + ""));
+        long daysBetween = DAYS.between(today, dateAfter);
+        int day = 0;
+        long days = new Long(day);
+        int ob = Long.compare(days, daysBetween);
+//        System.out.println(ob);
         if (TNoReg.getText().trim().equals("")) {
             Valid.textKosong(TNoReg, "No.Regristrasi");
         } else if (TNoRw.getText().trim().equals("")) {
@@ -5586,9 +5595,9 @@ public final class DlgReg extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Pasien sedang dalam masa perawatan di kamar inap..!!");
             TNoRM.requestFocus();
         } else {
-            if (var.getkode().equals("Admin Utama")) {
-                isRegistrasi();
-            } else {
+//            if (var.getkode().equals("Admin Utama")) {
+//                isRegistrasi();
+//            } else {
                 if (aktifjadwal.equals("aktif")) {
                     if (Sequel.cariInteger("select count(no_rawat) from reg_periksa where kd_dokter='" + kddokter.getText() + "' and tgl_registrasi='" + Valid.SetTgl(DTPReg.getSelectedItem() + "") + "' ") >= kuota) {
                         JOptionPane.showMessageDialog(null, "Eiiits, Kuota registrasi penuh..!!!");
@@ -5596,13 +5605,15 @@ public final class DlgReg extends javax.swing.JDialog {
                     } else {
                         isRegistrasi();
                     }
-                } else if (cekDate.equals(false)){
-                    JOptionPane.showMessageDialog(null, "Mohon maaf, tidak bisa dilakukan pendaftaran selain hari ini .");
-                    System.out.println("Gagal Simpan Tanggal Lebih Dari Hari Ini");
                 } else {
-                    isRegistrasi();
+                    if (ob == -1){
+                        JOptionPane.showMessageDialog(null, "Mohon maaf, tidak bisa dilakukan pendaftaran selain hari ini .");
+                        System.out.println("Gagal Simpan Tanggal Lebih Dari Hari Ini");
+                    } else {
+                        isRegistrasi();
+                    }
                 }
-            }
+//            }
         }
 }//GEN-LAST:event_BtnSimpanActionPerformed
 

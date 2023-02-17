@@ -82,7 +82,7 @@ public class DlgBilingRanap extends javax.swing.JDialog {
             Tindakan_Ranap = "", Laborat_Ranap = "", Radiologi_Ranap = "", Obat_Ranap = "", Registrasi_Ranap = "", tglmasuk = "",
             Tambahan_Ranap = "", Potongan_Ranap = "", Retur_Obat_Ranap = "", Resep_Pulang_Ranap = "", Kamar_Inap = "", Operasi_Ranap = "",
             Harian_Ranap = "", Uang_Muka_Ranap = "", Piutang_Pasien_Ranap = "", tampilkan_ppnobat_ranap = "",
-            Service_Ranap = "", status = "", centangobatranap = "No",
+            Service_Ranap = "", status = "", centangobatranap = "No",jns="",
             sqlpscekbilling = "select count(billing.no_rawat) from billing where billing.no_rawat=?",
             sqlpsdokterranap = "select dokter.nm_dokter from rawat_inap_dr "
             + "inner join dokter on rawat_inap_dr.kd_dokter=dokter.kd_dokter "
@@ -202,7 +202,7 @@ public class DlgBilingRanap extends javax.swing.JDialog {
             + "pasien.no_rkm_medis=reg_periksa.no_rkm_medis and ranap_gabung.no_rawat2=reg_periksa.no_rawat where ranap_gabung.no_rawat=?",
             sqlpstemporary = "insert into temporary_bayar_ranap values('0',?,?,?,?,?,?,?,?,'','','','','','','','','')",
             //tambahan start
-            sqlpsdpjp = "SELECT dokter.nm_dokter FROM dokter JOIN dpjp_ranap ON dokter.kd_dokter = dpjp_ranap.kd_dokter WHERE dpjp_ranap.no_rawat=?",
+            sqlpsdpjp = "SELECT dokter.nm_dokter,dpjp_ranap.jenis_dpjp FROM dokter JOIN dpjp_ranap ON dokter.kd_dokter = dpjp_ranap.kd_dokter WHERE dpjp_ranap.no_rawat=?",
             sqlpsdpjpbayi = "SELECT dokter.nm_dokter FROM dokter JOIN dpjp_ranap ON dokter.kd_dokter = dpjp_ranap.kd_dokter WHERE dpjp_ranap.no_rawat=?",
             //tambahan end
             sqlpsubahpenjab = "select tgl_ubah,kd_pj1,kd_pj2 from ubah_penjab where no_rawat=?";
@@ -350,19 +350,19 @@ public class DlgBilingRanap extends javax.swing.JDialog {
         tbPotongan.setDefaultRenderer(Object.class, new WarnaTable());
 
         //ubah lama inap
-        Object[] rowUbahLama = {"Kode Kamar", "Nama Kamar", "Tgl.Masuk", "Jam Masuk", "Tgl.Keluar", "Jam Keluar", "Lama Inap"};
+        Object[] rowUbahLama = {"P","Kode Kamar", "Nama Kamar", "Tgl.Masuk", "Jam Masuk", "Tgl.Keluar", "Jam Keluar", "Lama Inap"};
         tabModeKamIn = new DefaultTableModel(null, rowUbahLama) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
                 boolean a = false;
-                if ((colIndex == 2) || (colIndex == 3) || (colIndex == 4) || (colIndex == 5 || (colIndex == 6))) {
+                if ((colIndex == 3) || (colIndex == 4) || (colIndex == 5) || (colIndex == 6) || (colIndex == 7) || (colIndex == 0)) {
                     a = true;
                 }
                 return a;
             }
 
             Class[] types = new Class[]{
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
+                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
@@ -376,10 +376,10 @@ public class DlgBilingRanap extends javax.swing.JDialog {
         tbUbahLama.setPreferredScrollableViewportSize(new Dimension(800, 800));
         tbUbahLama.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 7; i++) {
+        for (i = 0; i < 8; i++) {
             TableColumn column = tbUbahLama.getColumnModel().getColumn(i);
             if (i == 0) {
-                column.setPreferredWidth(90);
+                column.setPreferredWidth(40);
             } else if (i == 1) {
                 column.setPreferredWidth(250);
             } else {
@@ -3294,12 +3294,14 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
         } else {
 
             for (int r = 0; r < tbUbahLama.getRowCount(); r++) {
-                if (Valid.SetAngka(tbUbahLama.getValueAt(r, 6).toString()) > -1) {
-                    Sequel.mengedit("kamar_inap", "no_rawat='" + norawatubahlama.getText() + "' and kd_kamar='" + tbUbahLama.getValueAt(r, 0) + "'",
-                            "tgl_keluar='" + tbUbahLama.getValueAt(r, 4).toString() + "',jam_keluar='" + tbUbahLama.getValueAt(r, 5).toString() + "',"
-                            + "tgl_masuk='" + tbUbahLama.getValueAt(r, 2).toString() + "',jam_masuk='" + tbUbahLama.getValueAt(r, 3).toString() + "',"
-                            + "lama='" + tbUbahLama.getValueAt(r, 6).toString() + "',"
-                            + "ttl_biaya=" + tbUbahLama.getValueAt(r, 6).toString() + "*trf_kamar");
+                if(tbUbahLama.getValueAt(i,0).toString().equals("true")){
+                    if (Valid.SetAngka(tbUbahLama.getValueAt(r, 6).toString()) > -1) {
+                        Sequel.mengedit("kamar_inap", "no_rawat='" + norawatubahlama.getText() + "' and kd_kamar='" + tbUbahLama.getValueAt(r, 0) + "'",
+                                "tgl_keluar='" + tbUbahLama.getValueAt(r, 4).toString() + "',jam_keluar='" + tbUbahLama.getValueAt(r, 5).toString() + "',"
+                                + "tgl_masuk='" + tbUbahLama.getValueAt(r, 2).toString() + "',jam_masuk='" + tbUbahLama.getValueAt(r, 3).toString() + "',"
+                                + "lama='" + tbUbahLama.getValueAt(r, 6).toString() + "',"
+                                + "ttl_biaya=" + tbUbahLama.getValueAt(r, 6).toString() + "*trf_kamar");
+                    }
                 }
             }
 
@@ -4390,7 +4392,13 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
 //                                x=0;
                                 rsdpjp.beforeFirst();
                                 while (rsdpjp.next()) {
-                                    tabModeRwJlDr.addRow(new Object[]{true, "                           ", rsdpjp.getString("nm_dokter"), "", null, null, null, null, "Dokter"});
+                                    jns = rsdpjp.getString("jenis_dpjp");
+                                    if (jns == null) {
+                                        jns = "-";
+                                     } else {
+                                         jns = rsdpjp.getString("jenis_dpjp");
+                                     }
+                                    tabModeRwJlDr.addRow(new Object[]{true, "                           ", rsdpjp.getString("nm_dokter")+" ("+jns+")", "", null, null, null, null, "Dokter"});
                                     x++;
                                 }
                             }
@@ -5212,11 +5220,11 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                 BtnNota.setVisible(false);
             }
         }
-        if(var.getkode().equals("Admin Utama") || var.getkode().equals("kasir1")){
-            MnHapusTagihan.setEnabled(true);
-        }else{
-            MnHapusTagihan.setEnabled(false);
-        } 
+//        if(var.getkode().equals("Admin Utama") || var.getkode().equals("kasir1")){
+//            MnHapusTagihan.setEnabled(true);
+//        }else{
+//            MnHapusTagihan.setEnabled(false);
+//        } 
 
     }
 
@@ -6039,7 +6047,7 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                 pskamarin.setString(1, norawatubahlama.getText());
                 rskamarin = pskamarin.executeQuery();
                 while (rskamarin.next()) {
-                    tabModeKamIn.addRow(new Object[]{
+                    tabModeKamIn.addRow(new Object[]{false,
                         rskamarin.getString("kd_kamar"), rskamarin.getString("nm_bangsal"),
                         rskamarin.getString("tgl_masuk"), rskamarin.getString("jam_masuk"),
                         rskamarin.getString("tgl_keluar"), rskamarin.getString("jam_keluar"),
