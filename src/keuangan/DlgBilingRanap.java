@@ -3296,11 +3296,11 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
             for (int r = 0; r < tbUbahLama.getRowCount(); r++) {
                 if(tbUbahLama.getValueAt(i,0).toString().equals("true")){
                     if (Valid.SetAngka(tbUbahLama.getValueAt(r, 6).toString()) > -1) {
-                        Sequel.mengedit("kamar_inap", "no_rawat='" + norawatubahlama.getText() + "' and kd_kamar='" + tbUbahLama.getValueAt(r, 0) + "'",
-                                "tgl_keluar='" + tbUbahLama.getValueAt(r, 4).toString() + "',jam_keluar='" + tbUbahLama.getValueAt(r, 5).toString() + "',"
-                                + "tgl_masuk='" + tbUbahLama.getValueAt(r, 2).toString() + "',jam_masuk='" + tbUbahLama.getValueAt(r, 3).toString() + "',"
-                                + "lama='" + tbUbahLama.getValueAt(r, 6).toString() + "',"
-                                + "ttl_biaya=" + tbUbahLama.getValueAt(r, 6).toString() + "*trf_kamar");
+                        Sequel.mengedit("kamar_inap", "no_rawat='" + norawatubahlama.getText() + "' and kd_kamar='" + tbUbahLama.getValueAt(r, 1) + "'",
+                                "tgl_keluar='" + tbUbahLama.getValueAt(r, 5).toString() + "',jam_keluar='" + tbUbahLama.getValueAt(r, 6).toString() + "',"
+                                + "tgl_masuk='" + tbUbahLama.getValueAt(r, 3).toString() + "',jam_masuk='" + tbUbahLama.getValueAt(r, 4).toString() + "',"
+                                + "lama='" + tbUbahLama.getValueAt(r, 7).toString() + "',"
+                                + "ttl_biaya=" + tbUbahLama.getValueAt(r, 7).toString() + "*trf_kamar");
                     }
                 }
             }
