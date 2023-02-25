@@ -46,7 +46,7 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" +
-                        "    Version 17.02.2023 [ 1.0.13 ] [Activated] GO KLAIM DIGITAL \n"+
+                        "    Version 17.02.2023 [ 1.0.16 ] [Activated] GO KLAIM DIGITAL \n"+
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai                              \n"+
                         "                                                                           \n"+
@@ -60,6 +60,8 @@ public final class koneksiDB {
                         "    * Changelog :                                                       \n"+
                         "       - Jenis DPJP                                              \n"+
                         "       - Diet Pasien                                              \n"+
+                        "       - Ubah Lama Inap                                             \n"+
+                        "       - Catatan Perawatan                                             \n"+
                         "                                                                       \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);

@@ -8,9 +8,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
@@ -30,8 +28,8 @@ public class BridgingWA {
 
     private static final Properties prop = new Properties();
     private sekuel Sequel = new sekuel();
-    private String Key, pass, url, token, requestJson, urlApi = "", sender = "", number = "", message = "", reurn = "", USER_AGENT = "Mozilla/5.0";
-    ;
+    private String Key, pass, url, token = "", requestJson, urlApi = "", sender = "", number = "", message = "", reurn = "";
+    private final String USER_AGENT = "Mozilla/5.0",moduleserver = "wagateway",fieldserver = "server",fieldtoken="token",fieldphone = "phonenumber";
     private HttpHeaders headers;
     private HttpEntity requestEntity;
     private ObjectMapper mapper = new ObjectMapper();
@@ -70,9 +68,10 @@ public class BridgingWA {
                     + " Pastikan RUJUKAN BPJS pian masih berlaku. Jika sudah habis, maka mintalah rujukan kembali untuk berobat ke Rumah Sakit.Terima kasih \n \nWassalamualaikum\n"
                     + " Daftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US";
             number = Sequel.cariIsi("SELECT no_tlp FROM pasien WHERE no_rkm_medis = " + no_rkm_medis);
-            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'") + "/wagateway/kirimpesan";
-            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_phonenumber'");
-            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message;
+            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldserver+"'") + "/wagateway/kirimpesan";
+            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldphone+"'");
+            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldtoken+"'");
+            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message+"&api_key="+token;
             System.out.println("PostField : " + requestJson);
 
             URL obj = new URL(urlApi);
@@ -126,13 +125,14 @@ public class BridgingWA {
                     + " Terkait dengan habar di atas, kami ucapkan permohonan maaf dan terima kasih atas kepercayaan pian berobat di RSUD H. Damanhuri. \nTerima kasih \n \nWassalamualaikum\n"
                     + " Daftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US";
             number = Sequel.cariIsi("SELECT no_tlp FROM pasien WHERE no_rkm_medis = " + no_rkm_medis);
-            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'") + "/wagateway/kirimpesan";
-            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_phonenumber'");
+            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldserver+"'") + "/wagateway/kirimpesan";
+            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldphone+"'");
+            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldtoken+"'");
 
             if (number.equals("")) {
                 System.out.println("Nomor telepon kosong !!!");
             } else {
-                requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message;
+                requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message+"&api_key="+token;
                 System.out.println("PostField : " + requestJson);
                 System.out.println("                  \n                 ");
                 System.out.println("Mengirim Pesan ............");
@@ -190,9 +190,10 @@ public class BridgingWA {
                     + "Mengingatkan bahwa Bapak/Ibu telah melakukan donor darah pada tanggal " + tanggal + " dan sudah dapat melakukan donor darah "
                     + "kembali karena waktu untuk donor darah sudah sampai. \nKami tunggu ya kedatangannya.\nTerima kasih. Wassalamualaikum";
 
-            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'") + "/wagateway/kirimpesan";
-            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_phonenumber'");
-            requestJson = "type=text&sender=" + sender + "&number=" + no_telp + "&message=" + message;
+            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldserver+"'") + "/wagateway/kirimpesan";
+            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldphone+"'");
+            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldtoken+"'");
+            requestJson = "type=text&sender=" + sender + "&number=" + no_telp + "&message=" + message+"&api_key="+token;
             System.out.println("PostField : " + requestJson);
 
             URL obj = new URL(urlApi);
@@ -243,9 +244,10 @@ public class BridgingWA {
             message = "Pemberitahuan Permintaan Kerohanian.\n\n"
                     + "Pasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal + "";
             number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='198011042005012011'");
-            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_server'") + "/wagateway/kirimpesan";
-            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='api' AND field = 'wagateway_phonenumber'");
-            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message;
+            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldserver+"'") + "/wagateway/kirimpesan";
+            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldphone+"'");
+            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldtoken+"'");
+            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message+"&api_key="+token;
             System.out.println("PostField : " + requestJson);
 
             URL obj = new URL(urlApi);

@@ -103,8 +103,10 @@ public class DlgBilingRanap extends javax.swing.JDialog {
             sqlpsobatlangsung = "select besar_tagihan from tagihan_obat_langsung where no_rawat=? ",
             sqlpskamarin = "select kamar_inap.kd_kamar,bangsal.nm_bangsal,kamar_inap.trf_kamar,"
             + "kamar_inap.lama,kamar_inap.ttl_biaya as total,kamar_inap.tgl_masuk, "
-            + "kamar_inap.jam_masuk,if(kamar_inap.tgl_keluar='0000-00-00',current_date(),kamar_inap.tgl_keluar) as tgl_keluar,"
-            + "if(kamar_inap.jam_keluar='00:00:00',current_time(),kamar_inap.jam_keluar) as jam_keluar "
+//            + "kamar_inap.jam_masuk,if(kamar_inap.tgl_keluar='0000-00-00',current_date(),kamar_inap.tgl_keluar) as tgl_keluar,"
+//            + "if(kamar_inap.jam_keluar='00:00:00',current_time(),kamar_inap.jam_keluar) as jam_keluar "
+            + "kamar_inap.jam_masuk,if(kamar_inap.tgl_keluar='0000-00-00','0000-00-00',kamar_inap.tgl_keluar) as tgl_keluar,"
+            + "kamar_inap.jam_keluar "
             + "from kamar_inap inner join bangsal inner join kamar "
             + "on kamar_inap.kd_kamar=kamar.kd_kamar "
             + "and kamar.kd_bangsal=bangsal.kd_bangsal where "
@@ -3292,19 +3294,26 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
         if (norawatubahlama.getText().trim().equals("") || (tbUbahLama.getRowCount() <= 0)) {
             Valid.textKosong(norawatubahlama, "Data");
         } else {
-
             for (int r = 0; r < tbUbahLama.getRowCount(); r++) {
-                if(tbUbahLama.getValueAt(i,0).toString().equals("true")){
-                    if (Valid.SetAngka(tbUbahLama.getValueAt(r, 6).toString()) > -1) {
-                        Sequel.mengedit("kamar_inap", "no_rawat='" + norawatubahlama.getText() + "' and kd_kamar='" + tbUbahLama.getValueAt(r, 1) + "'",
-                                "tgl_keluar='" + tbUbahLama.getValueAt(r, 5).toString() + "',jam_keluar='" + tbUbahLama.getValueAt(r, 6).toString() + "',"
-                                + "tgl_masuk='" + tbUbahLama.getValueAt(r, 3).toString() + "',jam_masuk='" + tbUbahLama.getValueAt(r, 4).toString() + "',"
-                                + "lama='" + tbUbahLama.getValueAt(r, 7).toString() + "',"
-                                + "ttl_biaya=" + tbUbahLama.getValueAt(r, 7).toString() + "*trf_kamar");
+                if(tbUbahLama.getValueAt(r, 0).toString().equals("true")){
+                    if(!tbUbahLama.getValueAt(r,5).toString().equals("0000-00-00")){
+                        if (Valid.SetAngka(tbUbahLama.getValueAt(r, 7).toString()) > -1) {
+                            Sequel.mengedit("kamar_inap", "no_rawat='" + norawatubahlama.getText() + "' and kd_kamar='" + tbUbahLama.getValueAt(r, 1) + "'",
+                                    "tgl_keluar='" + tbUbahLama.getValueAt(r, 5).toString() + "',jam_keluar='" + tbUbahLama.getValueAt(r, 6).toString() + "',"
+                                    + "tgl_masuk='" + tbUbahLama.getValueAt(r, 3).toString() + "',jam_masuk='" + tbUbahLama.getValueAt(r, 4).toString() + "',"
+                                    + "lama='" + tbUbahLama.getValueAt(r, 7).toString() + "',"
+                                    + "ttl_biaya=" + tbUbahLama.getValueAt(r, 7).toString() + "*trf_kamar");
+                        }
+                    } else {
+                        if (Valid.SetAngka(tbUbahLama.getValueAt(r, 7).toString()) > -1) {
+                            Sequel.mengedit("kamar_inap", "no_rawat='" + norawatubahlama.getText() + "' and kd_kamar='" + tbUbahLama.getValueAt(r, 1) + "'",
+                                    "tgl_masuk='" + tbUbahLama.getValueAt(r, 3).toString() + "',jam_masuk='" + tbUbahLama.getValueAt(r, 4).toString() + "',"
+                                    + "lama='" + tbUbahLama.getValueAt(r, 7).toString() + "',"
+                                    + "ttl_biaya=" + tbUbahLama.getValueAt(r, 7).toString() + "*trf_kamar");
+                        }
                     }
                 }
             }
-
             isRawat();
             isKembali();
             WindowInput5.dispose();
