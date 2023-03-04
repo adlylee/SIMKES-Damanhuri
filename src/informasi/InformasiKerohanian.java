@@ -53,7 +53,7 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-        WindowAmbilPetugas.setSize(550, 250);
+        WindowAmbilPetugas.setSize(550, 200);
         tabMode = new DefaultTableModel(null, new Object[]{
             "P", "No.Permintaan", "No.Rawat", "Pasien", "Kamar", "Tgl.Permintaan", "Perujuk", "Petugas", "Keterangan"}) {
             @Override
@@ -822,7 +822,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 Valid.textKosong(NmPtg, "No.Permintaan");
             } else {
                 Sequel.mengedit("permintaan_kerohanian", "noorder=?", "petugas=?,keterangan=?", 3, new String[]{
-                    NmPtg.getText(),TKeterangan.getText(), tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString()
+                    NmPtg.getText(), TKeterangan.getText(), tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString()
                 });
                 TeksKosong();
                 tampil();
@@ -1121,16 +1121,11 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     }
 
     private void getData() {
-//        Kd2.setText("");
+        Kd2.setText("");
         if (tbKerohanian.getSelectedRow() != -1) {
-            NoPermintaan = tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString();
-            NoRawat = tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 2).toString();
-            Kamar = tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 4).toString();
-            TglPermintaan = tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 5).toString();
-            Perujuk = tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 6).toString();
-            Petugas = tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 7).toString();
-            Ket = tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 8).toString();
-//            Kd2.setText(tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString());
+            Kd2.setText(tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString());
+            Sequel.cariIsi("select keterangan from permintaan_kerohanian where noorder=?",TKeterangan,Kd2.getText());
+            Sequel.cariIsi("select petugas from permintaan_kerohanian where noorder=?",NmPtg,Kd2.getText());
         }
     }
 

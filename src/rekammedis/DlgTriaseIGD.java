@@ -26,9 +26,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,6 +33,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
@@ -43,11 +41,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.text.Document;
-import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.StyleSheet;
 import kepegawaian.DlgCariDokter;
 import kepegawaian.DlgCariPegawai;
 import kepegawaian.DlgCariPetugas;
+import widget.CekBox;
+import widget.RadioButton;
 
 /**
  *
@@ -67,10 +65,8 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
     private String[] kodelevel, kodetindakan, level, pengkajian;
     private DlgCariDokter dokter = new DlgCariDokter(null, false);
     private DlgCariPetugas petugas = new DlgCariPetugas(null, false);
-    private String keputusan = "", pilihan = "", datatriase = "", finger = "", kodepetugas = "", norm = "", key = "", aturan = "", resiko = "",
-            kepala = "", mata = "", tht = "", mulut = "", leher = "", dada = "", abdomen = "", punggung = "", gen = "", eks = "", periksafisik = "",
-            nontr="",tr="",lktunggal="",lkganda="",lain="",nmkasus="";
-    private StringBuilder htmlContent;
+    private String keputusan = "", pilihan = "", datatriase = "", finger = "", kodepetugas = "", norm = "", key = "", aturan = "", resiko = "", periksafisik = "",
+            nmkasus = "", cmbantar = "", transport = "", fungsional = "";
     private boolean sukses = true;
 
     /**
@@ -84,9 +80,9 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         initComponents();
         this.setLocation(8, 1);
         tabMode = new DefaultTableModel(null, new Object[]{
-            "No.Rawat", "Tanggal","Jam", "No.RM", "Nama Pasien", "J.K", "Tgl.Lahir", "Umur", "NIK", "Alamat", "No.Telp",
-            "Agama", "Jns.Bayar", "Kasus","Diantar", "Transportasi", "Fungsional", "Psikologis", "Tinggal Dgn", "Alat Bantu",
-            "Ket. Alat Bantu", "Keluhan Utama", "Riwayat Penyakit", "TD", "Nadi", "RR", "Suhu", "Saturasi", "LK", "LILA",
+            "No.Rawat", "Tanggal", "Jam", "No.RM", "Nama Pasien", "J.K", "Tgl.Lahir", "Umur", "NIK", "Alamat", "No.Telp",
+            "Agama", "Jns.Bayar", "Kasus", "Diantar", "Transportasi", "Fungsional", "Psikologis", "Tinggal Dgn",
+            "Keluhan Utama", "Riwayat Penyakit", "TD", "Nadi", "RR", "Suhu", "Saturasi", "LK", "LILA",
             "TB", "BB", "IMT", "Edukasi", "Riwayat P.Dahulu", "Riwayat Pengobatan", "Riwayat Masuk RS", "Riwayat P.Keluarga",
             "Riwayat Operasi", "Riwayat Trauma", "Periksa Fisik", "Skala Nyeri", "Resiko Jatuh",
             "Nilai R.J", "Diagnosa Keperawatan", "Intervensi", "Diagnosis", "Tindakan", "Keterangan",
@@ -103,28 +99,28 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         tbTriase.setPreferredScrollableViewportSize(new Dimension(500, 500));
         tbTriase.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 53; i++) {
+        for (i = 0; i < 51; i++) {
             TableColumn column = tbTriase.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(105);
             } else if (i == 1) {
                 column.setPreferredWidth(70);
             } else if (i == 2) {
-                column.setPreferredWidth(65);
+                column.setPreferredWidth(50);
             } else if (i == 3) {
-                column.setPreferredWidth(65);
+                column.setPreferredWidth(50);
             } else if (i == 4) {
                 column.setPreferredWidth(200);
             } else if (i == 5) {
-                column.setPreferredWidth(40);
+                column.setPreferredWidth(30);
             } else if (i == 6) {
-                column.setPreferredWidth(40);
+                column.setPreferredWidth(65);
             } else if (i == 7) {
-                column.setPreferredWidth(60);
+                column.setPreferredWidth(50);
             } else if (i == 8) {
                 column.setPreferredWidth(100);
             } else if (i == 9) {
-                column.setPreferredWidth(165);
+                column.setPreferredWidth(175);
             } else if (i == 10) {
                 column.setPreferredWidth(80);
             } else if (i == 11) {
@@ -144,37 +140,37 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             } else if (i == 18) {
                 column.setPreferredWidth(110);
             } else if (i == 19) {
-                column.setPreferredWidth(70);
-            } else if (i == 20) {
-                column.setPreferredWidth(90);
-            } else if (i == 21) {
                 column.setPreferredWidth(120);
-            } else if (i == 22) {
+            } else if (i == 20) {
                 column.setPreferredWidth(150);
+            } else if (i == 21) {
+                column.setPreferredWidth(45);
+            } else if (i == 22) {
+                column.setPreferredWidth(40);
             } else if (i == 23) {
                 column.setPreferredWidth(40);
             } else if (i == 24) {
                 column.setPreferredWidth(40);
             } else if (i == 25) {
-                column.setPreferredWidth(40);
+                column.setPreferredWidth(55);
             } else if (i == 26) {
-                column.setPreferredWidth(40);
+                column.setPreferredWidth(25);
             } else if (i == 27) {
                 column.setPreferredWidth(40);
             } else if (i == 28) {
                 column.setPreferredWidth(25);
             } else if (i == 29) {
-                column.setPreferredWidth(40);
+                column.setPreferredWidth(25);
             } else if (i == 30) {
-                column.setPreferredWidth(25);
-            } else if (i == 31) {
-                column.setPreferredWidth(25);
-            } else if (i == 32) {
                 column.setPreferredWidth(30);
+            } else if (i == 31) {
+                column.setPreferredWidth(150);
+            } else if (i == 32) {
+                column.setPreferredWidth(155);
             } else if (i == 33) {
                 column.setPreferredWidth(150);
             } else if (i == 34) {
-                column.setPreferredWidth(155);
+                column.setPreferredWidth(150);
             } else if (i == 35) {
                 column.setPreferredWidth(150);
             } else if (i == 36) {
@@ -182,17 +178,17 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             } else if (i == 37) {
                 column.setPreferredWidth(150);
             } else if (i == 38) {
-                column.setPreferredWidth(150);
+                column.setPreferredWidth(200);
             } else if (i == 39) {
-                column.setPreferredWidth(150);
+                column.setPreferredWidth(90);
             } else if (i == 40) {
-                column.setPreferredWidth(150);
+                column.setPreferredWidth(120);
             } else if (i == 41) {
-                column.setPreferredWidth(150);
+                column.setPreferredWidth(120);
             } else if (i == 42) {
-                column.setPreferredWidth(100);
+                column.setPreferredWidth(130);
             } else if (i == 43) {
-                column.setPreferredWidth(80);
+                column.setPreferredWidth(100);
             } else if (i == 44) {
                 column.setPreferredWidth(100);
             } else if (i == 45) {
@@ -200,21 +196,15 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             } else if (i == 46) {
                 column.setPreferredWidth(100);
             } else if (i == 47) {
-                column.setPreferredWidth(100);
+                column.setMinWidth(0);
+                column.setMaxWidth(0);
             } else if (i == 48) {
-                column.setPreferredWidth(100);
+                column.setPreferredWidth(130);
             } else if (i == 49) {
                 column.setMinWidth(0);
                 column.setMaxWidth(0);
             } else if (i == 50) {
                 column.setPreferredWidth(120);
-            } else if (i == 51) {
-                column.setMinWidth(0);
-                column.setMaxWidth(0);
-            } else if (i == 52) {
-                column.setPreferredWidth(120);
-            } else if (i == 53) {
-                column.setPreferredWidth(50);
             }
         }
         tbTriase.setDefaultRenderer(Object.class, new WarnaTable());
@@ -296,16 +286,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                 return this;
             }
         });
-
-        TCari.setDocument(new batasInput((int) 100).getKata(TCari));
-        TCariSkala.setDocument(new batasInput((int) 100).getKata(TCariSkala));
-        Suhu.setDocument(new batasInput((byte) 5).getKata(Suhu));
-        LK.setDocument(new batasInput((byte) 5).getKata(LK));
-        Tensi.setDocument(new batasInput((byte) 8).getKata(Tensi));
-        Nadi.setDocument(new batasInput((byte) 3).getKata(Nadi));
-        Saturasi.setDocument(new batasInput((byte) 3).getKata(Saturasi));
-        Respirasi.setDocument(new batasInput((byte) 3).getKata(Respirasi));
-        KeluhanUtama.setDocument(new batasInput((int) 400).getKata(KeluhanUtama));
 
         if (koneksiDB.cariCepat().equals("aktif")) {
             TCari.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
@@ -440,25 +420,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             }
         });
 
-        HTMLEditorKit kit = new HTMLEditorKit();
-        LoadHTML2.setEditable(true);
-        LoadHTML2.setEditorKit(kit);
-        StyleSheet styleSheet = kit.getStyleSheet();
-        styleSheet.addRule(
-                ".isi td{border-right: 1px solid #e2e7dd;font: 8.5px tahoma;height:12px;border-bottom: 1px solid #e2e7dd;background: #ffffff;color:#323232;}"
-                + ".isi2 td{font: 8.5px tahoma;border:none;height:12px;background: #ffffff;color:#323232;}"
-                + ".isi3 td{border-right: 1px solid #e2e7dd;font: 8.5px tahoma;height:12px;border-top: 1px solid #e2e7dd;background: #ffffff;color:#323232;}"
-                + ".isi4 td{font: 11px tahoma;height:12px;border-top: 1px solid #e2e7dd;background: #ffffff;color:#323232;}"
-                + ".isi5 td{font: 8.5px tahoma;border:none;height:12px;background: #ffffff;color:#AA0000;}"
-                + ".isi6 td{font: 8.5px tahoma;border:none;height:12px;background: #ffffff;color:#FF0000;}"
-                + ".isi7 td{font: 8.5px tahoma;border:none;height:12px;background: #ffffff;color:#C8C800;}"
-                + ".isi8 td{font: 8.5px tahoma;border:none;height:12px;background: #ffffff;color:#00AA00;}"
-                + ".isi9 td{font: 8.5px tahoma;border:none;height:12px;background: #ffffff;color:#969696;}"
-        );
-
-        Document doc = kit.createDefaultDocument();
-        LoadHTML2.setDocument(doc);
-
         chkMasukRS.setSelected(false);
     }
 
@@ -478,6 +439,8 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         Kd2 = new widget.TextBox();
         buttonGroup2 = new javax.swing.ButtonGroup();
         buttonGroup3 = new javax.swing.ButtonGroup();
+        TNoRw2 = new widget.TextBox();
+        TResiko = new widget.TextBox();
         internalFrame1 = new widget.InternalFrame();
         TabPilihan = new javax.swing.JTabbedPane();
         ScrollTriase = new widget.ScrollPane();
@@ -490,7 +453,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         label11 = new widget.Label();
         TCariSkala = new widget.TextBox();
         BtnCariSkala = new widget.Button();
-        BtnTambahSkala = new widget.Button();
         Scroll3 = new widget.ScrollPane();
         tbLevel = new widget.Table();
         FormInput = new widget.PanelBiasa();
@@ -543,11 +505,8 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         Psikologis = new widget.ComboBox();
         jLabel44 = new widget.Label();
         SttsTinggal = new widget.ComboBox();
-        jLabel45 = new widget.Label();
-        AlatBantu = new widget.TextBox();
         jLabel46 = new widget.Label();
         Edukasi = new widget.TextBox();
-        cmbAlatBantu = new widget.ComboBox();
         jLabel11 = new widget.Label();
         Tensi = new widget.TextBox();
         jLabel26 = new widget.Label();
@@ -572,12 +531,15 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         Alergi = new widget.TextBox();
         cmbTriase = new widget.ComboBox();
         jLabel48 = new widget.Label();
-        Edukasi1 = new widget.TextBox();
+        Rujukan = new widget.TextBox();
         chkNontrauma = new widget.CekBox();
         chkTrauma = new widget.CekBox();
         chkLainnya = new widget.CekBox();
         chkLakaTunggal = new widget.CekBox();
         chkLakaGanda = new widget.CekBox();
+        TFungsional = new widget.TextBox();
+        TTransportasi = new widget.TextBox();
+        TDiantar = new widget.TextBox();
         FormInput1 = new widget.PanelBiasa();
         jLabel94 = new widget.Label();
         jLabel38 = new widget.Label();
@@ -594,25 +556,15 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         rOperasi = new widget.TextBox();
         rpKeluarga = new widget.TextBox();
         Kepala = new widget.TextBox();
-        jLabel54 = new widget.Label();
-        jLabel61 = new widget.Label();
         Leher = new widget.TextBox();
-        jLabel66 = new widget.Label();
         Punggung = new widget.TextBox();
         Mata = new widget.TextBox();
-        jLabel60 = new widget.Label();
-        jLabel67 = new widget.Label();
         Dada = new widget.TextBox();
-        jLabel68 = new widget.Label();
         Genetalia = new widget.TextBox();
         THT = new widget.TextBox();
-        jLabel69 = new widget.Label();
-        jLabel70 = new widget.Label();
         Abdomen = new widget.TextBox();
-        jLabel71 = new widget.Label();
         Ekstrimitas = new widget.TextBox();
         Mulut = new widget.TextBox();
-        jLabel72 = new widget.Label();
         Diagnosa = new widget.TextBox();
         jLabel55 = new widget.Label();
         scrollPane4 = new widget.ScrollPane();
@@ -702,6 +654,12 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         Kd2.setName("Kd2"); // NOI18N
         Kd2.setPreferredSize(new java.awt.Dimension(207, 23));
 
+        TNoRw2.setName("TNoRw2"); // NOI18N
+        TNoRw2.setPreferredSize(new java.awt.Dimension(207, 23));
+
+        TResiko.setName("TResiko"); // NOI18N
+        TResiko.setPreferredSize(new java.awt.Dimension(207, 23));
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
@@ -737,12 +695,12 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
 
         FormTriase.setBorder(null);
         FormTriase.setName("FormTriase"); // NOI18N
-        FormTriase.setPreferredSize(new java.awt.Dimension(900, 1659));
+        FormTriase.setPreferredSize(new java.awt.Dimension(900, 1710));
         FormTriase.setLayout(new java.awt.BorderLayout(1, 1));
 
         internalFrame5.setBorder(null);
         internalFrame5.setName("internalFrame5"); // NOI18N
-        internalFrame5.setPreferredSize(new java.awt.Dimension(700, 74));
+        internalFrame5.setPreferredSize(new java.awt.Dimension(700, 94));
         internalFrame5.setLayout(new java.awt.BorderLayout());
 
         internalFrame3.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 4, 0, 4));
@@ -795,24 +753,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                 BtnCariSkalaActionPerformed(evt);
             }
         });
-        BtnCariSkala.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                BtnCariSkalaKeyPressed(evt);
-            }
-        });
         panelisi6.add(BtnCariSkala);
-
-        BtnTambahSkala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/plus_16.png"))); // NOI18N
-        BtnTambahSkala.setMnemonic('3');
-        BtnTambahSkala.setToolTipText("Alt+3");
-        BtnTambahSkala.setName("BtnTambahSkala"); // NOI18N
-        BtnTambahSkala.setPreferredSize(new java.awt.Dimension(28, 23));
-        BtnTambahSkala.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnTambahSkalaActionPerformed(evt);
-            }
-        });
-        panelisi6.add(BtnTambahSkala);
 
         jPanel4.add(panelisi6, java.awt.BorderLayout.PAGE_END);
 
@@ -862,11 +803,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
 
         TNoRM.setHighlighter(null);
         TNoRM.setName("TNoRM"); // NOI18N
-        TNoRM.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TNoRMActionPerformed(evt);
-            }
-        });
         FormInput.add(TNoRM);
         TNoRM.setBounds(259, 10, 110, 23);
 
@@ -876,7 +812,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         jLabel18.setBounds(584, 70, 50, 23);
 
         Tanggal.setForeground(new java.awt.Color(50, 70, 50));
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "15-02-2023 23:55:32" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "23-02-2023 11:08:56" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy HH:mm:ss");
         Tanggal.setName("Tanggal"); // NOI18N
         Tanggal.setOpaque(false);
@@ -893,15 +829,15 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         FormInput.add(jLabel23);
         jLabel23.setBounds(0, 260, 100, 23);
 
-        cmbDiantar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Keluarga", "Polisi", "Petugas Kesehatan", "Datang Sendiri", "Rescue" }));
+        cmbDiantar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Keluarga", "Polisi", "Petugas Kesehatan", "Datang Sendiri", "Lainnya" }));
         cmbDiantar.setName("cmbDiantar"); // NOI18N
-        cmbDiantar.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbDiantarItemStateChanged(evt);
+        cmbDiantar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbDiantarActionPerformed(evt);
             }
         });
         FormInput.add(cmbDiantar);
-        cmbDiantar.setBounds(100, 260, 280, 23);
+        cmbDiantar.setBounds(105, 260, 155, 23);
 
         jLabel14.setText("Petugas :");
         jLabel14.setName("jLabel14"); // NOI18N
@@ -910,11 +846,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
 
         KdPetugas.setHighlighter(null);
         KdPetugas.setName("KdPetugas"); // NOI18N
-        KdPetugas.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                KdPetugasKeyPressed(evt);
-            }
-        });
         FormInput.add(KdPetugas);
         KdPetugas.setBounds(105, 130, 75, 23);
 
@@ -943,21 +874,11 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         KdDokter.setEditable(false);
         KdDokter.setHighlighter(null);
         KdDokter.setName("KdDokter"); // NOI18N
-        KdDokter.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                KdDokterKeyPressed(evt);
-            }
-        });
         FormInput.add(KdDokter);
         KdDokter.setBounds(105, 100, 75, 23);
 
         NmDokter.setEditable(false);
         NmDokter.setName("NmDokter"); // NOI18N
-        NmDokter.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                NmDokterKeyPressed(evt);
-            }
-        });
         FormInput.add(NmDokter);
         NmDokter.setBounds(182, 100, 180, 23);
 
@@ -968,14 +889,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         btnDokter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDokterActionPerformed(evt);
-            }
-        });
-        btnDokter.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                btnDokterKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                btnDokterKeyReleased(evt);
             }
         });
         FormInput.add(btnDokter);
@@ -1010,16 +923,21 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         FormInput.add(Alamat);
         Alamat.setBounds(275, 40, 170, 23);
 
-        Transportasi.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Ambulance", "Mobil Polisi", "Jalan Kaki", "Kendaraan umum", "Kendaraan pribadi" }));
+        Transportasi.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Ambulance", "Mobil Polisi", "Jalan Kaki", "Lainnya" }));
         Transportasi.setName("Transportasi"); // NOI18N
         Transportasi.setPreferredSize(new java.awt.Dimension(55, 28));
+        Transportasi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TransportasiActionPerformed(evt);
+            }
+        });
         Transportasi.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 TransportasiKeyPressed(evt);
             }
         });
         FormInput.add(Transportasi);
-        Transportasi.setBounds(100, 290, 280, 23);
+        Transportasi.setBounds(105, 290, 155, 23);
 
         jLabel22.setText("Transportasi :");
         jLabel22.setName("jLabel22"); // NOI18N
@@ -1104,11 +1022,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         Umur.setBounds(537, 70, 60, 23);
 
         TKasus.setName("TKasus"); // NOI18N
-        TKasus.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                TKasusKeyPressed(evt);
-            }
-        });
         FormInput.add(TKasus);
         TKasus.setBounds(180, 220, 200, 23);
 
@@ -1124,11 +1037,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         KeluhanUtama.setColumns(20);
         KeluhanUtama.setRows(5);
         KeluhanUtama.setName("KeluhanUtama"); // NOI18N
-        KeluhanUtama.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                KeluhanUtamaKeyPressed(evt);
-            }
-        });
         scrollPane1.setViewportView(KeluhanUtama);
 
         FormInput.add(scrollPane1);
@@ -1151,11 +1059,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         RiwayatPenyakit.setColumns(20);
         RiwayatPenyakit.setRows(5);
         RiwayatPenyakit.setName("RiwayatPenyakit"); // NOI18N
-        RiwayatPenyakit.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                RiwayatPenyakitKeyPressed(evt);
-            }
-        });
         scrollPane2.setViewportView(RiwayatPenyakit);
 
         FormInput.add(scrollPane2);
@@ -1169,13 +1072,8 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         SttsFungsional.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Mandiri", "Perlu bantuan", "Alat bantu" }));
         SttsFungsional.setName("SttsFungsional"); // NOI18N
         SttsFungsional.setPreferredSize(new java.awt.Dimension(55, 28));
-        SttsFungsional.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                SttsFungsionalKeyPressed(evt);
-            }
-        });
         FormInput.add(SttsFungsional);
-        SttsFungsional.setBounds(100, 320, 280, 23);
+        SttsFungsional.setBounds(105, 320, 155, 23);
 
         jLabel42.setText("Psikologis :");
         jLabel42.setName("jLabel42"); // NOI18N
@@ -1191,7 +1089,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             }
         });
         FormInput.add(Psikologis);
-        Psikologis.setBounds(100, 350, 280, 23);
+        Psikologis.setBounds(105, 350, 280, 23);
 
         jLabel44.setText("Tinggal dengan :");
         jLabel44.setName("jLabel44"); // NOI18N
@@ -1201,27 +1099,8 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         SttsTinggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Sendiri", "Keluarga", "Teman", "Orang Tua", "Suami / Istri", "Teman", "Tunawisma", "Rumah perawatan / jompo" }));
         SttsTinggal.setName("SttsTinggal"); // NOI18N
         SttsTinggal.setPreferredSize(new java.awt.Dimension(55, 28));
-        SttsTinggal.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                SttsTinggalKeyPressed(evt);
-            }
-        });
         FormInput.add(SttsTinggal);
-        SttsTinggal.setBounds(100, 380, 280, 23);
-
-        jLabel45.setText("Alat Bantu :");
-        jLabel45.setName("jLabel45"); // NOI18N
-        FormInput.add(jLabel45);
-        jLabel45.setBounds(390, 370, 100, 23);
-
-        AlatBantu.setName("AlatBantu"); // NOI18N
-        AlatBantu.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                AlatBantuKeyPressed(evt);
-            }
-        });
-        FormInput.add(AlatBantu);
-        AlatBantu.setBounds(610, 370, 165, 23);
+        SttsTinggal.setBounds(105, 380, 280, 23);
 
         jLabel46.setText("Edukasi :");
         jLabel46.setName("jLabel46"); // NOI18N
@@ -1229,23 +1108,8 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         jLabel46.setBounds(400, 340, 90, 23);
 
         Edukasi.setName("Edukasi"); // NOI18N
-        Edukasi.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                EdukasiKeyPressed(evt);
-            }
-        });
         FormInput.add(Edukasi);
         Edukasi.setBounds(493, 340, 273, 23);
-
-        cmbAlatBantu.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tidak", "Ya" }));
-        cmbAlatBantu.setName("cmbAlatBantu"); // NOI18N
-        cmbAlatBantu.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbAlatBantuItemStateChanged(evt);
-            }
-        });
-        FormInput.add(cmbAlatBantu);
-        cmbAlatBantu.setBounds(490, 370, 110, 23);
 
         jLabel11.setText("TD (mmHg) :");
         jLabel11.setName("jLabel11"); // NOI18N
@@ -1259,11 +1123,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                 TensiActionPerformed(evt);
             }
         });
-        Tensi.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                TensiKeyPressed(evt);
-            }
-        });
         FormInput.add(Tensi);
         Tensi.setBounds(493, 220, 55, 23);
 
@@ -1274,16 +1133,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
 
         Nadi.setFocusTraversalPolicyProvider(true);
         Nadi.setName("Nadi"); // NOI18N
-        Nadi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NadiActionPerformed(evt);
-            }
-        });
-        Nadi.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                NadiKeyPressed(evt);
-            }
-        });
         FormInput.add(Nadi);
         Nadi.setBounds(614, 220, 50, 23);
 
@@ -1294,11 +1143,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
 
         Suhu.setFocusTraversalPolicyProvider(true);
         Suhu.setName("Suhu"); // NOI18N
-        Suhu.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                SuhuKeyPressed(evt);
-            }
-        });
         FormInput.add(Suhu);
         Suhu.setBounds(715, 220, 50, 23);
 
@@ -1309,11 +1153,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
 
         Respirasi.setHighlighter(null);
         Respirasi.setName("Respirasi"); // NOI18N
-        Respirasi.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                RespirasiKeyPressed(evt);
-            }
-        });
         FormInput.add(Respirasi);
         Respirasi.setBounds(493, 250, 55, 23);
 
@@ -1324,11 +1163,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
 
         Saturasi.setFocusTraversalPolicyProvider(true);
         Saturasi.setName("Saturasi"); // NOI18N
-        Saturasi.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                SaturasiKeyPressed(evt);
-            }
-        });
         FormInput.add(Saturasi);
         Saturasi.setBounds(614, 250, 50, 23);
 
@@ -1339,11 +1173,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
 
         LK.setHighlighter(null);
         LK.setName("LK"); // NOI18N
-        LK.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                LKKeyPressed(evt);
-            }
-        });
         FormInput.add(LK);
         LK.setBounds(715, 250, 50, 23);
 
@@ -1353,11 +1182,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         jLabel24.setBounds(400, 280, 90, 23);
 
         TB.setName("TB"); // NOI18N
-        TB.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                TBKeyPressed(evt);
-            }
-        });
         FormInput.add(TB);
         TB.setBounds(493, 280, 55, 23);
 
@@ -1368,11 +1192,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
 
         BB.setHighlighter(null);
         BB.setName("BB"); // NOI18N
-        BB.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                BBKeyPressed(evt);
-            }
-        });
         FormInput.add(BB);
         BB.setBounds(614, 280, 50, 23);
 
@@ -1399,11 +1218,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
 
         LILA.setHighlighter(null);
         LILA.setName("LILA"); // NOI18N
-        LILA.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                LILAKeyPressed(evt);
-            }
-        });
         FormInput.add(LILA);
         LILA.setBounds(493, 310, 55, 23);
 
@@ -1413,52 +1227,33 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         jLabel20.setBounds(533, 310, 79, 23);
 
         Alergi.setName("Alergi"); // NOI18N
-        Alergi.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                AlergiKeyPressed(evt);
-            }
-        });
         FormInput.add(Alergi);
         Alergi.setBounds(614, 310, 152, 23);
 
         cmbTriase.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "AIRWAY", "BREATHING", "CIRCULATION", "DISABILITY", "Prediksi pemeriksaan penunjang", "Prediksi SDM yang akan terlibat", "Do'a" }));
         cmbTriase.setName("cmbTriase"); // NOI18N
-        cmbTriase.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbTriaseItemStateChanged(evt);
+        cmbTriase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbTriaseActionPerformed(evt);
             }
         });
         FormInput.add(cmbTriase);
-        cmbTriase.setBounds(100, 420, 280, 23);
+        cmbTriase.setBounds(105, 420, 280, 23);
 
         jLabel48.setText("Pemeriksaan :");
         jLabel48.setName("jLabel48"); // NOI18N
         FormInput.add(jLabel48);
         jLabel48.setBounds(0, 420, 100, 23);
 
-        Edukasi1.setName("Edukasi1"); // NOI18N
-        Edukasi1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                Edukasi1KeyPressed(evt);
-            }
-        });
-        FormInput.add(Edukasi1);
-        Edukasi1.setBounds(493, 100, 273, 23);
+        Rujukan.setEditable(false);
+        Rujukan.setName("Rujukan"); // NOI18N
+        FormInput.add(Rujukan);
+        Rujukan.setBounds(493, 100, 273, 23);
 
         chkNontrauma.setBorder(null);
         chkNontrauma.setText("Non Trauma");
         chkNontrauma.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         chkNontrauma.setName("chkNontrauma"); // NOI18N
-        chkNontrauma.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chkNontraumaItemStateChanged(evt);
-            }
-        });
-        chkNontrauma.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chkNontraumaActionPerformed(evt);
-            }
-        });
         FormInput.add(chkNontrauma);
         chkNontrauma.setBounds(105, 160, 80, 23);
 
@@ -1466,50 +1261,25 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         chkTrauma.setText("Trauma");
         chkTrauma.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         chkTrauma.setName("chkTrauma"); // NOI18N
-        chkTrauma.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chkTraumaItemStateChanged(evt);
-            }
-        });
-        chkTrauma.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chkTraumaActionPerformed(evt);
-            }
-        });
         FormInput.add(chkTrauma);
-        chkTrauma.setBounds(105, 190, 80, 23);
+        chkTrauma.setBounds(105, 190, 70, 23);
 
         chkLainnya.setBorder(null);
         chkLainnya.setText("Lainnya");
         chkLainnya.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         chkLainnya.setName("chkLainnya"); // NOI18N
-        chkLainnya.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chkLainnyaItemStateChanged(evt);
-            }
-        });
         chkLainnya.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chkLainnyaActionPerformed(evt);
             }
         });
         FormInput.add(chkLainnya);
-        chkLainnya.setBounds(105, 220, 90, 23);
+        chkLainnya.setBounds(105, 220, 60, 23);
 
         chkLakaTunggal.setBorder(null);
         chkLakaTunggal.setText("Laka Tunggal");
         chkLakaTunggal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         chkLakaTunggal.setName("chkLakaTunggal"); // NOI18N
-        chkLakaTunggal.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chkLakaTunggalItemStateChanged(evt);
-            }
-        });
-        chkLakaTunggal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chkLakaTunggalActionPerformed(evt);
-            }
-        });
         FormInput.add(chkLakaTunggal);
         chkLakaTunggal.setBounds(190, 160, 110, 20);
 
@@ -1517,18 +1287,20 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         chkLakaGanda.setText("Laka Ganda");
         chkLakaGanda.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         chkLakaGanda.setName("chkLakaGanda"); // NOI18N
-        chkLakaGanda.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chkLakaGandaItemStateChanged(evt);
-            }
-        });
-        chkLakaGanda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chkLakaGandaActionPerformed(evt);
-            }
-        });
         FormInput.add(chkLakaGanda);
         chkLakaGanda.setBounds(190, 190, 90, 20);
+
+        TFungsional.setName("TFungsional"); // NOI18N
+        FormInput.add(TFungsional);
+        TFungsional.setBounds(265, 320, 120, 23);
+
+        TTransportasi.setName("TTransportasi"); // NOI18N
+        FormInput.add(TTransportasi);
+        TTransportasi.setBounds(265, 290, 120, 23);
+
+        TDiantar.setName("TDiantar"); // NOI18N
+        FormInput.add(TDiantar);
+        TDiantar.setBounds(265, 260, 120, 23);
 
         FormTriase.add(FormInput, java.awt.BorderLayout.PAGE_START);
 
@@ -1541,7 +1313,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         jLabel94.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel94.setName("jLabel94"); // NOI18N
         FormInput1.add(jLabel94);
-        jLabel94.setBounds(20, 160, 180, 23);
+        jLabel94.setBounds(20, 165, 180, 23);
 
         jLabel38.setText("Pernah masuk RSHD");
         jLabel38.setName("jLabel38"); // NOI18N
@@ -1579,205 +1351,70 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         jLabel53.setBounds(0, 250, 130, 20);
 
         rpDahulu.setName("rpDahulu"); // NOI18N
-        rpDahulu.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                rpDahuluKeyPressed(evt);
-            }
-        });
         FormInput1.add(rpDahulu);
         rpDahulu.setBounds(135, 220, 145, 23);
 
         rPengobatan.setName("rPengobatan"); // NOI18N
-        rPengobatan.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                rPengobatanKeyPressed(evt);
-            }
-        });
         FormInput1.add(rPengobatan);
         rPengobatan.setBounds(407, 220, 145, 23);
 
         rMasukRS.setName("rMasukRS"); // NOI18N
-        rMasukRS.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                rMasukRSKeyPressed(evt);
-            }
-        });
         FormInput1.add(rMasukRS);
         rMasukRS.setBounds(670, 220, 145, 23);
 
         rTrauma.setName("rTrauma"); // NOI18N
-        rTrauma.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                rTraumaKeyPressed(evt);
-            }
-        });
         FormInput1.add(rTrauma);
         rTrauma.setBounds(670, 250, 145, 23);
 
         rOperasi.setName("rOperasi"); // NOI18N
-        rOperasi.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                rOperasiKeyPressed(evt);
-            }
-        });
         FormInput1.add(rOperasi);
         rOperasi.setBounds(407, 250, 145, 23);
 
         rpKeluarga.setName("rpKeluarga"); // NOI18N
-        rpKeluarga.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                rpKeluargaKeyPressed(evt);
-            }
-        });
         FormInput1.add(rpKeluarga);
         rpKeluarga.setBounds(135, 250, 145, 23);
 
         Kepala.setName("Kepala"); // NOI18N
-        Kepala.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                KepalaKeyPressed(evt);
-            }
-        });
         FormInput1.add(Kepala);
         Kepala.setBounds(155, 310, 125, 23);
 
-        jLabel54.setText("Kepala :");
-        jLabel54.setName("jLabel54"); // NOI18N
-        FormInput1.add(jLabel54);
-        jLabel54.setBounds(0, 310, 130, 23);
-
-        jLabel61.setText("Leher :");
-        jLabel61.setName("jLabel61"); // NOI18N
-        FormInput1.add(jLabel61);
-        jLabel61.setBounds(264, 310, 140, 23);
-
         Leher.setName("Leher"); // NOI18N
-        Leher.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                LeherKeyPressed(evt);
-            }
-        });
         FormInput1.add(Leher);
         Leher.setBounds(427, 310, 125, 23);
 
-        jLabel66.setText("Punggung :");
-        jLabel66.setName("jLabel66"); // NOI18N
-        FormInput1.add(jLabel66);
-        jLabel66.setBounds(547, 310, 120, 23);
-
         Punggung.setName("Punggung"); // NOI18N
-        Punggung.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                PunggungKeyPressed(evt);
-            }
-        });
         FormInput1.add(Punggung);
         Punggung.setBounds(690, 310, 125, 23);
 
         Mata.setName("Mata"); // NOI18N
-        Mata.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                MataKeyPressed(evt);
-            }
-        });
         FormInput1.add(Mata);
         Mata.setBounds(155, 340, 125, 23);
 
-        jLabel60.setText("Mata :");
-        jLabel60.setName("jLabel60"); // NOI18N
-        FormInput1.add(jLabel60);
-        jLabel60.setBounds(0, 340, 130, 23);
-
-        jLabel67.setText("Dada :");
-        jLabel67.setName("jLabel67"); // NOI18N
-        FormInput1.add(jLabel67);
-        jLabel67.setBounds(264, 340, 140, 23);
-
         Dada.setName("Dada"); // NOI18N
-        Dada.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                DadaKeyPressed(evt);
-            }
-        });
         FormInput1.add(Dada);
         Dada.setBounds(427, 340, 125, 23);
 
-        jLabel68.setText("Genetalia :");
-        jLabel68.setName("jLabel68"); // NOI18N
-        FormInput1.add(jLabel68);
-        jLabel68.setBounds(547, 340, 120, 23);
-
         Genetalia.setName("Genetalia"); // NOI18N
-        Genetalia.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                GenetaliaKeyPressed(evt);
-            }
-        });
         FormInput1.add(Genetalia);
         Genetalia.setBounds(690, 340, 125, 23);
 
         THT.setName("THT"); // NOI18N
-        THT.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                THTKeyPressed(evt);
-            }
-        });
         FormInput1.add(THT);
         THT.setBounds(155, 370, 125, 23);
 
-        jLabel69.setText("THT :");
-        jLabel69.setName("jLabel69"); // NOI18N
-        FormInput1.add(jLabel69);
-        jLabel69.setBounds(0, 370, 130, 23);
-
-        jLabel70.setText("Abdomen :");
-        jLabel70.setName("jLabel70"); // NOI18N
-        FormInput1.add(jLabel70);
-        jLabel70.setBounds(264, 370, 140, 23);
-
         Abdomen.setName("Abdomen"); // NOI18N
-        Abdomen.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                AbdomenKeyPressed(evt);
-            }
-        });
         FormInput1.add(Abdomen);
         Abdomen.setBounds(427, 370, 125, 23);
 
-        jLabel71.setText("Ekstrimitas :");
-        jLabel71.setName("jLabel71"); // NOI18N
-        FormInput1.add(jLabel71);
-        jLabel71.setBounds(547, 370, 120, 23);
-
         Ekstrimitas.setName("Ekstrimitas"); // NOI18N
-        Ekstrimitas.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                EkstrimitasKeyPressed(evt);
-            }
-        });
         FormInput1.add(Ekstrimitas);
         Ekstrimitas.setBounds(690, 370, 125, 23);
 
         Mulut.setName("Mulut"); // NOI18N
-        Mulut.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                MulutKeyPressed(evt);
-            }
-        });
         FormInput1.add(Mulut);
         Mulut.setBounds(155, 400, 125, 23);
 
-        jLabel72.setText("Mulut :");
-        jLabel72.setName("jLabel72"); // NOI18N
-        FormInput1.add(jLabel72);
-        jLabel72.setBounds(0, 400, 130, 23);
-
         Diagnosa.setName("Diagnosa"); // NOI18N
-        Diagnosa.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                DiagnosaKeyPressed(evt);
-            }
-        });
         FormInput1.add(Diagnosa);
         Diagnosa.setBounds(135, 440, 260, 23);
 
@@ -1793,11 +1430,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         Terapi.setColumns(20);
         Terapi.setRows(5);
         Terapi.setName("Terapi"); // NOI18N
-        Terapi.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                TerapiKeyPressed(evt);
-            }
-        });
         scrollPane4.setViewportView(Terapi);
 
         FormInput1.add(scrollPane4);
@@ -1814,11 +1446,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         jLabel57.setBounds(0, 470, 130, 20);
 
         Tindakan.setName("Tindakan"); // NOI18N
-        Tindakan.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                TindakanKeyPressed(evt);
-            }
-        });
         FormInput1.add(Tindakan);
         Tindakan.setBounds(135, 470, 260, 23);
 
@@ -1849,11 +1476,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
 
         cmbSkalaNyeri.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
         cmbSkalaNyeri.setName("cmbSkalaNyeri"); // NOI18N
-        cmbSkalaNyeri.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbSkalaNyeriItemStateChanged(evt);
-            }
-        });
         FormInput1.add(cmbSkalaNyeri);
         cmbSkalaNyeri.setBounds(493, 10, 200, 23);
 
@@ -1864,9 +1486,9 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
 
         cmbResikoJatuh.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Pediatri (humpty dumpty)", "Dewasa (skala morse)", "Lansia (skala ontario)", " " }));
         cmbResikoJatuh.setName("cmbResikoJatuh"); // NOI18N
-        cmbResikoJatuh.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbResikoJatuhItemStateChanged(evt);
+        cmbResikoJatuh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbResikoJatuhActionPerformed(evt);
             }
         });
         FormInput1.add(cmbResikoJatuh);
@@ -1875,88 +1497,48 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         buttonGroup1.add(R1);
         R1.setText("Rendah (0-24)");
         R1.setName("R1"); // NOI18N
-        R1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                R1ActionPerformed(evt);
-            }
-        });
         FormInput1.add(R1);
         R1.setBounds(493, 70, 150, 16);
 
         buttonGroup1.add(R2);
         R2.setText("Sedang (25-44)");
         R2.setName("R2"); // NOI18N
-        R2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                R2ActionPerformed(evt);
-            }
-        });
         FormInput1.add(R2);
         R2.setBounds(493, 90, 150, 16);
 
         buttonGroup1.add(R3);
         R3.setText("Tinggi (>= 45)");
         R3.setName("R3"); // NOI18N
-        R3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                R3ActionPerformed(evt);
-            }
-        });
         FormInput1.add(R3);
         R3.setBounds(493, 110, 150, 16);
 
         buttonGroup2.add(R4);
         R4.setText("Tinggi (>=12)");
         R4.setName("R4"); // NOI18N
-        R4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                R4ActionPerformed(evt);
-            }
-        });
         FormInput1.add(R4);
         R4.setBounds(493, 90, 150, 16);
 
         buttonGroup2.add(R5);
         R5.setText("Rendah (7-11)");
         R5.setName("R5"); // NOI18N
-        R5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                R5ActionPerformed(evt);
-            }
-        });
         FormInput1.add(R5);
         R5.setBounds(493, 70, 150, 16);
 
         buttonGroup3.add(R6);
         R6.setText("Rendah (0-5)");
         R6.setName("R6"); // NOI18N
-        R6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                R6ActionPerformed(evt);
-            }
-        });
         FormInput1.add(R6);
         R6.setBounds(493, 70, 150, 16);
 
         buttonGroup3.add(R7);
         R7.setText("Sedang (6-16)");
         R7.setName("R7"); // NOI18N
-        R7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                R7ActionPerformed(evt);
-            }
-        });
         FormInput1.add(R7);
         R7.setBounds(493, 90, 150, 16);
 
         buttonGroup3.add(R8);
         R8.setText("Tinggi (17-30)");
         R8.setName("R8"); // NOI18N
-        R8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                R8ActionPerformed(evt);
-            }
-        });
         FormInput1.add(R8);
         R8.setBounds(493, 110, 150, 16);
 
@@ -1997,11 +1579,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         Keterangan.setColumns(20);
         Keterangan.setRows(5);
         Keterangan.setName("Keterangan"); // NOI18N
-        Keterangan.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                KeteranganKeyPressed(evt);
-            }
-        });
         scrollPane6.setViewportView(Keterangan);
 
         FormInput1.add(scrollPane6);
@@ -2040,29 +1617,21 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         jLabel75.setBounds(410, 550, 140, 20);
 
         chkMulut.setBorder(null);
-        chkMulut.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        chkMulut.setText("Mulut :");
+        chkMulut.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        chkMulut.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         chkMulut.setName("chkMulut"); // NOI18N
-        chkMulut.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chkMulutItemStateChanged(evt);
-            }
-        });
         chkMulut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chkMulutActionPerformed(evt);
             }
         });
         FormInput1.add(chkMulut);
-        chkMulut.setBounds(135, 400, 20, 20);
+        chkMulut.setBounds(0, 400, 148, 20);
 
         chkMasukRS.setBorder(null);
         chkMasukRS.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         chkMasukRS.setName("chkMasukRS"); // NOI18N
-        chkMasukRS.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chkMasukRSItemStateChanged(evt);
-            }
-        });
         chkMasukRS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chkMasukRSActionPerformed(evt);
@@ -2072,148 +1641,121 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         chkMasukRS.setBounds(135, 190, 20, 20);
 
         chkKepala.setBorder(null);
-        chkKepala.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        chkKepala.setText("Kepala :");
+        chkKepala.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        chkKepala.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         chkKepala.setName("chkKepala"); // NOI18N
-        chkKepala.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chkKepalaItemStateChanged(evt);
-            }
-        });
         chkKepala.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chkKepalaActionPerformed(evt);
             }
         });
         FormInput1.add(chkKepala);
-        chkKepala.setBounds(135, 310, 20, 20);
+        chkKepala.setBounds(0, 310, 148, 20);
 
         chkMata.setBorder(null);
-        chkMata.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        chkMata.setText("Mata :");
+        chkMata.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        chkMata.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         chkMata.setName("chkMata"); // NOI18N
-        chkMata.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chkMataItemStateChanged(evt);
-            }
-        });
         chkMata.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chkMataActionPerformed(evt);
             }
         });
         FormInput1.add(chkMata);
-        chkMata.setBounds(135, 340, 20, 20);
+        chkMata.setBounds(0, 340, 148, 20);
 
         chkTHT.setBorder(null);
-        chkTHT.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        chkTHT.setText("THT :");
+        chkTHT.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        chkTHT.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         chkTHT.setName("chkTHT"); // NOI18N
-        chkTHT.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chkTHTItemStateChanged(evt);
-            }
-        });
         chkTHT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chkTHTActionPerformed(evt);
             }
         });
         FormInput1.add(chkTHT);
-        chkTHT.setBounds(135, 370, 20, 20);
+        chkTHT.setBounds(0, 370, 148, 20);
 
         chkLeher.setBorder(null);
-        chkLeher.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        chkLeher.setText("Leher :");
+        chkLeher.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        chkLeher.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         chkLeher.setName("chkLeher"); // NOI18N
-        chkLeher.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chkLeherItemStateChanged(evt);
-            }
-        });
         chkLeher.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chkLeherActionPerformed(evt);
             }
         });
         FormInput1.add(chkLeher);
-        chkLeher.setBounds(407, 310, 20, 20);
+        chkLeher.setBounds(320, 310, 100, 20);
 
         chkDada.setBorder(null);
-        chkDada.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        chkDada.setText("Dada :");
+        chkDada.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        chkDada.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         chkDada.setName("chkDada"); // NOI18N
-        chkDada.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chkDadaItemStateChanged(evt);
-            }
-        });
         chkDada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chkDadaActionPerformed(evt);
             }
         });
         FormInput1.add(chkDada);
-        chkDada.setBounds(407, 340, 20, 20);
+        chkDada.setBounds(320, 340, 100, 20);
 
         chkAbdomen.setBorder(null);
-        chkAbdomen.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        chkAbdomen.setText("Abdomen :");
+        chkAbdomen.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        chkAbdomen.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         chkAbdomen.setName("chkAbdomen"); // NOI18N
-        chkAbdomen.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chkAbdomenItemStateChanged(evt);
-            }
-        });
         chkAbdomen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chkAbdomenActionPerformed(evt);
             }
         });
         FormInput1.add(chkAbdomen);
-        chkAbdomen.setBounds(407, 370, 20, 20);
+        chkAbdomen.setBounds(320, 370, 100, 20);
 
         chkPunggung.setBorder(null);
-        chkPunggung.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        chkPunggung.setText("Punggung :");
+        chkPunggung.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        chkPunggung.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         chkPunggung.setName("chkPunggung"); // NOI18N
-        chkPunggung.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chkPunggungItemStateChanged(evt);
-            }
-        });
         chkPunggung.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chkPunggungActionPerformed(evt);
             }
         });
         FormInput1.add(chkPunggung);
-        chkPunggung.setBounds(670, 310, 20, 20);
+        chkPunggung.setBounds(582, 310, 100, 20);
 
         chkGenetalia.setBorder(null);
-        chkGenetalia.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        chkGenetalia.setText("Genetalia :");
+        chkGenetalia.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        chkGenetalia.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         chkGenetalia.setName("chkGenetalia"); // NOI18N
-        chkGenetalia.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chkGenetaliaItemStateChanged(evt);
-            }
-        });
         chkGenetalia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chkGenetaliaActionPerformed(evt);
             }
         });
         FormInput1.add(chkGenetalia);
-        chkGenetalia.setBounds(670, 340, 20, 20);
+        chkGenetalia.setBounds(582, 340, 100, 20);
 
         chkEkstrimitas.setBorder(null);
-        chkEkstrimitas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        chkEkstrimitas.setText("Ekstrimitas :");
+        chkEkstrimitas.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        chkEkstrimitas.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         chkEkstrimitas.setName("chkEkstrimitas"); // NOI18N
-        chkEkstrimitas.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chkEkstrimitasItemStateChanged(evt);
-            }
-        });
         chkEkstrimitas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chkEkstrimitasActionPerformed(evt);
             }
         });
         FormInput1.add(chkEkstrimitas);
-        chkEkstrimitas.setBounds(670, 370, 20, 20);
+        chkEkstrimitas.setBounds(582, 370, 100, 20);
 
         FormTriase.add(FormInput1, java.awt.BorderLayout.PAGE_END);
 
@@ -2260,7 +1802,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         panelGlass9.add(jLabel19);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "15-02-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "23-02-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -2274,7 +1816,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         panelGlass9.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "15-02-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "23-02-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -2469,8 +2011,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
     private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpanActionPerformed
         if (TNoRw.getText().trim().equals("") || TPasien.getText().trim().equals("")) {
             Valid.textKosong(TNoRw, "Pasien");
-//        } else if (NmKasus.getText().trim().equals("")) {
-//            Valid.textKosong(NmKasus, "Macam Kasus");
         } else {
             Sequel.AutoComitFalse();
             sukses = true;
@@ -2496,10 +2036,11 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                 Valid.textKosong(TB, "TB");
             } else if (BB.getText().trim().equals("")) {
                 Valid.textKosong(BB, "BB");
-            } else if (KdDokter.getText().trim().equals("") || NmDokter.getText().trim().equals("")) {
-                Valid.textKosong(btnDokter, "Dokter/Petugas Triase");
+            } else if (KdPetugas.getText().trim().equals("") || NmPetugas.getText().trim().equals("")) {
+                Valid.textKosong(btnPetugas, "Petugas");
             } else {
                 insertPasien();
+                simpan();
             }
             if (sukses == true) {
                 Sequel.Commit();
@@ -2516,9 +2057,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
 }//GEN-LAST:event_BtnSimpanActionPerformed
 
     private void BtnSimpanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnSimpanKeyPressed
-//        if(TabTriase.getSelectedIndex()==0){
         Valid.pindah(evt, btnDokter, BtnBatal);
-//        }
 }//GEN-LAST:event_BtnSimpanKeyPressed
 
     private void BtnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBatalActionPerformed
@@ -2569,9 +2108,11 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         } else {
             if (tbTriase.getSelectedRow() > -1) {
                 if (var.getkode().equals("Admin Utama")) {
+                    insertPasien();
                     ganti();
                 } else {
                     if (var.getkode().equals(kodepetugas)) {
+                        insertPasien();
                         ganti();
                     } else {
                         JOptionPane.showMessageDialog(null, "Hanya bisa diganti oleh petugas yang bersangkutan..!!");
@@ -2687,6 +2228,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         if (tabMode.getRowCount() != 0) {
             try {
                 getData();
+                getData2();
             } catch (java.lang.NullPointerException e) {
             }
         }}//GEN-LAST:event_tbTriaseMouseClicked
@@ -2704,12 +2246,8 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         setVisible();
-        tampil();
+//        tampil();
     }//GEN-LAST:event_formWindowOpened
-
-    private void TNoRMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TNoRMActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TNoRMActionPerformed
 
     private void TabPilihanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabPilihanMouseClicked
         if (TabPilihan.getSelectedIndex() == 1) {
@@ -2721,42 +2259,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
 
     }//GEN-LAST:event_formWindowActivated
 
-    private void SuhuKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SuhuKeyPressed
-        Valid.pindah(evt, KeluhanUtama, LK);
-    }//GEN-LAST:event_SuhuKeyPressed
-
-    private void SaturasiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SaturasiKeyPressed
-        Valid.pindah(evt, Nadi, Respirasi);
-    }//GEN-LAST:event_SaturasiKeyPressed
-
-    private void LKKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_LKKeyPressed
-        Valid.pindah(evt, Suhu, Tensi);
-    }//GEN-LAST:event_LKKeyPressed
-
-    private void NadiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NadiActionPerformed
-
-    }//GEN-LAST:event_NadiActionPerformed
-
-    private void NadiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NadiKeyPressed
-        Valid.pindah(evt, Tensi, Saturasi);
-    }//GEN-LAST:event_NadiKeyPressed
-
-    private void RespirasiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_RespirasiKeyPressed
-        Valid.pindah(evt, Saturasi, TB);
-    }//GEN-LAST:event_RespirasiKeyPressed
-
-    private void TensiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TensiKeyPressed
-        Valid.pindah(evt, LK, Nadi);
-    }//GEN-LAST:event_TensiKeyPressed
-
-    private void KdDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KdDokterKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_KdDokterKeyPressed
-
-    private void NmDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NmDokterKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NmDokterKeyPressed
-
     private void btnDokterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDokterActionPerformed
         index = 1;
         dokter.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
@@ -2765,10 +2267,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         dokter.setVisible(true);
     }//GEN-LAST:event_btnDokterActionPerformed
 
-    private void btnDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnDokterKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDokterKeyPressed
-
     private void TransportasiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TransportasiKeyPressed
         Valid.pindah(evt, TCari, Tanggal);
     }//GEN-LAST:event_TransportasiKeyPressed
@@ -2776,14 +2274,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
     private void TanggalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TanggalKeyPressed
         Valid.pindah(evt, Transportasi, Alergi);
     }//GEN-LAST:event_TanggalKeyPressed
-
-    private void KeluhanUtamaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KeluhanUtamaKeyPressed
-//       Valid.pindah2(evt,KetVaksin,PrimerSuhu);
-    }//GEN-LAST:event_KeluhanUtamaKeyPressed
-
-    private void btnDokterKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnDokterKeyReleased
-        Valid.pindah(evt, Tanggal, BtnSimpan);
-    }//GEN-LAST:event_btnDokterKeyReleased
 
     private void tbTriaseKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbTriaseKeyReleased
         if (tabMode.getRowCount() != 0) {
@@ -2796,25 +2286,9 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_tbTriaseKeyReleased
 
-    private void AlergiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_AlergiKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_AlergiKeyPressed
-
-    private void LILAKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_LILAKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_LILAKeyPressed
-
     private void TensiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TensiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TensiActionPerformed
-
-    private void TBKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TBKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TBKeyPressed
-
-    private void BBKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BBKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BBKeyPressed
 
     private void IMTKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_IMTKeyPressed
         // TODO add your handling code here:
@@ -2823,22 +2297,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
     private void PsikologisKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PsikologisKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_PsikologisKeyPressed
-
-    private void SttsFungsionalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SttsFungsionalKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SttsFungsionalKeyPressed
-
-    private void SttsTinggalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SttsTinggalKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SttsTinggalKeyPressed
-
-    private void EdukasiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EdukasiKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EdukasiKeyPressed
-
-    private void KdPetugasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KdPetugasKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_KdPetugasKeyPressed
 
     private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPetugasActionPerformed
         index = 1;
@@ -2939,117 +2397,9 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_tbTriaseMouseReleased
 
-    private void RiwayatPenyakitKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_RiwayatPenyakitKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RiwayatPenyakitKeyPressed
-
     private void NoTelpKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NoTelpKeyPressed
         Valid.pindah(evt, JK, NIK);
     }//GEN-LAST:event_NoTelpKeyPressed
-
-    private void TKasusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKasusKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TKasusKeyPressed
-
-    private void AlatBantuKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_AlatBantuKeyPressed
-        //Valid.pindah(evt,kdskala,BtnSimpan);
-    }//GEN-LAST:event_AlatBantuKeyPressed
-
-    private void cmbTriaseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbTriaseItemStateChanged
-        if (cmbTriase.getSelectedIndex() != 7) {
-            tampillevel();
-        }
-    }//GEN-LAST:event_cmbTriaseItemStateChanged
-
-    private void rpDahuluKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rpDahuluKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rpDahuluKeyPressed
-
-    private void rPengobatanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rPengobatanKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rPengobatanKeyPressed
-
-    private void rMasukRSKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rMasukRSKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rMasukRSKeyPressed
-
-    private void rTraumaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rTraumaKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rTraumaKeyPressed
-
-    private void rOperasiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rOperasiKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rOperasiKeyPressed
-
-    private void rpKeluargaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rpKeluargaKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rpKeluargaKeyPressed
-
-    private void KepalaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KepalaKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_KepalaKeyPressed
-
-    private void LeherKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_LeherKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_LeherKeyPressed
-
-    private void PunggungKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PunggungKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PunggungKeyPressed
-
-    private void MataKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MataKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MataKeyPressed
-
-    private void DadaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DadaKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DadaKeyPressed
-
-    private void GenetaliaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_GenetaliaKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_GenetaliaKeyPressed
-
-    private void THTKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_THTKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_THTKeyPressed
-
-    private void AbdomenKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_AbdomenKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_AbdomenKeyPressed
-
-    private void EkstrimitasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EkstrimitasKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EkstrimitasKeyPressed
-
-    private void MulutKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MulutKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MulutKeyPressed
-
-    private void DiagnosaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DiagnosaKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DiagnosaKeyPressed
-
-    private void TerapiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TerapiKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TerapiKeyPressed
-
-    private void TindakanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TindakanKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TindakanKeyPressed
-
-    private void BtnTambahSkalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTambahSkalaActionPerformed
-        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        DlgMasterTriaseSkala1 form = new DlgMasterTriaseSkala1(null, false);
-        form.isCek();
-        form.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
-        form.setLocationRelativeTo(internalFrame1);
-        form.setVisible(true);
-        this.setCursor(Cursor.getDefaultCursor());
-    }//GEN-LAST:event_BtnTambahSkalaActionPerformed
-
-    private void BtnCariSkalaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnCariSkalaKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnCariSkalaKeyPressed
 
     private void BtnCariSkalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCariSkalaActionPerformed
         tampillevel();
@@ -3065,11 +2415,32 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_TCariSkalaKeyPressed
 
-    private void cmbSkalaNyeriItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbSkalaNyeriItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbSkalaNyeriItemStateChanged
+    private void cmbDiantarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDiantarActionPerformed
+        if (cmbDiantar.getSelectedIndex() != 5) {
+            TDiantar.disable();
+        } else {
+            TDiantar.enable();
+        }
+    }//GEN-LAST:event_cmbDiantarActionPerformed
 
-    private void cmbResikoJatuhItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbResikoJatuhItemStateChanged
+    private void TransportasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TransportasiActionPerformed
+        if (Transportasi.getSelectedIndex() != 4) {
+            TTransportasi.disable();
+        } else {
+            TTransportasi.enable();
+        }
+    }//GEN-LAST:event_TransportasiActionPerformed
+
+    private void chkLainnyaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkLainnyaActionPerformed
+        if (chkLainnya.isSelected() == true) {
+            TKasus.setVisible(true);
+        } else {
+            TKasus.setVisible(false);
+            TKasus.setText("");
+        }
+    }//GEN-LAST:event_chkLainnyaActionPerformed
+
+    private void cmbResikoJatuhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbResikoJatuhActionPerformed
         if (cmbResikoJatuh.getSelectedIndex() == 1) {
             R1.setVisible(true);
             R2.setVisible(true);
@@ -3107,198 +2478,107 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             R7.setVisible(false);
             R8.setVisible(false);
         }
-    }//GEN-LAST:event_cmbResikoJatuhItemStateChanged
-
-    private void R2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_R2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_R2ActionPerformed
-
-    private void R3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_R3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_R3ActionPerformed
-
-    private void R1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_R1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_R1ActionPerformed
-
-    private void R4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_R4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_R4ActionPerformed
-
-    private void R5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_R5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_R5ActionPerformed
-
-    private void R6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_R6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_R6ActionPerformed
-
-    private void R7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_R7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_R7ActionPerformed
-
-    private void R8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_R8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_R8ActionPerformed
-
-    private void cmbAlatBantuItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbAlatBantuItemStateChanged
-        if (cmbAlatBantu.getSelectedIndex() == 1) {
-            AlatBantu.setVisible(true);
-        } else {
-            AlatBantu.setVisible(false);
-            AlatBantu.setText("");
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbAlatBantuItemStateChanged
-
-    private void cmbDiantarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDiantarItemStateChanged
-    }//GEN-LAST:event_cmbDiantarItemStateChanged
-
-    private void KeteranganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KeteranganKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_KeteranganKeyPressed
-
-    private void Edukasi1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Edukasi1KeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Edukasi1KeyPressed
-
-    private void chkNontraumaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkNontraumaItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkNontraumaItemStateChanged
-
-    private void chkNontraumaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkNontraumaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkNontraumaActionPerformed
-
-    private void chkTraumaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkTraumaItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkTraumaItemStateChanged
-
-    private void chkTraumaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkTraumaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkTraumaActionPerformed
-
-    private void chkLainnyaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkLainnyaItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkLainnyaItemStateChanged
-
-    private void chkLainnyaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkLainnyaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkLainnyaActionPerformed
-
-    private void chkLakaTunggalItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkLakaTunggalItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkLakaTunggalItemStateChanged
-
-    private void chkLakaTunggalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkLakaTunggalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkLakaTunggalActionPerformed
-
-    private void chkLakaGandaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkLakaGandaItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkLakaGandaItemStateChanged
-
-    private void chkLakaGandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkLakaGandaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkLakaGandaActionPerformed
-
-    private void chkMulutItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkMulutItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkMulutItemStateChanged
-
-    private void chkMulutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkMulutActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkMulutActionPerformed
-
-    private void chkMasukRSItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkMasukRSItemStateChanged
-        setVisible();
-    }//GEN-LAST:event_chkMasukRSItemStateChanged
+    }//GEN-LAST:event_cmbResikoJatuhActionPerformed
 
     private void chkMasukRSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkMasukRSActionPerformed
-
+        setVisible();
     }//GEN-LAST:event_chkMasukRSActionPerformed
 
-    private void chkKepalaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkKepalaItemStateChanged
-        if (chkKepala.isSelected() == true) {
-            Kepala.setVisible(true);
-        } else {
-            Kepala.setVisible(false);
-            Kepala.setText("");
+    private void cmbTriaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTriaseActionPerformed
+        if (cmbTriase.getSelectedIndex() != 0) {
+            tampillevel();
         }
-    }//GEN-LAST:event_chkKepalaItemStateChanged
+    }//GEN-LAST:event_cmbTriaseActionPerformed
 
-    private void chkKepalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkKepalaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkKepalaActionPerformed
+    private void chkEkstrimitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkEkstrimitasActionPerformed
+        if (chkEkstrimitas.isSelected() == true) {
+            Ekstrimitas.setVisible(true);
+        } else {
+            Ekstrimitas.setVisible(false);
+            Ekstrimitas.setText("");
+        }
+    }//GEN-LAST:event_chkEkstrimitasActionPerformed
 
-    private void chkMataItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkMataItemStateChanged
+    private void chkGenetaliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkGenetaliaActionPerformed
+        if (chkGenetalia.isSelected() == true) {
+            Genetalia.setVisible(true);
+        } else {
+            Genetalia.setVisible(false);
+            Genetalia.setText("");
+        }
+    }//GEN-LAST:event_chkGenetaliaActionPerformed
+
+    private void chkPunggungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkPunggungActionPerformed
+        if (chkPunggung.isSelected() == true) {
+            Punggung.setVisible(true);
+        } else {
+            Punggung.setVisible(false);
+            Punggung.setText("");
+        }
+    }//GEN-LAST:event_chkPunggungActionPerformed
+
+    private void chkAbdomenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkAbdomenActionPerformed
+        if (chkAbdomen.isSelected() == true) {
+            Abdomen.setVisible(true);
+        } else {
+            Abdomen.setVisible(false);
+            Abdomen.setText("");
+        }
+    }//GEN-LAST:event_chkAbdomenActionPerformed
+
+    private void chkDadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkDadaActionPerformed
+        if (chkDada.isSelected() == true) {
+            Dada.setVisible(true);
+        } else {
+            Dada.setVisible(false);
+            Dada.setText("");
+        }
+    }//GEN-LAST:event_chkDadaActionPerformed
+
+    private void chkLeherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkLeherActionPerformed
+        if (chkLeher.isSelected() == true) {
+            Leher.setVisible(true);
+        } else {
+            Leher.setVisible(false);
+            Leher.setText("");
+        }
+    }//GEN-LAST:event_chkLeherActionPerformed
+
+    private void chkMulutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkMulutActionPerformed
+        if (chkMulut.isSelected() == true) {
+            Mulut.setVisible(true);
+        } else {
+            Mulut.setVisible(false);
+            Mulut.setText("");
+        }
+    }//GEN-LAST:event_chkMulutActionPerformed
+
+    private void chkTHTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkTHTActionPerformed
+        if (chkTHT.isSelected() == true) {
+            THT.setVisible(true);
+        } else {
+            THT.setVisible(false);
+            THT.setText("");
+        }
+    }//GEN-LAST:event_chkTHTActionPerformed
+
+    private void chkMataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkMataActionPerformed
         if (chkMata.isSelected() == true) {
             Mata.setVisible(true);
         } else {
             Mata.setVisible(false);
             Mata.setText("");
         }
-    }//GEN-LAST:event_chkMataItemStateChanged
-
-    private void chkMataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkMataActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_chkMataActionPerformed
 
-    private void chkTHTItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkTHTItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkTHTItemStateChanged
-
-    private void chkTHTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkTHTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkTHTActionPerformed
-
-    private void chkLeherItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkLeherItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkLeherItemStateChanged
-
-    private void chkLeherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkLeherActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkLeherActionPerformed
-
-    private void chkDadaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkDadaItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkDadaItemStateChanged
-
-    private void chkDadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkDadaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkDadaActionPerformed
-
-    private void chkAbdomenItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkAbdomenItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkAbdomenItemStateChanged
-
-    private void chkAbdomenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkAbdomenActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkAbdomenActionPerformed
-
-    private void chkPunggungItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkPunggungItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkPunggungItemStateChanged
-
-    private void chkPunggungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkPunggungActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkPunggungActionPerformed
-
-    private void chkGenetaliaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkGenetaliaItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkGenetaliaItemStateChanged
-
-    private void chkGenetaliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkGenetaliaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkGenetaliaActionPerformed
-
-    private void chkEkstrimitasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkEkstrimitasItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkEkstrimitasItemStateChanged
-
-    private void chkEkstrimitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkEkstrimitasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkEkstrimitasActionPerformed
+    private void chkKepalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkKepalaActionPerformed
+        if (chkKepala.isSelected() == true) {
+            Kepala.setVisible(true);
+        } else {
+            Kepala.setVisible(false);
+            Kepala.setText("");
+        }
+    }//GEN-LAST:event_chkKepalaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -3320,7 +2600,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
     private widget.TextBox Abdomen;
     private widget.TextBox Agama;
     private widget.TextBox Alamat;
-    private widget.TextBox AlatBantu;
     private widget.TextBox Alergi;
     private widget.TextBox BB;
     private widget.Button BtnAll;
@@ -3332,13 +2611,11 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
     private widget.Button BtnKeluar;
     private widget.Button BtnPrint;
     private widget.Button BtnSimpan;
-    private widget.Button BtnTambahSkala;
     private widget.Tanggal DTPCari1;
     private widget.Tanggal DTPCari2;
     private widget.TextBox Dada;
     private widget.TextBox Diagnosa;
     private widget.TextBox Edukasi;
-    private widget.TextBox Edukasi1;
     private widget.TextBox Ekstrimitas;
     private widget.PanelBiasa FormInput;
     private widget.PanelBiasa FormInput1;
@@ -3381,6 +2658,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
     private widget.RadioButton R8;
     private widget.TextBox Respirasi;
     private widget.TextArea RiwayatPenyakit;
+    private widget.TextBox Rujukan;
     private widget.TextBox Saturasi;
     private widget.ScrollPane Scroll;
     private widget.ScrollPane Scroll3;
@@ -3391,11 +2669,16 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
     private widget.TextBox TB;
     private widget.TextBox TCari;
     private widget.TextBox TCariSkala;
+    private widget.TextBox TDiantar;
+    private widget.TextBox TFungsional;
     private widget.TextBox THT;
     private widget.TextBox TKasus;
     private widget.TextBox TNoRM;
     private widget.TextBox TNoRw;
+    private widget.TextBox TNoRw2;
     private widget.TextBox TPasien;
+    private widget.TextBox TResiko;
+    private widget.TextBox TTransportasi;
     private javax.swing.JTabbedPane TabPilihan;
     private widget.Tanggal Tanggal;
     private widget.TextBox Tensi;
@@ -3425,7 +2708,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
     private widget.CekBox chkPunggung;
     private widget.CekBox chkTHT;
     private widget.CekBox chkTrauma;
-    private widget.ComboBox cmbAlatBantu;
     private widget.ComboBox cmbDiantar;
     private widget.ComboBox cmbResikoJatuh;
     private widget.ComboBox cmbSkalaNyeri;
@@ -3468,7 +2750,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
     private widget.Label jLabel42;
     private widget.Label jLabel43;
     private widget.Label jLabel44;
-    private widget.Label jLabel45;
     private widget.Label jLabel46;
     private widget.Label jLabel47;
     private widget.Label jLabel48;
@@ -3478,27 +2759,17 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
     private widget.Label jLabel51;
     private widget.Label jLabel52;
     private widget.Label jLabel53;
-    private widget.Label jLabel54;
     private widget.Label jLabel55;
     private widget.Label jLabel56;
     private widget.Label jLabel57;
     private widget.Label jLabel58;
     private widget.Label jLabel59;
     private widget.Label jLabel6;
-    private widget.Label jLabel60;
-    private widget.Label jLabel61;
     private widget.Label jLabel62;
     private widget.Label jLabel63;
     private widget.Label jLabel64;
     private widget.Label jLabel65;
-    private widget.Label jLabel66;
-    private widget.Label jLabel67;
-    private widget.Label jLabel68;
-    private widget.Label jLabel69;
     private widget.Label jLabel7;
-    private widget.Label jLabel70;
-    private widget.Label jLabel71;
-    private widget.Label jLabel72;
     private widget.Label jLabel73;
     private widget.Label jLabel74;
     private widget.Label jLabel75;
@@ -3533,7 +2804,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             ps = koneksi.prepareStatement(
                     "select a.no_rawat,a.tanggal, pasien.no_rkm_medis,pasien.nm_pasien,pasien.jk,pasien.tgl_lahir,"
                     + "concat(reg_periksa.umurdaftar,' ',reg_periksa.sttsumur)as umur,pasien.no_ktp,pasien.alamat,pasien.no_tlp,pasien.agama,"
-                    + "penjab.png_jawab,a.namakasus,a.stts_diantar,a.transportasi,a.stts_fungsional,a.psikologis,a.stts_tinggal,a.alat_bantu,a.ket_alatbantu,"
+                    + "penjab.png_jawab,a.namakasus,a.stts_diantar,a.transportasi,a.stts_fungsional,a.psikologis,a.stts_tinggal,"
                     + "b.keluhan,b.pemeriksaan,b.tensi,b.nadi,b.respirasi,b.suhu_tubuh,a.saturasi,a.lk,a.lila,b.tinggi,b.berat,a.imt,"
                     + "a.edukasi,a.riwayat_penyakit_dahulu,a.riwayat_pengobatan,a.riwayat_masuk_rs,a.riwayat_penyakit_keluarga,"
                     + "a.riwayat_operasi,a.riwayat_trauma,a.periksafisik,a.skala_nyeri,a.resiko_jatuh,a.nilai_resiko_jatuh,"
@@ -3553,25 +2824,25 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     tabMode.addRow(new String[]{
-                        rs.getString(1), rs.getString(2),rs.getString(53), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),
+                        rs.getString(1), rs.getString(2), rs.getString(51), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),
                         rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14),
                         rs.getString(15), rs.getString(16), rs.getString(17), rs.getString(18), rs.getString(19), rs.getString(20), rs.getString(21),
                         rs.getString(22), rs.getString(23), rs.getString(24), rs.getString(25), rs.getString(26), rs.getString(27), rs.getString(28),
                         rs.getString(29), rs.getString(30), rs.getString(31), rs.getString(32), rs.getString(33), rs.getString(34), rs.getString(35),
                         rs.getString(36), rs.getString(37), rs.getString(38), rs.getString(39), rs.getString(40), rs.getString(41), rs.getString(42),
                         rs.getString(43), rs.getString(44), rs.getString(45), rs.getString(46), rs.getString(47), rs.getString(48), rs.getString(49),
-                        rs.getString(50), rs.getString(51),rs.getString(52)
+                        rs.getString(50)
                     });
                     ps2 = koneksi.prepareStatement(
-                            "select master_triase_igd.nm_tindakan from detail_pemeriksaan_triase inner join master_triase_igd "
+                            "select master_triase_igd.nm_level,master_triase_igd.nm_tindakan from detail_pemeriksaan_triase inner join master_triase_igd "
                             + "on detail_pemeriksaan_triase.kd_tindakan=master_triase_igd.kd_tindakan where detail_pemeriksaan_triase.no_rawat=?");
                     try {
                         ps2.setString(1, rs.getString("no_rawat"));
                         rs2 = ps2.executeQuery();
                         while (rs2.next()) {
                             tabMode.addRow(new Object[]{
-                                "", "", "","", rs2.getString("nm_tindakan"), "", "", "", "", "", "","", "", "", "", "", "", "", "", "", "","", "", "", "", "", "", 
-                                "", "", "", "","", "", "", "", "", "", "", "", "", "","", "", "", "", "", "", "", "", "", "","","","",""
+                                "", "", "", "", rs2.getString("nm_level") + "     " + rs2.getString("nm_tindakan"), "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+                                "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
                             });
                         }
                     } catch (Exception e) {
@@ -3609,7 +2880,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         SttsFungsional.setSelectedIndex(0);
         SttsTinggal.setSelectedIndex(0);
         TKasus.setText("");
-        AlatBantu.setText("");
         Alergi.setText("");
         KeluhanUtama.setText("");
         Suhu.setText("");
@@ -3639,24 +2909,41 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         rpKeluarga.setText("");
         rOperasi.setText("");
         rTrauma.setText("");
+        chkKepala.setSelected(false);
         Kepala.setText("");
+        chkMata.setSelected(false);
         Mata.setText("");
+        chkTHT.setSelected(false);
         THT.setText("");
+        chkMulut.setSelected(false);
         Mulut.setText("");
+        chkLeher.setSelected(false);
         Leher.setText("");
+        chkDada.setSelected(false);
         Dada.setText("");
+        chkAbdomen.setSelected(false);
         Abdomen.setText("");
+        chkPunggung.setSelected(false);
         Punggung.setText("");
+        chkGenetalia.setSelected(false);
         Genetalia.setText("");
+        chkEkstrimitas.setSelected(false);
         Ekstrimitas.setText("");
         Diagnosa.setText("");
         Tindakan.setText("");
         Terapi.setText("");
         Keterangan.setText("");
-        cmbAlatBantu.setSelectedIndex(0);
         dxKeperawatan.setSelectedIndex(0);
         Intervensi.setSelectedIndex(0);
-        
+        chkNontrauma.setSelected(false);
+        chkTrauma.setSelected(false);
+        chkLakaTunggal.setSelected(false);
+        chkLakaGanda.setSelected(false);
+        chkLainnya.setSelected(false);
+        TDiantar.setText("-");
+        TTransportasi.setText("-");
+        TFungsional.setText("-");
+        TKasus.setText("-");
     }
 
     public void setNoRm(String norwt, String norm, String namapasien) {
@@ -3718,6 +3005,8 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                 key = "kd_pemeriksaan='KP05'";
             } else if (cmbTriase.getSelectedItem().toString() == "Prediksi SDM yang akan terlibat") {
                 key = "kd_pemeriksaan='KP06'";
+            } else if (cmbTriase.getSelectedItem().toString() == "Do'a") {
+                key = "kd_pemeriksaan='KP07'";
             }
             ps = koneksi.prepareStatement(
                     "select * from master_triase_igd where " + key + " and nm_tindakan like ? order by kd_level, kd_tindakan");
@@ -3725,7 +3014,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                 ps.setString(1, "%" + TCariSkala.getText().trim() + "%");
                 rs = ps.executeQuery();
                 while (rs.next()) {
-                    tabModeLevel.addRow(new Object[]{false, rs.getString("kd_tindakan"), rs.getString("nm_level"), rs.getString("kd_tindakan"), rs.getString("nm_tindakan")});
+                    tabModeLevel.addRow(new Object[]{false, rs.getString("kd_level"), rs.getString("nm_level"), rs.getString("kd_tindakan"), rs.getString("nm_tindakan")});
                 }
             } catch (Exception e) {
                 System.out.println("Notif : " + e);
@@ -3763,9 +3052,9 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         if (tbTriase.getSelectedRow() != -1) {
             TNoRw.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString());
             Tanggal.setDate(new Date());
-            Sequel.cariIsi("SELECT no_rkm_medis FROM reg_periksa where no_rawat=? ",TNoRM,TNoRw.getText());
-            Sequel.cariIsi("select pasien.nm_pasien from reg_periksa inner join pasien "+
-                        "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis where reg_periksa.no_rawat=? ",TPasien,TNoRw.getText());
+            Sequel.cariIsi("SELECT no_rkm_medis FROM reg_periksa where no_rawat=? ", TNoRM, TNoRw.getText());
+            Sequel.cariIsi("select pasien.nm_pasien from reg_periksa inner join pasien "
+                    + "on pasien.no_rkm_medis=reg_periksa.no_rkm_medis where reg_periksa.no_rawat=? ", TPasien, TNoRw.getText());
             JK.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 5).toString());
             TglLahir.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 6).toString());
             Umur.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 7).toString());
@@ -3775,52 +3064,57 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             Agama.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 11).toString());
             JnsBayar.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 12).toString());
 //            nmkasus
-            cmbDiantar.setSelectedItem(tbTriase.getValueAt(tbTriase.getSelectedRow(), 14).toString());
-            Transportasi.setSelectedItem(tbTriase.getValueAt(tbTriase.getSelectedRow(), 15).toString());
-            SttsFungsional.setSelectedItem(tbTriase.getValueAt(tbTriase.getSelectedRow(), 16).toString());
+//            cmbDiantar.setSelectedItem(tbTriase.getValueAt(tbTriase.getSelectedRow(), 14).toString());
+//            Transportasi.setSelectedItem(tbTriase.getValueAt(tbTriase.getSelectedRow(), 15).toString());
+//            SttsFungsional.setSelectedItem(tbTriase.getValueAt(tbTriase.getSelectedRow(), 16).toString());
             Psikologis.setSelectedItem(tbTriase.getValueAt(tbTriase.getSelectedRow(), 17).toString());
             SttsTinggal.setSelectedItem(tbTriase.getValueAt(tbTriase.getSelectedRow(), 18).toString());
-            cmbAlatBantu.setSelectedItem(tbTriase.getValueAt(tbTriase.getSelectedRow(), 19).toString());
-            AlatBantu.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 20).toString());
-            KeluhanUtama.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 21).toString());
-            RiwayatPenyakit.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 22).toString());
-            Tensi.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 23).toString());
-            Nadi.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 24).toString());
-            Respirasi.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 25).toString());
-            Suhu.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 26).toString());
-            Saturasi.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 27).toString());
-            LK.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 28).toString());
-            LILA.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 29).toString());
-            TB.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 30).toString());
-            BB.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 31).toString());
-            IMT.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 32).toString());
-            Edukasi.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 33).toString());
-            rpDahulu.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 34).toString());
-            rPengobatan.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 35).toString());
-            rMasukRS.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 36).toString());
-            rpKeluarga.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 37).toString());
-            rOperasi.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 38).toString());
-            rTrauma.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 39).toString());
-//            periksafisik
-            cmbSkalaNyeri.setSelectedItem(tbTriase.getValueAt(tbTriase.getSelectedRow(), 41).toString());
-            cmbResikoJatuh.setSelectedItem(tbTriase.getValueAt(tbTriase.getSelectedRow(), 42).toString());
+//            cmbAlatBantu.setSelectedItem(tbTriase.getValueAt(tbTriase.getSelectedRow(), 19).toString());
+//            AlatBantu.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 20).toString());
+            KeluhanUtama.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 19).toString());
+            RiwayatPenyakit.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 20).toString());
+            Tensi.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 21).toString());
+            Nadi.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 22).toString());
+            Respirasi.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 23).toString());
+            Suhu.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 24).toString());
+            Saturasi.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 25).toString());
+            LK.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 26).toString());
+            LILA.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 27).toString());
+            TB.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 28).toString());
+            BB.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 29).toString());
+            IMT.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 30).toString());
+            Edukasi.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 31).toString());
+            rpDahulu.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 32).toString());
+            rPengobatan.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 33).toString());
+            rMasukRS.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 34).toString());
+            rpKeluarga.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 35).toString());
+            rOperasi.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 36).toString());
+            rTrauma.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 37).toString());
+            cmbSkalaNyeri.setSelectedItem(tbTriase.getValueAt(tbTriase.getSelectedRow(), 39).toString());
+            cmbResikoJatuh.setSelectedItem(tbTriase.getValueAt(tbTriase.getSelectedRow(), 40).toString());
 //           R1
-            dxKeperawatan.setSelectedItem(tbTriase.getValueAt(tbTriase.getSelectedRow(), 44).toString());
-            Intervensi.setSelectedItem(tbTriase.getValueAt(tbTriase.getSelectedRow(), 45).toString());
-            Diagnosa.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 46).toString());
-            Tindakan.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 47).toString());
-            Keterangan.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 48).toString());
-            KdDokter.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 49).toString());
-            NmDokter.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 50).toString());
-            KdPetugas.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 51).toString());
-            NmPetugas.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 52).toString());
+            dxKeperawatan.setSelectedItem(tbTriase.getValueAt(tbTriase.getSelectedRow(), 42).toString());
+            Intervensi.setSelectedItem(tbTriase.getValueAt(tbTriase.getSelectedRow(), 43).toString());
+            Diagnosa.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 44).toString());
+            Tindakan.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 45).toString());
+            Keterangan.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 46).toString());
+            Sequel.cariIsi("select kd_dokter from data_triase_igd where no_rawat=?", KdDokter, TNoRw.getText());
+            Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?", NmDokter, KdDokter.getText());
+            Sequel.cariIsi("select kd_petugas from data_triase_igd where no_rawat=?", KdPetugas, TNoRw.getText());
+            Sequel.cariIsi("select nama from petugas where nip=?", NmPetugas, KdPetugas.getText());
         }
     }
 
     private void hapus() {
-        Sequel.meghapus("data_triase_igd", "no_rawat", tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString());
-        Sequel.meghapus("detail_pemeriksaan_triase", "no_rawat", tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString());
-        tampil();
+        if (Sequel.queryu2tf("delete from data_triase_igd where no_rawat=? and tanggal=? and jam=?", 3, new String[]{
+            tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString(), tbTriase.getValueAt(tbTriase.getSelectedRow(), 1).toString(), tbTriase.getValueAt(tbTriase.getSelectedRow(), 2).toString()
+        }) == true) {
+            Sequel.queryu("delete from pemeriksaan_ralan where no_rawat='" + tbTriase.getValueAt(i, 0).toString()
+                    + "' and tgl_perawatan='" + tbTriase.getValueAt(i, 1).toString()
+                    + "' and jam_rawat='" + tbTriase.getValueAt(i, 2).toString() + "' ");
+            Sequel.meghapus("detail_pemeriksaan_triase", "no_rawat", tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString());
+            tampil();
+        }
     }
 
     private void simpan() {
@@ -3828,11 +3122,11 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             koneksi.setAutoCommit(false);
             for (i = 0; i < tbLevel.getRowCount(); i++) {
                 if (tbLevel.getValueAt(i, 0).toString().equals("true")) {
-                    if (Sequel.menyimpantf("data_triase_igd", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "No.Rawat", 35, new String[]{
+                    if (Sequel.menyimpantf("data_triase_igd", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "No.Rawat", 33, new String[]{
                         TNoRw.getText(), Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(11, 19),
-                        KdDokter.getText(), KdPetugas.getText(),nmkasus, cmbDiantar.getSelectedItem().toString(), Transportasi.getSelectedItem().toString(),
-                        SttsFungsional.getSelectedItem().toString(), Psikologis.getSelectedItem().toString(), SttsTinggal.getSelectedItem().toString(),
-                        cmbAlatBantu.getSelectedItem().toString(), AlatBantu.getText(), KeluhanUtama.getText(), RiwayatPenyakit.getText(),Saturasi.getText(), LK.getText(),
+                        KdDokter.getText(), KdPetugas.getText(), nmkasus, cmbantar, transport,
+                        fungsional, Psikologis.getSelectedItem().toString(), SttsTinggal.getSelectedItem().toString(),
+                        KeluhanUtama.getText(), RiwayatPenyakit.getText(), Saturasi.getText(), LK.getText(),
                         LILA.getText(), IMT.getText(), Edukasi.getText(), rpDahulu.getText(), rPengobatan.getText(), rMasukRS.getText(),
                         rpKeluarga.getText(), rOperasi.getText(), rTrauma.getText(), periksafisik, cmbSkalaNyeri.getSelectedItem().toString(), cmbResikoJatuh.getSelectedItem().toString(),
                         resiko, dxKeperawatan.getSelectedItem().toString(), Intervensi.getSelectedItem().toString(), Diagnosa.getText(), Tindakan.getText(), Keterangan.getText()
@@ -3865,7 +3159,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
     private void ganti() {
         Sequel.AutoComitFalse();
         sukses = true;
-//        Sequel.meghapus("detail_pemeriksaan_triase", "no_rawat", tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString());
         jmlskala1 = 0;
         for (i = 0; i < tbLevel.getRowCount(); i++) {
             if (tbLevel.getValueAt(i, 0).toString().equals("true")) {
@@ -3886,46 +3179,44 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             Valid.textKosong(Saturasi, "Saturasi O²");
         } else if (Respirasi.getText().trim().equals("")) {
             Valid.textKosong(Respirasi, "Respirasi");
-        } else if (KdDokter.getText().trim().equals("") || NmDokter.getText().trim().equals("")) {
-            Valid.textKosong(btnDokter, "Dokter/Petugas Triase");
-        } else if ((jmlskala1 == 0)) {
-            Valid.textKosong(TCariSkala, "Skala 1 / Skala 2");
+        } else if (KdPetugas.getText().trim().equals("") || NmPetugas.getText().trim().equals("")) {
+            Valid.textKosong(btnPetugas, "Petugas");
         } else {
             if (Sequel.mengedittf("data_triase_igd", "no_rawat=? and tanggal=? and jam=?",
                     "kd_dokter=?,kd_petugas=?,namakasus=?,stts_diantar=?,transportasi=?,stts_fungsional=?,"
-                    + "psikologis=?,stts_tinggal=?,alat_bantu=?,ket_alatbantu=?,keluhan_utama=?,riwayat_penyakit=?,saturasi=?,lk=?,lila=?,imt=?,"
+                    + "psikologis=?,stts_tinggal=?,keluhan_utama=?,riwayat_penyakit=?,saturasi=?,lk=?,lila=?,imt=?,"
                     + "edukasi=?,riwayat_penyakit_dahulu=?,riwayat_pengobatan=?,riwayat_masuk_rs=?,riwayat_penyakit_keluarga=?,"
                     + "riwayat_operasi=?,riwayat_trauma=?,periksafisik=?,skala_nyeri=?,resiko_jatuh=?,nilai_resiko_jatuh=?,"
                     + "diagnosa_keperawatan=?,intervensi=?,diagnosis=?,tindakan=?,keterangan=?",
-                    35, new String[]{
-                        KdDokter.getText(), KdPetugas.getText(),nmkasus, cmbDiantar.getSelectedItem().toString(), Transportasi.getSelectedItem().toString(),
-                        SttsFungsional.getSelectedItem().toString(), Psikologis.getSelectedItem().toString(), SttsTinggal.getSelectedItem().toString(),
-                        cmbAlatBantu.getSelectedItem().toString(), AlatBantu.getText(), KeluhanUtama.getText(), RiwayatPenyakit.getText(),Saturasi.getText(), LK.getText(),
-                        LILA.getText(), IMT.getText(), Edukasi.getText(), rpDahulu.getText(), rPengobatan.getText(), rMasukRS.getText(),rpKeluarga.getText(), 
+                    33, new String[]{
+                        KdDokter.getText(), KdPetugas.getText(), nmkasus, cmbantar, transport,
+                        fungsional, Psikologis.getSelectedItem().toString(), SttsTinggal.getSelectedItem().toString(),
+                        KeluhanUtama.getText(), RiwayatPenyakit.getText(), Saturasi.getText(), LK.getText(),
+                        LILA.getText(), IMT.getText(), Edukasi.getText(), rpDahulu.getText(), rPengobatan.getText(), rMasukRS.getText(), rpKeluarga.getText(),
                         rOperasi.getText(), rTrauma.getText(), periksafisik, cmbSkalaNyeri.getSelectedItem().toString(), cmbResikoJatuh.getSelectedItem().toString(),
                         resiko, dxKeperawatan.getSelectedItem().toString(), Intervensi.getSelectedItem().toString(), Diagnosa.getText(), Tindakan.getText(), Keterangan.getText(),
-                        tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString(),tbTriase.getValueAt(tbTriase.getSelectedRow(), 1).toString(),tbTriase.getValueAt(tbTriase.getSelectedRow(), 2).toString()
+                        tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString(), tbTriase.getValueAt(tbTriase.getSelectedRow(), 1).toString(), tbTriase.getValueAt(tbTriase.getSelectedRow(), 2).toString()
                     }) == true) {
-                        Sequel.queryu2("update pemeriksaan_ralan set suhu_tubuh=?,tensi=?,nadi=?,respirasi=?,tinggi=?,berat=?,keluhan=?,pemeriksaan=?"
-                                + " where no_rawat=? and tgl_perawatan=? and jam_rawat=?", 11,
-                            new String[]{Suhu.getText(), Tensi.getText(), Nadi.getText(), Respirasi.getText(), TB.getText(), BB.getText(),KeluhanUtama.getText(), RiwayatPenyakit.getText(),
-                                tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString(),tbTriase.getValueAt(tbTriase.getSelectedRow(), 1).toString(),
-                                tbTriase.getValueAt(tbTriase.getSelectedRow(), 2).toString()
+                Sequel.queryu2("update pemeriksaan_ralan set suhu_tubuh=?,tensi=?,nadi=?,respirasi=?,tinggi=?,berat=?,keluhan=?,pemeriksaan=?"
+                        + " where no_rawat=? and tgl_perawatan=? and jam_rawat=?", 11,
+                        new String[]{Suhu.getText(), Tensi.getText(), Nadi.getText(), Respirasi.getText(), TB.getText(), BB.getText(), KeluhanUtama.getText(), RiwayatPenyakit.getText(),
+                            tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString(), tbTriase.getValueAt(tbTriase.getSelectedRow(), 1).toString(),
+                            tbTriase.getValueAt(tbTriase.getSelectedRow(), 2).toString()
                         });
-                            for (i = 0; i < tbLevel.getRowCount(); i++) {
-                                if (tbLevel.getValueAt(i, 0).toString().equals("true")) {
-                                    if (Sequel.menyimpantf2("detail_pemeriksaan_triase", "?,?", "triase", 2, new String[]{
-                                        TNoRw.getText(), tbLevel.getValueAt(i, 3).toString()
-                                    }) == true) {
-                                        tbLevel.setValueAt(false, i, 0);
-                                    } else {
-                                        sukses = false;
-                                    }
-                                }
-                            }
-                } else {
-                    sukses = false;
+                for (i = 0; i < tbLevel.getRowCount(); i++) {
+                    if (tbLevel.getValueAt(i, 0).toString().equals("true")) {
+                        if (Sequel.menyimpantf2("detail_pemeriksaan_triase", "?,?", "triase", 2, new String[]{
+                            TNoRw.getText(), tbLevel.getValueAt(i, 3).toString()
+                        }) == true) {
+                            tbLevel.setValueAt(false, i, 0);
+                        } else {
+                            sukses = false;
+                        }
+                    }
                 }
+            } else {
+                sukses = false;
+            }
             if (sukses == true) {
                 Sequel.Commit();
             } else {
@@ -3944,61 +3235,127 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
 
     private void insertPasien() {
         if (R1.isSelected() == true) {
-            resiko = "Pediatri: Rendah (0-24)";
+            resiko = "R1: Rendah (0-24)";
         } else if (R2.isSelected() == true) {
-            resiko = "Pediatri: Sedang (25-44)";
+            resiko = "R2: Sedang (25-44)";
         } else if (R3.isSelected() == true) {
-            resiko = "Pediatri: Tinggi (>= 45)";
+            resiko = "R3: Tinggi (>= 45)";
         } else if (R4.isSelected() == true) {
-            resiko = "Dewasa: Rendah (7-11)";
+            resiko = "R4: Rendah (7-11)";
         } else if (R5.isSelected() == true) {
-            resiko = "Dewasa: Tinggi (>=12)";
+            resiko = "R5: Tinggi (>=12)";
         } else if (R6.isSelected() == true) {
-            resiko = "Lansia: Rendah (0-5)";
+            resiko = "R6: Rendah (0-5)";
         } else if (R7.isSelected() == true) {
-            resiko = "Lansia: Sedang (6-16)";
+            resiko = "R7: Sedang (6-16)";
         } else if (R8.isSelected() == true) {
-            resiko = "Lansia: Tinggi (17-30)";
+            resiko = "R8: Tinggi (17-30)";
         }
-        kepala = "";
-        mata = "";
+
+        cmbantar = "";
+        switch (cmbDiantar.getSelectedIndex()) {
+            case 1:
+                cmbantar = cmbantar + "Keluarga, " + TDiantar.getText();
+                break;
+            case 2:
+                cmbantar = cmbantar + "Polisi, " + TDiantar.getText();
+                break;
+            case 3:
+                cmbantar = cmbantar + "Petugas Kesehatan, " + TDiantar.getText();
+                break;
+            case 4:
+                cmbantar = cmbantar + "Datang Sendiri, " + TDiantar.getText();
+                break;
+            case 5:
+                cmbantar = cmbantar + "Lainnya, " + TDiantar.getText();
+                break;
+        }
+
+        transport = "";
+        switch (Transportasi.getSelectedIndex()) {
+            case 1:
+                transport = transport + "Ambulance, " + TTransportasi.getText();
+                break;
+            case 2:
+                transport = transport + "Mobil Polisi, " + TTransportasi.getText();
+                break;
+            case 3:
+                transport = transport + "Jalan Kaki, " + TTransportasi.getText();
+                break;
+            case 4:
+                transport = transport + "Lainnya, " + TTransportasi.getText();
+                break;
+        }
+
+        fungsional = "";
+        switch (SttsFungsional.getSelectedIndex()) {
+            case 1:
+                fungsional = fungsional + "Mandiri, " + TFungsional.getText();
+                break;
+            case 2:
+                fungsional = fungsional + "Perlu bantuan, " + TFungsional.getText();
+                break;
+            case 3:
+                fungsional = fungsional + "Alat bantu, " + TFungsional.getText();
+                break;
+        }
+
         periksafisik = "";
-        if (chkKepala.isSelected() == true) {
-            kepala = "1. " + Kepala.getText() + "\n";
+        if (chkKepala.isSelected()) {
+            periksafisik = periksafisik + "1. " + Kepala.getText() + ";";
         }
-        if (chkMata.isSelected() == true) {
-            mata = "2. ";
+        if (chkMata.isSelected()) {
+            periksafisik = periksafisik + "2. " + Mata.getText() + ";";
+        }
+        if (chkTHT.isSelected()) {
+            periksafisik = periksafisik + "3. " + THT.getText() + ";";
+        }
+        if (chkMulut.isSelected()) {
+            periksafisik = periksafisik + "4. " + Mulut.getText() + ";";
+        }
+        if (chkLeher.isSelected()) {
+            periksafisik = periksafisik + "5. " + Leher.getText() + ";";
+        }
+        if (chkDada.isSelected()) {
+            periksafisik = periksafisik + "6. " + Dada.getText() + ";";
+        }
+        if (chkAbdomen.isSelected()) {
+            periksafisik = periksafisik + "7. " + Abdomen.getText() + ";";
+        }
+        if (chkPunggung.isSelected()) {
+            periksafisik = periksafisik + "8. " + Punggung.getText() + ";";
+        }
+        if (chkGenetalia.isSelected()) {
+            periksafisik = periksafisik + "9. " + Genetalia.getText() + ";";
+        }
+        if (chkEkstrimitas.isSelected()) {
+            periksafisik = periksafisik + "10. " + Ekstrimitas.getText() + ";";
         }
 
-        if ((chkKepala.isSelected() == true) || (chkMata.isSelected() == true)) {
-            periksafisik = kepala + mata;
-        } else {
-            periksafisik = "";
-        }
-
-        if (periksafisik.endsWith("\n")) {
+        if (periksafisik.endsWith(";")) {
             periksafisik = periksafisik.substring(0, periksafisik.length() - 1);
         }
-        
-        nontr = "";tr = "";lktunggal="";lkganda="";lain="";
+
         nmkasus = "";
         if (chkNontrauma.isSelected() == true) {
-            nontr = "Non Trauma, ";
+            nmkasus = nmkasus + "Non Trauma" + ";";
+        }
+        if (chkTrauma.isSelected() == true) {
+            nmkasus = nmkasus + "Trauma" + ";";
+        }
+        if (chkLakaTunggal.isSelected() == true) {
+            nmkasus = nmkasus + "Laka Tunggal" + ";";
+        }
+        if (chkLakaGanda.isSelected() == true) {
+            nmkasus = nmkasus + "Laka Ganda" + ";";
         }
         if (chkLainnya.isSelected() == true) {
-            lain = "Lainnya, "+TKasus.getText();
+            nmkasus = nmkasus + "Lainnya, " + TKasus.getText() + ";";
         }
 
-        if ((chkNontrauma.isSelected() == true) || (chkLainnya.isSelected() == true)) {
-            nmkasus = nontr + lain ;
-        } else {
-            nmkasus = "";
-        }
-
-        if (nmkasus.endsWith(",")) {
+        if (nmkasus.endsWith(";")) {
             nmkasus = nmkasus.substring(0, nmkasus.length() - 1);
         }
-        simpan();
     }
 
     public void setDokter(String norwt) {
@@ -4007,7 +3364,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         KdDokter.setText(Sequel.cariIsi("select kd_dokter from reg_periksa where no_rawat=?", norwt));
         Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?", NmDokter, KdDokter.getText());
         isReset();
-        setobat();
     }
 
     public void isReset() {
@@ -4032,106 +3388,39 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
     public void setNoRM(String norawat) {
         TabPilihan.setSelectedIndex(0);
         TNoRw.setText(norawat);
-        try {
-            ps = koneksi.prepareStatement(
-                    "select pasien.no_rkm_medis,pasien.nm_pasien,pasien.jk,pasien.tgl_lahir,"
-                    + "concat(reg_periksa.umurdaftar,' ',reg_periksa.sttsumur)as umur,pasien.agama,"
-                    + "pasien.no_ktp,pasien.alamat,pasien.no_tlp,penjab.png_jawab "
-                    + "from pasien inner join reg_periksa inner join penjab on pasien.no_rkm_medis=reg_periksa.no_rkm_medis "
-                    + "and reg_periksa.kd_pj=penjab.kd_pj where reg_periksa.no_rawat=?"
-            );
-            try {
-                ps.setString(1, norawat);
-                rs = ps.executeQuery();
-                if (rs.next()) {
-                    TNoRM.setText(rs.getString("no_rkm_medis"));
-                    TPasien.setText(rs.getString("nm_pasien"));
-                    JK.setText(rs.getString("jk"));
-                    TglLahir.setText(rs.getString("tgl_lahir"));
-                    Umur.setText(rs.getString("umur"));
-                    NIK.setText(rs.getString("no_ktp"));
-                    Alamat.setText(rs.getString("alamat"));
-                    Agama.setText(rs.getString("agama"));
-                    NoTelp.setText(rs.getString("no_tlp"));
-                    JnsBayar.setText(rs.getString("png_jawab"));
-                }
-            } catch (Exception e) {
-                System.out.println("Notif : " + e);
-            } finally {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Notif : " + e);
-        }
-    }
-
-    public void setobat() {
-        TabPilihan.setSelectedIndex(0);
-        try {
-            ps = koneksi.prepareStatement("select no_rawat, tgl_perawatan, jam from resep_obat where no_rawat=?");
-            try {
-                ps.setString(1, TNoRw.getText());
-                rs = ps.executeQuery();
-                while (rs.next()) {
-                    ps2 = koneksi.prepareStatement("select detail_pemberian_obat.jml, detail_pemberian_obat.kode_brng, databarang.nama_brng "
-                            + "from detail_pemberian_obat inner join aturan_pakai inner join databarang "
-                            + "on detail_pemberian_obat.no_rawat=aturan_pakai.no_rawat and detail_pemberian_obat.kode_brng=aturan_pakai.kode_brng and aturan_pakai.kode_brng=databarang.kode_brng "
-                            + "where detail_pemberian_obat.tgl_perawatan=? and detail_pemberian_obat.jam=? and detail_pemberian_obat.no_rawat=?");
-                    try {
-                        ps2.setString(1, rs.getString("tgl_perawatan"));
-                        ps2.setString(2, rs.getString("jam"));
-                        ps2.setString(3, rs.getString("no_rawat"));
-                        rs2 = ps2.executeQuery();
-                        while (rs2.next()) {
-                            aturan = Sequel.cariIsi("select aturan from aturan_pakai where tgl_perawatan='" + rs.getString("tgl_perawatan") + "' and "
-                                    + "jam='" + rs.getString("jam") + "' and no_rawat='" + rs.getString("no_rawat") + "' and kode_brng='" + rs2.getString("kode_brng") + "'");
-                            Terapi.setText(rs2.getString("jml") + " " + rs2.getString("nama_brng") + " " + aturan);
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Notifikasi : " + e);
-                    } finally {
-                        if (rs2 != null) {
-                            rs2.close();
-                        }
-                        if (ps2 != null) {
-                            ps2.close();
-                        }
-                    }
-                }
-            } catch (Exception ex) {
-                System.out.println("Notifikasi : " + ex);
-            } finally {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Notifikasi : " + e);
-        }
+        Sequel.cariIsi("select no_rkm_medis from reg_periksa where no_rawat=?", TNoRM, TNoRw.getText());
+        Sequel.cariIsi("select nm_pasien from pasien where no_rkm_medis=?", TPasien, TNoRM.getText());
+        Sequel.cariIsi("select jk from pasien where no_rkm_medis=?", JK, TNoRM.getText());
+        Sequel.cariIsi("select tgl_lahir from pasien where no_rkm_medis=?", TglLahir, TNoRM.getText());
+        Sequel.cariIsi("select concat(reg_periksa.umurdaftar,' ',reg_periksa.sttsumur) from reg_periksa where no_rawat=?", Umur, TNoRw.getText());
+        Sequel.cariIsi("select no_ktp from pasien where no_rkm_medis=?", NIK, TNoRM.getText());
+        Sequel.cariIsi("select alamat from pasien where no_rkm_medis=?", Alamat, TNoRM.getText());
+        Sequel.cariIsi("select agama from pasien where no_rkm_medis=?", Agama, TNoRM.getText());
+        Sequel.cariIsi("select no_tlp from pasien where no_rkm_medis=?", NoTelp, TNoRM.getText());
+        Sequel.cariIsi("select penjab.png_jawab from reg_periksa inner join penjab on reg_periksa.kd_pj=penjab.kd_pj where no_rawat=?", JnsBayar, TNoRw.getText());
+        Sequel.cariIsi("select perujuk from rujuk_masuk where no_rawat=?", Rujukan, TNoRw.getText());
+        Sequel.cariIsi("SELECT GROUP_CONCAT(detail_pemberian_obat.jml,' ', databarang.nama_brng,' ',aturan_pakai.aturan,'\n') "
+                + "FROM detail_pemberian_obat inner join aturan_pakai inner join databarang "
+                + "ON detail_pemberian_obat.no_rawat=aturan_pakai.no_rawat and detail_pemberian_obat.kode_brng=aturan_pakai.kode_brng and aturan_pakai.kode_brng=databarang.kode_brng "
+                + "WHERE detail_pemberian_obat.no_rawat=?", Terapi, TNoRw.getText());
+        setRiwayat();
+        emptTeks();
     }
 
     public void setVisible() {
         if (chkMasukRS.isSelected() == true) {
-            jLabel47.setVisible(false);
-            rpDahulu.setVisible(false);
-            jLabel53.setVisible(false);
-            rpKeluarga.setVisible(false);
-            jLabel50.setVisible(false);
-            rPengobatan.setVisible(false);
-            jLabel51.setVisible(false);
-            rOperasi.setVisible(false);
-            jLabel52.setVisible(false);
-            rTrauma.setVisible(false);
-            jLabel49.setVisible(false);
-            rMasukRS.setVisible(false);
+            jLabel47.hide();
+            rpDahulu.hide();
+            jLabel53.hide();
+            rpKeluarga.hide();
+            jLabel50.hide();
+            rPengobatan.hide();
+            jLabel51.hide();
+            rOperasi.hide();
+            jLabel52.hide();
+            rTrauma.hide();
+            jLabel49.hide();
+            rMasukRS.hide();
         } else {
             jLabel47.setVisible(true);
             rpDahulu.setVisible(true);
@@ -4146,7 +3435,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             jLabel49.setVisible(true);
             rMasukRS.setVisible(true);
         }
-        AlatBantu.setVisible(false);
         R1.setVisible(false);
         R2.setVisible(false);
         R3.setVisible(false);
@@ -4175,5 +3463,214 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         Genetalia.setVisible(false);
         chkEkstrimitas.setSelected(false);
         Ekstrimitas.setVisible(false);
+    }
+
+    public void getData2() {
+        nmkasus = tbTriase.getValueAt(tbTriase.getSelectedRow(), 13).toString();
+        String[] kasus = nmkasus.split(";");
+        for (int i = 0; i < kasus.length; i++) {
+//            System.out.println("i " + kasus[i]);
+            String[] kss = kasus[i].split(", ");
+            for (int j = 0; j < kss.length; j++) {
+//                System.out.println("j " + kss[j]);
+                switch (kss[0]) {
+                    case "Non Trauma":
+                        chkNontrauma.setSelected(true);
+                        break;
+                    case "Trauma":
+                        chkTrauma.setSelected(true);
+                        break;
+                    case "Laka Tunggal":
+                        chkLakaTunggal.setSelected(true);
+                        break;
+                    case "Laka Ganda":
+                        chkLakaGanda.setSelected(true);
+                        break;
+                    case "Lainnya":
+                        chkLainnya.setSelected(true);
+                        TKasus.setText(kss[1]);
+                        break;
+                }
+            }
+        }
+
+        cmbantar = tbTriase.getValueAt(tbTriase.getSelectedRow(), 14).toString();
+        String[] diantar = cmbantar.split(", ");
+        for (int i = 0; i < diantar.length; i++) {
+//            System.out.println("i " + diantar[i]);
+//            String[] diantar2 = diantar[i].split(", ");
+//            for (int j = 0; j < diantar2.length; j++) {
+//                System.out.println("j " + diantar2[j]);
+            switch (diantar[0]) {
+                case "Keluarga":
+                    cmbDiantar.setSelectedIndex(1);
+                    TDiantar.setText(diantar[1]);
+                    break;
+                case "Polisi":
+                    cmbDiantar.setSelectedIndex(2);
+                    TDiantar.setText(diantar[1]);
+                    break;
+                case "Petugas Kesehatan":
+                    cmbDiantar.setSelectedIndex(3);
+                    TDiantar.setText(diantar[1]);
+                    break;
+                case "Datang Sendiri":
+                    cmbDiantar.setSelectedIndex(4);
+                    TDiantar.setText(diantar[1]);
+                    break;
+                case "Lainnya":
+                    cmbDiantar.setSelectedIndex(5);
+                    TDiantar.setText(diantar[1]);
+                    break;
+//                }
+            }
+        }
+
+        transport = tbTriase.getValueAt(tbTriase.getSelectedRow(), 15).toString();
+        String[] trans = transport.split(", ");
+        for (int i = 0; i < trans.length; i++) {
+//            System.out.println("i " + trans[i]);
+//            String[] trans2 = trans[i].split(", ");
+//            for (int j = 0; j < trans2.length; j++) {
+//                System.out.println("j " + trans2[j]);
+            switch (trans[0]) {
+                case "Ambulance":
+                    Transportasi.setSelectedIndex(1);
+                    TTransportasi.setText(trans[1]);
+                    break;
+                case "Mobil Polisi":
+                    Transportasi.setSelectedIndex(2);
+                    TTransportasi.setText(trans[1]);
+                    break;
+                case "Jalan Kaki":
+                    Transportasi.setSelectedIndex(3);
+                    TTransportasi.setText(trans[1]);
+                    break;
+                case "Lainnya":
+                    Transportasi.setSelectedIndex(4);
+                    TTransportasi.setText(trans[1]);
+                    break;
+            }
+        }
+//        }
+
+        fungsional = tbTriase.getValueAt(tbTriase.getSelectedRow(), 16).toString();
+        String[] fungsi = fungsional.split(", ");
+        for (int i = 0; i < fungsi.length; i++) {
+//            System.out.println("i " + fungsi[i]);
+//            String[] fungsi2 = fungsi[i].split(", ");
+//            for (int j = 0; j < fungsi2.length; j++) {
+//                System.out.println("j " + fungsi2[j]);
+            switch (fungsi[0]) {
+                case "Mandiri":
+                    SttsFungsional.setSelectedIndex(1);
+                    TFungsional.setText(fungsi[1]);
+                    break;
+                case "Perlu bantuan":
+                    SttsFungsional.setSelectedIndex(2);
+                    TFungsional.setText(fungsi[1]);
+                    break;
+                case "Alat bantu":
+                    SttsFungsional.setSelectedIndex(3);
+                    TFungsional.setText(fungsi[1]);
+                    break;
+            }
+        }
+//        }
+
+        periksafisik = tbTriase.getValueAt(tbTriase.getSelectedRow(), 38).toString();
+        String[] splite = periksafisik.split(";");
+        for (int i = 0; i < splite.length; i++) {
+//            System.out.println("i " + splite[i]);
+            String[] fisik = splite[i].split(". ");
+            for (int j = 0; j < fisik.length; j++) {
+//                System.out.println("j " + fisik[j]);
+                switch (fisik[0]) {
+                    case "1":
+                        chkKepala.setSelected(true);
+                        Kepala.setText(fisik[1]);
+                        break;
+                    case "2":
+                        chkMata.setSelected(true);
+                        Mata.setText(fisik[1]);
+                        break;
+                    case "3":
+                        chkTHT.setSelected(true);
+                        THT.setText(fisik[1]);
+                        break;
+                    case "4":
+                        chkMulut.setSelected(true);
+                        Mulut.setText(fisik[1]);
+                        break;
+                    case "5":
+                        chkLeher.setSelected(true);
+                        Leher.setText(fisik[1]);
+                        break;
+                    case "6":
+                        chkDada.setSelected(true);
+                        Dada.setText(fisik[1]);
+                        break;
+                    case "7":
+                        chkAbdomen.setSelected(true);
+                        Abdomen.setText(fisik[1]);
+                        break;
+                    case "8":
+                        chkPunggung.setSelected(true);
+                        Punggung.setText(fisik[1]);
+                        break;
+                    case "9":
+                        chkGenetalia.setSelected(true);
+                        Genetalia.setText(fisik[1]);
+                        break;
+                    case "10":
+                        chkEkstrimitas.setSelected(true);
+                        Ekstrimitas.setText(fisik[1]);
+                        break;
+                }
+            }
+        }
+
+        resiko = tbTriase.getValueAt(tbTriase.getSelectedRow(), 41).toString();
+        String[] rsk = resiko.split(": ");
+        for (int i = 0; i < rsk.length; i++) {
+//            System.out.println("i " + rsk[i]);
+            switch (rsk[0]) {
+                case "R1":
+                    R1.setSelected(true);
+                    break;
+                case "R2":
+                    R2.setSelected(true);
+                    break;
+                case "R3":
+                    R3.setSelected(true);
+                    break;
+                case "R4":
+                    R4.setSelected(true);
+                    break;
+                case "R5":
+                    R5.setSelected(true);
+                    break;
+                case "R6":
+                    R6.setSelected(true);
+                    break;
+                case "R7":
+                    R7.setSelected(true);
+                    break;
+                case "R8":
+                    R8.setSelected(true);
+                    break;
+            }
+        }
+    }
+
+    public void setRiwayat() {
+        TNoRw2.setText(Sequel.cariIsi("select reg_periksa.no_rawat from reg_periksa  where stts<>'Batal' and no_rkm_medis=? order by tgl_registrasi,jam_reg limit 1", TNoRM.getText()));
+        Sequel.cariIsi("select GROUP_CONCAT(penyakit.kd_penyakit) from reg_periksa inner join diagnosa_pasien inner join penyakit "
+                + "on reg_periksa.no_rawat=diagnosa_pasien.no_rawat and diagnosa_pasien.kd_penyakit=penyakit.kd_penyakit "
+                + "where diagnosa_pasien.no_rawat=?", rpDahulu, TNoRw2.getText());
+        Sequel.cariIsi("select paket_operasi.nm_perawatan from reg_periksa inner join pasien inner join operasi inner join paket_operasi "
+                + "on reg_periksa.no_rkm_medis=pasien.no_rkm_medis and reg_periksa.no_rawat=operasi.no_rawat and operasi.kode_paket=paket_operasi.kode_paket "
+                + "where reg_periksa.no_rkm_medis=?", rOperasi, TNoRM.getText());
+
     }
 }

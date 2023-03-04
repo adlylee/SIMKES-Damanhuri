@@ -958,7 +958,7 @@ private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     private void isRawat() {
         Sequel.cariIsi("select no_rkm_medis from reg_periksa where no_rawat=? ", TNoRM, TNoRw.getText());
         Sequel.cariIsi("select kd_pj from reg_periksa where no_rawat=? ", Penjab, TNoRw.getText());
-        Sequel.cariIsi("select kd_kamar from kamar_inap where no_rawat=?", TKdKamar, TNoRw.getText());
+        Sequel.cariIsi("select kd_kamar from kamar_inap where no_rawat=? and tgl_keluar='0000-00-00'", TKdKamar, TNoRw.getText());
         norawatibu = Sequel.cariIsi("select no_rawat from ranap_gabung where no_rawat2=?", TNoRw.getText());
         if (!norawatibu.equals("")) {
             kamar = Sequel.cariIsi("select ifnull(kd_kamar,'') from kamar_inap where no_rawat=? order by tgl_masuk desc limit 1", norawatibu);
