@@ -748,6 +748,78 @@ public class PanelResume extends widget.panelisi {
                             );                            
                             urut++;
                             
+                            //menampilkan triase
+                            try {
+                                rs3=koneksi.prepareStatement(
+                                        "select data_triase_igd.tanggal,data_triase_igd.jam,data_triase_igd.namakasus,data_triase_igd.stts_diantar,data_triase_igd.transportasi," +
+                                        "data_triase_igd.stts_fungsional,data_triase_igd.psikologis,data_triase_igd.stts_tinggal,data_triase_igd.imt,data_triase_igd.edukasi," +
+                                        "data_triase_igd.periksafisik,data_triase_igd.skala_nyeri,data_triase_igd.resiko_jatuh,data_triase_igd.nilai_resiko_jatuh,data_triase_igd.diagnosa_keperawatan," +
+                                        "data_triase_igd.intervensi,data_triase_igd.diagnosis,data_triase_igd.tindakan,data_triase_igd.keterangan,dokter.nm_dokter,petugas.nama " +
+                                        "from data_triase_igd,reg_periksa,pasien,dokter,petugas,penjab " +
+                                        "where data_triase_igd.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis " +
+                                        "and data_triase_igd.kd_dokter=dokter.kd_dokter and data_triase_igd.kd_petugas=petugas.nip and " +
+                                        "reg_periksa.kd_pj=penjab.kd_pj and data_triase_igd.no_rawat='"+rs2.getString("no_rawat")+"' order by data_triase_igd.tanggal").executeQuery();
+                                if(rs3.next()){
+                                    htmlContent.append(
+                                      "<tr class='isi'>"+ 
+                                        "<td valign='top' width='20%'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Triase IGD</td>"+
+                                        "<td valign='top' width='1%' align='center'>:</td>"+
+                                        "<td valign='top' width='79%'>"+
+                                          "<table width='100%' border='0' align='center' cellpadding='3px' cellspacing='0' class='tbl_form'>"+
+                                             "<tr align='center'>"+
+                                                "<td valign='top' width='3%' bgcolor='#fafff5'>No.</td>"+
+                                                "<td valign='top' width='6%' bgcolor='#fafff5'>Tanggal</td>"+
+                                                "<td valign='top' width='5%' bgcolor='#fafff5'>Kasus</td>"+
+                                                "<td valign='top' width='6%' bgcolor='#fafff5'>Diantar Oleh</td>"+
+                                                "<td valign='top' width='6%' bgcolor='#fafff5'>Psikologis</td>"+
+                                                "<td valign='top' width='6%' bgcolor='#fafff5'>Sosial</td>"+
+                                                "<td valign='top' width='3%' bgcolor='#fafff5'>IMT</td>"+
+                                                "<td valign='top' width='15%' bgcolor='#fafff5'>Pemeriksaan Fisik</td>"+
+                                                "<td valign='top' width='4%' bgcolor='#fafff5'>Skala Nyeri</td>"+
+                                                "<td valign='top' width='6%' bgcolor='#fafff5'>Resiko Jatuh</td>"+
+                                                "<td valign='top' width='6%' bgcolor='#fafff5'>Diagnosis</td>"+
+                                                "<td valign='top' width='6%' bgcolor='#fafff5'>Tindakan</td>"+
+                                                "<td valign='top' width='6%' bgcolor='#fafff5'>Keterangan</td>"+
+                                                "<td valign='top' width='8%' bgcolor='#fafff5'>Nama Dokter</td>"+
+                                                "<td valign='top' width='8%' bgcolor='#fafff5'>Petugas</td>"+
+                                             "</tr>"
+                                    );
+                                    rs3.beforeFirst();
+                                    w=1;
+                                    while(rs3.next()){
+                                        htmlContent.append(
+                                             "<tr>"+
+                                                "<td valign='top' align='center'>"+w+"</td>"+
+                                                "<td valign='top'>"+rs3.getString("tanggal")+" "+rs3.getString("jam")+"</td>"+
+                                                "<td valign='top'>"+rs3.getString("namakasus")+"</td>"+
+                                                "<td valign='top'>"+rs3.getString("stts_diantar")+","+rs3.getString("transportasi")+"</td>"+
+                                                "<td valign='top'>"+rs3.getString("psikologis")+"</td>"+
+                                                "<td valign='top'>"+rs3.getString("stts_tinggal")+"</td>"+
+                                                "<td valign='top'>"+rs3.getString("imt")+"</td>"+
+                                                "<td valign='top'>"+rs3.getString("periksafisik")+"</td>"+
+                                                "<td valign='top'>"+rs3.getString("skala_nyeri")+"</td>"+
+                                                "<td valign='top'>"+rs3.getString("resiko_jatuh")+"\n"+rs3.getString("nilai_resiko_jatuh")+"</td>"+
+                                                "<td valign='top'>"+rs3.getString("diagnosis")+"</td>"+
+                                                "<td valign='top'>"+rs3.getString("tindakan")+"</td>"+
+                                                "<td valign='top'>"+rs3.getString("keterangan")+"</td>"+
+                                                "<td valign='top'>"+rs3.getString("nm_dokter")+"</td>"+
+                                                "<td valign='top'>"+rs3.getString("nama")+"</td>"+
+                                             "</tr>");                                        
+                                        w++;
+                                    }
+                                    htmlContent.append(
+                                          "</table>"+
+                                        "</td>"+
+                                      "</tr>");
+                                }
+                            } catch (Exception e) {
+                                System.out.println("Notifikasi : "+e);
+                            } finally{
+                                if(rs3!=null){
+                                    rs3.close();
+                                }
+                            }
+                            
                             //menampilkan diagnosa penyakit                            
                             try {
                                 rs3=koneksi.prepareStatement(
@@ -2683,7 +2755,7 @@ public class PanelResume extends widget.panelisi {
                               "</tr>"
                             );                            
                             urut++;
-                            
+                                                           
                             //menampilkan diagnosa penyakit                            
                             try {
                                 rs3=koneksi.prepareStatement(

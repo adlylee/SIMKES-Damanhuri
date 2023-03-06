@@ -2666,12 +2666,14 @@ public final class DlgRawatJalan extends javax.swing.JDialog {
                             (!TBerat.getText().trim().equals(""))||(!TRespirasi.getText().trim().equals(""))||
                             (!TNadi.getText().trim().equals(""))||(!TGCS.getText().trim().equals(""))||
                             (!TindakLanjut.getText().trim().equals(""))||(!TPenilaian.getText().trim().equals(""))){
-                        if(Sequel.menyimpantf("pemeriksaan_ralan","?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?","Data",17,new String[]{
+//                        if(Sequel.menyimpantf("pemeriksaan_ralan","?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?","Data",17,new String[]{
+                        if(Sequel.menyimpantf("pemeriksaan_ralan","?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?","Data",16,new String[]{
                             TNoRw.getText(),Valid.SetTgl(DTPTgl.getSelectedItem()+""),cmbJam.getSelectedItem()+":"+cmbMnt.getSelectedItem()+":"+cmbDtk.getSelectedItem(),
                             TSuhu.getText(),TTensi.getText(),TNadi.getText(),TRespirasi.getText(),TTinggi.getText(),TBerat.getText(),TGCS.getText(),
                             TKeluhan.getText(),TPemeriksaan.getText(),TAlergi.getText(),
                             cmbImun.getSelectedItem().toString(),TindakLanjut.getText()
-                                ,TPenilaian.getText(),cmbKesadaran.getSelectedItem().toString()
+                                ,TPenilaian.getText()
+//                                ,cmbKesadaran.getSelectedItem().toString()
                         })==true){
                             NoResepUbah1.setText(TNoRw.getText());
                             WindowInput3.setSize(720, 185);
@@ -3352,7 +3354,8 @@ private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                                 "gcs='"+TGCS.getText()+"',alergi='"+TAlergi.getText()+"',imun_ke='"+cmbImun.getSelectedItem()+"',"+
                                 "tgl_perawatan='"+Valid.SetTgl(DTPTgl.getSelectedItem()+"")+"',"+
                                 "jam_rawat='"+cmbJam.getSelectedItem()+":"+cmbMnt.getSelectedItem()+":"+cmbDtk.getSelectedItem()+"',"+
-                                "rtl='"+TindakLanjut.getText()+"',penilaian='"+TPenilaian.getText()+"',kesadaran='"+cmbKesadaran.getSelectedItem()+"'")==true){
+                                "rtl='"+TindakLanjut.getText()+"',penilaian='"+TPenilaian.getText()+"'")==true){
+//                                "rtl='"+TindakLanjut.getText()+"',penilaian='"+TPenilaian.getText()+"',kesadaran='"+cmbKesadaran.getSelectedItem()+"'")==true){
                                     TSuhu.setText("");TTensi.setText("");TNadi.setText("");TRespirasi.setText("");
                                     TTinggi.setText("");TBerat.setText("");TGCS.setText("");TKeluhan.setText("");
                                     TPemeriksaan.setText("");TAlergi.setText("");cmbImun.setSelectedIndex(0);
@@ -4602,7 +4605,8 @@ private void BtnEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                     "pemeriksaan_ralan.nadi,pemeriksaan_ralan.respirasi,pemeriksaan_ralan.tinggi, " +
                     "pemeriksaan_ralan.berat,pemeriksaan_ralan.gcs,"
                     + "pemeriksaan_ralan.keluhan,pemeriksaan_ralan.pemeriksaan,pemeriksaan_ralan.alergi,pemeriksaan_ralan.imun_ke,pemeriksaan_ralan.rtl "
-                    + ",pemeriksaan_ralan.penilaian,pemeriksaan_ralan.kesadaran "
+                    + ",pemeriksaan_ralan.penilaian "
+//                    + ",pemeriksaan_ralan.kesadaran "
                     + "from pasien inner join reg_periksa inner join pemeriksaan_ralan "+
                     "on pemeriksaan_ralan.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis where  "+
                     "pemeriksaan_ralan.tgl_perawatan between ? and ? and reg_periksa.no_rkm_medis like ? and pemeriksaan_ralan.no_rawat like ? or "+
@@ -4648,7 +4652,7 @@ private void BtnEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                         false,rs.getString(1),rs.getString(2),rs.getString(3),
                         rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),
                         rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),
-                        rs.getString(12),rs.getString(19),rs.getString(13),rs.getString(14),rs.getString(15),
+                        rs.getString(12),"-",rs.getString(13),rs.getString(14),rs.getString(15),
                         rs.getString(16),rs.getString(17)
                             ,rs.getString(18)
 //                            ,"-"
