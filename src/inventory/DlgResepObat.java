@@ -452,9 +452,9 @@ public final class DlgResepObat extends javax.swing.JDialog {
         BtnKeluar4 = new widget.Button();
         WindowInput7 = new javax.swing.JDialog();
         internalFrame9 = new widget.InternalFrame();
-        BtnSimpan7 = new widget.Button();
+        BtnSimpan8 = new widget.Button();
         jLabel = new widget.Label();
-        NoAntri = new widget.TextBox();
+        noAntri = new widget.TextBox();
         BtnKeluar5 = new widget.Button();
         internalFrame1 = new widget.InternalFrame();
         Scroll = new widget.ScrollPane();
@@ -508,11 +508,6 @@ public final class DlgResepObat extends javax.swing.JDialog {
         TNoAntrian.setForeground(new java.awt.Color(255, 255, 255));
         TNoAntrian.setHighlighter(null);
         TNoAntrian.setName("TNoAntrian"); // NOI18N
-        TNoAntrian.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                TNoAntrianKeyPressed(evt);
-            }
-        });
 
         Popup2.setName("Popup2"); // NOI18N
 
@@ -1057,33 +1052,28 @@ public final class DlgResepObat extends javax.swing.JDialog {
         internalFrame9.setName("internalFrame9"); // NOI18N
         internalFrame9.setLayout(null);
 
-        BtnSimpan7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/save-16x16.png"))); // NOI18N
-        BtnSimpan7.setMnemonic('S');
-        BtnSimpan7.setText("Simpan");
-        BtnSimpan7.setToolTipText("Alt+S");
-        BtnSimpan7.setName("BtnSimpan7"); // NOI18N
-        BtnSimpan7.addActionListener(new java.awt.event.ActionListener() {
+        BtnSimpan8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/save-16x16.png"))); // NOI18N
+        BtnSimpan8.setMnemonic('S');
+        BtnSimpan8.setText("Simpan");
+        BtnSimpan8.setToolTipText("Alt+S");
+        BtnSimpan8.setName("BtnSimpan8"); // NOI18N
+        BtnSimpan8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnSimpan7ActionPerformed(evt);
+                BtnSimpan8ActionPerformed(evt);
             }
         });
-        internalFrame9.add(BtnSimpan7);
-        BtnSimpan7.setBounds(250, 30, 100, 30);
+        internalFrame9.add(BtnSimpan8);
+        BtnSimpan8.setBounds(250, 30, 120, 30);
 
         jLabel.setText("No. Antrian :");
         jLabel.setName("jLabel"); // NOI18N
         internalFrame9.add(jLabel);
         jLabel.setBounds(6, 32, 100, 23);
 
-        NoAntri.setName("NoAntri"); // NOI18N
-        NoAntri.setPreferredSize(new java.awt.Dimension(100, 23));
-        NoAntri.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                NoAntriKeyPressed(evt);
-            }
-        });
-        internalFrame9.add(NoAntri);
-        NoAntri.setBounds(110, 32, 100, 23);
+        noAntri.setName("noAntri"); // NOI18N
+        noAntri.setPreferredSize(new java.awt.Dimension(100, 23));
+        internalFrame9.add(noAntri);
+        noAntri.setBounds(110, 32, 100, 23);
 
         BtnKeluar5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/exit.png"))); // NOI18N
         BtnKeluar5.setMnemonic('K');
@@ -1275,11 +1265,6 @@ public final class DlgResepObat extends javax.swing.JDialog {
                 BtnAntrianActionPerformed(evt);
             }
         });
-        BtnAntrian.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                BtnAntrianKeyPressed(evt);
-            }
-        });
         panelGlass8.add(BtnAntrian);
 
         BtnPanggil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/kanan.png"))); // NOI18N
@@ -1330,7 +1315,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         panelGlass9.add(jLabel19);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "31-01-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "17-03-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -1344,7 +1329,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         panelGlass9.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "31-01-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "17-03-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -1511,7 +1496,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         jLabel8.setBounds(0, 42, 95, 23);
 
         DTPBeri.setForeground(new java.awt.Color(50, 70, 50));
-        DTPBeri.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "31-01-2023" }));
+        DTPBeri.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "17-03-2023" }));
         DTPBeri.setDisplayFormat("dd-MM-yyyy");
         DTPBeri.setName("DTPBeri"); // NOI18N
         DTPBeri.setOpaque(false);
@@ -2600,7 +2585,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnPanggil1KeyPressed
 
-    private void BtnSimpan7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpan7ActionPerformed
+    private void BtnSimpan8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpan8ActionPerformed
         if (tbResep.getSelectedRow() != -1) {
             if (tbResep.getValueAt(tbResep.getSelectedRow(), 1).toString().trim().equals("")) {
                 Valid.textKosong(TCari, "No. Resep");
@@ -2611,11 +2596,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 WindowInput7.dispose();
             }
         }
-    }//GEN-LAST:event_BtnSimpan7ActionPerformed
-
-    private void NoAntriKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NoAntriKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NoAntriKeyPressed
+    }//GEN-LAST:event_BtnSimpan8ActionPerformed
 
     private void BtnAntrianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAntrianActionPerformed
         if (tbResep.getSelectedRow() != -1) {
@@ -2633,10 +2614,6 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         }
     }//GEN-LAST:event_BtnAntrianActionPerformed
 
-    private void BtnAntrianKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnAntrianKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnAntrianKeyPressed
-
     private void BtnKeluar5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnKeluar5ActionPerformed
         WindowInput7.dispose();
     }//GEN-LAST:event_BtnKeluar5ActionPerformed
@@ -2644,10 +2621,6 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private void DTPBeriItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_DTPBeriItemStateChanged
         autoNomor();
     }//GEN-LAST:event_DTPBeriItemStateChanged
-
-    private void TNoAntrianKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TNoAntrianKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TNoAntrianKeyPressed
 
     /**
      * @param args the command line arguments
@@ -2686,7 +2659,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.Button BtnSimpan3;
     private widget.Button BtnSimpan4;
     private widget.Button BtnSimpan5;
-    private widget.Button BtnSimpan7;
+    private widget.Button BtnSimpan8;
     private widget.CekBox ChkInput;
     private widget.CekBox ChkRM;
     private widget.CekBox ChkRspPlg;
@@ -2697,7 +2670,6 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.TextBox KdDokter;
     private widget.Label LCount;
     private widget.TextBox NmDokter;
-    private widget.TextBox NoAntri;
     private widget.TextBox NoResep;
     private widget.TextBox NoResepUbah;
     private widget.TextBox NoResepUbah1;
@@ -2743,6 +2715,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.Label label16;
     private widget.Label label17;
     private widget.Label label18;
+    private widget.TextBox noAntri;
     private widget.panelisi panelGlass8;
     private widget.panelisi panelGlass9;
     private widget.panelisi panelisi1;
@@ -3660,26 +3633,29 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }
 
     private void autoNomor() {
-        Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_antrian,3),signed)),0) from antrian_apotek where tgl_perawatan='" + Valid.SetTgl(DTPCari1.getSelectedItem() + "") + "'", "", 3, NoAntri);
+        if (Sequel.cariIsi("select obat_racikan.no_rawat from resep_obat inner join obat_racikan on resep_obat.no_rawat=obat_racikan.no_rawat where resep_obat.no_resep=?", NoResep.getText()) == "") {
+            Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_antrian,3),signed)),0) from antrian_apotek where no_antrian like 'N-%' and tgl_perawatan='" + Valid.SetTgl(DTPCari1.getSelectedItem() + "") + "'", "N-", 3, noAntri);
+        } else {
+            Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_antrian,3),signed)),0) from antrian_apotek where no_antrian like 'R-%' and tgl_perawatan='" + Valid.SetTgl(DTPCari1.getSelectedItem() + "") + "'", "R-", 3, noAntri);
+        }
     }
 
     private void isNoAntrian() {
         ceksukses = false;
-
         if (Sequel.menyimpantf("antrian_apotek", "?,?,?,?,?", "No. Resep", 5, new String[]{
-            tbResep.getValueAt(tbResep.getSelectedRow(), 1).toString(), tbResep.getValueAt(tbResep.getSelectedRow(), 2).toString().substring(0, 17), NoAntri.getText(), "00:00:00", "00:00:00"
+            tbResep.getValueAt(tbResep.getSelectedRow(), 1).toString(), tbResep.getValueAt(tbResep.getSelectedRow(), 2).toString().substring(0, 17), noAntri.getText(), "00:00:00", "00:00:00"
         }) == true) {
             ceksukses = true;
         } else {
             autoNomor();
             if (Sequel.menyimpantf("antrian_apotek", "?,?,?,?,?", "No. Resep", 5, new String[]{
-                tbResep.getValueAt(tbResep.getSelectedRow(), 1).toString(), tbResep.getValueAt(tbResep.getSelectedRow(), 2).toString().substring(0, 17), NoAntri.getText(), "00:00:00", "00:00:00"
+                tbResep.getValueAt(tbResep.getSelectedRow(), 1).toString(), tbResep.getValueAt(tbResep.getSelectedRow(), 2).toString().substring(0, 17), noAntri.getText(), "00:00:00", "00:00:00"
             }) == true) {
                 ceksukses = true;
             } else {
                 autoNomor();
                 if (Sequel.menyimpantf("antrian_apotek", "?,?,?,?,?", "No. Resep", 5, new String[]{
-                    tbResep.getValueAt(tbResep.getSelectedRow(), 1).toString(), tbResep.getValueAt(tbResep.getSelectedRow(), 2).toString().substring(0, 17), NoAntri.getText(), "00:00:00", "00:00:00"
+                    tbResep.getValueAt(tbResep.getSelectedRow(), 1).toString(), tbResep.getValueAt(tbResep.getSelectedRow(), 2).toString().substring(0, 17), noAntri.getText(), "00:00:00", "00:00:00"
                 }) == true) {
                     ceksukses = true;
                 } else {

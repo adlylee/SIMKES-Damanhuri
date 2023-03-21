@@ -223,6 +223,7 @@ public class InformasiKerohanian extends javax.swing.JDialog {
     private void initComponents() {
 
         Kd2 = new widget.TextBox();
+        noPermintaan = new widget.TextBox();
         jPopupMenu1 = new javax.swing.JPopupMenu();
         MnCetakKerohanian = new javax.swing.JMenuItem();
         WindowAmbilPetugas = new javax.swing.JDialog();
@@ -262,6 +263,9 @@ public class InformasiKerohanian extends javax.swing.JDialog {
 
         Kd2.setName("Kd2"); // NOI18N
         Kd2.setPreferredSize(new java.awt.Dimension(207, 23));
+
+        noPermintaan.setName("noPermintaan"); // NOI18N
+        noPermintaan.setPreferredSize(new java.awt.Dimension(207, 23));
 
         jPopupMenu1.setName("jPopupMenu1"); // NOI18N
 
@@ -873,9 +877,9 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     }//GEN-LAST:event_CrKamarActionPerformed
 
     private void MnCetakKerohanianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnCetakKerohanianActionPerformed
-        if (!NoRawat.equals("")) {
+        if(tbKerohanian.getSelectedRow()!= -1){
             this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            if (NoPermintaan.trim().equals("")) {
+            if (tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString().trim().equals("")) {
                 Valid.textKosong(TCari, "No.Permintaan");
             } else {
 
@@ -887,9 +891,9 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                             + "permintaan_pemeriksaan_kerohanian.kd_rh=jns_kerohanian.kd_rh "
                             + "where permintaan_pemeriksaan_kerohanian.noorder=?");
                     try {
-                        ps.setString(1, NoPermintaan);
+                        ps.setString(1,tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),1).toString());
                         rs = ps.executeQuery();
-                        while (rs.next()) {
+                        while (rs.next()) { 
                             Sequel.menyimpan("temporary_permintaan_kerohanian", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", 38, new String[]{
                                 "0", rs.getString("nama_rh"), "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
                             });
@@ -909,8 +913,8 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 }
 
                 Map<String, Object> param = new HashMap<>();
-                param.put("noperiksa", NoPermintaan);
-                norm = Sequel.cariIsi("select no_rkm_medis from reg_periksa where no_rawat=? ", NoRawat);
+                param.put("noperiksa", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),1).toString());
+                norm = Sequel.cariIsi("select no_rkm_medis from reg_periksa where no_rawat=? ", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),2).toString());
                 param.put("norm", norm);
                 param.put("namapasien", Sequel.cariIsi("select nm_pasien from pasien where no_rkm_medis=? ", norm));
                 param.put("lahir", Sequel.cariIsi("select DATE_FORMAT(tgl_lahir,'%d-%m-%Y') from pasien where no_rkm_medis=? ", norm));
@@ -919,11 +923,11 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 param.put("umur", Sequel.cariIsi("select umur from pasien where no_rkm_medis=?", norm));
                 param.put("noktp", Sequel.cariIsi("select no_ktp from pasien where no_rkm_medis=?", norm));
                 param.put("agama", Sequel.cariIsi("select agama from pasien where no_rkm_medis=?", norm));
-                param.put("namakamar", Kamar);
-                param.put("pengirim", Perujuk);
-                param.put("petugas", Petugas);
-                param.put("keterangan", Ket);
-                param.put("tanggal", Valid.SetTgl3(TglPermintaan));
+                param.put("namakamar", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),4).toString());
+                param.put("pengirim", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),6).toString());
+                param.put("petugas", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),7).toString());
+                param.put("keterangan", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),8).toString());
+                param.put("tanggal", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),5).toString());
                 param.put("alamat", Sequel.cariIsi("select concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab) as alamat from pasien inner join kelurahan inner join kecamatan inner join kabupaten on pasien.kd_kel=kelurahan.kd_kel and pasien.kd_kec=kecamatan.kd_kec and pasien.kd_kab=kabupaten.kd_kab where no_rkm_medis=? ", norm));
                 param.put("jam", JamPermintaan);
                 param.put("namars", var.getnamars());
@@ -1037,6 +1041,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.Label label10;
     private widget.Label label11;
     private widget.Label label18;
+    private widget.TextBox noPermintaan;
     private widget.panelisi panelGlass10;
     private widget.panelisi panelGlass8;
     private widget.panelisi panelisi1;

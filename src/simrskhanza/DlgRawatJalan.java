@@ -3352,8 +3352,8 @@ private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                                 "nadi='"+TNadi.getText()+"',respirasi='"+TRespirasi.getText()+"',"+
                                 "tinggi='"+TTinggi.getText()+"',berat='"+TBerat.getText()+"',"+
                                 "gcs='"+TGCS.getText()+"',alergi='"+TAlergi.getText()+"',imun_ke='"+cmbImun.getSelectedItem()+"',"+
-                                "tgl_perawatan='"+Valid.SetTgl(DTPTgl.getSelectedItem()+"")+"',"+
-                                "jam_rawat='"+cmbJam.getSelectedItem()+":"+cmbMnt.getSelectedItem()+":"+cmbDtk.getSelectedItem()+"',"+
+//                                "tgl_perawatan='"+Valid.SetTgl(DTPTgl.getSelectedItem()+"")+"',"+
+//                                "jam_rawat='"+cmbJam.getSelectedItem()+":"+cmbMnt.getSelectedItem()+":"+cmbDtk.getSelectedItem()+"',"+
                                 "rtl='"+TindakLanjut.getText()+"',penilaian='"+TPenilaian.getText()+"'")==true){
 //                                "rtl='"+TindakLanjut.getText()+"',penilaian='"+TPenilaian.getText()+"',kesadaran='"+cmbKesadaran.getSelectedItem()+"'")==true){
                                     TSuhu.setText("");TTensi.setText("");TNadi.setText("");TRespirasi.setText("");

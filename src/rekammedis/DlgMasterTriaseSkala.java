@@ -519,7 +519,7 @@ public class DlgMasterTriaseSkala extends javax.swing.JDialog {
         }else if(nmtindakan.getText().trim().equals("")){
             Valid.textKosong(nmtindakan,"Pengkajian");
         }else{
-            Sequel.menyimpan("master_triase_igd","' ','"+kdpemeriksaan.getText()+"','"+nmpemeriksaan.getText()+"','"+kdlevel.getText()+"','"+nmlevel.getText()+"','"+kdtindakan.getText()+"','"+nmtindakan.getText()+"'","Kode");
+            Sequel.menyimpan("master_triase_igd","'0','"+kdpemeriksaan.getText()+"','"+nmpemeriksaan.getText()+"','"+kdlevel.getText()+"','"+nmlevel.getText()+"','"+kdtindakan.getText()+"','"+nmtindakan.getText()+"'","Kode");
             tampil();
             emptTeks();
         }

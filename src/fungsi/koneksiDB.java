@@ -46,7 +46,7 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" +
-                        "    Version 17.02.2023 [ 1.0.16 ] [Activated] GO KLAIM DIGITAL \n"+
+                        "    Version 10.03.2023 [ 1.0.16 ] [Activated] GO KLAIM DIGITAL \n"+
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai                              \n"+
                         "                                                                           \n"+
@@ -58,11 +58,11 @@ public final class koneksiDB {
                         "                                                                       \n"+
                         "                                                                       \n"+
                         "    * Changelog :                                                       \n"+
-                        "       - Jenis DPJP                                              \n"+
-                        "       - Diet Pasien                                              \n"+
-                        "       - Ubah Lama Inap                                             \n"+
-                        "       - Catatan Perawatan                                             \n"+
-                        "                                                                       \n");
+                        "       - Set Kategori Perioritas                                              \n"+
+                        "       - Surveilans Ranap                                              \n"+
+                        "       - MCU Radiologi                                              \n"+
+                        "       - Diet Harian Pasien                                              \n"+
+                        "       - Report Kerohanian                                              \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);
                 try {
@@ -245,7 +245,8 @@ public final class koneksiDB {
     public static String UrlAutoUpdate(){
         try {
             prop.loadFromXML(new FileInputStream("setting/database.xml"));
-            var = EnkripsiAES.decrypt(prop.getProperty("URLUPDATESISTEM"));
+            var = "192.168.0.52/updatesimrs";
+//            var = EnkripsiAES.decrypt(prop.getProperty("URLUPDATESISTEM"));
         } catch (Exception ex) {
             System.out.println("Notifikasi : "+ex);
         }
