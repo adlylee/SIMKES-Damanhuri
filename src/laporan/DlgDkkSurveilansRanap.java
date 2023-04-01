@@ -353,6 +353,7 @@ public final class DlgDkkSurveilansRanap extends javax.swing.JDialog {
                 Map<String, Object> param = new HashMap<>();
                 param.put("tanggal",Tgl2.getDate());
                 param.put("jmltotal",jmltotal+"");
+                System.out.println(jmltotal);
 
                 for(int r=0;r<tabMode.getRowCount();r++){  
                     Sequel.menyimpan("temporary","'0','"+

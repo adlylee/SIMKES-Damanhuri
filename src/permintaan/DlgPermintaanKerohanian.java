@@ -107,7 +107,8 @@ public final class DlgPermintaanKerohanian extends javax.swing.JDialog {
             } else if (i == 2) {
                 column.setPreferredWidth(480);
             } else if (i == 3) {
-                column.setPreferredWidth(100);
+                column.setMinWidth(0);
+                column.setMaxWidth(0);
             }
         }
         tbPemeriksaan.setDefaultRenderer(Object.class, new WarnaTable());
@@ -248,6 +249,8 @@ public final class DlgPermintaanKerohanian extends javax.swing.JDialog {
         TNoPermintaan = new widget.TextBox();
         jLabel5 = new widget.Label();
         TKdKamar = new widget.TextBox();
+        TAgama = new widget.TextBox();
+        jLabel6 = new widget.Label();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         panelisi5 = new widget.panelisi();
@@ -433,7 +436,7 @@ public final class DlgPermintaanKerohanian extends javax.swing.JDialog {
         PanelInput.add(jLabel9);
         jLabel9.setBounds(0, 42, 92, 23);
 
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "06-02-2023" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "28-03-2023" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy");
         Tanggal.setName("Tanggal"); // NOI18N
         Tanggal.setOpaque(false);
@@ -448,7 +451,7 @@ public final class DlgPermintaanKerohanian extends javax.swing.JDialog {
             }
         });
         PanelInput.add(Tanggal);
-        Tanggal.setBounds(95, 72, 90, 23);
+        Tanggal.setBounds(545, 42, 86, 23);
 
         KdPtg.setName("KdPtg"); // NOI18N
         KdPtg.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -457,13 +460,13 @@ public final class DlgPermintaanKerohanian extends javax.swing.JDialog {
             }
         });
         PanelInput.add(KdPtg);
-        KdPtg.setBounds(95, 42, 128, 23);
+        KdPtg.setBounds(95, 42, 103, 23);
 
         NmPtg.setEditable(false);
         NmPtg.setHighlighter(null);
         NmPtg.setName("NmPtg"); // NOI18N
         PanelInput.add(NmPtg);
-        NmPtg.setBounds(225, 42, 377, 23);
+        NmPtg.setBounds(200, 42, 230, 23);
 
         btnPetugas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
         btnPetugas.setMnemonic('4');
@@ -475,17 +478,17 @@ public final class DlgPermintaanKerohanian extends javax.swing.JDialog {
             }
         });
         PanelInput.add(btnPetugas);
-        btnPetugas.setBounds(605, 42, 28, 23);
+        btnPetugas.setBounds(427, 42, 28, 23);
 
         jLabel15.setText("Tgl.Permintaan :");
         jLabel15.setName("jLabel15"); // NOI18N
         PanelInput.add(jLabel15);
-        jLabel15.setBounds(0, 72, 92, 23);
+        jLabel15.setBounds(450, 42, 92, 23);
 
         jLabel4.setText("No.Permintaan :");
         jLabel4.setName("jLabel4"); // NOI18N
         PanelInput.add(jLabel4);
-        jLabel4.setBounds(195, 72, 90, 23);
+        jLabel4.setBounds(405, 72, 90, 23);
 
         TNoPermintaan.setEditable(false);
         TNoPermintaan.setHighlighter(null);
@@ -501,12 +504,12 @@ public final class DlgPermintaanKerohanian extends javax.swing.JDialog {
             }
         });
         PanelInput.add(TNoPermintaan);
-        TNoPermintaan.setBounds(288, 72, 130, 23);
+        TNoPermintaan.setBounds(500, 72, 130, 23);
 
         jLabel5.setText("Kode Kamar :");
         jLabel5.setName("jLabel5"); // NOI18N
         PanelInput.add(jLabel5);
-        jLabel5.setBounds(409, 72, 90, 23);
+        jLabel5.setBounds(0, 72, 90, 23);
 
         TKdKamar.setHighlighter(null);
         TKdKamar.setName("TKdKamar"); // NOI18N
@@ -521,7 +524,27 @@ public final class DlgPermintaanKerohanian extends javax.swing.JDialog {
             }
         });
         PanelInput.add(TKdKamar);
-        TKdKamar.setBounds(502, 72, 130, 23);
+        TKdKamar.setBounds(95, 72, 128, 23);
+
+        TAgama.setHighlighter(null);
+        TAgama.setName("TAgama"); // NOI18N
+        TAgama.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TAgamaActionPerformed(evt);
+            }
+        });
+        TAgama.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                TAgamaKeyPressed(evt);
+            }
+        });
+        PanelInput.add(TAgama);
+        TAgama.setBounds(290, 72, 100, 23);
+
+        jLabel6.setText("Agama :");
+        jLabel6.setName("jLabel6"); // NOI18N
+        PanelInput.add(jLabel6);
+        jLabel6.setBounds(195, 72, 90, 23);
 
         FormInput.add(PanelInput, java.awt.BorderLayout.CENTER);
 
@@ -825,6 +848,14 @@ private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
         autoNomor();
     }//GEN-LAST:event_TanggalItemStateChanged
 
+    private void TAgamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TAgamaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TAgamaActionPerformed
+
+    private void TAgamaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TAgamaKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TAgamaKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -856,6 +887,7 @@ private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     private widget.PanelBiasa PanelInput;
     private widget.TextBox Penjab;
     private widget.ScrollPane Scroll2;
+    private widget.TextBox TAgama;
     private widget.TextBox TCariPeriksa;
     private widget.TextBox TKdKamar;
     private widget.TextBox TNoPermintaan;
@@ -872,6 +904,7 @@ private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     private widget.Label jLabel3;
     private widget.Label jLabel4;
     private widget.Label jLabel5;
+    private widget.Label jLabel6;
     private widget.Label jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
@@ -997,7 +1030,7 @@ private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
         Sequel.cariIsi("select jk from pasien where no_rkm_medis=? ", Jk, TNoRM.getText());
         Sequel.cariIsi("select umur from pasien where no_rkm_medis=?", Umur, TNoRM.getText());
         Sequel.cariIsi("select concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab) as alamat from pasien inner join kelurahan inner join kecamatan inner join kabupaten on pasien.kd_kel=kelurahan.kd_kel and pasien.kd_kec=kecamatan.kd_kec and pasien.kd_kab=kabupaten.kd_kab where no_rkm_medis=? ", Alamat, TNoRM.getText());
-
+        Sequel.cariIsi("select agama from pasien where no_rkm_medis=?", TAgama,TNoRM.getText());        
     }
 
     public void setNoRm(String norwt, String posisi) {

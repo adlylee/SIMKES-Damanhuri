@@ -46,7 +46,7 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" +
-                        "    Version 10.03.2023 [ 1.0.16 ] [Activated] GO KLAIM DIGITAL \n"+
+                        "    Version 25.03.2023 [ 1.0.16 ] [Activated] GO KLAIM DIGITAL \n"+
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai                              \n"+
                         "                                                                           \n"+
@@ -61,8 +61,8 @@ public final class koneksiDB {
                         "       - Set Kategori Perioritas                                              \n"+
                         "       - Surveilans Ranap                                              \n"+
                         "       - MCU Radiologi                                              \n"+
-                        "       - Diet Harian Pasien                                              \n"+
-                        "       - Report Kerohanian                                              \n");
+                        "       - Report Kerohanian                                              \n"+
+                        "       - DPJP Ranap Bayi                                              \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);
                 try {
