@@ -10,6 +10,8 @@ import fungsi.koneksiDB;
 import fungsi.sekuel;
 import fungsi.validasi;
 import fungsi.var;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -26,6 +28,7 @@ import java.util.Properties;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import kepegawaian.DlgCariDokter;
@@ -91,7 +94,43 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
                 column.setPreferredWidth(150);
             }
         }
-        tbDokter.setDefaultRenderer(Object.class, new WarnaTable());
+        tbDokter.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+
+                String pasien = (String) table.getModel().getValueAt(row, 1);
+              
+                if (var.getkode().equals("DR00019") || var.getkode().equals("D0000132")) {
+                    if (pasien.contains("POLI MCU")) {
+                        setBackground(new Color(27, 117, 209));
+                        setForeground(Color.BLACK);
+                    } else {
+                        if (row % 2 == 1) {
+                            setForeground(Color.BLACK);
+                            setBackground(new Color(226, 234, 248));
+                        } else {
+                            setForeground(Color.BLACK);
+                            setBackground(new Color(255, 255, 255));
+                        }
+                    }
+                } else {
+                        if (row % 2 == 1) {
+                            setForeground(Color.BLACK);
+                            setBackground(new Color(226, 234, 248));
+                        } else {
+                            setForeground(Color.BLACK);
+                            setBackground(new Color(255, 255, 255));
+                        }
+                }
+                if (isSelected) {
+                    setForeground(Color.RED);
+                }
+                return this;
+            }
+        });
         
         tabModeDicom=new DefaultTableModel(null,new Object[]{
             "UUID Pasien","ID Studies","ID Series"}){
