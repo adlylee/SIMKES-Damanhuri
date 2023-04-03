@@ -103,7 +103,7 @@ public final class DlgKamar extends javax.swing.JDialog {
         }
         tbKamar.setDefaultRenderer(Object.class, new WarnaTable());
 
-        TKd.setDocument(new batasInput((byte)15).getKata(TKd));
+        TKd.setDocument(new batasInput((byte)20).getKata(TKd));
         TTarif.setDocument(new batasInput((byte)16).getOnlyAngka(TTarif));
         kd_bangsal.setDocument(new batasInput((byte)5).getKata(kd_bangsal));
         kdbangsalcari.setDocument(new batasInput((byte)5).getKata(kdbangsalcari));

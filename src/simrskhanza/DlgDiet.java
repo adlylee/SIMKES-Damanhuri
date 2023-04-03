@@ -631,6 +631,11 @@ public class DlgDiet extends javax.swing.JDialog {
         BtnSimpan.setEnabled(var.getdiet_pasien());
         BtnHapus.setEnabled(var.getdiet_pasien());
         BtnEdit.setEnabled(var.getdiet_pasien());
+        if (var.getkode().equals("Admin Utama")) {
+            BtnHapus.setEnabled(true);
+        } else {
+            BtnHapus.setEnabled(false);
+        }
     }
 
     private void isSimpan() {

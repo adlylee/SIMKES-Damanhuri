@@ -108,14 +108,17 @@ public final class DlgKehadiran extends javax.swing.JDialog {
             });
         }  
         loadTahun();
-        Valid.loadCombo(Departemen,"nama","departemen");
+//        Valid.loadCombo(Departemen,"nama","departemen");
+        Valid.loadCombo(Departemen,"nama","bidang");
         Departemen.addItem("Semua");
         Departemen.setSelectedItem("Semua");
         
         try {
            ps=koneksi.prepareStatement(
-                   "select pegawai.nik,pegawai.nama,departemen.nama,pegawai.id from pegawai inner join departemen on pegawai.departemen=departemen.dep_id where  "+
-                   " pegawai.stts_aktif<>'KELUAR' and departemen.nama like ? and pegawai.nik like ? or  pegawai.stts_aktif<>'KELUAR' and departemen.nama like ? and pegawai.nama like ?  order by pegawai.nik ");    
+//                   "select pegawai.nik,pegawai.nama,departemen.nama,pegawai.id from pegawai inner join departemen on pegawai.departemen=departemen.dep_id where  "+
+//                   " pegawai.stts_aktif<>'KELUAR' and departemen.nama like ? and pegawai.nik like ? or  pegawai.stts_aktif<>'KELUAR' and departemen.nama like ? and pegawai.nama like ?  order by pegawai.nik ");    
+                   "select pegawai.nik,pegawai.nama,bidang.nama,pegawai.id from pegawai inner join bidang on pegawai.bidang=bidang.nama where "+
+                   "pegawai.stts_aktif<>'KELUAR' and bidang.nama like ? and pegawai.nik like ? or  pegawai.stts_aktif<>'KELUAR' and bidang.nama like ? and pegawai.nama like ? order by pegawai.nik ");    
            ps2=koneksi.prepareStatement(
                    "select count(rekap_presensi.id) from rekap_presensi where rekap_presensi.id=?  "+
                    "and rekap_presensi.jam_datang like ?");
@@ -226,7 +229,7 @@ public final class DlgKehadiran extends javax.swing.JDialog {
         panelGlass7.add(label12);
 
         Departemen.setName("Departemen"); // NOI18N
-        Departemen.setPreferredSize(new java.awt.Dimension(130, 23));
+        Departemen.setPreferredSize(new java.awt.Dimension(200, 23));
         panelGlass7.add(Departemen);
 
         jLabel6.setText("Key Word :");

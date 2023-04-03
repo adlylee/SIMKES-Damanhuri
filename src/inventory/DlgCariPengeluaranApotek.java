@@ -43,7 +43,7 @@ public class DlgCariPengeluaranApotek extends javax.swing.JDialog {
     public DlgBarang barang=new DlgBarang(null,false);
     private DecimalFormat df2 = new DecimalFormat("###,###,###,###,###,###,###");    
     private double ttl=0,subttl=0;
-    private String nokeluar="",bang="",ptg="",jen="",bar="",tanggal="";
+    private String nokeluar="",bang="",ptg="",jen="",bar="",tanggal="",exp="",notexp="";
     
     /** Creates new form DlgProgramStudi
      * @param parent
@@ -1000,6 +1000,8 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
 
     private void tampil() {
         tanggal="  pengeluaran_obat_bhp.tanggal between '"+Valid.SetTgl(Tgl1.getSelectedItem()+"")+"' and '"+Valid.SetTgl(Tgl2.getSelectedItem()+"")+"' ";
+        exp=" and pengeluaran_obat_bhp.keterangan REGEXP 'ed|expire|exp|kada' ";//req exp
+        notexp=" and pengeluaran_obat_bhp.keterangan NOT REGEXP 'ed|expire|exp|kada' ";
         nokeluar="";bang="";ptg="";jen="";bar="";
         if(!NoNota.getText().equals("")){
             nokeluar=" and pengeluaran_obat_bhp.no_keluar='"+NoNota.getText()+"' ";

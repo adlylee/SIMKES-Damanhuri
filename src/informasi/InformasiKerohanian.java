@@ -223,6 +223,7 @@ public class InformasiKerohanian extends javax.swing.JDialog {
     private void initComponents() {
 
         Kd2 = new widget.TextBox();
+        noPermintaan = new widget.TextBox();
         jPopupMenu1 = new javax.swing.JPopupMenu();
         MnCetakKerohanian = new javax.swing.JMenuItem();
         WindowAmbilPetugas = new javax.swing.JDialog();
@@ -237,10 +238,17 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         internalFrame1 = new widget.InternalFrame();
         jPanel2 = new javax.swing.JPanel();
         panelGlass8 = new widget.panelisi();
-        panelisi1 = new widget.panelisi();
+        label11 = new widget.Label();
+        Tgl1 = new widget.Tanggal();
+        label18 = new widget.Label();
+        Tgl2 = new widget.Tanggal();
+        jLabel16 = new widget.Label();
+        CrKamar = new widget.TextBox();
+        BtnSeek4 = new widget.Button();
         label10 = new widget.Label();
         TCari = new widget.TextBox();
         BtnCari = new widget.Button();
+        panelisi1 = new widget.panelisi();
         BtnHapus = new widget.Button();
         BtnPetugas = new widget.Button();
         BtnAll = new widget.Button();
@@ -251,17 +259,12 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         BtnKirimWA = new widget.Button();
         scrollPane1 = new widget.ScrollPane();
         tbKerohanian = new widget.Table();
-        panelGlass10 = new widget.panelisi();
-        label11 = new widget.Label();
-        Tgl1 = new widget.Tanggal();
-        label18 = new widget.Label();
-        Tgl2 = new widget.Tanggal();
-        jLabel16 = new widget.Label();
-        CrKamar = new widget.TextBox();
-        BtnSeek4 = new widget.Button();
 
         Kd2.setName("Kd2"); // NOI18N
         Kd2.setPreferredSize(new java.awt.Dimension(207, 23));
+
+        noPermintaan.setName("noPermintaan"); // NOI18N
+        noPermintaan.setPreferredSize(new java.awt.Dimension(207, 23));
 
         jPopupMenu1.setName("jPopupMenu1"); // NOI18N
 
@@ -385,25 +388,78 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         panelGlass8.setName("panelGlass8"); // NOI18N
         panelGlass8.setPreferredSize(new java.awt.Dimension(44, 44));
         panelGlass8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 3, 9));
-        jPanel2.add(panelGlass8, java.awt.BorderLayout.CENTER);
 
-        panelisi1.setName("panelisi1"); // NOI18N
-        panelisi1.setPreferredSize(new java.awt.Dimension(100, 56));
-        panelisi1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 9));
+        label11.setText("Tanggal :");
+        label11.setName("label11"); // NOI18N
+        label11.setPreferredSize(new java.awt.Dimension(70, 23));
+        panelGlass8.add(label11);
+
+        Tgl1.setDisplayFormat("dd-MM-yyyy");
+        Tgl1.setName("Tgl1"); // NOI18N
+        Tgl1.setPreferredSize(new java.awt.Dimension(90, 23));
+        Tgl1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                Tgl1KeyPressed(evt);
+            }
+        });
+        panelGlass8.add(Tgl1);
+
+        label18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label18.setText("s.d.");
+        label18.setName("label18"); // NOI18N
+        label18.setPreferredSize(new java.awt.Dimension(25, 23));
+        panelGlass8.add(label18);
+
+        Tgl2.setDisplayFormat("dd-MM-yyyy");
+        Tgl2.setName("Tgl2"); // NOI18N
+        Tgl2.setPreferredSize(new java.awt.Dimension(90, 23));
+        Tgl2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                Tgl2KeyPressed(evt);
+            }
+        });
+        panelGlass8.add(Tgl2);
+
+        jLabel16.setText("Kamar :");
+        jLabel16.setName("jLabel16"); // NOI18N
+        jLabel16.setPreferredSize(new java.awt.Dimension(90, 23));
+        panelGlass8.add(jLabel16);
+
+        CrKamar.setEditable(false);
+        CrKamar.setName("CrKamar"); // NOI18N
+        CrKamar.setPreferredSize(new java.awt.Dimension(200, 23));
+        CrKamar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CrKamarActionPerformed(evt);
+            }
+        });
+        panelGlass8.add(CrKamar);
+
+        BtnSeek4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
+        BtnSeek4.setMnemonic('5');
+        BtnSeek4.setToolTipText("ALt+5");
+        BtnSeek4.setName("BtnSeek4"); // NOI18N
+        BtnSeek4.setPreferredSize(new java.awt.Dimension(28, 23));
+        BtnSeek4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSeek4ActionPerformed(evt);
+            }
+        });
+        panelGlass8.add(BtnSeek4);
 
         label10.setText("Key Word :");
         label10.setName("label10"); // NOI18N
         label10.setPreferredSize(new java.awt.Dimension(90, 23));
-        panelisi1.add(label10);
+        panelGlass8.add(label10);
 
         TCari.setName("TCari"); // NOI18N
-        TCari.setPreferredSize(new java.awt.Dimension(250, 23));
+        TCari.setPreferredSize(new java.awt.Dimension(200, 23));
         TCari.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 TCariKeyPressed(evt);
             }
         });
-        panelisi1.add(TCari);
+        panelGlass8.add(TCari);
 
         BtnCari.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/accept.png"))); // NOI18N
         BtnCari.setMnemonic('5');
@@ -420,7 +476,13 @@ public class InformasiKerohanian extends javax.swing.JDialog {
                 BtnCariKeyPressed(evt);
             }
         });
-        panelisi1.add(BtnCari);
+        panelGlass8.add(BtnCari);
+
+        jPanel2.add(panelGlass8, java.awt.BorderLayout.CENTER);
+
+        panelisi1.setName("panelisi1"); // NOI18N
+        panelisi1.setPreferredSize(new java.awt.Dimension(100, 56));
+        panelisi1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 9));
 
         BtnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/stop_f2.png"))); // NOI18N
         BtnHapus.setMnemonic('H');
@@ -502,7 +564,7 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         LCount.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         LCount.setText("0");
         LCount.setName("LCount"); // NOI18N
-        LCount.setPreferredSize(new java.awt.Dimension(53, 23));
+        LCount.setPreferredSize(new java.awt.Dimension(73, 23));
         panelisi1.add(LCount);
 
         BtnKeluar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/exit.png"))); // NOI18N
@@ -583,70 +645,6 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         scrollPane1.setViewportView(tbKerohanian);
 
         internalFrame1.add(scrollPane1, java.awt.BorderLayout.CENTER);
-
-        panelGlass10.setName("panelGlass10"); // NOI18N
-        panelGlass10.setPreferredSize(new java.awt.Dimension(44, 44));
-        panelGlass10.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 3, 9));
-
-        label11.setText("Tanggal :");
-        label11.setName("label11"); // NOI18N
-        label11.setPreferredSize(new java.awt.Dimension(70, 23));
-        panelGlass10.add(label11);
-
-        Tgl1.setDisplayFormat("dd-MM-yyyy");
-        Tgl1.setName("Tgl1"); // NOI18N
-        Tgl1.setPreferredSize(new java.awt.Dimension(90, 23));
-        Tgl1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                Tgl1KeyPressed(evt);
-            }
-        });
-        panelGlass10.add(Tgl1);
-
-        label18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        label18.setText("s.d.");
-        label18.setName("label18"); // NOI18N
-        label18.setPreferredSize(new java.awt.Dimension(25, 23));
-        panelGlass10.add(label18);
-
-        Tgl2.setDisplayFormat("dd-MM-yyyy");
-        Tgl2.setName("Tgl2"); // NOI18N
-        Tgl2.setPreferredSize(new java.awt.Dimension(90, 23));
-        Tgl2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                Tgl2KeyPressed(evt);
-            }
-        });
-        panelGlass10.add(Tgl2);
-
-        jLabel16.setText("Kamar :");
-        jLabel16.setName("jLabel16"); // NOI18N
-        jLabel16.setPreferredSize(new java.awt.Dimension(180, 23));
-        panelGlass10.add(jLabel16);
-
-        CrKamar.setEditable(false);
-        CrKamar.setName("CrKamar"); // NOI18N
-        CrKamar.setPreferredSize(new java.awt.Dimension(257, 23));
-        CrKamar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CrKamarActionPerformed(evt);
-            }
-        });
-        panelGlass10.add(CrKamar);
-
-        BtnSeek4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
-        BtnSeek4.setMnemonic('5');
-        BtnSeek4.setToolTipText("ALt+5");
-        BtnSeek4.setName("BtnSeek4"); // NOI18N
-        BtnSeek4.setPreferredSize(new java.awt.Dimension(28, 23));
-        BtnSeek4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnSeek4ActionPerformed(evt);
-            }
-        });
-        panelGlass10.add(BtnSeek4);
-
-        internalFrame1.add(panelGlass10, java.awt.BorderLayout.PAGE_START);
 
         getContentPane().add(internalFrame1, java.awt.BorderLayout.CENTER);
 
@@ -873,9 +871,9 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     }//GEN-LAST:event_CrKamarActionPerformed
 
     private void MnCetakKerohanianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnCetakKerohanianActionPerformed
-        if (!NoRawat.equals("")) {
+        if(tbKerohanian.getSelectedRow()!= -1){
             this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            if (NoPermintaan.trim().equals("")) {
+            if (tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString().trim().equals("")) {
                 Valid.textKosong(TCari, "No.Permintaan");
             } else {
 
@@ -887,9 +885,9 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                             + "permintaan_pemeriksaan_kerohanian.kd_rh=jns_kerohanian.kd_rh "
                             + "where permintaan_pemeriksaan_kerohanian.noorder=?");
                     try {
-                        ps.setString(1, NoPermintaan);
+                        ps.setString(1,tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),1).toString());
                         rs = ps.executeQuery();
-                        while (rs.next()) {
+                        while (rs.next()) { 
                             Sequel.menyimpan("temporary_permintaan_kerohanian", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", 38, new String[]{
                                 "0", rs.getString("nama_rh"), "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
                             });
@@ -909,8 +907,8 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 }
 
                 Map<String, Object> param = new HashMap<>();
-                param.put("noperiksa", NoPermintaan);
-                norm = Sequel.cariIsi("select no_rkm_medis from reg_periksa where no_rawat=? ", NoRawat);
+                param.put("noperiksa", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),1).toString());
+                norm = Sequel.cariIsi("select no_rkm_medis from reg_periksa where no_rawat=? ", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),2).toString());
                 param.put("norm", norm);
                 param.put("namapasien", Sequel.cariIsi("select nm_pasien from pasien where no_rkm_medis=? ", norm));
                 param.put("lahir", Sequel.cariIsi("select DATE_FORMAT(tgl_lahir,'%d-%m-%Y') from pasien where no_rkm_medis=? ", norm));
@@ -919,11 +917,11 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 param.put("umur", Sequel.cariIsi("select umur from pasien where no_rkm_medis=?", norm));
                 param.put("noktp", Sequel.cariIsi("select no_ktp from pasien where no_rkm_medis=?", norm));
                 param.put("agama", Sequel.cariIsi("select agama from pasien where no_rkm_medis=?", norm));
-                param.put("namakamar", Kamar);
-                param.put("pengirim", Perujuk);
-                param.put("petugas", Petugas);
-                param.put("keterangan", Ket);
-                param.put("tanggal", Valid.SetTgl3(TglPermintaan));
+                param.put("namakamar", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),4).toString());
+                param.put("pengirim", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),6).toString());
+                param.put("petugas", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),7).toString());
+                param.put("keterangan", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),8).toString());
+                param.put("tanggal", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(),5).toString());
                 param.put("alamat", Sequel.cariIsi("select concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab) as alamat from pasien inner join kelurahan inner join kecamatan inner join kabupaten on pasien.kd_kel=kelurahan.kd_kel and pasien.kd_kec=kecamatan.kd_kec and pasien.kd_kab=kabupaten.kd_kab where no_rkm_medis=? ", norm));
                 param.put("jam", JamPermintaan);
                 param.put("namars", var.getnamars());
@@ -1037,7 +1035,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.Label label10;
     private widget.Label label11;
     private widget.Label label18;
-    private widget.panelisi panelGlass10;
+    private widget.TextBox noPermintaan;
     private widget.panelisi panelGlass8;
     private widget.panelisi panelisi1;
     private widget.ScrollPane scrollPane1;

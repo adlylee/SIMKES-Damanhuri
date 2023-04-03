@@ -2156,7 +2156,7 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
             KdPtg.setText("");
             NmPtg.setText("");
         }
-        if(var.getkode().equals("Admin Utama") || var.getkode().equals("DR00019")){
+        if(var.getkode().equals("Admin Utama") || var.getkode().equals("DR00019") || var.getkode().equals("D0000132")){
             btnHasilRad.setEnabled(true);
         }else{
             btnHasilRad.setEnabled(false);

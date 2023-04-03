@@ -38,7 +38,6 @@
                   <Color PropertyName="color" blue="eb" green="f5" red="f0" type="rgb"/>
                 </LineBorder>
               </Border>
-              <Font PropertyName="font" name="Tahoma" size="11" style="0"/>
               <Color PropertyName="color" blue="46" green="46" red="46" type="rgb"/>
             </TitledBorder>
           </Border>
@@ -282,7 +281,7 @@
                     </Property>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="1">
-                        <StringItem index="0" value="16-02-2023"/>
+                        <StringItem index="0" value="10-03-2023"/>
                       </StringArray>
                     </Property>
                     <Property name="displayFormat" type="java.lang.String" value="dd-MM-yyyy"/>
@@ -306,7 +305,7 @@
                     </Property>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="1">
-                        <StringItem index="0" value="16-02-2023"/>
+                        <StringItem index="0" value="10-03-2023"/>
                       </StringArray>
                     </Property>
                     <Property name="displayFormat" type="java.lang.String" value="dd-MM-yyyy"/>
@@ -658,11 +657,12 @@
                 <Component class="widget.ComboBox" name="Jeniskelas">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="4">
+                      <StringArray count="5">
                         <StringItem index="0" value="Utama"/>
                         <StringItem index="1" value="Raber"/>
                         <StringItem index="2" value="PPDS"/>
-                        <StringItem index="3" value="Intern"/>
+                        <StringItem index="3" value="Internship"/>
+                        <StringItem index="4" value="Konsul"/>
                       </StringArray>
                     </Property>
                     <Property name="name" type="java.lang.String" value="Jeniskelas" noResource="true"/>

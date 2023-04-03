@@ -334,7 +334,7 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
 }//GEN-LAST:event_BtnCariKeyPressed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        tampil();
+        
     }//GEN-LAST:event_formWindowOpened
 
     private void TCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TCariKeyPressed
@@ -361,8 +361,8 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
     }//GEN-LAST:event_BtnAllKeyPressed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        tampil();
-
+        
+        
     }//GEN-LAST:event_formWindowActivated
 
     /**
@@ -406,21 +406,22 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
             currencyFormatter.setMaximumFractionDigits(0);
             switch (CmbJns.getSelectedIndex()) {
                 case 1:
-                    kategori = "'K05'";
+                    kategori = "'K03','K04','K06','K07','K08','K09','K13','K14'";//reguler
                     break;
                 case 2:
-                    kategori = "'K03','K04'";
+                    kategori = "'K05'";//bmhp
                     break;
                 default:
-                    kategori = "'K01'";
+                    kategori = "'K01','K02','K10','K11','K12','K15','K16'";//generik
                     break;
             }
             ps=koneksi.prepareStatement(
                     "SELECT databarang.nama_brng , kodesatuan.satuan , databarang.kode_brng , databarang.ralan "
                     + "FROM databarang JOIN kodesatuan ON databarang.kode_sat = kodesatuan.kode_sat "
-                    + "WHERE databarang.kode_kategori IN ("+kategori+") AND databarang.status='1' GROUP BY databarang.kode_brng");
+                    + "WHERE databarang.kode_kategori IN ("+kategori+") AND databarang.status='1' and databarang.nama_brng like ? GROUP BY databarang.kode_brng");
             this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR)); 
-            Valid.tabelKosong(tabMode);   
+            Valid.tabelKosong(tabMode);
+            ps.setString(1, "%"+TCari.getText()+"%");
             rs=ps.executeQuery();
             i=1;
             while(rs.next()){
@@ -490,9 +491,11 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
     
     public Integer stokAwal(String kode,String tgl_awal,String tgl_akhir){
         Integer sum = 0;
-        String query = "SELECT riwayat_barang_medis.stok_awal as awal " +
-                       "FROM riwayat_barang_medis " +
-                       "WHERE riwayat_barang_medis.kode_brng = '"+kode+"' AND riwayat_barang_medis.kd_bangsal = 'B0002'"
+//        String query = "SELECT riwayat_barang_medis.stok_awal as awal " +
+        String query = "SELECT SUM(riwayat_barang_medis.stok_akhir) as awal " +
+                       "FROM riwayat_barang_medis " +   
+                       "WHERE riwayat_barang_medis.kode_brng = '"+kode+"' "
+//                + "AND riwayat_barang_medis.kd_bangsal = 'B0002'"
                        + "AND riwayat_barang_medis.posisi IN ('Opname') "
                        + "AND riwayat_barang_medis.tanggal BETWEEN '"+tgl_awal+"' AND '"+tgl_akhir+"' "
                        + "GROUP BY riwayat_barang_medis.kode_brng ";

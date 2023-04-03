@@ -415,7 +415,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                     + "(SELECT SUM(jml) FROM detail_pemberian_obat WHERE kode_brng = nama.kode_brng AND status='Ralan' AND tgl_perawatan BETWEEN ? AND ?) AS ralan,"
                     + "(SELECT SUM(jml) FROM detail_pemberian_obat WHERE kode_brng = nama.kode_brng AND status='Ranap' AND tgl_perawatan BETWEEN ? AND ?) AS ranap,"
                     + "(SELECT SUM(jml) FROM detail_pemberian_obat WHERE kode_brng = nama.kode_brng AND tgl_perawatan BETWEEN ? AND ?) AS total "
-                    + "FROM (SELECT DISTINCT nama_brng, kode_brng , kode_sat ,ralan FROM databarang WHERE kode_brng IN(SELECT kode_brng FROM detail_pemberian_obat)) AS nama ORDER BY nama.nama_brng ASC");
+                    + "FROM (SELECT DISTINCT nama_brng, kode_brng , kode_sat ,ralan FROM databarang WHERE kode_brng IN(SELECT kode_brng FROM detail_pemberian_obat)) AS nama where nama.nama_brng like ? ORDER BY nama.nama_brng ASC");
             try {
                 ps.setString(1, Valid.SetTgl(tanggal1.getSelectedItem() + ""));
                 ps.setString(2, Valid.SetTgl(tanggal2.getSelectedItem() + ""));
@@ -427,6 +427,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 ps.setString(8, Valid.SetTgl(tanggal2.getSelectedItem() + ""));
                 ps.setString(9, Valid.SetTgl(tanggal1.getSelectedItem() + ""));
                 ps.setString(10, Valid.SetTgl(tanggal2.getSelectedItem() + ""));
+                ps.setString(11, "%"+TCari.getText()+"%");
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     Double total = rs.getDouble(6) + rs.getDouble(7);

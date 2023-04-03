@@ -67,7 +67,7 @@ import simrskhanza.DlgResumePerawatan;
  */
 public final class BPJSDataSEP extends javax.swing.JDialog {
 
-    private DefaultTableModel tabMode, tabMode1, tabMode2, tabMode3, tabMode4,tabMode5, tabModeDiagnosa, tabModeProsedur, tabModeInternal;
+    private DefaultTableModel tabMode, tabMode1, tabMode2, tabMode3, tabMode4, tabMode5, tabModeDiagnosa, tabModeProsedur, tabModeInternal;
     private Connection koneksi = koneksiDB.condb();
     private sekuel Sequel = new sekuel();
     private validasi Valid = new validasi();
@@ -88,8 +88,8 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
     private BPJSCekReferensiPropinsi propinsi = new BPJSCekReferensiPropinsi(null, false);
     private BPJSCekReferensiKabupaten kabupaten = new BPJSCekReferensiKabupaten(null, false);
     private BPJSCekReferensiKecamatan kecamatan = new BPJSCekReferensiKecamatan(null, false);
-    private String prb = "", no_peserta = "", link = "", requestJson, URL = "", jkel = "", duplikat = "",cekdulu = "",
-            user = "", penjamin = "", jasaraharja = "", BPJS = "", Taspen = "", Asabri = "", kddokter = "", dpjplayananbpjs = "",user1 = "",
+    private String prb = "", no_peserta = "", link = "", requestJson, URL = "", jkel = "", duplikat = "", cekdulu = "",
+            user = "", penjamin = "", jasaraharja = "", BPJS = "", Taspen = "", Asabri = "", kddokter = "", dpjplayananbpjs = "", user1 = "",
             tglkkl = "0000-00-00", antrian = "", klsRawat = "", dpjlayan = "", sep2tambah = "", penjaminan = "", kdppkrujukan = "", nmppkrujukan = "";
     private HttpHeaders headers;
     private HttpEntity requestEntity;
@@ -575,7 +575,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             }
         }
         tbFaskes4.setDefaultRenderer(Object.class, new WarnaTable());
-        
+
         tabMode5 = new DefaultTableModel(null, new String[]{"No.", "Id. Rujuk", "No. Rujukan",
             "No Kepesertaan", "Nama Peserta", "Diagnosa", "Tgl Awal Rujukan", "Tgl Awal Rujukan"}) {
             @Override
@@ -945,7 +945,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             public void keyReleased(KeyEvent e) {
             }
         });
-        
+
         dokter1.addWindowListener(new WindowListener() {
             @Override
             public void windowOpened(WindowEvent e) {
@@ -1234,7 +1234,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
                     String kd_diagnosa = skdp2.getTable().getValueAt(skdp2.getTable().getSelectedRow(), 6).toString();
                     int position = kd_diagnosa.indexOf(" - ");
                     System.out.println(position);
-                    KdPenyakit.setText(kd_diagnosa.substring(0,position));
+                    KdPenyakit.setText(kd_diagnosa.substring(0, position));
                     NmPenyakit.setText(kd_diagnosa.substring(position + 3));
                     NoSKDP.requestFocus();
                     String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
@@ -1285,7 +1285,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
 
         try {
             user = var.getkode().replace(" ", "").substring(0, 9);
-        } catch (Exception e){
+        } catch (Exception e) {
             user = var.getkode();
         }
         user1 = var.getkode();
@@ -4323,7 +4323,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             if (no_peserta.trim().equals("")) {
                 JOptionPane.showMessageDialog(null, "Pasien tidak mempunyai kepesertaan BPJS");
                 dispose();
-            } else if (cekdulu.equals("No")){
+            } else if (cekdulu.equals("No")) {
                 BtnSimpan.setEnabled(false);
                 cekViaBPJSKartu.tampil(no_peserta);
                 TPasien.setText(cekViaBPJSKartu.nama);
@@ -5904,7 +5904,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
     }//GEN-LAST:event_LakaLantasItemStateChanged
 
     private void tbFaskes5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbFaskes5MouseClicked
-    if (tabMode5.getRowCount() != 0) {
+        if (tabMode5.getRowCount() != 0) {
             try {
                 getDataRujukKhusus();
             } catch (java.lang.NullPointerException e) {
@@ -5956,6 +5956,18 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
     private void ppSEPPrioritasBtnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppSEPPrioritasBtnPrintActionPerformed
         if (tbObat.getSelectedRow() != -1) {
             simpanBerkas();
+            try {
+                if (Sequel.cariInteger("SELECT count(no_rawat) FROM kategori_pasien_igd WHERE no_rawat = '" + TNoRw.getText() + "'") > 0) {
+                    Sequel.mengedit("kategori_pasien_igd", "no_rawat='" + TNoRw.getText() + "'", "kategori='PRIORITAS'");
+                    System.out.println("Berhasil set kategori PRIORITAS");
+                } else {
+                    Sequel.queryu4("insert into kategori_pasien_igd values(?,?)", 2, new String[]{TNoRw.getText(), "PRIORITAS"});
+                    System.out.println("Berhasil set kategori PRIORITAS..");
+                }
+            } catch (Exception e) {
+                System.out.println("Gagal menyimpan " + e);
+            }
+            
             this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             Map<String, Object> param = new HashMap<>();
             param.put("namars", var.getnamars());
@@ -6548,13 +6560,13 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
 
     private void isRawat() {
         Sequel.cariIsi("select no_rkm_medis from reg_periksa where no_rawat=? ", TNoRM, TNoRw.getText());
-        Sequel.cariIsi("SELECT tgl_registrasi FROM reg_periksa WHERE no_rawat='"+TNoRw.getText()+"'",TanggalSEP);
+        Sequel.cariIsi("SELECT tgl_registrasi FROM reg_periksa WHERE no_rawat='" + TNoRw.getText() + "'", TanggalSEP);
         Catatan.setText("-");
     }
-    
-    private void cekDiagnosa(){
-        Sequel.cariIsi("SELECT kd_penyakit FROM diagnosa_pasien WHERE no_rawat = ? AND prioritas = 1 AND status = 'Ralan' LIMIT 1",KdPenyakit,TNoRw.getText());
-        Sequel.cariIsi("SELECT nm_penyakit FROM penyakit WHERE kd_penyakit = ? LIMIT 1",NmPenyakit,KdPenyakit.getText());
+
+    private void cekDiagnosa() {
+        Sequel.cariIsi("SELECT kd_penyakit FROM diagnosa_pasien WHERE no_rawat = ? AND prioritas = 1 AND status = 'Ralan' LIMIT 1", KdPenyakit, TNoRw.getText());
+        Sequel.cariIsi("SELECT nm_penyakit FROM penyakit WHERE kd_penyakit = ? LIMIT 1", NmPenyakit, KdPenyakit.getText());
     }
 
     private void emptTeks() {
@@ -6607,8 +6619,8 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         JenisPelayananItemStateChanged(null);
         isRawat();
     }
-    
-    public void setNoRmNonCek(String norwt, Date tgl1, String status, String kdpoli, String namapoli,String info) {
+
+    public void setNoRmNonCek(String norwt, Date tgl1, String status, String kdpoli, String namapoli, String info) {
         TNoRw.setText(norwt);
         TCari.setText(norwt);
         TCari1.setText(norwt);
@@ -6631,7 +6643,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         JenisPelayanan.setSelectedItem(status);
         JenisPelayananItemStateChanged(null);
         isRawat();
-        if(kdpoli == "IGDK"){
+        if (kdpoli == "IGDK") {
             cekDiagnosa();
         }
     }
@@ -6851,7 +6863,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
     private void insertSEP() {
         try {
             String penunjang;
-            
+
             tglkkl = "0000-00-00";
             if (LakaLantas.getSelectedIndex() == 1) {
                 tglkkl = Valid.SetTgl(TanggalKKL.getSelectedItem() + "");
@@ -6864,7 +6876,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             } else {
                 penunjang = cmbPenunjang.getSelectedItem().toString().substring(0, 1);
             };
-            
+
             headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
             headers.add("X-Cons-ID", koneksiDB.ConsIdBpjs());
@@ -7234,10 +7246,10 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             }
         }
     }
-    
+
     public void tampilRujukKhusus(String bulan) {
         try {
-            String URL = koneksiDB.UrlBpjs() + "/Rujukan/Khusus/List/Bulan/"+ bulan +"/Tahun/2022";
+            String URL = koneksiDB.UrlBpjs() + "/Rujukan/Khusus/List/Bulan/" + bulan + "/Tahun/2022";
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -7269,8 +7281,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
                             list.path("nmpst").asText(),
                             list.path("diagppk").asText(),
                             list.path("tglrujukan_awal").asText(),
-                            list.path("tglrujukan_berakhir").asText(),
-                        });
+                            list.path("tglrujukan_berakhir").asText(),});
                         i++;
                     }
                 }
@@ -7284,10 +7295,10 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             }
         }
     }
-    
+
     public void cariByNoRujuk(String noRujuk) {
         try {
-            String URL = koneksiDB.UrlBpjs() + "/Rujukan/"+ noRujuk;
+            String URL = koneksiDB.UrlBpjs() + "/Rujukan/" + noRujuk;
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -7407,7 +7418,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             }
         }
     }
-    
+
     private void getDataRujukKhusus() {
         if (tbFaskes5.getSelectedRow() != -1) {
             AsalRujukan.setSelectedIndex(0);
@@ -7580,15 +7591,17 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             no_rawat = tbObat1.getValueAt(tbObat1.getSelectedRow(), 1).toString();
         }
         try {
-            Sequel.menyimpan("mutasi_berkas", "?,?,?,?,?,?,?", 7, new String[]{
-                no_rawat, "Sudah Dikirim", dtf.format(now), jam, jam, jam, jam
-            });
+            if (Sequel.cariInteger("SELECT count(no_rawat) FROM mutasi_berkas WHERE no_rawat = '" + no_rawat + "'") < 1) {
+                Sequel.menyimpan("mutasi_berkas", "?,?,?,?,?,?,?", 7, new String[]{
+                    no_rawat, "Sudah Dikirim", dtf.format(now), jam, jam, jam, jam
+                });
+            }
         } catch (Exception e) {
             System.out.println("Gagal menyimpan " + e);
         }
     }
-    
-    public String cariDpjp(String nosep){
+
+    public String cariDpjp(String nosep) {
         String dpjp = "";
         dpjp = Sequel.cariIsi("SELECT kddpjp FROM bridging_sep WHERE no_sep = ?", nosep);
         return dpjp;

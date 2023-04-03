@@ -205,7 +205,7 @@ public class DlgBilingRanap extends javax.swing.JDialog {
             sqlpstemporary = "insert into temporary_bayar_ranap values('0',?,?,?,?,?,?,?,?,'','','','','','','','','')",
             //tambahan start
             sqlpsdpjp = "SELECT dokter.nm_dokter,dpjp_ranap.jenis_dpjp FROM dokter JOIN dpjp_ranap ON dokter.kd_dokter = dpjp_ranap.kd_dokter WHERE dpjp_ranap.no_rawat=?",
-            sqlpsdpjpbayi = "SELECT dokter.nm_dokter FROM dokter JOIN dpjp_ranap ON dokter.kd_dokter = dpjp_ranap.kd_dokter WHERE dpjp_ranap.no_rawat=?",
+            sqlpsdpjpbayi = "SELECT dokter.nm_dokter,dpjp_ranap.jenis_dpjp FROM dokter JOIN dpjp_ranap ON dokter.kd_dokter = dpjp_ranap.kd_dokter WHERE dpjp_ranap.no_rawat=?",
             //tambahan end
             sqlpsubahpenjab = "select tgl_ubah,kd_pj1,kd_pj2 from ubah_penjab where no_rawat=?";
     private double ttl = 0, y = 0, subttl = 0, lab, ttl1, ttl2, ttlobat, ttlretur, ppnobat, piutang = 0, kekurangan = 0, itembayar = 0, itempiutang = 0,
@@ -4422,7 +4422,13 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
         //                                x=0;
                                         rsdpjpbayi.beforeFirst();
                                         while (rsdpjpbayi.next()) {
-                                            tabModeRwJlDr.addRow(new Object[]{true, "                           ", rsdpjpbayi.getString("nm_dokter"), "", null, null, null, null, "Dokter"});
+                                        jns = rsdpjpbayi.getString("jenis_dpjp");
+                                        if (jns == null) {
+                                            jns = "-";
+                                        } else {
+                                            jns = rsdpjpbayi.getString("jenis_dpjp");
+                                        }
+                                            tabModeRwJlDr.addRow(new Object[]{true, "                           ", rsdpjpbayi.getString("nm_dokter")+" ("+jns+")", "", null, null, null, null, "Dokter"});
                                             x++;
                                         }
                                     }

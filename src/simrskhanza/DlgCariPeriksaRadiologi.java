@@ -94,6 +94,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
                 column.setPreferredWidth(150);
             }
         }
+        
         tbDokter.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table,
@@ -132,6 +133,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
             }
         });
         
+
         tabModeDicom=new DefaultTableModel(null,new Object[]{
             "UUID Pasien","ID Studies","ID Series"}){
              @Override public boolean isCellEditable(int rowIndex, int colIndex){return false;}
@@ -151,7 +153,6 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
             }
         }
         tbListDicom.setDefaultRenderer(Object.class, new WarnaTable());
-
         NoRawat.setDocument(new batasInput((byte)17).getKata(NoRawat));
         kdmem.setDocument(new batasInput((byte)8).getKata(kdmem));
         kdptg.setDocument(new batasInput((byte)25).getKata(kdptg));

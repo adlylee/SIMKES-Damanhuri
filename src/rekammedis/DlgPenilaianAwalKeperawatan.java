@@ -364,7 +364,7 @@ public final class DlgPenilaianAwalKeperawatan extends javax.swing.JDialog {
         Nadi.setDocument(new batasInput((byte) 5).getKata(Nadi));
         RR.setDocument(new batasInput((byte) 5).getKata(RR));
         Suhu.setDocument(new batasInput((byte) 5).getKata(Suhu));
-        GCS.setDocument(new batasInput((byte) 5).getKata(GCS));
+//        GCS.setDocument(new batasInput((byte) 5).getKata(GCS));
         BB.setDocument(new batasInput((byte) 5).getKata(BB));
         TB.setDocument(new batasInput((byte) 5).getKata(TB));
         BMI.setDocument(new batasInput((byte) 5).getKata(BMI));
@@ -373,17 +373,17 @@ public final class DlgPenilaianAwalKeperawatan extends javax.swing.JDialog {
         RPK.setDocument(new batasInput((int) 100).getKata(RPK));
         RPO.setDocument(new batasInput((int) 100).getKata(RPO));
         Alergi.setDocument(new batasInput((int) 25).getKata(Alergi));
-        KetBantu.setDocument(new batasInput((int) 50).getKata(KetBantu));
-        KetProthesa.setDocument(new batasInput((int) 50).getKata(KetProthesa));
-        KetBudaya.setDocument(new batasInput((int) 50).getKata(KetBudaya));
+//        KetBantu.setDocument(new batasInput((int) 50).getKata(KetBantu));
+//        KetProthesa.setDocument(new batasInput((int) 50).getKata(KetProthesa));
+//        KetBudaya.setDocument(new batasInput((int) 50).getKata(KetBudaya));
         KetPsiko.setDocument(new batasInput((int) 70).getKata(KetPsiko));
-        KetTinggal.setDocument(new batasInput((int) 40).getKata(KetTinggal));
-        KetEdukasi.setDocument(new batasInput((int) 50).getKata(KetEdukasi));
+//        KetTinggal.setDocument(new batasInput((int) 40).getKata(KetTinggal));
+//        KetEdukasi.setDocument(new batasInput((int) 50).getKata(KetEdukasi));
         KetLapor.setDocument(new batasInput((int) 15).getKata(KetLapor));
-        KetProvokes.setDocument(new batasInput((int) 40).getKata(KetProvokes));
-        KetQuality.setDocument(new batasInput((int) 50).getKata(KetQuality));
+//        KetProvokes.setDocument(new batasInput((int) 40).getKata(KetProvokes));
+//        KetQuality.setDocument(new batasInput((int) 50).getKata(KetQuality));
         Lokasi.setDocument(new batasInput((int) 50).getKata(Lokasi));
-        Durasi.setDocument(new batasInput((int) 25).getKata(Durasi));
+//        Durasi.setDocument(new batasInput((int) 25).getKata(Durasi));
         KetNyeri.setDocument(new batasInput((int) 40).getKata(KetNyeri));
         KetDokter.setDocument(new batasInput((int) 15).getKata(KetDokter));
         Rencana.setDocument(new batasInput((int) 200).getKata(Rencana));
@@ -1693,7 +1693,7 @@ public final class DlgPenilaianAwalKeperawatan extends javax.swing.JDialog {
         TotalHasil.setBounds(690, 650, 50, 23);
 
         TglAsuhan.setForeground(new java.awt.Color(50, 70, 50));
-        TglAsuhan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "31-01-2023 11:28:58" }));
+        TglAsuhan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-02-2023 15:18:19" }));
         TglAsuhan.setDisplayFormat("dd-MM-yyyy HH:mm:ss");
         TglAsuhan.setName("TglAsuhan"); // NOI18N
         TglAsuhan.setOpaque(false);
@@ -2402,7 +2402,7 @@ public final class DlgPenilaianAwalKeperawatan extends javax.swing.JDialog {
         panelGlass9.add(jLabel19);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "31-01-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-02-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -2416,7 +2416,7 @@ public final class DlgPenilaianAwalKeperawatan extends javax.swing.JDialog {
         panelGlass9.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "31-01-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-02-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -3331,26 +3331,6 @@ public final class DlgPenilaianAwalKeperawatan extends javax.swing.JDialog {
 //        Valid.pindah2(evt,RPD,Alergi);
     }//GEN-LAST:event_RPOKeyPressed
 
-    private void AlatBantuKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_AlatBantuKeyPressed
-        Valid.pindah(evt, Alergi, KetBantu);
-    }//GEN-LAST:event_AlatBantuKeyPressed
-
-    private void KetBantuKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KetBantuKeyPressed
-        Valid.pindah(evt, AlatBantu, Prothesa);
-    }//GEN-LAST:event_KetBantuKeyPressed
-
-    private void ProthesaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ProthesaKeyPressed
-        Valid.pindah(evt, KetBantu, KetProthesa);
-    }//GEN-LAST:event_ProthesaKeyPressed
-
-    private void KetProthesaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KetProthesaKeyPressed
-        Valid.pindah(evt, Prothesa, ADL);
-    }//GEN-LAST:event_KetProthesaKeyPressed
-
-    private void ADLKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ADLKeyPressed
-        Valid.pindah(evt, KetProthesa, StatusPsiko);
-    }//GEN-LAST:event_ADLKeyPressed
-
     private void StatusPsikoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_StatusPsikoKeyPressed
         Valid.pindah(evt, ADL, KetPsiko);
     }//GEN-LAST:event_StatusPsikoKeyPressed
@@ -3358,26 +3338,6 @@ public final class DlgPenilaianAwalKeperawatan extends javax.swing.JDialog {
     private void KetPsikoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KetPsikoKeyPressed
         Valid.pindah(evt, StatusPsiko, HubunganKeluarga);
     }//GEN-LAST:event_KetPsikoKeyPressed
-
-    private void TinggalDenganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TinggalDenganKeyPressed
-        Valid.pindah(evt, HubunganKeluarga, KetTinggal);
-    }//GEN-LAST:event_TinggalDenganKeyPressed
-
-    private void KetTinggalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KetTinggalKeyPressed
-        Valid.pindah(evt, TinggalDengan, Ekonomi);
-    }//GEN-LAST:event_KetTinggalKeyPressed
-
-    private void EkonomiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EkonomiKeyPressed
-        Valid.pindah(evt, KetTinggal, StatusBudaya);
-    }//GEN-LAST:event_EkonomiKeyPressed
-
-    private void EdukasiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EdukasiKeyPressed
-        Valid.pindah(evt, KetBudaya, KetEdukasi);
-    }//GEN-LAST:event_EdukasiKeyPressed
-
-    private void KetEdukasiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KetEdukasiKeyPressed
-        Valid.pindah(evt, Edukasi, ATS);
-    }//GEN-LAST:event_KetEdukasiKeyPressed
 
     private void LaporKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_LaporKeyPressed
         Valid.pindah(evt, Hasil, KetLapor);
@@ -3411,37 +3371,13 @@ public final class DlgPenilaianAwalKeperawatan extends javax.swing.JDialog {
         Valid.pindah(evt, Nilai2, Provokes);
     }//GEN-LAST:event_NyeriKeyPressed
 
-    private void ProvokesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ProvokesKeyPressed
-        Valid.pindah(evt, Nyeri, KetProvokes);
-    }//GEN-LAST:event_ProvokesKeyPressed
-
-    private void KetProvokesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KetProvokesKeyPressed
-        Valid.pindah(evt, Provokes, Quality);
-    }//GEN-LAST:event_KetProvokesKeyPressed
-
-    private void QualityKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_QualityKeyPressed
-        Valid.pindah(evt, KetProvokes, KetQuality);
-    }//GEN-LAST:event_QualityKeyPressed
-
-    private void KetQualityKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KetQualityKeyPressed
-        Valid.pindah(evt, Quality, Lokasi);
-    }//GEN-LAST:event_KetQualityKeyPressed
-
     private void LokasiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_LokasiKeyPressed
         Valid.pindah(evt, KetQuality, Menyebar);
     }//GEN-LAST:event_LokasiKeyPressed
 
-    private void MenyebarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MenyebarKeyPressed
-        Valid.pindah(evt, Lokasi, SkalaNyeri);
-    }//GEN-LAST:event_MenyebarKeyPressed
-
     private void SkalaNyeriKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SkalaNyeriKeyPressed
         Valid.pindah(evt, Menyebar, Durasi);
     }//GEN-LAST:event_SkalaNyeriKeyPressed
-
-    private void DurasiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DurasiKeyPressed
-        Valid.pindah(evt, SkalaNyeri, NyeriHilang);
-    }//GEN-LAST:event_DurasiKeyPressed
 
     private void NyeriHilangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NyeriHilangKeyPressed
         Valid.pindah(evt, Durasi, KetNyeri);
@@ -3466,22 +3402,6 @@ public final class DlgPenilaianAwalKeperawatan extends javax.swing.JDialog {
     private void TglAsuhanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TglAsuhanKeyPressed
         Valid.pindah(evt, Rencana, Informasi);
     }//GEN-LAST:event_TglAsuhanKeyPressed
-
-    private void GCSKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_GCSKeyPressed
-        Valid.pindah(evt, Suhu, BB);
-    }//GEN-LAST:event_GCSKeyPressed
-
-    private void CacatFisikKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CacatFisikKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CacatFisikKeyPressed
-
-    private void StatusBudayaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_StatusBudayaKeyPressed
-        Valid.pindah(evt, Ekonomi, KetBudaya);
-    }//GEN-LAST:event_StatusBudayaKeyPressed
-
-    private void KetBudayaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KetBudayaKeyPressed
-        Valid.pindah(evt, StatusBudaya, Edukasi);
-    }//GEN-LAST:event_KetBudayaKeyPressed
 
     private void TabRawatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabRawatMouseClicked
         if (TabRawat.getSelectedIndex() == 1) {
@@ -3909,6 +3829,86 @@ public final class DlgPenilaianAwalKeperawatan extends javax.swing.JDialog {
             KetDokter.setVisible(true);
         }
     }//GEN-LAST:event_PadaDokterItemStateChanged
+
+    private void DurasiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DurasiKeyPressed
+        Valid.pindah(evt, SkalaNyeri, NyeriHilang);
+    }//GEN-LAST:event_DurasiKeyPressed
+
+    private void MenyebarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MenyebarKeyPressed
+        Valid.pindah(evt, Lokasi, SkalaNyeri);
+    }//GEN-LAST:event_MenyebarKeyPressed
+
+    private void KetBudayaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KetBudayaKeyPressed
+        Valid.pindah(evt, StatusBudaya, Edukasi);
+    }//GEN-LAST:event_KetBudayaKeyPressed
+
+    private void StatusBudayaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_StatusBudayaKeyPressed
+        Valid.pindah(evt, Ekonomi, KetBudaya);
+    }//GEN-LAST:event_StatusBudayaKeyPressed
+
+    private void CacatFisikKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CacatFisikKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CacatFisikKeyPressed
+
+    private void GCSKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_GCSKeyPressed
+        Valid.pindah(evt, Suhu, BB);
+    }//GEN-LAST:event_GCSKeyPressed
+
+    private void KetQualityKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KetQualityKeyPressed
+        Valid.pindah(evt, Quality, Lokasi);
+    }//GEN-LAST:event_KetQualityKeyPressed
+
+    private void QualityKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_QualityKeyPressed
+        Valid.pindah(evt, KetProvokes, KetQuality);
+    }//GEN-LAST:event_QualityKeyPressed
+
+    private void KetProvokesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KetProvokesKeyPressed
+        Valid.pindah(evt, Provokes, Quality);
+    }//GEN-LAST:event_KetProvokesKeyPressed
+
+    private void ProvokesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ProvokesKeyPressed
+        Valid.pindah(evt, Nyeri, KetProvokes);
+    }//GEN-LAST:event_ProvokesKeyPressed
+
+    private void KetEdukasiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KetEdukasiKeyPressed
+        Valid.pindah(evt, Edukasi, ATS);
+    }//GEN-LAST:event_KetEdukasiKeyPressed
+
+    private void EdukasiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EdukasiKeyPressed
+        Valid.pindah(evt, KetBudaya, KetEdukasi);
+    }//GEN-LAST:event_EdukasiKeyPressed
+
+    private void EkonomiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EkonomiKeyPressed
+        Valid.pindah(evt, KetTinggal, StatusBudaya);
+    }//GEN-LAST:event_EkonomiKeyPressed
+
+    private void KetTinggalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KetTinggalKeyPressed
+        Valid.pindah(evt, TinggalDengan, Ekonomi);
+    }//GEN-LAST:event_KetTinggalKeyPressed
+
+    private void TinggalDenganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TinggalDenganKeyPressed
+        Valid.pindah(evt, HubunganKeluarga, KetTinggal);
+    }//GEN-LAST:event_TinggalDenganKeyPressed
+
+    private void ADLKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ADLKeyPressed
+        Valid.pindah(evt, KetProthesa, StatusPsiko);
+    }//GEN-LAST:event_ADLKeyPressed
+
+    private void KetProthesaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KetProthesaKeyPressed
+        Valid.pindah(evt, Prothesa, ADL);
+    }//GEN-LAST:event_KetProthesaKeyPressed
+
+    private void ProthesaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ProthesaKeyPressed
+        Valid.pindah(evt, KetBantu, KetProthesa);
+    }//GEN-LAST:event_ProthesaKeyPressed
+
+    private void KetBantuKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KetBantuKeyPressed
+        Valid.pindah(evt, AlatBantu, Prothesa);
+    }//GEN-LAST:event_KetBantuKeyPressed
+
+    private void AlatBantuKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_AlatBantuKeyPressed
+        Valid.pindah(evt, Alergi, KetBantu);
+    }//GEN-LAST:event_AlatBantuKeyPressed
 
     /**
      * @param args the command line arguments
