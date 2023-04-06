@@ -5,7 +5,6 @@
  */
 package fungsi;
 
-import fungsi.EnkripsiAES;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.io.FileInputStream;
 import java.sql.Connection;
@@ -249,6 +248,46 @@ public final class koneksiDB {
 //            var = EnkripsiAES.decrypt(prop.getProperty("URLUPDATESISTEM"));
         } catch (Exception ex) {
             System.out.println("Notifikasi : "+ex);
+        }
+        return var;
+    }
+    
+    public static String USERORTHANC(){
+        try{
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var=EnkripsiAES.decrypt(prop.getProperty("USERORTHANC"));
+        }catch(Exception e){
+            var=""; 
+        }
+        return var;
+    }
+    
+    public static String PASSORTHANC(){
+        try{
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var=EnkripsiAES.decrypt(prop.getProperty("PASSORTHANC"));
+        }catch(Exception e){
+            var=""; 
+        }
+        return var;
+    }
+    
+    public static String PORTORTHANC(){
+        try{
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var=EnkripsiAES.decrypt(prop.getProperty("PORTORTHANC"));
+        }catch(Exception e){
+            var=""; 
+        }
+        return var;
+    }
+    
+    public static String URLORTHANC(){
+        try{
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var=prop.getProperty("URLORTHANC");
+        }catch(Exception e){
+            var=""; 
         }
         return var;
     }
