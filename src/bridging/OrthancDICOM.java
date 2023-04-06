@@ -220,7 +220,7 @@ public class OrthancDICOM extends javax.swing.JDialog {
         PanelMenu.setPreferredSize(new java.awt.Dimension(44, 34));
         PanelMenu.setLayout(new java.awt.GridLayout(1, 0));
 
-        BtnPng.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/3079288_adobe file extensions_adobe fireworks_document_extension icon_file_icon.png"))); // NOI18N
+        BtnPng.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/011.png"))); // NOI18N
         BtnPng.setMnemonic('P');
         BtnPng.setText("Download PNG");
         BtnPng.setToolTipText("Alt+P");
@@ -233,7 +233,7 @@ public class OrthancDICOM extends javax.swing.JDialog {
         });
         PanelMenu.add(BtnPng);
 
-        BtnJpg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/2276087_document_extension_format_jpg_paper_icon.png"))); // NOI18N
+        BtnJpg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/095.png"))); // NOI18N
         BtnJpg.setMnemonic('D');
         BtnJpg.setText("Download JPG");
         BtnJpg.setToolTipText("Alt+D");
@@ -246,7 +246,7 @@ public class OrthancDICOM extends javax.swing.JDialog {
         });
         PanelMenu.add(BtnJpg);
 
-        BtnBmp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/2315911_bmp_documents_file_format_paper_icon.png"))); // NOI18N
+        BtnBmp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/129.png"))); // NOI18N
         BtnBmp.setMnemonic('D');
         BtnBmp.setText("Download BMP");
         BtnBmp.setToolTipText("Alt+D");

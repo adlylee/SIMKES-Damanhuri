@@ -18,7 +18,7 @@
         <Component class="widget.Button" name="BtnPng">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/picture/3079288_adobe file extensions_adobe fireworks_document_extension icon_file_icon.png"/>
+              <Image iconType="3" name="/picture/011.png"/>
             </Property>
             <Property name="mnemonic" type="int" value="80"/>
             <Property name="text" type="java.lang.String" value="Download PNG"/>
@@ -35,7 +35,7 @@
         <Component class="widget.Button" name="BtnJpg">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/picture/2276087_document_extension_format_jpg_paper_icon.png"/>
+              <Image iconType="3" name="/picture/095.png"/>
             </Property>
             <Property name="mnemonic" type="int" value="68"/>
             <Property name="text" type="java.lang.String" value="Download JPG"/>
@@ -52,7 +52,7 @@
         <Component class="widget.Button" name="BtnBmp">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/picture/2315911_bmp_documents_file_format_paper_icon.png"/>
+              <Image iconType="3" name="/picture/129.png"/>
             </Property>
             <Property name="mnemonic" type="int" value="68"/>
             <Property name="text" type="java.lang.String" value="Download BMP"/>
