@@ -205,9 +205,9 @@ public class DlgPasien extends javax.swing.JDialog {
         TNo.setDocument(new batasInput((byte) 15).getKata(TNo));
         TNm.setDocument(new batasInput((byte) 40).getKata(TNm));
         NmIbu.setDocument(new batasInput((byte) 40).getKata(NmIbu));
-        TKtp.setDocument(new batasInput((byte) 20).getKata(TKtp));
+        TKtp.setDocument(new batasInput((byte) 20).getOnlyAngka(TKtp));
         Kdpnj.setDocument(new batasInput((byte) 3).getKata(Kdpnj));
-        TTlp.setDocument(new batasInput((int) 40).getKata(TTlp));
+        TTlp.setDocument(new batasInput((int) 40).getOnlyAngka(TTlp));
         TTmp.setDocument(new batasInput((byte) 15).getKata(TTmp));
         Alamat.setDocument(new batasInput((int) 200).getFilter(Alamat));
         AlamatPj.setDocument(new batasInput((int) 100).getFilter(AlamatPj));
@@ -228,7 +228,7 @@ public class DlgPasien extends javax.swing.JDialog {
         PropinsiPj.setDocument(new batasInput((byte) 30).getFilter(PropinsiPj));
         EMail.setDocument(new batasInput((byte) 50).getKata(EMail));
         NIP.setDocument(new batasInput((byte) 30).getKata(NIP));
-        TNoPeserta.setDocument(new batasInput((byte) 25).getKata(TNoPeserta));
+        TNoPeserta.setDocument(new batasInput((byte) 25).getOnlyAngka(TNoPeserta));
         TCari.setDocument(new batasInput((byte) 100).getKata(TCari));
         if (koneksiDB.cariCepat().equals("aktif")) {
             TCari.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {

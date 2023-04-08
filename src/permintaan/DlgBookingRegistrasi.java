@@ -2170,9 +2170,9 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }
     
     private void isEditBooking() {        
-        if(Sequel.mengedittf("booking_registrasi","no_rkm_medis=? and tanggal_periksa=?","tanggal_periksa=?,kd_dokter=?,kd_poli=?",5,new String[]{
+        if(Sequel.mengedittf("booking_registrasi","no_rkm_medis=? and tanggal_periksa=?","tanggal_periksa=?,kd_dokter=?,kd_poli=?,no_reg=?",6,new String[]{
             Valid.SetTgl(TanggalPeriksa.getSelectedItem()+""),KdDokter.getText(),
-            KdPoli.getText(),tabMode.getValueAt(tbObat.getSelectedRow(),3).toString(),tabMode.getValueAt(tbObat.getSelectedRow(),5).toString()
+            KdPoli.getText(),NoReg.getText(),tabMode.getValueAt(tbObat.getSelectedRow(),3).toString(),tabMode.getValueAt(tbObat.getSelectedRow(),5).toString()
         })==true){
                 emptTeks();
                 tampil();
