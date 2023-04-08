@@ -65,7 +65,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-        Object[] row={"No.Rawat","Pasien","Petugas","Tgl.Periksa","Jam Periksa","Dokter Perujuk","Penanggung Jawab","Klinis"};
+        Object[] row={"No.Rawat","Pasien","Petugas","Tgl.Periksa","Jam Periksa","Dokter Perujuk","Penanggung Jawab","Klinis","Asal Rujukan"};
         tabMode=new DefaultTableModel(null,row){
               @Override public boolean isCellEditable(int rowIndex, int colIndex){return false;}
         };
@@ -74,7 +74,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         tbDokter.setPreferredScrollableViewportSize(new Dimension(800,800));
         tbDokter.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 8; i++) {
+        for (i = 0; i < 9; i++) {
             TableColumn column = tbDokter.getColumnModel().getColumn(i);
             if(i==0){
                 column.setPreferredWidth(110);
@@ -91,6 +91,8 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
             }else if(i==6){
                 column.setPreferredWidth(150);
             }else if(i==7){
+                column.setPreferredWidth(150);
+            }else if(i==8){
                 column.setPreferredWidth(150);
             }
         }
@@ -2546,8 +2548,9 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                     tabMode.addRow(new Object[]{
                         rs.getString("no_rawat"),rs.getString("no_rkm_medis")+" "+rs.getString("nm_pasien")+" ("+kamar+" : "+namakamar+")",rs.getString("nama"),
                         rs.getString("tgl_periksa"),rs.getString("jam"),Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?",rs.getString("dokter_perujuk")),rs.getString("nm_dokter"),rs.getString("klinis")
+                            ,Sequel.cariIsi("select perujuk from rujuk_masuk where no_rawat='"+rs.getString("no_rawat")+"'")
                     });
-                    tabMode.addRow(new Object[]{"","","Kode Periksa","Nama Pemeriksaan","Biaya Pemeriksaan","","",""});
+                    tabMode.addRow(new Object[]{"","","Kode Periksa","Nama Pemeriksaan","Biaya Pemeriksaan","","","",""});
                     ps2=koneksi.prepareStatement(
                             "select jns_perawatan_radiologi.kd_jenis_prw,jns_perawatan_radiologi.nm_perawatan,periksa_radiologi.biaya from periksa_radiologi inner join jns_perawatan_radiologi "+
                             "on periksa_radiologi.kd_jenis_prw=jns_perawatan_radiologi.kd_jenis_prw where periksa_radiologi.no_rawat=? and periksa_radiologi.tgl_periksa=? "+
@@ -2559,7 +2562,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                         rs2=ps2.executeQuery();
                         while(rs2.next()){
                             ttl=ttl+rs2.getDouble("biaya");
-                            tabMode.addRow(new Object[]{"","",rs2.getString("kd_jenis_prw"),rs2.getString("nm_perawatan"),Valid.SetAngka(rs2.getDouble("biaya")),"","",""});
+                            tabMode.addRow(new Object[]{"","",rs2.getString("kd_jenis_prw"),rs2.getString("nm_perawatan"),Valid.SetAngka(rs2.getDouble("biaya")),"","","",""});
                         }
                     } catch (Exception e) {
                         System.out.println("simrskhanza.DlgCariPeriksaRadiologi.tampil() ps2 : "+e);
@@ -2572,7 +2575,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                         }
                     }
 
-                    tabMode.addRow(new Object[]{"","","Kode BHP","Nama BHP","Satuan","Jumlah","",""});
+                    tabMode.addRow(new Object[]{"","","Kode BHP","Nama BHP","Satuan","Jumlah","","",""});
                     ps3=koneksi.prepareStatement(
                             "select beri_bhp_radiologi.kode_brng,ipsrsbarang.nama_brng,beri_bhp_radiologi.kode_sat,beri_bhp_radiologi.jumlah, "+
                             "beri_bhp_radiologi.total from beri_bhp_radiologi inner join ipsrsbarang on ipsrsbarang.kode_brng=beri_bhp_radiologi.kode_brng "+
@@ -2583,7 +2586,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                         ps3.setString(3,rs.getString("jam"));
                         rs3=ps3.executeQuery();
                         while(rs3.next()){
-                            tabMode.addRow(new Object[]{"","",rs3.getString("kode_brng"),rs3.getString("nama_brng"),rs3.getString("kode_sat"),rs3.getString("jumlah"),"",""});
+                            tabMode.addRow(new Object[]{"","",rs3.getString("kode_brng"),rs3.getString("nama_brng"),rs3.getString("kode_sat"),rs3.getString("jumlah"),"","",""});
                         }
                     } catch (Exception e) {
                         System.out.println("simrskhanza.DlgCariPeriksaRadiologi.tampil() ps3 : "+e);
@@ -2603,7 +2606,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                         ps5.setString(3,rs.getString("jam"));
                         rs5=ps5.executeQuery();
                         while(rs5.next()){
-                            tabMode.addRow(new Object[]{"","","Hasil Pemeriksaan :",rs5.getString("hasil"),"","","",""});
+                            tabMode.addRow(new Object[]{"","","Hasil Pemeriksaan :",rs5.getString("hasil"),"","","","",""});
                         }
                     } catch (Exception e) {
                         System.out.println("simrskhanza.DlgCariPeriksaRadiologi.tampil() ps5 : "+e);
@@ -2624,7 +2627,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                         ps6.setString(3,rs.getString("jam"));
                         rs6=ps6.executeQuery();
                         while(rs6.next()){
-                            tabMode.addRow(new Object[]{"","","Judul :",rs6.getString("judul"),"","","",""});
+                            tabMode.addRow(new Object[]{"","","Judul :",rs6.getString("judul"),"","","","",""});
                 }
             } catch (Exception e) {
                         System.out.println("simrskhanza.DlgCariPeriksaRadiologi.tampil() ps6 : "+e);
@@ -2645,7 +2648,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                         ps7.setString(3,rs.getString("jam"));
                         rs7=ps7.executeQuery();
                         while(rs7.next()){
-                            tabMode.addRow(new Object[]{"","","Saran :",rs7.getString("saran"),"","","",""});
+                            tabMode.addRow(new Object[]{"","","Saran :",rs7.getString("saran"),"","","","",""});
                         }
                     } catch (Exception e) {
                         System.out.println("simrskhanza.DlgCariPeriksaRadiologi.tampil() ps7 : "+e);
@@ -2666,7 +2669,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                         ps8.setString(3,rs.getString("jam"));
                         rs8=ps8.executeQuery();
                         while(rs8.next()){
-                            tabMode.addRow(new Object[]{"","","Kesan :",rs8.getString("kesan"),"","","",""});
+                            tabMode.addRow(new Object[]{"","","Kesan :",rs8.getString("kesan"),"","","","",""});
                         }
                     } catch (Exception e) {
                         System.out.println("simrskhanza.DlgCariPeriksaRadiologi.tampil() ps8 : "+e);
@@ -2690,7 +2693,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 }
             }
             if(ttl>0){
-                tabMode.addRow(new Object[]{">>","Total : "+Valid.SetAngka(ttl),"","","","","",""});
+                tabMode.addRow(new Object[]{">>","Total : "+Valid.SetAngka(ttl),"","","","","","",""});
             }
 
         } catch (Exception ex) {
