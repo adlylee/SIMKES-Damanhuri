@@ -12,6 +12,8 @@ import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
 import javax.swing.table.DefaultTableModel;
@@ -406,19 +408,22 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
 
     private void prosesCari() {
         Valid.tabelKosong(tabMode);
+        LocalDate theday = LocalDate.parse(Valid.SetTgl(tanggal1.getSelectedItem() + ""));
+//        System.out.println(theday);
+        LocalDate lastweek = theday.minus(1, ChronoUnit.WEEKS);
         try {
             ps = koneksi.prepareStatement(
                     "SELECT nama.nama_brng, nama.kode_brng, nama.ralan as harga_ralan,"
                     + "(SELECT satuan FROM kodesatuan WHERE kode_sat = nama.kode_sat) as kodesat,"
-                    + "(SELECT SUM(stok_akhir) FROM riwayat_barang_medis WHERE kode_brng = nama.kode_brng AND kd_bangsal IN ('B0001','B0014','B0018') AND status = 'Simpan' AND tanggal BETWEEN ? AND ?) AS opname,"
+                    + "(SELECT SUM(stok_akhir) FROM riwayat_barang_medis WHERE kode_brng = nama.kode_brng AND status = 'Simpan' AND posisi='Opname' AND tanggal BETWEEN ? AND ?) AS opname,"
                     + "(SELECT SUM(masuk) FROM riwayat_barang_medis WHERE kode_brng = nama.kode_brng AND kd_bangsal IN ('B0001','B0014','B0018') AND posisi IN ('Mutasi','Pengadaan','Penerimaan','Pengambilan Medis','Retur Jual') AND status = 'Simpan' AND tanggal BETWEEN ? AND ?) AS masuk,"
                     + "(SELECT SUM(jml) FROM detail_pemberian_obat WHERE kode_brng = nama.kode_brng AND status='Ralan' AND tgl_perawatan BETWEEN ? AND ?) AS ralan,"
                     + "(SELECT SUM(jml) FROM detail_pemberian_obat WHERE kode_brng = nama.kode_brng AND status='Ranap' AND tgl_perawatan BETWEEN ? AND ?) AS ranap,"
                     + "(SELECT SUM(jml) FROM detail_pemberian_obat WHERE kode_brng = nama.kode_brng AND tgl_perawatan BETWEEN ? AND ?) AS total "
                     + "FROM (SELECT DISTINCT nama_brng, kode_brng , kode_sat ,ralan FROM databarang WHERE kode_brng IN(SELECT kode_brng FROM detail_pemberian_obat)) AS nama where nama.nama_brng like ? ORDER BY nama.nama_brng ASC");
             try {
-                ps.setString(1, Valid.SetTgl(tanggal1.getSelectedItem() + ""));
-                ps.setString(2, Valid.SetTgl(tanggal2.getSelectedItem() + ""));
+                ps.setString(1, lastweek.toString());
+                ps.setString(2, Valid.SetTgl(tanggal1.getSelectedItem() + ""));
                 ps.setString(3, Valid.SetTgl(tanggal1.getSelectedItem() + ""));
                 ps.setString(4, Valid.SetTgl(tanggal2.getSelectedItem() + ""));
                 ps.setString(5, Valid.SetTgl(tanggal1.getSelectedItem() + ""));
@@ -430,10 +435,10 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 ps.setString(11, "%"+TCari.getText()+"%");
                 rs = ps.executeQuery();
                 while (rs.next()) {
-                    Double total = rs.getDouble(6) + rs.getDouble(7);
+                    Double total = rs.getDouble(7) + rs.getDouble(8);
                     tabMode.addRow(new Object[]{
                         rs.getString(1), rs.getString(4), rs.getDouble(5),
-                        rs.getDouble(5), rs.getDouble(6), rs.getDouble(7), total,
+                        rs.getDouble(6), rs.getDouble(7), rs.getDouble(8), total,
                         rs.getDouble(3), rs.getDouble(3) * total
                         ,cariStok(rs.getString("kode_brng"), "B0002"),cariStok(rs.getString("kode_brng"), "B0014"),cariStok(rs.getString("kode_brng"), "B0001"),cariStok(rs.getString("kode_brng"), "B0018")
                     });

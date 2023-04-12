@@ -25,6 +25,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -491,13 +493,17 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
     
     public Integer stokAwal(String kode,String tgl_awal,String tgl_akhir){
         Integer sum = 0;
+        LocalDate theday = LocalDate.parse(tgl_awal);
+//        System.out.println(theday);
+        LocalDate lastweek = theday.minus(1, ChronoUnit.WEEKS);
+//        System.out.println("Last week: " + lastweek);
 //        String query = "SELECT riwayat_barang_medis.stok_awal as awal " +
         String query = "SELECT SUM(riwayat_barang_medis.stok_akhir) as awal " +
                        "FROM riwayat_barang_medis " +   
                        "WHERE riwayat_barang_medis.kode_brng = '"+kode+"' "
 //                + "AND riwayat_barang_medis.kd_bangsal = 'B0002'"
                        + "AND riwayat_barang_medis.posisi IN ('Opname') "
-                       + "AND riwayat_barang_medis.tanggal BETWEEN '"+tgl_awal+"' AND '"+tgl_akhir+"' "
+                       + "AND riwayat_barang_medis.tanggal BETWEEN '"+lastweek+"' AND '"+tgl_awal+"' "
                        + "GROUP BY riwayat_barang_medis.kode_brng ";
 //                       + "ORDER BY riwayat_barang_medis.tanggal ASC LIMIT 1";
         try {
