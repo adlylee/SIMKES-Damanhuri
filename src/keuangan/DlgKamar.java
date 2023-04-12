@@ -1183,7 +1183,9 @@ private void CmbCrIsiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST
         kd_bangsal.setEditable(var.getkamar());
         Kelas.setEnabled(var.getkamar());        
         asalform=var.getform();
-        if(var.getkode().equals("Admin Utama")){
+        if(var.getkode().equals("Admin Utama") || 
+                var.getkode().equals("07012012017113007") || var.getkode().equals("07012062014313059") || var.getkode().equals("07012062019213080") || var.getkode().equals("07012062019213082") || var.getkode().equals("07012082019413099") ||
+                var.getkode().equals("07012082019413103") || var.getkode().equals("07012102014413067") || var.getkode().equals("07012102014413068") || var.getkode().equals("07012102016113021") || var.getkode().equals("07012102018213015")){
             MnRestore.setEnabled(true);
             BtnEdit.setEnabled(true);
         }else{
