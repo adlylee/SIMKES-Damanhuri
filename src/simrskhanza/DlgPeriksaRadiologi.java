@@ -1440,6 +1440,8 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
             Valid.textKosong(KodePerujuk,"Dokter Perujuk");
         }else if(KodePj.getText().equals("")||NmDokterPj.getText().equals("")){
             Valid.textKosong(KodePj,"Dokter Penanggung Jawab");
+        }else if(KodePj.getText().equals("-")||NmDokterPj.getText().equals("-")){
+            Valid.textKosong(KodePj,"Dokter PJ");
         }else if(tabMode.getRowCount()==0){
             Valid.textKosong(TCariPeriksa,"Data Pemeriksaan");
         }else{
