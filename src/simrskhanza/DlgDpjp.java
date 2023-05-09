@@ -668,7 +668,7 @@ public class DlgDpjp extends javax.swing.JDialog {
         FormInput.add(label12);
         label12.setBounds(230, 100, 50, 23);
 
-        Jeniskelas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Utama", "Raber", "PPDS", "Internship", "Konsul" }));
+        Jeniskelas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Utama", "Raber", "PPDS", "Internship", "Konsul", "Dokter Jaga" }));
         Jeniskelas.setName("Jeniskelas"); // NOI18N
         Jeniskelas.setPreferredSize(new java.awt.Dimension(100, 23));
         Jeniskelas.addItemListener(new java.awt.event.ItemListener() {

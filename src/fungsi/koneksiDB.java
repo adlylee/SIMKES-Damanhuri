@@ -45,7 +45,7 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" +
-                        "    Version 25.03.2023 [ 1.0.16 ] [Activated] GO KLAIM DIGITAL \n"+
+                        "    Version 15.04.2023 [ 1.0.16 ] [Activated] GO KLAIM DIGITAL \n"+
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai                              \n"+
                         "                                                                           \n"+
@@ -57,11 +57,9 @@ public final class koneksiDB {
                         "                                                                       \n"+
                         "                                                                       \n"+
                         "    * Changelog :                                                       \n"+
-                        "       - Set Kategori Perioritas                                              \n"+
-                        "       - Surveilans Ranap                                              \n"+
-                        "       - MCU Radiologi                                              \n"+
-                        "       - Report Kerohanian                                              \n"+
-                        "       - DPJP Ranap Bayi                                              \n");
+                        "       - Orthanc Radiologi                                              \n"+
+                        "       - Laporan Stok Opname Medis                                              \n"+
+                        "       - Laporan Pelayanan Geriatri                                              \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);
                 try {

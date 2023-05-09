@@ -209,68 +209,12 @@ public class OrthancDICOM extends javax.swing.JDialog {
     private void initComponents() {
 
         PanelMenu = new widget.panelisi();
-        BtnPng = new widget.Button();
-        BtnJpg = new widget.Button();
-        BtnBmp = new widget.Button();
-        BtnDcm = new widget.Button();
         BtnKeluar = new widget.Button();
         internalFrame1 = new widget.InternalFrame();
 
         PanelMenu.setName("PanelMenu"); // NOI18N
         PanelMenu.setPreferredSize(new java.awt.Dimension(44, 34));
         PanelMenu.setLayout(new java.awt.GridLayout(1, 0));
-
-        BtnPng.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/011.png"))); // NOI18N
-        BtnPng.setMnemonic('P');
-        BtnPng.setText("Download PNG");
-        BtnPng.setToolTipText("Alt+P");
-        BtnPng.setName("BtnPng"); // NOI18N
-        BtnPng.setPreferredSize(new java.awt.Dimension(100, 30));
-        BtnPng.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnPngActionPerformed(evt);
-            }
-        });
-        PanelMenu.add(BtnPng);
-
-        BtnJpg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/095.png"))); // NOI18N
-        BtnJpg.setMnemonic('D');
-        BtnJpg.setText("Download JPG");
-        BtnJpg.setToolTipText("Alt+D");
-        BtnJpg.setName("BtnJpg"); // NOI18N
-        BtnJpg.setPreferredSize(new java.awt.Dimension(100, 30));
-        BtnJpg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnJpgActionPerformed(evt);
-            }
-        });
-        PanelMenu.add(BtnJpg);
-
-        BtnBmp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/129.png"))); // NOI18N
-        BtnBmp.setMnemonic('D');
-        BtnBmp.setText("Download BMP");
-        BtnBmp.setToolTipText("Alt+D");
-        BtnBmp.setName("BtnBmp"); // NOI18N
-        BtnBmp.setPreferredSize(new java.awt.Dimension(100, 30));
-        BtnBmp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnBmpActionPerformed(evt);
-            }
-        });
-        PanelMenu.add(BtnBmp);
-
-        BtnDcm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/save-16x16i.png"))); // NOI18N
-        BtnDcm.setMnemonic('D');
-        BtnDcm.setText("Download DCM");
-        BtnDcm.setToolTipText("Alt+D");
-        BtnDcm.setName("BtnDcm"); // NOI18N
-        BtnDcm.setPreferredSize(new java.awt.Dimension(100, 30));
-        BtnDcm.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnDcmActionPerformed(evt);
-            }
-        });
-        PanelMenu.add(BtnDcm);
 
         BtnKeluar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/exit.png"))); // NOI18N
         BtnKeluar.setMnemonic('K');
@@ -306,7 +250,7 @@ public class OrthancDICOM extends javax.swing.JDialog {
         });
         getContentPane().setLayout(new java.awt.BorderLayout(1, 1));
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setPreferredSize(new java.awt.Dimension(500, 500));
         internalFrame1.setLayout(new java.awt.BorderLayout());
@@ -335,22 +279,6 @@ public class OrthancDICOM extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_BtnKeluarKeyPressed
 
-    private void BtnPngActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPngActionPerformed
-        orthanc.AmbilPng(norawat,series);
-    }//GEN-LAST:event_BtnPngActionPerformed
-
-    private void BtnDcmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDcmActionPerformed
-        orthanc.AmbilDcm(norawat,series);
-    }//GEN-LAST:event_BtnDcmActionPerformed
-
-    private void BtnJpgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnJpgActionPerformed
-        orthanc.AmbilJpg(norawat,series);
-    }//GEN-LAST:event_BtnJpgActionPerformed
-
-    private void BtnBmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBmpActionPerformed
-        orthanc.AmbilBmp(norawat,series);
-    }//GEN-LAST:event_BtnBmpActionPerformed
-
     /**
     * @param args the command line arguments
     */
@@ -368,11 +296,7 @@ public class OrthancDICOM extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private widget.Button BtnBmp;
-    private widget.Button BtnDcm;
-    private widget.Button BtnJpg;
     private widget.Button BtnKeluar;
-    private widget.Button BtnPng;
     private widget.panelisi PanelMenu;
     private widget.InternalFrame internalFrame1;
     // End of variables declaration//GEN-END:variables

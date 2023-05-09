@@ -167,8 +167,8 @@ public final class MyLimsMapping extends javax.swing.JDialog {
                     }
                 }
             });
-        }  
-        
+                    }
+                
     }
 
     /** This method is called from within the constructor to
@@ -185,11 +185,17 @@ public final class MyLimsMapping extends javax.swing.JDialog {
         scrollPane1 = new widget.ScrollPane();
         tbFaskes1 = new widget.Table();
         panelisi1 = new widget.panelisi();
-        BtnKeluar1 = new widget.Button();
+        label11 = new widget.Label();
+        TCariLims = new widget.TextBox();
+        BtnCariLims = new widget.Button();
+        BtnKeluarLims = new widget.Button();
         WindowCariLab = new javax.swing.JDialog();
         internalFrame9 = new widget.InternalFrame();
         panelisi2 = new widget.panelisi();
-        BtnKeluar2 = new widget.Button();
+        label10 = new widget.Label();
+        TCariLab = new widget.TextBox();
+        BtnCariLab = new widget.Button();
+        BtnKeluarLab = new widget.Button();
         scrollPane2 = new widget.ScrollPane();
         tbTarif = new widget.Table();
         internalFrame1 = new widget.InternalFrame();
@@ -255,24 +261,55 @@ public final class MyLimsMapping extends javax.swing.JDialog {
         panelisi1.setPreferredSize(new java.awt.Dimension(44, 54));
         panelisi1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 9));
 
-        BtnKeluar1.setForeground(new java.awt.Color(0, 0, 0));
-        BtnKeluar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/exit.png"))); // NOI18N
-        BtnKeluar1.setMnemonic('K');
-        BtnKeluar1.setText("Keluar");
-        BtnKeluar1.setToolTipText("Alt+K");
-        BtnKeluar1.setName("BtnKeluar1"); // NOI18N
-        BtnKeluar1.setPreferredSize(new java.awt.Dimension(100, 30));
-        BtnKeluar1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnKeluar1ActionPerformed(evt);
-            }
-        });
-        BtnKeluar1.addKeyListener(new java.awt.event.KeyAdapter() {
+        label11.setText("Key Word :");
+        label11.setName("label11"); // NOI18N
+        label11.setPreferredSize(new java.awt.Dimension(69, 23));
+        panelisi1.add(label11);
+
+        TCariLims.setName("TCariLims"); // NOI18N
+        TCariLims.setPreferredSize(new java.awt.Dimension(120, 23));
+        TCariLims.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                BtnKeluar1KeyPressed(evt);
+                TCariLimsKeyPressed(evt);
             }
         });
-        panelisi1.add(BtnKeluar1);
+        panelisi1.add(TCariLims);
+
+        BtnCariLims.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/accept.png"))); // NOI18N
+        BtnCariLims.setMnemonic('2');
+        BtnCariLims.setToolTipText("Alt+2");
+        BtnCariLims.setName("BtnCariLims"); // NOI18N
+        BtnCariLims.setPreferredSize(new java.awt.Dimension(28, 23));
+        BtnCariLims.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCariLimsActionPerformed(evt);
+            }
+        });
+        BtnCariLims.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnCariLimsKeyPressed(evt);
+            }
+        });
+        panelisi1.add(BtnCariLims);
+
+        BtnKeluarLims.setForeground(new java.awt.Color(0, 0, 0));
+        BtnKeluarLims.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/exit.png"))); // NOI18N
+        BtnKeluarLims.setMnemonic('K');
+        BtnKeluarLims.setText("Keluar");
+        BtnKeluarLims.setToolTipText("Alt+K");
+        BtnKeluarLims.setName("BtnKeluarLims"); // NOI18N
+        BtnKeluarLims.setPreferredSize(new java.awt.Dimension(100, 30));
+        BtnKeluarLims.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnKeluarLimsActionPerformed(evt);
+            }
+        });
+        BtnKeluarLims.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnKeluarLimsKeyPressed(evt);
+            }
+        });
+        panelisi1.add(BtnKeluarLims);
 
         internalFrame8.add(panelisi1, java.awt.BorderLayout.PAGE_END);
 
@@ -293,24 +330,55 @@ public final class MyLimsMapping extends javax.swing.JDialog {
         panelisi2.setPreferredSize(new java.awt.Dimension(44, 54));
         panelisi2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 9));
 
-        BtnKeluar2.setForeground(new java.awt.Color(0, 0, 0));
-        BtnKeluar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/exit.png"))); // NOI18N
-        BtnKeluar2.setMnemonic('K');
-        BtnKeluar2.setText("Keluar");
-        BtnKeluar2.setToolTipText("Alt+K");
-        BtnKeluar2.setName("BtnKeluar2"); // NOI18N
-        BtnKeluar2.setPreferredSize(new java.awt.Dimension(100, 30));
-        BtnKeluar2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnKeluar2ActionPerformed(evt);
-            }
-        });
-        BtnKeluar2.addKeyListener(new java.awt.event.KeyAdapter() {
+        label10.setText("Key Word :");
+        label10.setName("label10"); // NOI18N
+        label10.setPreferredSize(new java.awt.Dimension(69, 23));
+        panelisi2.add(label10);
+
+        TCariLab.setName("TCariLab"); // NOI18N
+        TCariLab.setPreferredSize(new java.awt.Dimension(120, 23));
+        TCariLab.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                BtnKeluar2KeyPressed(evt);
+                TCariLabKeyPressed(evt);
             }
         });
-        panelisi2.add(BtnKeluar2);
+        panelisi2.add(TCariLab);
+
+        BtnCariLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/accept.png"))); // NOI18N
+        BtnCariLab.setMnemonic('2');
+        BtnCariLab.setToolTipText("Alt+2");
+        BtnCariLab.setName("BtnCariLab"); // NOI18N
+        BtnCariLab.setPreferredSize(new java.awt.Dimension(28, 23));
+        BtnCariLab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCariLabActionPerformed(evt);
+            }
+        });
+        BtnCariLab.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnCariLabKeyPressed(evt);
+            }
+        });
+        panelisi2.add(BtnCariLab);
+
+        BtnKeluarLab.setForeground(new java.awt.Color(0, 0, 0));
+        BtnKeluarLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/exit.png"))); // NOI18N
+        BtnKeluarLab.setMnemonic('K');
+        BtnKeluarLab.setText("Keluar");
+        BtnKeluarLab.setToolTipText("Alt+K");
+        BtnKeluarLab.setName("BtnKeluarLab"); // NOI18N
+        BtnKeluarLab.setPreferredSize(new java.awt.Dimension(120, 30));
+        BtnKeluarLab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnKeluarLabActionPerformed(evt);
+            }
+        });
+        BtnKeluarLab.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnKeluarLabKeyPressed(evt);
+            }
+        });
+        panelisi2.add(BtnKeluarLab);
 
         internalFrame9.add(panelisi2, java.awt.BorderLayout.PAGE_END);
 
@@ -835,25 +903,25 @@ private void btnPoliBPJSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         }
     }//GEN-LAST:event_tbFaskes1KeyPressed
 
-    private void BtnKeluar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnKeluar1ActionPerformed
+    private void BtnKeluarLimsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnKeluarLimsActionPerformed
         WindowCariMyLims.dispose();
-    }//GEN-LAST:event_BtnKeluar1ActionPerformed
+    }//GEN-LAST:event_BtnKeluarLimsActionPerformed
 
-    private void BtnKeluar1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnKeluar1KeyPressed
+    private void BtnKeluarLimsKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnKeluarLimsKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
             dispose();
         } else {
             Valid.pindah(evt, BtnPrint, BtnKeluar);
         }
-    }//GEN-LAST:event_BtnKeluar1KeyPressed
+    }//GEN-LAST:event_BtnKeluarLimsKeyPressed
 
-    private void BtnKeluar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnKeluar2ActionPerformed
-        WindowCariLab.dispose();        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnKeluar2ActionPerformed
+    private void BtnKeluarLabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnKeluarLabActionPerformed
+        WindowCariLab.dispose();
+    }//GEN-LAST:event_BtnKeluarLabActionPerformed
 
-    private void BtnKeluar2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnKeluar2KeyPressed
+    private void BtnKeluarLabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnKeluarLabKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_BtnKeluar2KeyPressed
+    }//GEN-LAST:event_BtnKeluarLabKeyPressed
 
     private void tbTarifMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTarifMouseClicked
         if(tabMode2.getRowCount()!=0){
@@ -863,6 +931,54 @@ private void btnPoliBPJSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             }
         }
     }//GEN-LAST:event_tbTarifMouseClicked
+
+    private void TCariLabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TCariLabKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            BtnCariLabActionPerformed(null);
+        }else if(evt.getKeyCode()==KeyEvent.VK_PAGE_DOWN){
+            BtnCariLab.requestFocus();
+        }else if(evt.getKeyCode()==KeyEvent.VK_PAGE_UP){
+            BtnKeluarLab.requestFocus();
+        }
+    }//GEN-LAST:event_TCariLabKeyPressed
+
+    private void BtnCariLabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCariLabActionPerformed
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        tampiltarif();
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_BtnCariLabActionPerformed
+
+    private void BtnCariLabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnCariLabKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_SPACE){
+            BtnCariLabActionPerformed(null);
+        }else{
+            Valid.pindah(evt, TCariLab, BtnAll);
+        }
+    }//GEN-LAST:event_BtnCariLabKeyPressed
+
+    private void BtnCariLimsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCariLimsActionPerformed
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        tampilFaskes1();
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_BtnCariLimsActionPerformed
+
+    private void BtnCariLimsKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnCariLimsKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_SPACE){
+            BtnCariLimsActionPerformed(null);
+        }else{
+            Valid.pindah(evt, TCariLims, BtnAll);
+        }
+    }//GEN-LAST:event_BtnCariLimsKeyPressed
+
+    private void TCariLimsKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TCariLimsKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            BtnCariLimsActionPerformed(null);
+        }else if(evt.getKeyCode()==KeyEvent.VK_PAGE_DOWN){
+            BtnCariLims.requestFocus();
+        }else if(evt.getKeyCode()==KeyEvent.VK_PAGE_UP){
+            BtnKeluarLims.requestFocus();
+        }
+    }//GEN-LAST:event_TCariLimsKeyPressed
 
     /**
     * @param args the command line arguments
@@ -884,11 +1000,13 @@ private void btnPoliBPJSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private widget.Button BtnAll;
     private widget.Button BtnBatal;
     private widget.Button BtnCari;
+    private widget.Button BtnCariLab;
+    private widget.Button BtnCariLims;
     private widget.Button BtnEdit;
     private widget.Button BtnHapus;
     private widget.Button BtnKeluar;
-    private widget.Button BtnKeluar1;
-    private widget.Button BtnKeluar2;
+    private widget.Button BtnKeluarLab;
+    private widget.Button BtnKeluarLims;
     private widget.Button BtnPrint;
     private widget.Button BtnSimpan;
     private widget.PanelBiasa FormInput;
@@ -897,6 +1015,8 @@ private void btnPoliBPJSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private widget.TextBox NmPoliBPJS;
     private widget.ScrollPane Scroll;
     private widget.TextBox TCari;
+    private widget.TextBox TCariLab;
+    private widget.TextBox TCariLims;
     private widget.TextBox TPoli;
     private javax.swing.JDialog WindowCariLab;
     private javax.swing.JDialog WindowCariMyLims;
@@ -912,6 +1032,8 @@ private void btnPoliBPJSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JPanel jPanel3;
     private widget.TextBox kdpoli;
     private widget.TextBox kdpoli1;
+    private widget.Label label10;
+    private widget.Label label11;
     private widget.panelisi panelGlass8;
     private widget.panelisi panelGlass9;
     private widget.panelisi panelisi1;
@@ -1015,13 +1137,13 @@ private void btnPoliBPJSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                 if (response.isArray()) {
                     i = 1;
                     for (JsonNode list : response) {
-//                        if (list.path("id").asText().toLowerCase().contains(Kabupaten.getText().toLowerCase())
-//                                || list.path("nama").asText().toLowerCase().contains(Kabupaten.getText().toLowerCase()) 
-//                                || list.path("recmed").asText().toLowerCase().contains(Kabupaten.getText().toLowerCase())) {
+                        if (list.path("id").asText().toLowerCase().contains(TCariLims.getText().toLowerCase())
+                                || list.path("nama").asText().toLowerCase().contains(TCariLims.getText().toLowerCase()) 
+                                || list.path("kdlab").asText().toLowerCase().contains(TCariLims.getText().toLowerCase())) {
                             tabMode1.addRow(new Object[]{
                                 i + ".", list.path("id").asText(), list.path("nama").asText().trim(), list.path("kdlab").asText().trim(),list.path("grup1").asText().trim()
                             });
-//                        }
+                        }
                         i++;
                     }
                 }
@@ -1042,9 +1164,11 @@ private void btnPoliBPJSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             Valid.tabelKosong(tabMode2);
             pstindakan=koneksi.prepareStatement(
                 "select kd_jenis_prw,id_template,Pemeriksaan "+
-                "from template_laboratorium "+
+                "from template_laboratorium where kd_jenis_prw like ? or Pemeriksaan like ? "+
                 "order by kd_jenis_prw");
             try {
+                pstindakan.setString(1, "%"+TCariLab.getText()+"%");
+                pstindakan.setString(2, "%"+TCariLab.getText()+"%");
                 rstindakan=pstindakan.executeQuery();                       
                 while(rstindakan.next()){                
                     tabMode2.addRow(new Object[]{rstindakan.getString(1),rstindakan.getString(2),rstindakan.getString(3)});
