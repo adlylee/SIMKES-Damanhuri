@@ -1592,7 +1592,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         ppSEP1.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         ppSEP1.setForeground(new java.awt.Color(70, 70, 70));
         ppSEP1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
-        ppSEP1.setText("Print SEP Model 2");
+        ppSEP1.setText("Print SEP Ranap/Post Opname");
         ppSEP1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppSEP1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         ppSEP1.setIconTextGap(8);
@@ -1604,6 +1604,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             }
         });
         Popup.add(ppSEP1);
+        ppSEP1.getAccessibleContext().setAccessibleName("Print SEP Ranap/Post Opname");
 
         ppSEP2.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         ppSEP2.setForeground(new java.awt.Color(70, 70, 70));
@@ -1640,7 +1641,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         ppSEP4.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         ppSEP4.setForeground(new java.awt.Color(70, 70, 70));
         ppSEP4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
-        ppSEP4.setText("Print SEP Model 5");
+        ppSEP4.setText("Print SEP Rajal");
         ppSEP4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppSEP4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         ppSEP4.setIconTextGap(8);
@@ -1652,6 +1653,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             }
         });
         Popup.add(ppSEP4);
+        ppSEP4.getAccessibleContext().setAccessibleName("Print SEP Rajal");
 
         ppSEPPrioritas.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         ppSEPPrioritas.setForeground(new java.awt.Color(70, 70, 70));
@@ -1754,7 +1756,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         WindowUpdatePulang.setUndecorated(true);
         WindowUpdatePulang.setResizable(false);
 
-        internalFrame5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Update Tanggal Pulang ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Update Tanggal Pulang ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame5.setName("internalFrame5"); // NOI18N
         internalFrame5.setLayout(null);
 
@@ -1789,7 +1791,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         internalFrame5.add(jLabel26);
         jLabel26.setBounds(6, 32, 100, 23);
 
-        TanggalPulang.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-01-2023 15:02:50" }));
+        TanggalPulang.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "08-05-2023 11:25:50" }));
         TanggalPulang.setDisplayFormat("dd-MM-yyyy HH:mm:ss");
         TanggalPulang.setName("TanggalPulang"); // NOI18N
         TanggalPulang.setOpaque(false);
@@ -1807,7 +1809,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         WindowRujukan.setUndecorated(true);
         WindowRujukan.setResizable(false);
 
-        internalFrame6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Buat Rujukan Keluar VClaim ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Buat Rujukan Keluar VClaim ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame6.setName("internalFrame6"); // NOI18N
         internalFrame6.setLayout(null);
 
@@ -1843,7 +1845,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         jLabel30.setBounds(0, 25, 102, 23);
 
         TanggalRujukKeluar.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalRujukKeluar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-01-2023" }));
+        TanggalRujukKeluar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "08-05-2023" }));
         TanggalRujukKeluar.setDisplayFormat("dd-MM-yyyy");
         TanggalRujukKeluar.setName("TanggalRujukKeluar"); // NOI18N
         TanggalRujukKeluar.setOpaque(false);
@@ -2026,7 +2028,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         jLabel42.setBounds(215, 25, 102, 23);
 
         TanggalKunjungan.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalKunjungan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-01-2023" }));
+        TanggalKunjungan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "08-05-2023" }));
         TanggalKunjungan.setDisplayFormat("dd-MM-yyyy");
         TanggalKunjungan.setName("TanggalKunjungan"); // NOI18N
         TanggalKunjungan.setOpaque(false);
@@ -2103,7 +2105,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         WindowRujukKhusus.setUndecorated(true);
         WindowRujukKhusus.setResizable(false);
 
-        internalFrame13.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Rujukan Khusus VClaim ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame13.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Rujukan Khusus VClaim ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame13.setName("internalFrame13"); // NOI18N
         internalFrame13.setLayout(null);
 
@@ -2222,7 +2224,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         WindowCariSEP.setUndecorated(true);
         WindowCariSEP.setResizable(false);
 
-        internalFrame7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Ambil SEP di VClaim ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Ambil SEP di VClaim ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame7.setName("internalFrame7"); // NOI18N
         internalFrame7.setLayout(null);
 
@@ -2622,7 +2624,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Bridging SEP BPJS ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Bridging SEP BPJS ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
@@ -2697,7 +2699,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         jLabel20.setBounds(187, 102, 65, 23);
 
         TanggalSEP.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalSEP.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-01-2023" }));
+        TanggalSEP.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "08-05-2023" }));
         TanggalSEP.setDisplayFormat("dd-MM-yyyy");
         TanggalSEP.setName("TanggalSEP"); // NOI18N
         TanggalSEP.setOpaque(false);
@@ -2717,7 +2719,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         jLabel22.setBounds(0, 100, 90, 23);
 
         TanggalRujuk.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalRujuk.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-01-2023" }));
+        TanggalRujuk.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "08-05-2023" }));
         TanggalRujuk.setDisplayFormat("dd-MM-yyyy");
         TanggalRujuk.setName("TanggalRujuk"); // NOI18N
         TanggalRujuk.setOpaque(false);
@@ -3094,7 +3096,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         jLabel15.setText("Eksekutif :");
         jLabel15.setName("jLabel15"); // NOI18N
         FormInput.add(jLabel15);
-        jLabel15.setBounds(410, 280, 51, 23);
+        jLabel15.setBounds(410, 280, 50, 23);
 
         Eksekutif.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0. Tidak", "1.Ya" }));
         Eksekutif.setName("Eksekutif"); // NOI18N
@@ -3148,7 +3150,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         jLabel38.setBounds(230, 380, 58, 23);
 
         TanggalKKL.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalKKL.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-01-2023" }));
+        TanggalKKL.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "08-05-2023" }));
         TanggalKKL.setDisplayFormat("dd-MM-yyyy");
         TanggalKKL.setName("TanggalKKL"); // NOI18N
         TanggalKKL.setOpaque(false);
@@ -3517,7 +3519,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         panelGlass9.add(jLabel19);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-01-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "08-05-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -3531,7 +3533,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         panelGlass9.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-01-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "08-05-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -3633,7 +3635,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         panelGlass10.add(jLabel44);
 
         DTPCari3.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-01-2023" }));
+        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "08-05-2023" }));
         DTPCari3.setDisplayFormat("dd-MM-yyyy");
         DTPCari3.setName("DTPCari3"); // NOI18N
         DTPCari3.setOpaque(false);
@@ -3647,7 +3649,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         panelGlass10.add(jLabel45);
 
         DTPCari4.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-01-2023" }));
+        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "08-05-2023" }));
         DTPCari4.setDisplayFormat("dd-MM-yyyy");
         DTPCari4.setName("DTPCari4"); // NOI18N
         DTPCari4.setOpaque(false);
@@ -4879,28 +4881,78 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             param.put("kotars", var.getkabupatenrs());
             param.put("propinsirs", var.getpropinsirs());
             param.put("kontakrs", var.getkontakrs());
-            param.put("logo", Sequel.cariGambar("select bpjs from gambar"));
+            param.put("norawat", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString());
             param.put("prb", Sequel.cariIsi("select prb from bpjs_prb where no_sep=?", tbObat.getValueAt(tbObat.getSelectedRow(), 0).toString()));
+            param.put("dokter", Sequel.cariIsi("select nmdpdjp from bridging_sep where no_sep=?", tbObat.getValueAt(tbObat.getSelectedRow(), 0).toString()));
             param.put("noreg", Sequel.cariIsi("select no_reg from reg_periksa where no_rawat=?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
-            if (JenisPelayanan.getSelectedIndex() == 0) {
-                Valid.MyReport("rptBridgingSEP3.jrxml", "report", "::[ Cetak SEP ]::", "select bridging_sep.no_sep, bridging_sep.no_rawat,bridging_sep.nomr,bridging_sep.nama_pasien,bridging_sep.tglsep,"
-                        + "bridging_sep.tglrujukan,bridging_sep.no_rujukan,bridging_sep.kdppkrujukan,"
-                        + "bridging_sep.nmppkrujukan,bridging_sep.kdppkpelayanan,bridging_sep.nmppkpelayanan,"
-                        + "if(bridging_sep.jnspelayanan='1','Rawat Inap','Rawat Jalan'),bridging_sep.catatan,bridging_sep.diagawal,"
-                        + "bridging_sep.nmdiagnosaawal,bridging_sep.kdpolitujuan,bridging_sep.nmpolitujuan,"
-                        + "if(bridging_sep.klsrawat='1','Kelas 1',if(bridging_sep.klsrawat='2','Kelas 2','Kelas 3')),"
-                        + "if(bridging_sep.lakalantas='0','Kasus Kecelakaan','Bukan Kasus Kecelakaan'),concat(bridging_sep.nmkec,', ',bridging_sep.nmkab,', ',bridging_sep.nmprop) as lokasilaka,bridging_sep.user, "
-                        + "bridging_sep.tanggal_lahir,bridging_sep.peserta,bridging_sep.jkel,bridging_sep.no_kartu,bridging_sep.asal_rujukan,bridging_sep.eksekutif,bridging_sep.cob,bridging_sep.penjamin,bridging_sep.notelep from bridging_sep where no_sep='" + tbObat.getValueAt(tbObat.getSelectedRow(), 0).toString() + "'", param);
-            } else {
-                Valid.MyReport("rptBridgingSEP4.jrxml", "report", "::[ Cetak SEP ]::", "select bridging_sep.no_sep, bridging_sep.no_rawat,bridging_sep.nomr,bridging_sep.nama_pasien,bridging_sep.tglsep,"
-                        + "bridging_sep.tglrujukan,bridging_sep.no_rujukan,bridging_sep.kdppkrujukan, adddate(bridging_sep.tglrujukan, 85) as tgl_akhir, "
-                        + "bridging_sep.nmppkrujukan,bridging_sep.kdppkpelayanan,bridging_sep.nmppkpelayanan,"
-                        + "if(bridging_sep.jnspelayanan='1','Rawat Inap','Rawat Jalan'),bridging_sep.catatan,bridging_sep.diagawal,"
-                        + "bridging_sep.nmdiagnosaawal,bridging_sep.kdpolitujuan,bridging_sep.nmpolitujuan,"
-                        + "if(bridging_sep.klsrawat='1','Kelas 1',if(bridging_sep.klsrawat='2','Kelas 2','Kelas 3')),"
-                        + "if(bridging_sep.lakalantas='0','Kasus Kecelakaan','Bukan Kasus Kecelakaan'),concat(bridging_sep.nmkec,', ',bridging_sep.nmkab,', ',bridging_sep.nmprop) as lokasilaka,bridging_sep.user, "
-                        + "bridging_sep.tanggal_lahir,bridging_sep.peserta,bridging_sep.jkel,bridging_sep.no_kartu,bridging_sep.asal_rujukan,bridging_sep.eksekutif,bridging_sep.cob,bridging_sep.penjamin,bridging_sep.notelep from bridging_sep where no_sep='" + tbObat.getValueAt(tbObat.getSelectedRow(), 0).toString() + "'", param);
-            }
+            param.put("logo", Sequel.cariGambar("select bpjs from gambar"));
+            param.put("katarak", Sequel.cariIsi("select katarak from bridging_sep where no_rawat=?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
+            /* Tambahan source ulun (Ridho Alfian [ICT RSHD])*/
+            param.put("diagnosa1", Sequel.cariIsi("select b.nm_penyakit FROM diagnosa_pasien as a, penyakit as b, "
+                    + "reg_periksa as c,pasien as d WHERE a.no_rawat = c.no_rawat AND "
+                    + "c.no_rkm_medis = d.no_rkm_medis AND a.kd_penyakit = b.kd_penyakit AND a.prioritas = '1' "
+                    + "AND a.no_rawat =?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
+            param.put("diagnosa2", Sequel.cariIsi("select b.nm_penyakit FROM diagnosa_pasien as a, penyakit as b, "
+                    + "reg_periksa as c,pasien as d WHERE a.no_rawat = c.no_rawat AND "
+                    + "c.no_rkm_medis = d.no_rkm_medis AND a.kd_penyakit = b.kd_penyakit AND a.prioritas = '2' "
+                    + "AND a.no_rawat =?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
+            param.put("kd_diagnosa1", Sequel.cariIsi("select b.kd_penyakit FROM diagnosa_pasien as a, penyakit as b, "
+                    + "reg_periksa as c,pasien as d WHERE a.no_rawat = c.no_rawat AND "
+                    + "c.no_rkm_medis = d.no_rkm_medis AND a.kd_penyakit = b.kd_penyakit AND a.prioritas = '1' "
+                    + "AND a.no_rawat =?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
+            param.put("kd_diagnosa2", Sequel.cariIsi("select b.kd_penyakit FROM diagnosa_pasien as a, penyakit as b, "
+                    + "reg_periksa as c,pasien as d WHERE a.no_rawat = c.no_rawat AND "
+                    + "c.no_rkm_medis = d.no_rkm_medis AND a.kd_penyakit = b.kd_penyakit AND a.prioritas = '2' "
+                    + "AND a.no_rawat =?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
+            param.put("kd_icd9_1", Sequel.cariIsi("select b.kode FROM prosedur_pasien as a, icd9 as b, "
+                    + "reg_periksa as c,pasien as d WHERE a.no_rawat = c.no_rawat AND "
+                    + "c.no_rkm_medis = d.no_rkm_medis AND a.kode = b.kode AND a.prioritas = '1' "
+                    + "AND a.no_rawat =?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
+            param.put("kd_icd9_2", Sequel.cariIsi("select b.kode FROM prosedur_pasien as a, icd9 as b, "
+                    + "reg_periksa as c,pasien as d WHERE a.no_rawat = c.no_rawat AND "
+                    + "c.no_rkm_medis = d.no_rkm_medis AND a.kode = b.kode AND a.prioritas = '2' "
+                    + "AND a.no_rawat =?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
+            param.put("icd9_1", Sequel.cariIsi("select b.deskripsi_pendek FROM prosedur_pasien as a, icd9 as b, "
+                    + "reg_periksa as c,pasien as d WHERE a.no_rawat = c.no_rawat AND "
+                    + "c.no_rkm_medis = d.no_rkm_medis AND a.kode = b.kode AND a.prioritas = '1' "
+                    + "AND a.no_rawat =?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
+            param.put("icd9_2", Sequel.cariIsi("select b.deskripsi_pendek FROM prosedur_pasien as a, icd9 as b, "
+                    + "reg_periksa as c,pasien as d WHERE a.no_rawat = c.no_rawat AND "
+                    + "c.no_rkm_medis = d.no_rkm_medis AND a.kode = b.kode AND a.prioritas = '2' "
+                    + "AND a.no_rawat =?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
+            param.put("pemeriksaan", Sequel.cariIsi("select pemeriksaan from pemeriksaan_ralan where no_rawat=?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
+            param.put("keluhan", Sequel.cariIsi("select keluhan from pemeriksaan_ralan where no_rawat=?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
+            param.put("tensi", Sequel.cariIsi("select tensi from pemeriksaan_ralan where no_rawat=?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
+            param.put("nadi", Sequel.cariIsi("select nadi from pemeriksaan_ralan where no_rawat=?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
+            param.put("respirasi", Sequel.cariIsi("select respirasi from pemeriksaan_ralan where no_rawat=?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
+
+            Valid.MyReport("rptBridgingSEP4.jrxml", "report", "::[ Cetak SEP Ranap ]::", "select bridging_sep.no_sep, adddate(bridging_sep.tglrujukan, 85) as tgl_akhir,bridging_sep.no_rawat,bridging_sep.nomr,bridging_sep.nama_pasien,bridging_sep.tglsep,"
+                    + "bridging_sep.tglrujukan,bridging_sep.no_rujukan,bridging_sep.kdppkrujukan,"
+                    + "bridging_sep.nmppkrujukan,bridging_sep.kdppkpelayanan,bridging_sep.nmppkpelayanan,"
+                    + "if(bridging_sep.jnspelayanan='1','Rawat Inap','Rawat Jalan'),bridging_sep.catatan,bridging_sep.diagawal,"
+                    + "bridging_sep.nmdiagnosaawal,bridging_sep.kdpolitujuan,bridging_sep.nmpolitujuan,"
+                    + "if(bridging_sep.klsrawat='1','Kelas 1',if(bridging_sep.klsrawat='2','Kelas 2','Kelas 3')),"
+                    + "if(bridging_sep.lakalantas='0','Kasus Kecelakaan','Bukan Kasus Kecelakaan'),concat(bridging_sep.nmkec,', ',bridging_sep.nmkab,', ',bridging_sep.nmprop) as lokasilaka,bridging_sep.user, "
+                    + "bridging_sep.tanggal_lahir,bridging_sep.peserta,bridging_sep.jkel,bridging_sep.no_kartu,bridging_sep.asal_rujukan,bridging_sep.eksekutif,bridging_sep.cob,bridging_sep.penjamin,bridging_sep.notelep from bridging_sep where no_sep='" + tbObat.getValueAt(tbObat.getSelectedRow(), 0).toString() + "'", param);
+//            if (JenisPelayanan.getSelectedIndex() == 0) {
+//                Valid.MyReport("rptBridgingSEP3.jrxml", "report", "::[ Cetak SEP ]::", "select bridging_sep.no_sep, bridging_sep.no_rawat,bridging_sep.nomr,bridging_sep.nama_pasien,bridging_sep.tglsep,"
+//                    + "bridging_sep.tglrujukan,bridging_sep.no_rujukan,bridging_sep.kdppkrujukan,"
+//                    + "bridging_sep.nmppkrujukan,bridging_sep.kdppkpelayanan,bridging_sep.nmppkpelayanan,"
+//                    + "if(bridging_sep.jnspelayanan='1','Rawat Inap','Rawat Jalan'),bridging_sep.catatan,bridging_sep.diagawal,"
+//                    + "bridging_sep.nmdiagnosaawal,bridging_sep.kdpolitujuan,bridging_sep.nmpolitujuan,"
+//                    + "if(bridging_sep.klsrawat='1','Kelas 1',if(bridging_sep.klsrawat='2','Kelas 2','Kelas 3')),"
+//                    + "if(bridging_sep.lakalantas='0','Kasus Kecelakaan','Bukan Kasus Kecelakaan'),concat(bridging_sep.nmkec,', ',bridging_sep.nmkab,', ',bridging_sep.nmprop) as lokasilaka,bridging_sep.user, "
+//                    + "bridging_sep.tanggal_lahir,bridging_sep.peserta,bridging_sep.jkel,bridging_sep.no_kartu,bridging_sep.asal_rujukan,bridging_sep.eksekutif,bridging_sep.cob,bridging_sep.penjamin,bridging_sep.notelep from bridging_sep where no_sep='" + tbObat.getValueAt(tbObat.getSelectedRow(), 0).toString() + "'", param);
+//            } else {
+//                Valid.MyReport("rptBridgingSEP4.jrxml", "report", "::[ Cetak SEP ]::", "select bridging_sep.no_sep, bridging_sep.no_rawat,bridging_sep.nomr,bridging_sep.nama_pasien,bridging_sep.tglsep,"
+//                        + "bridging_sep.tglrujukan,bridging_sep.no_rujukan,bridging_sep.kdppkrujukan, adddate(bridging_sep.tglrujukan, 85) as tgl_akhir, "
+//                        + "bridging_sep.nmppkrujukan,bridging_sep.kdppkpelayanan,bridging_sep.nmppkpelayanan,"
+//                        + "if(bridging_sep.jnspelayanan='1','Rawat Inap','Rawat Jalan'),bridging_sep.catatan,bridging_sep.diagawal,"
+//                        + "bridging_sep.nmdiagnosaawal,bridging_sep.kdpolitujuan,bridging_sep.nmpolitujuan,"
+//                        + "if(bridging_sep.klsrawat='1','Kelas 1',if(bridging_sep.klsrawat='2','Kelas 2','Kelas 3')),"
+//                        + "if(bridging_sep.lakalantas='0','Kasus Kecelakaan','Bukan Kasus Kecelakaan'),concat(bridging_sep.nmkec,', ',bridging_sep.nmkab,', ',bridging_sep.nmprop) as lokasilaka,bridging_sep.user, "
+//                        + "bridging_sep.tanggal_lahir,bridging_sep.peserta,bridging_sep.jkel,bridging_sep.no_kartu,bridging_sep.asal_rujukan,bridging_sep.eksekutif,bridging_sep.cob,bridging_sep.penjamin,bridging_sep.notelep from bridging_sep where no_sep='" + tbObat.getValueAt(tbObat.getSelectedRow(), 0).toString() + "'", param);
+//            }
             this.setCursor(Cursor.getDefaultCursor());
         } else {
             JOptionPane.showMessageDialog(null, "Maaf, silahkan pilih data SEP yang mau dicetak...!!!!");
@@ -5498,7 +5550,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             param.put("nadi", Sequel.cariIsi("select nadi from pemeriksaan_ralan where no_rawat=?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
             param.put("respirasi", Sequel.cariIsi("select respirasi from pemeriksaan_ralan where no_rawat=?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
 
-            Valid.MyReport("rptBridgingSEP9.jrxml", "report", "::[ Cetak SEP ]::", "select bridging_sep.no_sep, adddate(bridging_sep.tglrujukan, 85) as tgl_akhir,bridging_sep.no_rawat,bridging_sep.nomr,bridging_sep.nama_pasien,bridging_sep.tglsep,"
+            Valid.MyReport("rptBridgingSEP9.jrxml", "report", "::[ Cetak SEP Rajal ]::", "select bridging_sep.no_sep, adddate(bridging_sep.tglrujukan, 85) as tgl_akhir,bridging_sep.no_rawat,bridging_sep.nomr,bridging_sep.nama_pasien,bridging_sep.tglsep,"
                     + "bridging_sep.tglrujukan,bridging_sep.no_rujukan,bridging_sep.kdppkrujukan,"
                     + "bridging_sep.nmppkrujukan,bridging_sep.kdppkpelayanan,bridging_sep.nmppkpelayanan,"
                     + "if(bridging_sep.jnspelayanan='1','Rawat Inap','Rawat Jalan'),bridging_sep.catatan,bridging_sep.diagawal,"
@@ -6020,7 +6072,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             param.put("nadi", Sequel.cariIsi("select nadi from pemeriksaan_ralan where no_rawat=?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
             param.put("respirasi", Sequel.cariIsi("select respirasi from pemeriksaan_ralan where no_rawat=?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
 
-            Valid.MyReport("rptBridgingSEPPrioritas.jrxml", "report", "::[ Cetak SEP ]::", "select bridging_sep.no_sep, adddate(bridging_sep.tglrujukan, 85) as tgl_akhir,bridging_sep.no_rawat,bridging_sep.nomr,bridging_sep.nama_pasien,bridging_sep.tglsep,"
+            Valid.MyReport("rptBridgingSEPPrioritas.jrxml", "report", "::[ Cetak SEP Prioritas ]::", "select bridging_sep.no_sep, adddate(bridging_sep.tglrujukan, 85) as tgl_akhir,bridging_sep.no_rawat,bridging_sep.nomr,bridging_sep.nama_pasien,bridging_sep.tglsep,"
                     + "bridging_sep.tglrujukan,bridging_sep.no_rujukan,bridging_sep.kdppkrujukan,"
                     + "bridging_sep.nmppkrujukan,bridging_sep.kdppkpelayanan,bridging_sep.nmppkpelayanan,"
                     + "if(bridging_sep.jnspelayanan='1','Rawat Inap','Rawat Jalan'),bridging_sep.catatan,bridging_sep.diagawal,"
@@ -6661,6 +6713,9 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         ppSEP.setEnabled(var.getbpjs_sep());
         ppRiwayatPerawatan.setEnabled(var.getresume_pasien());
         ppRujukan.setEnabled(var.getbpjs_rujukan_keluar());
+        ppSEP.setVisible(false);
+        ppSEP2.setVisible(false);
+        ppSEP3.setVisible(false);
     }
 
     public void tutupInput() {
