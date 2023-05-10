@@ -2424,6 +2424,11 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         MnLihatGambar.setEnabled(var.getperiksa_radiologi());
         MnLihatHasil.setEnabled(var.getperiksa_radiologi());
         BtnPrint.setEnabled(var.getperiksa_radiologi());
+        if (var.getkode().equals("Admin Utama") || var.getkode().equals("D0000132") || var.getkode().equals("DR00019") || var.getkode().equals("rad1")) {
+            BtnHapus.setEnabled(true);
+        }else{
+            BtnHapus.setEnabled(false);
+        }
     }
 
     public void setPasien(String pasien){

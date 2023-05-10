@@ -113,9 +113,9 @@ public final class DlgIGD extends javax.swing.JDialog {
         this.setLocation(8, 1);
         setSize(885, 674);
 
-        Object[] row = {"P", "No.Reg", "No.Rawat", "Tanggal", "Jam", "Kd.Dokter", "Dokter Dituju", "Nomer RM",
+        Object[] row = {"P", "No.Reg", "No.Rawat", "Tanggal", "Jam", "Jenis Bayar", "Kd.Dokter", "Dokter Dituju", "Nomer RM",
             "Nama Pasien", "J.K.","Tgl. Lahir", "Umur", "Poliklinik","No. Telp", "Penanggung Jawab", "Alamat", "Hubungan dg P.J.", "Diagnosa",
-            "Biaya Registrasi", "Status", "Jenis Bayar", "Stts Rawat", "Kd PJ", "Kategori","No Sep"};
+            "Biaya Registrasi", "Status", "Stts Rawat", "Kd PJ", "Kategori","No Sep"};
         tabMode = new DefaultTableModel(null, row) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -159,41 +159,41 @@ public final class DlgIGD extends javax.swing.JDialog {
             } else if (i == 4) {
                 column.setPreferredWidth(50);
             } else if (i == 5) {
-                column.setMinWidth(0);
-                column.setMaxWidth(0);
+                column.setPreferredWidth(70);
             } else if (i == 6) {
-                column.setPreferredWidth(155);
-            } else if (i == 7) {
-                column.setPreferredWidth(60);
-            } else if (i == 8) {
-                column.setPreferredWidth(200);
-            } else if (i == 9) {
-                column.setPreferredWidth(35);
-            } else if (i == 10) {
-                column.setPreferredWidth(100);
-            } else if (i == 11) {
-                column.setPreferredWidth(50);
-            } else if (i == 12) {
                 column.setMinWidth(0);
                 column.setMaxWidth(0);
-            } else if (i == 13) {
-                column.setPreferredWidth(100);
-            } else if (i == 14) {
+            } else if (i == 7) {
+                column.setPreferredWidth(155);
+            } else if (i == 8) {
+                column.setPreferredWidth(60);
+            } else if (i == 9) {
                 column.setPreferredWidth(200);
+            } else if (i == 10) {
+                column.setPreferredWidth(35);
+            } else if (i == 11) {
+                column.setPreferredWidth(100);
+            } else if (i == 12) {
+                column.setPreferredWidth(50);
+            } else if (i == 13) {
+                column.setMinWidth(0);
+                column.setMaxWidth(0);
+            } else if (i == 14) {
+                column.setPreferredWidth(100);
             } else if (i == 15) {
                 column.setPreferredWidth(200);
             } else if (i == 16) {
-                column.setMinWidth(0);
-                column.setMaxWidth(0);
+                column.setPreferredWidth(200);
             } else if (i == 17) {
-                column.setPreferredWidth(150);
-            } else if (i == 18) {
                 column.setMinWidth(0);
                 column.setMaxWidth(0);
+            } else if (i == 18) {
+                column.setPreferredWidth(150);
             } else if (i == 19) {
-                column.setPreferredWidth(50);
+                column.setMinWidth(0);
+                column.setMaxWidth(0);
             } else if (i == 20) {
-                column.setPreferredWidth(70);
+                column.setPreferredWidth(50);
             } else if (i == 21) {
                 column.setPreferredWidth(80);
             } else if (i == 22) {
@@ -4041,7 +4041,7 @@ private void MnRawatJalanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
                 dlgrwjl.setSize(internalFrame1.getWidth(), internalFrame1.getHeight());
                 dlgrwjl.setLocationRelativeTo(internalFrame1);
                 dlgrwjl.SetPoli("IGDK");
-                dlgrwjl.SetPj(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 19).toString());
+                dlgrwjl.SetPj(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 5).toString());
                 dlgrwjl.setNoRm(TNoRw.getText(), DTPCari1.getDate(), DTPCari2.getDate());
                 dlgrwjl.setVisible(true);
             }
@@ -5163,7 +5163,7 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
                 } else if (TKategori.getText().trim().equals("")) {
                     JOptionPane.showMessageDialog(null, "Maaf, Silahkan pian input kategori pasien dulu...!!!");
                     // tambahan koding ulun //
-                } else if (tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 15).toString().equals("")) {
+                } else if (tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 18).toString().equals("")) {
                     JOptionPane.showMessageDialog(null, "Maaf, Silahkan input diagnosa pasien dulu...!!!");
                 } else {
                     var.setstatus(true);
@@ -6436,6 +6436,7 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
+                        rs.getString(17),
                         rs.getString(5),
                         rs.getString(6),
                         rs.getString(7),
@@ -6449,7 +6450,6 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
                         "",
                         Valid.SetAngka(rs.getDouble(15)),
                         rs.getString(16),
-                        rs.getString(17),
                         rs.getString(18),
                         rs.getString("kd_pj"),
                         "",""});
@@ -6502,15 +6502,15 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
             CmbJam.setSelectedItem(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 4).toString().substring(0, 2));
             CmbMenit.setSelectedItem(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 4).toString().substring(3, 5));
             CmbDetik.setSelectedItem(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 4).toString().substring(6, 8));
-            kddokter.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 5).toString());
-            TDokter.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 6).toString());
-            TNoRM.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 7).toString());
+            kddokter.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 6).toString());
+            TDokter.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 7).toString());
+            TNoRM.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 8).toString());
             isCekPasien();
-            TPngJwb.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 14).toString());
-            TAlmt.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 15).toString());
-            THbngn.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 16).toString());
-            TStatus.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 19).toString());
-            nmpnj.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 20).toString());
+            TPngJwb.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 15).toString());
+            TAlmt.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 16).toString());
+            THbngn.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 17).toString());
+            TStatus.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 20).toString());
+            nmpnj.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 5).toString());
             kdpnj.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 22).toString());
             TKategori.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 23).toString());
 
@@ -6762,7 +6762,7 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
                 parsialralan.setNoRm(TNoRw.getText(), kddokter.getText(), TDokter.getText(), "IGDK");
                 parsialralan.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(null, "Maaf, Cara bayar " + tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 20).toString() + " tidak diijinkan menggunakan Billing Parsial...!!!");
+                JOptionPane.showMessageDialog(null, "Maaf, Cara bayar " + tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 5).toString() + " tidak diijinkan menggunakan Billing Parsial...!!!");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu dengan menklik data pada table...!!!");
@@ -6843,7 +6843,7 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
         String sep = "";
         for (int j = 0; j < tbPetugas.getRowCount(); j++) {
             try {
-                if(tbPetugas.getValueAt(j, 20).toString().equals("BPJS")){
+                if(tbPetugas.getValueAt(j, 5).toString().equals("BPJS")){
                     sep = Sequel.cariIsi("SELECT no_sep FROM bridging_sep WHERE no_rawat = ?", tbPetugas.getValueAt(j, 2).toString());
                     tbPetugas.setValueAt(sep, j, 24);
                 } else {
