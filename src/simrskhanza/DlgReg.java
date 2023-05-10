@@ -7249,23 +7249,7 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
     }//GEN-LAST:event_MnBuktiPelayananRalanActionPerformed
 
     private void MnSEPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnSEPActionPerformed
-        if (tabMode.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(null, "Maaf, table masih kosong...!!!!");
-            TNoReg.requestFocus();
-        } else if (TPasien.getText().trim().equals("")) {
-            JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu dengan menklik data pada table...!!!");
-            tbPetugas.requestFocus();
-        } else {
-            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            var.setform("DlgReg");
-            BPJSDataSEP dlgki = new BPJSDataSEP(null, false);
-            dlgki.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
-            dlgki.setLocationRelativeTo(internalFrame1);
-            dlgki.isCek();
-            dlgki.setNoRm2(TNoRw.getText(), DTPReg.getDate(), "2. Ralan", kdpoli.getText(), TPoli.getText(), kddokter.getText());
-            dlgki.setVisible(true);
-            this.setCursor(Cursor.getDefaultCursor());
-        }
+        bukaBridging();
     }//GEN-LAST:event_MnSEPActionPerformed
 
     private void MnLabelTracker2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnLabelTracker2ActionPerformed
@@ -9785,6 +9769,10 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
                     MnCetakRegisterActionPerformed(null);
                 } else if (i == 7) {
                     MnBuktiPelayananRalanActionPerformed(null);
+                } else if (i == 13) {
+                    if (MnSEP.isEnabled() == true) {
+                        bukaBridging();
+                    }
                 }
             } else if (evt.getKeyCode() == KeyEvent.VK_A) {
                 for (i = 0; i < tbPetugas.getRowCount(); i++) {
@@ -9845,6 +9833,10 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
                     }
                 } else if (i == 6) {
                     MnCetakRegisterActionPerformed(null);
+                } else if (i == 13) {
+                    if (MnSEP.isEnabled() == true) {
+                        bukaBridging();
+                    }
                 }
             }
 
@@ -11861,6 +11853,26 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
 
         tampil();
         emptTeks();
+    }
+    
+    private void bukaBridging(){
+        if (tabMode.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Maaf, table masih kosong...!!!!");
+            TNoReg.requestFocus();
+        } else if (TPasien.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu dengan menklik data pada table...!!!");
+            tbPetugas.requestFocus();
+        } else {
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            var.setform("DlgReg");
+            BPJSDataSEP dlgki = new BPJSDataSEP(null, false);
+            dlgki.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
+            dlgki.setLocationRelativeTo(internalFrame1);
+            dlgki.isCek();
+            dlgki.setNoRm2(TNoRw.getText(), DTPReg.getDate(), "2. Ralan", kdpoli.getText(), TPoli.getText(), kddokter.getText());
+            dlgki.setVisible(true);
+            this.setCursor(Cursor.getDefaultCursor());
+        }
     }
 
     private void cekSep() {
