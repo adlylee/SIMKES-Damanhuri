@@ -289,4 +289,15 @@ public final class koneksiDB {
         }
         return var;
     }
+    
+    public static String URLORTHANC2(){
+        try{
+            prop.loadFromXML(new FileInputStream("setting/database.xml"));
+            var=prop.getProperty("URLORTHANC");
+            var=var.replace("http://", "");
+        }catch(Exception e){
+            var=""; 
+        }
+        return var;
+    }
 }
