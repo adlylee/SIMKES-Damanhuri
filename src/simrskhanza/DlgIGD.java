@@ -6832,7 +6832,7 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
                         psDx.close();
                     }
                 }
-                tbPetugas.setValueAt(diagnosaAwal, j, 17);
+                tbPetugas.setValueAt(diagnosaAwal, j, 18);
             } catch (Exception e) {
                 System.out.println("Notifikasi : " + e);
             }

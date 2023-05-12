@@ -9043,8 +9043,8 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
                 BangsalCari.setEditable(true);
             } else {
                 BangsalCari.setText(namakamar);
-                btnBangsalCari.setEnabled(false);
-                BangsalCari.setEditable(false);
+                btnBangsalCari.setEnabled(true);
+                BangsalCari.setEditable(true);
             }
         } else {
             btnBangsalCari.setEnabled(true);

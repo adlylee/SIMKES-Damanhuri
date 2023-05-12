@@ -1199,6 +1199,7 @@ private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCariActionPerformed
     this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
     DlgCariPeriksaRadiologi form=new DlgCariPeriksaRadiologi(null,false);
+    form.isCek();
     form.setPasien(TNoRw.getText());
     form.setSize(this.getWidth(),this.getHeight());
     form.setLocationRelativeTo(this);
@@ -2158,14 +2159,29 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
             KdPtg.setText("");
             NmPtg.setText("");
         }
+//        if (var.getkode().equals("Admin Utama") || var.getkode().equals("D0000132") || var.getkode().equals("DR00019") || var.getkode().equals("rad1")) {
+//            BtnHapus.setEnabled(true);
+//        } else {
+//            BtnHapus.setEnabled(false);
+//        }
+//        
         if(var.getkode().equals("Admin Utama") || var.getkode().equals("DR00019") || var.getkode().equals("D0000132")){
             btnHasilRad.setEnabled(true);
+            BtnSimpan.setEnabled(var.getperiksa_radiologi());
+            BtnTambahPeriksa.setEnabled(var.gettarif_radiologi());
+            BtnTambahBhp.setEnabled(var.getipsrs_barang());
+            BtnBatal.setEnabled(var.getperiksa_radiologi());
         }else{
             btnHasilRad.setEnabled(false);
+            BtnSimpan.setEnabled(false);
+            BtnBatal.setEnabled(false);
         }
-        BtnSimpan.setEnabled(var.getperiksa_radiologi());
-        BtnTambahPeriksa.setEnabled(var.gettarif_radiologi());
-        BtnTambahBhp.setEnabled(var.getipsrs_barang());
+        if(var.getkode().equals("rad1")){
+            BtnSimpan.setEnabled(var.getperiksa_radiologi());
+            BtnTambahPeriksa.setEnabled(var.gettarif_radiologi());
+            BtnTambahBhp.setEnabled(var.getipsrs_barang());
+            BtnBatal.setEnabled(var.getperiksa_radiologi());
+        }
     }
 
     private void isForm(){

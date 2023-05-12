@@ -90,8 +90,8 @@ public class DicomViewerHybrid extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         initComponents2();
-        //auth=koneksiDB.USERORTHANC()+":"+koneksiDB.PASSORTHANC();
-        auth = "orthanc:orthanc";
+        auth=koneksiDB.USERORTHANC()+":"+koneksiDB.PASSORTHANC();
+//        auth = "orthanc:orthanc";
         byte[] encodedBytes = Base64.encodeBase64(auth.getBytes());
         authEncrypt= new String(encodedBytes);
     }
