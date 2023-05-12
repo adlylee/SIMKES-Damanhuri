@@ -6022,7 +6022,7 @@ public final class DlgReg extends javax.swing.JDialog {
 
     private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpanActionPerformed
         if (var.getkode().contains("unit")) {
-            bukaPeriksa();
+            setStatusPasien("Diterima");
         } else {
             trySimpan();
         }

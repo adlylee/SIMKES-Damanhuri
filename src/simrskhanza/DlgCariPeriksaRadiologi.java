@@ -2644,7 +2644,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 url_orthanc = "";
                 if (viewer.equals("dicom")) {
-                    url_orthanc = koneksiDB.URLORTHANC() + ":" + koneksiDB.PORTORTHANC() + "/web-viewer/app/viewer.html?series=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 2).toString();
+                    url_orthanc = "http://"+koneksiDB.URLORTHANC() + ":" + koneksiDB.PORTORTHANC() + "/web-viewer/app/viewer.html?series=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 2).toString();
                     OrthancDICOM orthan = new OrthancDICOM(null, false);
                     orthan.setJudul("::[ DICOM Orthanc Pasien " + tbDokter.getValueAt(tbDokter.getSelectedRow(), 1).toString() + ", Series " + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 2).toString() + " ]::", tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString().replaceAll("/", ""), tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 2).toString());
                     try {
@@ -2660,7 +2660,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 if (viewer.equals("stone")) {
                     seriesbyid = orthanc.AmbilSeriesById(tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 2).toString());
                     JsonNode listSeries = seriesbyid;
-                    url_orthanc = koneksiDB.URLORTHANC() + ":" + koneksiDB.PORTORTHANC() + "/stone-webviewer/index.html?study=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString() + "&series=" + listSeries.path("MainDicomTags").path("SeriesInstanceUID").asText();
+                    url_orthanc = "http://"+koneksiDB.USERORTHANC()+":"+koneksiDB.PASSORTHANC()+"@"+koneksiDB.URLORTHANC() + ":" + koneksiDB.PORTORTHANC() + "/stone-webviewer/index.html?study=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString() + "&series=" + listSeries.path("MainDicomTags").path("SeriesInstanceUID").asText();
                     try {
                       //Set your page url in this string. For eg, I m using URL for Google Search engine
                       java.awt.Desktop.getDesktop().browse(java.net.URI.create(url_orthanc));
