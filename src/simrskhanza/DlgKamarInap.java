@@ -68,7 +68,7 @@ import bridging.BPJSSPRI;
 import bridging.BPJSSuratKontrol;
 import bridging.SirsApi;
 import bridging.SirsLaporanCovid19V3;
-import mpp.DlgFormSkrining;
+import mpp.DlgSkriningMPP;
 import permintaan.DlgPermintaanKerohanian;
 import permintaan.DlgPermintaanUTD;
 
@@ -8402,7 +8402,7 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
                                         rs2 = psanak.executeQuery();
                                         if (rs2.next()) {
                                                 this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                                                DlgFormSkrining dlgro = new DlgFormSkrining(null, false);
+                                                DlgSkriningMPP dlgro = new DlgSkriningMPP(null, false);
                                                 dlgro.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
                                                 dlgro.setLocationRelativeTo(internalFrame1);
                                                 dlgro.emptTeks();
@@ -8429,7 +8429,7 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
                             }
                     } else {
                         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                        DlgFormSkrining dlgro = new DlgFormSkrining(null, false);
+                        DlgSkriningMPP dlgro = new DlgSkriningMPP(null, false);
                         dlgro.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
                         dlgro.setLocationRelativeTo(internalFrame1);
                         dlgro.emptTeks();
@@ -9051,11 +9051,11 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
             BangsalCari.setEditable(true);
         }
         
-        if (var.getkode().equals("Admin Utama")) {
-            MnPermintaanMPP.setVisible(true);
-        } else {
-            MnPermintaanMPP.setVisible(false);
-        }
+//        if (var.getkode().equals("Admin Utama")) {
+//            MnPermintaanMPP.setVisible(true);
+//        } else {
+//            MnPermintaanMPP.setVisible(false);
+//        }
         
         BtnSimpan.setEnabled(var.getkamar_inap());
         BtnSimpanpindah.setEnabled(var.getkamar_inap());
