@@ -71,6 +71,7 @@ import laporan.DlgDkkSurveilansRalan;
 import laporan.DlgFrekuensiPenyakitRanap;
 import laporan.DlgFrekuensiPenyakitRanapPerDokter;
 import laporan.DlgFrekuensiPenyakitRalan;
+import laporan.DlgFrekuensiPenyakitPerRujukMasuk;
 import laporan.DlgDkkSurveilansRanap;
 import laporan.DlgDkkPenyakitTidakMenularRalan;
 import laporan.DlgDkkSurveilansPD3I;
@@ -135,6 +136,7 @@ import inventory.DlgReturPiutang;
 import inventory.DlgSirkulasiBarang;
 import inventory.DlgSirkulasiBarang2;
 import inventory.DlgStokPasien;
+import inventory.DlgPaketOperasi;
 import ipsrs.DlgBarangIPSRS;
 import ipsrs.DlgCariPengambilanPenunjangUTD;
 import ipsrs.DlgJenisIPSRS;
@@ -942,6 +944,8 @@ public class frmUtama extends javax.swing.JFrame {
         btnUTDPermintaan = new widget.ButtonBig();
         btnSetSubAkun = new widget.ButtonBig();
         btnFrekuensiPenyakitRanapBaru = new widget.ButtonBig();
+        btnFrekuensiPerPerujuk = new widget.ButtonBig();
+        btnPaketObatOp = new widget.ButtonBig();
         internalFrame1 = new widget.InternalFrame();
         BtnMenu = new widget.ButtonBig();
         jSeparator4 = new javax.swing.JSeparator();
@@ -5643,7 +5647,7 @@ public class frmUtama extends javax.swing.JFrame {
 
         tanggal.setEditable(false);
         tanggal.setForeground(new java.awt.Color(50, 70, 50));
-        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30/03/2023" }));
+        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "12/05/2023" }));
         tanggal.setDisplayFormat("dd/MM/yyyy");
         tanggal.setName("tanggal"); // NOI18N
         tanggal.setOpaque(false);
@@ -5864,6 +5868,28 @@ public class frmUtama extends javax.swing.JFrame {
         btnFrekuensiPenyakitRanapBaru.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFrekuensiPenyakitRanapBaruActionPerformed(evt);
+            }
+        });
+
+        btnFrekuensiPerPerujuk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/applications-office.png"))); // NOI18N
+        btnFrekuensiPerPerujuk.setText("10 Besar Penyakit Per Perujuk");
+        btnFrekuensiPerPerujuk.setIconTextGap(0);
+        btnFrekuensiPerPerujuk.setName("btnFrekuensiPerPerujuk"); // NOI18N
+        btnFrekuensiPerPerujuk.setPreferredSize(new java.awt.Dimension(200, 90));
+        btnFrekuensiPerPerujuk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFrekuensiPerPerujukActionPerformed(evt);
+            }
+        });
+
+        btnPaketObatOp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/Gnome-X-Office-Address-Book-48.png"))); // NOI18N
+        btnPaketObatOp.setText("Master Paket Operasi");
+        btnPaketObatOp.setIconTextGap(0);
+        btnPaketObatOp.setName("btnPaketObatOp"); // NOI18N
+        btnPaketObatOp.setPreferredSize(new java.awt.Dimension(200, 90));
+        btnPaketObatOp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPaketObatOpActionPerformed(evt);
             }
         });
 
@@ -12293,6 +12319,28 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_btnFrekuensiPenyakitRanapBaruActionPerformed
 
+    private void btnFrekuensiPerPerujukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFrekuensiPerPerujukActionPerformed
+        isTutup();
+        DlgHome.dispose();
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        DlgFrekuensiPenyakitPerRujukMasuk aplikasi=new DlgFrekuensiPenyakitPerRujukMasuk(this,false);
+        aplikasi.setSize(PanelUtama.getWidth(), PanelUtama.getHeight());
+        aplikasi.setLocationRelativeTo(PanelUtama);
+        aplikasi.setVisible(true);
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_btnFrekuensiPerPerujukActionPerformed
+
+    private void btnPaketObatOpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaketObatOpActionPerformed
+        isTutup();
+        DlgHome.dispose();
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        DlgPaketOperasi aplikasi=new DlgPaketOperasi(this,false);
+        aplikasi.setSize(PanelUtama.getWidth(), PanelUtama.getHeight());
+        aplikasi.setLocationRelativeTo(PanelUtama);
+        aplikasi.setVisible(true);
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_btnPaketObatOpActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -12430,6 +12478,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private widget.ButtonBig btnDisplayApotek;
     private widget.ButtonBig btnDokter;
     private widget.ButtonBig btnFrekuensiPenyakitRanapBaru;
+    private widget.ButtonBig btnFrekuensiPerPerujuk;
     private widget.ButtonBig btnFrekuensiRalan;
     private widget.ButtonBig btnFrekuensiRalanDanRanap;
     private widget.ButtonBig btnFrekuensiRanap;
@@ -12520,6 +12569,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private widget.ButtonBig btnOpname;
     private widget.ButtonBig btnOpnameIPSRS;
     private widget.ButtonBig btnPPNObat;
+    private widget.ButtonBig btnPaketObatOp;
     private widget.ButtonBig btnPaketOperasi;
     private widget.ButtonBig btnPasien;
     private widget.ButtonBig btnPasienMati;
@@ -13405,6 +13455,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
                 Panelmenu.add(btnLapStokOp);
                 Panelmenu.add(btnLapPelFar);
                 Panelmenu.add(btnPelFar);
+                Panelmenu.add(btnPaketObatOp);
                 jmlmenu++;
             }
 
@@ -14056,6 +14107,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             if(var.getpenyakit_ralan()==true){                
                 Panelmenu.add(btnFrekuensiRalan);
                 Panelmenu.add(btnFrekuensiRalanDanRanap);
+                Panelmenu.add(btnFrekuensiPerPerujuk);
                 jmlmenu++;
             }
 
@@ -15259,6 +15311,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             Panelmenu.add(btnLapStokOp);
             Panelmenu.add(btnLapPelFar);
             Panelmenu.add(btnPelFar);
+            Panelmenu.add(btnPaketObatOp);
             jmlmenu++;
         }
 
@@ -15900,6 +15953,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         if(var.getpenyakit_ralan()==true){                
             Panelmenu.add(btnFrekuensiRalan); 
             Panelmenu.add(btnFrekuensiRalanDanRanap);
+            Panelmenu.add(btnFrekuensiPerPerujuk);
             jmlmenu++;
         }
 
@@ -17203,6 +17257,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
                 Panelmenu.add(btnLapStokOp);
                 Panelmenu.add(btnLapPelFar);
                 Panelmenu.add(btnPelFar);
+                Panelmenu.add(btnPaketObatOp);
                 jmlmenu++;
             }                
         }
@@ -18100,6 +18155,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             if(btnFrekuensiRalan.getText().toLowerCase().trim().contains(TCari.getText().toLowerCase().trim())){
                 Panelmenu.add(btnFrekuensiRalan); 
                 Panelmenu.add(btnFrekuensiRalanDanRanap);
+                Panelmenu.add(btnFrekuensiPerPerujuk);
                 jmlmenu++;
             }                
         }

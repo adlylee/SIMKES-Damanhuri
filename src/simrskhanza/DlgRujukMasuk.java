@@ -141,7 +141,7 @@ public final class DlgRujukMasuk extends javax.swing.JDialog {
         tbObat.setDefaultRenderer(Object.class, new WarnaTable());
         
         //Perujuk
-        Object[] row2={"Perujuk","Alamat Perujuk"};
+        Object[] row2={"Perujuk","Alamat Perujuk","Jumlah"};
         tabMode2=new DefaultTableModel(null,row2){
               @Override public boolean isCellEditable(int rowIndex, int colIndex){return false;}
         };
@@ -151,12 +151,14 @@ public final class DlgRujukMasuk extends javax.swing.JDialog {
         tbPerujuk.setPreferredScrollableViewportSize(new Dimension(500,500));
         tbPerujuk.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 2; i++) {
+        for (i = 0; i < 3; i++) {
             TableColumn column = tbPerujuk.getColumnModel().getColumn(i);
             if(i==0){
                 column.setPreferredWidth(200);
             }else if(i==1){
                 column.setPreferredWidth(400);
+            } else {
+                column.setPreferredWidth(50);
             }
         }
         tbPerujuk.setDefaultRenderer(Object.class, new WarnaTable());
@@ -1928,14 +1930,14 @@ private void TAlamatKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_T
     public void tampil2() {        
         Valid.tabelKosong(tabMode2);
         try{
-            psperujuk=koneksi.prepareStatement("select rujuk_masuk.perujuk,rujuk_masuk.alamat from rujuk_masuk where "+
+            psperujuk=koneksi.prepareStatement("select rujuk_masuk.perujuk,rujuk_masuk.alamat,COUNT(rujuk_masuk.perujuk) as jml from rujuk_masuk where "+
                     "rujuk_masuk.perujuk like ? or rujuk_masuk.alamat like ? group by rujuk_masuk.perujuk order by rujuk_masuk.perujuk");
             try {
                 psperujuk.setString(1,"%"+TCariPerujuk.getText()+"%");
                 psperujuk.setString(2,"%"+TCariPerujuk.getText()+"%");
                 rs=psperujuk.executeQuery();
                 while(rs.next()){                              
-                    tabMode2.addRow(new Object[]{rs.getString(1),rs.getString(2)});
+                    tabMode2.addRow(new Object[]{rs.getString(1),rs.getString(2),rs.getString(3)});
                 }
             } catch (Exception e) {
                 System.out.println("simrskhanza.DlgRujukMasuk.tampil2() : "+e);
