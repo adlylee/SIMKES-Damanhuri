@@ -784,6 +784,9 @@ public class DlgDiagnosaPenyakit extends javax.swing.JDialog {
         BtnPrint.setEnabled(var.getdiagnosa_pasien());
         panelDiagnosa1.btnTambahPenyakit.setEnabled(var.getpenyakit());
         panelDiagnosa1.btnTambahProsedur.setEnabled(var.geticd9());
+        if (var.getkode().equals("unit45")) {
+            TCari.setText("A09");
+        }
     }
 
     

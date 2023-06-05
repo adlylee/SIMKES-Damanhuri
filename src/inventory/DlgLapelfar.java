@@ -37,7 +37,7 @@ public class DlgLapelfar extends javax.swing.JDialog {
         initComponents();
 
         Object[] row = {
-            "Nama Barang", "Bentuk Sediaan", "Stok Awal",
+            "Nama Barang", "Bentuk Sediaan","Kapasitas", "Stok Awal",
             "Penerimaan", "Ralan", "Ranap", "Total", "Harga", "Total Harga"
             ,"Stok Gudang","Stok Rajal","Stok Ranap","Stok IGD"
         };
@@ -49,8 +49,8 @@ public class DlgLapelfar extends javax.swing.JDialog {
             Class[] types = new Class[]{
                 java.lang.Object.class, java.lang.Object.class,
                 java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class,
-                java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
-               ,java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class,
+                java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
             };
 
             @Override
@@ -63,16 +63,16 @@ public class DlgLapelfar extends javax.swing.JDialog {
         tbDokter.setPreferredScrollableViewportSize(new Dimension(800, 800));
         tbDokter.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (int i = 0; i < 13; i++) {
+        for (int i = 0; i < 14; i++) {
             TableColumn column = tbDokter.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(70);
             } else if (i == 1) {
                 column.setPreferredWidth(140);
             } else if (i == 2) {
-                column.setPreferredWidth(50);
+                column.setPreferredWidth(60);
             } else if (i == 3) {
-                column.setPreferredWidth(80);
+                column.setPreferredWidth(60);
             } else if (i == 4) {
                 column.setPreferredWidth(80);
             } else if (i == 5) {
@@ -82,7 +82,7 @@ public class DlgLapelfar extends javax.swing.JDialog {
             } else if (i == 7) {
                 column.setPreferredWidth(80);
             } else if (i == 8) {
-                column.setPreferredWidth(90);
+                column.setPreferredWidth(80);
             } else {
                 column.setPreferredWidth(90);
             }
@@ -419,11 +419,12 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                     + "(SELECT SUM(masuk) FROM riwayat_barang_medis WHERE kode_brng = nama.kode_brng AND kd_bangsal IN ('B0001','B0014','B0018') AND posisi IN ('Mutasi','Pengadaan','Penerimaan','Pengambilan Medis','Retur Jual') AND status = 'Simpan' AND tanggal BETWEEN ? AND ?) AS masuk,"
                     + "(SELECT SUM(jml) FROM detail_pemberian_obat WHERE kode_brng = nama.kode_brng AND status='Ralan' AND tgl_perawatan BETWEEN ? AND ?) AS ralan,"
                     + "(SELECT SUM(jml) FROM detail_pemberian_obat WHERE kode_brng = nama.kode_brng AND status='Ranap' AND tgl_perawatan BETWEEN ? AND ?) AS ranap,"
-                    + "(SELECT SUM(jml) FROM detail_pemberian_obat WHERE kode_brng = nama.kode_brng AND tgl_perawatan BETWEEN ? AND ?) AS total "
-                    + "FROM (SELECT DISTINCT nama_brng, kode_brng , kode_sat ,ralan FROM databarang WHERE kode_brng IN(SELECT kode_brng FROM detail_pemberian_obat)) AS nama where nama.nama_brng like ? ORDER BY nama.nama_brng ASC");
+                    + "(SELECT SUM(jml) FROM detail_pemberian_obat WHERE kode_brng = nama.kode_brng AND tgl_perawatan BETWEEN ? AND ?) AS total,nama.kapasitas "
+                    + "FROM (SELECT DISTINCT nama_brng,kode_brng,kode_sat,ralan,kapasitas FROM databarang WHERE status='1' and kode_brng IN(SELECT kode_brng FROM detail_pemberian_obat)) AS nama where nama.nama_brng like ? ORDER BY nama.nama_brng ASC");
             try {
-                ps.setString(1, lastweek.toString());
-                ps.setString(2, Valid.SetTgl(tanggal1.getSelectedItem() + ""));
+//                ps.setString(1, lastweek.toString());
+                ps.setString(1, Valid.SetTgl(tanggal1.getSelectedItem() + ""));
+                ps.setString(2, Valid.SetTgl(tanggal2.getSelectedItem() + ""));
                 ps.setString(3, Valid.SetTgl(tanggal1.getSelectedItem() + ""));
                 ps.setString(4, Valid.SetTgl(tanggal2.getSelectedItem() + ""));
                 ps.setString(5, Valid.SetTgl(tanggal1.getSelectedItem() + ""));
@@ -437,7 +438,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 while (rs.next()) {
                     Double total = rs.getDouble(7) + rs.getDouble(8);
                     tabMode.addRow(new Object[]{
-                        rs.getString(1), rs.getString(4), rs.getDouble(5),
+                        rs.getString(1), rs.getString(4), rs.getDouble(10), rs.getDouble(6),
                         rs.getDouble(6), rs.getDouble(7), rs.getDouble(8), total,
                         rs.getDouble(3), rs.getDouble(3) * total
                         ,cariStok(rs.getString("kode_brng"), "B0002"),cariStok(rs.getString("kode_brng"), "B0014"),cariStok(rs.getString("kode_brng"), "B0001"),cariStok(rs.getString("kode_brng"), "B0018")

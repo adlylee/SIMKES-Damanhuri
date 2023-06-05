@@ -53,6 +53,7 @@ public final class DlgRujukMasuk extends javax.swing.JDialog {
     private SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
     private int i=0;
     private DlgCariPenyakit penyakit=new DlgCariPenyakit(null,false);
+    private DlgMasterRujukMasuk rujuk=new DlgMasterRujukMasuk(null,false);
     /** Creates new form DlgRujuk
      * @param parent
      * @param modal */
@@ -237,6 +238,7 @@ public final class DlgRujukMasuk extends javax.swing.JDialog {
         TCariPerujuk = new widget.TextBox();
         BtnCari1 = new widget.Button();
         BtnAll1 = new widget.Button();
+        BtnTambah = new widget.Button();
         label10 = new widget.Label();
         LCount1 = new widget.Label();
         BtnKeluar1 = new widget.Button();
@@ -387,6 +389,18 @@ public final class DlgRujukMasuk extends javax.swing.JDialog {
         });
         panelisi2.add(BtnAll1);
 
+        BtnTambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/plus_16.png"))); // NOI18N
+        BtnTambah.setMnemonic('3');
+        BtnTambah.setToolTipText("Alt+3");
+        BtnTambah.setName("BtnTambah"); // NOI18N
+        BtnTambah.setPreferredSize(new java.awt.Dimension(28, 23));
+        BtnTambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnTambahActionPerformed(evt);
+            }
+        });
+        panelisi2.add(BtnTambah);
+
         label10.setText("Record :");
         label10.setName("label10"); // NOI18N
         label10.setPreferredSize(new java.awt.Dimension(60, 23));
@@ -460,7 +474,7 @@ public final class DlgRujukMasuk extends javax.swing.JDialog {
 
         DTPReg.setEditable(false);
         DTPReg.setForeground(new java.awt.Color(50, 70, 50));
-        DTPReg.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-02-2019" }));
+        DTPReg.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "27-05-2023" }));
         DTPReg.setDisplayFormat("dd-MM-yyyy");
         DTPReg.setName("DTPReg"); // NOI18N
         DTPReg.setOpaque(false);
@@ -642,7 +656,7 @@ public final class DlgRujukMasuk extends javax.swing.JDialog {
         panelGlass9.add(jLabel19);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-02-2019" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "27-05-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -656,7 +670,7 @@ public final class DlgRujukMasuk extends javax.swing.JDialog {
         panelGlass9.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-02-2019" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "27-05-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -1665,6 +1679,18 @@ private void TAlamatKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_T
         }
     }//GEN-LAST:event_tbObatKeyReleased
 
+    private void BtnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTambahActionPerformed
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        //bangsal.setModal(true);
+        rujuk.emptTeks();
+        rujuk.isCek();
+        rujuk.setSize(internalFrame6.getWidth(),internalFrame6.getHeight());
+        rujuk.setLocationRelativeTo(internalFrame6);
+        rujuk.setAlwaysOnTop(false);
+        rujuk.setVisible(true);
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_BtnTambahActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -1693,6 +1719,7 @@ private void TAlamatKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_T
     private widget.Button BtnKeluar1;
     private widget.Button BtnPrint;
     private widget.Button BtnSimpan;
+    private widget.Button BtnTambah;
     private widget.CekBox ChkInput;
     private widget.Tanggal DTPCari1;
     private widget.Tanggal DTPCari2;
@@ -1922,14 +1949,20 @@ private void TAlamatKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_T
         BtnHapus.setEnabled(var.getrujukan_masuk());
         BtnPrint.setEnabled(var.getrujukan_masuk());
         BtnEdit.setEnabled(var.getrujukan_masuk());
-        
+        if (var.getkode().equals("Admin Utama")) {
+            BtnTambah.setEnabled(true);
+        }else{
+            BtnTambah.setEnabled(false);
+        }
     }
     
     public void tampil2() {        
         Valid.tabelKosong(tabMode2);
         try{
-            psperujuk=koneksi.prepareStatement("select rujuk_masuk.perujuk,rujuk_masuk.alamat from rujuk_masuk where "+
-                    "rujuk_masuk.perujuk like ? or rujuk_masuk.alamat like ? group by rujuk_masuk.perujuk order by rujuk_masuk.perujuk");
+//            psperujuk=koneksi.prepareStatement("select rujuk_masuk.perujuk,rujuk_masuk.alamat from rujuk_masuk where "+
+//                    "rujuk_masuk.perujuk like ? or rujuk_masuk.alamat like ? group by rujuk_masuk.perujuk order by rujuk_masuk.perujuk");
+            psperujuk=koneksi.prepareStatement("select master_rujuk_masuk.perujuk,master_rujuk_masuk.alamat from master_rujuk_masuk where "+
+                    "master_rujuk_masuk.perujuk like ? or master_rujuk_masuk.alamat like ? group by master_rujuk_masuk.perujuk order by master_rujuk_masuk.perujuk");
             try {
                 psperujuk.setString(1,"%"+TCariPerujuk.getText()+"%");
                 psperujuk.setString(2,"%"+TCariPerujuk.getText()+"%");

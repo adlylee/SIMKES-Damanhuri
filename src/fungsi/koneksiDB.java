@@ -45,7 +45,7 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" +
-                        "    Version 11.05.2023 [ 1.0.16 ] [Activated] GO KLAIM DIGITAL \n"+
+                        "    Version 04.06.2023 [ 1.0.16 ] [Activated] GO KLAIM DIGITAL \n"+
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai                              \n"+
                         "                                                                           \n"+
@@ -57,9 +57,10 @@ public final class koneksiDB {
                         "                                                                       \n"+
                         "                                                                       \n"+
                         "    * Changelog :                                                       \n"+
-                        "       - Orthanc Radiologi Stone Viewer                                             \n"+
-                        "       - Laporan Stok Opname Medis                                              \n"+
-                        "       - Laporan Pelayanan Geriatri                                              \n");
+                        "       - Diagnosa pasien                                              \n"+
+                        "       - Laporan Pelayanan Kefarmasian                                              \n"+
+                        "       - Rujuk Masuk                                              \n"+
+                        "       - Resep Rawat Gabung                                              \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);
                 try {

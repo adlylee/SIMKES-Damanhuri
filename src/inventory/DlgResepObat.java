@@ -3633,11 +3633,11 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }
 
     private void autoNomor() {
-        if (Sequel.cariIsi("select obat_racikan.no_rawat from resep_obat inner join obat_racikan on resep_obat.no_rawat=obat_racikan.no_rawat where resep_obat.no_resep=?", NoResep.getText()) == "") {
-            Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_antrian,3),signed)),0) from antrian_apotek where no_antrian like 'N-%' and tgl_perawatan='" + Valid.SetTgl(DTPCari1.getSelectedItem() + "") + "'", "N-", 3, noAntri);
-        } else {
-            Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_antrian,3),signed)),0) from antrian_apotek where no_antrian like 'R-%' and tgl_perawatan='" + Valid.SetTgl(DTPCari1.getSelectedItem() + "") + "'", "R-", 3, noAntri);
-        }
+//        if (Sequel.cariIsi("select obat_racikan.no_rawat from resep_obat inner join obat_racikan on resep_obat.no_rawat=obat_racikan.no_rawat where resep_obat.no_resep=?", NoResep.getText()) == "") {
+            Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_antrian,3),signed)),0) from antrian_apotek where tgl_perawatan='" + Valid.SetTgl(DTPCari1.getSelectedItem() + "") + "'", "", 3, noAntri);
+//        } else {
+//            Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_antrian,3),signed)),0) from antrian_apotek where no_antrian like 'R-%' and tgl_perawatan='" + Valid.SetTgl(DTPCari1.getSelectedItem() + "") + "'", "R-", 3, noAntri);
+//        }
     }
 
     private void isNoAntrian() {
