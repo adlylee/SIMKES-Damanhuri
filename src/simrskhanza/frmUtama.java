@@ -392,6 +392,7 @@ import java.awt.geom.RoundRectangle2D;
 import laporan.DlgFrekuensiPenyakitRalanDanRanap;
 import laporan.DlgFrekuensiPenyakitRanapBaru;
 import permintaan.DlgCariPermintaanUTD;
+import mpp.DlgSkriningMPP;
 
 
 /**
@@ -946,6 +947,7 @@ public class frmUtama extends javax.swing.JFrame {
         btnFrekuensiPenyakitRanapBaru = new widget.ButtonBig();
         btnFrekuensiPerPerujuk = new widget.ButtonBig();
         btnPaketObatOp = new widget.ButtonBig();
+        btnPermintaanMPP = new widget.ButtonBig();
         internalFrame1 = new widget.InternalFrame();
         BtnMenu = new widget.ButtonBig();
         jSeparator4 = new javax.swing.JSeparator();
@@ -5890,6 +5892,17 @@ public class frmUtama extends javax.swing.JFrame {
         btnPaketObatOp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPaketObatOpActionPerformed(evt);
+            }
+        });
+
+        btnPermintaanMPP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/applications-office.png"))); // NOI18N
+        btnPermintaanMPP.setText("MPP");
+        btnPermintaanMPP.setIconTextGap(0);
+        btnPermintaanMPP.setName("btnPermintaanMPP"); // NOI18N
+        btnPermintaanMPP.setPreferredSize(new java.awt.Dimension(200, 90));
+        btnPermintaanMPP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPermintaanMPPActionPerformed(evt);
             }
         });
 
@@ -12341,6 +12354,17 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_btnPaketObatOpActionPerformed
 
+    private void btnPermintaanMPPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPermintaanMPPActionPerformed
+        isTutup();
+        DlgHome.dispose();
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        DlgSkriningMPP aplikasi=new DlgSkriningMPP(this,false);
+        aplikasi.setSize(PanelUtama.getWidth(), PanelUtama.getHeight());
+        aplikasi.setLocationRelativeTo(PanelUtama);
+        aplikasi.setVisible(true);
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_btnPermintaanMPPActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -12607,6 +12631,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private widget.ButtonBig btnPenyakitRanapCaraBayar;
     private widget.ButtonBig btnPeriksaRadiologi;
     private widget.ButtonBig btnPermintaanLab;
+    private widget.ButtonBig btnPermintaanMPP;
     private widget.ButtonBig btnPermintaanMedis;
     private widget.ButtonBig btnPermintaanNonMedis;
     private widget.ButtonBig btnPermintaanRadiologi;
@@ -14754,6 +14779,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             if(var.getpasien_meninggal()==true){
                 Panelmenu.add(btnPasienMati);
                 Panelmenu.add(btnKerohanian);
+                Panelmenu.add(btnPermintaanMPP);
                 jmlmenu++;
             }
 
@@ -16596,6 +16622,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         if(var.getpasien_meninggal()==true){
             Panelmenu.add(btnPasienMati);
             Panelmenu.add(btnKerohanian);
+            Panelmenu.add(btnPermintaanMPP);
             jmlmenu++;
         }
 
@@ -19049,6 +19076,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             if(btnPasienMati.getText().toLowerCase().trim().contains(TCari.getText().toLowerCase().trim())){
                 Panelmenu.add(btnPasienMati);
                 Panelmenu.add(btnKerohanian);
+                Panelmenu.add(btnPermintaanMPP);
                 jmlmenu++;
             }
         }

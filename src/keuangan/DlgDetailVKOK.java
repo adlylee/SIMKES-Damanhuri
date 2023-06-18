@@ -239,7 +239,8 @@ public final class DlgDetailVKOK extends javax.swing.JDialog {
             "Perawat Luar","JM P.L.","Onloop 1","JM Onloop 1","Onloop 2","JM Onloop 2",
             "Onloop 3","JM Onloop 3", "Onloop 4","JM Onloop 4", "Onloop 5","JM Onloop 5",
             "Dokter P.J. Anak","JM dr P.J. Anak","Dokter Umum", "JM dr Umum",
-            "Sewa Alat", "Sewa OK/VK", "Akomodasi", "N.M.S.",  "Sarpras","Total" 
+            "Sewa Alat", "Sewa OK/VK", "Akomodasi", "N.M.S.",  "Sarpras","Total",
+            "Alamat" ,"J.K","Tgl. Lahir","Umur"
         }){
              @Override public boolean isCellEditable(int rowIndex, int colIndex){return false;}
              Class[] types = new Class[] {
@@ -263,7 +264,8 @@ public final class DlgDetailVKOK extends javax.swing.JDialog {
                  java.lang.Double.class,java.lang.Object.class,java.lang.Double.class,
                  java.lang.Object.class,java.lang.Double.class,java.lang.Double.class,
                  java.lang.Double.class,java.lang.Double.class,java.lang.Double.class,
-                 java.lang.Double.class,java.lang.Double.class
+                 java.lang.Double.class,java.lang.Double.class,java.lang.Object.class,
+                 java.lang.Object.class,java.lang.Object.class,java.lang.Object.class
              };
              @Override
              public Class getColumnClass(int columnIndex) {
@@ -274,7 +276,7 @@ public final class DlgDetailVKOK extends javax.swing.JDialog {
         tbOperasi1.setPreferredScrollableViewportSize(new Dimension(500,500));
         tbOperasi1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 60; i++) {
+        for (i = 0; i < 64; i++) {
             TableColumn column = tbOperasi1.getColumnModel().getColumn(i);
             if(i==0){
                 column.setPreferredWidth(30);
@@ -396,6 +398,14 @@ public final class DlgDetailVKOK extends javax.swing.JDialog {
                 column.setPreferredWidth(80);
             }else if(i==59){
                 column.setPreferredWidth(100);
+            }else if(i==60){
+                column.setPreferredWidth(170);
+            }else if(i==61){
+                column.setPreferredWidth(35);
+            }else if(i==62){
+                column.setPreferredWidth(70);
+            }else if(i==63){
+                column.setPreferredWidth(50);
             }
         }
         tbOperasi1.setDefaultRenderer(Object.class, new WarnaTable());
@@ -425,6 +435,8 @@ public final class DlgDetailVKOK extends javax.swing.JDialog {
         BtnCari = new widget.Button();
         BtnAll = new widget.Button();
         label11 = new widget.Label();
+        jLabel7 = new widget.Label();
+        LCount = new widget.Label();
         BtnPrint = new widget.Button();
         BtnKeluar = new widget.Button();
         TabRawat = new javax.swing.JTabbedPane();
@@ -530,6 +542,17 @@ public final class DlgDetailVKOK extends javax.swing.JDialog {
         label11.setPreferredSize(new java.awt.Dimension(20, 23));
         panelGlass5.add(label11);
 
+        jLabel7.setText("Record :");
+        jLabel7.setName("jLabel7"); // NOI18N
+        jLabel7.setPreferredSize(new java.awt.Dimension(65, 23));
+        panelGlass5.add(jLabel7);
+
+        LCount.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        LCount.setText("0");
+        LCount.setName("LCount"); // NOI18N
+        LCount.setPreferredSize(new java.awt.Dimension(50, 23));
+        panelGlass5.add(LCount);
+
         BtnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/b_print.png"))); // NOI18N
         BtnPrint.setMnemonic('T');
         BtnPrint.setText("Cetak");
@@ -566,7 +589,6 @@ public final class DlgDetailVKOK extends javax.swing.JDialog {
         TabRawat.setBackground(new java.awt.Color(255, 255, 253));
         TabRawat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(241, 246, 236)));
         TabRawat.setForeground(new java.awt.Color(70, 70, 70));
-        TabRawat.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         TabRawat.setName("TabRawat"); // NOI18N
         TabRawat.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -781,6 +803,7 @@ public final class DlgDetailVKOK extends javax.swing.JDialog {
     private widget.Button BtnCari;
     private widget.Button BtnKeluar;
     private widget.Button BtnPrint;
+    private widget.Label LCount;
     private widget.ScrollPane Scroll10;
     private widget.ScrollPane Scroll3;
     private widget.TextBox TCari;
@@ -790,6 +813,7 @@ public final class DlgDetailVKOK extends javax.swing.JDialog {
     private widget.InternalFrame internalFrame1;
     private widget.InternalFrame internalFrame12;
     private widget.InternalFrame internalFrame5;
+    private widget.Label jLabel7;
     private widget.Label label10;
     private widget.Label label11;
     private widget.Label label18;
@@ -981,6 +1005,7 @@ public final class DlgDetailVKOK extends javax.swing.JDialog {
                          }
                      }
                 }
+                LCount.setText(""+rstindakan.getRow());
             } catch (Exception e) {
                 System.out.println("keuangan.DlgDetailVKOK.tampil() 1 : "+e);
             } finally{
@@ -1019,7 +1044,7 @@ public final class DlgDetailVKOK extends javax.swing.JDialog {
                          "","","","","",null,"",null,"",null,"",null,"",null,
                          "",null,"",null,"",null,"",null,"",null,"",null,"",null,
                          "",null,"",null,"",null,"",null,"",null,"",null,"",null,
-                         "",null,"",null,"",null,"",null,null,null,null,null,null,null
+                         "",null,"",null,"",null,"",null,null,null,null,null,null,null,null,null,null,null
                     });
                     ps=koneksi.prepareStatement(
                             "select operasi.no_rawat,reg_periksa.no_rkm_medis,pasien.nm_pasien, "+
@@ -1050,7 +1075,8 @@ public final class DlgDetailVKOK extends javax.swing.JDialog {
                             "(select nama from petugas where petugas.nip=operasi.omloop5) as omloop5,operasi.biaya_omloop5, "+
                             "(select nm_dokter from dokter where dokter.kd_dokter=operasi.dokter_pjanak) as dokter_pjanak,operasi.biaya_dokter_pjanak, "+
                             "(select nm_dokter from dokter where dokter.kd_dokter=operasi.dokter_umum) as dokter_umum,operasi.biaya_dokter_umum, "+
-                            "operasi.biayaalat,operasi.biayasewaok,operasi.akomodasi,operasi.bagian_rs,operasi.biayasarpras "+
+                            "operasi.biayaalat,operasi.biayasewaok,operasi.akomodasi,operasi.bagian_rs,operasi.biayasarpras, "+
+                            "pasien.jk,pasien.tgl_lahir,reg_periksa.umurdaftar,reg_periksa.sttsumur,pasien.alamat "+
                             "from operasi inner join reg_periksa inner join pasien "+
                             "inner join paket_operasi inner join penjab "+
                             "on operasi.no_rawat=reg_periksa.no_rawat and "+
@@ -1149,7 +1175,8 @@ public final class DlgDetailVKOK extends javax.swing.JDialog {
                                  rs.getDouble("biayaperawat_luar")+rs.getDouble("biaya_omloop")+rs.getDouble("biaya_omloop2")+
                                  rs.getDouble("biaya_omloop3")+rs.getDouble("biaya_omloop4")+rs.getDouble("biaya_omloop5")+
                                  rs.getDouble("biaya_dokter_pjanak")+rs.getDouble("biaya_dokter_umum")+rs.getDouble("biayaalat")+
-                                 rs.getDouble("biayasewaok")+rs.getDouble("akomodasi")+rs.getDouble("bagian_rs")+rs.getDouble("biayasarpras"))
+                                 rs.getDouble("biayasewaok")+rs.getDouble("akomodasi")+rs.getDouble("bagian_rs")+rs.getDouble("biayasarpras")),
+                                 rs.getString("alamat"),rs.getString("jk"),rs.getString("tgl_lahir"),rs.getString("umurdaftar")+" "+rs.getString("sttsumur")
                              });
                              i++;
                          }
@@ -1164,9 +1191,11 @@ public final class DlgDetailVKOK extends javax.swing.JDialog {
                                  "",biayabidan3,"",biayaperawat_luar,"",biaya_omloop,
                                  "",biaya_omloop2,"",biaya_omloop3,"",biaya_omloop4,
                                  "",biaya_omloop5,"",biaya_dokter_pjanak,"",biaya_dokter_umum,
-                                 biayaalat,biayasewaok,akomodasi,bagian_rs,biayasarpras,total
+                                 biayaalat,biayasewaok,akomodasi,bagian_rs,biayasarpras,total,"","","",""
                              });
                          }
+                         rs.last();
+                         LCount.setText("" + rstindakan.getRow());
                      } catch (Exception e) {
                          System.out.println("Notifikasi : "+e);
                      } finally{

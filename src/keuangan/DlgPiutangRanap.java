@@ -237,8 +237,10 @@ public final class DlgPiutangRanap extends javax.swing.JDialog {
         Tgl1 = new widget.Tanggal();
         label18 = new widget.Label();
         Tgl2 = new widget.Tanggal();
-        BtnAll = new widget.Button();
+        label10 = new widget.Label();
+        TCari = new widget.TextBox();
         BtnCari1 = new widget.Button();
+        BtnAll = new widget.Button();
         BtnPrint = new widget.Button();
         jLabel11 = new javax.swing.JLabel();
         LCount1 = new javax.swing.JLabel();
@@ -352,23 +354,19 @@ public final class DlgPiutangRanap extends javax.swing.JDialog {
         Tgl2.setName("Tgl2"); // NOI18N
         panelGlass5.add(Tgl2);
 
-        BtnAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Search-16x16.png"))); // NOI18N
-        BtnAll.setMnemonic('M');
-        BtnAll.setText("Semua");
-        BtnAll.setToolTipText("Alt+M");
-        BtnAll.setName("BtnAll"); // NOI18N
-        BtnAll.setPreferredSize(new java.awt.Dimension(100, 30));
-        BtnAll.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnAllActionPerformed(evt);
-            }
-        });
-        BtnAll.addKeyListener(new java.awt.event.KeyAdapter() {
+        label10.setText("Key Word :");
+        label10.setName("label10"); // NOI18N
+        label10.setPreferredSize(new java.awt.Dimension(69, 23));
+        panelGlass5.add(label10);
+
+        TCari.setName("TCari"); // NOI18N
+        TCari.setPreferredSize(new java.awt.Dimension(120, 23));
+        TCari.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                BtnAllKeyPressed(evt);
+                TCariKeyPressed(evt);
             }
         });
-        panelGlass5.add(BtnAll);
+        panelGlass5.add(TCari);
 
         BtnCari1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/accept.png"))); // NOI18N
         BtnCari1.setMnemonic('2');
@@ -386,6 +384,23 @@ public final class DlgPiutangRanap extends javax.swing.JDialog {
             }
         });
         panelGlass5.add(BtnCari1);
+
+        BtnAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Search-16x16.png"))); // NOI18N
+        BtnAll.setMnemonic('M');
+        BtnAll.setToolTipText("Alt+M");
+        BtnAll.setName("BtnAll"); // NOI18N
+        BtnAll.setPreferredSize(new java.awt.Dimension(28, 30));
+        BtnAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnAllActionPerformed(evt);
+            }
+        });
+        BtnAll.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnAllKeyPressed(evt);
+            }
+        });
+        panelGlass5.add(BtnAll);
 
         BtnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/b_print.png"))); // NOI18N
         BtnPrint.setMnemonic('T');
@@ -405,7 +420,6 @@ public final class DlgPiutangRanap extends javax.swing.JDialog {
         });
         panelGlass5.add(BtnPrint);
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(70, 70, 70));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel11.setText("Jumlah :");
@@ -421,12 +435,11 @@ public final class DlgPiutangRanap extends javax.swing.JDialog {
         LCount1.setPreferredSize(new java.awt.Dimension(50, 23));
         panelGlass5.add(LCount1);
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(70, 70, 70));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel10.setText("Total Piutang :");
         jLabel10.setName("jLabel10"); // NOI18N
-        jLabel10.setPreferredSize(new java.awt.Dimension(125, 23));
+        jLabel10.setPreferredSize(new java.awt.Dimension(90, 23));
         panelGlass5.add(jLabel10);
 
         LCount.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
@@ -434,7 +447,7 @@ public final class DlgPiutangRanap extends javax.swing.JDialog {
         LCount.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         LCount.setText("0");
         LCount.setName("LCount"); // NOI18N
-        LCount.setPreferredSize(new java.awt.Dimension(300, 23));
+        LCount.setPreferredSize(new java.awt.Dimension(250, 23));
         panelGlass5.add(LCount);
 
         BtnKeluar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/exit.png"))); // NOI18N
@@ -709,6 +722,9 @@ private void BtnCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         nmpenjab.setText("");
         kddokter.setText("");
         nmdokter.setText("");
+        kdbangsal.setText("");
+        nmbangsal.setText("");
+        TCari.setText("");
         tampil();
     }//GEN-LAST:event_BtnAllActionPerformed
 
@@ -825,6 +841,16 @@ private void BtnCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         //Valid.pindah(evt,DTPCari2,TCari);
     }//GEN-LAST:event_btnBangsalKeyPressed
 
+    private void TCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TCariKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            BtnCari1ActionPerformed(null);
+        } else if (evt.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
+            BtnCari1.requestFocus();
+        } else if (evt.getKeyCode() == KeyEvent.VK_PAGE_UP) {
+            BtnKeluar.requestFocus();
+        }
+    }//GEN-LAST:event_TCariKeyPressed
+
     /**
     * @param args the command line arguments
     */
@@ -853,6 +879,7 @@ private void BtnCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private javax.swing.JMenuItem MnBilling;
     private javax.swing.JMenuItem MnLihatDokter;
     private widget.ScrollPane Scroll;
+    private widget.TextBox TCari;
     private widget.TextBox TKd;
     private widget.Tanggal Tgl1;
     private widget.Tanggal Tgl2;
@@ -864,6 +891,7 @@ private void BtnCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.TextBox kdbangsal;
     private widget.TextBox kddokter;
     private widget.TextBox kdpenjab;
+    private widget.Label label10;
     private widget.Label label11;
     private widget.Label label17;
     private widget.Label label18;
@@ -888,7 +916,7 @@ private void BtnCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 + " inner join pasien on reg_periksa.no_rkm_medis=pasien.no_rkm_medis inner join penjab on reg_periksa.kd_pj=penjab.kd_pj "+
                 "inner join kamar on kamar_inap.kd_kamar=kamar.kd_kamar inner join bangsal on kamar.kd_bangsal=bangsal.kd_bangsal INNER JOIN bridging_sep ON reg_periksa.no_rawat = bridging_sep.no_rawat "
                 + "inner join piutang_pasien on piutang_pasien.no_rawat=reg_periksa.no_rawat left join dpjp_ranap on kamar_inap.no_rawat=dpjp_ranap.no_rawat "+
-                "where kamar_inap.tgl_keluar between ? and ? and reg_periksa.kd_pj like ?  and COALESCE(dpjp_ranap.kd_dokter,'') like ? and concat(kamar.kd_bangsal,bangsal.nm_bangsal) like ? and kamar_inap.stts_pulang not in ('-','Pindah Kamar') "+
+                "where kamar_inap.tgl_keluar between ? and ? and reg_periksa.kd_pj like ?  and COALESCE(dpjp_ranap.kd_dokter,'') like ? and concat(kamar.kd_bangsal,bangsal.nm_bangsal) like ? and reg_periksa.no_rkm_medis like ? and kamar_inap.stts_pulang not in ('-','Pindah Kamar') "+
                 "GROUP BY kamar_inap.no_rawat order by kamar_inap.tgl_keluar,kamar_inap.jam_keluar ");
             try {
                 ps.setString(1,Valid.SetTgl(Tgl1.getSelectedItem()+""));
@@ -896,6 +924,7 @@ private void BtnCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 ps.setString(3,"%"+kdpenjab.getText()+"%");
                 ps.setString(4,"%"+kddokter.getText()+"%");
                 ps.setString(5,"%"+kdbangsal.getText()+nmbangsal.getText()+"%");
+                ps.setString(6,"%"+TCari.getText()+"%");
                 rs=ps.executeQuery();
                 all=0;ttlLaborat=0;ttlRadiologi=0;ttlOperasi=0;ttlObat=0;
                 ttlRanap_Dokter=0;ttlRanap_Paramedis=0;ttlRalan_Dokter=0;
