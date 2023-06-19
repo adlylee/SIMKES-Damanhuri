@@ -392,6 +392,7 @@ import java.awt.geom.RoundRectangle2D;
 import laporan.DlgFrekuensiPenyakitRalanDanRanap;
 import laporan.DlgFrekuensiPenyakitRanapBaru;
 import permintaan.DlgCariPermintaanUTD;
+import mpp.DlgSkriningMPP;
 
 
 /**
@@ -946,6 +947,7 @@ public class frmUtama extends javax.swing.JFrame {
         btnFrekuensiPenyakitRanapBaru = new widget.ButtonBig();
         btnFrekuensiPerPerujuk = new widget.ButtonBig();
         btnPaketObatOp = new widget.ButtonBig();
+        btnPermintaanMPP = new widget.ButtonBig();
         internalFrame1 = new widget.InternalFrame();
         BtnMenu = new widget.ButtonBig();
         jSeparator4 = new javax.swing.JSeparator();
@@ -1123,7 +1125,7 @@ public class frmUtama extends javax.swing.JFrame {
         WindowInput.setUndecorated(true);
         WindowInput.setResizable(false);
 
-        internalFrame6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Ubah Password ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Ubah Password ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame6.setName("internalFrame6"); // NOI18N
         internalFrame6.setLayout(null);
 
@@ -1202,7 +1204,7 @@ public class frmUtama extends javax.swing.JFrame {
         DlgHome.setUndecorated(true);
         DlgHome.setResizable(false);
 
-        panelMenu.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 225, 205)), "::[ Menu Utama ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(60, 60, 60))); // NOI18N
+        panelMenu.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 225, 205)), "::[ Menu Utama ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(60, 60, 60))); // NOI18N
         panelMenu.setName("panelMenu"); // NOI18N
         panelMenu.setPreferredSize(new java.awt.Dimension(2412, 3653));
         panelMenu.setLayout(new java.awt.BorderLayout(1, 1));
@@ -5890,6 +5892,17 @@ public class frmUtama extends javax.swing.JFrame {
         btnPaketObatOp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPaketObatOpActionPerformed(evt);
+            }
+        });
+
+        btnPermintaanMPP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/applications-office.png"))); // NOI18N
+        btnPermintaanMPP.setText("MPP");
+        btnPermintaanMPP.setIconTextGap(0);
+        btnPermintaanMPP.setName("btnPermintaanMPP"); // NOI18N
+        btnPermintaanMPP.setPreferredSize(new java.awt.Dimension(200, 90));
+        btnPermintaanMPP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPermintaanMPPActionPerformed(evt);
             }
         });
 
@@ -12341,6 +12354,17 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_btnPaketObatOpActionPerformed
 
+    private void btnPermintaanMPPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPermintaanMPPActionPerformed
+        isTutup();
+        DlgHome.dispose();
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        DlgSkriningMPP aplikasi=new DlgSkriningMPP(this,false);
+        aplikasi.setSize(PanelUtama.getWidth(), PanelUtama.getHeight());
+        aplikasi.setLocationRelativeTo(PanelUtama);
+        aplikasi.setVisible(true);
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_btnPermintaanMPPActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -12607,6 +12631,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private widget.ButtonBig btnPenyakitRanapCaraBayar;
     private widget.ButtonBig btnPeriksaRadiologi;
     private widget.ButtonBig btnPermintaanLab;
+    private widget.ButtonBig btnPermintaanMPP;
     private widget.ButtonBig btnPermintaanMedis;
     private widget.ButtonBig btnPermintaanNonMedis;
     private widget.ButtonBig btnPermintaanRadiologi;
@@ -14754,6 +14779,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             if(var.getpasien_meninggal()==true){
                 Panelmenu.add(btnPasienMati);
                 Panelmenu.add(btnKerohanian);
+                Panelmenu.add(btnPermintaanMPP);
                 jmlmenu++;
             }
 
@@ -16596,6 +16622,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         if(var.getpasien_meninggal()==true){
             Panelmenu.add(btnPasienMati);
             Panelmenu.add(btnKerohanian);
+            Panelmenu.add(btnPermintaanMPP);
             jmlmenu++;
         }
 
@@ -19049,6 +19076,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             if(btnPasienMati.getText().toLowerCase().trim().contains(TCari.getText().toLowerCase().trim())){
                 Panelmenu.add(btnPasienMati);
                 Panelmenu.add(btnKerohanian);
+                Panelmenu.add(btnPermintaanMPP);
                 jmlmenu++;
             }
         }

@@ -46,8 +46,8 @@ public class PanelDiagnosa extends widget.panelisi {
     public PanelDiagnosa() {
         initComponents();
         TabModeDiagnosaPasien=new DefaultTableModel(null,new Object[]{
-            "P","Tgl.Rawat","No.Rawat","No.R.M.","Nama Pasien","Umur","Ruangan","Kode","Nama Penyakit",
-            "Status","Kasus"}){
+            "P","Tgl.Rawat","No.Rawat","No.R.M.","Nama Pasien","Alamat","NIK","J.K","Tgl.Lahir","Umur","Ruangan","Kode","Nama Penyakit",
+            "Status","Kasus","Stts. Pulang"}){
             @Override public boolean isCellEditable(int rowIndex, int colIndex){
                 boolean a = false;
                 if (colIndex==0) {
@@ -58,7 +58,8 @@ public class PanelDiagnosa extends widget.panelisi {
              Class[] types = new Class[] {
                 java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, 
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, 
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, 
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class 
              };
              @Override
              public Class getColumnClass(int columnIndex) {
@@ -69,7 +70,7 @@ public class PanelDiagnosa extends widget.panelisi {
         tbDiagnosaPasien.setPreferredScrollableViewportSize(new Dimension(500,500));
         tbDiagnosaPasien.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 11; i++) {
+        for (i = 0; i < 16; i++) {
             TableColumn column = tbDiagnosaPasien.getColumnModel().getColumn(i);
             if(i==0){
                 column.setPreferredWidth(20);
@@ -82,17 +83,27 @@ public class PanelDiagnosa extends widget.panelisi {
             }else if(i==4){
                 column.setPreferredWidth(160);
             }else if(i==5){
-                column.setPreferredWidth(50);
+                column.setPreferredWidth(170);
             }else if(i==6){
-                column.setPreferredWidth(150);
+                column.setPreferredWidth(100);
             }else if(i==7){
-                column.setPreferredWidth(50);
+                column.setPreferredWidth(35);
             }else if(i==8){
-                column.setPreferredWidth(350);
+                column.setPreferredWidth(70);
             }else if(i==9){
                 column.setPreferredWidth(50);
             }else if(i==10){
+                column.setPreferredWidth(150);
+            }else if(i==11){
                 column.setPreferredWidth(50);
+            }else if(i==12){
+                column.setPreferredWidth(350);
+            }else if(i==13){
+                column.setPreferredWidth(50);
+            }else if(i==14){
+                column.setPreferredWidth(50);
+            }else if(i==15){
+                column.setPreferredWidth(90);
             }
         }
         tbDiagnosaPasien.setDefaultRenderer(Object.class, new WarnaTable());
@@ -545,7 +556,7 @@ public class PanelDiagnosa extends widget.panelisi {
             JOptionPane.showMessageDialog(null,"Maaf, Silahkan anda pilih dulu pasien...!!!");
         }else{
             Sequel.queryu2("update diagnosa_pasien set status_penyakit='Baru' where no_rawat=? and kd_penyakit=?",2,new String[]{
-                tbDiagnosaPasien.getValueAt(tbDiagnosaPasien.getSelectedRow(),2).toString(),tbDiagnosaPasien.getValueAt(tbDiagnosaPasien.getSelectedRow(),5).toString()
+                tbDiagnosaPasien.getValueAt(tbDiagnosaPasien.getSelectedRow(),2).toString(),tbDiagnosaPasien.getValueAt(tbDiagnosaPasien.getSelectedRow(),11).toString()
             });
             tampil();
         }
@@ -556,7 +567,7 @@ public class PanelDiagnosa extends widget.panelisi {
             JOptionPane.showMessageDialog(null,"Maaf, Silahkan anda pilih dulu pasien...!!!");
         }else{
             Sequel.queryu2("update diagnosa_pasien set status_penyakit='Lama' where no_rawat=? and kd_penyakit=?",2,new String[]{
-                tbDiagnosaPasien.getValueAt(tbDiagnosaPasien.getSelectedRow(),2).toString(),tbDiagnosaPasien.getValueAt(tbDiagnosaPasien.getSelectedRow(),5).toString()
+                tbDiagnosaPasien.getValueAt(tbDiagnosaPasien.getSelectedRow(),2).toString(),tbDiagnosaPasien.getValueAt(tbDiagnosaPasien.getSelectedRow(),11).toString()
             });
             tampil();
         }
@@ -596,10 +607,12 @@ public class PanelDiagnosa extends widget.panelisi {
                     "diagnosa_pasien.kd_penyakit,penyakit.nm_penyakit, diagnosa_pasien.status,diagnosa_pasien.status_penyakit,reg_periksa.umurdaftar,reg_periksa.sttsumur, "+
                     "if(diagnosa_pasien.status='Ralan',(select nm_poli from poliklinik where poliklinik.kd_poli=reg_periksa.kd_poli),"+
                     "(select bangsal.nm_bangsal from kamar_inap inner join kamar inner join bangsal on kamar_inap.kd_kamar=kamar.kd_kamar "+
-                    "and kamar.kd_bangsal=bangsal.kd_bangsal where kamar_inap.no_rawat=reg_periksa.no_rawat limit 1 )) as ruangan "+
+                    "and kamar.kd_bangsal=bangsal.kd_bangsal where kamar_inap.no_rawat=reg_periksa.no_rawat limit 1 )) as ruangan,pasien.no_ktp,pasien.tgl_lahir,pasien.alamat,pasien.jk, "+
+                    "IF(diagnosa_pasien.status = 'Ralan',(SELECT MAX(reg_periksa.stts) FROM reg_periksa WHERE reg_periksa.no_rawat = diagnosa_pasien.no_rawat),(SELECT kamar_inap.stts_pulang FROM kamar_inap WHERE kamar_inap.no_rawat = diagnosa_pasien.no_rawat LIMIT 1)) AS pulang "+
                     "from diagnosa_pasien inner join reg_periksa inner join pasien inner join penyakit "+
                     "on diagnosa_pasien.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "+
                     "and diagnosa_pasien.kd_penyakit=penyakit.kd_penyakit "+
+                    "left join kamar_inap on kamar_inap.no_rawat=diagnosa_pasien.no_rawat and kamar_inap.no_rawat=reg_periksa.no_rawat "+
                     "where reg_periksa.tgl_registrasi between ? and ? and reg_periksa.no_rkm_medis like ? and reg_periksa.tgl_registrasi like ? and diagnosa_pasien.status = ? or "+
                     "reg_periksa.tgl_registrasi between ? and ? and reg_periksa.no_rkm_medis like ? and diagnosa_pasien.no_rawat like ? and diagnosa_pasien.status = ? or "+
                     "reg_periksa.tgl_registrasi between ? and ? and reg_periksa.no_rkm_medis like ? and reg_periksa.no_rkm_medis like ? and diagnosa_pasien.status = ? or "+
@@ -609,7 +622,7 @@ public class PanelDiagnosa extends widget.panelisi {
                     "reg_periksa.tgl_registrasi between ? and ? and reg_periksa.no_rkm_medis like ? and diagnosa_pasien.status like ? and diagnosa_pasien.status = ? or "+
                     "reg_periksa.tgl_registrasi between ? and ? and reg_periksa.no_rkm_medis like ? and diagnosa_pasien.status = ? and diagnosa_pasien.status = ? or "+
                     "reg_periksa.tgl_registrasi between ? and ? and reg_periksa.no_rkm_medis like ? and diagnosa_pasien.status_penyakit like ? and diagnosa_pasien.status = ? "+
-                    "order by reg_periksa.tgl_registrasi,diagnosa_pasien.prioritas ");
+                    "group by diagnosa_pasien.no_rawat,diagnosa_pasien.kd_penyakit order by reg_periksa.tgl_registrasi,diagnosa_pasien.prioritas ");
             try {
                 psdiagnosapasien.setString(1,tanggal1);
                 psdiagnosapasien.setString(2,tanggal2);
@@ -662,13 +675,13 @@ public class PanelDiagnosa extends widget.panelisi {
                                    rs.getString(1),
                                    rs.getString(2),
                                    rs.getString(3),
-                                   rs.getString(4),
+                                   rs.getString(4),rs.getString(14),rs.getString(12),rs.getString(15),rs.getString(13),
                                    rs.getString(9)+" "+rs.getString(10),
                                    rs.getString("ruangan"),
                                    rs.getString(5),
                                    rs.getString(6),
                                    rs.getString(7),
-                                   rs.getString(8)});
+                                   rs.getString(8),rs.getString("pulang")});
                 }            
             } catch (Exception e) {
                 System.out.println("Notifikasi : "+e);
@@ -1004,7 +1017,7 @@ public class PanelDiagnosa extends widget.panelisi {
                 for(i=0;i<tbDiagnosaPasien.getRowCount();i++){ 
                     if(tbDiagnosaPasien.getValueAt(i,0).toString().equals("true")){
                         Sequel.queryu2("delete from diagnosa_pasien where no_rawat=? and kd_penyakit=?",2,new String[]{
-                            tbDiagnosaPasien.getValueAt(i,2).toString(),tbDiagnosaPasien.getValueAt(i,7).toString()
+                            tbDiagnosaPasien.getValueAt(i,2).toString(),tbDiagnosaPasien.getValueAt(i,11).toString()
                         });
                     }
                 }
@@ -1041,19 +1054,24 @@ public class PanelDiagnosa extends widget.panelisi {
                 param.put("logo",Sequel.cariGambar("select logo from setting")); 
                 Valid.MyReport("rptDiagnosa.jrxml","report","::[ Data Diagnosa Pasien ]::",
                         "select reg_periksa.tgl_registrasi,diagnosa_pasien.no_rawat,reg_periksa.no_rkm_medis,pasien.nm_pasien,"+
-                        "diagnosa_pasien.kd_penyakit,penyakit.nm_penyakit, diagnosa_pasien.status,diagnosa_pasien.status_penyakit "+
+                        "diagnosa_pasien.kd_penyakit,penyakit.nm_penyakit, diagnosa_pasien.status,diagnosa_pasien.status_penyakit,concat(reg_periksa.umurdaftar,' ',reg_periksa.sttsumur) as umur, "+
+                        "if(diagnosa_pasien.status='Ralan',(select nm_poli from poliklinik where poliklinik.kd_poli=reg_periksa.kd_poli),"+
+                        "(select bangsal.nm_bangsal from kamar_inap inner join kamar inner join bangsal on kamar_inap.kd_kamar=kamar.kd_kamar "+
+                        "and kamar.kd_bangsal=bangsal.kd_bangsal where kamar_inap.no_rawat=reg_periksa.no_rawat limit 1 )) as ruangan,pasien.no_ktp,pasien.tgl_lahir,pasien.alamat,pasien.jk, "+
+                        "IF(diagnosa_pasien.status = 'Ralan',(SELECT MAX(reg_periksa.stts) FROM reg_periksa WHERE reg_periksa.no_rawat = diagnosa_pasien.no_rawat),(SELECT kamar_inap.stts_pulang FROM kamar_inap WHERE kamar_inap.no_rawat = diagnosa_pasien.no_rawat LIMIT 1)) AS pulang "+
                         "from diagnosa_pasien inner join reg_periksa inner join pasien inner join penyakit "+
                         "on diagnosa_pasien.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "+
                         "and diagnosa_pasien.kd_penyakit=penyakit.kd_penyakit "+
-                        "where reg_periksa.tgl_registrasi between '"+tanggal1+"' and '"+tanggal2+"' and reg_periksa.no_rkm_medis like '%"+norm+"%' and reg_periksa.tgl_registrasi like '%"+keyword+"%' or "+
-                        "reg_periksa.tgl_registrasi between '"+tanggal1+"' and '"+tanggal2+"' and reg_periksa.no_rkm_medis like '%"+norm+"%' and diagnosa_pasien.no_rawat like '%"+keyword+"%' or "+
-                        "reg_periksa.tgl_registrasi between '"+tanggal1+"' and '"+tanggal2+"' and reg_periksa.no_rkm_medis like '%"+norm+"%' and reg_periksa.no_rkm_medis like '%"+keyword+"%' or "+
-                        "reg_periksa.tgl_registrasi between '"+tanggal1+"' and '"+tanggal2+"' and reg_periksa.no_rkm_medis like '%"+norm+"%' and pasien.nm_pasien like '%"+keyword+"%' or "+
-                        "reg_periksa.tgl_registrasi between '"+tanggal1+"' and '"+tanggal2+"' and reg_periksa.no_rkm_medis like '%"+norm+"%' and diagnosa_pasien.kd_penyakit like '%"+keyword+"%' or "+
-                        "reg_periksa.tgl_registrasi between '"+tanggal1+"' and '"+tanggal2+"' and reg_periksa.no_rkm_medis like '%"+norm+"%' and penyakit.nm_penyakit like '%"+keyword+"%' or "+
-                        "reg_periksa.tgl_registrasi between '"+tanggal1+"' and '"+tanggal2+"' and reg_periksa.no_rkm_medis like '%"+norm+"%' and diagnosa_pasien.status_penyakit like '%"+keyword+"%' or "+
-                        "reg_periksa.tgl_registrasi between '"+tanggal1+"' and '"+tanggal2+"' and reg_periksa.no_rkm_medis like '%"+norm+"%' and diagnosa_pasien.status like '%"+keyword+"%' "+
-                        "order by reg_periksa.tgl_registrasi,diagnosa_pasien.prioritas ",param);
+                        "left join kamar_inap on kamar_inap.no_rawat=diagnosa_pasien.no_rawat and kamar_inap.no_rawat=reg_periksa.no_rawat "+
+                        "where reg_periksa.tgl_registrasi between '"+tanggal1+"' and '"+tanggal2+"' and reg_periksa.no_rkm_medis like '%"+norm+"%' and reg_periksa.tgl_registrasi like '%"+keyword+"%' and diagnosa_pasien.status = '"+status+"' or "+
+                        "reg_periksa.tgl_registrasi between '"+tanggal1+"' and '"+tanggal2+"' and reg_periksa.no_rkm_medis like '%"+norm+"%' and diagnosa_pasien.no_rawat like '%"+keyword+"%' and diagnosa_pasien.status = '"+status+"' or "+
+                        "reg_periksa.tgl_registrasi between '"+tanggal1+"' and '"+tanggal2+"' and reg_periksa.no_rkm_medis like '%"+norm+"%' and reg_periksa.no_rkm_medis like '%"+keyword+"%' and diagnosa_pasien.status = '"+status+"' or "+
+                        "reg_periksa.tgl_registrasi between '"+tanggal1+"' and '"+tanggal2+"' and reg_periksa.no_rkm_medis like '%"+norm+"%' and pasien.nm_pasien like '%"+keyword+"%' and diagnosa_pasien.status = '"+status+"' or "+
+                        "reg_periksa.tgl_registrasi between '"+tanggal1+"' and '"+tanggal2+"' and reg_periksa.no_rkm_medis like '%"+norm+"%' and diagnosa_pasien.kd_penyakit like '%"+keyword+"%' and diagnosa_pasien.status = '"+status+"' or "+
+                        "reg_periksa.tgl_registrasi between '"+tanggal1+"' and '"+tanggal2+"' and reg_periksa.no_rkm_medis like '%"+norm+"%' and penyakit.nm_penyakit like '%"+keyword+"%' and diagnosa_pasien.status = '"+status+"' or "+
+                        "reg_periksa.tgl_registrasi between '"+tanggal1+"' and '"+tanggal2+"' and reg_periksa.no_rkm_medis like '%"+norm+"%' and diagnosa_pasien.status_penyakit like '%"+keyword+"%' and diagnosa_pasien.status = '"+status+"' or "+
+                        "reg_periksa.tgl_registrasi between '"+tanggal1+"' and '"+tanggal2+"' and reg_periksa.no_rkm_medis like '%"+norm+"%' and diagnosa_pasien.status like '%"+keyword+"%' and diagnosa_pasien.status = '"+status+"' "+
+                        "group by diagnosa_pasien.no_rawat,diagnosa_pasien.kd_penyakit order by reg_periksa.tgl_registrasi,diagnosa_pasien.prioritas ",param);
             }
         }else if(TabRawat.getSelectedIndex()==2){
             if(TabModeTindakanPasien.getRowCount()==0){
