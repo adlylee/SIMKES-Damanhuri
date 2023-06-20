@@ -52,7 +52,7 @@ public final class DlgPenanggungJawab extends javax.swing.JDialog {
         this.setLocation(10,2);
         setSize(628,674);
 
-        Object[] row={"P","Kode Askes/Asuransi","Nama Penanggung/Askes/Asuransi"};
+        Object[] row={"P","Kode Askes/Asuransi","Nama Penanggung/Askes/Asuransi","Status"};
         tabMode=new DefaultTableModel(null,row){
              @Override public boolean isCellEditable(int rowIndex, int colIndex){
                 boolean a = false;
@@ -62,7 +62,7 @@ public final class DlgPenanggungJawab extends javax.swing.JDialog {
                 return a;
              }
              Class[] types = new Class[] {
-                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
              };
              @Override
              public Class getColumnClass(int columnIndex) {
@@ -74,7 +74,7 @@ public final class DlgPenanggungJawab extends javax.swing.JDialog {
         tbKamar.setPreferredScrollableViewportSize(new Dimension(500,500));
         tbKamar.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 3; i++) {
+        for (i = 0; i < 4; i++) {
             TableColumn column = tbKamar.getColumnModel().getColumn(i);
             if(i==0){
                 column.setPreferredWidth(20);
@@ -82,6 +82,9 @@ public final class DlgPenanggungJawab extends javax.swing.JDialog {
                 column.setPreferredWidth(150);
             }else if(i==2){
                 column.setPreferredWidth(450);
+            }else{
+                column.setMinWidth(0);
+                column.setMaxWidth(0);
             }
         }
         tbKamar.setDefaultRenderer(Object.class, new WarnaTable());
@@ -552,7 +555,7 @@ public final class DlgPenanggungJawab extends javax.swing.JDialog {
         }else if(Nm.getText().trim().equals("")){
             Valid.textKosong(Nm,"Nama Penanggung/Askes/Asuransi");
         }else{
-            Sequel.menyimpan("penjab","'"+Kd.getText()+"','"+Nm.getText()+"'","Kode Penanggung/Askes/Asuransi");
+            Sequel.menyimpan("penjab","'"+Kd.getText()+"','"+Nm.getText()+"','1'","Kode Penanggung/Askes/Asuransi");
             BtnCariActionPerformed(evt);
             emptTeks();
         }
@@ -579,7 +582,7 @@ public final class DlgPenanggungJawab extends javax.swing.JDialog {
     private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHapusActionPerformed
         for(i=0;i<tbKamar.getRowCount();i++){ 
             if(tbKamar.getValueAt(i,0).toString().equals("true")){
-                Sequel.meghapus("penjab","kd_pj",tbKamar.getValueAt(i,1).toString());
+                Sequel.mengedit("penjab","kd_pj = '"+tbKamar.getValueAt(i,1).toString()+"'","status = '0'");
             }
         } 
         BtnCariActionPerformed(evt);
@@ -780,14 +783,15 @@ private void NmKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NmKeyP
     private void tampil() {
         Valid.tabelKosong(tabMode);
         try{
-            ps=koneksi.prepareStatement("select kd_pj, png_jawab "+
-                    " from penjab where  kd_pj like ? or png_jawab like ? order by png_jawab ");
+            ps=koneksi.prepareStatement("select kd_pj, png_jawab , status"+
+                    " from penjab where (kd_pj like ? or png_jawab like ?) and status = ? order by png_jawab ");
             try{
                 ps.setString(1,"%"+TCari.getText().trim()+"%");
                 ps.setString(2,"%"+TCari.getText().trim()+"%");
+                ps.setString(3,"1");
                 rs=ps.executeQuery();
                 while(rs.next()){
-                    tabMode.addRow(new Object[]{false,rs.getString(1),rs.getString(2)});
+                    tabMode.addRow(new Object[]{false,rs.getString(1),rs.getString(2),rs.getString(3)});
                 }
             }catch(Exception ex){
                 System.out.println(ex);

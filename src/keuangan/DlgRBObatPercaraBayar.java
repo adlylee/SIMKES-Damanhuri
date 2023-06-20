@@ -22,7 +22,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import kepegawaian.DlgCariDokter;
 import simrskhanza.DlgPenanggungJawab;
 
 public class DlgRBObatPercaraBayar extends javax.swing.JDialog {
@@ -31,13 +30,13 @@ public class DlgRBObatPercaraBayar extends javax.swing.JDialog {
     private validasi Valid=new validasi();
     private Connection koneksi=koneksiDB.condb();
     private Jurnal jur=new Jurnal();
-    private PreparedStatement pspenjab,psresep,psresep2;
-    private ResultSet rspenjab,rsresep; 
+    private PreparedStatement pspenjab,psresep,psresep2,psretur;
+    private ResultSet rspenjab,rsresep,rsretur; 
     private Dimension screen=Toolkit.getDefaultToolkit().getScreenSize(); 
     private DlgPenanggungJawab penjab=new DlgPenanggungJawab(null,false);
     private int i=0,a=0;
-    private double subtotal=0,ttlbiaya=0,embalase=0,ttlembalase=0,tuslah=0,ttltuslah=0;
-    private String carabayar="",jumlah,total,emb,tsl;
+    private double subtotal=0,ttlbiaya=0,embalase=0,ttlembalase=0,tuslah=0,ttltuslah=0,jmlretur=0,subtotalretur=0;
+    private String carabayar="",jumlah,total,emb,tsl,caridetretur,simpannorawat,detretur;
 
     /** Creates new form DlgProgramStudi
      * @param parent
@@ -127,7 +126,7 @@ public class DlgRBObatPercaraBayar extends javax.swing.JDialog {
         
         try {
              pspenjab=koneksi.prepareStatement(
-                     "select kd_pj,png_jawab from penjab where kd_pj like ?");             
+                     "select kd_pj,png_jawab from penjab where kd_pj like ? and status = '1'");             
              psresep=koneksi.prepareStatement(
                      "select detail_pemberian_obat.tgl_perawatan,detail_pemberian_obat.jam,"+
                      "detail_pemberian_obat.no_rawat,pasien.nm_pasien,reg_periksa.kd_pj,databarang.nama_brng,"+
@@ -146,6 +145,11 @@ public class DlgRBObatPercaraBayar extends javax.swing.JDialog {
                      "detail_pemberian_obat inner join databarang "+
                      "on detail_pemberian_obat.kode_brng=databarang.kode_brng and detail_pemberian_obat.no_rawat=reg_periksa.no_rawat and "+
                      "reg_periksa.no_rkm_medis=pasien.no_rkm_medis where reg_periksa.kd_pj=? and detail_pemberian_obat.tgl_perawatan between ? and ? order by detail_pemberian_obat.no_rawat");             
+             psretur = koneksi.prepareStatement("select databarang.kode_brng, databarang.nama_brng,detreturjual.h_retur, returjual.tgl_retur, "
+            + "sum(detreturjual.jml_retur * -1) as jml, "
+            + "sum(detreturjual.subtotal * -1) as total from detreturjual inner join databarang inner join returjual "
+            + "on detreturjual.kode_brng=databarang.kode_brng "
+            + "and returjual.no_retur_jual=detreturjual.no_retur_jual where returjual.no_retur_jual like ? group by databarang.kode_brng");
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -557,7 +561,7 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         Tgl1.requestFocus();
-        prosesCari();
+//        prosesCari();
     }//GEN-LAST:event_formWindowOpened
 
     private void MnUrut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnUrut1ActionPerformed
@@ -613,6 +617,7 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
         try{   
            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR)); 
            Valid.tabelKosong(tabMode);
+           noRawatKelas cek = new noRawatKelas();
            pspenjab.setString(1,"%"+kdpenjab.getText()+"%"); 
            rspenjab=pspenjab.executeQuery();
            i=1;
@@ -631,17 +636,54 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                tuslah=0;
                //Object[] row={"No.","Dokter","Tanggal","Nama Obat","Jml","Biaya Obat","Embalase","Tuslah"};
                while(rsresep.next()){
-                   subtotal=subtotal+rsresep.getDouble("total");
-                   ttlbiaya=ttlbiaya+rsresep.getDouble("total");
-                   embalase=embalase+rsresep.getDouble("embalase");
-                   ttlembalase=ttlembalase+rsresep.getDouble("embalase");
-                   tuslah=tuslah+rsresep.getDouble("tuslah");
-                   ttltuslah=ttltuslah+rsresep.getDouble("tuslah");
-                   tabMode.addRow(new Object[]{
-                       "","   "+a+". ("+rsresep.getString("no_rawat")+") "+rsresep.getString("nm_pasien"),
-                       rsresep.getString("tgl_perawatan")+" "+rsresep.getString("jam"),rsresep.getString("kode_brng")+" "+rsresep.getString("nama_brng"),
-                       rsresep.getDouble("jml"),rsresep.getDouble("total"),rsresep.getDouble("embalase"),rsresep.getDouble("tuslah")
-                   });
+                   jmlretur = 0;
+                   subtotalretur = 0;
+//                   System.out.println(cek.getUsername());
+                   if (cek.getNorawat()== null) {
+                        cek.setNorawat(rsresep.getString("no_rawat"));
+                        cek.setNama(rsresep.getString("nm_pasien"));
+                        detretur ="";
+//                        System.out.println("Set Awal");
+                   }
+                   if (!cek.getNorawat().equals(rsresep.getString("no_rawat"))) {
+                        cek.setNorawat(rsresep.getString("no_rawat"));
+                        cek.setNama(rsresep.getString("nm_pasien"));
+                        detretur ="";
+//                        System.out.println("Set Selanjutnya");
+                   }
+//                   if(detretur.equals("")){
+//                        caridetretur = Sequel.cariIsi("SELECT no_retur_jual FROM returjual WHERE no_retur_jual LIKE '%"+cek.getUsername()+"%'");
+//                        jmlretur = Sequel.cariIsiAngka("SELECT sum(detreturjual.jml_retur) FROM detreturjual WHERE no_retur_jual LIKE '%"+rsresep.getString("no_rawat")+"%' AND kode_brng = '"+rsresep.getString("kode_brng")+"' group by kode_brng");
+//                        subtotalretur = Sequel.cariIsiAngka("SELECT sum(detreturjual.subtotal) FROM detreturjual WHERE no_retur_jual LIKE '%"+rsresep.getString("no_rawat")+"%' AND kode_brng = '"+rsresep.getString("kode_brng")+"' group by kode_brng");
+//                        detretur = caridetretur;
+//                   }
+//                   if(detretur.equals(caridetretur)){
+//                        jmlretur = Sequel.cariIsiAngka("SELECT sum(detreturjual.jml_retur)  FROM detreturjual WHERE no_retur_jual LIKE '%"+rsresep.getString("no_rawat")+"%' AND kode_brng = '"+rsresep.getString("kode_brng")+"' group by kode_brng");
+//                        subtotalretur = Sequel.cariIsiAngka("SELECT sum(detreturjual.subtotal) FROM detreturjual WHERE no_retur_jual LIKE '%"+rsresep.getString("no_rawat")+"%' AND kode_brng = '"+rsresep.getString("kode_brng")+"' group by kode_brng");
+//                   }
+                   
+                    subtotal=subtotal+rsresep.getDouble("total");
+
+                    ttlbiaya=ttlbiaya+rsresep.getDouble("total");
+
+                    embalase=embalase+rsresep.getDouble("embalase");
+                    ttlembalase=ttlembalase+rsresep.getDouble("embalase");
+                    tuslah=tuslah+rsresep.getDouble("tuslah");
+                    ttltuslah=ttltuslah+rsresep.getDouble("tuslah");
+                    tabMode.addRow(new Object[]{
+                        "","   "+a+". ("+rsresep.getString("no_rawat")+") "+rsresep.getString("nm_pasien"),
+                        rsresep.getString("tgl_perawatan")+" "+rsresep.getString("jam"),rsresep.getString("kode_brng")+" "+rsresep.getString("nama_brng"),
+                        rsresep.getDouble("jml"),rsresep.getDouble("total"),rsresep.getDouble("embalase"),rsresep.getDouble("tuslah")
+                    });
+                    psretur.setString(1,"%"+cek.getNorawat()+"%");
+                    rsretur=psretur.executeQuery();
+                    while (rsretur.next()) {
+                        tabMode.addRow(new Object[]{
+                            ""," ("+cek.getNorawat()+") "+cek.getNama(),
+                            rsretur.getString("tgl_retur"),rsretur.getString("kode_brng")+" "+rsretur.getString("nama_brng"),
+                            rsretur.getDouble("jml"),rsretur.getDouble("total"),0,0
+                        });
+                    }
                    a++;
                }
                if(subtotal>0){
@@ -651,7 +693,7 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
            }
            tabMode.addRow(new Object[]{">>","Total ",":","",null,ttlbiaya,ttlembalase,ttltuslah});
            this.setCursor(Cursor.getDefaultCursor());             
-        }catch(Exception e){
+        }catch(SQLException e){
             System.out.println("Catatan  "+e);
         }        
     }
@@ -701,6 +743,34 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
         }catch(Exception e){
             System.out.println("Catatan  "+e);
         }        
+    }
+    
+    class noRawatKelas{
+        private String norawat;
+        private String nama;
+
+//        public noRawatKelas(String norawat, String nama) {
+//            this.norawat = norawat;
+//            this.nama = nama;
+//        }
+        
+        public void setNama(String nama) {
+            this.nama = nama;
+        }
+
+        public void setNorawat(String norawat) {
+            this.norawat = norawat;
+        }
+
+        public String getNorawat() {
+            return norawat;
+        }
+
+        public String getNama() {
+            return nama;
+        }
+
+        
     }
     
 }

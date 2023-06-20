@@ -132,7 +132,13 @@ public class BridgingWA {
             if (number.equals("")) {
                 System.out.println("Nomor telepon kosong !!!");
             } else {
-                requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message+"&api_key="+token;
+                    
+                requestJson = 
+                        "{"
+                    + "\"number\":\"" + number + "\","
+                    + "\"body\":\"" + message + "\","
+                    + "}";
+//                "type=text&sender=" + sender + "&number=" + number + "&message=" + message+"&api_key="+token;
                 System.out.println("PostField : " + requestJson);
                 System.out.println("                  \n                 ");
                 System.out.println("Mengirim Pesan ............");
@@ -141,8 +147,13 @@ public class BridgingWA {
                 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
                 con.setRequestMethod("POST");
                 con.setRequestProperty("User-Agent", USER_AGENT);
-                con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                con.setRequestProperty("Content-Type", "application/json");
+                con.setRequestProperty("Accept", "application/json");
+                con.setRequestProperty("Authorization", "Bearer 9928cda0-7397-4bb8-8fa0-6da8025e6871");
                 con.setRequestProperty("charset", "utf-8");
+//                "Accept: application/json",
+//                "Authorization: Bearer 9928cda0-7397-4bb8-8fa0-6da8025e6871",
+
 
                 // For POST only - START
                 con.setDoOutput(true);
