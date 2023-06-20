@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fungsi.EnkripsiAES;
 import fungsi.sekuel;
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -14,14 +16,20 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
+import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import javax.swing.JOptionPane;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
@@ -37,27 +45,25 @@ public class BridgingWA {
     private JsonNode root;
     private JsonNode nameNode;
     private JsonNode response;
+    private SSLContext sslContext;
+    private SSLSocketFactory sslFactory;
+    private SecretKeySpec secretKey;
+    private Scheme scheme;
+    private HttpComponentsClientHttpRequestFactory factory;
 
     public RestTemplate getRest() throws NoSuchAlgorithmException, KeyManagementException {
-        SSLContext sslContext = SSLContext.getInstance("SSL");
-        javax.net.ssl.TrustManager[] trustManagers = {
+        sslContext = SSLContext.getInstance("SSL");
+        TrustManager[] trustManagers= {
             new X509TrustManager() {
-                public X509Certificate[] getAcceptedIssuers() {
-                    return null;
-                }
-
-                public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
-                }
-
-                public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
-                }
+                public X509Certificate[] getAcceptedIssuers() {return null;}
+                public void checkServerTrusted(X509Certificate[] arg0, String arg1)throws CertificateException {}
+                public void checkClientTrusted(X509Certificate[] arg0, String arg1)throws CertificateException {}
             }
         };
-        sslContext.init(null, trustManagers, new SecureRandom());
-        SSLSocketFactory sslFactory = new SSLSocketFactory(sslContext, SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-        Scheme scheme = new Scheme("https", 443, sslFactory);
-        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-        factory.setReadTimeout(2000);
+        sslContext.init(null,trustManagers , new SecureRandom());
+        sslFactory=new SSLSocketFactory(sslContext,SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+        scheme=new Scheme("https",443,sslFactory);
+        factory=new HttpComponentsClientHttpRequestFactory();
         factory.getHttpClient().getConnectionManager().getSchemeRegistry().register(scheme);
         return new RestTemplate(factory);
     }
@@ -120,11 +126,7 @@ public class BridgingWA {
 
     public void sendWaBatal(String no_rkm_medis, String nama, String tanggal, String polidari, String polike) {
         try {
-            message = "Assalamualaikum " + nama + ". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai .\n"
-                    + " Handak mahabar akan kalaunya JADWAL PERIKSA ke " + polidari + " sebelumnya dibatalkan, karena Dokter berhalangan hadir. "
-                    + " Dan dipindah jadi tanggal " + tanggal + " ke " + polike + ". \n"
-                    + " Terkait dengan habar di atas, kami ucapkan permohonan maaf dan terima kasih atas kepercayaan pian berobat di RSUD H. Damanhuri. \nTerima kasih \n \nWassalamualaikum\n"
-                    + " Daftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US";
+            message = "Assalamualaikum " + nama + ". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai .\n Handak mahabar akan kalaunya JADWAL PERIKSA ke " + polidari + " sebelumnya dibatalkan, karena Dokter berhalangan hadir. Dan dipindah jadi tanggal " + tanggal + " ke " + polike + ". \n Terkait dengan habar di atas, kami ucapkan permohonan maaf dan terima kasih atas kepercayaan pian berobat di RSUD H. Damanhuri. \nTerima kasih \n \nWassalamualaikum\n Daftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US\n Daftar Online Tanpa Antri via JKN Mobile Klik Disini >>> https://play.google.com/store/apps/details?id=app.bpjs.mobile";
             number = Sequel.cariIsi("SELECT no_tlp FROM pasien WHERE no_rkm_medis = " + no_rkm_medis);
             urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldserver+"'");
             sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldphone+"'");
@@ -133,57 +135,48 @@ public class BridgingWA {
             if (number.equals("")) {
                 System.out.println("Nomor telepon kosong !!!");
             } else {
-                    
-                requestJson = 
-                        "{"
-                    + "\"number\":\"" + number + "\","
-                    + "\"body\":\"" + message + "\","
-                    + "}";
-//                "type=text&sender=" + sender + "&number=" + number + "&message=" + message+"&api_key="+token;
-                System.out.println("PostField : " + requestJson);
-                System.out.println("                  \n                 ");
-                System.out.println("Mengirim Pesan ............");
+                number = number.replaceFirst("0", "62");
+                Map<String,String> mss=new HashMap<String,String>();
+                mss.put("number", number);
+                mss.put("body", message);
 
-                URL obj = new URL(urlApi);
-                HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+                JSONObject j=new JSONObject(mss);
+
+                URL url = new URL(urlApi);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+                //  CURLOPT_POST
                 con.setRequestMethod("POST");
-//                con.setRequestProperty("User-Agent", USER_AGENT);
+
+                // CURLOPT_FOLLOWLOCATION
+                con.setInstanceFollowRedirects(true);
+
+                String postData = j.toString();
                 con.setRequestProperty("Content-Type", "application/json");
                 con.setRequestProperty("Accept", "application/json");
-                con.setRequestProperty("Authorization", EnkripsiAES.decrypt("oyA0tRuIM0W4abvpcH1RDZfvOPD96wYWZsNfzrRLKVTilmT1FiyFbKQ/Pi9/xgXR"));
-//                con.setRequestProperty("charset", "utf-8");
+                con.setRequestProperty("Authorization", "Bearer "+token);
 
-
-                // For POST only - START
                 con.setDoOutput(true);
-                OutputStreamWriter os = new OutputStreamWriter(con.getOutputStream());
-                os.write(requestJson);
-                os.flush();
-                os.close();
-                // For POST only - END
+                con.setDoInput(true);
 
-                int responseCode = con.getResponseCode();
-                System.out.println("POST Response Code :: " + responseCode);
+                DataOutputStream output = new DataOutputStream(con.getOutputStream());
+                output.writeBytes(postData);
+                output.close();
 
-                if (responseCode == HttpURLConnection.HTTP_OK) { //success
-                    BufferedReader in = new BufferedReader(new InputStreamReader(
-                            con.getInputStream()));
-                    String inputLine;
-                    StringBuffer response = new StringBuffer();
+                // "Post data send ... waiting for reply");
+                int code = con.getResponseCode(); // 200 = HTTP_OK
+                System.out.println("Response    (Code):" + code);
+                System.out.println("Response (Message):" + con.getResponseMessage());
 
-                    while ((inputLine = in.readLine()) != null) {
-                        response.append(inputLine);
-                    }
-                    in.close();
-
-                    // print result
-                    System.out.println(response.toString());
-                    System.out.println("\n");
-                    System.out.println("Pesan Berhasil Dikirim . ");
-                } else {
-                    System.out.println("POST request not worked");
+                // read the response
+                DataInputStream input = new DataInputStream(con.getInputStream());
+                int c;
+                StringBuilder resultBuf = new StringBuilder();
+                while ( (c = input.read()) != -1) {
+                    resultBuf.append((char) c);
                 }
-                System.out.println("----------------- -------------------");
+                input.close();
+                System.out.println(resultBuf.toString());
             }
         } catch (Exception ex) {
             System.out.println("Notifikasi : " + ex);

@@ -34,7 +34,7 @@ public class DlgRBObatPercaraBayar extends javax.swing.JDialog {
     private ResultSet rspenjab,rsresep,rsretur; 
     private Dimension screen=Toolkit.getDefaultToolkit().getScreenSize(); 
     private DlgPenanggungJawab penjab=new DlgPenanggungJawab(null,false);
-    private int i=0,a=0;
+    private int i=0,a=0,jml=0;
     private double subtotal=0,ttlbiaya=0,embalase=0,ttlembalase=0,tuslah=0,ttltuslah=0,jmlretur=0,subtotalretur=0;
     private String carabayar="",jumlah,total,emb,tsl,caridetretur,simpannorawat,detretur;
 
@@ -617,7 +617,8 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
         try{   
            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR)); 
            Valid.tabelKosong(tabMode);
-           noRawatKelas cek = new noRawatKelas();
+           noRawatKelas[] cek;
+//           noRawatKelas cek = new noRawatKelas();
            pspenjab.setString(1,"%"+kdpenjab.getText()+"%"); 
            rspenjab=pspenjab.executeQuery();
            i=1;
@@ -639,18 +640,18 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                    jmlretur = 0;
                    subtotalretur = 0;
 //                   System.out.println(cek.getUsername());
-                   if (cek.getNorawat()== null) {
-                        cek.setNorawat(rsresep.getString("no_rawat"));
-                        cek.setNama(rsresep.getString("nm_pasien"));
-                        detretur ="";
-//                        System.out.println("Set Awal");
-                   }
-                   if (!cek.getNorawat().equals(rsresep.getString("no_rawat"))) {
-                        cek.setNorawat(rsresep.getString("no_rawat"));
-                        cek.setNama(rsresep.getString("nm_pasien"));
-                        detretur ="";
-//                        System.out.println("Set Selanjutnya");
-                   }
+//                   if (cek.getNorawat()== null) {
+//                        cek.setNorawat(rsresep.getString("no_rawat"));
+//                        cek.setNama(rsresep.getString("nm_pasien"));
+//                        detretur ="";
+////                        System.out.println("Set Awal");
+//                   }
+//                   if (!cek.getNorawat().equals(rsresep.getString("no_rawat"))) {
+//                        cek.setNorawat(rsresep.getString("no_rawat"));
+//                        cek.setNama(rsresep.getString("nm_pasien"));
+//                        detretur ="";
+////                        System.out.println("Set Selanjutnya");
+//                   }
 //                   if(detretur.equals("")){
 //                        caridetretur = Sequel.cariIsi("SELECT no_retur_jual FROM returjual WHERE no_retur_jual LIKE '%"+cek.getUsername()+"%'");
 //                        jmlretur = Sequel.cariIsiAngka("SELECT sum(detreturjual.jml_retur) FROM detreturjual WHERE no_retur_jual LIKE '%"+rsresep.getString("no_rawat")+"%' AND kode_brng = '"+rsresep.getString("kode_brng")+"' group by kode_brng");
@@ -675,17 +676,21 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                         rsresep.getString("tgl_perawatan")+" "+rsresep.getString("jam"),rsresep.getString("kode_brng")+" "+rsresep.getString("nama_brng"),
                         rsresep.getDouble("jml"),rsresep.getDouble("total"),rsresep.getDouble("embalase"),rsresep.getDouble("tuslah")
                     });
-                    psretur.setString(1,"%"+cek.getNorawat()+"%");
-                    rsretur=psretur.executeQuery();
-                    while (rsretur.next()) {
-                        tabMode.addRow(new Object[]{
-                            ""," ("+cek.getNorawat()+") "+cek.getNama(),
-                            rsretur.getString("tgl_retur"),rsretur.getString("kode_brng")+" "+rsretur.getString("nama_brng"),
-                            rsretur.getDouble("jml"),rsretur.getDouble("total"),0,0
-                        });
-                    }
                    a++;
                }
+               cek = new noRawatKelas[a];
+               for (int j = 0; j < cek.length; j++) {
+                   
+               }
+//                psretur.setString(1,"%"+cek.getNorawat()+"%");
+//                rsretur=psretur.executeQuery();
+//                while (rsretur.next()) {
+//                    tabMode.addRow(new Object[]{
+//                        ""," ("+cek.getNorawat()+") "+cek.getNama(),
+//                        rsretur.getString("tgl_retur"),rsretur.getString("kode_brng")+" "+rsretur.getString("nama_brng"),
+//                        rsretur.getDouble("jml"),rsretur.getDouble("total"),0,0
+//                    });
+//                }
                if(subtotal>0){
                    tabMode.addRow(new Object[]{"","       "+"Subtotal ",":","",null,subtotal,embalase,tuslah});
                }  
