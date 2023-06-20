@@ -152,8 +152,6 @@ public class BridgingWA {
                 con.setRequestProperty("Accept", "application/json");
                 con.setRequestProperty("Authorization", EnkripsiAES.decrypt("oyA0tRuIM0W4abvpcH1RDZfvOPD96wYWZsNfzrRLKVTilmT1FiyFbKQ/Pi9/xgXR"));
 //                con.setRequestProperty("charset", "utf-8");
-//                "Accept: application/json",
-//                "Authorization: Bearer 9928cda0-7397-4bb8-8fa0-6da8025e6871",
 
 
                 // For POST only - START
