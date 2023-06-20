@@ -7,6 +7,7 @@ import fungsi.sekuel;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -37,7 +38,7 @@ public class BridgingWA {
 
     private static final Properties prop = new Properties();
     private sekuel Sequel = new sekuel();
-    private String Key, pass, url, token = "", requestJson, urlApi = "", sender = "", number = "", message = "", reurn = "";
+    private String Key, pass, url, token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'token'"), requestJson, urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='wagateway' AND field = 'server'"), sender = "", number = "", message = "", reurn = "";
     private final String USER_AGENT = "Mozilla/5.0",moduleserver = "wagateway",fieldserver = "server",fieldtoken="token",fieldphone = "phonenumber";
     private HttpHeaders headers;
     private HttpEntity requestEntity;
@@ -126,59 +127,21 @@ public class BridgingWA {
 
     public void sendWaBatal(String no_rkm_medis, String nama, String tanggal, String polidari, String polike) {
         try {
-            message = "Assalamualaikum " + nama + ". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai .\n Handak mahabar akan kalaunya JADWAL PERIKSA ke " + polidari + " sebelumnya dibatalkan, karena Dokter berhalangan hadir. Dan dipindah jadi tanggal " + tanggal + " ke " + polike + ". \n Terkait dengan habar di atas, kami ucapkan permohonan maaf dan terima kasih atas kepercayaan pian berobat di RSUD H. Damanhuri. \nTerima kasih \n \nWassalamualaikum\n Daftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US\n Daftar Online Tanpa Antri via JKN Mobile Klik Disini >>> https://play.google.com/store/apps/details?id=app.bpjs.mobile";
+            message = "Assalamualaikum " + nama + ". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai .\nHandak mahabar akan kalaunya JADWAL PERIKSA ke " + polidari + " sebelumnya dibatalkan, karena Dokter berhalangan hadir. Dan dipindah jadi tanggal " + tanggal + " ke " + polike + ". \nTerkait dengan habar di atas, kami ucapkan permohonan maaf dan terima kasih atas kepercayaan pian berobat di RSUD H. Damanhuri. \nTerima kasih \nWassalamualaikum \nDaftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US \nDaftar Online Tanpa Antri via JKN Mobile Klik Disini >>> https://play.google.com/store/apps/details?id=app.bpjs.mobile";
             number = Sequel.cariIsi("SELECT no_tlp FROM pasien WHERE no_rkm_medis = " + no_rkm_medis);
-            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldserver+"'");
-            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldphone+"'");
-            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldtoken+"'");
-
             if (number.equals("")) {
                 System.out.println("Nomor telepon kosong !!!");
             } else {
                 number = number.replaceFirst("0", "62");
-                Map<String,String> mss=new HashMap<String,String>();
+                Map<String,String> mss=new HashMap<>();
                 mss.put("number", number);
                 mss.put("body", message);
 
                 JSONObject j=new JSONObject(mss);
-
-                URL url = new URL(urlApi);
-                HttpURLConnection con = (HttpURLConnection) url.openConnection();
-
-                //  CURLOPT_POST
-                con.setRequestMethod("POST");
-
-                // CURLOPT_FOLLOWLOCATION
-                con.setInstanceFollowRedirects(true);
-
-                String postData = j.toString();
-                con.setRequestProperty("Content-Type", "application/json");
-                con.setRequestProperty("Accept", "application/json");
-                con.setRequestProperty("Authorization", "Bearer "+token);
-
-                con.setDoOutput(true);
-                con.setDoInput(true);
-
-                DataOutputStream output = new DataOutputStream(con.getOutputStream());
-                output.writeBytes(postData);
-                output.close();
-
-                // "Post data send ... waiting for reply");
-                int code = con.getResponseCode(); // 200 = HTTP_OK
-                System.out.println("Response    (Code):" + code);
-                System.out.println("Response (Message):" + con.getResponseMessage());
-
-                // read the response
-                DataInputStream input = new DataInputStream(con.getInputStream());
-                int c;
-                StringBuilder resultBuf = new StringBuilder();
-                while ( (c = input.read()) != -1) {
-                    resultBuf.append((char) c);
-                }
-                input.close();
-                System.out.println(resultBuf.toString());
+                reurn = waGw(j.toString());
+                System.out.println(reurn);
             }
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             System.out.println("Notifikasi : " + ex);
             System.out.println(url);
             if (ex.toString().contains("UnknownHostException")) {
@@ -347,5 +310,43 @@ public class BridgingWA {
                 JOptionPane.showMessageDialog(null, "Koneksi ke server WA terputus...!");
             }
         }
+    }
+    
+    public String waGw(String j) throws IOException{
+        URL url = new URL(urlApi);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+        //  CURLOPT_POST
+        con.setRequestMethod("POST");
+
+        // CURLOPT_FOLLOWLOCATION
+        con.setInstanceFollowRedirects(true);
+
+        String postData = j;
+        con.setRequestProperty("Content-Type", "application/json");
+        con.setRequestProperty("Accept", "application/json");
+        con.setRequestProperty("Authorization", "Bearer "+token);
+
+        con.setDoOutput(true);
+        con.setDoInput(true);
+
+        DataOutputStream output = new DataOutputStream(con.getOutputStream());
+        output.writeBytes(postData);
+        output.close();
+
+        // "Post data send ... waiting for reply");
+        int code = con.getResponseCode(); // 200 = HTTP_OK
+        System.out.println("Response    (Code):" + code);
+        System.out.println("Response (Message):" + con.getResponseMessage());
+
+        // read the response
+        DataInputStream input = new DataInputStream(con.getInputStream());
+        int c;
+        StringBuilder resultBuf = new StringBuilder();
+        while ( (c = input.read()) != -1) {
+            resultBuf.append((char) c);
+        }
+        input.close();
+        return resultBuf.toString();
     }
 }
