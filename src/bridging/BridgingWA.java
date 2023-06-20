@@ -2,6 +2,7 @@ package bridging;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fungsi.EnkripsiAES;
 import fungsi.sekuel;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -125,7 +126,7 @@ public class BridgingWA {
                     + " Terkait dengan habar di atas, kami ucapkan permohonan maaf dan terima kasih atas kepercayaan pian berobat di RSUD H. Damanhuri. \nTerima kasih \n \nWassalamualaikum\n"
                     + " Daftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US";
             number = Sequel.cariIsi("SELECT no_tlp FROM pasien WHERE no_rkm_medis = " + no_rkm_medis);
-            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldserver+"'") + "/wagateway/kirimpesan";
+            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldserver+"'");
             sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldphone+"'");
             token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldtoken+"'");
 
@@ -146,11 +147,11 @@ public class BridgingWA {
                 URL obj = new URL(urlApi);
                 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
                 con.setRequestMethod("POST");
-                con.setRequestProperty("User-Agent", USER_AGENT);
+//                con.setRequestProperty("User-Agent", USER_AGENT);
                 con.setRequestProperty("Content-Type", "application/json");
                 con.setRequestProperty("Accept", "application/json");
-                con.setRequestProperty("Authorization", "Bearer 9928cda0-7397-4bb8-8fa0-6da8025e6871");
-                con.setRequestProperty("charset", "utf-8");
+                con.setRequestProperty("Authorization", EnkripsiAES.decrypt("oyA0tRuIM0W4abvpcH1RDZfvOPD96wYWZsNfzrRLKVTilmT1FiyFbKQ/Pi9/xgXR"));
+//                con.setRequestProperty("charset", "utf-8");
 //                "Accept: application/json",
 //                "Authorization: Bearer 9928cda0-7397-4bb8-8fa0-6da8025e6871",
 
