@@ -76,45 +76,17 @@ public class BridgingWA {
                     + " Pastikan RUJUKAN BPJS pian masih berlaku. Jika sudah habis, maka mintalah rujukan kembali untuk berobat ke Rumah Sakit.Terima kasih \n \nWassalamualaikum\n"
                     + " Daftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US";
             number = Sequel.cariIsi("SELECT no_tlp FROM pasien WHERE no_rkm_medis = " + no_rkm_medis);
-            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldserver+"'") + "/wagateway/kirimpesan";
-            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldphone+"'");
-            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldtoken+"'");
-            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message+"&api_key="+token;
-            System.out.println("PostField : " + requestJson);
-
-            URL obj = new URL(urlApi);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-            con.setRequestMethod("POST");
-            con.setRequestProperty("User-Agent", USER_AGENT);
-            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            con.setRequestProperty("charset", "utf-8");
-
-            // For POST only - START
-            con.setDoOutput(true);
-            OutputStreamWriter os = new OutputStreamWriter(con.getOutputStream());
-            os.write(requestJson);
-            os.flush();
-            os.close();
-            // For POST only - END
-
-            int responseCode = con.getResponseCode();
-            System.out.println("POST Response Code :: " + responseCode);
-
-            if (responseCode == HttpURLConnection.HTTP_OK) { //success
-                BufferedReader in = new BufferedReader(new InputStreamReader(
-                        con.getInputStream()));
-                String inputLine;
-                StringBuffer response = new StringBuffer();
-
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                in.close();
-
-                // print result
-                System.out.println(response.toString());
+            if (number.equals("")) {
+                System.out.println("Nomor telepon kosong !!!");
             } else {
-                System.out.println("POST request not worked");
+                number = number.replaceFirst("0", "62");
+                Map<String,String> mss=new HashMap<>();
+                mss.put("number", number);
+                mss.put("body", message);
+
+                JSONObject j=new JSONObject(mss);
+                reurn = waGw(j.toString(),nama);
+                System.out.println(reurn);
             }
         } catch (Exception ex) {
             System.out.println("Notifikasi : " + ex);
@@ -127,6 +99,7 @@ public class BridgingWA {
 
     public void sendWaBatal(String no_rkm_medis, String nama, String tanggal, String polidari, String polike) {
         try {
+            reurn = "";
             message = "Assalamualaikum " + nama + ". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai .\nHandak mahabar akan kalaunya JADWAL PERIKSA ke " + polidari + " sebelumnya dibatalkan, karena Dokter berhalangan hadir. Dan dipindah jadi tanggal " + tanggal + " ke " + polike + ". \nTerkait dengan habar di atas, kami ucapkan permohonan maaf dan terima kasih atas kepercayaan pian berobat di RSUD H. Damanhuri. \nTerima kasih \nWassalamualaikum \nDaftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US \nDaftar Online Tanpa Antri via JKN Mobile Klik Disini >>> https://play.google.com/store/apps/details?id=app.bpjs.mobile";
             number = Sequel.cariIsi("SELECT no_tlp FROM pasien WHERE no_rkm_medis = " + no_rkm_medis);
             if (number.equals("")) {
@@ -138,7 +111,7 @@ public class BridgingWA {
                 mss.put("body", message);
 
                 JSONObject j=new JSONObject(mss);
-                reurn = waGw(j.toString());
+                reurn = waGw(j.toString(),nama);
                 System.out.println(reurn);
             }
         } catch (IOException ex) {
@@ -312,7 +285,7 @@ public class BridgingWA {
         }
     }
     
-    public String waGw(String j) throws IOException{
+    public String waGw(String j,String nama) throws IOException{
         URL url = new URL(urlApi);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
@@ -338,6 +311,7 @@ public class BridgingWA {
         int code = con.getResponseCode(); // 200 = HTTP_OK
         System.out.println("Response    (Code):" + code);
         System.out.println("Response (Message):" + con.getResponseMessage());
+        System.out.println("Response (Nama):" + nama);
 
         // read the response
         DataInputStream input = new DataInputStream(con.getInputStream());
