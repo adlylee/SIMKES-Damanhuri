@@ -6414,7 +6414,7 @@
         </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="1">
-            <StringItem index="0" value="20/06/2023"/>
+            <StringItem index="0" value="22/06/2023"/>
           </StringArray>
         </Property>
         <Property name="displayFormat" type="java.lang.String" value="dd/MM/yyyy"/>
@@ -6785,6 +6785,22 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPermintaanMPPActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="widget.ButtonBig" name="btnSirkulasiObat4">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/48x48/1360487125_system-restart-panel.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Sirkulasi Obat, Alkes &amp; BHP 4"/>
+        <Property name="iconTextGap" type="int" value="0"/>
+        <Property name="name" type="java.lang.String" value="btnSirkulasiObat4" noResource="true"/>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[200, 90]"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSirkulasiObat4ActionPerformed"/>
       </Events>
     </Component>
     <Menu class="widget.MenuBar" name="MenuBar">
@@ -7856,7 +7872,7 @@
             <Property name="iconTextGap" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="BtnMenu" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[85, 40]"/>
+              <Dimension value="[90, 40]"/>
             </Property>
             <Property name="verticalTextPosition" type="int" value="0"/>
           </Properties>
@@ -7904,7 +7920,7 @@
             <Property name="iconTextGap" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="BtnToolReg" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[100, 40]"/>
+              <Dimension value="[110, 40]"/>
             </Property>
             <Property name="verticalTextPosition" type="int" value="0"/>
           </Properties>
@@ -7929,7 +7945,7 @@
             <Property name="iconTextGap" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="btnToolIGD" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[100, 40]"/>
+              <Dimension value="[110, 40]"/>
             </Property>
             <Property name="verticalTextPosition" type="int" value="0"/>
           </Properties>
@@ -7977,7 +7993,7 @@
             <Property name="iconTextGap" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="btnToolLab" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[110, 40]"/>
+              <Dimension value="[130, 40]"/>
             </Property>
             <Property name="verticalTextPosition" type="int" value="0"/>
           </Properties>
@@ -8002,7 +8018,7 @@
             <Property name="iconTextGap" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="btnToolRad" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[96, 40]"/>
+              <Dimension value="[120, 40]"/>
             </Property>
             <Property name="verticalTextPosition" type="int" value="0"/>
           </Properties>
@@ -8027,7 +8043,7 @@
             <Property name="iconTextGap" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="BtnToolJualObat" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[90, 40]"/>
+              <Dimension value="[110, 40]"/>
             </Property>
             <Property name="verticalTextPosition" type="int" value="0"/>
           </Properties>
@@ -8075,7 +8091,7 @@
             <Property name="iconTextGap" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="BtnToolKamnap" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[95, 40]"/>
+              <Dimension value="[120, 40]"/>
             </Property>
             <Property name="verticalTextPosition" type="int" value="0"/>
           </Properties>
@@ -8100,7 +8116,7 @@
             <Property name="iconTextGap" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="BtnToolKasir" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[105, 40]"/>
+              <Dimension value="[120, 40]"/>
             </Property>
             <Property name="verticalTextPosition" type="int" value="0"/>
           </Properties>
@@ -8147,7 +8163,7 @@
             <Property name="iconTextGap" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="BtnLog" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[90, 40]"/>
+              <Dimension value="[110, 40]"/>
             </Property>
             <Property name="verticalTextPosition" type="int" value="0"/>
           </Properties>
@@ -8171,7 +8187,7 @@
             <Property name="iconTextGap" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="BtnClose" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[80, 40]"/>
+              <Dimension value="[110, 40]"/>
             </Property>
             <Property name="verticalTextPosition" type="int" value="0"/>
           </Properties>

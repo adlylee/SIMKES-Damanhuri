@@ -48,7 +48,7 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
     private DlgCariDokter dokter = new DlgCariDokter(null, false);
     private DlgCariPoli poli = new DlgCariPoli(null, false);
     private BPJSSuratKontrol kontrol = new BPJSSuratKontrol(null, false);
-    private String URUTNOREG = "", status = "", kdpoli = "", nmpoli = "", noantri = "", antrian = "", user = "", nosep = "", nosepCari = "", penjab = "", diag, kddokter = "", norujuk="", norujukCari="";
+    private String URUTNOREG = "", status = "", kdpoli = "", nmpoli = "", noantri = "", antrian = "", user = "", nosep = "", nosepCari = "", penjab = "", diag, kddokter = "", norujuk = "", norujukCari = "";
 
     /**
      * Creates new form DlgPemberianInfus
@@ -1130,17 +1130,16 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
             LocalDate today = LocalDate.now();
             String tglsep = Sequel.cariIsi("select tglrujukan from bridging_sep where no_sep='" + nosep + "'");
             int cari = Sequel.cariInteger("select DATEDIFF('" + today + "','" + tglsep + "')");
-            int cari2 = Sequel.cariInteger("SELECT COUNT(*) AS jumlah FROM bridging_sep WHERE '" + norujuk + "' IN (no_sep, no_rujukan) and jnsPelayanan in ('1','2')");
-            System.out.println("norujuk: " + norujuk);
-            if (cari2 >= 2) {
+            int caribooking = Sequel.cariInteger("select count(no_rkm_medis) from booking_registrasi where no_rkm_medis='" + TNoRM.getText() + "' and tanggal_periksa='" + Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + "'");
+
+            if (Sequel.cariInteger("SELECT COUNT(*) AS jumlah FROM bridging_sep WHERE '" + norujuk + "' IN (no_sep, no_rujukan) and jnsPelayanan in ('1','2')") >= 2) {
                 JOptionPane.showMessageDialog(rootPane, "Maaf, Rujukan pasien belum tersedia. \nSilahkan meminta rujukan ke Faskes..!!");
+                System.out.println("norujuk: " + norujuk);
             } else {
                 if (cari > 85) {
                     JOptionPane.showMessageDialog(rootPane, "Maaf, masa rujukan pasien telah habis. \nSilahkan meminta rujukan kembali untuk berobat ke Rumah Sakit.. !!");
-//                    System.out.println("Masa rujukan: " + cari);
                 } else {
-                    if (Sequel.cariInteger("select count(no_rkm_medis) from skdp_bpjs where no_rkm_medis='" + TNoRM.getText() + "' and tanggal_datang='" + Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + "'") > 0
-                            || Sequel.cariInteger("select count(no_rkm_medis) from booking_registrasi where no_rkm_medis='" + TNoRM.getText() + "' and tanggal_periksa='" + Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + "'") > 0) {
+                    if (caribooking > 0) {
                         String tglperiksa = Sequel.cariIsi("SELECT tanggal_periksa FROM booking_registrasi WHERE no_rkm_medis=? order by tanggal_periksa DESC LIMIT 1", TNoRM.getText());
                         String poli = Sequel.cariIsi("SELECT poliklinik.nm_poli FROM booking_registrasi inner join poliklinik on booking_registrasi.kd_poli=poliklinik.kd_poli where booking_registrasi.no_rkm_medis='" + TNoRM.getText() + "' and booking_registrasi.tanggal_periksa='" + Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + "'");
                         JOptionPane.showMessageDialog(rootPane, "Maaf, pasien telah memiliki jadwal periksa " + poli + " di tanggal " + Valid.SetTgl3(tglperiksa) + ".\nSilahkan pilih tanggal periksa lain.. !!");
@@ -1162,7 +1161,6 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
                             emptTeks();
                             tampil();
                         }
-                        //            }
                     }
                 }
             }
@@ -1838,7 +1836,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         if (norujukCari.equals("")) {
             norujuk = Sequel.cariIsi("select no_sep from bridging_sep_internal where no_rawat=?", norawat);
         } else {
-            norujuk=norujukCari;
+            norujuk = norujukCari;
         }
     }
 
@@ -1867,6 +1865,13 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         ChkInput.setSelected(true);
         isForm();
         tampil();
+        norujukCari = Sequel.cariIsi("select no_rujukan from bridging_sep where no_rawat=?", norawat);
+        if (norujukCari.equals("")) {
+            norujuk = Sequel.cariIsi("select no_sep from bridging_sep_internal where no_rawat=?", norawat);
+        } else {
+            norujuk = norujukCari;
+        }
+
     }
 
     public boolean compareDates(String d1, String d2) {

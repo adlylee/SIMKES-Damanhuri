@@ -16,7 +16,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -34,7 +36,7 @@ public class DlgRBObatPercaraBayar extends javax.swing.JDialog {
     private ResultSet rspenjab,rsresep,rsretur; 
     private Dimension screen=Toolkit.getDefaultToolkit().getScreenSize(); 
     private DlgPenanggungJawab penjab=new DlgPenanggungJawab(null,false);
-    private int i=0,a=0;
+    private int i=0,a=0,jml=0;
     private double subtotal=0,ttlbiaya=0,embalase=0,ttlembalase=0,tuslah=0,ttltuslah=0,jmlretur=0,subtotalretur=0;
     private String carabayar="",jumlah,total,emb,tsl,caridetretur,simpannorawat,detretur;
 
@@ -617,7 +619,10 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
         try{   
            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR)); 
            Valid.tabelKosong(tabMode);
-           noRawatKelas cek = new noRawatKelas();
+//           noRawatKelas[] cek;
+//           List<String> norawatsimpan = new ArrayList<>();
+           HashMap<String,String> nonama = new HashMap<>();
+//           noRawatKelas cek = new noRawatKelas();
            pspenjab.setString(1,"%"+kdpenjab.getText()+"%"); 
            rspenjab=pspenjab.executeQuery();
            i=1;
@@ -639,18 +644,18 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                    jmlretur = 0;
                    subtotalretur = 0;
 //                   System.out.println(cek.getUsername());
-                   if (cek.getNorawat()== null) {
-                        cek.setNorawat(rsresep.getString("no_rawat"));
-                        cek.setNama(rsresep.getString("nm_pasien"));
-                        detretur ="";
-//                        System.out.println("Set Awal");
-                   }
-                   if (!cek.getNorawat().equals(rsresep.getString("no_rawat"))) {
-                        cek.setNorawat(rsresep.getString("no_rawat"));
-                        cek.setNama(rsresep.getString("nm_pasien"));
-                        detretur ="";
-//                        System.out.println("Set Selanjutnya");
-                   }
+//                   if (cek.getNorawat()== null) {
+//                        cek.setNorawat(rsresep.getString("no_rawat"));
+//                        cek.setNama(rsresep.getString("nm_pasien"));
+//                        detretur ="";
+////                        System.out.println("Set Awal");
+//                   }
+//                   if (!cek.getNorawat().equals(rsresep.getString("no_rawat"))) {
+//                        cek.setNorawat(rsresep.getString("no_rawat"));
+//                        cek.setNama(rsresep.getString("nm_pasien"));
+//                        detretur ="";
+////                        System.out.println("Set Selanjutnya");
+//                   }
 //                   if(detretur.equals("")){
 //                        caridetretur = Sequel.cariIsi("SELECT no_retur_jual FROM returjual WHERE no_retur_jual LIKE '%"+cek.getUsername()+"%'");
 //                        jmlretur = Sequel.cariIsiAngka("SELECT sum(detreturjual.jml_retur) FROM detreturjual WHERE no_retur_jual LIKE '%"+rsresep.getString("no_rawat")+"%' AND kode_brng = '"+rsresep.getString("kode_brng")+"' group by kode_brng");
@@ -675,21 +680,57 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                         rsresep.getString("tgl_perawatan")+" "+rsresep.getString("jam"),rsresep.getString("kode_brng")+" "+rsresep.getString("nama_brng"),
                         rsresep.getDouble("jml"),rsresep.getDouble("total"),rsresep.getDouble("embalase"),rsresep.getDouble("tuslah")
                     });
-                    psretur.setString(1,"%"+cek.getNorawat()+"%");
-                    rsretur=psretur.executeQuery();
-                    while (rsretur.next()) {
-                        tabMode.addRow(new Object[]{
-                            ""," ("+cek.getNorawat()+") "+cek.getNama(),
-                            rsretur.getString("tgl_retur"),rsretur.getString("kode_brng")+" "+rsretur.getString("nama_brng"),
-                            rsretur.getDouble("jml"),rsretur.getDouble("total"),0,0
-                        });
+                    if (nonama.containsKey(rsresep.getString("no_rawat")) == false) {
+                        nonama.put(rsresep.getString("no_rawat"),rsresep.getString("nm_pasien"));
                     }
                    a++;
                }
+               tabMode.addRow(new Object[]{
+                        ">>","Retur",
+                        "","",
+                        null,null,null,null
+                    });
+//               cek = new noRawatKelas[a];
+//               for (int j = 0; j < cek.length; j++) {
+//              
+                for (Map.Entry<String, String> entry : nonama.entrySet()) {
+                   String key = entry.getKey();
+                   String value = entry.getValue();
+                   String reut = Sequel.cariIsi("SELECT no_retur_jual FROM returjual WHERE no_retur_jual LIKE '%"+key+"%'");
+                   if (!reut.equals("")) {
+                        psretur.setString(1,"%"+key+"%");
+                        rsretur=psretur.executeQuery();
+                        while (rsretur.next()) {
+                            subtotal=subtotal + rsretur.getDouble("total");
+                            ttlbiaya=ttlbiaya + rsretur.getDouble("total");
+                            tabMode.addRow(new Object[]{
+                                ""," ("+key+") Retur : "+value,
+                                rsretur.getString("tgl_retur"),rsretur.getString("kode_brng")+" "+rsretur.getString("nama_brng"),
+                                rsretur.getDouble("jml"),rsretur.getDouble("total"),0,0
+                            });
+                        }
+                    }
+               }
+//                for (int j = 0; j < nonama.size(); j++) {
+//                    String reut = Sequel.cariIsi("SELECT no_retur_jual FROM returjual WHERE no_retur_jual LIKE '%"+nonama.get(j)+"%'");
+//                    if (!reut.equals("")) {
+//                        psretur.setString(1,"%"+norawatsimpan.get(j)+"%");
+//                        rsretur=psretur.executeQuery();
+//                        while (rsretur.next()) {
+//                            tabMode.addRow(new Object[]{
+//                                ""," ("+norawatsimpan.get(j)+") Retur : ",
+//                                rsretur.getString("tgl_retur"),rsretur.getString("kode_brng")+" "+rsretur.getString("nama_brng"),
+//                                rsretur.getDouble("jml"),rsretur.getDouble("total"),0,0
+//                            });
+//                        }
+//                    }
+//                }
+//               }
                if(subtotal>0){
                    tabMode.addRow(new Object[]{"","       "+"Subtotal ",":","",null,subtotal,embalase,tuslah});
                }  
                i++;
+               nonama.clear();
            }
            tabMode.addRow(new Object[]{">>","Total ",":","",null,ttlbiaya,ttlembalase,ttltuslah});
            this.setCursor(Cursor.getDefaultCursor());             

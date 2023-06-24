@@ -240,6 +240,7 @@ import inventory.DlgRekapPermintaan;
 import inventory.DlgRiwayatBarangMedis;
 import inventory.DlgRiwayatBatch;
 import inventory.DlgSirkulasiBarang3;
+import inventory.DlgSirkulasiBarang4;
 import inventory.DlgSuratPemesanan;
 import ipsrs.DlgInputStokIPSRS;
 import ipsrs.DlgPemesananIPSRS;
@@ -393,7 +394,6 @@ import laporan.DlgFrekuensiPenyakitRalanDanRanap;
 import laporan.DlgFrekuensiPenyakitRanapBaru;
 import permintaan.DlgCariPermintaanUTD;
 import mpp.DlgSkriningMPP;
-
 
 /**
  *
@@ -948,6 +948,7 @@ public class frmUtama extends javax.swing.JFrame {
         btnFrekuensiPerPerujuk = new widget.ButtonBig();
         btnPaketObatOp = new widget.ButtonBig();
         btnPermintaanMPP = new widget.ButtonBig();
+        btnSirkulasiObat4 = new widget.ButtonBig();
         internalFrame1 = new widget.InternalFrame();
         BtnMenu = new widget.ButtonBig();
         jSeparator4 = new javax.swing.JSeparator();
@@ -1125,7 +1126,7 @@ public class frmUtama extends javax.swing.JFrame {
         WindowInput.setUndecorated(true);
         WindowInput.setResizable(false);
 
-        internalFrame6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Ubah Password ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Ubah Password ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame6.setName("internalFrame6"); // NOI18N
         internalFrame6.setLayout(null);
 
@@ -1204,7 +1205,7 @@ public class frmUtama extends javax.swing.JFrame {
         DlgHome.setUndecorated(true);
         DlgHome.setResizable(false);
 
-        panelMenu.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 225, 205)), "::[ Menu Utama ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(60, 60, 60))); // NOI18N
+        panelMenu.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 225, 205)), "::[ Menu Utama ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(60, 60, 60))); // NOI18N
         panelMenu.setName("panelMenu"); // NOI18N
         panelMenu.setPreferredSize(new java.awt.Dimension(2412, 3653));
         panelMenu.setLayout(new java.awt.BorderLayout(1, 1));
@@ -5649,7 +5650,7 @@ public class frmUtama extends javax.swing.JFrame {
 
         tanggal.setEditable(false);
         tanggal.setForeground(new java.awt.Color(50, 70, 50));
-        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "20/06/2023" }));
+        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22/06/2023" }));
         tanggal.setDisplayFormat("dd/MM/yyyy");
         tanggal.setName("tanggal"); // NOI18N
         tanggal.setOpaque(false);
@@ -5906,6 +5907,17 @@ public class frmUtama extends javax.swing.JFrame {
             }
         });
 
+        btnSirkulasiObat4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/1360487125_system-restart-panel.png"))); // NOI18N
+        btnSirkulasiObat4.setText("Sirkulasi Obat, Alkes & BHP 4");
+        btnSirkulasiObat4.setIconTextGap(0);
+        btnSirkulasiObat4.setName("btnSirkulasiObat4"); // NOI18N
+        btnSirkulasiObat4.setPreferredSize(new java.awt.Dimension(200, 90));
+        btnSirkulasiObat4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSirkulasiObat4ActionPerformed(evt);
+            }
+        });
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("::[ Khanza SIMKES 2019 ]::");
         setBackground(new java.awt.Color(153, 255, 153));
@@ -5955,7 +5967,7 @@ public class frmUtama extends javax.swing.JFrame {
         BtnMenu.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         BtnMenu.setIconTextGap(2);
         BtnMenu.setName("BtnMenu"); // NOI18N
-        BtnMenu.setPreferredSize(new java.awt.Dimension(85, 40));
+        BtnMenu.setPreferredSize(new java.awt.Dimension(90, 40));
         BtnMenu.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
         BtnMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -5983,7 +5995,7 @@ public class frmUtama extends javax.swing.JFrame {
         BtnToolReg.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         BtnToolReg.setIconTextGap(2);
         BtnToolReg.setName("BtnToolReg"); // NOI18N
-        BtnToolReg.setPreferredSize(new java.awt.Dimension(100, 40));
+        BtnToolReg.setPreferredSize(new java.awt.Dimension(110, 40));
         BtnToolReg.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
         BtnToolReg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -6002,7 +6014,7 @@ public class frmUtama extends javax.swing.JFrame {
         btnToolIGD.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnToolIGD.setIconTextGap(2);
         btnToolIGD.setName("btnToolIGD"); // NOI18N
-        btnToolIGD.setPreferredSize(new java.awt.Dimension(100, 40));
+        btnToolIGD.setPreferredSize(new java.awt.Dimension(110, 40));
         btnToolIGD.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
         btnToolIGD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -6030,7 +6042,7 @@ public class frmUtama extends javax.swing.JFrame {
         btnToolLab.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnToolLab.setIconTextGap(2);
         btnToolLab.setName("btnToolLab"); // NOI18N
-        btnToolLab.setPreferredSize(new java.awt.Dimension(110, 40));
+        btnToolLab.setPreferredSize(new java.awt.Dimension(130, 40));
         btnToolLab.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
         btnToolLab.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -6049,7 +6061,7 @@ public class frmUtama extends javax.swing.JFrame {
         btnToolRad.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnToolRad.setIconTextGap(2);
         btnToolRad.setName("btnToolRad"); // NOI18N
-        btnToolRad.setPreferredSize(new java.awt.Dimension(96, 40));
+        btnToolRad.setPreferredSize(new java.awt.Dimension(120, 40));
         btnToolRad.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
         btnToolRad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -6068,7 +6080,7 @@ public class frmUtama extends javax.swing.JFrame {
         BtnToolJualObat.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         BtnToolJualObat.setIconTextGap(2);
         BtnToolJualObat.setName("BtnToolJualObat"); // NOI18N
-        BtnToolJualObat.setPreferredSize(new java.awt.Dimension(90, 40));
+        BtnToolJualObat.setPreferredSize(new java.awt.Dimension(110, 40));
         BtnToolJualObat.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
         BtnToolJualObat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -6096,7 +6108,7 @@ public class frmUtama extends javax.swing.JFrame {
         BtnToolKamnap.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         BtnToolKamnap.setIconTextGap(2);
         BtnToolKamnap.setName("BtnToolKamnap"); // NOI18N
-        BtnToolKamnap.setPreferredSize(new java.awt.Dimension(95, 40));
+        BtnToolKamnap.setPreferredSize(new java.awt.Dimension(120, 40));
         BtnToolKamnap.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
         BtnToolKamnap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -6115,7 +6127,7 @@ public class frmUtama extends javax.swing.JFrame {
         BtnToolKasir.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         BtnToolKasir.setIconTextGap(2);
         BtnToolKasir.setName("BtnToolKasir"); // NOI18N
-        BtnToolKasir.setPreferredSize(new java.awt.Dimension(105, 40));
+        BtnToolKasir.setPreferredSize(new java.awt.Dimension(120, 40));
         BtnToolKasir.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
         BtnToolKasir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -6142,7 +6154,7 @@ public class frmUtama extends javax.swing.JFrame {
         BtnLog.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         BtnLog.setIconTextGap(2);
         BtnLog.setName("BtnLog"); // NOI18N
-        BtnLog.setPreferredSize(new java.awt.Dimension(90, 40));
+        BtnLog.setPreferredSize(new java.awt.Dimension(110, 40));
         BtnLog.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
         BtnLog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -6160,7 +6172,7 @@ public class frmUtama extends javax.swing.JFrame {
         BtnClose.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         BtnClose.setIconTextGap(2);
         BtnClose.setName("BtnClose"); // NOI18N
-        BtnClose.setPreferredSize(new java.awt.Dimension(80, 40));
+        BtnClose.setPreferredSize(new java.awt.Dimension(110, 40));
         BtnClose.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
         BtnClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -6841,12 +6853,12 @@ public class frmUtama extends javax.swing.JFrame {
         jMenu4.setName("jMenu4"); // NOI18N
         jMenu4.setPreferredSize(new java.awt.Dimension(124, 28));
         jMenu4.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jMenu4MenuSelected(evt);
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                jMenu4MenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
         jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -12350,6 +12362,18 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_btnPermintaanMPPActionPerformed
 
+    private void btnSirkulasiObat4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSirkulasiObat4ActionPerformed
+        isTutup();
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        DlgSirkulasiBarang4 sirkulasi=new DlgSirkulasiBarang4(this,false);
+        sirkulasi.isCek();
+        sirkulasi.setSize(PanelUtama.getWidth(),PanelUtama.getHeight());
+        sirkulasi.setLocationRelativeTo(PanelUtama);
+        sirkulasi.setVisible(true);
+        DlgHome.dispose();
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_btnSirkulasiObat4ActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -12742,6 +12766,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private widget.ButtonBig btnSirkulasiBerkas;
     private widget.ButtonBig btnSirkulasiInventaris;
     private widget.ButtonBig btnSirkulasiNonMedis;
+    private widget.ButtonBig btnSirkulasiObat4;
     private widget.ButtonBig btnSisaStok;
     private widget.ButtonBig btnStokKeluarIPSRSPerTanggal;
     private widget.ButtonBig btnStokKeluarMedis;
@@ -13581,6 +13606,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             
             if(var.getsirkulasi_obat3()==true){
                 Panelmenu.add(btnSirkulasi3);
+                Panelmenu.add(btnSirkulasiObat4);
                 jmlmenu++;
             }
             
@@ -15438,6 +15464,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         
         if(var.getsirkulasi_obat3()==true){
             Panelmenu.add(btnSirkulasi3);
+            Panelmenu.add(btnSirkulasiObat4);
             jmlmenu++;
         }
 
@@ -17431,6 +17458,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         if(var.getsirkulasi_obat3()==true){
             if(btnSirkulasi3.getText().toLowerCase().trim().contains(TCari.getText().toLowerCase().trim())){
                 Panelmenu.add(btnSirkulasi3);
+                Panelmenu.add(btnSirkulasiObat4);
                 jmlmenu++;
             }                
         }
