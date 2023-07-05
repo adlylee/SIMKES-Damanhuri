@@ -45,7 +45,7 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" +
-                        "    Version 23.06.2023 [ 1.0.19 ] [Activated] GO KLAIM DIGITAL \n"+
+                        "    Version 03.07.2023 [ 1.0.19 ] [Activated] GO KLAIM DIGITAL \n"+
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai                              \n"+
                         "                                                                           \n"+
@@ -59,7 +59,7 @@ public final class koneksiDB {
                         "    * Changelog :                                                       \n"+
                         "       - Record Detail Tindakan VK/OK                                              \n"+
                         "       - Validasi SKDP                                              \n"+
-                        "       - Sirkulasi Obat, Alkes & BHP                                              \n");
+                        "       - Sirkulasi Obat, Alkes & BHP 4                                             \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);
                 try {

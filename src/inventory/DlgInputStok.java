@@ -972,15 +972,21 @@ private void BtnGudangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                             kurang = 0;
                         }
 
-                        if (kurang > 0) {
+                        if (kurang==0) {//added
+                            tbDokter.setValueAt(0, tbDokter.getSelectedRow(), 7);
+                            tbDokter.setValueAt(0, tbDokter.getSelectedRow(), 9);
+                        }else if (kurang > 0) {
                             tbDokter.setValueAt(kurang, tbDokter.getSelectedRow(), 7);
                             tbDokter.setValueAt(0, tbDokter.getSelectedRow(), 9);
                         } else {
                             tbDokter.setValueAt(0, tbDokter.getSelectedRow(), 7);
                             tbDokter.setValueAt((kurang*-1), tbDokter.getSelectedRow(), 9);
                         }
-
-                        if (kurang > 0) {
+                        
+                        if(kurang==0){//added
+                            tbDokter.setValueAt(0, tbDokter.getSelectedRow(), 8);
+                            tbDokter.setValueAt(0, tbDokter.getSelectedRow(), 10);
+                        }else if (kurang > 0) {
                             tbDokter.setValueAt(kurang * Double.parseDouble(tbDokter.getValueAt(tbDokter.getSelectedRow(), 5).toString()), tbDokter.getSelectedRow(), 8);
                             tbDokter.setValueAt(0, tbDokter.getSelectedRow(), 10);
                         } else {

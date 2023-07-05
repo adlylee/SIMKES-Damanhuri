@@ -1132,7 +1132,8 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
             int cari = Sequel.cariInteger("select DATEDIFF('" + today + "','" + tglsep + "')");
             int caribooking = Sequel.cariInteger("select count(no_rkm_medis) from booking_registrasi where no_rkm_medis='" + TNoRM.getText() + "' and tanggal_periksa='" + Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + "'");
 
-            if (Sequel.cariInteger("SELECT COUNT(*) AS jumlah FROM bridging_sep WHERE '" + norujuk + "' IN (no_sep, no_rujukan) and jnsPelayanan in ('1','2')") >= 2) {
+            if (Sequel.cariInteger("select count(bridging_sep.no_rujukan) from bridging_sep, (select no_rujukan from bridging_sep where no_sep='"+norujuk+"') as carinorujuk " +
+                                   "where bridging_sep.no_rujukan=carinorujuk.no_rujukan and bridging_sep.jnspelayanan in ('1','2')") >= 1) {
                 JOptionPane.showMessageDialog(rootPane, "Maaf, Rujukan pasien belum tersedia. \nSilahkan meminta rujukan ke Faskes..!!");
                 System.out.println("norujuk: " + norujuk);
             } else {

@@ -448,7 +448,6 @@ public class DlgSkriningMPP extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        evaluasiawal = new widget.TextBox();
         jPopupMenu1 = new javax.swing.JPopupMenu();
         MnLihatForm = new javax.swing.JMenuItem();
         WindowEvaluasiAwal = new javax.swing.JDialog();
@@ -469,6 +468,7 @@ public class DlgSkriningMPP extends javax.swing.JDialog {
         jLabel4 = new widget.Label();
         TNoRM1 = new widget.TextBox();
         TPasien1 = new widget.TextBox();
+        TSkriningCeklist = new widget.TextBox();
         internalFrame1 = new widget.InternalFrame();
         jPanel2 = new javax.swing.JPanel();
         panelisi1 = new widget.panelisi();
@@ -585,9 +585,6 @@ public class DlgSkriningMPP extends javax.swing.JDialog {
         jLabel9 = new widget.Label();
         Tanggal = new widget.Tanggal();
 
-        evaluasiawal.setHighlighter(null);
-        evaluasiawal.setName("evaluasiawal"); // NOI18N
-
         jPopupMenu1.setName("jPopupMenu1"); // NOI18N
 
         MnLihatForm.setBackground(new java.awt.Color(255, 255, 254));
@@ -609,7 +606,7 @@ public class DlgSkriningMPP extends javax.swing.JDialog {
         WindowEvaluasiAwal.setUndecorated(true);
         WindowEvaluasiAwal.setResizable(false);
 
-        internalFrame4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Form A Evaluasi Awal Case Manager/MPP  ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Form A Evaluasi Awal Case Manager/MPP  ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame4.setName("internalFrame4"); // NOI18N
         internalFrame4.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -679,7 +676,7 @@ public class DlgSkriningMPP extends javax.swing.JDialog {
         WindowCatatan.setUndecorated(true);
         WindowCatatan.setResizable(false);
 
-        internalFrame7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Catatan Skrining Ceklist ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Catatan Skrining Ceklist ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame7.setName("internalFrame7"); // NOI18N
         internalFrame7.setLayout(null);
 
@@ -746,6 +743,9 @@ public class DlgSkriningMPP extends javax.swing.JDialog {
 
         WindowCatatan.getContentPane().add(internalFrame7, java.awt.BorderLayout.CENTER);
 
+        TSkriningCeklist.setHighlighter(null);
+        TSkriningCeklist.setName("TSkriningCeklist"); // NOI18N
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
@@ -761,7 +761,7 @@ public class DlgSkriningMPP extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Form MPP ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Form MPP ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -913,7 +913,7 @@ public class DlgSkriningMPP extends javax.swing.JDialog {
         panelisi2.add(label8);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10-06-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-06-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -927,7 +927,7 @@ public class DlgSkriningMPP extends javax.swing.JDialog {
         panelisi2.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10-06-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-06-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -1605,7 +1605,7 @@ public class DlgSkriningMPP extends javax.swing.JDialog {
         panelGlass14.add(jLabel9);
         jLabel9.setBounds(580, 10, 70, 23);
 
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10-06-2023" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-06-2023" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy");
         Tanggal.setName("Tanggal"); // NOI18N
         Tanggal.setOpaque(false);
@@ -1699,6 +1699,8 @@ public class DlgSkriningMPP extends javax.swing.JDialog {
     private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpanActionPerformed
         if (TNoRw.getText().trim().equals("") || TPasien.getText().trim().equals("")) {
             Valid.textKosong(TNoRw, "No.Rawat");
+        }else if (kdptg.getText().trim().equals("") || nmptg.getText().trim().equals("")) {
+            Valid.textKosong(TNoRw, "Perawat/Bidan");
         } else {
             if (TabSkrining.getSelectedIndex() == 0) {
                 if (TabInput.getSelectedIndex() == 0) {
@@ -1710,6 +1712,7 @@ public class DlgSkriningMPP extends javax.swing.JDialog {
                         }) == true) {
                             if (totalSelected < 7) {
                                 TNoRM1.setText(TNoRM.getText());
+                                TPasien1.setText(TPasien.getText());
                                 WindowCatatan.setSize(720, 185);
                                 WindowCatatan.setLocationRelativeTo(internalFrame1);
                                 WindowCatatan.setVisible(true);
@@ -1734,6 +1737,7 @@ public class DlgSkriningMPP extends javax.swing.JDialog {
                             TNoRw.getText(), Valid.SetTgl(Tanggal.getSelectedItem() + ""), Sequel.cariIsi("select current_time()"),
                             Implementasi.getText(), Evaluasi.getText(), nmptg1.getText()
                         }) == true) {
+                            JOptionPane.showMessageDialog(null, "Berhasil Simpan");
                             tampil3();
                             emptTeks();
                         }
@@ -1763,7 +1767,19 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
     }//GEN-LAST:event_formWindowOpened
 
     private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditActionPerformed
-
+        if (TabSkrining.getSelectedIndex() == 0) {
+            if (TabInput.getSelectedIndex() == 0) {
+                total();
+                insertCeklist();
+                if(Sequel.mengedittf("evaluasi_awal_mpp","no_rawat=?","skrining_ceklist=?,nilai_skrining=?",3,new String[]{
+                    periksaceklist,tTotal.getText(),TNoRw.getText()
+                })==true){
+                    JOptionPane.showMessageDialog(null, "Berhasil Simpan");
+                    emptTeks();
+                    tampil2();
+                }
+            }
+        }
     }//GEN-LAST:event_BtnEditActionPerformed
 
     private void BtnEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnEditKeyPressed
@@ -2073,6 +2089,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
     private widget.TextBox TNoRw;
     private widget.TextBox TPasien;
     private widget.TextBox TPasien1;
+    private widget.TextBox TSkriningCeklist;
     private javax.swing.JTabbedPane TabInput;
     private javax.swing.JTabbedPane TabSkrining;
     private widget.Tanggal Tanggal;
@@ -2089,7 +2106,6 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
     private widget.CekBox chkBox7;
     private widget.CekBox chkBox8;
     private widget.CekBox chkBox9;
-    private widget.TextBox evaluasiawal;
     private widget.InternalFrame internalFrame1;
     private widget.InternalFrame internalFrame2;
     private widget.InternalFrame internalFrame3;
@@ -2225,7 +2241,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
             }
 
             ps2 = koneksi.prepareStatement(
-                    "SELECT header,sub,sub_unit,nama FROM master_skrinning_mpp where header='2' order by cast(sub as int), sub_unit");
+                    "SELECT header,sub,sub_unit,nama FROM master_skrinning_mpp where header='2' order by cast(sub as unsigned), sub_unit");
 
             try {
                 rs2 = ps2.executeQuery();
@@ -2244,7 +2260,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
             }
 
             ps3 = koneksi.prepareStatement(
-                    "SELECT header,sub,sub_unit,nama FROM master_skrinning_mpp where header='3' order by cast(sub_unit as int)");
+                    "SELECT header,sub,sub_unit,nama FROM master_skrinning_mpp where header='3' order by cast(sub_unit as unsigned)");
             try {
                 rs3 = ps3.executeQuery();
                 while (rs3.next()) {
@@ -2262,7 +2278,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
             }
 
             ps4 = koneksi.prepareStatement(
-                    "SELECT header,sub,sub_unit,nama FROM master_skrinning_mpp where header='4' order by cast(sub_unit as int)");
+                    "SELECT header,sub,sub_unit,nama FROM master_skrinning_mpp where header='4' order by cast(sub_unit as unsigned)");
             try {
                 rs4 = ps4.executeQuery();
                 while (rs4.next()) {
@@ -2391,16 +2407,16 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
     }
 
     public void emptTeks() {
-        chkBox1.setSelected(false);
-        chkBox2.setSelected(false);
-        chkBox3.setSelected(false);
-        chkBox4.setSelected(false);
-        chkBox5.setSelected(false);
-        chkBox6.setSelected(false);
-        chkBox7.setSelected(false);
-        chkBox8.setSelected(false);
-        chkBox9.setSelected(false);
-        chkBox10.setSelected(false);
+//        chkBox1.setSelected(false);
+//        chkBox2.setSelected(false);
+//        chkBox3.setSelected(false);
+//        chkBox4.setSelected(false);
+//        chkBox5.setSelected(false);
+//        chkBox6.setSelected(false);
+//        chkBox7.setSelected(false);
+//        chkBox8.setSelected(false);
+//        chkBox9.setSelected(false);
+//        chkBox10.setSelected(false);
         nmptg1.setText("");
         Implementasi.setText("");
         Evaluasi.setText("");
@@ -2414,6 +2430,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
             Valid.SetTgl(Tanggal, tbData.getValueAt(tbData.getSelectedRow(), 4).toString());
             Sequel.cariIsi("select no_rkm_medis from reg_periksa where no_rawat=?", TNoRM, TNoRw.getText());
             Sequel.cariIsi("select nm_pasien from pasien where no_rkm_medis=?", TPasien, TNoRM.getText());
+            TSkriningCeklist.setText(tbData.getValueAt(tbData.getSelectedRow(), 6).toString());
         }
     }
 

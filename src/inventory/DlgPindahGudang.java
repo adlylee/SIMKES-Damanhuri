@@ -876,6 +876,11 @@ private void BtnCetakKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             Valid.SetTgl2(Tanggal,tabMode.getValueAt(row,9).toString());
             
         }
+        if (var.getkode().equals("Admin Utama")) {
+            BtnHapus.setEnabled(true);
+        }else{
+            BtnHapus.setEnabled(false);
+        }
     }
     
 }

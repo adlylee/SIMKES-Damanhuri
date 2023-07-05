@@ -1026,5 +1026,12 @@ private void StokKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Stok
         BtnPrint.setEnabled(var.getstok_opname_obat());    
         ppHapus.setEnabled(var.getstok_opname_obat());
         ppCetak.setEnabled(var.getstok_opname_obat());
+        if (var.getkode().equals("Admin Utama")) {
+            BtnHapus.setEnabled(true);
+            ppHapus.setEnabled(true);
+        }else{
+            BtnHapus.setEnabled(false);
+            ppHapus.setEnabled(false);
+        }
     }
 }

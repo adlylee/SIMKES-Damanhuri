@@ -902,10 +902,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                     jumlahutd=0;jumlahkeluar=0;totalkeluar=0;totalutd=0;
                     jumlahmutasikeluar=0;totalmutasikeluar=0;jumlahmutasimasuk=0;totalmutasimasuk=0;stoksaldoakhir=0;totalsaldoakhir=0;Tstokakhir=0;
                     
-                    ps2=koneksi.prepareStatement("select sum(stok_akhir),(sum(stok_akhir)*h_beli) as aset "+
-                        " from riwayat_barang_medis inner join databarang on riwayat_barang_medis.kode_brng=databarang.kode_brng "+
-                        " where riwayat_barang_medis.kode_brng=? AND riwayat_barang_medis.tanggal "+
-                        " between ? and ? AND riwayat_barang_medis.posisi='Opname' AND riwayat_barang_medis.status='Simpan'");
+                    ps2=koneksi.prepareStatement("SELECT SUM(`real`) FROM opname WHERE kode_brng =? AND tanggal BETWEEN ? AND ?");
                     try {
                         LocalDate theday = LocalDate.parse(Valid.SetTgl(Tgl1.getSelectedItem()+""));
 //                        System.out.println(theday);
@@ -1252,10 +1249,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                     }
                     
                     //stok akhir (Opname)
-                    ps2=koneksi.prepareStatement("select sum(stok_akhir),(sum(stok_akhir)*h_beli) as aset "+
-                        " from riwayat_barang_medis inner join databarang on riwayat_barang_medis.kode_brng=databarang.kode_brng "+
-                        " where riwayat_barang_medis.kode_brng=? AND riwayat_barang_medis.tanggal "+
-                        " between ? and ? AND riwayat_barang_medis.posisi='Opname' AND riwayat_barang_medis.status='Simpan'");
+                    ps2=koneksi.prepareStatement("SELECT SUM(`real`) FROM opname WHERE kode_brng =? AND tanggal BETWEEN ? AND ?");
                     try {
                         LocalDate theday = LocalDate.parse(Valid.SetTgl(Tgl2.getSelectedItem()+""));
 //                        System.out.println(theday);
