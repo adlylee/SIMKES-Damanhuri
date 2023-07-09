@@ -19,6 +19,8 @@ import java.sql.ResultSet;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -1128,16 +1130,19 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
 //                }
 //            } else {
             LocalDate today = LocalDate.now();
-            String tglsep = Sequel.cariIsi("select tglrujukan from bridging_sep where no_sep='" + nosep + "'");
-            int cari = Sequel.cariInteger("select DATEDIFF('" + today + "','" + tglsep + "')");
+            String tglrujukan = Sequel.cariIsi("select tglrujukan from bridging_sep where no_sep='" + nosep + "'");
+            int cari = Sequel.cariInteger("select DATEDIFF('" + Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + "','" + tglrujukan + "')");
             int caribooking = Sequel.cariInteger("select count(no_rkm_medis) from booking_registrasi where no_rkm_medis='" + TNoRM.getText() + "' and tanggal_periksa='" + Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + "'");
 
             if (Sequel.cariInteger("select count(bridging_sep.no_rujukan) from bridging_sep, (select no_rujukan from bridging_sep where no_sep='"+norujuk+"') as carinorujuk " +
                                    "where bridging_sep.no_rujukan=carinorujuk.no_rujukan and bridging_sep.jnspelayanan in ('1','2')") >= 1) {
                 JOptionPane.showMessageDialog(rootPane, "Maaf, Rujukan pasien belum tersedia. \nSilahkan meminta rujukan ke Faskes..!!");
+                System.out.println("nosep: "+nosep);
                 System.out.println("norujuk: " + norujuk);
             } else {
                 if (cari > 85) {
+                    System.out.println("cari");
+                    System.out.println("nosep: "+nosep);
                     JOptionPane.showMessageDialog(rootPane, "Maaf, masa rujukan pasien telah habis. \nSilahkan meminta rujukan kembali untuk berobat ke Rumah Sakit.. !!");
                 } else {
                     if (caribooking > 0) {
@@ -1835,7 +1840,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         tampil();
         norujukCari = Sequel.cariIsi("select no_rujukan from bridging_sep where no_rawat=?", norawat);
         if (norujukCari.equals("")) {
-            norujuk = Sequel.cariIsi("select no_sep from bridging_sep_internal where no_rawat=?", norawat);
+            norujuk = Sequel.cariIsi("select no_rujukan from bridging_sep_internal where no_rawat=?", norawat);
         } else {
             norujuk = norujukCari;
         }
@@ -1868,7 +1873,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         tampil();
         norujukCari = Sequel.cariIsi("select no_rujukan from bridging_sep where no_rawat=?", norawat);
         if (norujukCari.equals("")) {
-            norujuk = Sequel.cariIsi("select no_sep from bridging_sep_internal where no_rawat=?", norawat);
+            norujuk = Sequel.cariIsi("select no_rujukan from bridging_sep_internal where no_rawat=?", norawat);
         } else {
             norujuk = norujukCari;
         }

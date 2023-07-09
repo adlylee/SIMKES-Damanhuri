@@ -1276,9 +1276,9 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         }
                     }
                     
-                    if((aset>0)||(jumlahbeli>0)||(jumlahpesan>0)||(jumlahjual>0)||(jumlahpasin>0)||(jumlahpiutang>0)||
-                            (jumlahretbeli>0)||(jumlahretjual>0)||(jumlahretpiut>0)||(jumlahutd>0)||(jumlahkeluar>0)||
-                            (jumlahrespulang>0)||(jumlahmutasimasuk>0)||(jumlahmutasikeluar>0)){
+//                    if((aset>0)||(jumlahbeli>0)||(jumlahpesan>0)||(jumlahjual>0)||(jumlahpasin>0)||(jumlahpiutang>0)||
+//                            (jumlahretbeli>0)||(jumlahretjual>0)||(jumlahretpiut>0)||(jumlahutd>0)||(jumlahkeluar>0)||
+//                            (jumlahrespulang>0)||(jumlahmutasimasuk>0)||(jumlahmutasikeluar>0)){
                         stok_masuk = jumlahbeli + jumlahpesan;
 //                        + jumlahretjual;
                         saldo_masuk = totalbeli + totalpesan;
@@ -1339,7 +1339,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         ttltotalrespulang=ttltotalrespulang+totalrespulang;
                         ttltotalmutasimasuk=ttltotalmutasimasuk+totalmutasimasuk;
                         ttltotalmutasikeluar=ttltotalmutasikeluar+totalmutasikeluar;
-                    }
+//                    }
                 }
                 ttlsaldo_masuk = ttltotalbeli + ttltotalpesan;
 //                        + ttltotalretjual;
