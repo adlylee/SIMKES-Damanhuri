@@ -184,6 +184,7 @@ public class DlgRujukanPoliInternal extends javax.swing.JDialog {
         TCatatanKonsul = new widget.TextArea();
         panelGlass8 = new widget.panelisi();
         BtnSimpan = new widget.Button();
+        BtnHapus = new widget.Button();
         jLabel14 = new widget.Label();
         BtnKeluar = new widget.Button();
 
@@ -344,8 +345,26 @@ public class DlgRujukanPoliInternal extends javax.swing.JDialog {
         });
         panelGlass8.add(BtnSimpan);
 
+        BtnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/stop_f2.png"))); // NOI18N
+        BtnHapus.setMnemonic('H');
+        BtnHapus.setText("Hapus");
+        BtnHapus.setToolTipText("Alt+H");
+        BtnHapus.setName("BtnHapus"); // NOI18N
+        BtnHapus.setPreferredSize(new java.awt.Dimension(100, 30));
+        BtnHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnHapusActionPerformed(evt);
+            }
+        });
+        BtnHapus.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnHapusKeyPressed(evt);
+            }
+        });
+        panelGlass8.add(BtnHapus);
+
         jLabel14.setName("jLabel14"); // NOI18N
-        jLabel14.setPreferredSize(new java.awt.Dimension(520, 23));
+        jLabel14.setPreferredSize(new java.awt.Dimension(420, 23));
         panelGlass8.add(jLabel14);
 
         BtnKeluar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/cross.png"))); // NOI18N
@@ -504,6 +523,23 @@ public class DlgRujukanPoliInternal extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_TCatatanKonsulKeyPressed
 
+    private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHapusActionPerformed
+        String rujukinternal = Sequel.cariIsi("SELECT no_rawat from rujukan_internal_poli where no_rawat='"+TNoRw.getText()+"'");
+        if (!rujukinternal.isEmpty()) {
+            Sequel.meghapus("rujukan_internal_poli", "no_rawat", TNoRw.getText());
+            Sequel.meghapus("rujukan_internal_poli_detail", "no_rawat", TNoRw.getText());
+            emptTeks();
+        }
+    }//GEN-LAST:event_BtnHapusActionPerformed
+
+    private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnHapusKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+            BtnHapusActionPerformed(null);
+        } else {
+            Valid.pindah(evt, BtnKeluar, BtnKeluar);
+        }
+    }//GEN-LAST:event_BtnHapusKeyPressed
+
     /**
     * @param args the command line arguments
     */
@@ -522,6 +558,7 @@ public class DlgRujukanPoliInternal extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private widget.Button BtnDokter;
+    private widget.Button BtnHapus;
     private widget.Button BtnKeluar;
     private widget.Button BtnSimpan;
     private widget.Button BtnUnit;
@@ -559,7 +596,20 @@ public class DlgRujukanPoliInternal extends javax.swing.JDialog {
     public void isCek(){
         BtnSimpan.setEnabled(true);
     }
-
-
-
+    
+    public void cekRujukanInternal(String norw){
+        kddokter.setText(Sequel.cariIsi("select kd_dokter from rujukan_internal_poli where no_rawat=?", norw));
+        TDokter.setText(Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?",kddokter.getText()));
+        kdpoli.setText(Sequel.cariIsi("select kd_poli from rujukan_internal_poli where no_rawat=?",norw));
+        TPoli.setText(Sequel.cariIsi("select nm_poli from poliklinik where kd_poli=?",kdpoli.getText()));
+        TCatatanKonsul.setText(Sequel.cariIsi("select konsul from rujukan_internal_poli_detail where no_rawat=?",norw));
+    }
+    
+    public void emptTeks(){
+     kddokter.setText("");
+     TDokter.setText("");
+     kdpoli.setText("");
+     TPoli.setText("");
+     TCatatanKonsul.setText("");
+    }
 }

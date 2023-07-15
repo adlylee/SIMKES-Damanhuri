@@ -1130,12 +1130,12 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
 //                }
 //            } else {
             LocalDate today = LocalDate.now();
-            String tglrujukan = Sequel.cariIsi("select tglrujukan from bridging_sep where no_sep='" + nosep + "'");
+            String tglrujukan = Sequel.cariIsi("select tglrujukan from bridging_sep where no_sep='" + nosep + "' and kdpolitujuan <> 'HDL'");
             int cari = Sequel.cariInteger("select DATEDIFF('" + Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + "','" + tglrujukan + "')");
-            int caribooking = Sequel.cariInteger("select count(no_rkm_medis) from booking_registrasi where no_rkm_medis='" + TNoRM.getText() + "' and tanggal_periksa='" + Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + "'");
+            int caribooking = Sequel.cariInteger("select count(no_rkm_medis) from booking_registrasi where kd_pj='BPJ' and no_rkm_medis='" + TNoRM.getText() + "' and tanggal_periksa='" + Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + "'");
 
-            if (Sequel.cariInteger("select count(bridging_sep.no_rujukan) from bridging_sep, (select no_rujukan from bridging_sep where no_sep='"+norujuk+"') as carinorujuk " +
-                                   "where bridging_sep.no_rujukan=carinorujuk.no_rujukan and bridging_sep.jnspelayanan in ('1','2')") >= 1) {
+            if (Sequel.cariInteger("select count(bridging_sep.no_sep) from bridging_sep, (select no_rujukan from bridging_sep where no_sep='"+nosep+"' and jnspelayanan='2') as nocarirujuk " +
+                                    "where bridging_sep.no_sep=nocarirujuk.no_rujukan") >= 1) {
                 JOptionPane.showMessageDialog(rootPane, "Maaf, Rujukan pasien belum tersedia. \nSilahkan meminta rujukan ke Faskes..!!");
                 System.out.println("nosep: "+nosep);
                 System.out.println("norujuk: " + norujuk);

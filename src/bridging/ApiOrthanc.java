@@ -79,7 +79,7 @@ public class ApiOrthanc {
             root = mapper.readTree(requestJson);
         }catch(Exception e){
             System.out.println("Notifikasi : "+e);
-            JOptionPane.showMessageDialog(null,"Gagal mengambil data dari Orthanc, silahkan hubungi administrator ..!!");
+            JOptionPane.showMessageDialog(null,"Gagal mengambil data dari server A-Pacs, silakan hubungi petugas radiologi untuk mengirim data ke server A-Pacs terlebih dahulu...");
         }
         return root;
     }
@@ -97,7 +97,7 @@ public class ApiOrthanc {
             root = mapper.readTree(requestJson);
         }catch(Exception e){
             System.out.println("Notifikasi : "+e);
-            JOptionPane.showMessageDialog(null,"Gagal mengambil data dari Orthanc, silahkan hubungi administrator ..!!");
+            JOptionPane.showMessageDialog(null,"Gagal mengambil data dari server A-Pacs, silakan hubungi petugas radiologi untuk mengirim data ke server A-Pacs terlebih dahulu...");
         }
         return root;
     }
@@ -126,10 +126,10 @@ public class ApiOrthanc {
                  Files.write(Paths.get("./gambarradiologi/"+NoRawat+i+".png"),response.getBody());
                  i++;
             }
-            JOptionPane.showMessageDialog(null,"Pengambilan Gambar PNG dari Orthanc berhasil, silahkan lihat di dalam folder Aplikasi..!!");
+            JOptionPane.showMessageDialog(null,"Pengambilan Gambar PNG berhasil, silahkan lihat di dalam folder Aplikasi..!!");
         }catch(Exception e){
             System.out.println("Notifikasi : "+e);
-            JOptionPane.showMessageDialog(null,"Gagal mengambil Gambar PNG dari Orthanc, silahkan hubungi administrator ..!!");
+            JOptionPane.showMessageDialog(null,"Gagal mengambil Gambar PNG dari server A-Pacs, silakan hubungi petugas radiologi untuk mengirim data ke server A-Pacs terlebih dahulu...");
         }
         return root;
     }
@@ -158,10 +158,10 @@ public class ApiOrthanc {
                  Files.write(Paths.get("./gambarradiologi/"+NoRawat+i+".jpg"),response.getBody());
                  i++;
             }
-            JOptionPane.showMessageDialog(null,"Pengambilan Gambar JPG dari Orthanc berhasil, silahkan lihat di dalam folder Aplikasi..!!");
+            JOptionPane.showMessageDialog(null,"Pengambilan Gambar JPG berhasil, silahkan lihat di dalam folder Aplikasi..!!");
         }catch(Exception e){
             System.out.println("Notifikasi : "+e);
-            JOptionPane.showMessageDialog(null,"Gagal mengambil Gambar JPG dari Orthanc, silahkan hubungi administrator ..!!");
+            JOptionPane.showMessageDialog(null,"Gagal mengambil Gambar JPG data dari server A-Pacs, silakan hubungi petugas radiologi untuk mengirim data ke server A-Pacs terlebih dahulu...");
         }
         return root;
     }
@@ -190,10 +190,10 @@ public class ApiOrthanc {
                  Files.write(Paths.get("./gambarradiologi/"+NoRawat+i+".bmp"),response.getBody());
                  i++;
             }
-            JOptionPane.showMessageDialog(null,"Pengambilan Gambar BMP dari Orthanc berhasil, silahkan lihat di dalam folder Aplikasi..!!");
+            JOptionPane.showMessageDialog(null,"Pengambilan Gambar BMP berhasil, silahkan lihat di dalam folder Aplikasi..!!");
         }catch(Exception e){
             System.out.println("Notifikasi : "+e);
-            JOptionPane.showMessageDialog(null,"Gagal mengambil Gambar BMP dari Orthanc, silahkan hubungi administrator ..!!");
+            JOptionPane.showMessageDialog(null,"Gagal mengambil Gambar BMP dari server A-Pacs, silakan hubungi petugas radiologi untuk mengirim data ke server A-Pacs terlebih dahulu...");
         }
         return root;
     }
@@ -221,10 +221,10 @@ public class ApiOrthanc {
                  Files.write(Paths.get("./gambarradiologi/"+NoRawat+i+".dcm"),response.getBody());
                  i++;
             }
-            JOptionPane.showMessageDialog(null,"Pengambilan Gambar DCM dari Orthanc berhasil, silahkan lihat di dalam folder Aplikasi..!!");
+            JOptionPane.showMessageDialog(null,"Pengambilan Gambar DCM berhasil, silahkan lihat di dalam folder Aplikasi..!!");
         }catch(Exception e){
             System.out.println("Notifikasi : "+e);
-            JOptionPane.showMessageDialog(null,"Gagal mengambil Gambar DCM dari Orthanc, silahkan hubungi administrator ..!!");
+            JOptionPane.showMessageDialog(null,"Gagal mengambil Gambar DCM dari server A-Pacs, silakan hubungi petugas radiologi untuk mengirim data ke server A-Pacs terlebih dahulu...");
         }
         return root;
     }

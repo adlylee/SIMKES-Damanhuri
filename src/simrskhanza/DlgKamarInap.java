@@ -187,9 +187,9 @@ public class DlgKamarInap extends javax.swing.JDialog {
                 super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
                 String sep = (String) table.getModel().getValueAt(row, 7);
-                String nama = (String) table.getModel().getValueAt(row, 2);
+                String norawat = (String) table.getModel().getValueAt(row, 0);
                 
-                if (!sep.contains("1708") && sep.contains("BPJS") && nama.contains("BY.") ) {
+                if (!sep.contains("1708") && sep.contains("BPJS") && !"".equals(norawat) ) {
                     setBackground(new Color(153, 0, 76));
                     setForeground(Color.WHITE);
                 } else {
