@@ -7713,6 +7713,7 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
             dlgrjk.isCek();
             dlgrjk.setNoRm(TNoRw.getText(), TNoRM.getText(), TPasien.getText(), internalFrame1.getWidth(), internalFrame1.getHeight());
             //dlgrjk.setNoRm2(TNoRw.getText(),TNoRM.getText(),TPasien.getText()); 
+            dlgrjk.cekRujukanInternal(TNoRw.getText());
             dlgrjk.setVisible(true);
             this.setCursor(Cursor.getDefaultCursor());
         }

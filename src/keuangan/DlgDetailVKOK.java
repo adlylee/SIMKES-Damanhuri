@@ -1021,7 +1021,8 @@ public final class DlgDetailVKOK extends javax.swing.JDialog {
         }
     }
     
-    public void tampil2(){     
+    public void tampil2(){
+        String jumlah=Sequel.cariIsi("select count(no_rawat) from operasi where tgl_operasi between '" + Valid.SetTgl(Tgl1.getSelectedItem()+"")+" 00:00:00" + "' and '" + Valid.SetTgl(Tgl2.getSelectedItem()+"")+" 23:59:59" + "' ");
         Valid.tabelKosong(tabModeOperasi2);
         try{
             pstindakan=koneksi.prepareStatement(
@@ -1194,8 +1195,7 @@ public final class DlgDetailVKOK extends javax.swing.JDialog {
                                  biayaalat,biayasewaok,akomodasi,bagian_rs,biayasarpras,total,"","","",""
                              });
                          }
-                         rs.last();
-                         LCount.setText("" + rstindakan.getRow());
+                         LCount.setText("" + jumlah);
                      } catch (Exception e) {
                          System.out.println("Notifikasi : "+e);
                      } finally{
