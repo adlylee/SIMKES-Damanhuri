@@ -2804,6 +2804,11 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         setDokterPeresep();
         ChkInput.setSelected(true);
         ChkRspPlg.setSelected(false);
+        if (status.equals("pulang")) {
+            ChkRspPlg.setSelected(true);
+            ChkRM.setSelected(false);
+            Sequel.cariIsi("select no_resep from resep_pulang where no_rawat=? GROUP BY no_resep", NoResep, TNoRw.getText());
+        }
         this.status = status;
         isForm();
     }
