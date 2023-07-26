@@ -3251,36 +3251,28 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
         Valid.tabelKosong(tabModeTranfusi);
         try {
             pstranfusi = koneksi.prepareStatement(
-                    "select * from utd_donor where tanggal between ? and ? and no_donor like ? or "
-                    + "tanggal between ? and ? and nama like ? or "
-                    + "tanggal between ? and ? and alamat like ? or "
-                    + "tanggal between ? and ? and jenis_donor like ? or "
-                    + "tanggal between ? and ? and tempat_aftap like ? or "
-                    + "tanggal between ? and ? and jenis_bag like ? or "
-                    + "tanggal between ? and ? and dinas like ? order by tanggal,no_donor "
+                    "select * from utd_donor where tanggal between ? and ? and (no_donor like ? or "
+                    + "nama like ? or "
+                    + "alamat like ? or "
+                    + "jenis_donor like ? or "
+                    + "tempat_aftap like ? or "
+                    + "jenis_bag like ? or "
+                    + "nik like ? or "
+                    + "tgl_lahir like ? or "
+                    + "dinas like ?) order by tanggal,no_donor "
             );
             try {
                 pstranfusi.setString(1, Valid.SetTgl(TanggalCari1.getSelectedItem() + ""));
                 pstranfusi.setString(2, Valid.SetTgl(TanggalCari2.getSelectedItem() + ""));
                 pstranfusi.setString(3, "%" + TCari.getText().trim() + "%");
-                pstranfusi.setString(4, Valid.SetTgl(TanggalCari1.getSelectedItem() + ""));
-                pstranfusi.setString(5, Valid.SetTgl(TanggalCari2.getSelectedItem() + ""));
+                pstranfusi.setString(4, "%" + TCari.getText().trim() + "%");
+                pstranfusi.setString(5, "%" + TCari.getText().trim() + "%");
                 pstranfusi.setString(6, "%" + TCari.getText().trim() + "%");
-                pstranfusi.setString(7, Valid.SetTgl(TanggalCari1.getSelectedItem() + ""));
-                pstranfusi.setString(8, Valid.SetTgl(TanggalCari2.getSelectedItem() + ""));
+                pstranfusi.setString(7, "%" + TCari.getText().trim() + "%");
+                pstranfusi.setString(8, "%" + TCari.getText().trim() + "%");
                 pstranfusi.setString(9, "%" + TCari.getText().trim() + "%");
-                pstranfusi.setString(10, Valid.SetTgl(TanggalCari1.getSelectedItem() + ""));
-                pstranfusi.setString(11, Valid.SetTgl(TanggalCari2.getSelectedItem() + ""));
-                pstranfusi.setString(12, "%" + TCari.getText().trim() + "%");
-                pstranfusi.setString(13, Valid.SetTgl(TanggalCari1.getSelectedItem() + ""));
-                pstranfusi.setString(14, Valid.SetTgl(TanggalCari2.getSelectedItem() + ""));
-                pstranfusi.setString(15, "%" + TCari.getText().trim() + "%");
-                pstranfusi.setString(16, Valid.SetTgl(TanggalCari1.getSelectedItem() + ""));
-                pstranfusi.setString(17, Valid.SetTgl(TanggalCari2.getSelectedItem() + ""));
-                pstranfusi.setString(18, "%" + TCari.getText().trim() + "%");
-                pstranfusi.setString(19, Valid.SetTgl(TanggalCari1.getSelectedItem() + ""));
-                pstranfusi.setString(20, Valid.SetTgl(TanggalCari2.getSelectedItem() + ""));
-                pstranfusi.setString(21, "%" + TCari.getText().trim() + "%");
+                pstranfusi.setString(10, "%" + TCari.getText().trim() + "%");
+                pstranfusi.setString(11, "%" + TCari.getText().trim() + "%");
                 rstranfusi = pstranfusi.executeQuery();
                 while (rstranfusi.next()) {
                     String hbsag = "-";

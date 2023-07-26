@@ -45,7 +45,7 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" +
-                        "    Version 10.07.2023 [ 1.0.20 ] [Activated] GO KLAIM DIGITAL \n"+
+                        "    Version 26.07.2023 [ 1.0.20 ] [Activated] GO KLAIM DIGITAL \n"+
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai                              \n"+
                         "                                                                           \n"+
@@ -58,7 +58,8 @@ public final class koneksiDB {
                         "                                                                       \n"+
                         "    * Changelog :                                                       \n"+
                         "       - SEP Kamar Inap                                              \n"+
-                        "       - Validasi SKDP                                              \n");
+                        "       - Validasi Masa Rujukan SKDP                                              \n"+
+                        "       - Notifikasi SEP                                              \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);
                 try {

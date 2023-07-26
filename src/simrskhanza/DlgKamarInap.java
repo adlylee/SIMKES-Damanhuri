@@ -117,7 +117,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         tabMode = new DefaultTableModel(null, new Object[]{
             "No.Rawat", "Nomer RM", "Nama Pasien", "Alamat Pasien", "No. Telp", "Penanggung Jawab", "Hubungan P.J.", "Jenis Bayar", "Kamar", "Tarif Kamar",
             "Diagnosa Awal", "Diagnosa Akhir", "Tgl.Masuk", "Jam Masuk", "Tgl.Keluar", "Jam Keluar",
-            "Ttl.Biaya", "Stts.Pulang", "Lama", "Dokter P.J.", "Kamar", "Status Bayar"
+            "Ttl.Biaya", "Stts.Pulang", "Lama", "Dokter P.J.", "Kamar", "Status Bayar","Kode Pj"
         }) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -130,7 +130,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         tbKamIn.setPreferredScrollableViewportSize(new Dimension(500, 500));
         tbKamIn.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 22; i++) {
+        for (i = 0; i < 23; i++) {
             TableColumn column = tbKamIn.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(105);
@@ -188,10 +188,14 @@ public class DlgKamarInap extends javax.swing.JDialog {
 
                 String sep = (String) table.getModel().getValueAt(row, 7);
                 String norawat = (String) table.getModel().getValueAt(row, 0);
+                String kdpj = (String) table.getModel().getValueAt(row, 22);
                 
-                if (!sep.contains("1708") && sep.contains("BPJS") && !"".equals(norawat) ) {
+                if (!sep.contains("1708") && "BPJ".equals(kdpj) && !"".equals(norawat) ) {
                     setBackground(new Color(153, 0, 76));
                     setForeground(Color.WHITE);
+                    if (isSelected) {
+                        setForeground(Color.CYAN);
+                    }
                 } else {
                     if (row % 2 == 1) {
                         setForeground(Color.BLACK);
@@ -200,9 +204,9 @@ public class DlgKamarInap extends javax.swing.JDialog {
                         setForeground(Color.BLACK);
                         setBackground(new Color(255, 255, 255));
                     }
-                }
-                if (isSelected) {
-                    setForeground(Color.RED);
+                       if (isSelected) {
+                        setForeground(Color.RED);
+                    }
                 }
                 return this;
             }
@@ -6942,6 +6946,9 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
                         dlgki.isCek();
                         dlgki.setNoRm(rs2.getString("no_rawat2"), Valid.SetTgl2(tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 11).toString()), "1. Ranap", "", "");
                         dlgki.setVisible(true);
+                        if ((Sequel.cariInteger("select count(no_rawat) from bridging_sep where no_rawat=?", norawat.getText()) > 0)) {
+                            dlgki.getTab(norawat.getText());
+                        }
                         this.setCursor(Cursor.getDefaultCursor());
                     } else {
                         JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu pasien...!!!");
@@ -6969,6 +6976,9 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
             dlgki.isCek();
             dlgki.setNoRm(norawat.getText(), Valid.SetTgl2(tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 11).toString()), "1. Ranap", "", "");
             dlgki.setVisible(true);
+            if ((Sequel.cariInteger("select count(no_rawat) from bridging_sep where no_rawat=?", norawat.getText()) > 0)) {
+                dlgki.getTab(norawat.getText());
+            }
             this.setCursor(Cursor.getDefaultCursor());
         }
     }//GEN-LAST:event_MnSEPActionPerformed
@@ -8434,6 +8444,9 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
         dlgki.isCek();
         dlgki.setNoRmNonCek(norawat.getText(), Valid.SetTgl2(tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 11).toString()), "1. Ranap", "", "", "No");
         dlgki.setVisible(true);
+        if ((Sequel.cariInteger("select count(no_rawat) from bridging_sep where no_rawat=?", norawat.getText()) > 0)) {
+            dlgki.getTab(norawat.getText());
+        }
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_MnSEPNoCekActionPerformed
 
@@ -8839,7 +8852,7 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
                         rs.getString("kamar"), Valid.SetAngka(rs.getDouble("trf_kamar")), rs.getString("diagnosa_awal"),
                         rs.getString("diagnosa_akhir"), rs.getString("tgl_masuk"), rs.getString("jam_masuk"), rs.getString("tgl_keluar"),
                         rs.getString("jam_keluar"), Valid.SetAngka(rs.getDouble("ttl_biaya")), rs.getString("stts_pulang"),
-                        rs.getString("lama"), rs.getString("nm_dokter"), rs.getString("kd_kamar"), rs.getString("status_bayar")
+                        rs.getString("lama"), rs.getString("nm_dokter"), rs.getString("kd_kamar"), rs.getString("status_bayar"),rs.getString("kd_pj")
                     });
                     psanak = koneksi.prepareStatement(
                             "select pasien.no_rkm_medis,pasien.nm_pasien,ranap_gabung.no_rawat2,concat(reg_periksa.umurdaftar,' ',reg_periksa.sttsumur)as umur,pasien.no_peserta, "
@@ -8856,7 +8869,7 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
                                 rs.getString("kamar"), Valid.SetAngka(rs.getDouble("trf_kamar") * (persenbayi / 100)), "",
                                 "", rs.getString("tgl_masuk"), rs.getString("jam_masuk"), rs.getString("tgl_keluar"),
                                 rs.getString("jam_keluar"), Valid.SetAngka(rs.getDouble("ttl_biaya") * (persenbayi / 100)), rs.getString("stts_pulang"),
-                                rs.getString("lama"), rs.getString("nm_dokter"), rs.getString("kd_kamar"), rs.getString("status_bayar")
+                                rs.getString("lama"), rs.getString("nm_dokter"), rs.getString("kd_kamar"), rs.getString("status_bayar"),rs.getString("kd_pj")
                             });
                         }
                     } catch (Exception ex) {
