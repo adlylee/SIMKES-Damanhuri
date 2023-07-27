@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.Date;
 import java.util.HashMap;
@@ -1131,6 +1132,9 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
 //            } else {
             LocalDate today = LocalDate.now();
             String tglrujukan = Sequel.cariIsi("select tglrujukan from bridging_sep where no_sep='" + nosep + "' and kdpolitujuan <> 'HDL'");
+            LocalDate tglRujukanmulai = LocalDate.parse(tglrujukan);
+            LocalDate tglRujukanakhir = tglRujukanmulai.plusDays(85);
+            String tglSetelah85Hari = tglRujukanakhir.format(DateTimeFormatter.ISO_LOCAL_DATE);
             int cari = Sequel.cariInteger("select DATEDIFF('" + Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + "','" + tglrujukan + "')");
             int caribooking = Sequel.cariInteger("select count(no_rkm_medis) from booking_registrasi where kd_pj='BPJ' and no_rkm_medis='" + TNoRM.getText() + "' and tanggal_periksa='" + Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + "'");
 
@@ -1143,7 +1147,7 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
                 if (cari > 85) {
                     System.out.println("cari");
                     System.out.println("nosep: "+nosep);
-                    JOptionPane.showMessageDialog(rootPane, "Maaf, masa rujukan pasien telah habis. \nSilahkan meminta rujukan kembali untuk berobat ke Rumah Sakit.. !!");
+                    JOptionPane.showMessageDialog(rootPane, "Maaf, masa rujukan pasien telah habis. Masa berlaku rujukan "+tglrujukan+" s/d "+tglSetelah85Hari+". \nSilahkan meminta rujukan kembali untuk berobat ke Rumah Sakit.. !!");
                 } else {
                     if (caribooking > 0) {
                         String tglperiksa = Sequel.cariIsi("SELECT tanggal_periksa FROM booking_registrasi WHERE no_rkm_medis=? order by tanggal_periksa DESC LIMIT 1", TNoRM.getText());

@@ -5654,7 +5654,7 @@ public class frmUtama extends javax.swing.JFrame {
 
         tanggal.setEditable(false);
         tanggal.setForeground(new java.awt.Color(50, 70, 50));
-        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "11/07/2023" }));
+        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "20/07/2023" }));
         tanggal.setDisplayFormat("dd/MM/yyyy");
         tanggal.setName("tanggal"); // NOI18N
         tanggal.setOpaque(false);
@@ -5922,8 +5922,8 @@ public class frmUtama extends javax.swing.JFrame {
             }
         });
 
-        btnLapRBA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/Gnome-X-Office-Address-Book-48.png"))); // NOI18N
-        btnLapRBA.setText("Master Paket Operasi");
+        btnLapRBA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/applications-office.png"))); // NOI18N
+        btnLapRBA.setText("RBA");
         btnLapRBA.setIconTextGap(0);
         btnLapRBA.setName("btnLapRBA"); // NOI18N
         btnLapRBA.setPreferredSize(new java.awt.Dimension(200, 90));
@@ -5949,11 +5949,11 @@ public class frmUtama extends javax.swing.JFrame {
         setBackground(new java.awt.Color(153, 255, 153));
         setIconImages(null);
         addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentMoved(java.awt.event.ComponentEvent evt) {
-                formComponentMoved(evt);
-            }
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 formComponentResized(evt);
+            }
+            public void componentMoved(java.awt.event.ComponentEvent evt) {
+                formComponentMoved(evt);
             }
         });
         addWindowStateListener(new java.awt.event.WindowStateListener() {
@@ -5962,14 +5962,14 @@ public class frmUtama extends javax.swing.JFrame {
             }
         });
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent evt) {
-                formWindowActivated(evt);
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
             }
         });
 
@@ -6354,6 +6354,7 @@ public class frmUtama extends javax.swing.JFrame {
         jMenu1.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jMenu1.setIconTextGap(3);
         jMenu1.setName("jMenu1"); // NOI18N
+        jMenu1.setOpaque(false);
         jMenu1.setPreferredSize(new java.awt.Dimension(80, 28));
 
         MnLogin.setBackground(new java.awt.Color(255, 255, 254));
@@ -6420,6 +6421,7 @@ public class frmUtama extends javax.swing.JFrame {
         jMenu5.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jMenu5.setIconTextGap(3);
         jMenu5.setName("jMenu5"); // NOI18N
+        jMenu5.setOpaque(false);
         jMenu5.setPreferredSize(new java.awt.Dimension(127, 28));
 
         MnBelumDatang1.setBackground(new java.awt.Color(255, 255, 254));
@@ -6508,6 +6510,7 @@ public class frmUtama extends javax.swing.JFrame {
         jMenu6.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jMenu6.setIconTextGap(3);
         jMenu6.setName("jMenu6"); // NOI18N
+        jMenu6.setOpaque(false);
         jMenu6.setPreferredSize(new java.awt.Dimension(89, 28));
 
         MnRekapBulanan1.setBackground(new java.awt.Color(255, 255, 254));
@@ -6775,6 +6778,7 @@ public class frmUtama extends javax.swing.JFrame {
         jMenu7.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jMenu7.setIconTextGap(3);
         jMenu7.setName("jMenu7"); // NOI18N
+        jMenu7.setOpaque(false);
         jMenu7.setPreferredSize(new java.awt.Dimension(138, 28));
 
         MnAnjungan.setBackground(new java.awt.Color(255, 255, 254));
@@ -6877,6 +6881,7 @@ public class frmUtama extends javax.swing.JFrame {
         jMenu4.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jMenu4.setIconTextGap(3);
         jMenu4.setName("jMenu4"); // NOI18N
+        jMenu4.setOpaque(false);
         jMenu4.setPreferredSize(new java.awt.Dimension(124, 28));
         jMenu4.addMenuListener(new javax.swing.event.MenuListener() {
             public void menuSelected(javax.swing.event.MenuEvent evt) {
@@ -13489,7 +13494,6 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             
             if(var.getriwayat_penelitian()==true){                
                 Panelmenu.add(btnRiwayatPenelitian); 
-                Panelmenu.add(btnLapRBA); 
                 jmlmenu++;
             }
 
@@ -14444,6 +14448,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
 
             if(var.getrekening_tahun()==true){
                 Panelmenu.add(btnRekeningTahun);   
+                Panelmenu.add(btnLapRBA);   
                 jmlmenu++;
             } 
             
@@ -15351,7 +15356,6 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
 
         if(var.getriwayat_penelitian()==true){                
             Panelmenu.add(btnRiwayatPenelitian); 
-            Panelmenu.add(btnLapRBA); 
             jmlmenu++;
         }
 
@@ -16292,6 +16296,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
 
         if(var.getrekening_tahun()==true){
             Panelmenu.add(btnRekeningTahun);   
+            Panelmenu.add(btnLapRBA);   
             jmlmenu++;
         } 
         
@@ -17283,7 +17288,6 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         if(var.getriwayat_penelitian()==true){    
             if(btnRiwayatPenelitian.getText().toLowerCase().trim().contains(TCari.getText().toLowerCase().trim())){
                 Panelmenu.add(btnRiwayatPenelitian);
-                Panelmenu.add(btnLapRBA);
                 jmlmenu++;
             }                
         }
@@ -18594,6 +18598,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         if(var.getrekening_tahun()==true){
             if(btnRekeningTahun.getText().toLowerCase().trim().contains(TCari.getText().toLowerCase().trim())){
                 Panelmenu.add(btnRekeningTahun);   
+                Panelmenu.add(btnLapRBA);   
                 jmlmenu++;
             }                
         } 

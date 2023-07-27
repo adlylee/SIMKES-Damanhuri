@@ -3871,7 +3871,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         } else {
             if (JenisPelayanan.getSelectedIndex() == 0) {
                 insertSEP();
-            } else if (JenisPelayanan.getSelectedIndex() == 1) {
+            } else if (JenisPelayanan.getSelectedIndex() == 1) {             
                 if (NmPoli.getText().toLowerCase().contains("darurat")) {
                     if (Sequel.cariInteger("select count(no_kartu) from bridging_sep where "
                             + "no_kartu='" + no_peserta + "' and jnspelayanan='" + JenisPelayanan.getSelectedItem().toString().substring(0, 1) + "' "
@@ -6916,7 +6916,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
     }
 
     private void insertSEP() {
-        try {
+        try {            
             String penunjang;
 
             tglkkl = "0000-00-00";
@@ -7660,5 +7660,12 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         String dpjp = "";
         dpjp = Sequel.cariIsi("SELECT kddpjp FROM bridging_sep WHERE no_sep = ?", nosep);
         return dpjp;
+    }
+    
+    public void getTab(String norawat){
+        String tgl = Sequel.cariIsi("select tglsep from bridging_sep where no_rawat=?",norawat);
+        TabRawat.setSelectedIndex(1);
+        tampil();
+        JOptionPane.showMessageDialog(null, "Maaf, SEP masih tersedia pada tanggal "+tgl+".");
     }
 }

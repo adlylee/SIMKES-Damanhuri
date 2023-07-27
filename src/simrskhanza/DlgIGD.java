@@ -4976,6 +4976,9 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
             dlgki.isCek();
             dlgki.setNoRm2(TNoRw.getText(), DTPReg.getDate(), "2. Ralan", "IGDK", "Unit IGD/UGD",kddokter.getText());
             dlgki.setVisible(true);
+            if ((Sequel.cariInteger("select count(no_rawat) from bridging_sep where no_rawat=?", TNoRw.getText()) > 0)) {
+                dlgki.getTab(TNoRw.getText());
+            }
             this.setCursor(Cursor.getDefaultCursor());
         }
     }//GEN-LAST:event_MnSEPActionPerformed
@@ -6761,7 +6764,9 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
         }else{
             MnAssesment.setEnabled(false);
         }
-
+        if (var.getkode().equals("unit01") || var.getkode().equals("igdponek")) {
+            MnResepDOkter.setEnabled(false);
+        }
     }
 
     private void isNumber() {
