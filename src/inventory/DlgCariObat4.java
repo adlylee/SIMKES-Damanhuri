@@ -647,7 +647,7 @@ public final class DlgCariObat4 extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Obat, Alkes & BHP Medis ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Obat, Alkes & BHP Medis Resep Pulang ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -804,7 +804,7 @@ public final class DlgCariObat4 extends javax.swing.JDialog {
         jLabel5.setBounds(4, 10, 68, 23);
 
         DTPTgl.setForeground(new java.awt.Color(50, 70, 50));
-        DTPTgl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-10-2022" }));
+        DTPTgl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "17-01-2023" }));
         DTPTgl.setDisplayFormat("dd-MM-yyyy");
         DTPTgl.setName("DTPTgl"); // NOI18N
         DTPTgl.setOpaque(false);
@@ -1399,7 +1399,7 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                                         tbObat.getValueAt(i, 8).toString(), tbObat.getValueAt(i, 9).toString(), "" + Valid.SetAngka2(Double.parseDouble(tbObat.getValueAt(i, 8).toString())
                                         + Double.parseDouble(tbObat.getValueAt(i, 9).toString()) + (Double.parseDouble(tbObat.getValueAt(i, 6).toString())
                                         * (Double.parseDouble(tbObat.getValueAt(i, 1).toString()) / carikapasitas.getDouble(1)))),
-                                        "Ranap", kdgudang.getText(), tbObat.getValueAt(i, 16).toString()
+                                        "Pulang", kdgudang.getText(), tbObat.getValueAt(i, 16).toString()
                                     }) == true) {
                                         if (Sequel.mengedittf("resep_pulang", "no_rawat=? and kode_brng=?", "jml_barang=?,tuslah=?,total=?,dosis=?", 6, new String[]{
                                             tbObat.getValueAt(i, 1).toString(), tbObat.getValueAt(i, 9).toString(), "" + (Double.parseDouble(tbObat.getValueAt(i, 8).toString())
@@ -1454,7 +1454,7 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                                         tbObat.getValueAt(i, 8).toString(), tbObat.getValueAt(i, 9).toString(), "" + (Double.parseDouble(tbObat.getValueAt(i, 8).toString())
                                         + Double.parseDouble(tbObat.getValueAt(i, 9).toString()) + (Double.parseDouble(tbObat.getValueAt(i, 6).toString())
                                         * Double.parseDouble(tbObat.getValueAt(i, 1).toString()))),
-                                        "Ranap", kdgudang.getText(), tbObat.getValueAt(i, 16).toString()
+                                        "Pulang", kdgudang.getText(), tbObat.getValueAt(i, 16).toString()
                                     }) == true) {
                                         if (Sequel.mengedittf("resep_pulang", "no_rawat=? and kode_brng=?", "jml_barang=?,tuslah=?,total=?,dosis=?", 6, new String[]{
                                             tbObat.getValueAt(i, 1).toString(), tbObat.getValueAt(i, 9).toString(), "" + (Double.parseDouble(tbObat.getValueAt(i, 8).toString())
@@ -1520,7 +1520,7 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                                 tbObat.getValueAt(i, 8).toString(), tbObat.getValueAt(i, 9).toString(), "" + (Double.parseDouble(tbObat.getValueAt(i, 8).toString())
                                 + Double.parseDouble(tbObat.getValueAt(i, 9).toString()) + (Double.parseDouble(tbObat.getValueAt(i, 6).toString())
                                 * Double.parseDouble(tbObat.getValueAt(i, 1).toString()))),
-                                "Ranap", kdgudang.getText(), tbObat.getValueAt(i, 16).toString()
+                                "Pulang", kdgudang.getText(), tbObat.getValueAt(i, 16).toString()
                             }) == true) {
                                 if (Sequel.mengedittf("resep_pulang", "no_rawat=? and kode_brng=?", "jml_barang=?,tuslah=?,total=?,dosis=?", 6, new String[]{
                                     tbObat.getValueAt(i, 1).toString(), tbObat.getValueAt(i, 9).toString(), "" + (Double.parseDouble(tbObat.getValueAt(i, 8).toString())
@@ -1603,7 +1603,7 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                                 + Double.parseDouble(tbDetailObatRacikan.getValueAt(i, 12).toString())
                                 + (Double.parseDouble(tbDetailObatRacikan.getValueAt(i, 4).toString())
                                 * Double.parseDouble(tbDetailObatRacikan.getValueAt(i, 10).toString()))),
-                                "Ranap", kdgudang.getText(), tbDetailObatRacikan.getValueAt(i, 16).toString()
+                                "Pulang", kdgudang.getText(), tbDetailObatRacikan.getValueAt(i, 16).toString()
                             }) == true) {
                                 ttljual = ttljual + Double.parseDouble(tbDetailObatRacikan.getValueAt(i, 11).toString())
                                         + Double.parseDouble(tbDetailObatRacikan.getValueAt(i, 12).toString()) + (Double.parseDouble(tbDetailObatRacikan.getValueAt(i, 4).toString())

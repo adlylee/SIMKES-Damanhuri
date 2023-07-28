@@ -222,6 +222,7 @@ public class DlgBilingRanap extends javax.swing.JDialog {
     private WarnaTable2 warna2 = new WarnaTable2();
     private String[] Nama_Akun_Piutang, Kode_Rek_Piutang, Kd_PJ, Besar_Piutang, Jatuh_Tempo,
             Nama_Akun_Bayar, Kode_Rek_Bayar, Bayar, PPN_Persen, PPN_Besar;
+    private Boolean cekpulang=false;
 
     /**
      * Creates new form DlgBiling
@@ -4587,11 +4588,12 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
         subttl = 0;
         ttlobat = 0;
         ttlretur = 0;
+        cekpulang = false;
         try {
             pscariobat = koneksi.prepareStatement(
                     "select databarang.nama_brng,jenis.nama,detail_pemberian_obat.biaya_obat,"
                     + "sum(detail_pemberian_obat.jml) as jml,sum(detail_pemberian_obat.embalase+detail_pemberian_obat.tuslah) as tambahan,"
-                    + "(sum(detail_pemberian_obat.total)-sum(detail_pemberian_obat.embalase+detail_pemberian_obat.tuslah)) as total "
+                    + "(sum(detail_pemberian_obat.total)-sum(detail_pemberian_obat.embalase+detail_pemberian_obat.tuslah)) as total , detail_pemberian_obat.status "
                     + "from detail_pemberian_obat inner join databarang inner join jenis "
                     + "on detail_pemberian_obat.kode_brng=databarang.kode_brng and databarang.kdjns=jenis.kdjns where "
                     + "detail_pemberian_obat.no_rawat=? and detail_pemberian_obat.status like ? group by databarang.kode_brng,detail_pemberian_obat.biaya_obat order by jenis.nama");
@@ -4609,6 +4611,9 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                 rscariobat = pscariobat.executeQuery();
                 if (centangobatranap.equals("Yes")) {
                     while (rscariobat.next()) {
+                        if (rscariobat.getString("status").equals("Pulang")) {
+                            cekpulang = true;
+                        }
                         tabModeRwJlDr.addRow(new Object[]{true, "                           ", rscariobat.getString("nama_brng") + " (" + rscariobat.getString("nama") + ")", ":",
                             rscariobat.getDouble("biaya_obat"), rscariobat.getDouble("jml"), rscariobat.getDouble("tambahan"),
                             (rscariobat.getDouble("total") + rscariobat.getDouble("tambahan")), "Obat"});
@@ -4616,6 +4621,9 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                     }
                 } else {
                     while (rscariobat.next()) {
+                        if (rscariobat.getString("status").equals("Pulang")) {
+                            cekpulang = true;
+                        }
                         tabModeRwJlDr.addRow(new Object[]{false, "                           ", rscariobat.getString("nama_brng") + " (" + rscariobat.getString("nama") + ")", ":",
                             rscariobat.getDouble("biaya_obat"), rscariobat.getDouble("jml"), rscariobat.getDouble("tambahan"),
                             (rscariobat.getDouble("total") + rscariobat.getDouble("tambahan")), "Obat"});
@@ -4941,60 +4949,62 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
     }
 
     private void prosesResepPulang(String norawat) {
-        if (Sequel.cariInteger("select count(resep_pulang.kode_brng) from resep_pulang where resep_pulang.no_rawat=?", norawat) > 0) {
-            tabModeRwJlDr.addRow(new Object[]{true, "Resep Pulang", ":", "", null, null, null, null, "Resep Pulang"});
-        } else {
-            tabModeRwJlDr.addRow(new Object[]{false, "Resep Pulang", ":", "", null, null, null, null, "Resep Pulang"});
-        }
+        if (cekpulang == false) {
+            if (Sequel.cariInteger("select count(resep_pulang.kode_brng) from resep_pulang where resep_pulang.no_rawat=?", norawat) > 0) {
+                tabModeRwJlDr.addRow(new Object[]{true, "Resep Pulang", ":", "", null, null, null, null, "Resep Pulang"});
+            } else {
+                tabModeRwJlDr.addRow(new Object[]{false, "Resep Pulang", ":", "", null, null, null, null, "Resep Pulang"});
+            }
 
-        x++;
-        subttl = 0;
-        try {
-            psreseppulang = koneksi.prepareStatement(sqlpsreseppulang);
+            x++;
+            subttl = 0;
             try {
-                psreseppulang.setString(1, norawat);
-                rsreseppulang = psreseppulang.executeQuery();
-                while (rsreseppulang.next()) {
-                    tamkur = 500;
-                    pstamkur = koneksi.prepareStatement(sqlpstamkur);
-                    try {
-                        pstamkur.setString(1, TNoRw.getText());
-                        pstamkur.setString(2, rsreseppulang.getString("nama_brng") + " " + rsreseppulang.getString("dosis"));
-                        pstamkur.setString(3, "Resep Pulang");
-                        rstamkur = pstamkur.executeQuery();
-                        if (rstamkur.next()) {
-                            tamkur = rstamkur.getDouble(1);
+                psreseppulang = koneksi.prepareStatement(sqlpsreseppulang);
+                try {
+                    psreseppulang.setString(1, norawat);
+                    rsreseppulang = psreseppulang.executeQuery();
+                    while (rsreseppulang.next()) {
+                        tamkur = 500;
+                        pstamkur = koneksi.prepareStatement(sqlpstamkur);
+                        try {
+                            pstamkur.setString(1, TNoRw.getText());
+                            pstamkur.setString(2, rsreseppulang.getString("nama_brng") + " " + rsreseppulang.getString("dosis"));
+                            pstamkur.setString(3, "Resep Pulang");
+                            rstamkur = pstamkur.executeQuery();
+                            if (rstamkur.next()) {
+                                tamkur = rstamkur.getDouble(1);
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Notifikasi : " + e);
+                        } finally {
+                            if (rstamkur != null) {
+                                rstamkur.close();
+                            }
+                            if (pstamkur != null) {
+                                pstamkur.close();
+                            }
                         }
-                    } catch (Exception e) {
-                        System.out.println("Notifikasi : " + e);
-                    } finally {
-                        if (rstamkur != null) {
-                            rstamkur.close();
-                        }
-                        if (pstamkur != null) {
-                            pstamkur.close();
-                        }
+                        tabModeRwJlDr.addRow(new Object[]{true, "                           ", rsreseppulang.getString("nama_brng") + " " + rsreseppulang.getString("dosis"), ":",
+                            rsreseppulang.getDouble("harga"), rsreseppulang.getDouble("jml_barang"), tamkur, (tamkur + rsreseppulang.getDouble("total")), "Resep Pulang"});
+                        subttl = subttl + rsreseppulang.getDouble("total") + tamkur;
                     }
-                    tabModeRwJlDr.addRow(new Object[]{true, "                           ", rsreseppulang.getString("nama_brng") + " " + rsreseppulang.getString("dosis"), ":",
-                        rsreseppulang.getDouble("harga"), rsreseppulang.getDouble("jml_barang"), tamkur, (tamkur + rsreseppulang.getDouble("total")), "Resep Pulang"});
-                    subttl = subttl + rsreseppulang.getDouble("total") + tamkur;
+                } catch (Exception e) {
+                    System.out.println("Notifikasi : " + e);
+                } finally {
+                    if (rsreseppulang != null) {
+                        rsreseppulang.close();
+                    }
+                    if (psreseppulang != null) {
+                        psreseppulang.close();
+                    }
                 }
+                //rs.close();
             } catch (Exception e) {
                 System.out.println("Notifikasi : " + e);
-            } finally {
-                if (rsreseppulang != null) {
-                    rsreseppulang.close();
-                }
-                if (psreseppulang != null) {
-                    psreseppulang.close();
-                }
             }
-            //rs.close();
-        } catch (Exception e) {
-            System.out.println("Notifikasi : " + e);
-        }
-        if (subttl > 1) {
-            tabModeRwJlDr.addRow(new Object[]{true, "", "Total Resep Pulang : " + Valid.SetAngka(subttl), "", null, null, null, null, "TtlResep Pulang"});
+            if (subttl > 1) {
+                tabModeRwJlDr.addRow(new Object[]{true, "", "Total Resep Pulang : " + Valid.SetAngka(subttl), "", null, null, null, null, "TtlResep Pulang"});
+            }   
         }
     }
 
