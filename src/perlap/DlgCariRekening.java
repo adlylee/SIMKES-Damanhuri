@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import keuangan.DlgRekening;
 
-public class DlgLapRBA extends javax.swing.JDialog {
+public class DlgCariRekening extends javax.swing.JDialog {
 
     private final DefaultTableModel tabMode;
     private sekuel Sequel = new sekuel();
@@ -34,7 +34,6 @@ public class DlgLapRBA extends javax.swing.JDialog {
     private WarnaTable2 warna = new WarnaTable2();
     public boolean tampilkanpermintaan = false;
     private DlgRekening rekening = new DlgRekening(null, false);
-    private DlgCariRekening rekening2 = new DlgCariRekening(null, false);
     private riwayatRBA riwayat = new riwayatRBA();
     private double cariselisih = 0;
 
@@ -44,18 +43,22 @@ public class DlgLapRBA extends javax.swing.JDialog {
      * @param parent
      * @param modal
      */
-    public DlgLapRBA(java.awt.Frame parent, boolean modal) {
+    public DlgCariRekening(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
 
-        Object[] judul = {"Kode Rek", "Nama", "Anggaran", "Pergeseran", "Selisih"};
+        Object[] judul = {"P", "Kode Rek", "Nama", "Nominal", "Anggaran"};
         tabMode = new DefaultTableModel(null, judul) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
-                return false;
+                boolean a = false;
+                if (colIndex == 0 || colIndex == 3) {
+                    a = true;
+                }
+                return a;
             }
             Class[] types = new Class[]{
-                java.lang.String.class, java.lang.String.class, java.lang.Double.class,
+                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class,
                 java.lang.Double.class, java.lang.Double.class
             };
 
@@ -72,19 +75,19 @@ public class DlgLapRBA extends javax.swing.JDialog {
         for (i = 0; i < 5; i++) {
             TableColumn column = tbDokter.getColumnModel().getColumn(i);
             if (i == 0) {
-                column.setPreferredWidth(95);
+                column.setPreferredWidth(35);
             } else if (i == 1) {
+                column.setPreferredWidth(95);
+            } else if (i == 2) {
                 column.setPreferredWidth(350);
             } else {
                 column.setPreferredWidth(95);
             }
         }
-        warna.kolom = 0;
+        warna.kolom = 3;
         tbDokter.setDefaultRenderer(Object.class, warna);
 
         kdrekdari.setDocument(new batasInput((byte) 10).getKata(kdrekdari));
-        kdrekke.setDocument(new batasInput((byte) 10).getKata(kdrekke));
-        TJumlah.setDocument(new batasInput((int) 40).getOnlyAngka(TJumlah));
         Keterangan.setDocument(new batasInput((byte) 30).getKata(Keterangan));
         TCari.setDocument(new batasInput((byte) 100).getKata(TCari));
         if (koneksiDB.cariCepat().equals("aktif")) {
@@ -128,10 +131,6 @@ public class DlgLapRBA extends javax.swing.JDialog {
                         if (pilihan == 1) {
                             kdrekdari.setText(rekening.getTabel().getValueAt(rekening.getTabel().getSelectedRow(), 0).toString());
                             nmrekdari.setText(rekening.getTabel().getValueAt(rekening.getTabel().getSelectedRow(), 1).toString());
-                            TCari.requestFocus();
-                        } else if (pilihan == 2) {
-                            kdrekke.setText(rekening.getTabel().getValueAt(rekening.getTabel().getSelectedRow(), 0).toString());
-                            nmrekke.setText(rekening.getTabel().getValueAt(rekening.getTabel().getSelectedRow(), 1).toString());
                             TCari.requestFocus();
                         }
                         tampil();
@@ -197,31 +196,23 @@ public class DlgLapRBA extends javax.swing.JDialog {
         scrollPane1 = new widget.ScrollPane();
         tbDokter = new widget.Table();
         panelisi1 = new widget.panelisi();
-        BtnSimpan = new widget.Button();
         label10 = new widget.Label();
         TCari = new widget.TextBox();
         BtnCari1 = new widget.Button();
-        label11 = new widget.Label();
+        BtnCari = new widget.Button();
+        BtnSimpan = new widget.Button();
         label12 = new widget.Label();
         LCount = new widget.Label();
-        BtnCari = new widget.Button();
         BtnKeluar = new widget.Button();
         panelisi3 = new widget.panelisi();
         label17 = new widget.Label();
         kdrekdari = new widget.TextBox();
         nmrekdari = new widget.TextBox();
         btnDari = new widget.Button();
-        btnKe = new widget.Button();
-        nmrekke = new widget.TextBox();
-        kdrekke = new widget.TextBox();
         label32 = new widget.Label();
         Keterangan = new widget.TextBox();
         label39 = new widget.Label();
-        label18 = new widget.Label();
-        TJumlah = new widget.TextBox();
-        label40 = new widget.Label();
         Tanggal = new widget.Tanggal();
-        btnKe1 = new widget.Button();
 
         Kd2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         Kd2.setName("Kd2"); // NOI18N
@@ -328,24 +319,6 @@ public class DlgLapRBA extends javax.swing.JDialog {
         panelisi1.setPreferredSize(new java.awt.Dimension(734, 56));
         panelisi1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 9));
 
-        BtnSimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/save-16x16.png"))); // NOI18N
-        BtnSimpan.setMnemonic('S');
-        BtnSimpan.setText("Simpan");
-        BtnSimpan.setToolTipText("Alt+S");
-        BtnSimpan.setName("BtnSimpan"); // NOI18N
-        BtnSimpan.setPreferredSize(new java.awt.Dimension(100, 30));
-        BtnSimpan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnSimpanActionPerformed(evt);
-            }
-        });
-        BtnSimpan.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                BtnSimpanKeyPressed(evt);
-            }
-        });
-        panelisi1.add(BtnSimpan);
-
         label10.setText("Key Word :");
         label10.setName("label10"); // NOI18N
         label10.setPreferredSize(new java.awt.Dimension(77, 23));
@@ -377,27 +350,11 @@ public class DlgLapRBA extends javax.swing.JDialog {
         });
         panelisi1.add(BtnCari1);
 
-        label11.setName("label11"); // NOI18N
-        label11.setPreferredSize(new java.awt.Dimension(25, 23));
-        panelisi1.add(label11);
-
-        label12.setText("Record :");
-        label12.setName("label12"); // NOI18N
-        label12.setPreferredSize(new java.awt.Dimension(70, 23));
-        panelisi1.add(label12);
-
-        LCount.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        LCount.setText("0");
-        LCount.setName("LCount"); // NOI18N
-        LCount.setPreferredSize(new java.awt.Dimension(60, 23));
-        panelisi1.add(LCount);
-
         BtnCari.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Search-16x16.png"))); // NOI18N
         BtnCari.setMnemonic('C');
-        BtnCari.setText("Cari");
         BtnCari.setToolTipText("Alt+C");
         BtnCari.setName("BtnCari"); // NOI18N
-        BtnCari.setPreferredSize(new java.awt.Dimension(100, 30));
+        BtnCari.setPreferredSize(new java.awt.Dimension(28, 23));
         BtnCari.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnCariActionPerformed(evt);
@@ -409,6 +366,35 @@ public class DlgLapRBA extends javax.swing.JDialog {
             }
         });
         panelisi1.add(BtnCari);
+
+        BtnSimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/save-16x16.png"))); // NOI18N
+        BtnSimpan.setMnemonic('S');
+        BtnSimpan.setText("Simpan");
+        BtnSimpan.setToolTipText("Alt+S");
+        BtnSimpan.setName("BtnSimpan"); // NOI18N
+        BtnSimpan.setPreferredSize(new java.awt.Dimension(100, 30));
+        BtnSimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSimpanActionPerformed(evt);
+            }
+        });
+        BtnSimpan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnSimpanKeyPressed(evt);
+            }
+        });
+        panelisi1.add(BtnSimpan);
+
+        label12.setText("Record :");
+        label12.setName("label12"); // NOI18N
+        label12.setPreferredSize(new java.awt.Dimension(70, 23));
+        panelisi1.add(label12);
+
+        LCount.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        LCount.setText("0");
+        LCount.setName("LCount"); // NOI18N
+        LCount.setPreferredSize(new java.awt.Dimension(60, 23));
+        panelisi1.add(LCount);
 
         BtnKeluar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/exit.png"))); // NOI18N
         BtnKeluar.setMnemonic('K');
@@ -431,7 +417,7 @@ public class DlgLapRBA extends javax.swing.JDialog {
         internalFrame1.add(panelisi1, java.awt.BorderLayout.PAGE_END);
 
         panelisi3.setName("panelisi3"); // NOI18N
-        panelisi3.setPreferredSize(new java.awt.Dimension(100, 73));
+        panelisi3.setPreferredSize(new java.awt.Dimension(100, 43));
         panelisi3.setLayout(null);
 
         label17.setText("Dari :");
@@ -469,35 +455,6 @@ public class DlgLapRBA extends javax.swing.JDialog {
         panelisi3.add(btnDari);
         btnDari.setBounds(400, 10, 28, 23);
 
-        btnKe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
-        btnKe.setMnemonic('1');
-        btnKe.setToolTipText("Alt+1");
-        btnKe.setName("btnKe"); // NOI18N
-        btnKe.setPreferredSize(new java.awt.Dimension(28, 23));
-        btnKe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKeActionPerformed(evt);
-            }
-        });
-        panelisi3.add(btnKe);
-        btnKe.setBounds(400, 40, 28, 23);
-
-        nmrekke.setEditable(false);
-        nmrekke.setName("nmrekke"); // NOI18N
-        nmrekke.setPreferredSize(new java.awt.Dimension(207, 23));
-        panelisi3.add(nmrekke);
-        nmrekke.setBounds(141, 40, 257, 23);
-
-        kdrekke.setName("kdrekke"); // NOI18N
-        kdrekke.setPreferredSize(new java.awt.Dimension(80, 23));
-        kdrekke.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                kdrekkeKeyPressed(evt);
-            }
-        });
-        panelisi3.add(kdrekke);
-        kdrekke.setBounds(49, 40, 90, 23);
-
         label32.setText("Tanggal :");
         label32.setName("label32"); // NOI18N
         label32.setPreferredSize(new java.awt.Dimension(35, 23));
@@ -512,30 +469,13 @@ public class DlgLapRBA extends javax.swing.JDialog {
             }
         });
         panelisi3.add(Keterangan);
-        Keterangan.setBounds(560, 40, 320, 23);
+        Keterangan.setBounds(560, 10, 160, 23);
 
         label39.setText("Keterangan :");
         label39.setName("label39"); // NOI18N
         label39.setPreferredSize(new java.awt.Dimension(35, 23));
         panelisi3.add(label39);
-        label39.setBounds(485, 40, 70, 23);
-
-        label18.setText("Ke :");
-        label18.setName("label18"); // NOI18N
-        label18.setPreferredSize(new java.awt.Dimension(65, 23));
-        panelisi3.add(label18);
-        label18.setBounds(0, 40, 45, 23);
-
-        TJumlah.setHighlighter(null);
-        TJumlah.setName("TJumlah"); // NOI18N
-        panelisi3.add(TJumlah);
-        TJumlah.setBounds(560, 10, 160, 23);
-
-        label40.setText("Jumlah :");
-        label40.setName("label40"); // NOI18N
-        label40.setPreferredSize(new java.awt.Dimension(35, 23));
-        panelisi3.add(label40);
-        label40.setBounds(485, 10, 70, 23);
+        label39.setBounds(485, 10, 70, 23);
 
         Tanggal.setDisplayFormat("dd-MM-yyyy");
         Tanggal.setName("Tanggal"); // NOI18N
@@ -547,19 +487,6 @@ public class DlgLapRBA extends javax.swing.JDialog {
         panelisi3.add(Tanggal);
         Tanggal.setBounds(785, 10, 95, 23);
 
-        btnKe1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
-        btnKe1.setMnemonic('1');
-        btnKe1.setToolTipText("Alt+1");
-        btnKe1.setName("btnKe1"); // NOI18N
-        btnKe1.setPreferredSize(new java.awt.Dimension(28, 23));
-        btnKe1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKe1ActionPerformed(evt);
-            }
-        });
-        panelisi3.add(btnKe1);
-        btnKe1.setBounds(430, 40, 28, 23);
-
         internalFrame1.add(panelisi3, java.awt.BorderLayout.PAGE_START);
 
         getContentPane().add(internalFrame1, java.awt.BorderLayout.CENTER);
@@ -568,14 +495,8 @@ public class DlgLapRBA extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCariActionPerformed
-        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        DlgMutasiRBA pindah = new DlgMutasiRBA(null, true);
-        pindah.prosesCari();
-        pindah.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
-        pindah.setLocationRelativeTo(internalFrame1);
-        pindah.setAlwaysOnTop(false);
-        pindah.setVisible(true);
-        this.setCursor(Cursor.getDefaultCursor());
+        TCari.setText("");
+        tampil();
 }//GEN-LAST:event_BtnCariActionPerformed
 
     private void BtnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnKeluarActionPerformed
@@ -599,24 +520,22 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
         String saldoawal = Sequel.cariIsi("select ifnull(saldo_berjalan,'0') from rekeningtahun where thn='" + Tanggal.getSelectedItem().toString().substring(6, 10) + "' and kd_rek='" + kdrekdari.getText() + "'");
         if (nmrekdari.getText().trim().equals("") || kdrekdari.getText().trim().equals("")) {
             Valid.textKosong(kdrekdari, "Rekening Asal");
-        } else if (nmrekke.getText().trim().equals("") || kdrekke.getText().trim().equals("")) {
-            Valid.textKosong(kdrekke, "Rekening Tujuan");
         } else if (Keterangan.getText().trim().equals("")) {
             Valid.textKosong(Keterangan, "Keterangan");
-        } else if (Double.parseDouble(TJumlah.getText()) > Double.parseDouble(saldoawal)) {
-            JOptionPane.showMessageDialog(null, "Eiiitsss, saldo rekening " + kdrekdari.getText() + " " + nmrekdari.getText() + " tidak mencukupi..!!");
-            TJumlah.requestFocus();
         } else {
             i = JOptionPane.showConfirmDialog(rootPane, "Eeiiiiiits, udah bener belum data yang mau disimpan..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
             if (i == JOptionPane.YES_OPTION) {
-                getData();
-                riwayat.catatRiwayat(Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(6, 10),
-                        kdrekdari.getText(), 0, Valid.SetAngka(TJumlah.getText()), var.getkode(), "Simpan", Keterangan.getText());
-                Sequel.menyimpan("rekeningtahun", "'" + Tanggal.getSelectedItem().toString().substring(6, 10) + "','" + kdrekdari.getText() + "','" + tbDokter.getValueAt(i, 3).toString() + "','-" + TJumlah.getText() + "'",
-                        "saldo_berjalan=saldo_berjalan-" + TJumlah.getText() + "", "kd_rek='" + kdrekdari.getText() + "' and thn='" + Tanggal.getSelectedItem().toString().substring(6, 10) + "'");
-                riwayat.catatRiwayat(Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(6, 10), kdrekke.getText(), Valid.SetAngka(TJumlah.getText()), 0, var.getkode(), "Simpan", Keterangan.getText());
-                Sequel.menyimpan("rekeningtahun", "'" + Tanggal.getSelectedItem().toString().substring(6, 10) + "','" + kdrekdari.getText() + "','" + tbDokter.getValueAt(i, 3).toString() + "','-" + TJumlah.getText() + "'",
-                        "saldo_berjalan=saldo_berjalan+" + TJumlah.getText() + "", "kd_rek='" + kdrekke.getText() + "' and thn='" + Tanggal.getSelectedItem().toString().substring(6, 10) + "'");
+                for (i = 0; i < tbDokter.getRowCount(); i++) {
+                    if (tbDokter.getValueAt(i, 0).toString().equals("true")) {
+                        riwayat.catatRiwayat(Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(6, 10),
+                                kdrekdari.getText(), 0, Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()), var.getkode(), "Simpan", Keterangan.getText());
+                        Sequel.menyimpan("rekeningtahun", "'" + Tanggal.getSelectedItem().toString().substring(6, 10) + "','" + kdrekdari.getText() + "','" + tbDokter.getValueAt(i, 3).toString() + "','-" + Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()) + "'",
+                                "saldo_berjalan=saldo_berjalan-" + Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()) + "", "kd_rek='" + kdrekdari.getText() + "' and thn='" + Tanggal.getSelectedItem().toString().substring(6, 10) + "'");
+                        riwayat.catatRiwayat(Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(6, 10), tbDokter.getValueAt(i, 1).toString(), Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()), 0, var.getkode(), "Simpan", Keterangan.getText());
+                        Sequel.menyimpan("rekeningtahun", "'" + Tanggal.getSelectedItem().toString().substring(6, 10) + "','" + kdrekdari.getText() + "','" + tbDokter.getValueAt(i, 3).toString() + "','-" + Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()) + "'",
+                                "saldo_berjalan=saldo_berjalan+" + Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()) + "", "kd_rek='" + tbDokter.getValueAt(i, 1) + "' and thn='" + Tanggal.getSelectedItem().toString().substring(6, 10) + "'");
+                    }
+                }
                 tampil();
                 emptTeks();
             }
@@ -686,7 +605,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             TCari.requestFocus();
         } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             Sequel.cariIsi("select nm_rek from rekening where kd_rek='" + kdrekdari.getText() + "'", nmrekdari);
-            kdrekke.requestFocus();
+            TCari.requestFocus();
         } else if (evt.getKeyCode() == KeyEvent.VK_UP) {
             btnDariActionPerformed(null);
         }
@@ -702,31 +621,6 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         rekening.setLocationRelativeTo(internalFrame1);
         rekening.setVisible(true);
     }//GEN-LAST:event_btnDariActionPerformed
-
-    private void btnKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKeActionPerformed
-        pilihan = 2;
-        var.setform("DlgLapRBA");
-        rekening.emptTeks();
-        rekening.isCek();
-        rekening.tampil3();
-        rekening.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
-        rekening.setLocationRelativeTo(internalFrame1);
-        rekening.setVisible(true);
-    }//GEN-LAST:event_btnKeActionPerformed
-
-    private void kdrekkeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kdrekkeKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
-            Sequel.cariIsi("select nm_bangsal from bangsal where kd_bangsal='" + kdrekke.getText() + "'", nmrekke);
-        } else if (evt.getKeyCode() == KeyEvent.VK_PAGE_UP) {
-            Sequel.cariIsi("select nm_bangsal from bangsal where kd_bangsal='" + kdrekke.getText() + "'", nmrekke);
-            kdrekdari.requestFocus();
-        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            Sequel.cariIsi("select nm_bangsal from bangsal where kd_bangsal='" + kdrekke.getText() + "'", nmrekke);
-            BtnSimpan.requestFocus();
-        } else if (evt.getKeyCode() == KeyEvent.VK_UP) {
-            btnKeActionPerformed(null);
-        }
-    }//GEN-LAST:event_kdrekkeKeyPressed
 
     private void KeteranganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KeteranganKeyPressed
         Valid.pindah(evt, Tanggal, TCari);
@@ -760,22 +654,12 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         Valid.pindah(evt, TCari, BtnKeluar);
     }//GEN-LAST:event_TanggalKeyPressed
 
-    private void btnKe1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKe1ActionPerformed
-        rekening2.setPetugas(kdrekdari.getText(), nmrekdari.getText());
-        var.setform("DlgLapRBA");
-        rekening2.isCek();
-        rekening2.tampil();
-        rekening2.setSize(this.getWidth() - 20, this.getHeight() - 20);
-        rekening2.setLocationRelativeTo(internalFrame1);
-        rekening2.setVisible(true);
-    }//GEN-LAST:event_btnKe1ActionPerformed
-
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
-            DlgLapRBA dialog = new DlgLapRBA(new javax.swing.JFrame(), true);
+            DlgCariRekening dialog = new DlgCariRekening(new javax.swing.JFrame(), true);
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -796,28 +680,20 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private widget.Label LCount;
     private javax.swing.JPopupMenu Popup;
     private widget.TextBox TCari;
-    private widget.TextBox TJumlah;
     private widget.TextBox TSaldoAkhir;
     private widget.TextBox TSaldoAwal;
     private widget.TextBox TSaldoBerjalan;
     private widget.TextBox TSelisih;
     private widget.Tanggal Tanggal;
     private widget.Button btnDari;
-    private widget.Button btnKe;
-    private widget.Button btnKe1;
     private widget.InternalFrame internalFrame1;
     private widget.TextBox kdrekdari;
-    private widget.TextBox kdrekke;
     private widget.Label label10;
-    private widget.Label label11;
     private widget.Label label12;
     private widget.Label label17;
-    private widget.Label label18;
     private widget.Label label32;
     private widget.Label label39;
-    private widget.Label label40;
     private widget.TextBox nmrekdari;
-    private widget.TextBox nmrekke;
     private widget.panelisi panelisi1;
     private widget.panelisi panelisi3;
     private javax.swing.JMenuItem ppBersihkan;
@@ -826,7 +702,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private widget.Table tbDokter;
     // End of variables declaration//GEN-END:variables
 
-    private void tampil() {
+    public void tampil() {
         Valid.tabelKosong(tabMode);
         try {
             ps = koneksi.prepareStatement("select rekening.kd_rek,rekening.nm_rek, rekeningtahun.saldo_awal, rekeningtahun.saldo_berjalan from rekeningtahun inner join rekening "
@@ -836,7 +712,9 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                 ps.setString(1, "%" + TCari.getText().trim() + "%");
                 rs = ps.executeQuery();
                 while (rs.next()) {
-                    tabMode.addRow(new Object[]{rs.getString("kd_rek"), rs.getString("nm_rek"), rs.getDouble("saldo_awal"), rs.getDouble("saldo_berjalan"), cariselisih});
+                    tabMode.addRow(new Object[]{
+                        false, rs.getString(1), rs.getString(2), 0, rs.getDouble(3)
+                    });
                     ps2 = koneksi.prepareStatement("select rekening.kd_rek, rekening.nm_rek, rekeningtahun.saldo_awal, rekeningtahun.saldo_berjalan "
                             + " from rekening inner join rekeningtahun inner join subrekening on rekening.kd_rek=rekeningtahun.kd_rek and rekening.kd_rek=subrekening.kd_rek2 "
                             + " where subrekening.kd_rek=? and rekening.level='1' and rekening.balance='K' and rekening.nm_rek like ?");
@@ -845,7 +723,9 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                         ps2.setString(2, "%" + TCari.getText().trim() + "%");
                         rs2 = ps2.executeQuery();
                         while (rs2.next()) {
-                            tabMode.addRow(new Object[]{"  " + rs2.getString("kd_rek"), rs2.getString("nm_rek"), rs2.getDouble("saldo_awal"), rs2.getDouble("saldo_berjalan"), cariSelisih(rs2.getString("kd_rek"))});
+                            tabMode.addRow(new Object[]{
+                                false, "  " + rs2.getString(1), rs2.getString(2), 0, rs2.getDouble(3)
+                            });
                             ps3 = koneksi.prepareStatement("select rekening.kd_rek, rekening.nm_rek, rekeningtahun.saldo_awal, rekeningtahun.saldo_berjalan "
                                     + " from rekening inner join rekeningtahun inner join subrekening on rekening.kd_rek=rekeningtahun.kd_rek and rekening.kd_rek=subrekening.kd_rek2 "
                                     + " where subrekening.kd_rek=? and rekening.level='1' and rekening.balance='K' and rekening.nm_rek like ?");
@@ -854,7 +734,9 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                                 ps3.setString(2, "%" + TCari.getText().trim() + "%");
                                 rs3 = ps3.executeQuery();
                                 while (rs3.next()) {
-                                    tabMode.addRow(new Object[]{"     " + rs3.getString("kd_rek"), rs3.getString("nm_rek"), rs3.getDouble("saldo_awal"), rs3.getDouble("saldo_berjalan"), cariSelisih(rs3.getString("kd_rek"))});
+                                    tabMode.addRow(new Object[]{
+                                        false, "   " + rs3.getString(1), rs3.getString(2), 0, rs3.getDouble(3)
+                                    });
                                     ps4 = koneksi.prepareStatement("select rekening.kd_rek, rekening.nm_rek, rekeningtahun.saldo_awal, rekeningtahun.saldo_berjalan "
                                             + " from rekening inner join rekeningtahun inner join subrekening on rekening.kd_rek=rekeningtahun.kd_rek and rekening.kd_rek=subrekening.kd_rek2 "
                                             + " where subrekening.kd_rek=? and rekening.level='1' and rekening.balance='K' and rekening.nm_rek like ?");
@@ -863,7 +745,9 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                                         ps4.setString(2, "%" + TCari.getText().trim() + "%");
                                         rs4 = ps4.executeQuery();
                                         while (rs4.next()) {
-                                            tabMode.addRow(new Object[]{"       " + rs4.getString("kd_rek"), rs4.getString("nm_rek"), rs4.getDouble("saldo_awal"), rs4.getDouble("saldo_berjalan"), cariSelisih(rs4.getString("kd_rek"))});
+                                            tabMode.addRow(new Object[]{
+                                                false, "    " + rs4.getString(1), rs4.getString(2), 0, rs4.getDouble(3)
+                                            });
                                             ps5 = koneksi.prepareStatement("select rekening.kd_rek, rekening.nm_rek, rekeningtahun.saldo_awal, rekeningtahun.saldo_berjalan "
                                                     + " from rekening inner join rekeningtahun inner join subrekening on rekening.kd_rek=rekeningtahun.kd_rek and rekening.kd_rek=subrekening.kd_rek2 "
                                                     + " where subrekening.kd_rek=? and rekening.level='1' and rekening.balance='K' and rekening.nm_rek like ?");
@@ -872,7 +756,9 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                                                 ps5.setString(2, "%" + TCari.getText().trim() + "%");
                                                 rs5 = ps5.executeQuery();
                                                 while (rs5.next()) {
-                                                    tabMode.addRow(new Object[]{"         " + rs5.getString("kd_rek"), rs5.getString("nm_rek"), rs5.getDouble("saldo_awal"), rs5.getDouble("saldo_berjalan"), cariSelisih(rs5.getString("kd_rek"))});
+                                                    tabMode.addRow(new Object[]{
+                                                        false, "     " + rs5.getString(1), rs5.getString(2), 0, rs5.getDouble(3)
+                                                    });
                                                 }
                                             } catch (Exception e) {
                                                 System.out.println("Notif 5 : " + e);
@@ -939,13 +825,13 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         try {
             ps = koneksi.prepareStatement("select rekening.kd_rek, rekening.nm_rek, rekeningtahun.saldo_awal, rekeningtahun.saldo_berjalan "
                     + "from rekening inner join rekeningtahun on rekening.kd_rek=rekeningtahun.kd_rek "
-                    + "where rekeningtahun.kd_rek like '5%' and rekening.balance='K' and rekening.nm_rek like ? order by kd_rek");
+                    + "where rekeningtahun.kd_rek like '5%' and rekening.balance='K' and rekening.level='1' and rekening.nm_rek like ? order by kd_rek");
             try {
                 ps.setString(1, "%" + TCari.getText().trim() + "%");
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     tabMode.addRow(new Object[]{
-                        rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getDouble(4), cariSelisih(rs.getString("kd_rek"))
+                        false, rs.getString(1), rs.getString(2), 0, rs.getDouble(3)
                     });
                 }
             } catch (Exception e) {
@@ -969,7 +855,6 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     }
 
     public void emptTeks() {
-        TJumlah.setText("");
         Keterangan.setText("");
         TCari.setText("");
         TCari.requestFocus();
@@ -980,7 +865,12 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         TSaldoBerjalan.setText(Sequel.cariIsi("select saldo_berjalan from rekeningtahun where kd_rek=?", kdrekdari.getText()));
     }
 
-//    public void isCekStok() {
+    public void setPetugas(String kdrek, String nmrek) {
+        kdrekdari.setText(kdrek);
+        nmrekdari.setText(nmrek);
+    }
+
+    public void isCekStok() {
 //        try {
 //            String saldoawal = Sequel.cariIsi("select ifnull(saldo_berjalan,'0') from rekeningtahun where thn='" + Tanggal.getSelectedItem().toString().substring(6, 10) + "' and kd_rek='" + kdrekdari.getText() + "'");
 //            String saldotujuan = Sequel.cariIsi("select ifnull(saldo_berjalan,'0') from rekeningtahun where thn='" + Tanggal.getSelectedItem().toString().substring(6, 10) + "' and kd_rek='" + kdrekke.getText() + "'");
@@ -989,7 +879,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 //            }
 //        } catch (Exception e) {
 //        }
-//    }
+    }
 
     public double cariSelisih(String kdrek) {
         double selisih = 0;

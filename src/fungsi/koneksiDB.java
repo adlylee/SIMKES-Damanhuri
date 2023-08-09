@@ -45,7 +45,7 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" +
-                        "    Version 26.07.2023 [ 1.0.20 ] [Activated] GO KLAIM DIGITAL \n"+
+                        "    Version 09.08.2023 [ 1.0.21 ] [Activated] GO KLAIM DIGITAL \n"+
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai                              \n"+
                         "                                                                           \n"+
@@ -57,9 +57,12 @@ public final class koneksiDB {
                         "                                                                       \n"+
                         "                                                                       \n"+
                         "    * Changelog :                                                       \n"+
-                        "       - SEP Kamar Inap                                              \n"+
-                        "       - Validasi Masa Rujukan SKDP                                              \n"+
-                        "       - Notifikasi SEP                                              \n");
+                        "       - Booking registrasi                                              \n"+
+                        "       - Update cetak lembar pemberian obat                           \n"+
+                        "       - Bridging PACS                                                 \n"+
+                        "       - Fix bug cetak hasil periksa radiologi                           \n"+
+                        "       - Fix bug SKDP                           \n"+
+                        "       - UTD Donor                           \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);
                 try {

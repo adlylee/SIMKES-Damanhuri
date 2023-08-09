@@ -164,10 +164,10 @@ public class UTDStokDarah extends javax.swing.JDialog {
             public void windowClosed(WindowEvent e) {
                 if(donor.getTable().getSelectedRow()!= -1){ 
 //                    KodeKomponen.setText(komponen.getTable().getValueAt(komponen.getTable().getSelectedRow(),0).toString());
-                    NoKantong.setText(donor.getTable().getValueAt(donor.getTable().getSelectedRow(),12).toString());
-                    NoKantong1.setText(donor.getTable().getValueAt(donor.getTable().getSelectedRow(),12).toString());
-                    GolonganDarah.setSelectedItem(donor.getTable().getValueAt(donor.getTable().getSelectedRow(),9).toString());
-                    Resus.setSelectedItem(donor.getTable().getValueAt(donor.getTable().getSelectedRow(),10).toString());
+                    NoKantong.setText(donor.getTable().getValueAt(donor.getTable().getSelectedRow(),13).toString());
+                    NoKantong1.setText(donor.getTable().getValueAt(donor.getTable().getSelectedRow(),13).toString());
+                    GolonganDarah.setSelectedItem(donor.getTable().getValueAt(donor.getTable().getSelectedRow(),10).toString());
+                    Resus.setSelectedItem(donor.getTable().getValueAt(donor.getTable().getSelectedRow(),11).toString());
 //                    NamaKomponen.setText(komponen.getTable().getValueAt(komponen.getTable().getSelectedRow(),1).toString());
 //                    KodeKomponen.requestFocus();
 //                    cal = Calendar.getInstance();
