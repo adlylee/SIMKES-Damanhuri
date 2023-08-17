@@ -1941,7 +1941,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                     namakamar = kamar + ", " + Sequel.cariIsi("select nm_bangsal from bangsal inner join kamar on bangsal.kd_bangsal=kamar.kd_bangsal "
                             + " where kamar.kd_kamar=? ", kamar);
                     kamar = "Kamar";
-                    param.put("kamar", kamar);
+                    param.put("kamar", kamar);                   
                     param.put("namakamar", namakamar);
                 }
 
@@ -2245,6 +2245,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             param.put("noresep", NoResep.getText());
             param.put("jam", cmbJam.getSelectedItem() + ":" + cmbMnt.getSelectedItem() + ":" + cmbDtk.getSelectedItem());
             param.put("noantrian", Sequel.cariIsi("select no_antrian from antrian_apotek where no_resep=?", NoResep.getText()));
+            param.put("reseppulang", Sequel.cariIsi("select no_rawat from resep_pulang where no_rawat=? limit 1",TNoRw.getText()));
             try {
                 String a = Sequel.cariIsi("select no_rawat from kamar_inap where kamar_inap.no_rawat=?", TNoRw.getText());
 

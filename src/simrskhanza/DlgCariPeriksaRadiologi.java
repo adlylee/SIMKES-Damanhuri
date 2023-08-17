@@ -45,14 +45,15 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
     private DlgPasien member = new DlgPasien(null, false);
     private DlgCariDokter dokter = new DlgCariDokter(null, false);
     private final Properties prop = new Properties();
-    private DlgCariPetugas petugas = new DlgCariPetugas(null, false);
+    private DlgCariPetugas petugas = new DlgCariPetugas(null, false); 
+    public DlgRujukMasuk rujukmasuk = new DlgRujukMasuk(null, false);
     private JsonNode root,seriesbyid;
     private int i;
     private ApiOrthanc orthanc = new ApiOrthanc();
     private StringBuilder htmlContent;
     private PreparedStatement ps, ps2, ps3, ps4, ps5, ps6, ps7, ps8, psrekening, ps9;
     private ResultSet rs, rs2, rs3, rs5, rs6, rs7, rs8, rsrekening, rs9;
-    private String kamar, namakamar, pemeriksaan = "", pilihan = "", status = "", finger = "", url_orthanc = "";
+    private String kamar, namakamar, pemeriksaan = "", pilihan = "", status = "", finger = "", url_orthanc = "", judul="",hasil="", kesan="", saran="";
     private double ttl = 0, item = 0;
     private double ttljmdokter = 0, ttljmpetugas = 0, ttlkso = 0, ttlpendapatan = 0, ttlbhp = 0;
     private String kdpetugas = "", kdpenjab = "", Suspen_Piutang_Radiologi_Ranap = "", Radiologi_Ranap = "", Beban_Jasa_Medik_Dokter_Radiologi_Ranap = "",
@@ -145,7 +146,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         });
 
         tabModeDicom = new DefaultTableModel(null, new Object[]{
-            "UUID Pasien", "ID Studies", "ID Series", "UID Instance Studies"}) {
+            "Tanggal", "UUID Pasien", "ID Studies", "ID Series", "UID Instance Studies"}) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
                 return false;
@@ -155,15 +156,17 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         tbListDicom.setPreferredScrollableViewportSize(new Dimension(500, 500));
         tbListDicom.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 4; i++) {
+        for (i = 0; i < 5; i++) {
             TableColumn column = tbListDicom.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(100);
             } else if (i == 1) {
-                column.setPreferredWidth(310);
+                column.setPreferredWidth(100);
             } else if (i == 2) {
                 column.setPreferredWidth(310);
             } else if (i == 3) {
+                column.setPreferredWidth(310);
+            } else if (i == 4) {
                 column.setPreferredWidth(360);
             }
         }
@@ -319,6 +322,43 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
                             KodePj.requestFocus();
                         }
                     }
+                }
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+        });
+        
+        rujukmasuk.WindowPerujuk.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                if (var.getform().equals("DlgCariPeriksaRadiologi")) {
+                    if (rujukmasuk.tbPerujuk.getSelectedRow() != -1) {
+                        NmPerujuk.setText(rujukmasuk.tbPerujuk.getValueAt(rujukmasuk.tbPerujuk.getSelectedRow(), 0).toString());
+//                        alamatperujuk = rujukmasuk.tbPerujuk.getValueAt(rujukmasuk.tbPerujuk.getSelectedRow(), 1).toString();
+                    }
+//                    AsalRujukan.requestFocus();
                 }
             }
 
@@ -572,7 +612,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         WindowHasil.setResizable(false);
         WindowHasil.getContentPane().setLayout(new java.awt.BorderLayout(1, 1));
 
-        internalFrame6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Hasil Pemeriksaan ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(100, 80, 80))); // NOI18N
+        internalFrame6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Hasil Pemeriksaan ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(100, 80, 80))); // NOI18N
         internalFrame6.setName("internalFrame6"); // NOI18N
         internalFrame6.setLayout(new java.awt.BorderLayout());
 
@@ -644,7 +684,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         panelGlass6.add(label14);
         label14.setBounds(4, 90, 48, 23);
 
-        scrollPane2.setBorder(javax.swing.BorderFactory.createLineBorder(null));
+        scrollPane2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         scrollPane2.setName("scrollPane2"); // NOI18N
 
         TKesan.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -661,7 +701,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         panelGlass6.add(scrollPane2);
         scrollPane2.setBounds(58, 10, 620, 70);
 
-        scrollPane3.setBorder(javax.swing.BorderFactory.createLineBorder(null));
+        scrollPane3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         scrollPane3.setName("scrollPane3"); // NOI18N
 
         TSaran.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -683,7 +723,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         panelisi7.setBorder(null);
         panelisi7.setName("panelisi7"); // NOI18N
         panelisi7.setPreferredSize(new java.awt.Dimension(100, 38));
-        panelisi7.setLayout(new java.awt.FlowLayout(0, 4, 9));
+        panelisi7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 4, 9));
 
         label17.setText("Judul : ");
         label17.setName("label17"); // NOI18N
@@ -768,9 +808,8 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         WindowGantiDokterParamedis.setName("WindowGantiDokterParamedis"); // NOI18N
         WindowGantiDokterParamedis.setUndecorated(true);
         WindowGantiDokterParamedis.setResizable(false);
-        WindowGantiDokterParamedis.getContentPane().setLayout(new java.awt.BorderLayout());
 
-        internalFrame5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(239, 244, 234)), "::[ Ubah P.J.Rad, Perujuk & Petugas ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(239, 244, 234)), "::[ Ubah P.J.Rad, Perujuk & Petugas ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame5.setName("internalFrame5"); // NOI18N
         internalFrame5.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -918,9 +957,8 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
                 formWindowOpened(evt);
             }
         });
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Pemeriksaan Radiologi ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(100, 80, 80))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Pemeriksaan Radiologi ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(100, 80, 80))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -1084,7 +1122,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
 
         panelisi1.setName("panelisi1"); // NOI18N
         panelisi1.setPreferredSize(new java.awt.Dimension(100, 56));
-        panelisi1.setLayout(new java.awt.FlowLayout(0, 5, 9));
+        panelisi1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 9));
 
         label10.setText("Key Word :");
         label10.setName("label10"); // NOI18N
@@ -1307,7 +1345,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
 
         FormOrthan.add(panelGlass8, java.awt.BorderLayout.PAGE_END);
 
-        TabData.addTab("Integrasi Orthanc", FormOrthan);
+        TabData.addTab("Integrasi PACS", FormOrthan);
 
         PanelAccor.add(TabData, java.awt.BorderLayout.CENTER);
 
@@ -1843,6 +1881,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         } else {
             this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             pemeriksaan = "";
+            judul="";hasil = "";kesan="";saran="";
             try {
                 ps2 = koneksi.prepareStatement(
                         "select jns_perawatan_radiologi.kd_jenis_prw,jns_perawatan_radiologi.nm_perawatan,periksa_radiologi.biaya from periksa_radiologi inner join jns_perawatan_radiologi "
@@ -1885,11 +1924,15 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 namakamar = Sequel.cariIsi("select nm_poli from poliklinik inner join reg_periksa on poliklinik.kd_poli=reg_periksa.kd_poli "
                         + "where reg_periksa.no_rawat='" + Kd2.getText() + "'");
             }
+            judul = TJudul.getText();
+            hasil = HasilPeriksa.getText();
+            kesan = TKesan.getText();
+            saran = TSaran.getText();
             Map<String, Object> param = new HashMap<>();
             param.put("noperiksa", Kd2.getText());
             param.put("norm", NoRM.getText());
             param.put("namapasien", Sequel.cariIsi("select nm_pasien from pasien where no_rkm_medis=? ", NoRM.getText()));
-            param.put("jkel", Jk.getText());
+            param.put("jkel", (Jk.getText().equals("L")) ? "Laki - Laki" : "Perempuan");
             param.put("umur", Umur.getText());
             param.put("lahir", Sequel.cariIsi("select DATE_FORMAT(tgl_lahir,'%d-%m-%Y') from pasien where no_rkm_medis=? ", NoRM.getText()));
             param.put("pengirim", tbDokter.getValueAt(tbDokter.getSelectedRow(), 5).toString());
@@ -1907,33 +1950,57 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             param.put("propinsirs", var.getpropinsirs());
             param.put("kontakrs", var.getkontakrs());
             param.put("emailrs", var.getemailrs());
-            param.put("hasil", HasilPeriksa.getText());
-            param.put("judul", TJudul.getText());
-            param.put("saran", TSaran.getText());
-            param.put("kesan", TKesan.getText());
+            param.put("hasil", hasil);
+            param.put("judul", judul);
+            param.put("saran", saran);
+            param.put("kesan", kesan);
             param.put("logo", Sequel.cariGambar("select logo from setting"));
             param.put("klinis", TKlinis.getText());
             param.put("perujuk", Perujuk.getText());
+            String pj = Sequel.cariIsi("select kd_dokter from periksa_radiologi where no_rawat=?",tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString());
             pilihan = (String) JOptionPane.showInputDialog(null, "Silahkan pilih hasil pemeriksaan..!", "Hasil Pemeriksaan", JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Pasien IGD", "Pasien Rawat Jalan", "Pasien Rawat Inap", "Pasien Dari Luar"}, "Pasien IGD");
-            switch (pilihan) {
-                case "Pasien IGD":
-                    Valid.MyReport("rptPeriksaRadiologi.jrxml", "report", "::[ Pemeriksaan Radiologi ]::",
-                            "select current_date as tanggal", param);
-                    break;
-                case "Pasien Rawat Jalan":
-                    Valid.MyReport("rptPeriksaRadiologi2.jrxml", "report", "::[ Pemeriksaan Radiologi ]::",
-                            "select current_date as tanggal", param);
-                    break;
-                case "Pasien Rawat Inap":
-                    Valid.MyReport("rptPeriksaRadiologi3.jrxml", "report", "::[ Pemeriksaan Radiologi ]::",
-                            "select current_date as tanggal", param);
-                    break;
-                case "Pasien Dari Luar":
-                    Valid.MyReport("rptPeriksaRadiologi4.jrxml", "report", "::[ Pemeriksaan Radiologi ]::",
-                            "select current_date as tanggal", param);
-                    break;
+            if (pj.equals("DR00019")) {
+                switch (pilihan) {
+                    case "Pasien IGD":
+                        Valid.MyReport("rptPeriksaRadiologi.jrxml", "report", "::[ Pemeriksaan Radiologi ]::",
+                                "select current_date as tanggal", param);
+                        break;
+                    case "Pasien Rawat Jalan":
+                        Valid.MyReport("rptPeriksaRadiologi2.jrxml", "report", "::[ Pemeriksaan Radiologi ]::",
+                                "select current_date as tanggal", param);
+                        break;
+                    case "Pasien Rawat Inap":
+                        Valid.MyReport("rptPeriksaRadiologi3.jrxml", "report", "::[ Pemeriksaan Radiologi ]::",
+                                "select current_date as tanggal", param);
+                        break;
+                    case "Pasien Dari Luar":
+                        param.put("pengirim", Perujuk.getText());
+                        Valid.MyReport("rptPeriksaRadiologi4.jrxml", "report", "::[ Pemeriksaan Radiologi ]::",
+                                "select current_date as tanggal", param);
+                        break;
+                }
             }
-
+            if (pj.equals("D0000132")) {
+                switch (pilihan) {
+                    case "Pasien IGD":
+                        Valid.MyReport("rptPeriksaRadiologi5.jrxml", "report", "::[ Pemeriksaan Radiologi ]::",
+                                "select current_date as tanggal", param);
+                        break;
+                    case "Pasien Rawat Jalan":
+                        Valid.MyReport("rptPeriksaRadiologi6.jrxml", "report", "::[ Pemeriksaan Radiologi ]::",
+                                "select current_date as tanggal", param);
+                        break;
+                    case "Pasien Rawat Inap":
+                        Valid.MyReport("rptPeriksaRadiologi7.jrxml", "report", "::[ Pemeriksaan Radiologi ]::",
+                                "select current_date as tanggal", param);
+                        break;
+                    case "Pasien Dari Luar":
+                        param.put("pengirim", Perujuk.getText());
+                        Valid.MyReport("rptPeriksaRadiologi8.jrxml", "report", "::[ Pemeriksaan Radiologi ]::",
+                                "select current_date as tanggal", param);
+                        break;
+                }
+            }
             this.setCursor(Cursor.getDefaultCursor());
         }
     }//GEN-LAST:event_BtnPrint1ActionPerformed
@@ -2012,14 +2079,29 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private void BtnSimpan4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpan4ActionPerformed
         if (tbDokter.getSelectedRow() > -1) {
             if (!tbDokter.getValueAt(tbDokter.getSelectedRow(), 1).toString().equals("")) {
-                Sequel.queryu2("update periksa_radiologi set nip=?,dokter_perujuk=?,kd_dokter=? where no_rawat=? and tgl_periksa=? and jam=?", 6, new String[]{
-                    KdPtgUbah.getText(), KodePerujuk.getText(), KodePj.getText(), tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString(),
-                    tbDokter.getValueAt(tbDokter.getSelectedRow(), 3).toString(), tbDokter.getValueAt(tbDokter.getSelectedRow(), 4).toString()
-                });
-                tampil();
-                dokter.dispose();
-                petugas.dispose();
-                WindowGantiDokterParamedis.dispose();
+                if (!KodePerujuk.getText().equals("-")) {
+                    Sequel.queryu2("update periksa_radiologi set nip=?,dokter_perujuk=?,kd_dokter=? where no_rawat=? and tgl_periksa=? and jam=?", 6, new String[]{
+                        KdPtgUbah.getText(), KodePerujuk.getText(), KodePj.getText(), tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString(),
+                        tbDokter.getValueAt(tbDokter.getSelectedRow(), 3).toString(), tbDokter.getValueAt(tbDokter.getSelectedRow(), 4).toString()
+                    });
+                    tampil();
+                    dokter.dispose();
+                    petugas.dispose();
+                    WindowGantiDokterParamedis.dispose();
+                }
+                if (KodePerujuk.getText().equals("-")) {
+                    Sequel.queryu2("update periksa_radiologi set nip=?,kd_dokter=? where no_rawat=? and tgl_periksa=? and jam=?", 5, new String[]{
+                        KdPtgUbah.getText(), KodePj.getText(), tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString(),
+                        tbDokter.getValueAt(tbDokter.getSelectedRow(), 3).toString(), tbDokter.getValueAt(tbDokter.getSelectedRow(), 4).toString()
+                    });
+                    Sequel.queryu2("update rujuk_masuk set perujuk=? where no_rawat=?", 2, new String[]{
+                        NmPerujuk.getText(), tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString()
+                    });
+                    tampil();
+                    dokter.dispose();
+                    petugas.dispose();
+                    WindowGantiDokterParamedis.dispose();
+                }
             }
         }
     }//GEN-LAST:event_BtnSimpan4ActionPerformed
@@ -2043,11 +2125,20 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private void btnDokterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDokterActionPerformed
         pilihan = "perujuk";
         var.setform("DlgCariPeriksaRadiologi");
-        dokter.emptTeks();
-        dokter.isCek();
-        dokter.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
-        dokter.setLocationRelativeTo(internalFrame1);
-        dokter.setVisible(true);
+        if (KodePerujuk.getText().equals("-")) {
+            rujukmasuk.tampil2();
+            rujukmasuk.TCariPerujuk.requestFocus();
+            rujukmasuk.WindowPerujuk.setSize(this.getWidth() - 20, this.getHeight() - 20);
+            rujukmasuk.WindowPerujuk.setLocationRelativeTo(internalFrame1);
+            rujukmasuk.WindowPerujuk.setVisible(true);
+        } else {
+            dokter.emptTeks();
+            dokter.isCek();
+            dokter.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
+            dokter.setLocationRelativeTo(internalFrame1);
+            dokter.setVisible(true);
+        }
+        
     }//GEN-LAST:event_btnDokterActionPerformed
 
     private void KodePerujukKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KodePerujukKeyPressed
@@ -2093,19 +2184,6 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             }
         }
     }//GEN-LAST:event_MnUbahDokterPetugasActionPerformed
-
-    private void TKlinisKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKlinisKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TKlinisKeyPressed
-
-    private void btnHasilRadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHasilRadActionPerformed
-        var.setform("DlgCariPeriksaRadiologi");
-        radiologi.emptTeks();
-        radiologi.isCek();
-        radiologi.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
-        radiologi.setLocationRelativeTo(internalFrame1);
-        radiologi.setVisible(true);
-    }//GEN-LAST:event_btnHasilRadActionPerformed
 
     private void ChkAccorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChkAccorActionPerformed
         if (tbDokter.getSelectedRow() != -1) {
@@ -2161,9 +2239,22 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnCari2KeyPressed
 
-    private void TJudulKeyPressed(java.awt.event.KeyEvent evt) {
+    private void btnHasilRadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHasilRadActionPerformed
+        var.setform("DlgCariPeriksaRadiologi");
+        radiologi.emptTeks();
+        radiologi.isCek();
+        radiologi.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
+        radiologi.setLocationRelativeTo(internalFrame1);
+        radiologi.setVisible(true);
+    }//GEN-LAST:event_btnHasilRadActionPerformed
+
+    private void TKlinisKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKlinisKeyPressed
         // TODO add your handling code here:
-    }
+    }//GEN-LAST:event_TKlinisKeyPressed
+
+    private void TJudulKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TJudulKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TJudulKeyPressed
 
     private void TKesanKeyPressed(java.awt.event.KeyEvent evt) {
         //        Valid.pindah(evt,TKdPrw,TPemeriksaan);
@@ -2508,8 +2599,16 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         BtnPrint.setEnabled(var.getperiksa_radiologi());
         if (var.getkode().equals("Admin Utama") || var.getkode().equals("D0000132") || var.getkode().equals("DR00019") || var.getkode().equals("rad1")) {
             BtnHapus.setEnabled(true);
+            MnCetakNota.setEnabled(true);
+            MnLihatGambar.setEnabled(true);
+            MnLihatHasil.setEnabled(true);
+            MnUbahDokterPetugas.setEnabled(true);
         } else {
             BtnHapus.setEnabled(false);
+            MnCetakNota.setEnabled(false);
+            MnLihatGambar.setEnabled(false);
+            MnLihatHasil.setEnabled(false);
+            MnUbahDokterPetugas.setEnabled(false);
         }
     }
 
@@ -2533,6 +2632,10 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 if (rs5.next()) {
                     KodePerujuk.setText(rs5.getString("dokter_perujuk"));
                     NmPerujuk.setText(Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?", rs5.getString("dokter_perujuk")));
+                    if (rs5.getString("dokter_perujuk").equals("-")) {
+                        NmPerujuk.setText(Sequel.cariIsi("select perujuk from rujuk_masuk where no_rawat='" + tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString() + "'"));
+//                        System.out.println("norawat "+tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString());
+                    }
                     KodePj.setText(rs5.getString("kd_dokter"));
                     NmDokterPj.setText(rs5.getString("nm_dokter"));
                     KdPtgUbah.setText(rs5.getString("nip"));
@@ -2643,33 +2746,64 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             if (tbListDicom.getSelectedRow() != -1) {
                 this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 url_orthanc = "";
-                if (viewer.equals("dicom")) {
-                    url_orthanc = koneksiDB.URLORTHANC() + ":" + koneksiDB.PORTORTHANC() + "/web-viewer/app/viewer.html?series=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 2).toString();
-                    OrthancDICOM orthan = new OrthancDICOM(null, false);
-                    orthan.setJudul("::[ DICOM Orthanc Pasien " + tbDokter.getValueAt(tbDokter.getSelectedRow(), 1).toString() + ", Series " + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 2).toString() + " ]::", tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString().replaceAll("/", ""), tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 2).toString());
-                    try {
-                        System.out.println("URL : " + url_orthanc);
-                        orthan.loadURL(url_orthanc);
-                    } catch (Exception ex) {
-                        System.out.println("Notifikasi : " + ex);
+                if (NoRawat.getText().equals("")) {
+                    if (viewer.equals("dicom")) {
+                        url_orthanc = koneksiDB.URLORTHANC() + ":" + koneksiDB.PORTORTHANC() + "/web-viewer/app/viewer.html?series=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString();
+                        OrthancDICOM orthan = new OrthancDICOM(null, false);
+                        orthan.setJudul("::[ DICOM PACS Pasien " + tbDokter.getValueAt(tbDokter.getSelectedRow(), 1).toString() + ", Series " + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString() + " ]::", tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString().replaceAll("/", ""), tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString());
+                        try {
+                            System.out.println("URL : " + url_orthanc);
+                            orthan.loadURL(url_orthanc);
+                        } catch (Exception ex) {
+                            System.out.println("Notifikasi : " + ex);
+                        }
+                        orthan.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
+                        orthan.setLocationRelativeTo(internalFrame1);
+                        orthan.setVisible(true);
                     }
-                    orthan.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
-                    orthan.setLocationRelativeTo(internalFrame1);
-                    orthan.setVisible(true);
+                    if (viewer.equals("stone")) {
+                        seriesbyid = orthanc.AmbilSeriesById(tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString());
+                        JsonNode listSeries = seriesbyid;
+                        url_orthanc = "http://" + koneksiDB.USERORTHANC() + ":" + koneksiDB.PASSORTHANC() + "@" + koneksiDB.URLORTHANC2() + ":" + koneksiDB.PORTORTHANC() + "/stone-webviewer/index.html?study=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 4).toString() + "&series=" + listSeries.path("MainDicomTags").path("SeriesInstanceUID").asText();
+                        try {
+                            //Set your page url in this string. For eg, I m using URL for Google Search engine
+                            java.awt.Desktop.getDesktop().browse(java.net.URI.create(url_orthanc));
+                        } catch (java.io.IOException e) {
+                            System.out.println(e.getMessage());
+                        }
+
+                    }
                 }
-                if (viewer.equals("stone")) {
-                    seriesbyid = orthanc.AmbilSeriesById(tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 2).toString());
-                    JsonNode listSeries = seriesbyid;
-                    url_orthanc = "http://"+koneksiDB.USERORTHANC()+":"+koneksiDB.PASSORTHANC()+"@"+koneksiDB.URLORTHANC2() + ":" + koneksiDB.PORTORTHANC() + "/stone-webviewer/index.html?study=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString() + "&series=" + listSeries.path("MainDicomTags").path("SeriesInstanceUID").asText();
-                    try {
-                      //Set your page url in this string. For eg, I m using URL for Google Search engine
-                      java.awt.Desktop.getDesktop().browse(java.net.URI.create(url_orthanc));
+                if (!NoRawat.getText().equals("")) {
+                    if (viewer.equals("dicom")) {
+                        String nm_pasien = Sequel.cariIsi("SELECT nm_pasien FROM pasien JOIN reg_periksa ON pasien.no_rkm_medis = reg_periksa.no_rkm_medis WHERE reg_periksa.no_rawat=?", NoRawat.getText());
+                        url_orthanc = koneksiDB.URLORTHANC() + ":" + koneksiDB.PORTORTHANC() + "/web-viewer/app/viewer.html?series=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString();
+                        OrthancDICOM orthan = new OrthancDICOM(null, false);
+                        orthan.setJudul("::[ DICOM PACS Pasien " + nm_pasien + ", Series " + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString() + " ]::", NoRawat.getText(), tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString());
+                        try {
+                            System.out.println("URL : " + url_orthanc);
+                            orthan.loadURL(url_orthanc);
+                        } catch (Exception ex) {
+                            System.out.println("Notifikasi : " + ex);
+                        }
+                        orthan.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
+                        orthan.setLocationRelativeTo(internalFrame1);
+                        orthan.setVisible(true);
                     }
-                    catch (java.io.IOException e) {
-                        System.out.println(e.getMessage());
+                    if (viewer.equals("stone")) {
+                        seriesbyid = orthanc.AmbilSeriesById(tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString());
+                        JsonNode listSeries = seriesbyid;
+                        url_orthanc = "http://" + koneksiDB.USERORTHANC() + ":" + koneksiDB.PASSORTHANC() + "@" + koneksiDB.URLORTHANC2() + ":" + koneksiDB.PORTORTHANC() + "/stone-webviewer/index.html?study=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 4).toString() + "&series=" + listSeries.path("MainDicomTags").path("SeriesInstanceUID").asText();
+                        try {
+                            //Set your page url in this string. For eg, I m using URL for Google Search engine
+                            java.awt.Desktop.getDesktop().browse(java.net.URI.create(url_orthanc));
+                        } catch (java.io.IOException e) {
+                            System.out.println(e.getMessage());
+                        }
+
                     }
-                      
                 }
+
                 this.setCursor(Cursor.getDefaultCursor());
             } else {
                 JOptionPane.showMessageDialog(null, "Maaf, Silahkan pilih data..!!");
@@ -2678,27 +2812,53 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     }
 
     private void tampilOrthanc() {
+        if (NoRawat.getText().equals("")) {
 //        if(TabData.isVisible()==true){
-        if (tbDokter.getSelectedRow() != -1) {
-            if ((!Kd2.getText().equals("")) && (!Petugas.getText().equals(""))) {
+            if (tbDokter.getSelectedRow() != -1) {
+                if ((!Kd2.getText().equals("")) && (!Petugas.getText().equals(""))) {
 //                     if(TabData.getSelectedIndex()==2){
-                try {
-                    Valid.tabelKosong(tabModeDicom);
-                    root = orthanc.AmbilSeries(Sequel.cariIsi("select reg_periksa.no_rkm_medis from reg_periksa where reg_periksa.no_rawat=?", tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString()), Valid.SetTgl(Tgl1.getSelectedItem() + "").replaceAll("-", ""), Valid.SetTgl(Tgl2.getSelectedItem() + "").replaceAll("-", ""));
-                    for (JsonNode list : root) {
-                        for (JsonNode sublist : list.path("Series")) {
-                            tabModeDicom.addRow(new Object[]{
-                                list.path("PatientMainDicomTags").path("PatientID").asText(), list.path("ID").asText(), sublist.asText(), list.path("MainDicomTags").path("StudyInstanceUID").asText()
-                            });   
+                    try {
+                        Valid.tabelKosong(tabModeDicom);
+                        root = orthanc.AmbilSeries(Sequel.cariIsi("select reg_periksa.no_rkm_medis from reg_periksa where reg_periksa.no_rawat=?", tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString()), Valid.SetTgl(Tgl1.getSelectedItem() + "").replaceAll("-", ""), Valid.SetTgl(Tgl2.getSelectedItem() + "").replaceAll("-", ""));
+                        for (JsonNode list : root) {
+                            for (JsonNode sublist : list.path("Series")) {
+                                String tgl = list.path("MainDicomTags").path("StudyDate").asText().substring(6, 8) + "-" + list.path("MainDicomTags").path("StudyDate").asText().substring(4, 6) + "-" + list.path("MainDicomTags").path("StudyDate").asText().substring(0, 4);
+                                tabModeDicom.addRow(new Object[]{
+                                    tgl, list.path("PatientMainDicomTags").path("PatientID").asText(), list.path("ID").asText(), sublist.asText(), list.path("MainDicomTags").path("StudyInstanceUID").asText()
+                                });
+                            }
                         }
+                    } catch (Exception e) {
+                        System.out.println("Notif : " + e);
                     }
-                } catch (Exception e) {
-                    System.out.println("Notif : " + e);
-                }
 //                     }
+                }
+            }
+//        }
+
+        }
+
+        if (!NoRawat.getText().equals("")) {
+            try {
+                Valid.tabelKosong(tabModeDicom);
+                root = orthanc.AmbilSeries(Sequel.cariIsi("select reg_periksa.no_rkm_medis from reg_periksa where reg_periksa.no_rawat=?", NoRawat.getText()), Valid.SetTgl(Tgl1.getSelectedItem() + "").replaceAll("-", ""), Valid.SetTgl(Tgl2.getSelectedItem() + "").replaceAll("-", ""));
+                for (JsonNode list : root) {
+                    for (JsonNode sublist : list.path("Series")) {
+                        String tgl = list.path("MainDicomTags").path("StudyDate").asText().substring(6, 8) + "-" + list.path("MainDicomTags").path("StudyDate").asText().substring(4, 6) + "-" + list.path("MainDicomTags").path("StudyDate").asText().substring(0, 4);
+                        tabModeDicom.addRow(new Object[]{
+                            tgl, list.path("PatientMainDicomTags").path("PatientID").asText(), list.path("ID").asText(), sublist.asText(), list.path("MainDicomTags").path("StudyInstanceUID").asText()
+                        });
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("Notif : " + e);
             }
         }
-//        }
+    }
+
+    public void tampilOrthanc2() {
+        tampil();
+        tampilOrthanc();
     }
 
 }

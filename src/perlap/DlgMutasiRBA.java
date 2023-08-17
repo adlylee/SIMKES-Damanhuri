@@ -49,6 +49,16 @@ public class DlgMutasiRBA extends javax.swing.JDialog {
             public boolean isCellEditable(int rowIndex, int colIndex) {
                 return false;
             }
+            Class[] types = new Class[]{
+                java.lang.Object.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class,
+                java.lang.Double.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+
+            @Override
+            public Class getColumnClass(int columnIndex) {
+                return types[columnIndex];
+            }
         };
         tbDokter.setModel(tabMode);
 
@@ -60,13 +70,13 @@ public class DlgMutasiRBA extends javax.swing.JDialog {
             if (i == 0) {
                 column.setPreferredWidth(70);
             } else if (i == 1) {
-                column.setPreferredWidth(80);
+                column.setPreferredWidth(95);
             } else if (i == 2) {
-                column.setPreferredWidth(80);
+                column.setPreferredWidth(95);
             } else if (i == 3) {
-                column.setPreferredWidth(80);
+                column.setPreferredWidth(95);
             } else if (i == 4) {
-                column.setPreferredWidth(80);
+                column.setPreferredWidth(95);
             } else if (i == 5) {
                 column.setPreferredWidth(70);
             } else if (i == 6) {
@@ -433,8 +443,8 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 while (rs.next()) {
                     tabMode.addRow(new Object[]{
                         rs.getString("kd_rek"),
-                        rs.getString("awal"), rs.getString("masuk"),
-                        rs.getString("keluar"), rs.getString("akhir"),
+                        rs.getDouble("awal"), rs.getDouble("masuk"),
+                        rs.getDouble("keluar"), rs.getDouble("akhir"),
                         rs.getString("tgl_pergeseran"),
                         rs.getString("tgl_input"), rs.getString("jam_input"),
                         rs.getString("user"), rs.getString("status"),

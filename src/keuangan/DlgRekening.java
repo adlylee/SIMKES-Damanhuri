@@ -1992,6 +1992,19 @@ private void NmKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NmKeyP
         BtnEdit.setEnabled(var.getakun_rekening());
         BtnHapus.setEnabled(var.getakun_rekening());
         BtnPrint.setEnabled(var.getakun_rekening());
+        if (var.getkode().equals("Admin Utama")) {
+            BtnSimpan.setEnabled(true);
+            BtnBatal.setEnabled(true);
+            BtnHapus.setEnabled(true);
+            BtnPrint.setEnabled(true);
+            BtnEdit.setEnabled(true);
+        } else {
+            BtnSimpan.setEnabled(false);
+            BtnBatal.setEnabled(false);
+            BtnHapus.setEnabled(false);
+            BtnPrint.setEnabled(false);
+            BtnEdit.setEnabled(false);
+        }
     }
         
 }
