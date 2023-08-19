@@ -7709,7 +7709,8 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
             form.emptTeks();
             form.setNoRm(TNoRM.getText(), TPasien.getText(), TNoRw1.getText(), "Ranap");
             form.setVisible(true);
-            if ((Sequel.cariInteger("select count(no_rawat) from bridging_sep where no_rawat=?", TNoRw1.getText()) == 0)) {
+            kd_pj = Sequel.cariIsi("select kd_pj from reg_periksa where no_rawat=?", norawat.getText());            
+            if ((kd_pj.equals("BPJ") || kd_pj.contains("A02")) && (Sequel.cariInteger("select count(no_rawat) from bridging_sep where no_rawat=?", TNoRw1.getText()) == 0)) {
                 form.getTab(TNoRw1.getText());
             }
         }

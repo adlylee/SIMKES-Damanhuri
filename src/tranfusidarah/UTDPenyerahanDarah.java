@@ -32,6 +32,7 @@ import javax.swing.table.TableColumn;
 import keuangan.Jurnal;
 import kepegawaian.DlgCariPetugas;
 import simrskhanza.DlgKamarInap;
+import simrskhanza.DlgKamarInap2;
 
 public class UTDPenyerahanDarah extends javax.swing.JDialog {
     private final DefaultTableModel tabModeMedis,tabModeNonMedis,tabMode;
@@ -53,7 +54,7 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
     private DlgCariPetugas petugas=new DlgCariPetugas(null,false);
     private WarnaTable2 warna=new WarnaTable2();
     private UTDCariPenyerahanDarah carijual=new UTDCariPenyerahanDarah(null,false);
-    private DlgKamarInap kamar=new DlgKamarInap(null,false);
+    private DlgKamarInap2 kamar=new DlgKamarInap2(null,false);
 
     /** Creates new form DlgProgramStudi
      * @param parent
@@ -269,10 +270,10 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
             @Override
             public void windowClosed(WindowEvent e) {
                 if(kamar.getTable().getSelectedRow()!= -1){ 
-                    norawat.setText(kamar.getTable().getValueAt(kamar.getTable().getSelectedRow(),1).toString());
+                    norawat.setText(kamar.getTable().getValueAt(kamar.getTable().getSelectedRow(),0).toString());
                     nmpengambil.setText(kamar.getTable().getValueAt(kamar.getTable().getSelectedRow(),2).toString());
                     alamatpengambil.setText(kamar.getTable().getValueAt(kamar.getTable().getSelectedRow(),3).toString());
-                    keterangan.setText(kamar.getTable().getValueAt(kamar.getTable().getSelectedRow(),8).toString());
+                    keterangan.setText(kamar.getTable().getValueAt(kamar.getTable().getSelectedRow(),6).toString());
                 } 
             }
             @Override

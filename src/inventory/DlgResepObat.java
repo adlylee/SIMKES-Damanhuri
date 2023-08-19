@@ -2245,7 +2245,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             param.put("noresep", NoResep.getText());
             param.put("jam", cmbJam.getSelectedItem() + ":" + cmbMnt.getSelectedItem() + ":" + cmbDtk.getSelectedItem());
             param.put("noantrian", Sequel.cariIsi("select no_antrian from antrian_apotek where no_resep=?", NoResep.getText()));
-            param.put("reseppulang", Sequel.cariIsi("select no_rawat from resep_pulang where no_rawat=? limit 1",TNoRw.getText()));
+            param.put("reseppulang", Sequel.cariIsi("select no_rawat from resep_pulang where no_resep=? limit 1",NoResep.getText()));            
             try {
                 String a = Sequel.cariIsi("select no_rawat from kamar_inap where kamar_inap.no_rawat=?", TNoRw.getText());
 
@@ -3176,11 +3176,12 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                     ps2pulang = koneksi.prepareStatement("select databarang.kode_brng,databarang.nama_brng,resep_pulang.jml_barang,"
                             + "resep_pulang.tuslah,resep_pulang.harga,resep_pulang.total from "
                             + "resep_pulang inner join databarang on resep_pulang.kode_brng=databarang.kode_brng "
-                            + "where resep_pulang.tanggal=? and resep_pulang.no_rawat=? "
+                            + "where resep_pulang.tanggal=? and resep_pulang.no_rawat=? and resep_pulang.jam=? "
                             + "order by databarang.kode_brng");
                     try {
                         ps2pulang.setString(1, rspulang.getString("tanggal"));
                         ps2pulang.setString(2, rspulang.getString("no_rawat"));
+                        ps2pulang.setString(3, rspulang.getString("jam"));
                         rs2pulang = ps2pulang.executeQuery();
                         totalpulang = 0;
                         while (rs2pulang.next()) {

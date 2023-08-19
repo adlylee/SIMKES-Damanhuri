@@ -529,11 +529,15 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                     if (tbDokter.getValueAt(i, 0).toString().equals("true")) {
                         riwayat.catatRiwayat(Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(6, 10),
                                 kdrekdari.getText(), 0, Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()), var.getkode(), "Simpan", Keterangan.getText());
+                        System.out.println("riwayat dari");
                         Sequel.menyimpan("rekeningtahun", "'" + Tanggal.getSelectedItem().toString().substring(6, 10) + "','" + kdrekdari.getText() + "','" + tbDokter.getValueAt(i, 3).toString() + "','-" + Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()) + "'",
                                 "saldo_berjalan=saldo_berjalan-" + Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()) + "", "kd_rek='" + kdrekdari.getText() + "' and thn='" + Tanggal.getSelectedItem().toString().substring(6, 10) + "'");
+                        System.out.println("simpan dari");
                         riwayat.catatRiwayat(Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(6, 10), tbDokter.getValueAt(i, 1).toString(), Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()), 0, var.getkode(), "Simpan", Keterangan.getText());
+                        System.out.println("riwayat ke");
                         Sequel.menyimpan("rekeningtahun", "'" + Tanggal.getSelectedItem().toString().substring(6, 10) + "','" + kdrekdari.getText() + "','" + tbDokter.getValueAt(i, 3).toString() + "','-" + Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()) + "'",
                                 "saldo_berjalan=saldo_berjalan+" + Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()) + "", "kd_rek='" + tbDokter.getValueAt(i, 1) + "' and thn='" + Tanggal.getSelectedItem().toString().substring(6, 10) + "'");
+                        System.out.println("simpan ke");
                     }
                 }
                 tampil();
