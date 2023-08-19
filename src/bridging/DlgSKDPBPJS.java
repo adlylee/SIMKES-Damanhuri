@@ -1134,11 +1134,6 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
 //            if (KdPoli.getText().equals("U0019")) {
 //         
 //            }
-            if (!KdPoli.getText().equals("U0019") && (penjab.equals("BPJ") || penjab.equals("A02")) ) {
-                LocalDate today = LocalDate.now();
-                String tglrujukan = Sequel.cariIsi("select tglrujukan from bridging_sep where no_sep='" + nosep + "'");
-                if (tglrujukan.isEmpty() || tglrujukan == null) {
-                    JOptionPane.showMessageDialog(null, "Maaf, SEP pasien belum tersedia...!!"); 
             if (set_status_rawat.equals("Ranap")) {
                 if (penjab.equals("BPJ") || penjab.equals("A02")) {
                     nomer = kontrol.simpanSurat(nosep, Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), KdDokter1.getText(), NmDokter1.getText(), KdPoli1.getText(), NmPoli1.getText(), user);
@@ -1243,24 +1238,6 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
                             }
                         }
                     }
-                }
-            } else {
-                if (Sequel.menyimpantf("skdp_bpjs", "?,?,?,?,?,?,?,?,?,?,?,?,?", "Tahun dan nomor surat", 13, new String[]{
-                    TanggalPeriksa.getSelectedItem().toString().substring(6, 10), TNoRM.getText(), Diagnosa.getText(), Terapi.getText(),
-                    Alasan1.getText(), nomer, Rtl1.getText(), nosep, Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""),
-                    Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), antrian, KdDokter.getText(), Status.getSelectedItem().toString()
-                }) == true) {
-                    System.out.println("Simpan SKDP Berhasil");
-                    Sequel.menyimpan2("booking_registrasi", "?,?,?,?,?,?,?,?,?,?,?", "Pasien dan Tanggal", 11, new String[]{
-                        Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), TanggalSurat.getSelectedItem().toString().substring(11, 19), TNoRM.getText(),
-                        Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), KdDokter.getText(),
-                        KdPoli.getText(), NoReg.getText(), Sequel.cariIsi("select kd_pj from pasien where no_rkm_medis=?", TNoRM.getText()), "0",
-                        Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + " " + TanggalPeriksa.getSelectedItem().toString().substring(11, 19),
-                        "belum"
-                    });
-                    JOptionPane.showMessageDialog(null, "Berhasil Simpan");
-                    emptTeks();
-                    tampil();
                 }
             }
         }
