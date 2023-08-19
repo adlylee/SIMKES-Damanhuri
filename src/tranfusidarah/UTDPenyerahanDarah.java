@@ -1298,12 +1298,12 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                     for(i=0;i<tbDarah.getRowCount();i++){ 
                         if(tbDarah.getValueAt(i,0).toString().equals("true")){
                             try {
-                                ps = koneksi.prepareStatement("SELECT kd_jenis_prw , bagian_rs , bhp , tarif_perujuk , tarif_tindakan_dokter, tarif_tindakan_petugas , kso, menejemen , total_byr FROM jns_perawatan_lab WHERE nm_perawatan LIKE '%UTD - "+tbDarah.getValueAt(i,2).toString()+"%'");
+                                String kd_jns_prw = Sequel.cariIsi("SELECT kd_lab FROM utd_mapping_komponen WHERE nm_komponen = '"+tbDarah.getValueAt(i,2).toString()+"'");
+                                ps = koneksi.prepareStatement("SELECT kd_jenis_prw , bagian_rs , bhp , tarif_perujuk , tarif_tindakan_dokter, tarif_tindakan_petugas , kso, menejemen , total_byr FROM jns_perawatan_lab WHERE kd_jenis_prw = '"+kd_jns_prw+"'");
                                 rs=ps.executeQuery();
                                 while(rs.next()){
                                     String pj = Sequel.cariIsi("SELECT kd_dokterutd FROM set_pjlab");
-                                    String user=var.getkode();
-                                    String status = "Ranap";
+                                    String status_bill = "Ranap";
                                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");  
                                     LocalDateTime now = LocalDateTime.now();  
                                     System.out.println(dtf.format(now));  
@@ -1312,7 +1312,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                         "insert into periksa_lab values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
                                     try {
                                         pssimpanperiksa.setString(1,norawat.getText());
-                                        pssimpanperiksa.setString(2,user);
+                                        pssimpanperiksa.setString(2,"UTD1");
                                         pssimpanperiksa.setString(3,rs.getString(1));
                                         pssimpanperiksa.setString(4,Valid.SetTgl(tanggal.getSelectedItem()+""));
                                         pssimpanperiksa.setString(5,dtf.format(now));
@@ -1326,7 +1326,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                         pssimpanperiksa.setDouble(13,rs.getDouble(8));
                                         pssimpanperiksa.setDouble(14,rs.getDouble(9));
                                         pssimpanperiksa.setString(15,pj);
-                                        pssimpanperiksa.setString(16,status);
+                                        pssimpanperiksa.setString(16,status_bill);
                                         pssimpanperiksa.executeUpdate();   
                                     } catch (Exception e) {
                                         System.out.println("Notifikasi 1 : "+e);
@@ -1729,14 +1729,14 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     }//GEN-LAST:event_BesarPPNActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        if(this.getWidth()<820){
-            scrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-            scrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-            panelisi3.setPreferredSize(new Dimension(800,137));
-        }else{
-            scrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-            scrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-        }
+//        if(this.getWidth()<820){
+//            scrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+//            scrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+//            panelisi3.setPreferredSize(new Dimension(800,137));
+//        }else{
+//            scrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+//            scrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+//        }
     }//GEN-LAST:event_formWindowActivated
 
     private void CmbCariResusItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbCariResusItemStateChanged

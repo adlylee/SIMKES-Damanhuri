@@ -11,6 +11,7 @@
 
 package setting;
 
+import bridging.MyLimsMapping;
 import fungsi.WarnaTable;
 import fungsi.batasInput;
 import fungsi.koneksiDB;
@@ -28,6 +29,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import kepegawaian.DlgCariDokter;
+import tranfusidarah.UTDKomponenDarah;
 
 /**
  *
@@ -39,6 +41,8 @@ public class DlgSetUtd extends javax.swing.JDialog {
     private sekuel Sequel=new sekuel();
     private validasi Valid=new validasi();
     public  DlgCariDokter dokter=new DlgCariDokter(null,false);
+    private UTDKomponenDarah komponen=new UTDKomponenDarah(null,true);
+    private MyLimsMapping app = new MyLimsMapping(null, true);
     private int pilihan=0,i=0;
 
     /** Creates new form DlgAdmin
@@ -75,33 +79,48 @@ public class DlgSetUtd extends javax.swing.JDialog {
         tbAdmin.setDefaultRenderer(Object.class, new WarnaTable());
         kddokter.setDocument(new batasInput((byte)20).getKata(kddokter));
         kddokter2.setDocument(new batasInput((byte)20).getKata(kddokter2));
-        kddokter3.setDocument(new batasInput((byte)20).getKata(kddokter3));
-        kddokter4.setDocument(new batasInput((byte)20).getKata(kddokter4));
 
-        dokter.addWindowListener(new WindowListener() {
+        komponen.addWindowListener(new WindowListener() {
             @Override
             public void windowOpened(WindowEvent e) {;}
             @Override
             public void windowClosing(WindowEvent e) {}
             @Override
             public void windowClosed(WindowEvent e) {
-                if(dokter.getTable().getSelectedRow()!= -1){                    
+                if(komponen.getTable().getSelectedRow()!= -1){                    
                     if(pilihan==1){
                         kddokter.setText(dokter.getTable().getValueAt(dokter.getTable().getSelectedRow(),0).toString());
                         TDokter.setText(dokter.getTable().getValueAt(dokter.getTable().getSelectedRow(),1).toString());
                         kddokter.requestFocus();
                     }else if(pilihan==2){
-                        kddokter2.setText(dokter.getTable().getValueAt(dokter.getTable().getSelectedRow(),0).toString());
-                        TDokter2.setText(dokter.getTable().getValueAt(dokter.getTable().getSelectedRow(),1).toString());
+                        kddokter2.setText(komponen.getTable().getValueAt(komponen.getTable().getSelectedRow(),0).toString());
+                        TDokter2.setText(komponen.getTable().getValueAt(komponen.getTable().getSelectedRow(),1).toString());
                         kddokter2.requestFocus();
-                    }else if(pilihan==3){
-                        kddokter3.setText(dokter.getTable().getValueAt(dokter.getTable().getSelectedRow(),0).toString());
-                        TDokter3.setText(dokter.getTable().getValueAt(dokter.getTable().getSelectedRow(),1).toString());
-                        kddokter3.requestFocus();
-                    }else if(pilihan==4){
-                        kddokter4.setText(dokter.getTable().getValueAt(dokter.getTable().getSelectedRow(),0).toString());
-                        TDokter4.setText(dokter.getTable().getValueAt(dokter.getTable().getSelectedRow(),1).toString());
-                        kddokter4.requestFocus();
+                    }
+                }                
+            }
+            @Override
+            public void windowIconified(WindowEvent e) {}
+            @Override
+            public void windowDeiconified(WindowEvent e) {}
+            @Override
+            public void windowActivated(WindowEvent e) {}
+            @Override
+            public void windowDeactivated(WindowEvent e) {}
+        });
+        
+        app.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {;}
+            @Override
+            public void windowClosing(WindowEvent e) {}
+            @Override
+            public void windowClosed(WindowEvent e) {
+                if(app.getTable().getSelectedRow()!= -1){                    
+                    if(pilihan==1){
+                        kddokter.setText(app.getTable().getValueAt(app.getTable().getSelectedRow(),0).toString());
+                        TDokter.setText(app.getTable().getValueAt(app.getTable().getSelectedRow(),1).toString());
+                        kddokter.requestFocus();
                     }
                 }                
             }
@@ -138,14 +157,6 @@ public class DlgSetUtd extends javax.swing.JDialog {
         kddokter2 = new widget.TextBox();
         TDokter2 = new widget.TextBox();
         BtnDokter2 = new widget.Button();
-        jLabel15 = new widget.Label();
-        kddokter3 = new widget.TextBox();
-        TDokter3 = new widget.TextBox();
-        BtnDokter3 = new widget.Button();
-        jLabel16 = new widget.Label();
-        kddokter4 = new widget.TextBox();
-        TDokter4 = new widget.TextBox();
-        BtnDokter4 = new widget.Button();
         panelGlass5 = new widget.panelisi();
         BtnSimpan = new widget.Button();
         BtnBatal = new widget.Button();
@@ -191,7 +202,7 @@ public class DlgSetUtd extends javax.swing.JDialog {
         panelGlass7.setPreferredSize(new java.awt.Dimension(44, 137));
         panelGlass7.setLayout(null);
 
-        jLabel13.setText("P.J.Laboratorium :");
+        jLabel13.setText("Tindakan Lab :");
         jLabel13.setName("jLabel13"); // NOI18N
         panelGlass7.add(jLabel13);
         jLabel13.setBounds(0, 12, 115, 23);
@@ -223,7 +234,7 @@ public class DlgSetUtd extends javax.swing.JDialog {
         panelGlass7.add(BtnDokter);
         BtnDokter.setBounds(485, 12, 28, 23);
 
-        jLabel14.setText("P.J.Radiologi :");
+        jLabel14.setText("Komponen Darah :");
         jLabel14.setName("jLabel14"); // NOI18N
         panelGlass7.add(jLabel14);
         jLabel14.setBounds(0, 42, 115, 23);
@@ -254,70 +265,6 @@ public class DlgSetUtd extends javax.swing.JDialog {
         });
         panelGlass7.add(BtnDokter2);
         BtnDokter2.setBounds(485, 42, 28, 23);
-
-        jLabel15.setText("P.J.Hemodialisa :");
-        jLabel15.setName("jLabel15"); // NOI18N
-        panelGlass7.add(jLabel15);
-        jLabel15.setBounds(0, 72, 115, 23);
-
-        kddokter3.setHighlighter(null);
-        kddokter3.setName("kddokter3"); // NOI18N
-        kddokter3.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                kddokter3KeyPressed(evt);
-            }
-        });
-        panelGlass7.add(kddokter3);
-        kddokter3.setBounds(117, 72, 95, 23);
-
-        TDokter3.setEditable(false);
-        TDokter3.setName("TDokter3"); // NOI18N
-        panelGlass7.add(TDokter3);
-        TDokter3.setBounds(213, 72, 269, 23);
-
-        BtnDokter3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
-        BtnDokter3.setMnemonic('3');
-        BtnDokter3.setToolTipText("ALt+3");
-        BtnDokter3.setName("BtnDokter3"); // NOI18N
-        BtnDokter3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnDokter3ActionPerformed(evt);
-            }
-        });
-        panelGlass7.add(BtnDokter3);
-        BtnDokter3.setBounds(485, 72, 28, 23);
-
-        jLabel16.setText("P.J.Tranfusi Darah :");
-        jLabel16.setName("jLabel16"); // NOI18N
-        panelGlass7.add(jLabel16);
-        jLabel16.setBounds(0, 102, 115, 23);
-
-        kddokter4.setHighlighter(null);
-        kddokter4.setName("kddokter4"); // NOI18N
-        kddokter4.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                kddokter4KeyPressed(evt);
-            }
-        });
-        panelGlass7.add(kddokter4);
-        kddokter4.setBounds(117, 102, 95, 23);
-
-        TDokter4.setEditable(false);
-        TDokter4.setName("TDokter4"); // NOI18N
-        panelGlass7.add(TDokter4);
-        TDokter4.setBounds(213, 102, 269, 23);
-
-        BtnDokter4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
-        BtnDokter4.setMnemonic('3');
-        BtnDokter4.setToolTipText("ALt+3");
-        BtnDokter4.setName("BtnDokter4"); // NOI18N
-        BtnDokter4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnDokter4ActionPerformed(evt);
-            }
-        });
-        panelGlass7.add(BtnDokter4);
-        BtnDokter4.setBounds(485, 102, 28, 23);
 
         internalFrame1.add(panelGlass7, java.awt.BorderLayout.PAGE_START);
 
@@ -428,30 +375,23 @@ public class DlgSetUtd extends javax.swing.JDialog {
 
     private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpanActionPerformed
         if(TDokter.getText().trim().equals("")||kddokter.getText().trim().equals("")){
-            Valid.textKosong(kddokter,"Penanggung Jawab Laborat");
+            Valid.textKosong(kddokter,"Kode Lab");
         }else if(TDokter2.getText().trim().equals("")||kddokter2.getText().trim().equals("")){
-            Valid.textKosong(kddokter2,"Penanggung Jawab Radiologi");
-        }else if(TDokter3.getText().trim().equals("")||kddokter3.getText().trim().equals("")){
-            Valid.textKosong(kddokter3,"Penanggung Jawab Hemodialisa");
-        }else if(TDokter4.getText().trim().equals("")||kddokter4.getText().trim().equals("")){
-            Valid.textKosong(kddokter4,"Penanggung Jawab Unit Tranfusi Darah");
-        }else if(tabMode.getRowCount()==0){
-            Sequel.menyimpan("set_pjlab","?,?,?,?","Penanggung Jawab",4,new String[]{
-                kddokter.getText(),kddokter2.getText(),kddokter3.getText(),kddokter4.getText()
-            });
+            Valid.textKosong(kddokter2,"Komponen");
+        }else{
+            String query = "INSERT INTO utd_mapping_komponen (kd_lab,kd_komponen,nm_komponen,status) VALUES ('"+kddokter.getText()+"','"+kddokter2.getText()+"','"+TDokter2.getText()+"',1)";
+            Sequel.queryu(query);
+//            Sequel.menyimpan("utd_mapping_komponen","?,?,?","Kode",3,new Object[]{
+//                kddokter.getText(),kddokter2.getText(),1
+//            });
             tampil();
             emptTeks();
-        }else if(tabMode.getRowCount()>0){
-            JOptionPane.showMessageDialog(null,"Maaf, Hanya diijinkan satu Admin Utama ...!!!!");
-            kddokter.requestFocus();
         }
 }//GEN-LAST:event_BtnSimpanActionPerformed
 
     private void BtnSimpanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnSimpanKeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_SPACE){
             BtnSimpanActionPerformed(null);
-        }else{
-            Valid.pindah(evt,kddokter4,BtnBatal);
         }
 }//GEN-LAST:event_BtnSimpanKeyPressed
 
@@ -470,7 +410,7 @@ public class DlgSetUtd extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null,"Maaf, data sudah habis...!!!!");
             kddokter.requestFocus();
         }else{
-            Sequel.queryu("delete from set_pjlab");
+//            Sequel.queryu("delete from set_pjlab");
             tampil();
             emptTeks();
         }
@@ -489,15 +429,11 @@ public class DlgSetUtd extends javax.swing.JDialog {
             Valid.textKosong(kddokter,"Penanggung Jawab Laborat");
         }else if(TDokter2.getText().trim().equals("")||kddokter2.getText().trim().equals("")){
             Valid.textKosong(kddokter2,"Penanggung Jawab Radiologi");
-        }else if(TDokter3.getText().trim().equals("")||kddokter3.getText().trim().equals("")){
-            Valid.textKosong(kddokter3,"Penanggung Jawab Hemodialisa");
-        }else if(TDokter4.getText().trim().equals("")||kddokter4.getText().trim().equals("")){
-            Valid.textKosong(kddokter4,"Penanggung Jawab Unit Tranfusi Darah");
         }else{
-            Sequel.queryu("delete from set_pjlab");
-            Sequel.menyimpan("set_pjlab","?,?,?,?","Penanggung Jawab",4,new String[]{
-                kddokter.getText(),kddokter2.getText(),kddokter3.getText(),kddokter4.getText()
-            });
+//            Sequel.queryu("delete from set_pjlab");
+//            Sequel.menyimpan("set_pjlab","?,?,?,?","Penanggung Jawab",4,new String[]{
+//                kddokter.getText(),kddokter2.getText()
+//            });
             tampil();
             emptTeks();
         }
@@ -562,11 +498,7 @@ public class DlgSetUtd extends javax.swing.JDialog {
 
     private void BtnDokterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDokterActionPerformed
         pilihan=1;
-        dokter.isCek();
-        dokter.TCari.requestFocus();
-        dokter.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
-        dokter.setLocationRelativeTo(internalFrame1);
-        dokter.setVisible(true);
+        app.getMapp("set",kddokter,TDokter);
     }//GEN-LAST:event_BtnDokterActionPerformed
 
     private void kddokter2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kddokter2KeyPressed
@@ -574,57 +506,17 @@ public class DlgSetUtd extends javax.swing.JDialog {
             Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?",TDokter2,kddokter2.getText());
         }else if(evt.getKeyCode()==KeyEvent.VK_UP){
             BtnDokter2ActionPerformed(null);
-        }else{
-            Valid.pindah(evt,kddokter,kddokter3);
         }
     }//GEN-LAST:event_kddokter2KeyPressed
 
     private void BtnDokter2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDokter2ActionPerformed
         pilihan=2;
-        dokter.isCek();
-        dokter.TCari.requestFocus();
-        dokter.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
-        dokter.setLocationRelativeTo(internalFrame1);
-        dokter.setVisible(true);
+        komponen.emptTeks();
+        komponen.isCek();
+        komponen.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
+        komponen.setLocationRelativeTo(internalFrame1);        
+        komponen.setVisible(true);
     }//GEN-LAST:event_BtnDokter2ActionPerformed
-
-    private void kddokter3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kddokter3KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_PAGE_DOWN){
-            Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?",TDokter3,kddokter3.getText());
-        }else if(evt.getKeyCode()==KeyEvent.VK_UP){
-            BtnDokter3ActionPerformed(null);
-        }else{
-            Valid.pindah(evt,kddokter2,kddokter4);
-        }
-    }//GEN-LAST:event_kddokter3KeyPressed
-
-    private void BtnDokter3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDokter3ActionPerformed
-        pilihan=3;
-        dokter.isCek();
-        dokter.TCari.requestFocus();
-        dokter.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
-        dokter.setLocationRelativeTo(internalFrame1);
-        dokter.setVisible(true);
-    }//GEN-LAST:event_BtnDokter3ActionPerformed
-
-    private void kddokter4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kddokter4KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_PAGE_DOWN){
-            Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?",TDokter4,kddokter4.getText());
-        }else if(evt.getKeyCode()==KeyEvent.VK_UP){
-            BtnDokter4ActionPerformed(null);
-        }else{
-            Valid.pindah(evt,kddokter3,BtnSimpan);
-        }
-    }//GEN-LAST:event_kddokter4KeyPressed
-
-    private void BtnDokter4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDokter4ActionPerformed
-        pilihan=4;
-        dokter.isCek();
-        dokter.TCari.requestFocus();
-        dokter.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
-        dokter.setLocationRelativeTo(internalFrame1);
-        dokter.setVisible(true);
-    }//GEN-LAST:event_BtnDokter4ActionPerformed
 
     /**
     * @param args the command line arguments
@@ -646,8 +538,6 @@ public class DlgSetUtd extends javax.swing.JDialog {
     private widget.Button BtnBatal;
     private widget.Button BtnDokter;
     private widget.Button BtnDokter2;
-    private widget.Button BtnDokter3;
-    private widget.Button BtnDokter4;
     private widget.Button BtnEdit;
     private widget.Button BtnHapus;
     private widget.Button BtnKeluar;
@@ -655,17 +545,11 @@ public class DlgSetUtd extends javax.swing.JDialog {
     private widget.ScrollPane Scroll;
     private widget.TextBox TDokter;
     private widget.TextBox TDokter2;
-    private widget.TextBox TDokter3;
-    private widget.TextBox TDokter4;
     private widget.InternalFrame internalFrame1;
     private widget.Label jLabel13;
     private widget.Label jLabel14;
-    private widget.Label jLabel15;
-    private widget.Label jLabel16;
     private widget.TextBox kddokter;
     private widget.TextBox kddokter2;
-    private widget.TextBox kddokter3;
-    private widget.TextBox kddokter4;
     private widget.panelisi panelGlass5;
     private widget.panelisi panelGlass7;
     private widget.Table tbAdmin;
@@ -674,13 +558,13 @@ public class DlgSetUtd extends javax.swing.JDialog {
     private void tampil() {
         Valid.tabelKosong(tabMode);
         try{
-            ResultSet rs=koneksi.prepareStatement("select * from set_pjlab").executeQuery();
+            ResultSet rs=koneksi.prepareStatement("select * from utd_mapping_komponen").executeQuery();
             while(rs.next()){
                 tabMode.addRow(new Object[]{
-                    rs.getString(1)+" "+Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?",rs.getString(1)),
-                    rs.getString(2)+" "+Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?",rs.getString(2)),
-                    rs.getString(3)+" "+Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?",rs.getString(3)),
-                    rs.getString(4)+" "+Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?",rs.getString(4))
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4)
                 });
             }
         }catch(SQLException e){
@@ -693,12 +577,8 @@ public class DlgSetUtd extends javax.swing.JDialog {
         if(row!= -1){
             kddokter.setText(Sequel.cariIsi("select kd_dokterlab from set_pjlab"));
             kddokter2.setText(Sequel.cariIsi("select kd_dokterrad from set_pjlab"));
-            kddokter3.setText(Sequel.cariIsi("select kd_dokterhemodialisa from set_pjlab"));
-            kddokter4.setText(Sequel.cariIsi("select kd_dokterutd from set_pjlab"));
             TDokter.setText(Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?",kddokter.getText()));
             TDokter2.setText(Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?",kddokter2.getText()));
-            TDokter3.setText(Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?",kddokter3.getText()));
-            TDokter4.setText(Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?",kddokter4.getText()));
         }
     }
 
@@ -707,10 +587,6 @@ public class DlgSetUtd extends javax.swing.JDialog {
         TDokter.setText("");
         kddokter2.setText("");
         TDokter2.setText("");
-        kddokter3.setText("");
-        TDokter3.setText("");
-        kddokter4.setText("");
-        TDokter4.setText("");
         kddokter.requestFocus();
     }
 }

@@ -26,6 +26,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -45,7 +46,8 @@ public final class MyLimsMapping extends javax.swing.JDialog {
     private PreparedStatement ps,pstindakan;
     private ResultSet rs,rstindakan;    
     private int i=0;
-    private String URL = "", query = "", token,requestJson,tanggal = "",jam ="";
+    private String URL = "", query = "", token,requestJson,tanggal = "",jam ="",f="";
+    private JTextField A,S;
     private MyLimsApi api = new MyLimsApi();
     private HttpHeaders headers;
     private HttpEntity requestEntity;
@@ -926,7 +928,11 @@ private void btnPoliBPJSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private void tbTarifMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTarifMouseClicked
         if(tabMode2.getRowCount()!=0){
             try {
-                getDataFK2();
+                if (f.equals("")) {
+                    getDataFK2();
+                } else {
+                    getDataSet(S, A);
+                }
             } catch (java.lang.NullPointerException e) {
             }
         }
@@ -944,7 +950,11 @@ private void btnPoliBPJSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 
     private void BtnCariLabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCariLabActionPerformed
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        tampiltarif();
+        if (f.equals("")) {
+            tampiltarif();
+        } else {
+            tampilt();
+        }
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_BtnCariLabActionPerformed
 
@@ -1111,6 +1121,13 @@ private void btnPoliBPJSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             TPoli.setText(tbTarif.getValueAt(tbTarif.getSelectedRow(), 2).toString());
         }
     }
+    
+    private void getDataSet(JTextField S,JTextField A) {
+        if (tbTarif.getSelectedRow() != -1) {
+            S.setText(tbTarif.getValueAt(tbTarif.getSelectedRow(), 0).toString());
+            A.setText(tbTarif.getValueAt(tbTarif.getSelectedRow(), 1).toString());
+        }
+    }
    
     public void tampilFaskes1() {
         try {
@@ -1186,6 +1203,45 @@ private void btnPoliBPJSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         }catch(Exception e){
             System.out.println("Notifikasi : "+e);
         }
+    }
+    
+    private void tampilt() {     
+        try{
+            Valid.tabelKosong(tabMode2);
+            pstindakan=koneksi.prepareStatement(
+                "select kd_jenis_prw,nm_perawatan "+
+                "from jns_perawatan_lab where kd_jenis_prw like ? or nm_perawatan like ? "+
+                "order by kd_jenis_prw");
+            try {
+                pstindakan.setString(1, "%"+TCariLab.getText()+"%");
+                pstindakan.setString(2, "%"+TCariLab.getText()+"%");
+                rstindakan=pstindakan.executeQuery();                       
+                while(rstindakan.next()){                
+                    tabMode2.addRow(new Object[]{rstindakan.getString(1),rstindakan.getString(2)});
+                }
+            } catch (Exception e) {
+                System.out.println("Notifikasi : "+e);
+            } finally{
+                if(rstindakan!=null){
+                    rstindakan.close();
+                }
+                if(pstindakan!=null){
+                    pstindakan.close();
+                }                
+            }
+        }catch(Exception e){
+            System.out.println("Notifikasi : "+e);
+        }
+    }
+    
+    public void getMapp(String val, JTextField kode,JTextField nama){
+        f = "";
+        WindowCariLab.setLocationRelativeTo(internalFrame1);
+        WindowCariLab.setVisible(true);
+        tampilt();
+        S = kode;
+        A = nama;
+        f = val;
     }
     
     
