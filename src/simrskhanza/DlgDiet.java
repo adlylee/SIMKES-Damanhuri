@@ -608,7 +608,7 @@ public class DlgDiet extends javax.swing.JDialog {
         TNm.setText("");
         TCari.setText("");
         TKd.requestFocus();
-//        Valid.autoNomer("diet", "D", 3, TKd);
+        isNumber();
         TKd.requestFocus();
     }
 
@@ -633,9 +633,15 @@ public class DlgDiet extends javax.swing.JDialog {
         BtnEdit.setEnabled(var.getdiet_pasien());
         if (var.getkode().equals("Admin Utama")) {
             BtnHapus.setEnabled(true);
+            BtnEdit.setEnabled(true);
         } else {
             BtnHapus.setEnabled(false);
+            BtnEdit.setEnabled(false);
         }
+    }
+
+     private void isNumber() {
+        Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(kd_diet,4),signed)),0) from diet", "D", 4, TKd);
     }
 
     private void isSimpan() {
@@ -646,20 +652,20 @@ public class DlgDiet extends javax.swing.JDialog {
         }) == true) {
             ceksukses = true;
         } else {
-            Valid.autoNomer("diet", "D", 3, TKd);
+            isNumber();
             if (Sequel.menyimpantf("diet", "?,?", "kode diet", 2, new String[]{
                 TKd.getText(), TNm.getText()
             }) == true) {
                 ceksukses = true;
             } else {
-                Valid.autoNomer("diet", "D", 3, TKd);
+                isNumber();
                 if (Sequel.menyimpantf("diet", "?,?", "kode diet", 2, new String[]{
                     TKd.getText(), TNm.getText()
                 }) == true) {
                     ceksukses = true;
                 } else {
                     TKd.requestFocus();
-                    Valid.autoNomer("diet", "D", 3, TKd);
+                    isNumber();
                 }
             }
         }

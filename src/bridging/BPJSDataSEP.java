@@ -7023,7 +7023,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
                 response = mapper.readTree(lz);
                 response = response.path("sep").path("noSep");
                 System.out.println("SEP : " + response.asText() + "'");
-//                String jsonResponse = response.asText().replace(" ", "");//replace spasi sep
+                String jsonResponse = response.asText().replace(" ", "");//replace spasi sep
                 if (Sequel.menyimpantf("bridging_sep", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "SEP", 47, new String[]{
                     response.asText(), TNoRw.getText(), Valid.SetTgl(TanggalSEP.getSelectedItem() + ""), Valid.SetTgl(TanggalRujuk.getSelectedItem() + ""),
                     NoRujukan.getText(), KdPpkRujukan.getText(), NmPpkRujukan.getText(), KdPPK.getText(), NmPPK.getText(),
