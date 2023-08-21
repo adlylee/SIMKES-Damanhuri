@@ -235,7 +235,7 @@ public class BridgingWA {
         public void sendwaMPP(String nama, String tanggal, String kamar) {
         try {
             reurn = "";
-            message = "Pemberitahuan Permintaan Kerohanian.\n\nPasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal + "";
+            message = "Pemberitahuan pasien perlu penanganan MPP lebih lanjut.\n\nPasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal + "";
             number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='198011042005012011'");
             if (number.equals("")) {
                 System.out.println("Nomor telepon kosong !!!");
