@@ -48,7 +48,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
     private final Properties prop = new Properties();
     private DlgCariPetugas petugas = new DlgCariPetugas(null, false); 
     public DlgRujukMasuk rujukmasuk = new DlgRujukMasuk(null, false);
-    private JsonNode root,seriesbyid;
+    private JsonNode root,seriesbyid,hasilexpertise;
     private int i;
     private ApiOrthanc orthanc = new ApiOrthanc();
     private StringBuilder htmlContent;
@@ -548,6 +548,8 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         NoOrder = new widget.TextBox();
         Perujuk = new widget.TextBox();
         Petugas = new widget.TextBox();
+        jPopupMenu2 = new javax.swing.JPopupMenu();
+        MnTarikGambar = new javax.swing.JMenuItem();
         internalFrame1 = new widget.InternalFrame();
         scrollPane1 = new widget.ScrollPane();
         tbDokter = new widget.Table();
@@ -653,7 +655,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         WindowHasil.setResizable(false);
         WindowHasil.getContentPane().setLayout(new java.awt.BorderLayout(1, 1));
 
-        internalFrame6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Hasil Pemeriksaan ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(100, 80, 80))); // NOI18N
+        internalFrame6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Hasil Pemeriksaan ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(100, 80, 80))); // NOI18N
         internalFrame6.setName("internalFrame6"); // NOI18N
         internalFrame6.setLayout(new java.awt.BorderLayout());
 
@@ -819,7 +821,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
             }
         });
         panelIsi7.add(btnHasilRad);
-        btnHasilRad.setBounds(460, 10, 36, 26);
+        btnHasilRad.setBounds(460, 10, 58, 32);
 
         internalFrame6.add(panelIsi7, java.awt.BorderLayout.PAGE_START);
 
@@ -854,7 +856,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         WindowGantiDokterParamedis.setUndecorated(true);
         WindowGantiDokterParamedis.setResizable(false);
 
-        internalFrame5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(239, 244, 234)), "::[ Ubah P.J.Rad, Perujuk & Petugas ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(239, 244, 234)), "::[ Ubah P.J.Rad, Perujuk & Petugas ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame5.setName("internalFrame5"); // NOI18N
         internalFrame5.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -994,6 +996,21 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         Petugas.setHighlighter(null);
         Petugas.setName("Petugas"); // NOI18N
 
+        jPopupMenu2.setName("jPopupMenu2"); // NOI18N
+
+        MnTarikGambar.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        MnTarikGambar.setForeground(new java.awt.Color(100, 80, 80));
+        MnTarikGambar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        MnTarikGambar.setText("Tarik Hasil Expertise");
+        MnTarikGambar.setName("MnTarikGambar"); // NOI18N
+        MnTarikGambar.setPreferredSize(new java.awt.Dimension(250, 28));
+        MnTarikGambar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnTarikGambarActionPerformed(evt);
+            }
+        });
+        jPopupMenu2.add(MnTarikGambar);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
@@ -1003,7 +1020,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Pemeriksaan Radiologi ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(100, 80, 80))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Pemeriksaan Radiologi ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(100, 80, 80))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -1362,7 +1379,16 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         Scroll6.setName("Scroll6"); // NOI18N
         Scroll6.setOpaque(true);
 
+        tbListDicom.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
         tbListDicom.setName("tbListDicom"); // NOI18N
+        tbListDicom.setComponentPopupMenu(jPopupMenu2);
         tbListDicom.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbListDicomMouseClicked(evt);
@@ -2362,6 +2388,19 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         // TODO add your handling code here:
     }//GEN-LAST:event_kddokterKeyPressed
 
+    private void MnTarikGambarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnTarikGambarActionPerformed
+        hasilexpertise = orthanc.AmbilHasilExpertise(Sequel.cariIsi("select reg_periksa.no_rkm_medis from reg_periksa where reg_periksa.no_rawat=?", tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString()), Valid.SetTgl(Tgl1.getSelectedItem() + "").replaceAll("-", ""), tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 2).toString());
+        String notif = "<html>Hasil : "+hasilexpertise.path("response").path("hasil");
+        notif += "<br>Kesan : "+hasilexpertise.path("response").path("kesan");
+        notif += "<br>Apakah Ingin Disimpan ? </html>";
+//        JOptionPane.showConfirmDialog(null, notif);
+        int opsi = JOptionPane.showConfirmDialog(null, notif, "Simpan Hasil Expertise Data", JOptionPane.YES_NO_OPTION);
+        if (opsi == JOptionPane.YES_OPTION)
+            JOptionPane.showMessageDialog(null, "Saat dipilih yes !");
+        else
+            JOptionPane.showMessageDialog(null, "Saat dipilih no !");
+    }//GEN-LAST:event_MnTarikGambarActionPerformed
+
     private void TKesanKeyPressed(java.awt.event.KeyEvent evt) {
         //        Valid.pindah(evt,TKdPrw,TPemeriksaan);
     }
@@ -2413,6 +2452,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private javax.swing.JMenuItem MnCetakNota;
     private javax.swing.JMenuItem MnLihatGambar;
     private javax.swing.JMenuItem MnLihatHasil;
+    private javax.swing.JMenuItem MnTarikGambar;
     private javax.swing.JMenuItem MnUbahDokterPetugas;
     private widget.TextBox NmDokterPj;
     private widget.TextBox NmPerujuk;
@@ -2451,6 +2491,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.Label jLabel7;
     private widget.Label jLabel9;
     private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JPopupMenu jPopupMenu2;
     private widget.TextBox kddokter;
     private widget.TextBox kdmem;
     private widget.TextBox kdptg;

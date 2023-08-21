@@ -229,6 +229,31 @@ public class ApiOrthanc {
         return root;
     }
     
+    public JsonNode AmbilHasilExpertise(String Norm,String Tanggal1,String Studies_id){
+        System.out.println("Percobaan Mengambil Hasil Expertise Pasien : "+Norm);
+        try{
+            headers = new HttpHeaders();
+//            System.out.println("Auth : "+authEncrypt);
+//            headers.add("Authorization", "Basic "+authEncrypt);
+            requestJson = "{"+
+                                "\"token\": \"hollows\","+
+                                "\"no_rkm_medis\": \""+Norm+"\","+
+                                "\"studies_id\": \""+Studies_id+"\","+
+                                "\"tgl_periksa\": \""+Tanggal1+"\""+
+                          "}";
+            System.out.println("Request JSON : "+requestJson);
+            requestEntity = new HttpEntity(requestJson,headers);
+//            System.out.println("URL : "+koneksiDB.URLORTHANC()+":"+koneksiDB.PORTORTHANC()+"/tools/find");
+            requestJson=getRest().exchange("http://dev.rshdbarabai.com/dokter-rad/expertise", HttpMethod.POST, requestEntity, String.class).getBody();
+            System.out.println("Result JSON : "+requestJson);
+            root = mapper.readTree(requestJson);
+        }catch(Exception e){
+            System.out.println("Notifikasi : "+e);
+            JOptionPane.showMessageDialog(null,"Gagal mengambil data dari server A-Pacs, silakan hubungi petugas radiologi untuk mengirim data ke server A-Pacs terlebih dahulu...");
+        }
+        return root;
+    }
+    
     public RestTemplate getRest() throws NoSuchAlgorithmException, KeyManagementException {
         sslContext = SSLContext.getInstance("SSL");
         TrustManager[] trustManagers= {
