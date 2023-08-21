@@ -1773,7 +1773,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah anda ingin mengirim whatsapp permintaan evaluasi MPP..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
                 if (reply == JOptionPane.YES_OPTION) {
                     if (tbData.getValueAt(i, 0).toString().equals("true")) {
-                        kirimwa.sendwaMPP(tbData.getValueAt(i, 2).toString(), tbData.getValueAt(i, 4).toString(), tbData.getValueAt(i, 3).toString());
+                        kirimwa.sendwaMPP(tbData.getValueAt(i, 2).toString(), tbData.getValueAt(i, 5).toString(), tbData.getValueAt(i, 4).toString());
                         JOptionPane.showMessageDialog(null, "Berhasil Mengirim Whatsapp...");
                         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                     }

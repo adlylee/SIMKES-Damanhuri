@@ -1073,11 +1073,10 @@
                     <Component class="widget.ComboBox" name="dinas">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="4">
+                          <StringArray count="3">
                             <StringItem index="0" value="Pagi"/>
                             <StringItem index="1" value="Siang"/>
-                            <StringItem index="2" value="Sore"/>
-                            <StringItem index="3" value="Malam"/>
+                            <StringItem index="2" value="Malam"/>
                           </StringArray>
                         </Property>
                         <Property name="name" type="java.lang.String" value="dinas" noResource="true"/>

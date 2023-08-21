@@ -21,6 +21,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,6 +34,7 @@ import keuangan.Jurnal;
 import kepegawaian.DlgCariPetugas;
 import simrskhanza.DlgKamarInap;
 import simrskhanza.DlgKamarInap2;
+import static tranfusidarah.UTDDonor.getShift;
 
 public class UTDPenyerahanDarah extends javax.swing.JDialog {
     private final DefaultTableModel tabModeMedis,tabModeNonMedis,tabMode;
@@ -1019,7 +1021,7 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
         panelisi3.add(btnPtgPJ);
         btnPtgPJ.setBounds(764, 40, 28, 23);
 
-        dinas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pagi", "Siang", "Sore", "Malam" }));
+        dinas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pagi", "Siang", "Malam" }));
         dinas.setName("dinas"); // NOI18N
         dinas.setPreferredSize(new java.awt.Dimension(40, 23));
         dinas.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1246,6 +1248,8 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
 */
 
     private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpanActionPerformed
+        LocalTime currentTime = LocalTime.now();
+        String shift = getShift(currentTime);
         if(nopenyerahan.getText().trim().equals("")){
             Valid.textKosong(nopenyerahan,"No.Penyerahan");
         }else if(keterangan.getText().trim().equals("")){
@@ -1272,7 +1276,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                     status="Belum Dibayar";
                 }
                 if(Sequel.menyimpantf("utd_penyerahan_darah","?,?,?,?,?,?,?,?,?,?,?","No.Penyerahan", 11,new String[]{
-                    nopenyerahan.getText(),Valid.SetTgl(tanggal.getSelectedItem()+""),dinas.getSelectedItem().toString(),
+                    nopenyerahan.getText(),Valid.SetTgl(tanggal.getSelectedItem()+""),shift,
                     kdptgcross.getText(),keterangan.getText(),status,Sequel.cariIsi("select kd_rek from akun_bayar where nama_bayar=?",CmbAkun.getSelectedItem().toString()),
                     nmpengambil.getText(),alamatpengambil.getText(),kdptgpj.getText(),""+besarppn
                    })==true){
@@ -1563,6 +1567,8 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         tampil();
         tampilMedis();
         tampilNonMedis();
+        label12.setVisible(false);
+        dinas.setVisible(false);
     }//GEN-LAST:event_formWindowOpened
 
     private void BtnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTambahActionPerformed
@@ -2197,7 +2203,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             btnPtgPJ.setEnabled(false);
             kdptgpj.setText(var.getkode());
             Sequel.cariIsi("select nama from petugas where nip=?", nmptgpj,kdptgpj.getText());
-        }      
+        }
     }
     
     private void emptTeks(){
@@ -2213,5 +2219,14 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         BesarPPN.setText("0");
         LKembali.setText("0");
     }
- 
+    
+    public static String getShift(LocalTime time) {
+        if (time.isAfter(LocalTime.of(6, 0)) && time.isBefore(LocalTime.of(15, 0))) {
+            return "Pagi";
+        } else if (time.isAfter(LocalTime.of(15, 0)) && time.isBefore(LocalTime.of(21, 0))) {
+            return "Siang";
+        } else {
+            return "Malam";
+        }
+    }
 }
