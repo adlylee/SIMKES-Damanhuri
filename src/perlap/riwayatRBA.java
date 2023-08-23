@@ -38,15 +38,15 @@ public class riwayatRBA {
                     saldoberjalan = rs.getDouble("saldo_berjalan");
                     saldoakhir = saldoberjalan + masuk - keluar;
                 } else {
-                    saldoawal = rs.getDouble("saldo_awal");
+                    saldoawal = 0;
                     saldoberjalan = 0;
                     saldoakhir = saldoberjalan + masuk - keluar;
                 }
             } catch (Exception e) {
                 System.out.println("Notif Stok : " + e);
             } finally {
-                if (rsawal != null) {
-                    rsawal.close();
+                if (rs != null) {
+                    rs.close();
                 }
                 if (psawal != null) {
                     psawal.close();

@@ -58,7 +58,7 @@ public class DlgCariRekening extends javax.swing.JDialog {
                 return a;
             }
             Class[] types = new Class[]{
-                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class,
+                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class,
                 java.lang.Double.class, java.lang.Double.class
             };
 
@@ -530,15 +530,14 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         riwayat.catatRiwayat(Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(6, 10),
                                 kdrekdari.getText(), 0, Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()), var.getkode(), "Simpan", Keterangan.getText());
                         System.out.println("riwayat dari");
-                        Sequel.menyimpan("rekeningtahun", "'" + Tanggal.getSelectedItem().toString().substring(6, 10) + "','" + kdrekdari.getText() + "','" + tbDokter.getValueAt(i, 4).toString() + "','-" + Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()) + "'",
-                                "saldo_berjalan=saldo_berjalan-" + Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()) + "", "kd_rek='" + kdrekdari.getText() + "' and thn='" + Tanggal.getSelectedItem().toString().substring(6, 10) + "'");
+                        Sequel.menyimpan("rekeningtahun", "'" + Tanggal.getSelectedItem().toString().substring(6, 10) + "','" + kdrekdari.getText() + "','" + tbDokter.getValueAt(i, 4).toString() + "','-" + tbDokter.getValueAt(i, 3).toString() + "'",
+                                "saldo_berjalan=saldo_berjalan-" + tbDokter.getValueAt(i, 3).toString() + "", "kd_rek='" + kdrekdari.getText() + "' and thn='" + Tanggal.getSelectedItem().toString().substring(6, 10) + "'");
                         System.out.println("simpan dari");
                         riwayat.catatRiwayat(Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(6, 10), 
                                 tbDokter.getValueAt(i, 1).toString(), Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()), 0, var.getkode(), "Simpan", Keterangan.getText());
                         System.out.println("riwayat ke");
-                        Sequel.menyimpan("rekeningtahun", "'" + Tanggal.getSelectedItem().toString().substring(6, 10) + "','" + tbDokter.getValueAt(i, 1).toString()  + "','" + tbDokter.getValueAt(i, 4).toString() + "','" + Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()) + "'",
-                                "saldo_berjalan=saldo_berjalan+" + Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()) + "", "kd_rek='" + tbDokter.getValueAt(i, 1).toString() + "' and thn='" + Tanggal.getSelectedItem().toString().substring(6, 10) + "'");
-                        System.out.println("simpan ke");
+                        Sequel.menyimpan("rekeningtahun", "'" + Tanggal.getSelectedItem().toString().substring(6, 10) + "','" + tbDokter.getValueAt(i, 1).toString()  + "','" + tbDokter.getValueAt(i, 4).toString() + "','" + tbDokter.getValueAt(i, 3).toString() + "'",
+                                "saldo_berjalan=saldo_berjalan+" + tbDokter.getValueAt(i, 3).toString() + "", "kd_rek='" + tbDokter.getValueAt(i, 1).toString() + "' and thn='" + Tanggal.getSelectedItem().toString().substring(6, 10) + "'");                        
                     }
                 }
                 tampil();
