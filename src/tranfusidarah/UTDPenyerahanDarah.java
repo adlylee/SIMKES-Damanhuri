@@ -21,6 +21,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,6 +34,7 @@ import keuangan.Jurnal;
 import kepegawaian.DlgCariPetugas;
 import simrskhanza.DlgKamarInap;
 import simrskhanza.DlgKamarInap2;
+import static tranfusidarah.UTDDonor.getShift;
 
 public class UTDPenyerahanDarah extends javax.swing.JDialog {
     private final DefaultTableModel tabModeMedis,tabModeNonMedis,tabMode;
@@ -339,6 +341,8 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
         BtnCari1 = new widget.Button();
         BtnTambah = new widget.Button();
         label22 = new widget.Label();
+        label24 = new widget.Label();
+        LCount = new widget.Label();
         BtnNota = new widget.Button();
         BtnSimpan = new widget.Button();
         BtnCari = new widget.Button();
@@ -553,6 +557,17 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
         label22.setName("label22"); // NOI18N
         label22.setPreferredSize(new java.awt.Dimension(15, 23));
         panelisi1.add(label22);
+
+        label24.setText("Record :");
+        label24.setName("label24"); // NOI18N
+        label24.setPreferredSize(new java.awt.Dimension(70, 23));
+        panelisi1.add(label24);
+
+        LCount.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        LCount.setText("0");
+        LCount.setName("LCount"); // NOI18N
+        LCount.setPreferredSize(new java.awt.Dimension(60, 23));
+        panelisi1.add(LCount);
 
         BtnNota.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Agenda-1-16x16.png"))); // NOI18N
         BtnNota.setMnemonic('S');
@@ -1019,7 +1034,7 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
         panelisi3.add(btnPtgPJ);
         btnPtgPJ.setBounds(764, 40, 28, 23);
 
-        dinas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pagi", "Siang", "Sore", "Malam" }));
+        dinas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pagi", "Siang", "Malam" }));
         dinas.setName("dinas"); // NOI18N
         dinas.setPreferredSize(new java.awt.Dimension(40, 23));
         dinas.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1246,6 +1261,8 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
 */
 
     private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpanActionPerformed
+        LocalTime currentTime = LocalTime.now();
+        String shift = getShift(currentTime);
         if(nopenyerahan.getText().trim().equals("")){
             Valid.textKosong(nopenyerahan,"No.Penyerahan");
         }else if(keterangan.getText().trim().equals("")){
@@ -1272,7 +1289,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                     status="Belum Dibayar";
                 }
                 if(Sequel.menyimpantf("utd_penyerahan_darah","?,?,?,?,?,?,?,?,?,?,?","No.Penyerahan", 11,new String[]{
-                    nopenyerahan.getText(),Valid.SetTgl(tanggal.getSelectedItem()+""),dinas.getSelectedItem().toString(),
+                    nopenyerahan.getText(),Valid.SetTgl(tanggal.getSelectedItem()+""),shift,
                     kdptgcross.getText(),keterangan.getText(),status,Sequel.cariIsi("select kd_rek from akun_bayar where nama_bayar=?",CmbAkun.getSelectedItem().toString()),
                     nmpengambil.getText(),alamatpengambil.getText(),kdptgpj.getText(),""+besarppn
                    })==true){
@@ -1557,10 +1574,12 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         tampil();
         tampilMedis();
         tampilNonMedis();
+        label12.setVisible(false);
+        dinas.setVisible(false);
     }//GEN-LAST:event_formWindowOpened
 
     private void BtnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTambahActionPerformed
-        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         UTDStokDarah barang=new UTDStokDarah(null,false);
         barang.emptTeks();
         barang.isCek();
@@ -1803,6 +1822,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private widget.ComboBox CmbCariGd;
     private widget.ComboBox CmbCariResus;
     private widget.TextBox Kd2;
+    private widget.Label LCount;
     private widget.Label LKembali;
     private widget.Label LTotal;
     private widget.TextBox PPN;
@@ -1844,6 +1864,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private widget.Label label21;
     private widget.Label label22;
     private widget.Label label23;
+    private widget.Label label24;
     private widget.Label label9;
     private widget.TextBox nmpengambil;
     private widget.TextBox nmptgcross;
@@ -1984,6 +2005,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         } catch (Exception e) {
             System.out.println("Notifikasi Darah : "+e);
         }
+        LCount.setText("" + tabMode.getRowCount());
     }
     
     private void tampilMedis() {
@@ -2191,7 +2213,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             btnPtgPJ.setEnabled(false);
             kdptgpj.setText(var.getkode());
             Sequel.cariIsi("select nama from petugas where nip=?", nmptgpj,kdptgpj.getText());
-        }      
+        }
     }
     
     private void emptTeks(){
@@ -2207,5 +2229,14 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         BesarPPN.setText("0");
         LKembali.setText("0");
     }
- 
+    
+    public static String getShift(LocalTime time) {
+        if (time.isAfter(LocalTime.of(6, 0)) && time.isBefore(LocalTime.of(15, 0))) {
+            return "Pagi";
+        } else if (time.isAfter(LocalTime.of(15, 0)) && time.isBefore(LocalTime.of(21, 0))) {
+            return "Siang";
+        } else {
+            return "Malam";
+        }
+    }
 }

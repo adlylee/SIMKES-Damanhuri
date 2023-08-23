@@ -517,7 +517,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
 */
 
     private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpanActionPerformed
-        String saldoawal = Sequel.cariIsi("select ifnull(saldo_berjalan,'0') from rekeningtahun where thn='" + Tanggal.getSelectedItem().toString().substring(6, 10) + "' and kd_rek='" + kdrekdari.getText() + "'");
+//        String saldoawal = Sequel.cariIsi("select ifnull(saldo_berjalan,'0') from rekeningtahun where thn='" + Tanggal.getSelectedItem().toString().substring(6, 10) + "' and kd_rek='" + kdrekdari.getText() + "'");
         if (nmrekdari.getText().trim().equals("") || kdrekdari.getText().trim().equals("")) {
             Valid.textKosong(kdrekdari, "Rekening Asal");
         } else if (Keterangan.getText().trim().equals("")) {
@@ -530,13 +530,14 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         riwayat.catatRiwayat(Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(6, 10),
                                 kdrekdari.getText(), 0, Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()), var.getkode(), "Simpan", Keterangan.getText());
                         System.out.println("riwayat dari");
-                        Sequel.menyimpan("rekeningtahun", "'" + Tanggal.getSelectedItem().toString().substring(6, 10) + "','" + kdrekdari.getText() + "','" + tbDokter.getValueAt(i, 3).toString() + "','-" + Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()) + "'",
+                        Sequel.menyimpan("rekeningtahun", "'" + Tanggal.getSelectedItem().toString().substring(6, 10) + "','" + kdrekdari.getText() + "','" + tbDokter.getValueAt(i, 4).toString() + "','-" + Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()) + "'",
                                 "saldo_berjalan=saldo_berjalan-" + Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()) + "", "kd_rek='" + kdrekdari.getText() + "' and thn='" + Tanggal.getSelectedItem().toString().substring(6, 10) + "'");
                         System.out.println("simpan dari");
-                        riwayat.catatRiwayat(Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(6, 10), tbDokter.getValueAt(i, 1).toString(), Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()), 0, var.getkode(), "Simpan", Keterangan.getText());
+                        riwayat.catatRiwayat(Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(6, 10), 
+                                tbDokter.getValueAt(i, 1).toString(), Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()), 0, var.getkode(), "Simpan", Keterangan.getText());
                         System.out.println("riwayat ke");
-                        Sequel.menyimpan("rekeningtahun", "'" + Tanggal.getSelectedItem().toString().substring(6, 10) + "','" + kdrekdari.getText() + "','" + tbDokter.getValueAt(i, 3).toString() + "','-" + Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()) + "'",
-                                "saldo_berjalan=saldo_berjalan+" + Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()) + "", "kd_rek='" + tbDokter.getValueAt(i, 1) + "' and thn='" + Tanggal.getSelectedItem().toString().substring(6, 10) + "'");
+                        Sequel.menyimpan("rekeningtahun", "'" + Tanggal.getSelectedItem().toString().substring(6, 10) + "','" + tbDokter.getValueAt(i, 1).toString()  + "','" + tbDokter.getValueAt(i, 4).toString() + "','" + Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()) + "'",
+                                "saldo_berjalan=saldo_berjalan+" + Valid.SetAngka(tbDokter.getValueAt(i, 3).toString()) + "", "kd_rek='" + tbDokter.getValueAt(i, 1).toString() + "' and thn='" + Tanggal.getSelectedItem().toString().substring(6, 10) + "'");
                         System.out.println("simpan ke");
                     }
                 }

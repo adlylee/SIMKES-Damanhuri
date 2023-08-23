@@ -3176,12 +3176,13 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                     ps2pulang = koneksi.prepareStatement("select databarang.kode_brng,databarang.nama_brng,resep_pulang.jml_barang,"
                             + "resep_pulang.tuslah,resep_pulang.harga,resep_pulang.total from "
                             + "resep_pulang inner join databarang on resep_pulang.kode_brng=databarang.kode_brng "
-                            + "where resep_pulang.tanggal=? and resep_pulang.no_rawat=? and resep_pulang.jam=? "
+                            + "where resep_pulang.tanggal=? and resep_pulang.no_rawat=? "
+                            + " and resep_pulang.no_resep=? "
                             + "order by databarang.kode_brng");
                     try {
                         ps2pulang.setString(1, rspulang.getString("tanggal"));
                         ps2pulang.setString(2, rspulang.getString("no_rawat"));
-                        ps2pulang.setString(3, rspulang.getString("jam"));
+                        ps2pulang.setString(3, rspulang.getString("no_resep"));
                         rs2pulang = ps2pulang.executeQuery();
                         totalpulang = 0;
                         while (rs2pulang.next()) {

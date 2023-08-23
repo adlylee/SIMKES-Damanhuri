@@ -45,7 +45,7 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" +
-                        "    Version 18.08.2023 [ 1.0.22 ] [Activated] GO KLAIM DIGITAL \n"+
+                        "    Version 21.08.2023 [ 1.0.22 ] [Activated] GO KLAIM DIGITAL \n"+
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai                              \n"+
                         "                                                                           \n"+
@@ -57,13 +57,8 @@ public final class koneksiDB {
                         "                                                                       \n"+
                         "                                                                       \n"+
                         "    * Changelog :                                                       \n"+
-                        "       - Bridging PACS                                                 \n"+
-                        "       - Fix bug cetak hasil periksa radiologi                           \n"+
-                        "       - UTD Donor                           \n"+
-                        "       - Fix bug resep pulang                           \n"+
-                        "       - Data diet pasien                           \n"+
-                        "       - Fix bug SKDP                           \n"+
-                        "       - Edit booking registrasi                           \n");
+                        "       - Edit booking registrasi                           \n"+
+                        "       - UTD Penyerahan Darah                           \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);
                 try {
