@@ -76,6 +76,7 @@ public final class UTDDonor extends javax.swing.JDialog {
     private String totaldonor, totallk, totalpr, umur1, umur2, umur3, umur4, umur5,
             opos, oneg, apos, aneg, bpos, bneg, abpos, abneg, jenisdb, jenisdp, jenisds;
     private SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
+    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private String aktifkan = "",
             sqlpscekmedis = "select utd_penggunaan_medis_donor.kode_brng,databarang.nama_brng,utd_penggunaan_medis_donor.jml,utd_penggunaan_medis_donor.harga,"
             + "utd_penggunaan_medis_donor.total,databarang.kode_sat from utd_penggunaan_medis_donor inner join databarang "
@@ -1140,7 +1141,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelGlass12.add(NomorTelp1);
         NomorTelp1.setBounds(105, 100, 160, 23);
 
-        tgl_lahir1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "09-08-2023" }));
+        tgl_lahir1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22-08-2023" }));
         tgl_lahir1.setDisplayFormat("dd-MM-yyyy");
         tgl_lahir1.setName("tgl_lahir1"); // NOI18N
         tgl_lahir1.addItemListener(new java.awt.event.ItemListener() {
@@ -1571,7 +1572,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelisi4.add(label32);
         label32.setBounds(260, 10, 57, 23);
 
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "09-08-2023" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22-08-2023" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy");
         Tanggal.setName("Tanggal"); // NOI18N
         Tanggal.addItemListener(new java.awt.event.ItemListener() {
@@ -1926,7 +1927,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelisi4.add(label33);
         label33.setBounds(12, 70, 90, 23);
 
-        tgl_lahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "09-08-2023" }));
+        tgl_lahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22-08-2023" }));
         tgl_lahir.setDisplayFormat("dd-MM-yyyy");
         tgl_lahir.setName("tgl_lahir"); // NOI18N
         tgl_lahir.addItemListener(new java.awt.event.ItemListener() {
@@ -2246,7 +2247,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelGlass9.add(jLabel20);
 
         TanggalCari1.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "09-08-2023" }));
+        TanggalCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22-08-2023" }));
         TanggalCari1.setDisplayFormat("dd-MM-yyyy");
         TanggalCari1.setName("TanggalCari1"); // NOI18N
         TanggalCari1.setOpaque(false);
@@ -2260,7 +2261,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelGlass9.add(jLabel21);
 
         TanggalCari2.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "09-08-2023" }));
+        TanggalCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22-08-2023" }));
         TanggalCari2.setDisplayFormat("dd-MM-yyyy");
         TanggalCari2.setName("TanggalCari2"); // NOI18N
         TanggalCari2.setOpaque(false);
@@ -2689,7 +2690,7 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
             }
         }
 
-        if (TabRawat.getSelectedIndex() != 0) {
+        if (TabRawat.getSelectedIndex() == 2) {
             if (tabModeTranfusi.getRowCount() == 0) {
                 JOptionPane.showMessageDialog(null, "Maaf, data sudah habis...!!!!");
                 TCari.requestFocus();
@@ -4066,7 +4067,7 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     }//GEN-LAST:event_PropinsiKeyPressed
 
     private void MnDaftarBaruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnDaftarBaruActionPerformed
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String inputString1 = Sequel.cariIsi("select tanggal from utd_donor where no_pendonor='" + NomorPendonor.getText() + "' order by tanggal desc");
         LocalDate month = LocalDate.now();
         String inputString2 = month.format(dtf);
@@ -4101,7 +4102,6 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
             }
             
         }
-//        }
     }//GEN-LAST:event_MnDaftarBaruActionPerformed
 
     private void GantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GantiActionPerformed
@@ -4126,17 +4126,20 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
                 Valid.textKosong(Kelurahan, "Kelurahan");
             } else {
 //                isNumber2();
-                if (Sequel.mengedittf("utd_pendonor", "no_pendonor=?", "nama=?,no_ktp=?,jk=?,tmp_lahir=?,tgl_lahir=?,alamat=?,kd_kel=?,kd_kec=?,kd_kab=?,kd_prop=?,golongan_darah=?,resus=?,no_telp=?", 14,
-                        new String[]{
-                            NamaPendonor1.getText().toUpperCase(), nik1.getText(), JK1.getSelectedItem().toString().substring(0, 1), tempatlahir.getText().toUpperCase(), Valid.SetTgl(tgl_lahir1.getSelectedItem() + ""),
-                            Alamat1.getText().toUpperCase(), kdkel, kdkec, kdkab, kdprop, GolDarah.getSelectedItem().toString(), Resus1.getSelectedItem().toString(), NomorTelp1.getText(), NomorPendonor.getText()
-                        }) == true) {
-                    if (var.getform().equals("UTDDonor")) {
-                        TCari.setText(NomorPendonor.getText());
+            int reply = JOptionPane.showConfirmDialog(rootPane, "Yakin ingin mengedit data pendonor..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                if (reply == JOptionPane.YES_OPTION) {
+                    if (Sequel.mengedittf("utd_pendonor", "no_pendonor=?", "nama=?,no_ktp=?,jk=?,tmp_lahir=?,tgl_lahir=?,alamat=?,kd_kel=?,kd_kec=?,kd_kab=?,kd_prop=?,golongan_darah=?,resus=?,no_telp=?", 14,
+                            new String[]{
+                                NamaPendonor1.getText().toUpperCase(), nik1.getText(), JK1.getSelectedItem().toString().substring(0, 1), tempatlahir.getText().toUpperCase(), Valid.SetTgl(tgl_lahir1.getSelectedItem() + ""),
+                                Alamat1.getText().toUpperCase(), kdkel, kdkec, kdkab, kdprop, GolDarah.getSelectedItem().toString(), Resus1.getSelectedItem().toString(), NomorTelp1.getText(), NomorPendonor.getText()
+                            }) == true) {
+                        if (var.getform().equals("UTDDonor")) {
+                            TCari.setText(NomorPendonor.getText());
+                        }
+                        emptTeks();
+                        tampilPendonor();
                     }
-                    emptTeks();
-                    tampilPendonor();
-                }
+                }                
             }
         }
     }//GEN-LAST:event_GantiActionPerformed
@@ -5044,8 +5047,12 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     }
 
     private void isNumber() {
-        Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_donor,3),signed)),0) from utd_donor where tanggal like '%" + Valid.SetTgl(Tanggal.getSelectedItem() + "") + "%'", dateformat.format(Tanggal.getDate()).substring(2, 4)
-                + dateformat.format(Tanggal.getDate()).substring(5, 7) + dateformat.format(Tanggal.getDate()).substring(8, 10), 3, NomorDonor);
+    LocalDate date = LocalDate.now();
+    String formattedDate = date.format(dtf);
+    Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_donor,3),signed)),0) from utd_donor where tanggal like '%" + formattedDate + "%'", 
+            formattedDate.substring(2, 4)+formattedDate.substring(5, 7)+formattedDate.substring(8, 10), 3, NomorDonor);
+//        Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_donor,3),signed)),0) from utd_donor where tanggal like '%" + Valid.SetTgl(Tanggal.getSelectedItem() + "") + "%'", dateformat.format(Tanggal.getDate()).substring(2, 4)
+//                + dateformat.format(Tanggal.getDate()).substring(5, 7) + dateformat.format(Tanggal.getDate()).substring(8, 10), 3, NomorDonor);
     }
 
     private void isNumber2() {

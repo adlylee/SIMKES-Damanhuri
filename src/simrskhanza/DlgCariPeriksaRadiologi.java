@@ -36,7 +36,7 @@ import kepegawaian.DlgCariDokter;
 
 public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
 
-    private final DefaultTableModel tabMode, tabModeDicom,tabModeExpertise;
+    private final DefaultTableModel tabMode, tabModeDicom;
     private sekuel Sequel = new sekuel();
     private validasi Valid = new validasi();
     private Jurnal jur = new Jurnal();
@@ -173,32 +173,32 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         }
         tbListDicom.setDefaultRenderer(Object.class, new WarnaTable());
         
-        tabModeExpertise = new DefaultTableModel(null, new Object[]{
-            "Tanggal", "Jam", "Judul", "Kesan", "Saran"}) {
-            @Override
-            public boolean isCellEditable(int rowIndex, int colIndex) {
-                return false;
-            }
-        };
-        tbExpertise.setModel(tabModeExpertise);
-        tbExpertise.setPreferredScrollableViewportSize(new Dimension(500, 500));
-        tbExpertise.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-        for (i = 0; i < 5; i++) {
-            TableColumn column = tbExpertise.getColumnModel().getColumn(i);
-            if (i == 0) {
-                column.setPreferredWidth(100);
-            } else if (i == 1) {
-                column.setPreferredWidth(100);
-            } else if (i == 2) {
-                column.setPreferredWidth(310);
-            } else if (i == 3) {
-                column.setPreferredWidth(310);
-            } else if (i == 4) {
-                column.setPreferredWidth(360);
-            }
-        }
-        tbExpertise.setDefaultRenderer(Object.class, new WarnaTable());
+//        tabModeExpertise = new DefaultTableModel(null, new Object[]{
+//            "Tanggal", "Jam", "Judul", "Kesan", "Saran"}) {
+//            @Override
+//            public boolean isCellEditable(int rowIndex, int colIndex) {
+//                return false;
+//            }
+//        };
+//        tbExpertise.setModel(tabModeExpertise);
+//        tbExpertise.setPreferredScrollableViewportSize(new Dimension(500, 500));
+//        tbExpertise.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+//
+//        for (i = 0; i < 5; i++) {
+//            TableColumn column = tbExpertise.getColumnModel().getColumn(i);
+//            if (i == 0) {
+//                column.setPreferredWidth(100);
+//            } else if (i == 1) {
+//                column.setPreferredWidth(100);
+//            } else if (i == 2) {
+//                column.setPreferredWidth(310);
+//            } else if (i == 3) {
+//                column.setPreferredWidth(310);
+//            } else if (i == 4) {
+//                column.setPreferredWidth(360);
+//            }
+//        }
+//        tbExpertise.setDefaultRenderer(Object.class, new WarnaTable());
         NoRawat.setDocument(new batasInput((byte) 17).getKata(NoRawat));
         kdmem.setDocument(new batasInput((byte) 8).getKata(kdmem));
         kdptg.setDocument(new batasInput((byte) 25).getKata(kdptg));
@@ -611,15 +611,16 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         PanelAccor = new widget.PanelBiasa();
         ChkAccor = new widget.CekBox();
         TabData = new javax.swing.JTabbedPane();
-        FormOrthan = new widget.PanelBiasa();
+        internalFrame7 = new widget.InternalFrame();
+        Scroll4 = new widget.ScrollPane();
+        tbPemeriksaan = new widget.Table();
+        PanelInput = new javax.swing.JPanel();
         Scroll6 = new widget.ScrollPane();
         tbListDicom = new widget.Table();
         panelGlass8 = new widget.panelisi();
         BtnCari1 = new widget.Button();
         btnDicom = new widget.Button();
         BtnCari2 = new widget.Button();
-        Scroll7 = new widget.ScrollPane();
-        tbExpertise = new widget.Table();
 
         Kd2.setName("Kd2"); // NOI18N
         Kd2.setPreferredSize(new java.awt.Dimension(207, 23));
@@ -1398,11 +1399,35 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
             }
         });
 
-        FormOrthan.setBackground(new java.awt.Color(255, 255, 255));
-        FormOrthan.setBorder(null);
-        FormOrthan.setName("FormOrthan"); // NOI18N
-        FormOrthan.setPreferredSize(new java.awt.Dimension(115, 73));
-        FormOrthan.setLayout(new java.awt.BorderLayout(1, 1));
+        internalFrame7.setBackground(new java.awt.Color(235, 255, 235));
+        internalFrame7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        internalFrame7.setName("internalFrame7"); // NOI18N
+        internalFrame7.setLayout(new java.awt.BorderLayout(1, 1));
+
+        Scroll4.setName("Scroll4"); // NOI18N
+        Scroll4.setOpaque(true);
+
+        tbPemeriksaan.setAutoCreateRowSorter(true);
+        tbPemeriksaan.setToolTipText("Silahkan klik untuk memilih data yang mau diedit ataupun dihapus");
+        tbPemeriksaan.setName("tbPemeriksaan"); // NOI18N
+        tbPemeriksaan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbPemeriksaanMouseClicked(evt);
+            }
+        });
+        tbPemeriksaan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tbPemeriksaanKeyReleased(evt);
+            }
+        });
+        Scroll4.setViewportView(tbPemeriksaan);
+
+        internalFrame7.add(Scroll4, java.awt.BorderLayout.CENTER);
+
+        PanelInput.setName("PanelInput"); // NOI18N
+        PanelInput.setOpaque(false);
+        PanelInput.setPreferredSize(new java.awt.Dimension(192, 215));
+        PanelInput.setLayout(new java.awt.BorderLayout(1, 1));
 
         Scroll6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         Scroll6.setName("Scroll6"); // NOI18N
@@ -1430,7 +1455,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         });
         Scroll6.setViewportView(tbListDicom);
 
-        FormOrthan.add(Scroll6, java.awt.BorderLayout.CENTER);
+        PanelInput.add(Scroll6, java.awt.BorderLayout.CENTER);
 
         panelGlass8.setBorder(null);
         panelGlass8.setName("panelGlass8"); // NOI18N
@@ -1485,36 +1510,11 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         });
         panelGlass8.add(BtnCari2);
 
-        FormOrthan.add(panelGlass8, java.awt.BorderLayout.PAGE_END);
+        PanelInput.add(panelGlass8, java.awt.BorderLayout.PAGE_END);
 
-        Scroll7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        Scroll7.setName("Scroll7"); // NOI18N
-        Scroll7.setOpaque(true);
+        internalFrame7.add(PanelInput, java.awt.BorderLayout.CENTER);
 
-        tbExpertise.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        tbExpertise.setName("tbExpertise"); // NOI18N
-        tbExpertise.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbExpertiseMouseClicked(evt);
-            }
-        });
-        tbExpertise.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                tbExpertiseKeyPressed(evt);
-            }
-        });
-        Scroll7.setViewportView(tbExpertise);
-
-        FormOrthan.add(Scroll7, java.awt.BorderLayout.PAGE_START);
-
-        TabData.addTab("Integrasi PACS", FormOrthan);
+        TabData.addTab("Intergrasi PACS", internalFrame7);
 
         PanelAccor.add(TabData, java.awt.BorderLayout.CENTER);
 
@@ -2368,17 +2368,17 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
 
     private void tbListDicomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbListDicomMouseClicked
         if (tabModeDicom.getRowCount() != 0) {
-            if (evt.getClickCount() == 2) {
-                btnDicomActionPerformed(null);
-            }
+//            if (evt.getClickCount() == 2) {
+//                btnDicomActionPerformed(null);
+//            }
         }
     }//GEN-LAST:event_tbListDicomMouseClicked
 
     private void tbListDicomKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbListDicomKeyPressed
         if (tabModeDicom.getRowCount() != 0) {
-            if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
-                btnDicomActionPerformed(null);
-            }
+//            if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+//                btnDicomActionPerformed(null);
+//            }
         }
     }//GEN-LAST:event_tbListDicomKeyPressed
 
@@ -2446,36 +2446,56 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
 
     private void MnTarikGambarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnTarikGambarActionPerformed
         hasilexpertise = orthanc.AmbilHasilExpertise(Sequel.cariIsi("select reg_periksa.no_rkm_medis from reg_periksa where reg_periksa.no_rawat=?", tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString()), Valid.SetTgl(Tgl1.getSelectedItem() + "").replaceAll("-", ""), tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 2).toString());
-        String notif = "<html>Hasil : "+hasilexpertise.path("response").path("hasil");
-        notif += "<br>Kesan : "+hasilexpertise.path("response").path("kesan");
+        String notif = "<html>Judul : " + hasilexpertise.path("response").path("judul");
+        notif += "<br>Hasil : " + hasilexpertise.path("response").path("hasil");
+        notif += "<br>Kesan : " + hasilexpertise.path("response").path("kesan");
+        notif += "<br>Saran : " + hasilexpertise.path("response").path("saran");
         notif += "<br>Apakah Ingin Disimpan ? </html>";
 //        JOptionPane.showConfirmDialog(null, notif);
+        String judul = hasilexpertise.path("response").path("judul").asText();
         String hasil = hasilexpertise.path("response").path("hasil").asText();
         String kesan = hasilexpertise.path("response").path("kesan").asText();
+        String saran = hasilexpertise.path("response").path("saran").asText();
+        if (Sequel.cariInteger("select count(no_rawat) from saran_kesan_rad where no_rawat='" + tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString() + "'") > 0) {
+            int opsi = JOptionPane.showConfirmDialog(null, notif, "Sudah ada hasil expertise,apakah ingin update hasil expertise?", JOptionPane.YES_NO_OPTION);
+            if (opsi == JOptionPane.YES_OPTION) {
+//                JOptionPane.showMessageDialog(null, "Saat dipilih yes !");
+                Sequel.mengedit("hasil_radiologi", "no_rawat='" + tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString() + "' and tgl_periksa='" + tbDokter.getValueAt(tbDokter.getSelectedRow(), 3).toString() + "' and jam='" + tbDokter.getValueAt(tbDokter.getSelectedRow(), 4).toString() + "'",
+                        "hasil='" + hasil + "'");
+                Sequel.queryu2("update saran_kesan_rad set judul=?,saran=?,kesan=? where no_rawat=? and tgl_periksa=? and jam=?", 6, new String[]{
+                    judul, saran, kesan, tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString(), tbDokter.getValueAt(tbDokter.getSelectedRow(), 3).toString(), tbDokter.getValueAt(tbDokter.getSelectedRow(), 4).toString()
+                });
+                tampil();
+            }
+        }
 
-        int opsi = JOptionPane.showConfirmDialog(null, notif, "Simpan Hasil Expertise Data", JOptionPane.YES_NO_OPTION);
-        if (opsi == JOptionPane.YES_OPTION)
-            JOptionPane.showMessageDialog(null, "Saat dipilih yes !");
-            if (Sequel.menyimpantf("saran_kesan_rad", "?,?,?,?,?,?", " ", 6, new String[]{
-                    tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString(),tbDokter.getValueAt(tbDokter.getSelectedRow(), 3).toString(),
-                    "select current_time()","-",hasil,kesan
+        if (Sequel.cariInteger("select count(no_rawat) from saran_kesan_rad where no_rawat='" + tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString() + "'") < 0) {
+            int opsi = JOptionPane.showConfirmDialog(null, notif, "Simpan Hasil Expertise Data", JOptionPane.YES_NO_OPTION);
+            if (opsi == JOptionPane.YES_OPTION) {
+//                JOptionPane.showMessageDialog(null, "Saat dipilih yes !");
+
+                if (Sequel.menyimpantf("hasil_radiologi", "?,?,?,?", "Hasil Radiologi", 4, new String[]{
+                    tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString(), Sequel.cariIsi("select current_date()"),
+                    Sequel.cariIsi("select current_time()"), hasil
                 }) == true) {
-                System.out.println("simpan saran_kesan_rad");
-//                    emptTeks();
-//                    TabRawat.setSelectedIndex(1);
-//                    tampil();
+                    Sequel.menyimpan("saran_kesan_rad", "?,?,?,?,?,?", 6, new String[]{
+                        tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString(), Sequel.cariIsi("select current_date()"),
+                        Sequel.cariIsi("select current_time()"), judul, saran, kesan});
+                    tampil();
                 }
-        else
-            JOptionPane.showMessageDialog(null, "Saat dipilih no !");
+            }
+//            else 
+//                JOptionPane.showMessageDialog(null, "Saat dipilih no !");            
+        }
     }//GEN-LAST:event_MnTarikGambarActionPerformed
 
-    private void tbExpertiseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbExpertiseMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tbExpertiseMouseClicked
+    private void tbPemeriksaanKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbPemeriksaanKeyReleased
 
-    private void tbExpertiseKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbExpertiseKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tbExpertiseKeyPressed
+    }//GEN-LAST:event_tbPemeriksaanKeyReleased
+
+    private void tbPemeriksaanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPemeriksaanMouseClicked
+
+    }//GEN-LAST:event_tbPemeriksaanMouseClicked
 
     private void TKesanKeyPressed(java.awt.event.KeyEvent evt) {
         //        Valid.pindah(evt,TKdPrw,TPemeriksaan);
@@ -2518,7 +2538,6 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.Button BtnSimpan4;
     private widget.CekBox ChkAccor;
     private widget.panelisi FormInput;
-    private widget.PanelBiasa FormOrthan;
     private widget.TextArea HasilPeriksa;
     private widget.TextBox Jk;
     private widget.TextBox Kd2;
@@ -2537,12 +2556,13 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.TextBox NoRM;
     private widget.TextBox NoRawat;
     private widget.PanelBiasa PanelAccor;
+    private javax.swing.JPanel PanelInput;
     private widget.TextBox Penjab;
     private widget.TextBox Perujuk;
     private widget.TextBox Petugas;
     private widget.ScrollPane Scroll3;
+    private widget.ScrollPane Scroll4;
     private widget.ScrollPane Scroll6;
-    private widget.ScrollPane Scroll7;
     private widget.TextBox TCari;
     private widget.TextBox TJudul;
     private widget.TextArea TKesan;
@@ -2564,6 +2584,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.InternalFrame internalFrame1;
     private widget.InternalFrame internalFrame5;
     private widget.InternalFrame internalFrame6;
+    private widget.InternalFrame internalFrame7;
     private widget.Label jLabel12;
     private widget.Label jLabel7;
     private widget.Label jLabel9;
@@ -2596,8 +2617,8 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.ScrollPane scrollPane2;
     private widget.ScrollPane scrollPane3;
     private widget.Table tbDokter;
-    private widget.Table tbExpertise;
     private widget.Table tbListDicom;
+    private widget.Table tbPemeriksaan;
     // End of variables declaration//GEN-END:variables
 
     private void tampil() {
