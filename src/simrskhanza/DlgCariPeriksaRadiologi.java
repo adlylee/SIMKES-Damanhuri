@@ -47,7 +47,7 @@ import kepegawaian.DlgCariDokter;
 
 public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
 
-    private final DefaultTableModel tabMode, tabModeDicom;
+    private final DefaultTableModel tabMode, tabModeDicom,tabModeSeries;
     private sekuel Sequel = new sekuel();
     private validasi Valid = new validasi();
     private Jurnal jur = new Jurnal();
@@ -183,6 +183,29 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
             }
         }
         tbListDicom.setDefaultRenderer(Object.class, new WarnaTable());
+        
+        tabModeSeries = new DefaultTableModel(null, new Object[]{
+            "Modality","Body Part", "Instance"}) {
+            @Override
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false;
+            }
+        };
+        tbListDicom1.setModel(tabModeSeries);
+        tbListDicom1.setPreferredScrollableViewportSize(new Dimension(500, 500));
+        tbListDicom1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        for (i = 0; i < 3; i++) {
+            TableColumn column = tbListDicom1.getColumnModel().getColumn(i);
+            if (i == 0) {
+                column.setPreferredWidth(100);
+            } else if (i == 1) {
+                column.setPreferredWidth(100);
+            } else if (i == 1) {
+                column.setPreferredWidth(100);
+            }
+        }
+        tbListDicom1.setDefaultRenderer(Object.class, new WarnaTable());
         
 //        tabModeExpertise = new DefaultTableModel(null, new Object[]{
 //            "Tanggal", "Jam", "Judul", "Kesan", "Saran"}) {
@@ -619,20 +642,19 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         BtnAll = new widget.Button();
         BtnPrint = new widget.Button();
         BtnKeluar = new widget.Button();
-        PanelAccor = new widget.PanelBiasa();
-        jPanel2 = new javax.swing.JPanel();
-        internalFrame7 = new widget.InternalFrame();
-        PanelInput = new javax.swing.JPanel();
+        panelisi6 = new widget.panelisi();
+        jPanel3 = new javax.swing.JPanel();
         Scroll6 = new widget.ScrollPane();
         tbListDicom = new widget.Table();
         panelGlass8 = new widget.panelisi();
         BtnCari1 = new widget.Button();
         btnDicom = new widget.Button();
         BtnCari2 = new widget.Button();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        scrollPane4 = new widget.ScrollPane();
+        tbListDicom1 = new widget.Table();
         scrollPane5 = new widget.ScrollPane();
-        tbDokter2 = new widget.Table();
+        jLabel1 = new javax.swing.JLabel();
 
         Kd2.setName("Kd2"); // NOI18N
         Kd2.setPreferredSize(new java.awt.Dimension(207, 23));
@@ -1379,23 +1401,16 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
 
         internalFrame1.add(panelisi1, java.awt.BorderLayout.PAGE_END);
 
-        PanelAccor.setBackground(new java.awt.Color(255, 255, 255));
-        PanelAccor.setName("PanelAccor"); // NOI18N
-        PanelAccor.setPreferredSize(new java.awt.Dimension(445, 43));
-        PanelAccor.setLayout(new java.awt.BorderLayout(1, 1));
+        panelisi6.setBorder(null);
+        panelisi6.setName("panelisi6"); // NOI18N
+        panelisi6.setPreferredSize(new java.awt.Dimension(450, 77));
+        panelisi6.setLayout(new java.awt.GridLayout(2, 0));
 
-        jPanel2.setName("jPanel2"); // NOI18N
-        jPanel2.setPreferredSize(new java.awt.Dimension(443, 178));
-
-        internalFrame7.setBackground(new java.awt.Color(235, 255, 235));
-        internalFrame7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        internalFrame7.setName("internalFrame7"); // NOI18N
-        internalFrame7.setLayout(new java.awt.BorderLayout(1, 1));
-
-        PanelInput.setName("PanelInput"); // NOI18N
-        PanelInput.setOpaque(false);
-        PanelInput.setPreferredSize(new java.awt.Dimension(192, 215));
-        PanelInput.setLayout(new java.awt.BorderLayout(1, 1));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(237, 242, 232)), ".: PACS", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        jPanel3.setName("jPanel3"); // NOI18N
+        jPanel3.setOpaque(false);
+        jPanel3.setPreferredSize(new java.awt.Dimension(300, 102));
+        jPanel3.setLayout(new java.awt.BorderLayout(1, 1));
 
         Scroll6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         Scroll6.setName("Scroll6"); // NOI18N
@@ -1423,7 +1438,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         });
         Scroll6.setViewportView(tbListDicom);
 
-        PanelInput.add(Scroll6, java.awt.BorderLayout.CENTER);
+        jPanel3.add(Scroll6, java.awt.BorderLayout.CENTER);
 
         panelGlass8.setBorder(null);
         panelGlass8.setName("panelGlass8"); // NOI18N
@@ -1478,98 +1493,59 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         });
         panelGlass8.add(BtnCari2);
 
-        PanelInput.add(panelGlass8, java.awt.BorderLayout.PAGE_END);
+        jPanel3.add(panelGlass8, java.awt.BorderLayout.PAGE_END);
 
-        internalFrame7.add(PanelInput, java.awt.BorderLayout.CENTER);
+        panelisi6.add(jPanel3);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(internalFrame7, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(internalFrame7, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(237, 242, 232)), ".: Preview", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        jPanel4.setName("jPanel4"); // NOI18N
+        jPanel4.setOpaque(false);
+        jPanel4.setPreferredSize(new java.awt.Dimension(300, 202));
+        jPanel4.setLayout(new java.awt.GridLayout());
 
-        PanelAccor.add(jPanel2, java.awt.BorderLayout.NORTH);
+        scrollPane4.setName("scrollPane4"); // NOI18N
+        scrollPane4.setOpaque(true);
+        scrollPane4.setPreferredSize(new java.awt.Dimension(452, 102));
 
-        jPanel1.setName("jPanel1"); // NOI18N
-        jPanel1.setPreferredSize(new java.awt.Dimension(443, 231));
-
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("ini Gambar");
-        jLabel1.setIconTextGap(2);
-        jLabel1.setName("jLabel1"); // NOI18N
-        jLabel1.setPreferredSize(new java.awt.Dimension(64, 40));
-
-        scrollPane5.setName("scrollPane5"); // NOI18N
-        scrollPane5.setOpaque(true);
-        scrollPane5.setPreferredSize(new java.awt.Dimension(452, 102));
-
-        tbDokter2.setModel(new javax.swing.table.DefaultTableModel(
+        tbListDicom1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {}
+
             },
             new String [] {
 
             }
         ));
-        tbDokter2.setToolTipText("Silahkan klik untuk memilih data yang mau diedit ataupun dihapus");
-        tbDokter2.setComponentPopupMenu(jPopupMenu1);
-        tbDokter2.setName("tbDokter2"); // NOI18N
-        tbDokter2.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbListDicom1.setName("tbListDicom1"); // NOI18N
+        tbListDicom1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbDokter2MouseClicked(evt);
+                tbListDicom1MouseClicked(evt);
             }
         });
-        tbDokter2.addKeyListener(new java.awt.event.KeyAdapter() {
+        tbListDicom1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                tbDokter2KeyPressed(evt);
+                tbListDicom1KeyPressed(evt);
             }
         });
-        scrollPane5.setViewportView(tbDokter2);
+        scrollPane4.setViewportView(tbListDicom1);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(209, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(241, Short.MAX_VALUE)
-                    .addComponent(scrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(7, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(scrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
+        jPanel4.add(scrollPane4);
 
-        PanelAccor.add(jPanel1, java.awt.BorderLayout.SOUTH);
+        scrollPane5.setName("scrollPane5"); // NOI18N
+        scrollPane5.setOpaque(true);
+        scrollPane5.setPreferredSize(new java.awt.Dimension(452, 102));
 
-        internalFrame1.add(PanelAccor, java.awt.BorderLayout.EAST);
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("jLabel1");
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jLabel1.setName("jLabel1"); // NOI18N
+        jLabel1.setSize(new java.awt.Dimension(33, 15));
+        scrollPane5.setViewportView(jLabel1);
+
+        jPanel4.add(scrollPane5);
+
+        panelisi6.add(jPanel4);
+
+        internalFrame1.add(panelisi6, java.awt.BorderLayout.EAST);
 
         getContentPane().add(internalFrame1, java.awt.BorderLayout.CENTER);
 
@@ -2410,45 +2386,15 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private void tbListDicomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbListDicomMouseClicked
         if (tabModeDicom.getRowCount() != 0) {
             if (evt.getClickCount() == 1) {
-                JOptionPane.showMessageDialog(null, "cilukba "+tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 2).toString());
-                String urllink = null;
-                try {
-                    urllink = orthanc.ambilPreview(tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 2).toString());
-                } catch (NoSuchAlgorithmException ex) {
-                    Logger.getLogger(DlgCariPeriksaRadiologi.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (KeyManagementException ex) {
-                    Logger.getLogger(DlgCariPeriksaRadiologi.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                URL urla;
-                System.out.println(urllink);
-                try {
-                    urla = new URL(urllink);
-//                    BufferedImage image = ImageIO.read(urla);
-//                    ImageIcon iii = new ImageIcon(urla);
-                    
-//                    jPanel1.add(jLabel1);
-//                    URL url = new URL("urlPath");
-                    BufferedImage c = ImageIO.read(urla);
-                    ImageIcon iii = new ImageIcon(c);
-                    jLabel1.setIcon(iii);
-                    repaint();
-                } catch (MalformedURLException ex) {
-                    Logger.getLogger(DlgCariPeriksaRadiologi.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(DlgCariPeriksaRadiologi.class.getName()).log(Level.SEVERE, null, ex);
-                }
-//                URL url = getClass().getResource(urllink);
-//                if (url != null) {
-//                    ImageIcon ii = new ImageIcon(url);
-////                    Image image = ii.getImage();
-////                    image = image.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
-////                    ii = new ImageIcon(image);
-//                    jLabel1.setIcon(ii);
-//                    repaint();
-////                    ImageIcon image = new ImageIcon(url);
-////                    jLabel1.setIcon(image);
-////                    jPanel1.add(jLabel1);
-////                    this.revalidate();
+                Valid.tabelKosong(tabModeSeries);
+                seriesbyid = orthanc.AmbilSeriesById(tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString());
+//                for (JsonNode list : seriesbyid) {
+                    JsonNode listSeries = seriesbyid;
+                    for (JsonNode sublist : listSeries.path("Instances")) {
+                        tabModeSeries.addRow(new Object[]{
+                            listSeries.path("MainDicomTags").path("Modality").asText(),listSeries.path("MainDicomTags").path("BodyPartExamined").asText(),sublist.asText()
+                        });
+                    }
 //                }
             }
             if (evt.getClickCount() == 2) {
@@ -2568,13 +2514,25 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         }
     }//GEN-LAST:event_MnTarikGambarActionPerformed
 
-    private void tbDokter2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDokter2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tbDokter2MouseClicked
+    private void tbListDicom1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbListDicom1MouseClicked
+        String urlins;
+        BufferedImage c = null;
+        URL url = null;
+        try {
+            urlins = orthanc.ambilPreview(tbListDicom1.getValueAt(tbListDicom1.getSelectedRow(), 2).toString());
+            jLabel1.setText("");
+            url = new URL(urlins);
+            c = ImageIO.read(url);
+            ImageIcon image = new ImageIcon(c);
+            jLabel1.setIcon(image);
+        } catch (NoSuchAlgorithmException | KeyManagementException | IOException ex) {
+            Logger.getLogger(DlgCariPeriksaRadiologi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tbListDicom1MouseClicked
 
-    private void tbDokter2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbDokter2KeyPressed
+    private void tbListDicom1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbListDicom1KeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tbDokter2KeyPressed
+    }//GEN-LAST:event_tbListDicom1KeyPressed
 
     private void TKesanKeyPressed(java.awt.event.KeyEvent evt) {
         //        Valid.pindah(evt,TKdPrw,TPemeriksaan);
@@ -2633,8 +2591,6 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.TextBox NoOrder;
     private widget.TextBox NoRM;
     private widget.TextBox NoRawat;
-    private widget.PanelBiasa PanelAccor;
-    private javax.swing.JPanel PanelInput;
     private widget.TextBox Penjab;
     private widget.TextBox Perujuk;
     private widget.TextBox Petugas;
@@ -2660,13 +2616,12 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.InternalFrame internalFrame1;
     private widget.InternalFrame internalFrame5;
     private widget.InternalFrame internalFrame6;
-    private widget.InternalFrame internalFrame7;
     private javax.swing.JLabel jLabel1;
     private widget.Label jLabel12;
     private widget.Label jLabel7;
     private widget.Label jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;
     private widget.TextBox kddokter;
@@ -2692,13 +2647,15 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.panelisi panelIsi7;
     private widget.panelisi panelisi1;
     private widget.panelisi panelisi3;
+    private widget.panelisi panelisi6;
     private widget.ScrollPane scrollPane1;
     private widget.ScrollPane scrollPane2;
     private widget.ScrollPane scrollPane3;
+    private widget.ScrollPane scrollPane4;
     private widget.ScrollPane scrollPane5;
     private widget.Table tbDokter;
-    private widget.Table tbDokter2;
     private widget.Table tbListDicom;
+    private widget.Table tbListDicom1;
     // End of variables declaration//GEN-END:variables
 
     private void tampil() {
