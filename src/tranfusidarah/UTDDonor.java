@@ -84,7 +84,8 @@ public final class UTDDonor extends javax.swing.JDialog {
             sqlpsceknonmedis = "select utd_penggunaan_penunjang_donor.kode_brng,ipsrsbarang.nama_brng,utd_penggunaan_penunjang_donor.jml,utd_penggunaan_penunjang_donor.harga,"
             + "utd_penggunaan_penunjang_donor.total,ipsrsbarang.kode_sat from utd_penggunaan_penunjang_donor inner join ipsrsbarang "
             + "on utd_penggunaan_penunjang_donor.kode_brng=ipsrsbarang.kode_brng where utd_penggunaan_penunjang_donor.no_donor=?",
-            hari = "", kdkel = "", kdkec = "", kdkab = "", kdprop = "", nodonor = "", dinas = "",umur="";
+            hari = "", kdkel = "", kdkec = "", kdkab = "", kdprop = "", nodonor = "", dinas = "",umur="",
+            sqltotaldonor = "select COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor ";
     private BridgingWA kirimwa = new BridgingWA();
     public DlgKabupaten kab = new DlgKabupaten(null, false);
     public DlgPropinsi prop = new DlgPropinsi(null, false);
@@ -4708,25 +4709,25 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     private void tampilTotalDonor() {
         Valid.tabelKosong(tabModeTotalDonor);
         try {
-            psTotal = koneksi.prepareStatement("SELECT COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor and utd_donor.tanggal BETWEEN ? AND ?");
-            psTotalLk = koneksi.prepareStatement("SELECT COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor and utd_donor.tanggal BETWEEN ? AND ? AND utd_pendonor.jk='L'");
-            psTotalPr = koneksi.prepareStatement("SELECT COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor and utd_donor.tanggal BETWEEN ? AND ? AND utd_pendonor.jk='P'");
-            psUmur1 = koneksi.prepareStatement("SELECT COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor and utd_donor.tanggal and umur=17 AND utd_donor.tanggal BETWEEN ? AND ?");
-            psUmur2 = koneksi.prepareStatement("SELECT COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor and utd_donor.tanggal and umur BETWEEN 18 AND 24 AND utd_donor.tanggal BETWEEN ? AND ?");
-            psUmur3 = koneksi.prepareStatement("SELECT COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor and utd_donor.tanggal and umur BETWEEN 25 AND 44 AND utd_donor.tanggal BETWEEN ? AND ?");
-            psUmur4 = koneksi.prepareStatement("SELECT COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor and utd_donor.tanggal and BETWEEN 45 AND 64 AND utd_donor.tanggal BETWEEN ? AND ?");
-            psUmur5 = koneksi.prepareStatement("SELECT COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor and utd_donor.tanggal and umur>=65 AND utd_donor.tanggal BETWEEN ? AND ?");
-            psOpos = koneksi.prepareStatement("SELECT COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor and utd_donor.tanggal BETWEEN ? AND ? AND utd_pendonor.golongan_darah='O' AND utd_pendonor.resus='(+)'");
-            psOneg = koneksi.prepareStatement("SELECT COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor and utd_donor.tanggal BETWEEN ? AND ? AND utd_pendonor.golongan_darah='O' AND utd_pendonor.resus='(-)'");
-            psApos = koneksi.prepareStatement("SELECT COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor and utd_donor.tanggal BETWEEN ? AND ? AND utd_pendonor.golongan_darah='A' AND utd_pendonor.resus='(+)'");
-            psAneg = koneksi.prepareStatement("SELECT COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor and utd_donor.tanggal BETWEEN ? AND ? AND utd_pendonor.golongan_darah='A' AND utd_pendonor.resus='(-)'");
-            psBpos = koneksi.prepareStatement("SELECT COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor and utd_donor.tanggal BETWEEN ? AND ? AND utd_pendonor.golongan_darah='B' AND utd_pendonor.resus='(+)'");
-            psBneg = koneksi.prepareStatement("SELECT COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor and utd_donor.tanggal BETWEEN ? AND ? AND utd_pendonor.golongan_darah='B' AND utd_pendonor.resus='(-)'");
-            psABpos = koneksi.prepareStatement("SELECT COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor and utd_donor.tanggal BETWEEN ? AND ? AND utd_pendonor.golongan_darah='AB' AND rutd_pendonor.esus='(+)'");
-            psABneg = koneksi.prepareStatement("SELECT COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor and utd_donor.tanggal BETWEEN ? AND ? AND utd_pendonor.golongan_darah='AB' AND utd_pendonor.resus='(-)'");
-            psjenisdb = koneksi.prepareStatement("SELECT COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor and utd_donor.jenis_donor='DB' and utd_donor.tanggal BETWEEN ? AND ?");
-            psjenisdp = koneksi.prepareStatement("SELECT COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor and utd_donor.jenis_donor='DP' and utd_donor.tanggal BETWEEN ? AND ?");
-            psjenisds = koneksi.prepareStatement("SELECT COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor and utd_donor.jenis_donor='DS' and utd_donor.tanggal BETWEEN ? AND ?");
+            psTotal = koneksi.prepareStatement(""+sqltotaldonor+" and utd_donor.tanggal BETWEEN ? AND ?");
+            psTotalLk = koneksi.prepareStatement(""+sqltotaldonor+" and utd_donor.tanggal BETWEEN ? AND ? AND utd_pendonor.jk='L'");
+            psTotalPr = koneksi.prepareStatement(""+sqltotaldonor+" and utd_donor.tanggal BETWEEN ? AND ? AND utd_pendonor.jk='P'");
+            psUmur1 = koneksi.prepareStatement(""+sqltotaldonor+" and utd_donor.tanggal and TIMESTAMPDIFF(YEAR, utd_pendonor.tgl_lahir, utd_donor.tanggal)=17 AND utd_donor.tanggal BETWEEN ? AND ?");
+            psUmur2 = koneksi.prepareStatement(""+sqltotaldonor+" and utd_donor.tanggal and TIMESTAMPDIFF(YEAR, utd_pendonor.tgl_lahir, utd_donor.tanggal) BETWEEN 18 AND 24 AND utd_donor.tanggal BETWEEN ? AND ?");
+            psUmur3 = koneksi.prepareStatement(""+sqltotaldonor+" and utd_donor.tanggal and TIMESTAMPDIFF(YEAR, utd_pendonor.tgl_lahir, utd_donor.tanggal) BETWEEN 25 AND 44 AND utd_donor.tanggal BETWEEN ? AND ?");
+            psUmur4 = koneksi.prepareStatement(""+sqltotaldonor+" and utd_donor.tanggal and TIMESTAMPDIFF(YEAR, utd_pendonor.tgl_lahir, utd_donor.tanggal) BETWEEN 45 AND 64 AND utd_donor.tanggal BETWEEN ? AND ?");
+            psUmur5 = koneksi.prepareStatement(""+sqltotaldonor+" and utd_donor.tanggal and TIMESTAMPDIFF(YEAR, utd_pendonor.tgl_lahir, utd_donor.tanggal)>=65 AND utd_donor.tanggal BETWEEN ? AND ?");
+            psOpos = koneksi.prepareStatement(""+sqltotaldonor+" and utd_donor.tanggal BETWEEN ? AND ? AND utd_pendonor.golongan_darah='O' AND utd_pendonor.resus='(+)'");
+            psOneg = koneksi.prepareStatement(""+sqltotaldonor+" and utd_donor.tanggal BETWEEN ? AND ? AND utd_pendonor.golongan_darah='O' AND utd_pendonor.resus='(-)'");
+            psApos = koneksi.prepareStatement(""+sqltotaldonor+" and utd_donor.tanggal BETWEEN ? AND ? AND utd_pendonor.golongan_darah='A' AND utd_pendonor.resus='(+)'");
+            psAneg = koneksi.prepareStatement(""+sqltotaldonor+" and utd_donor.tanggal BETWEEN ? AND ? AND utd_pendonor.golongan_darah='A' AND utd_pendonor.resus='(-)'");
+            psBpos = koneksi.prepareStatement(""+sqltotaldonor+" and utd_donor.tanggal BETWEEN ? AND ? AND utd_pendonor.golongan_darah='B' AND utd_pendonor.resus='(+)'");
+            psBneg = koneksi.prepareStatement(""+sqltotaldonor+" and utd_donor.tanggal BETWEEN ? AND ? AND utd_pendonor.golongan_darah='B' AND utd_pendonor.resus='(-)'");
+            psABpos = koneksi.prepareStatement(""+sqltotaldonor+" and utd_donor.tanggal BETWEEN ? AND ? AND utd_pendonor.golongan_darah='AB' AND utd_pendonor.resus='(+)'");
+            psABneg = koneksi.prepareStatement(""+sqltotaldonor+" and utd_donor.tanggal BETWEEN ? AND ? AND utd_pendonor.golongan_darah='AB' AND utd_pendonor.resus='(-)'");
+            psjenisdb = koneksi.prepareStatement(""+sqltotaldonor+" and utd_donor.jenis_donor='DB' and utd_donor.tanggal BETWEEN ? AND ?");
+            psjenisdp = koneksi.prepareStatement(""+sqltotaldonor+" and utd_donor.jenis_donor='DP' and utd_donor.tanggal BETWEEN ? AND ?");
+            psjenisds = koneksi.prepareStatement(""+sqltotaldonor+" and utd_donor.jenis_donor='DS' and utd_donor.tanggal BETWEEN ? AND ?");
             try {
                 psTotal.setString(1, Valid.SetTgl(TanggalCari1.getSelectedItem() + ""));
                 psTotal.setString(2, Valid.SetTgl(TanggalCari2.getSelectedItem() + ""));
