@@ -28,7 +28,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import kepegawaian.DlgCariDokter;
+import keuangan.DlgJnsPerawatanRalan;
 import tranfusidarah.UTDKomponenDarah;
 
 /**
@@ -40,9 +40,8 @@ public class DlgSetUtd extends javax.swing.JDialog {
     private Connection koneksi=koneksiDB.condb();
     private sekuel Sequel=new sekuel();
     private validasi Valid=new validasi();
-    public  DlgCariDokter dokter=new DlgCariDokter(null,false);
     private UTDKomponenDarah komponen=new UTDKomponenDarah(null,true);
-    private MyLimsMapping app = new MyLimsMapping(null, true);
+    private DlgJnsPerawatanRalan app = new DlgJnsPerawatanRalan(null, true);
     private int pilihan=0,i=0;
 
     /** Creates new form DlgAdmin
@@ -88,11 +87,7 @@ public class DlgSetUtd extends javax.swing.JDialog {
             @Override
             public void windowClosed(WindowEvent e) {
                 if(komponen.getTable().getSelectedRow()!= -1){                    
-                    if(pilihan==1){
-                        kddokter.setText(dokter.getTable().getValueAt(dokter.getTable().getSelectedRow(),0).toString());
-                        TDokter.setText(dokter.getTable().getValueAt(dokter.getTable().getSelectedRow(),1).toString());
-                        kddokter.requestFocus();
-                    }else if(pilihan==2){
+                    if(pilihan==2){
                         kddokter2.setText(komponen.getTable().getValueAt(komponen.getTable().getSelectedRow(),0).toString());
                         TDokter2.setText(komponen.getTable().getValueAt(komponen.getTable().getSelectedRow(),1).toString());
                         kddokter2.requestFocus();
@@ -118,8 +113,8 @@ public class DlgSetUtd extends javax.swing.JDialog {
             public void windowClosed(WindowEvent e) {
                 if(app.getTable().getSelectedRow()!= -1){                    
                     if(pilihan==1){
-                        kddokter.setText(app.getTable().getValueAt(app.getTable().getSelectedRow(),0).toString());
-                        TDokter.setText(app.getTable().getValueAt(app.getTable().getSelectedRow(),1).toString());
+                        kddokter.setText(app.getTable().getValueAt(app.getTable().getSelectedRow(),1).toString());
+                        TDokter.setText(app.getTable().getValueAt(app.getTable().getSelectedRow(),2).toString());
                         kddokter.requestFocus();
                     }
                 }                
@@ -202,7 +197,7 @@ public class DlgSetUtd extends javax.swing.JDialog {
         panelGlass7.setPreferredSize(new java.awt.Dimension(44, 137));
         panelGlass7.setLayout(null);
 
-        jLabel13.setText("Tindakan Lab :");
+        jLabel13.setText("Tindakan :");
         jLabel13.setName("jLabel13"); // NOI18N
         panelGlass7.add(jLabel13);
         jLabel13.setBounds(0, 12, 115, 23);
@@ -410,7 +405,7 @@ public class DlgSetUtd extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null,"Maaf, data sudah habis...!!!!");
             kddokter.requestFocus();
         }else{
-//            Sequel.queryu("delete from set_pjlab");
+            Sequel.queryu("delete from set_pjlab WHERE kd_lab = "+kddokter.getText());
             tampil();
             emptTeks();
         }
@@ -498,7 +493,11 @@ public class DlgSetUtd extends javax.swing.JDialog {
 
     private void BtnDokterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDokterActionPerformed
         pilihan=1;
-        app.getMapp("set",kddokter,TDokter);
+        app.emptTeks();
+        app.isCek();
+        app.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
+        app.setLocationRelativeTo(internalFrame1);        
+        app.setVisible(true);
     }//GEN-LAST:event_BtnDokterActionPerformed
 
     private void kddokter2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kddokter2KeyPressed
@@ -575,10 +574,8 @@ public class DlgSetUtd extends javax.swing.JDialog {
     private void getData() {
         int row=tbAdmin.getSelectedRow();
         if(row!= -1){
-            kddokter.setText(Sequel.cariIsi("select kd_dokterlab from set_pjlab"));
-            kddokter2.setText(Sequel.cariIsi("select kd_dokterrad from set_pjlab"));
-            TDokter.setText(Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?",kddokter.getText()));
-            TDokter2.setText(Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?",kddokter2.getText()));
+            kddokter.setText(tbAdmin.getValueAt(tbAdmin.getSelectedRow(),1).toString());
+            kddokter2.setText(tbAdmin.getValueAt(tbAdmin.getSelectedRow(),2).toString());
         }
     }
 
