@@ -1308,34 +1308,27 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                 Sequel.mengedit("utd_stok_darah","no_bag='"+tbDarah.getValueAt(i,1).toString()+"'","status='Diambil'");
                                 try {
                                     String kd_jns_prw = Sequel.cariIsi("SELECT kd_lab FROM utd_mapping_komponen WHERE nm_komponen = '"+tbDarah.getValueAt(i,2).toString()+"'");
-                                    ps = koneksi.prepareStatement("SELECT kd_jenis_prw , bagian_rs , bhp , tarif_perujuk , tarif_tindakan_dokter, tarif_tindakan_petugas , kso, menejemen , total_byr FROM jns_perawatan_lab WHERE kd_jenis_prw = '"+kd_jns_prw+"'");
+                                    ps = koneksi.prepareStatement("SELECT kd_jenis_prw , material , bhp , tarif_tindakanpr , kso, menejemen , total_byrpr FROM jns_perawatan_inap WHERE kd_jenis_prw = '"+kd_jns_prw+"'");
                                     rs=ps.executeQuery();
                                     while(rs.next()){
-                                        String pj = Sequel.cariIsi("SELECT kd_dokterutd FROM set_pjlab");
-                                        String status_bill = "Ranap";
                                         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");  
                                         LocalDateTime now = LocalDateTime.now();  
                                         System.out.println(dtf.format(now));  
 
                                         pssimpanperiksa=koneksi.prepareStatement(
-                                            "insert into periksa_lab values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                                            "insert into rawat_inap_pr values(?,?,?,?,?,?,?,?,?,?,?)");
                                         try {
                                             pssimpanperiksa.setString(1,norawat.getText());
-                                            pssimpanperiksa.setString(2,"UTD1");
-                                            pssimpanperiksa.setString(3,rs.getString(1));
+                                            pssimpanperiksa.setString(2,rs.getString(1));
+                                            pssimpanperiksa.setString(3,"UTD1");
                                             pssimpanperiksa.setString(4,Valid.SetTgl(tanggal.getSelectedItem()+""));
                                             pssimpanperiksa.setString(5,dtf.format(now));
-                                            pssimpanperiksa.setString(6,pj);
-                                            pssimpanperiksa.setDouble(7,rs.getDouble(2));
-                                            pssimpanperiksa.setDouble(8,rs.getDouble(3));
-                                            pssimpanperiksa.setDouble(9,rs.getDouble(4));
-                                            pssimpanperiksa.setDouble(10,rs.getDouble(5));
-                                            pssimpanperiksa.setDouble(11,rs.getDouble(6));
-                                            pssimpanperiksa.setDouble(12,rs.getDouble(7));
-                                            pssimpanperiksa.setDouble(13,rs.getDouble(8));
-                                            pssimpanperiksa.setDouble(14,rs.getDouble(9));
-                                            pssimpanperiksa.setString(15,pj);
-                                            pssimpanperiksa.setString(16,status_bill);
+                                            pssimpanperiksa.setDouble(6,rs.getDouble(2));
+                                            pssimpanperiksa.setDouble(7,rs.getDouble(3));
+                                            pssimpanperiksa.setDouble(8,rs.getDouble(4));
+                                            pssimpanperiksa.setDouble(9,rs.getDouble(5));
+                                            pssimpanperiksa.setDouble(10,rs.getDouble(6));
+                                            pssimpanperiksa.setDouble(11,rs.getDouble(7));
                                             pssimpanperiksa.executeUpdate();   
                                         } catch (Exception e) {
                                             System.out.println("Notifikasi 1 : "+e);

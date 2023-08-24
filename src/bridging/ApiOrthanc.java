@@ -254,6 +254,17 @@ public class ApiOrthanc {
         return root;
     }
     
+    public String ambilPreview(String studies_id) throws NoSuchAlgorithmException, KeyManagementException
+    {
+        String url;
+        headers = new HttpHeaders();
+        headers.add("Accept", "image/jpeg");
+        requestEntity = new HttpEntity(requestJson,headers);
+        url = getRest().exchange(koneksiDB.URLORTHANC()+":"+koneksiDB.PORTORTHANC()+"/instances/"+studies_id+"/rendered?quality=20&height=60&width=40", HttpMethod.GET, requestEntity, String.class).getBody();
+//        url = ;
+        return url;
+    }
+    
     public RestTemplate getRest() throws NoSuchAlgorithmException, KeyManagementException {
         sslContext = SSLContext.getInstance("SSL");
         TrustManager[] trustManagers= {
