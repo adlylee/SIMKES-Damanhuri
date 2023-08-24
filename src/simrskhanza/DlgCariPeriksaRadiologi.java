@@ -2386,6 +2386,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private void tbListDicomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbListDicomMouseClicked
         if (tabModeDicom.getRowCount() != 0) {
             if (evt.getClickCount() == 1) {
+                Valid.tabelKosong(tabModeSeries);
                 seriesbyid = orthanc.AmbilSeriesById(tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString());
 //                for (JsonNode list : seriesbyid) {
                     JsonNode listSeries = seriesbyid;
