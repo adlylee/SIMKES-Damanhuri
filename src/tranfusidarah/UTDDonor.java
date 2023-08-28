@@ -77,6 +77,7 @@ public final class UTDDonor extends javax.swing.JDialog {
             opos, oneg, apos, aneg, bpos, bneg, abpos, abneg, jenisdb, jenisdp, jenisds;
     private SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
     private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private LocalDate today = LocalDate.now();
     private String aktifkan = "",
             sqlpscekmedis = "select utd_penggunaan_medis_donor.kode_brng,databarang.nama_brng,utd_penggunaan_medis_donor.jml,utd_penggunaan_medis_donor.harga,"
             + "utd_penggunaan_medis_donor.total,databarang.kode_sat from utd_penggunaan_medis_donor inner join databarang "
@@ -1142,7 +1143,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelGlass12.add(NomorTelp1);
         NomorTelp1.setBounds(105, 100, 160, 23);
 
-        tgl_lahir1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22-08-2023" }));
+        tgl_lahir1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-08-2023" }));
         tgl_lahir1.setDisplayFormat("dd-MM-yyyy");
         tgl_lahir1.setName("tgl_lahir1"); // NOI18N
         tgl_lahir1.addItemListener(new java.awt.event.ItemListener() {
@@ -1538,7 +1539,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         label34.setName("label34"); // NOI18N
         label34.setPreferredSize(new java.awt.Dimension(35, 23));
         panelisi4.add(label34);
-        label34.setBounds(0, 170, 102, 23);
+        label34.setBounds(0, 140, 102, 23);
 
         NomorDonor.setEditable(false);
         NomorDonor.setHighlighter(null);
@@ -1573,7 +1574,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelisi4.add(label32);
         label32.setBounds(260, 10, 57, 23);
 
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22-08-2023" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-08-2023" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy");
         Tanggal.setName("Tanggal"); // NOI18N
         Tanggal.addItemListener(new java.awt.event.ItemListener() {
@@ -1608,25 +1609,25 @@ public final class UTDDonor extends javax.swing.JDialog {
         label35.setName("label35"); // NOI18N
         label35.setPreferredSize(new java.awt.Dimension(35, 23));
         panelisi4.add(label35);
-        label35.setBounds(320, 70, 40, 23);
+        label35.setBounds(660, 10, 40, 23);
 
         Umur.setEditable(false);
         Umur.setHighlighter(null);
         Umur.setName("Umur"); // NOI18N
         panelisi4.add(Umur);
-        Umur.setBounds(286, 70, 40, 23);
+        Umur.setBounds(630, 10, 40, 23);
 
         label37.setText("Umur :");
         label37.setName("label37"); // NOI18N
         label37.setPreferredSize(new java.awt.Dimension(35, 23));
         panelisi4.add(label37);
-        label37.setBounds(240, 70, 40, 23);
+        label37.setBounds(580, 10, 40, 23);
 
         label38.setText("Alamat :");
         label38.setName("label38"); // NOI18N
         label38.setPreferredSize(new java.awt.Dimension(35, 23));
         panelisi4.add(label38);
-        label38.setBounds(0, 130, 102, 23);
+        label38.setBounds(0, 100, 102, 23);
 
         Alamat.setHighlighter(null);
         Alamat.setName("Alamat"); // NOI18N
@@ -1636,12 +1637,12 @@ public final class UTDDonor extends javax.swing.JDialog {
             }
         });
         panelisi4.add(Alamat);
-        Alamat.setBounds(110, 130, 450, 23);
+        Alamat.setBounds(110, 100, 450, 23);
 
         jLabel9.setText("J.K. :");
         jLabel9.setName("jLabel9"); // NOI18N
         panelisi4.add(jLabel9);
-        jLabel9.setBounds(0, 100, 102, 23);
+        jLabel9.setBounds(140, 70, 102, 23);
 
         JK.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "LAKI-LAKI", "PEREMPUAN" }));
         JK.setName("JK"); // NOI18N
@@ -1651,12 +1652,12 @@ public final class UTDDonor extends javax.swing.JDialog {
             }
         });
         panelisi4.add(JK);
-        JK.setBounds(110, 100, 110, 23);
+        JK.setBounds(250, 70, 110, 23);
 
         jLabel10.setText("Golongan Darah :");
         jLabel10.setName("jLabel10"); // NOI18N
         panelisi4.add(jLabel10);
-        jLabel10.setBounds(0, 200, 102, 23);
+        jLabel10.setBounds(0, 170, 102, 23);
 
         GolonganDarah.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "A", "AB", "B", "O" }));
         GolonganDarah.setName("GolonganDarah"); // NOI18N
@@ -1666,23 +1667,23 @@ public final class UTDDonor extends javax.swing.JDialog {
             }
         });
         panelisi4.add(GolonganDarah);
-        GolonganDarah.setBounds(110, 200, 70, 23);
+        GolonganDarah.setBounds(110, 170, 70, 23);
 
         jLabel11.setText("Resus :");
         jLabel11.setName("jLabel11"); // NOI18N
         panelisi4.add(jLabel11);
-        jLabel11.setBounds(210, 200, 50, 23);
+        jLabel11.setBounds(210, 170, 50, 23);
 
         Resus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "(-)", "(+)" }));
         Resus.setName("Resus"); // NOI18N
         panelisi4.add(Resus);
-        Resus.setBounds(260, 200, 70, 23);
+        Resus.setBounds(260, 170, 70, 23);
 
         label39.setText("Tensi :");
         label39.setName("label39"); // NOI18N
         label39.setPreferredSize(new java.awt.Dimension(35, 23));
         panelisi4.add(label39);
-        label39.setBounds(350, 200, 70, 23);
+        label39.setBounds(350, 170, 70, 23);
 
         Tensi.setHighlighter(null);
         Tensi.setName("Tensi"); // NOI18N
@@ -1692,7 +1693,7 @@ public final class UTDDonor extends javax.swing.JDialog {
             }
         });
         panelisi4.add(Tensi);
-        Tensi.setBounds(425, 200, 80, 23);
+        Tensi.setBounds(425, 170, 80, 23);
 
         label40.setText("Nomor Donor :");
         label40.setName("label40"); // NOI18N
@@ -1703,13 +1704,13 @@ public final class UTDDonor extends javax.swing.JDialog {
         NomorBag.setHighlighter(null);
         NomorBag.setName("NomorBag"); // NOI18N
         panelisi4.add(NomorBag);
-        NomorBag.setBounds(110, 170, 140, 23);
+        NomorBag.setBounds(110, 140, 140, 23);
 
         label41.setText("No.Telp :");
         label41.setName("label41"); // NOI18N
         label41.setPreferredSize(new java.awt.Dimension(35, 23));
         panelisi4.add(label41);
-        label41.setBounds(230, 100, 50, 23);
+        label41.setBounds(370, 70, 50, 23);
 
         NomorTelp.setHighlighter(null);
         NomorTelp.setName("NomorTelp"); // NOI18N
@@ -1719,12 +1720,12 @@ public final class UTDDonor extends javax.swing.JDialog {
             }
         });
         panelisi4.add(NomorTelp);
-        NomorTelp.setBounds(290, 100, 110, 23);
+        NomorTelp.setBounds(430, 70, 130, 23);
 
         jLabel12.setText("Jenis Bag :");
         jLabel12.setName("jLabel12"); // NOI18N
         panelisi4.add(jLabel12);
-        jLabel12.setBounds(190, 230, 70, 23);
+        jLabel12.setBounds(190, 200, 70, 23);
 
         JenisBag.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SB", "DB", "TB", "QB", "P" }));
         JenisBag.setName("JenisBag"); // NOI18N
@@ -1739,22 +1740,22 @@ public final class UTDDonor extends javax.swing.JDialog {
             }
         });
         panelisi4.add(JenisBag);
-        JenisBag.setBounds(260, 230, 70, 23);
+        JenisBag.setBounds(260, 200, 70, 23);
 
         jLabel13.setText("Jenis Donor :");
         jLabel13.setName("jLabel13"); // NOI18N
         panelisi4.add(jLabel13);
-        jLabel13.setBounds(0, 230, 102, 23);
+        jLabel13.setBounds(0, 200, 102, 23);
 
         JenisDonor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "DB", "DP", "DS" }));
         JenisDonor.setName("JenisDonor"); // NOI18N
         panelisi4.add(JenisDonor);
-        JenisDonor.setBounds(110, 230, 70, 23);
+        JenisDonor.setBounds(110, 200, 70, 23);
 
         jLabel14.setText("Tempat Aftap :");
         jLabel14.setName("jLabel14"); // NOI18N
         panelisi4.add(jLabel14);
-        jLabel14.setBounds(280, 170, 80, 23);
+        jLabel14.setBounds(275, 140, 80, 23);
 
         TempatAftap.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dalam Gedung", "Luar Gedung" }));
         TempatAftap.setName("TempatAftap"); // NOI18N
@@ -1764,13 +1765,13 @@ public final class UTDDonor extends javax.swing.JDialog {
             }
         });
         panelisi4.add(TempatAftap);
-        TempatAftap.setBounds(360, 170, 150, 23);
+        TempatAftap.setBounds(360, 140, 150, 23);
 
         label17.setText("Hasil Uji Saring :");
         label17.setName("label17"); // NOI18N
         label17.setPreferredSize(new java.awt.Dimension(65, 23));
         panelisi4.add(label17);
-        label17.setBounds(0, 290, 102, 23);
+        label17.setBounds(0, 260, 102, 23);
 
         KodePetugasAftap.setName("KodePetugasAftap"); // NOI18N
         KodePetugasAftap.setPreferredSize(new java.awt.Dimension(80, 23));
@@ -1780,13 +1781,13 @@ public final class UTDDonor extends javax.swing.JDialog {
             }
         });
         panelisi4.add(KodePetugasAftap);
-        KodePetugasAftap.setBounds(110, 260, 90, 23);
+        KodePetugasAftap.setBounds(110, 230, 90, 23);
 
         NamaPetugasAftap.setEditable(false);
         NamaPetugasAftap.setName("NamaPetugasAftap"); // NOI18N
         NamaPetugasAftap.setPreferredSize(new java.awt.Dimension(207, 23));
         panelisi4.add(NamaPetugasAftap);
-        NamaPetugasAftap.setBounds(200, 260, 286, 23);
+        NamaPetugasAftap.setBounds(200, 230, 286, 23);
 
         btnPetugasAftap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
         btnPetugasAftap.setMnemonic('1');
@@ -1799,18 +1800,18 @@ public final class UTDDonor extends javax.swing.JDialog {
             }
         });
         panelisi4.add(btnPetugasAftap);
-        btnPetugasAftap.setBounds(490, 260, 28, 23);
+        btnPetugasAftap.setBounds(490, 230, 28, 23);
 
         label18.setText("Petugas Aftap :");
         label18.setName("label18"); // NOI18N
         label18.setPreferredSize(new java.awt.Dimension(65, 23));
         panelisi4.add(label18);
-        label18.setBounds(0, 260, 102, 23);
+        label18.setBounds(0, 230, 102, 23);
 
         jLabel15.setText("HBSAg :");
         jLabel15.setName("jLabel15"); // NOI18N
         panelisi4.add(jLabel15);
-        jLabel15.setBounds(40, 310, 97, 23);
+        jLabel15.setBounds(40, 280, 97, 23);
 
         HBSAg.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "Non-Reaktif", "Reaktif" }));
         HBSAg.setName("HBSAg"); // NOI18N
@@ -1825,7 +1826,7 @@ public final class UTDDonor extends javax.swing.JDialog {
             }
         });
         panelisi4.add(HBSAg);
-        HBSAg.setBounds(140, 310, 110, 23);
+        HBSAg.setBounds(140, 280, 110, 23);
 
         HCV.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "Non-Reaktif", "Reaktif" }));
         HCV.setName("HCV"); // NOI18N
@@ -1835,17 +1836,17 @@ public final class UTDDonor extends javax.swing.JDialog {
             }
         });
         panelisi4.add(HCV);
-        HCV.setBounds(340, 310, 110, 23);
+        HCV.setBounds(340, 280, 110, 23);
 
         jLabel16.setText("HCV :");
         jLabel16.setName("jLabel16"); // NOI18N
         panelisi4.add(jLabel16);
-        jLabel16.setBounds(270, 310, 70, 23);
+        jLabel16.setBounds(270, 280, 70, 23);
 
         jLabel17.setText("HIV :");
         jLabel17.setName("jLabel17"); // NOI18N
         panelisi4.add(jLabel17);
-        jLabel17.setBounds(40, 340, 97, 23);
+        jLabel17.setBounds(40, 310, 97, 23);
 
         HIV.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "Non-Reaktif", "Reaktif" }));
         HIV.setName("HIV"); // NOI18N
@@ -1855,12 +1856,12 @@ public final class UTDDonor extends javax.swing.JDialog {
             }
         });
         panelisi4.add(HIV);
-        HIV.setBounds(140, 340, 110, 23);
+        HIV.setBounds(140, 310, 110, 23);
 
         jLabel18.setText("Spilis :");
         jLabel18.setName("jLabel18"); // NOI18N
         panelisi4.add(jLabel18);
-        jLabel18.setBounds(270, 340, 70, 23);
+        jLabel18.setBounds(270, 310, 70, 23);
 
         Spilis.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "Non-Reaktif", "Reaktif" }));
         Spilis.setName("Spilis"); // NOI18N
@@ -1870,13 +1871,13 @@ public final class UTDDonor extends javax.swing.JDialog {
             }
         });
         panelisi4.add(Spilis);
-        Spilis.setBounds(340, 340, 110, 23);
+        Spilis.setBounds(340, 310, 110, 23);
 
         label19.setText("Petugas U.Saring :");
         label19.setName("label19"); // NOI18N
         label19.setPreferredSize(new java.awt.Dimension(65, 23));
         panelisi4.add(label19);
-        label19.setBounds(0, 400, 102, 23);
+        label19.setBounds(0, 370, 102, 23);
 
         KodePetugasUSaring.setName("KodePetugasUSaring"); // NOI18N
         KodePetugasUSaring.setPreferredSize(new java.awt.Dimension(80, 23));
@@ -1886,13 +1887,13 @@ public final class UTDDonor extends javax.swing.JDialog {
             }
         });
         panelisi4.add(KodePetugasUSaring);
-        KodePetugasUSaring.setBounds(110, 400, 90, 23);
+        KodePetugasUSaring.setBounds(110, 370, 90, 23);
 
         NamaPetugasUSaring.setEditable(false);
         NamaPetugasUSaring.setName("NamaPetugasUSaring"); // NOI18N
         NamaPetugasUSaring.setPreferredSize(new java.awt.Dimension(207, 23));
         panelisi4.add(NamaPetugasUSaring);
-        NamaPetugasUSaring.setBounds(200, 400, 286, 23);
+        NamaPetugasUSaring.setBounds(200, 370, 286, 23);
 
         btnPetugasUSaring.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
         btnPetugasUSaring.setMnemonic('1');
@@ -1905,12 +1906,12 @@ public final class UTDDonor extends javax.swing.JDialog {
             }
         });
         panelisi4.add(btnPetugasUSaring);
-        btnPetugasUSaring.setBounds(490, 400, 28, 23);
+        btnPetugasUSaring.setBounds(490, 370, 28, 23);
 
         jLabel19.setText("Malaria :");
         jLabel19.setName("jLabel19"); // NOI18N
         panelisi4.add(jLabel19);
-        jLabel19.setBounds(40, 370, 97, 23);
+        jLabel19.setBounds(40, 340, 97, 23);
 
         Malaria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "Non-Reaktif", "Reaktif" }));
         Malaria.setName("Malaria"); // NOI18N
@@ -1920,7 +1921,7 @@ public final class UTDDonor extends javax.swing.JDialog {
             }
         });
         panelisi4.add(Malaria);
-        Malaria.setBounds(140, 370, 110, 23);
+        Malaria.setBounds(140, 340, 110, 23);
 
         label33.setText("Tanggal Lahir :");
         label33.setName("label33"); // NOI18N
@@ -1928,7 +1929,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelisi4.add(label33);
         label33.setBounds(12, 70, 90, 23);
 
-        tgl_lahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22-08-2023" }));
+        tgl_lahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-08-2023" }));
         tgl_lahir.setDisplayFormat("dd-MM-yyyy");
         tgl_lahir.setName("tgl_lahir"); // NOI18N
         tgl_lahir.addItemListener(new java.awt.event.ItemListener() {
@@ -1947,31 +1948,31 @@ public final class UTDDonor extends javax.swing.JDialog {
             }
         });
         panelisi4.add(nik);
-        nik.setBounds(420, 40, 140, 23);
+        nik.setBounds(430, 40, 130, 23);
 
         label42.setText("NIK : ");
         label42.setName("label42"); // NOI18N
         label42.setPreferredSize(new java.awt.Dimension(33, 23));
         panelisi4.add(label42);
-        label42.setBounds(310, 40, 105, 23);
+        label42.setBounds(320, 40, 105, 23);
 
         jSeparator1.setName("jSeparator1"); // NOI18N
         panelisi4.add(jSeparator1);
-        jSeparator1.setBounds(0, 285, 780, 2);
+        jSeparator1.setBounds(0, 255, 780, 2);
 
         jSeparator2.setName("jSeparator2"); // NOI18N
         panelisi4.add(jSeparator2);
-        jSeparator2.setBounds(0, 156, 780, 2);
+        jSeparator2.setBounds(0, 126, 780, 2);
 
         Pengambilan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Baik", "Gagal" }));
         Pengambilan.setName("Pengambilan"); // NOI18N
         panelisi4.add(Pengambilan);
-        Pengambilan.setBounds(425, 230, 80, 23);
+        Pengambilan.setBounds(425, 200, 80, 23);
 
         jLabel22.setText("Pengambilan :");
         jLabel22.setName("jLabel22"); // NOI18N
         panelisi4.add(jLabel22);
-        jLabel22.setBounds(350, 230, 70, 23);
+        jLabel22.setBounds(350, 200, 70, 23);
 
         scrollPane1.setViewportView(panelisi4);
 
@@ -2248,7 +2249,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelGlass9.add(jLabel20);
 
         TanggalCari1.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22-08-2023" }));
+        TanggalCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-08-2023" }));
         TanggalCari1.setDisplayFormat("dd-MM-yyyy");
         TanggalCari1.setName("TanggalCari1"); // NOI18N
         TanggalCari1.setOpaque(false);
@@ -2262,7 +2263,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelGlass9.add(jLabel21);
 
         TanggalCari2.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22-08-2023" }));
+        TanggalCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-08-2023" }));
         TanggalCari2.setDisplayFormat("dd-MM-yyyy");
         TanggalCari2.setName("TanggalCari2"); // NOI18N
         TanggalCari2.setOpaque(false);
@@ -2454,37 +2455,29 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     }//GEN-LAST:event_tbNonMedisKeyPressed
 
     private void tbTranfusiDarahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTranfusiDarahMouseClicked
-        /*if(tabMode.getRowCount()!=0){
+        if (tabModeTranfusi.getRowCount() != 0) {
             try {
-                getData();
-                if(evt.getClickCount()==2){
-                    TabRawat.setSelectedIndex(0);
-                }
+                getData2();
             } catch (java.lang.NullPointerException e) {
             }
-        }*/
+        }
     }//GEN-LAST:event_tbTranfusiDarahMouseClicked
 
     private void tbTranfusiDarahKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbTranfusiDarahKeyPressed
-        /*if(tabMode.getRowCount()!=0){
-            if((evt.getKeyCode()==KeyEvent.VK_ENTER)||(evt.getKeyCode()==KeyEvent.VK_UP)||(evt.getKeyCode()==KeyEvent.VK_DOWN)){
+        if (tabModeTranfusi.getRowCount() != 0) {
+            if ((evt.getKeyCode() == KeyEvent.VK_ENTER) || (evt.getKeyCode() == KeyEvent.VK_UP) || (evt.getKeyCode() == KeyEvent.VK_DOWN)) {
                 try {
-                    getData();
-                } catch (java.lang.NullPointerException e) {
-                }
-            }else if(evt.getKeyCode()==KeyEvent.VK_SPACE){
-                try {
-                    getData();
-                    TabRawat.setSelectedIndex(0);
+                    getData2();
                 } catch (java.lang.NullPointerException e) {
                 }
             }
-        }*/
+        }
     }//GEN-LAST:event_tbTranfusiDarahKeyPressed
 
     private void TabRawatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabRawatMouseClicked
         if (TabRawat.getSelectedIndex() == 0) {
             tampilPendonor();
+            TCari.setText("");
         }
         if (TabRawat.getSelectedIndex() == 2) {
             tampil();
@@ -2832,12 +2825,12 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
 //                            malar, KodePetugasUSaring.getText(),
 //                            Valid.SetTgl(tgl_lahir.getSelectedItem() + ""), nik.getText(), tbTranfusiDarah.getValueAt(tbTranfusiDarah.getSelectedRow(), 0).toString()
 //                        }) == true) {
-                if (Sequel.mengedittf("utd_donor", "no_donor=?", "tanggal=?,dinas=?,"
+                if (Sequel.mengedittf("utd_donor", "no_donor=?", "tanggal=?,"
                         + "tensi=?,no_bag=?,jenis_bag=?,"
                         + "jenis_donor=?,tempat_aftap=?,petugas_aftap=?,hbsag=?,hcv=?,hiv=?,spilis=?,malaria=?,"
-                        + "stts_pengambilan=?,petugas_u_saring=?", 16, new String[]{
+                        + "stts_pengambilan=?,petugas_u_saring=?", 15, new String[]{
                             Valid.SetTgl(Tanggal.getSelectedItem() + ""),
-                            Dinas.getSelectedItem().toString(),
+//                            Dinas.getSelectedItem().toString(),
                             Tensi.getText(), NomorBag.getText(), JenisBag.getSelectedItem().toString(),
                             JenisDonor.getSelectedItem().toString(), TempatAftap.getSelectedItem().toString(),
                             KodePetugasAftap.getText(), hbs, hcv,
@@ -4068,10 +4061,9 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     }//GEN-LAST:event_PropinsiKeyPressed
 
     private void MnDaftarBaruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnDaftarBaruActionPerformed
-//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String inputString1 = Sequel.cariIsi("select tanggal from utd_donor where no_pendonor='" + NomorPendonor.getText() + "' order by tanggal desc");
-        LocalDate month = LocalDate.now();
-        String inputString2 = month.format(dtf);
+//        LocalDate month = LocalDate.now();
+        String inputString2 = today.format(dtf);
         System.out.println(inputString1);
         System.out.println(inputString2);
         if (tabModePendonor.getRowCount() == 0) {
@@ -4509,13 +4501,17 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
         Valid.tabelKosong(tabModeTranfusi);
         try {
             pstranfusi = koneksi.prepareStatement(
-                    "select * from utd_donor where no_donor like ? or "
-                    + "nama like ? or nik like ? or "
-                    + "alamat like ? or "
-                    + "jenis_donor like ? or "
-                    + "tempat_aftap like ? or "
-                    + "jenis_bag like ? or "
-                    + "dinas like ? GROUP BY nik order by tanggal,no_donor "
+                    "select * from utd_donor inner join utd_pendonor on utd_donor.no_pendonor=utd_pendonor.no_pendonor "
+                    + "where utd_donor.no_donor like ? or "
+                    + "utd_pendonor.no_pendonor like ? or "
+                    + "utd_pendonor.nama like ? or "
+                    + "utd_pendonor.alamat like ? or "
+                    + "utd_donor.jenis_donor like ? or "
+                    + "utd_donor.tempat_aftap like ? or "
+                    + "utd_donor.jenis_bag like ? or "
+                    + "utd_pendonor.no_ktp like ? or "
+                    + "utd_pendonor.tgl_lahir like ? or "
+                    + "utd_donor.dinas like ? order by utd_donor.tanggal,utd_donor.no_donor"
             );
             try {
                 pstranfusi.setString(1, "%" + TCari.getText().trim() + "%");
@@ -4526,14 +4522,17 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
                 pstranfusi.setString(6, "%" + TCari.getText().trim() + "%");
                 pstranfusi.setString(7, "%" + TCari.getText().trim() + "%");
                 pstranfusi.setString(8, "%" + TCari.getText().trim() + "%");
+                pstranfusi.setString(9, "%" + TCari.getText().trim() + "%");
+                pstranfusi.setString(10, "%" + TCari.getText().trim() + "%");
                 rstranfusi = pstranfusi.executeQuery();
                 while (rstranfusi.next()) {
                     tabModeTranfusi.addRow(new Object[]{
-                        rstranfusi.getString("no_donor"), rstranfusi.getString("nama"), rstranfusi.getString("nik"), rstranfusi.getString("tanggal"),
-                        rstranfusi.getString("dinas"), rstranfusi.getString("jk"), rstranfusi.getString("tgl_lahir"), rstranfusi.getString("umur"),
-                        rstranfusi.getString("alamat"), rstranfusi.getString("golongan_darah"), rstranfusi.getString("resus"),
+                        rstranfusi.getString("no_donor"), rstranfusi.getString("no_pendonor"), rstranfusi.getString("nama"), rstranfusi.getString("no_ktp"), rstranfusi.getString("tanggal"),
+                        rstranfusi.getString("dinas"), rstranfusi.getString("jk"), rstranfusi.getString("tgl_lahir"), "",
+                        rstranfusi.getString("alamat"),
+                        rstranfusi.getString("golongan_darah"), rstranfusi.getString("resus"),
                         rstranfusi.getString("tensi"), rstranfusi.getString("no_bag"), rstranfusi.getString("no_telp"),
-                        rstranfusi.getString("jenis_bag"), rstranfusi.getString("jenis_donor"), rstranfusi.getString("tempat_aftap"),
+                        rstranfusi.getString("jenis_bag"), rstranfusi.getString("jenis_donor"), rstranfusi.getString("stts_pengambilan"), rstranfusi.getString("tempat_aftap"),
                         Sequel.cariIsi("select nama from petugas where nip=?", rstranfusi.getString("petugas_aftap")), rstranfusi.getString("hbsag"), rstranfusi.getString("hcv"),
                         rstranfusi.getString("hiv"), rstranfusi.getString("spilis"), rstranfusi.getString("malaria"),
                         Sequel.cariIsi("select nama from petugas where nip=?", rstranfusi.getString("petugas_u_saring"))
@@ -5044,12 +5043,13 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
         ppBaru.setVisible(false);
         label37.setVisible(false);
         label35.setVisible(false);
-        Umur.setVisible(false);        
+        Umur.setVisible(false);    
+        jLabel8.setVisible(false);
+        Dinas.setVisible(false);
     }
 
     private void isNumber() {
-    LocalDate date = LocalDate.now();
-    String formattedDate = date.format(dtf);
+    String formattedDate = today.format(dtf);
     Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_donor,3),signed)),0) from utd_donor where tanggal like '%" + formattedDate + "%'", 
             formattedDate.substring(2, 4)+formattedDate.substring(5, 7)+formattedDate.substring(8, 10), 3, NomorDonor);
 //        Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_donor,3),signed)),0) from utd_donor where tanggal like '%" + Valid.SetTgl(Tanggal.getSelectedItem() + "") + "%'", dateformat.format(Tanggal.getDate()).substring(2, 4)
@@ -5110,6 +5110,12 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
             }
         }
     }
+    
+    public void getData2(){
+        if (tbTranfusiDarah.getSelectedRow() != -1) {
+            TCari.setText(tbTranfusiDarah.getValueAt(tbTranfusiDarah.getSelectedRow(), 3).toString());
+        }
+    }
 
     public static String getShift(LocalTime time) {
         if (time.isAfter(LocalTime.of(6, 0)) && time.isBefore(LocalTime.of(15, 0))) {
@@ -5139,9 +5145,10 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
         System.out.println("insert");
         LocalTime currentTime = LocalTime.now();
         String shift = getShift(currentTime);
+        String tanggal = today.format(dtf);
         String user = var.getkode();
         if (Sequel.menyimpantf("utd_donor", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "Nomor Donor", 18, new String[]{
-            NomorDonor.getText(), NomorPendonor.getText(), Sequel.cariIsi("select current_date()"),
+            NomorDonor.getText(), NomorPendonor.getText(), tanggal,
             shift, "", "", null, null, null, user, null, null, null, null, null, "", user, "Aman"
         }) == true) {
             for (i = 0; i < tbMedis.getRowCount(); i++) {
