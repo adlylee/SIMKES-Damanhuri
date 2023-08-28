@@ -1308,7 +1308,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                 Sequel.mengedit("utd_stok_darah","no_bag='"+tbDarah.getValueAt(i,1).toString()+"'","status='Diambil'");
                                 try {
                                     String kd_jns_prw = Sequel.cariIsi("SELECT kd_lab FROM utd_mapping_komponen WHERE nm_komponen = '"+tbDarah.getValueAt(i,2).toString()+"'");
-                                    ps = koneksi.prepareStatement("SELECT kd_jenis_prw , material , bhp , tarif_tindakanpr , kso, menejemen , total_byrpr FROM jns_perawatan_inap WHERE kd_jenis_prw = '"+kd_jns_prw+"'");
+                                    ps = koneksi.prepareStatement("SELECT kd_jenis_prw , material , bhp , tarif_tindakanpr , kso, menejemen , total_byrpr FROM jns_perawatan WHERE kd_jenis_prw = '"+kd_jns_prw+"'");
                                     rs=ps.executeQuery();
                                     while(rs.next()){
                                         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");  
