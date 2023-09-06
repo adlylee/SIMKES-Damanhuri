@@ -1649,6 +1649,37 @@ public final class sekuel {
         return dicari;
     }
     
+    public String cariStringArrayLine(String sql){
+        String dicari = "";
+        String holder;
+        try {
+            ps=connect.prepareStatement(sql);
+            try{
+                rs=ps.executeQuery(); 
+//                dicari+="<html>";
+                while(rs.next()){
+                    holder=rs.getString(1);
+                    dicari+= ""+holder+"\n";
+                }
+//                dicari+="</html>";
+            }catch(Exception e){
+                System.out.println("Notifikasi : "+e);
+            }finally{
+                if(rs != null){
+                    rs.close();
+                }
+                
+                if(ps != null){
+                    ps.close();
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Notifikasi : "+e);
+        }
+
+        return dicari;
+    }
+    
     public static String buangChar(String str) {
         return buangCharTerakhir(str, 1);
     }
