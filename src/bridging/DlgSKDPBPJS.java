@@ -1106,34 +1106,7 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
                     break;
                 }
             }
-//            if (penjab.equals("BPJ") || penjab.equals("A02")) {
-//                nomer = kontrol.simpanSurat(nosep, Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), KdDokter1.getText(), NmDokter1.getText(), KdPoli1.getText(), NmPoli1.getText(), user);
-//                if (!nomer.equals("")) {
-//                    System.out.println("Simpan Surat Kontrol BPJS Berhasil");
-//                    System.out.println("Menyimpan SKDP .........");
-//                    if (Sequel.menyimpantf("skdp_bpjs", "?,?,?,?,?,?,?,?,?,?,?,?,?", "Tahun dan nomor surat", 13, new String[]{
-//                        TanggalPeriksa.getSelectedItem().toString().substring(6, 10), TNoRM.getText(), Diagnosa.getText(), Terapi.getText(),
-//                        Alasan1.getText(), nomer, Rtl1.getText(), nosep, Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""),
-//                        Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), antrian, KdDokter.getText(), Status.getSelectedItem().toString()
-//                    }) == true) {
-//                        System.out.println("Simpan SKDP Berhasil");
-//                        Sequel.menyimpan2("booking_registrasi", "?,?,?,?,?,?,?,?,?,?,?", "Pasien dan Tanggal", 11, new String[]{
-//                            Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), TanggalSurat.getSelectedItem().toString().substring(11, 19), TNoRM.getText(),
-//                            Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), KdDokter.getText(),
-//                            KdPoli.getText(), NoReg.getText(), Sequel.cariIsi("select kd_pj from pasien where no_rkm_medis=?", TNoRM.getText()), "0",
-//                            Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + " " + TanggalPeriksa.getSelectedItem().toString().substring(11, 19),
-//                            "belum"
-//                        });
-//                        JOptionPane.showMessageDialog(null, "Berhasil Simpan");
-//                        emptTeks();
-//                        tampil();
-//                    }
-//                }
-//            } else {
-
-//            if (KdPoli.getText().equals("U0019")) {
-//         
-//            }
+            
             if (set_status_rawat.equals("Ranap")) {
                 if (penjab.equals("BPJ") || penjab.equals("A02")) {
                     nomer = kontrol.simpanSurat(nosep, Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), KdDokter1.getText(), NmDokter1.getText(), KdPoli1.getText(), NmPoli1.getText(), user);
@@ -1274,8 +1247,8 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Maaf, Gagal menghapus. Pilih dulu data yang mau dihapus.\nKlik data pada table untuk memilih...!!!!");
         } else if (!(TPasien.getText().trim().equals(""))) {
             if (tbObat.getSelectedRow() != -1) {
-//                String surat = tbObat.getValueAt(tbObat.getSelectedRow(), 6).toString();
-//                kontrol.setNoSurat(surat);
+                String surat = tbObat.getValueAt(tbObat.getSelectedRow(), 6).toString();
+                kontrol.setNoSurat(surat);
                 if (Sequel.queryu2tf("delete from skdp_bpjs where tahun=? and no_antrian=?", 2, new String[]{
                     tbObat.getValueAt(tbObat.getSelectedRow(), 0).toString(), tbObat.getValueAt(tbObat.getSelectedRow(), 11).toString()
                 }) == true) {
@@ -1462,8 +1435,8 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             Valid.textKosong(Diagnosa, "Diagnosa");
         } else {
             if (tbObat.getSelectedRow() != -1) {
-//                nomer = kontrol.editSurat(Alasan2.getText(), Rtl2.getText(), KdDokter1.getText(), NmDokter1.getText(), KdPoli1.getText(), NmPoli1.getText(), Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), user);
-//                if (!nomer.equals("")) {
+                nomer = kontrol.editSurat(Alasan2.getText(), Rtl2.getText(), KdDokter1.getText(), NmDokter1.getText(), KdPoli1.getText(), NmPoli1.getText(), Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), user);
+                if (!nomer.equals("")) {
                 if (Sequel.mengedittf("skdp_bpjs", "tahun=? and no_antrian=?", "tahun=?,no_rkm_medis=?,diagnosa=?,terapi=?,alasan1=?,alasan2=?,rtl1=?,rtl2=?,tanggal_datang=?,tanggal_rujukan=?,no_antrian=?,kd_dokter=?,status=?", 15, new String[]{
                     TanggalPeriksa.getSelectedItem().toString().substring(6, 10), TNoRM.getText(), Diagnosa.getText(), Terapi.getText(),
                     Alasan1.getText(), Alasan2.getText(), Rtl1.getText(), Rtl2.getText(), Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""),
@@ -1479,7 +1452,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                     emptTeks();
                     tampil();
                 }
-//                }
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih terlebih dulu data yang mau anda ganti...\n Klik data pada table untuk memilih data...!!!!");
             }

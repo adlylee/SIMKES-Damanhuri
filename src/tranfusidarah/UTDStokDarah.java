@@ -884,9 +884,12 @@ public class UTDStokDarah extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null,"Maaf, Pilih dulu data yang akan Anda hapus dengan menklik data pada tabel...!!!");
             tbDokter.requestFocus();
         }else{
-            Valid.hapusTable(tabMode,NoKantong,"utd_stok_darah","no_kantong");
-            tampil();
-            emptTeks();
+            int reply = JOptionPane.showConfirmDialog(rootPane, "Eeiiiiiits, Yakin mau dihapus..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                Valid.hapusTable(tabMode, NoKantong, "utd_stok_darah", "no_kantong");
+                tampil();
+                emptTeks();
+            }
         }
 }//GEN-LAST:event_BtnHapusActionPerformed
 

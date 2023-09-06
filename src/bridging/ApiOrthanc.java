@@ -253,7 +253,7 @@ public class ApiOrthanc {
         }
         return root;
     }
-    
+        
     public String ambilPreview(String studies_id) throws NoSuchAlgorithmException, KeyManagementException
     {
         String url;

@@ -611,10 +611,10 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
             if (i == JOptionPane.YES_OPTION) {
                 getData();
                 riwayat.catatRiwayat(Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(6, 10),
-                        kdrekdari.getText(), 0, Valid.SetAngka(TJumlah.getText()), var.getkode(), "Simpan", Keterangan.getText());
+                        kdrekdari.getText() , 0, Valid.SetAngka(TJumlah.getText()), var.getkode(), "Simpan", Keterangan.getText());
                 Sequel.menyimpan("rekeningtahun", "'" + Tanggal.getSelectedItem().toString().substring(6, 10) + "','" + kdrekdari.getText() + "','" + tbDokter.getValueAt(i, 3).toString() + "','-" + TJumlah.getText() + "'",
                         "saldo_berjalan=saldo_berjalan-" + TJumlah.getText() + "", "kd_rek='" + kdrekdari.getText() + "' and thn='" + Tanggal.getSelectedItem().toString().substring(6, 10) + "'");
-                riwayat.catatRiwayat(Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(6, 10), kdrekke.getText(), Valid.SetAngka(TJumlah.getText()), 0, var.getkode(), "Simpan", Keterangan.getText());
+                riwayat.catatRiwayat(Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(6, 10), kdrekke.getText() , Valid.SetAngka(TJumlah.getText()), 0, var.getkode(), "Simpan", Keterangan.getText());
                 Sequel.menyimpan("rekeningtahun", "'" + Tanggal.getSelectedItem().toString().substring(6, 10) + "','" + kdrekke.getText() + "','" + tbDokter.getValueAt(i, 3).toString() + "','" + TJumlah.getText() + "'",
                         "saldo_berjalan=saldo_berjalan+" + TJumlah.getText() + "", "kd_rek='" + kdrekke.getText() + "' and thn='" + Tanggal.getSelectedItem().toString().substring(6, 10) + "'");
                 tampil();

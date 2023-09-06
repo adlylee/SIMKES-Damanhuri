@@ -28,7 +28,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import keuangan.DlgJnsPerawatanRalan;
+import keuangan.DlgJnsPerawatanRanap;
 import tranfusidarah.UTDKomponenDarah;
 
 /**
@@ -41,7 +41,7 @@ public class DlgSetUtd extends javax.swing.JDialog {
     private sekuel Sequel=new sekuel();
     private validasi Valid=new validasi();
     private UTDKomponenDarah komponen=new UTDKomponenDarah(null,true);
-    private DlgJnsPerawatanRalan app = new DlgJnsPerawatanRalan(null, true);
+    private DlgJnsPerawatanRanap app = new DlgJnsPerawatanRanap(null, true);
     private int pilihan=0,i=0;
 
     /** Creates new form DlgAdmin
@@ -53,7 +53,7 @@ public class DlgSetUtd extends javax.swing.JDialog {
         this.setLocation(10,10);
         setSize(457,249);
 
-        Object[] row={"P.J.Laboratorium","P.J.Radiologi","P.J.Hemodialisa","P.J.Tranfusi Darah"};
+        Object[] row={"id","Kode Laboratorium","Kode Komponen","Nama Komponen"};
         tabMode=new DefaultTableModel(null,row){
               @Override public boolean isCellEditable(int rowIndex, int colIndex){return false;}
         };
@@ -65,7 +65,8 @@ public class DlgSetUtd extends javax.swing.JDialog {
         for (i = 0; i < 4; i++) {
             TableColumn column = tbAdmin.getColumnModel().getColumn(i);
             if(i==0){
-                column.setPreferredWidth(200);
+                column.setMinWidth(0);
+                column.setMaxWidth(0);
             }else if(i==1){
                 column.setPreferredWidth(200);
             }else if(i==2){
@@ -376,9 +377,6 @@ public class DlgSetUtd extends javax.swing.JDialog {
         }else{
             String query = "INSERT INTO utd_mapping_komponen (kd_lab,kd_komponen,nm_komponen,status) VALUES ('"+kddokter.getText()+"','"+kddokter2.getText()+"','"+TDokter2.getText()+"',1)";
             Sequel.queryu(query);
-//            Sequel.menyimpan("utd_mapping_komponen","?,?,?","Kode",3,new Object[]{
-//                kddokter.getText(),kddokter2.getText(),1
-//            });
             tampil();
             emptTeks();
         }
@@ -405,7 +403,9 @@ public class DlgSetUtd extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null,"Maaf, data sudah habis...!!!!");
             kddokter.requestFocus();
         }else{
-            Sequel.queryu("delete from set_pjlab WHERE kd_lab = "+kddokter.getText());
+            Sequel.mengedit3("utd_mapping_komponen", "id=?", "status=?", 2, new String[]{
+                "0",tbAdmin.getValueAt(tbAdmin.getSelectedRow(), 0).toString()
+            });
             tampil();
             emptTeks();
         }
@@ -425,10 +425,9 @@ public class DlgSetUtd extends javax.swing.JDialog {
         }else if(TDokter2.getText().trim().equals("")||kddokter2.getText().trim().equals("")){
             Valid.textKosong(kddokter2,"Penanggung Jawab Radiologi");
         }else{
-//            Sequel.queryu("delete from set_pjlab");
-//            Sequel.menyimpan("set_pjlab","?,?,?,?","Penanggung Jawab",4,new String[]{
-//                kddokter.getText(),kddokter2.getText()
-//            });
+            Sequel.mengedit3("utd_mapping_komponen", "id=?", "kd_lab=?,kd_komponen=?,nm_komponen=?", 4, new String[]{
+                kddokter.getText(), kddokter2.getText(), TDokter2.getText(), tbAdmin.getValueAt(tbAdmin.getSelectedRow(), 0).toString()
+            });
             tampil();
             emptTeks();
         }

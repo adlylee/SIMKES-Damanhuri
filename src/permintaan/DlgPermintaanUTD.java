@@ -57,11 +57,10 @@ public final class DlgPermintaanUTD extends javax.swing.JDialog {
     private PreparedStatement pspemeriksaan, psstok;
     private ResultSet rs, rs2;
     private boolean[] pilih;
-    private String[] kode, nama, jumlah, jlh, namastok, gd, resus;
+    private String[] kode, nama, jlh, namastok, gd, resus;
     private int jml = 0, i = 0, index = 0, jmlparsial = 0;
-    private String kelas = "", pemeriksaan = "", kamar, namakamar, status = "";
-    private double ttl = 0, item = 0;
-    private String norawatibu = "", aktifkanparsial = "no";
+    private String kelas = "", kamar, namakamar, status = "";
+    private String norawatibu = "", aktifkanparsial = "no",komponen="";
     private final Properties prop = new Properties();
     private WarnaTable2 warna = new WarnaTable2();
 
@@ -76,19 +75,19 @@ public final class DlgPermintaanUTD extends javax.swing.JDialog {
         initComponents();
 
         tabMode = new DefaultTableModel(null, new Object[]{
-            "P", "Jumlah", "Kode Periksa", "Nama Pemeriksaan"
+            "P", "Kode Periksa", "Nama Pemeriksaan"
         }) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
                 boolean a = false;
-                if ((colIndex == 0) || (colIndex == 1)) {
+                if ((colIndex == 0)) {
                     a = true;
                 }
                 return a;
             }
 
             Class[] types = new Class[]{
-                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class
             };
 
             @Override
@@ -97,28 +96,22 @@ public final class DlgPermintaanUTD extends javax.swing.JDialog {
             }
         };
         tbPemeriksaan.setModel(tabMode);
-
-        //tbObat.setDefaultRenderer(Object.class, new WarnaTable(panelJudul.getBackground(),tbObat.getBackground()));
         tbPemeriksaan.setPreferredScrollableViewportSize(new Dimension(500, 500));
         tbPemeriksaan.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 4; i++) {
+        for (i = 0; i < 3; i++) {
             TableColumn column = tbPemeriksaan.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(20);
             } else if (i == 1) {
-                column.setPreferredWidth(45);
+                column.setPreferredWidth(80);
             } else if (i == 2) {
-                column.setPreferredWidth(130);
-            } else if (i == 3) {
                 column.setPreferredWidth(480);
             }
         }
-
         warna.kolom = 1;
         tbPemeriksaan.setDefaultRenderer(Object.class, warna);
 
-//        tbPemeriksaan.setDefaultRenderer(Object.class, new WarnaTable());
         tabModeStok = new DefaultTableModel(null, new Object[]{"Jml", "Nama Barang", "Gol. Darah", "Resus"}) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -148,7 +141,6 @@ public final class DlgPermintaanUTD extends javax.swing.JDialog {
         tbMedis.setDefaultRenderer(Object.class, new WarnaTable());
 
         TNoRw.setDocument(new batasInput((byte) 17).getKata(TNoRw));
-        KodePerujuk.setDocument(new batasInput((byte) 20).getKata(KodePerujuk));
         if (koneksiDB.cariCepat().equals("aktif")) {
             TCariPeriksa.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
                 @Override
@@ -261,8 +253,6 @@ public final class DlgPermintaanUTD extends javax.swing.JDialog {
         jLabel15 = new widget.Label();
         jLabel4 = new widget.Label();
         TNoPermintaan = new widget.TextBox();
-        jLabel11 = new widget.Label();
-        TKet = new widget.TextBox();
         jLabel18 = new widget.Label();
         CmbCariGd = new widget.ComboBox();
         jLabel17 = new widget.Label();
@@ -289,11 +279,6 @@ public final class DlgPermintaanUTD extends javax.swing.JDialog {
         Penjab.setEditable(false);
         Penjab.setFocusTraversalPolicyProvider(true);
         Penjab.setName("Penjab"); // NOI18N
-        Penjab.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                PenjabKeyPressed(evt);
-            }
-        });
 
         Jk.setEditable(false);
         Jk.setFocusTraversalPolicyProvider(true);
@@ -316,7 +301,7 @@ public final class DlgPermintaanUTD extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Input Data Permintaan UTD ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Input Data Permintaan UTD ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -426,7 +411,8 @@ public final class DlgPermintaanUTD extends javax.swing.JDialog {
 
         FormInput.setName("FormInput"); // NOI18N
         FormInput.setOpaque(false);
-        FormInput.setPreferredSize(new java.awt.Dimension(560, 169));
+        FormInput.setPreferredSize(new java.awt.Dimension(560, 129));
+        FormInput.setRequestFocusEnabled(false);
         FormInput.setLayout(new java.awt.BorderLayout(1, 1));
 
         ChkInput.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/143.png"))); // NOI18N
@@ -483,7 +469,7 @@ public final class DlgPermintaanUTD extends javax.swing.JDialog {
         PanelInput.add(jLabel9);
         jLabel9.setBounds(0, 42, 92, 23);
 
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "12-12-2022" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01-09-2023" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy");
         Tanggal.setName("Tanggal"); // NOI18N
         Tanggal.setOpaque(false);
@@ -521,33 +507,18 @@ public final class DlgPermintaanUTD extends javax.swing.JDialog {
         ChkJln.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ChkJln.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         ChkJln.setName("ChkJln"); // NOI18N
-        ChkJln.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ChkJlnActionPerformed(evt);
-            }
-        });
         PanelInput.add(ChkJln);
         ChkJln.setBounds(384, 72, 23, 23);
 
         KodePerujuk.setName("KodePerujuk"); // NOI18N
-        KodePerujuk.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                KodePerujukActionPerformed(evt);
-            }
-        });
-        KodePerujuk.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                KodePerujukKeyPressed(evt);
-            }
-        });
         PanelInput.add(KodePerujuk);
-        KodePerujuk.setBounds(95, 42, 128, 23);
+        KodePerujuk.setBounds(95, 42, 105, 23);
 
         NmPerujuk.setEditable(false);
         NmPerujuk.setHighlighter(null);
         NmPerujuk.setName("NmPerujuk"); // NOI18N
         PanelInput.add(NmPerujuk);
-        NmPerujuk.setBounds(225, 42, 377, 23);
+        NmPerujuk.setBounds(202, 42, 175, 23);
 
         btnDokter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
         btnDokter.setMnemonic('4');
@@ -559,7 +530,7 @@ public final class DlgPermintaanUTD extends javax.swing.JDialog {
             }
         });
         PanelInput.add(btnDokter);
-        btnDokter.setBounds(604, 42, 28, 23);
+        btnDokter.setBounds(375, 42, 28, 23);
 
         jLabel15.setText("Tgl.Periksa :");
         jLabel15.setName("jLabel15"); // NOI18N
@@ -569,82 +540,37 @@ public final class DlgPermintaanUTD extends javax.swing.JDialog {
         jLabel4.setText("No.Permintaan :");
         jLabel4.setName("jLabel4"); // NOI18N
         PanelInput.add(jLabel4);
-        jLabel4.setBounds(409, 72, 90, 23);
+        jLabel4.setBounds(405, 42, 90, 23);
 
         TNoPermintaan.setEditable(false);
         TNoPermintaan.setHighlighter(null);
         TNoPermintaan.setName("TNoPermintaan"); // NOI18N
-        TNoPermintaan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TNoPermintaanActionPerformed(evt);
-            }
-        });
-        TNoPermintaan.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                TNoPermintaanKeyPressed(evt);
-            }
-        });
         PanelInput.add(TNoPermintaan);
-        TNoPermintaan.setBounds(502, 72, 130, 23);
+        TNoPermintaan.setBounds(500, 42, 130, 23);
 
-        jLabel11.setText("Keterangan :");
-        jLabel11.setName("jLabel11"); // NOI18N
-        PanelInput.add(jLabel11);
-        jLabel11.setBounds(0, 102, 92, 23);
-
-        TKet.setHighlighter(null);
-        TKet.setName("TKet"); // NOI18N
-        PanelInput.add(TKet);
-        TKet.setBounds(95, 102, 310, 40);
-
-        jLabel18.setText("G.D.:");
+        jLabel18.setText("G.D :");
         jLabel18.setName("jLabel18"); // NOI18N
         jLabel18.setPreferredSize(new java.awt.Dimension(33, 23));
         PanelInput.add(jLabel18);
-        jLabel18.setBounds(410, 102, 40, 23);
+        jLabel18.setBounds(400, 72, 40, 23);
 
         CmbCariGd.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "A", "AB", "B", "O" }));
         CmbCariGd.setName("CmbCariGd"); // NOI18N
         CmbCariGd.setPreferredSize(new java.awt.Dimension(65, 23));
-        CmbCariGd.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                CmbCariGdItemStateChanged(evt);
-            }
-        });
-        CmbCariGd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CmbCariGdActionPerformed(evt);
-            }
-        });
-        CmbCariGd.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                CmbCariGdKeyPressed(evt);
-            }
-        });
         PanelInput.add(CmbCariGd);
-        CmbCariGd.setBounds(460, 102, 52, 23);
+        CmbCariGd.setBounds(450, 72, 60, 23);
 
-        jLabel17.setText("Resus:");
+        jLabel17.setText("Resus :");
         jLabel17.setName("jLabel17"); // NOI18N
         jLabel17.setPreferredSize(new java.awt.Dimension(33, 23));
         PanelInput.add(jLabel17);
-        jLabel17.setBounds(520, 102, 40, 23);
+        jLabel17.setBounds(520, 72, 40, 23);
 
         CmbCariResus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "(-)", "(+)" }));
         CmbCariResus.setName("CmbCariResus"); // NOI18N
         CmbCariResus.setPreferredSize(new java.awt.Dimension(65, 23));
-        CmbCariResus.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                CmbCariResusItemStateChanged(evt);
-            }
-        });
-        CmbCariResus.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                CmbCariResusKeyPressed(evt);
-            }
-        });
         PanelInput.add(CmbCariResus);
-        CmbCariResus.setBounds(570, 102, 52, 23);
+        CmbCariResus.setBounds(560, 72, 70, 23);
 
         FormInput.add(PanelInput, java.awt.BorderLayout.CENTER);
 
@@ -687,7 +613,7 @@ public final class DlgPermintaanUTD extends javax.swing.JDialog {
         panelisi6.setPreferredSize(new java.awt.Dimension(450, 77));
         panelisi6.setLayout(new java.awt.GridLayout(2, 0));
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(237, 242, 232)), ".: Stok Darah", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(237, 242, 232)), ".: Stok Darah", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         jPanel4.setName("jPanel4"); // NOI18N
         jPanel4.setOpaque(false);
         jPanel4.setPreferredSize(new java.awt.Dimension(300, 102));
@@ -703,11 +629,6 @@ public final class DlgPermintaanUTD extends javax.swing.JDialog {
         tbMedis.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbMedisMouseClicked(evt);
-            }
-        });
-        tbMedis.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                tbMedisKeyPressed(evt);
             }
         });
         Scroll1.setViewportView(tbMedis);
@@ -744,11 +665,6 @@ public final class DlgPermintaanUTD extends javax.swing.JDialog {
                 BtnCari2ActionPerformed(evt);
             }
         });
-        BtnCari2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                BtnCari2KeyPressed(evt);
-            }
-        });
         panelisi7.add(BtnCari2);
 
         BtnAll1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Search-16x16.png"))); // NOI18N
@@ -759,11 +675,6 @@ public final class DlgPermintaanUTD extends javax.swing.JDialog {
         BtnAll1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnAll1ActionPerformed(evt);
-            }
-        });
-        BtnAll1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                BtnAll1KeyPressed(evt);
             }
         });
         panelisi7.add(BtnAll1);
@@ -787,12 +698,7 @@ public final class DlgPermintaanUTD extends javax.swing.JDialog {
 
         TCariPeriksa.setToolTipText("Alt+C");
         TCariPeriksa.setName("TCariPeriksa"); // NOI18N
-        TCariPeriksa.setPreferredSize(new java.awt.Dimension(680, 23));
-        TCariPeriksa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TCariPeriksaActionPerformed(evt);
-            }
-        });
+        TCariPeriksa.setPreferredSize(new java.awt.Dimension(500, 23));
         TCariPeriksa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 TCariPeriksaKeyPressed(evt);
@@ -872,17 +778,9 @@ private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     this.setCursor(Cursor.getDefaultCursor());
 }//GEN-LAST:event_BtnCariActionPerformed
 
-private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChkJlnActionPerformed
-    // TODO add your handling code here:
-}//GEN-LAST:event_ChkJlnActionPerformed
-
     private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChkInputActionPerformed
         isForm();
     }//GEN-LAST:event_ChkInputActionPerformed
-
-    private void PenjabKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PenjabKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PenjabKeyPressed
 
     private void TanggalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TanggalKeyPressed
         Valid.pindah(evt, KodePerujuk, TCariPeriksa);
@@ -970,12 +868,14 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     }//GEN-LAST:event_BtnSimpanKeyPressed
 
     private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpanActionPerformed
-        jml = 0;
+        komponen="";jml = 0;
         for (i = 0; i < tbPemeriksaan.getRowCount(); i++) {
             if (tbPemeriksaan.getValueAt(i, 0).toString().equals("true")) {
                 jml++;
+                komponen =  tbPemeriksaan.getValueAt(i, 1).toString();
             }
-        }
+        }        
+        int cekStok = Sequel.cariInteger("select count(*) from utd_stok_darah join utd_mapping_komponen on utd_stok_darah.kode_komponen=utd_mapping_komponen.kd_komponen where utd_mapping_komponen.kd_lab='"+komponen+"' and utd_stok_darah.golongan_darah='"+CmbCariGd.getSelectedItem().toString()+"' and utd_stok_darah.resus='"+CmbCariResus.getSelectedItem().toString()+"' and utd_stok_darah.status='Ada'");        
         if (TNoRw.getText().equals("") || TNoRM.getText().equals("") || TPasien.getText().equals("")) {
             Valid.textKosong(TNoRw, "Pasien");
         } else if (KodePerujuk.getText().equals("") || NmPerujuk.getText().equals("")) {
@@ -984,6 +884,9 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
             Valid.textKosong(TCariPeriksa, "Data Permintaan");
         } else if (jml == 0) {
             Valid.textKosong(TCariPeriksa, "Data Permintaan");
+        } else if (cekStok < 1) {
+            JOptionPane.showMessageDialog(null, "Maaf, stok darah tidak mencukupi.\nSilahkan hubungi petugas unit transfusi darah..!!");
+            TCariPeriksa.requestFocus();
         } else {
             jmlparsial = 0;
             if (aktifkanparsial.equals("yes")) {
@@ -1018,16 +921,6 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
         }
     }//GEN-LAST:event_BtnCariKeyPressed
 
-    private void KodePerujukKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KodePerujukKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
-            Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?", NmPerujuk, KodePerujuk.getText());
-        } else if (evt.getKeyCode() == KeyEvent.VK_UP) {
-            btnDokterActionPerformed(null);
-        } else {
-            Valid.pindah(evt, TCariPeriksa, Tanggal);
-        }
-    }//GEN-LAST:event_KodePerujukKeyPressed
-
     private void btnDokterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDokterActionPerformed
         dokter.emptTeks();
         dokter.isCek();
@@ -1058,8 +951,8 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
             for (i = 0; i < tbPemeriksaan.getRowCount(); i++) {
                 if (tbPemeriksaan.getValueAt(i, 0).toString().equals("true")) {
                     Sequel.menyimpan("temporary_permintaan_utd", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", 38, new String[]{
-                        "0", tbPemeriksaan.getValueAt(i, 2).toString(),
-                        tbPemeriksaan.getValueAt(i, 3).toString(), "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
+                        "0", tbPemeriksaan.getValueAt(i, 1).toString(),
+                        tbPemeriksaan.getValueAt(i, 2).toString(), "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
                     });
                 }
             }
@@ -1102,22 +995,6 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
         }
     }//GEN-LAST:event_BtnPrintKeyPressed
 
-    private void TCariPeriksaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TCariPeriksaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TCariPeriksaActionPerformed
-
-    private void TNoPermintaanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TNoPermintaanKeyPressed
-        //Valid.pindah(evt,TNoReg,DTPReg);
-    }//GEN-LAST:event_TNoPermintaanKeyPressed
-
-    private void TNoPermintaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TNoPermintaanActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TNoPermintaanActionPerformed
-
-    private void KodePerujukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KodePerujukActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_KodePerujukActionPerformed
-
     private void TanggalItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_TanggalItemStateChanged
         autoNomor();
     }//GEN-LAST:event_TanggalItemStateChanged
@@ -1125,24 +1002,6 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     private void tbMedisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbMedisMouseClicked
 
     }//GEN-LAST:event_tbMedisMouseClicked
-
-    private void tbMedisKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbMedisKeyPressed
-        if (tbMedis.getRowCount() != 0) {
-            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-                try {
-                    i = tbMedis.getSelectedColumn();
-                    if (i == 1) {
-                        TCariStok.setText("");
-                        TCariStok.requestFocus();
-                    }
-                } catch (java.lang.NullPointerException e) {
-                }
-            } else if (evt.getKeyCode() == KeyEvent.VK_SHIFT) {
-                TCariStok.setText("");
-                TCariStok.requestFocus();
-            }
-        }
-    }//GEN-LAST:event_tbMedisKeyPressed
 
     private void TCariStokKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TCariStokKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -1160,38 +1019,14 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
         tampilStok();
     }//GEN-LAST:event_BtnCari2ActionPerformed
 
-    private void BtnCari2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnCari2KeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnCari2KeyPressed
-
     private void BtnAll1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAll1ActionPerformed
         TCariStok.setText("");
         tampilStok();
     }//GEN-LAST:event_BtnAll1ActionPerformed
 
-    private void BtnAll1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnAll1KeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnAll1KeyPressed
-
-    private void CmbCariGdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CmbCariGdKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CmbCariGdKeyPressed
-
-    private void CmbCariGdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmbCariGdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CmbCariGdActionPerformed
-
-    private void CmbCariGdItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbCariGdItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CmbCariGdItemStateChanged
-
-    private void CmbCariResusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CmbCariResusKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CmbCariResusKeyPressed
-
-    private void CmbCariResusItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbCariResusItemStateChanged
+    private void CmbCariResusItemStateChanged(java.awt.event.ItemEvent evt) {
         tampil();
-    }//GEN-LAST:event_CmbCariResusItemStateChanged
+    }
 
     /**
      * @param args the command line arguments
@@ -1236,7 +1071,6 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     private widget.ScrollPane Scroll2;
     private widget.TextBox TCariPeriksa;
     private widget.TextBox TCariStok;
-    private widget.TextBox TKet;
     private widget.TextBox TNoPermintaan;
     private widget.TextBox TNoRM;
     private widget.TextBox TNoRw;
@@ -1247,7 +1081,6 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     private widget.Button btnDokter;
     private widget.InternalFrame internalFrame1;
     private widget.Label jLabel10;
-    private widget.Label jLabel11;
     private widget.Label jLabel12;
     private widget.Label jLabel15;
     private widget.Label jLabel17;
@@ -1279,8 +1112,6 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
 
             pilih = null;
             pilih = new boolean[jml];
-            jumlah = null;
-            jumlah = new String[jml];
             kode = null;
             kode = new String[jml];
             nama = null;
@@ -1290,29 +1121,27 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
             for (i = 0; i < tbPemeriksaan.getRowCount(); i++) {
                 if (tbPemeriksaan.getValueAt(i, 0).toString().equals("true")) {
                     pilih[index] = true;
-                    jumlah[index] = tbPemeriksaan.getValueAt(i, 1).toString();
-                    kode[index] = tbPemeriksaan.getValueAt(i, 2).toString();
-                    nama[index] = tbPemeriksaan.getValueAt(i, 3).toString();
+                    kode[index] = tbPemeriksaan.getValueAt(i, 1).toString();
+                    nama[index] = tbPemeriksaan.getValueAt(i, 2).toString();
                     index++;
                 }
             }
 
             Valid.tabelKosong(tabMode);
             for (i = 0; i < jml; i++) {
-                tabMode.addRow(new Object[]{pilih[i], jumlah[i], kode[i], nama[i]});
+                tabMode.addRow(new Object[]{pilih[i], kode[i], nama[i]});
             }
 
             pspemeriksaan = koneksi.prepareStatement(
                     "select jns_perawatan_inap.kd_jenis_prw,jns_perawatan_inap.nm_perawatan,penjab.png_jawab,jns_perawatan_inap.total_byrdr "
-                    + "from jns_perawatan_inap inner join penjab on penjab.kd_pj=jns_perawatan_inap.kd_pj where jns_perawatan_inap.kd_jenis_prw "
-                    + "in ('J001000','J001001','J001002','J001003','J001004','J001005','J001006') and jns_perawatan_inap.status='1' and "
-                    + "(jns_perawatan_inap.kd_jenis_prw like ? or jns_perawatan_inap.nm_perawatan like ?) order by jns_perawatan_inap.kd_jenis_prw ");
+                    + "from jns_perawatan_inap inner join penjab on penjab.kd_pj=jns_perawatan_inap.kd_pj where jns_perawatan_inap.kd_kategori='KP036' "
+                    + " and jns_perawatan_inap.status='1' and (jns_perawatan_inap.kd_jenis_prw like ? or jns_perawatan_inap.nm_perawatan like ?)   order by jns_perawatan_inap.kd_jenis_prw ");
             try {
                 pspemeriksaan.setString(1, "%" + TCariPeriksa.getText().trim() + "%");
                 pspemeriksaan.setString(2, "%" + TCariPeriksa.getText().trim() + "%");
                 rs = pspemeriksaan.executeQuery();
                 while (rs.next()) {
-                    tabMode.addRow(new Object[]{false, "", rs.getString(1), rs.getString(2)});
+                    tabMode.addRow(new Object[]{false, rs.getString(1), rs.getString(2)});
                 }
             } catch (Exception e) {
                 System.out.println("Notifikasi 1 : " + e);
@@ -1342,7 +1171,6 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
         KodePerujuk.setText("");
         NmPerujuk.setText("");
         TCariPeriksa.setText("");
-        TKet.setText("");
         autoNomor();
     }
 
@@ -1467,8 +1295,8 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     }
 
     public void isCek() {
-        BtnSimpan.setEnabled(var.getutd_penyerahan_darah());
-        BtnPrint.setEnabled(var.getutd_penyerahan_darah());
+        BtnSimpan.setEnabled(var.getutd_donor());
+        BtnPrint.setEnabled(var.getutd_donor());
     }
 
     private void isForm() {
@@ -1503,23 +1331,21 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
                 //autoNomor();
                 jml = tbPemeriksaan.getRowCount();
                 for (i = 0; i < jml; i++) {
-                    if (Valid.SetAngka(tbPemeriksaan.getValueAt(i, 1).toString()) > 0) {
-                        if (Sequel.menyimpantf2("permintaan_utd", "?,?,?,?,?,?,?,?,?", "No.Permintaan", 9, new String[]{
-                            TNoPermintaan.getText(), TNoRw.getText(), Valid.SetTgl(Tanggal.getSelectedItem() + ""),
-                            CmbJam.getSelectedItem() + ":" + CmbMenit.getSelectedItem() + ":" + CmbDetik.getSelectedItem(),
-                            KodePerujuk.getText(), tbPemeriksaan.getValueAt(i, 1).toString(), CmbCariGd.getSelectedItem().toString(),
-                            CmbCariResus.getSelectedItem().toString(), status.replaceAll("R", "r")
-                        }) == true) {
-                            for (i = 0; i < tbPemeriksaan.getRowCount(); i++) {
-                                if (tbPemeriksaan.getValueAt(i, 0).toString().equals("true")) {
-                                    Sequel.menyimpan2("permintaan_pemeriksaan_utd", "?,?,?", "pemeriksaan lab", 3, new String[]{
-                                        TNoPermintaan.getText(), tbPemeriksaan.getValueAt(i, 2).toString(), "Belum"
-                                    });
-                                }
+                    if (Sequel.menyimpantf2("permintaan_utd", "?,?,?,?,?,?,?,?,?,?", "No.Permintaan", 10, new String[]{
+                        TNoPermintaan.getText(), TNoRw.getText(), Valid.SetTgl(Tanggal.getSelectedItem() + ""),
+                        CmbJam.getSelectedItem() + ":" + CmbMenit.getSelectedItem() + ":" + CmbDetik.getSelectedItem(),
+                        KodePerujuk.getText(), CmbCariGd.getSelectedItem().toString(),
+                        CmbCariResus.getSelectedItem().toString(), status.replaceAll("R", "r"), "Belum Validasi", ""
+                    }) == true) {
+                        for (i = 0; i < tbPemeriksaan.getRowCount(); i++) {
+                            if (tbPemeriksaan.getValueAt(i, 0).toString().equals("true")) {
+                                Sequel.menyimpan2("permintaan_pemeriksaan_utd", "?,?,?", "pemeriksaan utd", 3, new String[]{
+                                    TNoPermintaan.getText(), tbPemeriksaan.getValueAt(i, 1).toString(), "Belum"
+                                });
                             }
-                            isReset();
-                            emptTeks();
                         }
+                        isReset();
+                        emptTeks();
                     }
                 }
                 koneksi.setAutoCommit(true);
@@ -1567,7 +1393,7 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
 
             psstok = koneksi.prepareStatement(
                     "select count(utd_stok_darah.golongan_darah) as jlh, utd_komponen_darah.nama, utd_stok_darah.golongan_darah, "
-                    + "utd_stok_darah.resus FROM `utd_stok_darah` inner join utd_komponen_darah on utd_stok_darah.kode_komponen=utd_komponen_darah.kode "
+                    + "utd_stok_darah.resus FROM utd_stok_darah inner join utd_komponen_darah on utd_stok_darah.kode_komponen=utd_komponen_darah.kode "
                     + "where utd_stok_darah.status='Ada' and (utd_komponen_darah.nama like ? or utd_stok_darah.golongan_darah like ?) "
                     + "group by utd_stok_darah.kode_komponen, utd_stok_darah.golongan_darah, utd_stok_darah.resus");
             try {
@@ -1591,5 +1417,4 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
             System.out.println("Notifikasi 2 : " + e);
         }
     }
-
 }

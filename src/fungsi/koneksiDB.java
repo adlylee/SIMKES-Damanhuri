@@ -45,7 +45,7 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" +
-                        "    Version 21.08.2023 [ 1.0.22 ] [Activated] GO KLAIM DIGITAL \n"+
+                        "    Version 05.09.2023 [ 1.0.24 ] [Activated] GO KLAIM DIGITAL \n"+
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai                              \n"+
                         "                                                                           \n"+
@@ -58,7 +58,9 @@ public final class koneksiDB {
                         "                                                                       \n"+
                         "    * Changelog :                                                       \n"+
                         "       - Edit booking registrasi                           \n"+
-                        "       - UTD Penyerahan Darah                           \n");
+                        "       - Rekap kegiatan radiologi                           \n"+
+                        "       - Hasil expertise & riwayat pemeriksaan radiologi                           \n"+
+                        "       - UTD penyerahan darah                         \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);
                 try {
