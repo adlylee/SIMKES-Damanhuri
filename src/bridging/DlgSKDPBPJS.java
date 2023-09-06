@@ -1170,42 +1170,44 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
                 }
                 if (!KdPoli.getText().equals("U0019")) {
                     LocalDate today = LocalDate.now();
-                    String tglrujukan = Sequel.cariIsi("select tglrujukan from bridging_sep where no_sep='" + nosep + "'");
-                    if (tglrujukan.isEmpty() || tglrujukan == null) {
-                        JOptionPane.showMessageDialog(null, "Maaf, SEP pasien belum tersedia...!!");
-                    } else {
-                        LocalDate tglRujukanmulai = LocalDate.parse(tglrujukan);
-                        LocalDate tglRujukanakhir = tglRujukanmulai.plusDays(85);
-                        String tglSetelah85Hari = tglRujukanakhir.format(DateTimeFormatter.ISO_LOCAL_DATE);
-                        int cari = Sequel.cariInteger("select DATEDIFF('" + Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + "','" + tglrujukan + "')");
-                        int caribooking = Sequel.cariInteger("select count(no_rkm_medis) from booking_registrasi where kd_pj='BPJ' and no_rkm_medis='" + TNoRM.getText() + "' and tanggal_periksa='" + Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + "'");
-                        if (Sequel.cariInteger("select count(bridging_sep.no_sep) from bridging_sep, (select no_rujukan from bridging_sep where no_sep='" + nosep + "' and jnspelayanan='2') as nocarirujuk "
-                                + "where bridging_sep.no_sep=nocarirujuk.no_rujukan") >= 1) {
-                            JOptionPane.showMessageDialog(rootPane, "Maaf, Rujukan pasien belum tersedia. \nSilahkan meminta rujukan ke Faskes..!!");
+                    if (!norujuk.contains("1708R008")) {
+                        String tglrujukan = Sequel.cariIsi("select tglrujukan from bridging_sep where no_sep='" + nosep + "'");
+                        if (tglrujukan.isEmpty() || tglrujukan == null) {
+                            JOptionPane.showMessageDialog(null, "Maaf, SEP pasien belum tersedia...!!");
                         } else {
-                            if (cari > 85) {
-                                JOptionPane.showMessageDialog(rootPane, "Maaf, masa rujukan pasien telah habis. Masa berlaku rujukan " + tglrujukan + " s/d " + tglSetelah85Hari + ". \nSilahkan meminta rujukan kembali untuk berobat ke Rumah Sakit.. !!");
+                            LocalDate tglRujukanmulai = LocalDate.parse(tglrujukan);
+                            LocalDate tglRujukanakhir = tglRujukanmulai.plusDays(85);
+                            String tglSetelah85Hari = tglRujukanakhir.format(DateTimeFormatter.ISO_LOCAL_DATE);
+                            int cari = Sequel.cariInteger("select DATEDIFF('" + Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + "','" + tglrujukan + "')");
+                            int caribooking = Sequel.cariInteger("select count(no_rkm_medis) from booking_registrasi where kd_pj='BPJ' and no_rkm_medis='" + TNoRM.getText() + "' and tanggal_periksa='" + Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + "'");
+                            if (Sequel.cariInteger("select count(bridging_sep.no_sep) from bridging_sep, (select no_rujukan from bridging_sep where no_sep='" + nosep + "' and jnspelayanan='2') as nocarirujuk "
+                                    + "where bridging_sep.no_sep=nocarirujuk.no_rujukan") >= 1) {
+                                JOptionPane.showMessageDialog(rootPane, "Maaf, Rujukan pasien belum tersedia. \nSilahkan meminta rujukan ke Faskes..!!");
                             } else {
-                                if (caribooking > 0) {
-                                    String tglperiksa = Sequel.cariIsi("SELECT tanggal_periksa FROM booking_registrasi WHERE no_rkm_medis=? order by tanggal_periksa DESC LIMIT 1", TNoRM.getText());
-                                    String poli = Sequel.cariIsi("SELECT poliklinik.nm_poli FROM booking_registrasi inner join poliklinik on booking_registrasi.kd_poli=poliklinik.kd_poli where booking_registrasi.no_rkm_medis='" + TNoRM.getText() + "' and booking_registrasi.tanggal_periksa='" + Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + "'");
-                                    JOptionPane.showMessageDialog(rootPane, "Maaf, pasien telah memiliki jadwal periksa " + poli + " di tanggal " + Valid.SetTgl3(tglperiksa) + ".\nSilahkan pilih tanggal periksa lain.. !!");
+                                if (cari > 85) {
+                                    JOptionPane.showMessageDialog(rootPane, "Maaf, masa rujukan pasien telah habis. Masa berlaku rujukan " + tglrujukan + " s/d " + tglSetelah85Hari + ". \nSilahkan meminta rujukan kembali untuk berobat ke Rumah Sakit.. !!");
                                 } else {
-                                    if (Sequel.menyimpantf("skdp_bpjs", "?,?,?,?,?,?,?,?,?,?,?,?,?", "Tahun dan nomor surat", 13, new String[]{
-                                        TanggalPeriksa.getSelectedItem().toString().substring(6, 10), TNoRM.getText(), Diagnosa.getText(), Terapi.getText(),
-                                        Alasan1.getText(), nomer, Rtl1.getText(), nosep, Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""),
-                                        Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), antrian, KdDokter.getText(), Status.getSelectedItem().toString()
-                                    }) == true) {
-                                        Sequel.menyimpan2("booking_registrasi", "?,?,?,?,?,?,?,?,?,?,?", "Pasien dan Tanggal", 11, new String[]{
-                                            Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), TanggalSurat.getSelectedItem().toString().substring(11, 19), TNoRM.getText(),
-                                            Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), KdDokter.getText(),
-                                            KdPoli.getText(), NoReg.getText(), Sequel.cariIsi("select kd_pj from pasien where no_rkm_medis=?", TNoRM.getText()), "0",
-                                            Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + " " + TanggalPeriksa.getSelectedItem().toString().substring(11, 19),
-                                            "belum"
-                                        });
-                                        JOptionPane.showMessageDialog(null, "Berhasil Simpan");
-                                        emptTeks();
-                                        tampil();
+                                    if (caribooking > 0) {
+                                        String tglperiksa = Sequel.cariIsi("SELECT tanggal_periksa FROM booking_registrasi WHERE no_rkm_medis=? order by tanggal_periksa DESC LIMIT 1", TNoRM.getText());
+                                        String poli = Sequel.cariIsi("SELECT poliklinik.nm_poli FROM booking_registrasi inner join poliklinik on booking_registrasi.kd_poli=poliklinik.kd_poli where booking_registrasi.no_rkm_medis='" + TNoRM.getText() + "' and booking_registrasi.tanggal_periksa='" + Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + "'");
+                                        JOptionPane.showMessageDialog(rootPane, "Maaf, pasien telah memiliki jadwal periksa " + poli + " di tanggal " + Valid.SetTgl3(tglperiksa) + ".\nSilahkan pilih tanggal periksa lain.. !!");
+                                    } else {
+                                        if (Sequel.menyimpantf("skdp_bpjs", "?,?,?,?,?,?,?,?,?,?,?,?,?", "Tahun dan nomor surat", 13, new String[]{
+                                            TanggalPeriksa.getSelectedItem().toString().substring(6, 10), TNoRM.getText(), Diagnosa.getText(), Terapi.getText(),
+                                            Alasan1.getText(), nomer, Rtl1.getText(), nosep, Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""),
+                                            Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), antrian, KdDokter.getText(), Status.getSelectedItem().toString()
+                                        }) == true) {
+                                            Sequel.menyimpan2("booking_registrasi", "?,?,?,?,?,?,?,?,?,?,?", "Pasien dan Tanggal", 11, new String[]{
+                                                Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), TanggalSurat.getSelectedItem().toString().substring(11, 19), TNoRM.getText(),
+                                                Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), KdDokter.getText(),
+                                                KdPoli.getText(), NoReg.getText(), Sequel.cariIsi("select kd_pj from pasien where no_rkm_medis=?", TNoRM.getText()), "0",
+                                                Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + " " + TanggalPeriksa.getSelectedItem().toString().substring(11, 19),
+                                                "belum"
+                                            });
+                                            JOptionPane.showMessageDialog(null, "Berhasil Simpan");
+                                            emptTeks();
+                                            tampil();
+                                        }
                                     }
                                 }
                             }
@@ -1921,6 +1923,10 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         } else {
             norujuk = norujukCari;
         }
+        KdPoli1.setText(Sequel.cariIsi("select kd_poli_bpjs from maping_poli_bpjs where kd_poli_rs=?", KdPoli.getText()));
+        NmPoli1.setText(Sequel.cariIsi("select nm_poli_bpjs from maping_poli_bpjs where kd_poli_bpjs=?", KdPoli1.getText()));
+        KdDokter1.setText(Sequel.cariIsi("select kd_dokter_bpjs from maping_dokter_dpjpvclaim where kd_dokter=?", KdDokter.getText()));
+        NmDokter1.setText(Sequel.cariIsi("select nm_dokter_bpjs from maping_dokter_dpjpvclaim where kd_dokter=?", KdDokter1.getText()));
         set_status_rawat = status_rawat;
 
     }
