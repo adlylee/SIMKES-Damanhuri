@@ -634,6 +634,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         printWB = new javax.swing.JMenuItem();
         jPopupMenu2 = new javax.swing.JPopupMenu();
         MnDaftarBaru = new javax.swing.JMenuItem();
+        MnKartu = new javax.swing.JMenuItem();
         internalFrame1 = new widget.InternalFrame();
         TabRawat = new javax.swing.JTabbedPane();
         internalFrame5 = new widget.InternalFrame();
@@ -980,6 +981,20 @@ public final class UTDDonor extends javax.swing.JDialog {
         });
         jPopupMenu2.add(MnDaftarBaru);
 
+        MnKartu.setBackground(new java.awt.Color(255, 255, 254));
+        MnKartu.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        MnKartu.setForeground(new java.awt.Color(70, 70, 70));
+        MnKartu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        MnKartu.setText("Kartu Pendonor");
+        MnKartu.setName("MnKartu"); // NOI18N
+        MnKartu.setPreferredSize(new java.awt.Dimension(150, 26));
+        MnKartu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnKartuActionPerformed(evt);
+            }
+        });
+        jPopupMenu2.add(MnKartu);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
@@ -1143,7 +1158,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelGlass12.add(NomorTelp1);
         NomorTelp1.setBounds(105, 100, 160, 23);
 
-        tgl_lahir1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-08-2023" }));
+        tgl_lahir1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "05-09-2023" }));
         tgl_lahir1.setDisplayFormat("dd-MM-yyyy");
         tgl_lahir1.setName("tgl_lahir1"); // NOI18N
         tgl_lahir1.addItemListener(new java.awt.event.ItemListener() {
@@ -1568,13 +1583,13 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelisi4.add(NamaPendonor);
         NamaPendonor.setBounds(110, 40, 270, 23);
 
-        label32.setText("Tanggal :");
+        label32.setText("Tanggal Donor :");
         label32.setName("label32"); // NOI18N
         label32.setPreferredSize(new java.awt.Dimension(35, 23));
         panelisi4.add(label32);
-        label32.setBounds(260, 10, 57, 23);
+        label32.setBounds(260, 10, 90, 23);
 
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-08-2023" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "05-09-2023" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy");
         Tanggal.setName("Tanggal"); // NOI18N
         Tanggal.addItemListener(new java.awt.event.ItemListener() {
@@ -1588,12 +1603,12 @@ public final class UTDDonor extends javax.swing.JDialog {
             }
         });
         panelisi4.add(Tanggal);
-        Tanggal.setBounds(320, 10, 90, 23);
+        Tanggal.setBounds(355, 10, 90, 23);
 
         jLabel8.setText("Dinas :");
         jLabel8.setName("jLabel8"); // NOI18N
         panelisi4.add(jLabel8);
-        jLabel8.setBounds(430, 10, 50, 23);
+        jLabel8.setBounds(440, 10, 50, 23);
 
         Dinas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pagi", "Siang", "Malam" }));
         Dinas.setName("Dinas"); // NOI18N
@@ -1603,7 +1618,7 @@ public final class UTDDonor extends javax.swing.JDialog {
             }
         });
         panelisi4.add(Dinas);
-        Dinas.setBounds(480, 10, 86, 23);
+        Dinas.setBounds(490, 10, 86, 23);
 
         label35.setText("Tahun");
         label35.setName("label35"); // NOI18N
@@ -1929,7 +1944,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelisi4.add(label33);
         label33.setBounds(12, 70, 90, 23);
 
-        tgl_lahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-08-2023" }));
+        tgl_lahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "05-09-2023" }));
         tgl_lahir.setDisplayFormat("dd-MM-yyyy");
         tgl_lahir.setName("tgl_lahir"); // NOI18N
         tgl_lahir.addItemListener(new java.awt.event.ItemListener() {
@@ -2084,11 +2099,6 @@ public final class UTDDonor extends javax.swing.JDialog {
         Ganti.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GantiActionPerformed(evt);
-            }
-        });
-        Ganti.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                GantiKeyPressed(evt);
             }
         });
         panelGlass8.add(Ganti);
@@ -2249,7 +2259,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelGlass9.add(jLabel20);
 
         TanggalCari1.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-08-2023" }));
+        TanggalCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "05-09-2023" }));
         TanggalCari1.setDisplayFormat("dd-MM-yyyy");
         TanggalCari1.setName("TanggalCari1"); // NOI18N
         TanggalCari1.setOpaque(false);
@@ -2263,7 +2273,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         panelGlass9.add(jLabel21);
 
         TanggalCari2.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-08-2023" }));
+        TanggalCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "05-09-2023" }));
         TanggalCari2.setDisplayFormat("dd-MM-yyyy");
         TanggalCari2.setName("TanggalCari2"); // NOI18N
         TanggalCari2.setOpaque(false);
@@ -2509,6 +2519,9 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
                 Valid.textKosong(Kecamatan, "Kecamatan");
             } else if (Kelurahan.getText().trim().equals("")) {
                 Valid.textKosong(Kelurahan, "Kelurahan");
+            } else if (Sequel.cariInteger("select count(no_ktp) from utd_pendonor where no_ktp=?",nik1.getText()) > 0) {
+                JOptionPane.showMessageDialog(null, "Maaf, data nik pendonor sudah tersedia..!!");
+                TCari.requestFocus();
             } else {
                 isNumber2();
                 if (Sequel.menyimpantf2("utd_pendonor", "?,?,?,?,?,?,?,?,?,?,?,?,?,?", "No.Donor", 14, new String[]{
@@ -2825,11 +2838,11 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
 //                            malar, KodePetugasUSaring.getText(),
 //                            Valid.SetTgl(tgl_lahir.getSelectedItem() + ""), nik.getText(), tbTranfusiDarah.getValueAt(tbTranfusiDarah.getSelectedRow(), 0).toString()
 //                        }) == true) {
-                if (Sequel.mengedittf("utd_donor", "no_donor=?", "tanggal=?,"
-                        + "tensi=?,no_bag=?,jenis_bag=?,"
+                if (Sequel.mengedittf("utd_donor", "no_donor=?", "tensi=?,"
+                        + "no_bag=?,jenis_bag=?,"
                         + "jenis_donor=?,tempat_aftap=?,petugas_aftap=?,hbsag=?,hcv=?,hiv=?,spilis=?,malaria=?,"
-                        + "stts_pengambilan=?,petugas_u_saring=?", 15, new String[]{
-                            Valid.SetTgl(Tanggal.getSelectedItem() + ""),
+                        + "stts_pengambilan=?,petugas_u_saring=?", 14, new String[]{
+//                            Valid.SetTgl(Tanggal.getSelectedItem() + ""),
 //                            Dinas.getSelectedItem().toString(),
                             Tensi.getText(), NomorBag.getText(), JenisBag.getSelectedItem().toString(),
                             JenisDonor.getSelectedItem().toString(), TempatAftap.getSelectedItem().toString(),
@@ -4062,10 +4075,11 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
 
     private void MnDaftarBaruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnDaftarBaruActionPerformed
         String inputString1 = Sequel.cariIsi("select tanggal from utd_donor where no_pendonor='" + NomorPendonor.getText() + "' order by tanggal desc");
-//        LocalDate month = LocalDate.now();
         String inputString2 = today.format(dtf);
+        String jk = JK1.getSelectedItem().toString().substring(0, 1);
         System.out.println(inputString1);
         System.out.println(inputString2);
+        String cekStokDarah = Sequel.cariIsi("select count(*) from utd_stok_darah where golongan_darah='"+GolDarah.getSelectedItem().toString()+"' and resus='"+Resus1.getSelectedItem().toString()+"' and status='Ada'");
         if (tabModePendonor.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "Maaf, data sudah habis...!!!!");
             TCari.requestFocus();
@@ -4085,15 +4099,22 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
                     LocalDate date2 = LocalDate.parse(inputString2);
                     long daysBetween = DAYS.between(date1, date2);
                     System.out.println("Days: " + daysBetween);
-                    if (daysBetween < 76) {
-                        JOptionPane.showMessageDialog(null, "Maaf,Tidak Bisa Donor Sebelum Lewat 2,5 Bulan");
+                    if ((daysBetween < 65) && jk.equals("L")) {
+                        int reply = JOptionPane.showConfirmDialog(rootPane, "Maaf, tidak bisa donor sebelum lewat 65 hari. \nApakah ingin tetap melakukan donor darah?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                        if (reply == JOptionPane.YES_OPTION) {
+                            insertData();
+                        }                        
+                    } else if ((daysBetween < 90) && jk.equals("P")) {
+                        int reply = JOptionPane.showConfirmDialog(rootPane, "Maaf, tidak bisa donor sebelum lewat 90 hari. \nApakah Ingin tetap melakukan donor darah?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                        if (reply == JOptionPane.YES_OPTION) {
+                            insertData();
+                        }
                     } else {
                         insertData();
                     }
                 } catch (Exception e) {
                 }
             }
-            
         }
     }//GEN-LAST:event_MnDaftarBaruActionPerformed
 
@@ -4137,9 +4158,23 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
         }
     }//GEN-LAST:event_GantiActionPerformed
 
-    private void GantiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_GantiKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_GantiKeyPressed
+    private void MnKartuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnKartuActionPerformed
+        if (tabModePendonor.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Maaf, data pasien sudah habis...!!!!");
+            NomorPendonor.requestFocus();
+        } else if (NamaPendonor1.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu data pasien dengan menklik data pada table...!!!");
+            tbData.requestFocus();
+        } else {
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            Valid.MyReport("rptKartuDonor.jrxml", "report", "::[ Kartu Pendonor ]::", "SELECT utd_pendonor.no_pendonor, utd_pendonor.nama, utd_pendonor.no_ktp, "
+                    + "utd_pendonor.jk, utd_pendonor.tmp_lahir, utd_pendonor.tgl_lahir, utd_pendonor.alamat, kelurahan.nm_kel, kecamatan.nm_kec, kabupaten.nm_kab, "
+                    + "propinsi.nm_prop, utd_pendonor.golongan_darah, utd_pendonor.resus, utd_pendonor.no_telp FROM utd_pendonor inner join propinsi inner "
+                    + "join kabupaten inner join kecamatan inner join kelurahan on utd_pendonor.kd_prop=propinsi.kd_prop and utd_pendonor.kd_kab=kabupaten.kd_kab "
+                    + "and utd_pendonor.kd_kec=kecamatan.kd_kec and utd_pendonor.kd_kel=kelurahan.kd_kel where utd_pendonor.no_pendonor='" + NomorPendonor.getText() + "' ");
+            this.setCursor(Cursor.getDefaultCursor());
+        }
+    }//GEN-LAST:event_MnKartuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -4201,6 +4236,7 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     private widget.Label LCount;
     private widget.ComboBox Malaria;
     private javax.swing.JMenuItem MnDaftarBaru;
+    private javax.swing.JMenuItem MnKartu;
     private widget.TextBox NamaPendonor;
     private widget.TextBox NamaPendonor1;
     private widget.TextBox NamaPetugasAftap;
@@ -5142,7 +5178,6 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     }
     
     private void insertData() {
-        System.out.println("insert");
         LocalTime currentTime = LocalTime.now();
         String shift = getShift(currentTime);
         String tanggal = today.format(dtf);
@@ -5191,7 +5226,7 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
 //                autoNomer();
             isNumber();
             if (Sequel.menyimpantf("utd_donor", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "Nomor Donor", 18, new String[]{
-                NomorDonor.getText(), NomorPendonor.getText(), Sequel.cariIsi("select current_date()"),
+                NomorDonor.getText(), NomorPendonor.getText(), tanggal,
                 shift, "", "", null, null, null, user, null, null, null, null, null, "", user, "Aman"
             }) == true) {
                 for (i = 0; i < tbMedis.getRowCount(); i++) {

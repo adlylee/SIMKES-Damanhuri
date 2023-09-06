@@ -934,6 +934,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         MnStatusMembaik = new javax.swing.JMenuItem();
         MnStatusBelumPulang = new javax.swing.JMenuItem();
         ppRiwayat = new javax.swing.JMenuItem();
+        ppResume = new javax.swing.JMenuItem();
         MnUpdateHari = new javax.swing.JMenuItem();
         MnPenjab = new javax.swing.JMenuItem();
         MnHapusData = new javax.swing.JMenu();
@@ -2754,6 +2755,23 @@ public class DlgKamarInap extends javax.swing.JDialog {
         });
         jPopupMenu1.add(ppRiwayat);
 
+        ppResume.setBackground(new java.awt.Color(255, 255, 254));
+        ppResume.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        ppResume.setForeground(new java.awt.Color(70, 70, 70));
+        ppResume.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        ppResume.setText("Resume Perawatan");
+        ppResume.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        ppResume.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        ppResume.setIconTextGap(5);
+        ppResume.setName("ppResume"); // NOI18N
+        ppResume.setPreferredSize(new java.awt.Dimension(220, 26));
+        ppResume.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ppResumeBtnPrintActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(ppResume);
+
         MnUpdateHari.setBackground(new java.awt.Color(255, 255, 254));
         MnUpdateHari.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         MnUpdateHari.setForeground(new java.awt.Color(70, 70, 70));
@@ -3605,7 +3623,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         R2.setPreferredSize(new java.awt.Dimension(90, 23));
         panelCari.add(R2);
 
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-08-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "27-08-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -3627,7 +3645,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         jLabel22.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel22);
 
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-08-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "27-08-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -3653,7 +3671,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         R3.setPreferredSize(new java.awt.Dimension(75, 23));
         panelCari.add(R3);
 
-        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-08-2023" }));
+        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "27-08-2023" }));
         DTPCari3.setDisplayFormat("dd-MM-yyyy");
         DTPCari3.setName("DTPCari3"); // NOI18N
         DTPCari3.setOpaque(false);
@@ -3675,7 +3693,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         jLabel25.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel25);
 
-        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-08-2023" }));
+        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "27-08-2023" }));
         DTPCari4.setDisplayFormat("dd-MM-yyyy");
         DTPCari4.setName("DTPCari4"); // NOI18N
         DTPCari4.setOpaque(false);
@@ -8357,6 +8375,24 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
         }
     }//GEN-LAST:event_MnPACSActionPerformed
 
+    private void ppResumeBtnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppResumeBtnPrintActionPerformed
+        if (tabMode.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Maaf, data pasien sudah habis...!!!!");
+            TCari.requestFocus();
+        } else if (tbKamIn.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu data kamar inap pada table...!!!");
+            TCari.requestFocus();
+        } else {
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            DlgResumePerawatan2 resume = new DlgResumePerawatan2(null, true);
+            resume.setNoRm(tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 0).toString(),tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 1).toString(), tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 2).toString());
+            resume.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
+            resume.setLocationRelativeTo(internalFrame1);
+            resume.setVisible(true);
+            this.setCursor(Cursor.getDefaultCursor());
+        }
+    }//GEN-LAST:event_ppResumeBtnPrintActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -8603,6 +8639,7 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
     private javax.swing.JMenuItem ppDataHAIs;
     private javax.swing.JMenuItem ppDataIdo;
     private javax.swing.JMenuItem ppIKP;
+    private javax.swing.JMenuItem ppResume;
     private javax.swing.JMenuItem ppRiwayat;
     private javax.swing.JMenuItem ppSuratKontrol;
     private javax.swing.JMenuItem ppSuratPRI;
@@ -8964,11 +9001,6 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
             BangsalCari.setEditable(true);
         }
 
-//        if (var.getkode().equals("Admin Utama")) {
-//            MnPermintaanMPP.setVisible(true);
-//        } else {
-//            MnPermintaanMPP.setVisible(false);
-//        }
         BtnSimpan.setEnabled(var.getkamar_inap());
         BtnSimpanpindah.setEnabled(var.getkamar_inap());
         BtnHapus.setEnabled(var.getkamar_inap());
@@ -9011,6 +9043,8 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
         MnPermintaanLab.setEnabled(var.getpermintaan_lab());
         MnPermintaanRadiologi.setEnabled(var.getpermintaan_radiologi());
         MnPermintaanKerohanian.setEnabled(var.getpasien_meninggal());
+        MnPermintaanMPP.setEnabled(var.getpasien_meninggal());
+        MnPermintaanUTD.setEnabled(var.getutd_donor());        
         if (var.getkode().equals("Admin Utama")) {
             MnHapusDataSalah.setEnabled(true);
             MnLapCov19V3.setVisible(true);
@@ -9020,11 +9054,6 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
             } else {
                 MnHapusDataSalah.setEnabled(false);
             }
-        }
-        if (var.getkode().equals("Admin Utama")) {
-            MnPermintaanUTD.setEnabled(true);
-        } else {
-            MnPermintaanUTD.setEnabled(false);
         }
         Rganti1.setVisible(false);
         Rganti4.setVisible(false);

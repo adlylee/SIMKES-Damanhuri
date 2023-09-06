@@ -396,5 +396,5 @@ private void BtnCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         panelResume1.pilihTab();
     }
     
-
+    
 }
