@@ -18,6 +18,7 @@ import fungsi.koneksiDB;
 import fungsi.sekuel;
 import fungsi.validasi;
 import fungsi.var;
+import java.awt.Cursor;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -25,6 +26,10 @@ import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import javax.swing.JOptionPane;
 
@@ -42,7 +47,7 @@ public class DlgSoapResume extends javax.swing.JDialog {
     private DlgCariDokter2 dokter2=new DlgCariDokter2(null,false);
     private DlgCariPoli poli=new DlgCariPoli(null,false);
     private DlgCariPoli2 poli2=new DlgCariPoli2(null,false);
-    private String aktifjadwal="";
+    private String aktifjadwal="",kamar = "", namakamar = "";
     private Properties prop = new Properties();
     private int lebar=0,tinggi=0;
     /** Creates new form DlgPemberianObat
@@ -172,9 +177,12 @@ public class DlgSoapResume extends javax.swing.JDialog {
         scrollPane3 = new widget.ScrollPane();
         TSaran = new widget.TextArea();
         panelGlass8 = new widget.panelisi();
-        BtnSimpan = new widget.Button();
+        jLabel20 = new widget.Label();
+        DTPCari1 = new widget.Tanggal();
         jLabel14 = new widget.Label();
+        BtnPrint = new widget.Button();
         BtnKeluar = new widget.Button();
+        BtnSimpan = new widget.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -185,7 +193,7 @@ public class DlgSoapResume extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Jawaban Konsul ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Laporan SOAP ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -241,7 +249,7 @@ public class DlgSoapResume extends javax.swing.JDialog {
         scrollPane1.setViewportView(TCatatanKonsul);
 
         FormInput.add(scrollPane1);
-        scrollPane1.setBounds(98, 50, 150, 80);
+        scrollPane1.setBounds(98, 50, 270, 80);
 
         jLabel16.setText("DPJP :");
         jLabel16.setName("jLabel16"); // NOI18N
@@ -295,27 +303,40 @@ public class DlgSoapResume extends javax.swing.JDialog {
         panelGlass8.setPreferredSize(new java.awt.Dimension(100, 56));
         panelGlass8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 9));
 
-        BtnSimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/save-16x16.png"))); // NOI18N
-        BtnSimpan.setMnemonic('S');
-        BtnSimpan.setText("Simpan");
-        BtnSimpan.setToolTipText("Alt+S");
-        BtnSimpan.setName("BtnSimpan"); // NOI18N
-        BtnSimpan.setPreferredSize(new java.awt.Dimension(100, 30));
-        BtnSimpan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnSimpanActionPerformed(evt);
-            }
-        });
-        BtnSimpan.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                BtnSimpanKeyPressed(evt);
-            }
-        });
-        panelGlass8.add(BtnSimpan);
+        jLabel20.setText("Tanggal :");
+        jLabel20.setName("jLabel20"); // NOI18N
+        jLabel20.setPreferredSize(new java.awt.Dimension(85, 23));
+        panelGlass8.add(jLabel20);
+
+        DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "06-09-2023" }));
+        DTPCari1.setDisplayFormat("dd-MM-yyyy");
+        DTPCari1.setName("DTPCari1"); // NOI18N
+        DTPCari1.setOpaque(false);
+        DTPCari1.setPreferredSize(new java.awt.Dimension(95, 23));
+        panelGlass8.add(DTPCari1);
 
         jLabel14.setName("jLabel14"); // NOI18N
         jLabel14.setPreferredSize(new java.awt.Dimension(520, 23));
         panelGlass8.add(jLabel14);
+
+        BtnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/b_print.png"))); // NOI18N
+        BtnPrint.setMnemonic('T');
+        BtnPrint.setText("Cetak");
+        BtnPrint.setToolTipText("Alt+T");
+        BtnPrint.setName("BtnPrint"); // NOI18N
+        BtnPrint.setPreferredSize(new java.awt.Dimension(100, 30));
+        BtnPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnPrintActionPerformed(evt);
+            }
+        });
+        BtnPrint.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnPrintKeyPressed(evt);
+            }
+        });
+        panelGlass8.add(BtnPrint);
 
         BtnKeluar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/cross.png"))); // NOI18N
         BtnKeluar.setMnemonic('K');
@@ -334,6 +355,24 @@ public class DlgSoapResume extends javax.swing.JDialog {
             }
         });
         panelGlass8.add(BtnKeluar);
+
+        BtnSimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/save-16x16.png"))); // NOI18N
+        BtnSimpan.setMnemonic('S');
+        BtnSimpan.setText("Simpan");
+        BtnSimpan.setToolTipText("Alt+S");
+        BtnSimpan.setName("BtnSimpan"); // NOI18N
+        BtnSimpan.setPreferredSize(new java.awt.Dimension(100, 30));
+        BtnSimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSimpanActionPerformed(evt);
+            }
+        });
+        BtnSimpan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnSimpanKeyPressed(evt);
+            }
+        });
+        panelGlass8.add(BtnSimpan);
 
         internalFrame1.add(panelGlass8, java.awt.BorderLayout.PAGE_END);
 
@@ -405,6 +444,42 @@ public class DlgSoapResume extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_TSaranKeyPressed
 
+    private void BtnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPrintActionPerformed
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));        
+        Map<String, Object> param = new HashMap<>();
+        param.put("norawat", TNoRw.getText());
+        param.put("norm", TNoRM.getText());
+        param.put("namapasien", Sequel.cariIsi("select nm_pasien from pasien where no_rkm_medis=? ", TNoRM.getText()));
+        param.put("jkel", Sequel.cariIsi("select if(jk='L','Laki-laki','Perempuan') as jk from pasien where no_rkm_medis=? ", TNoRM.getText()));
+        param.put("umur", Sequel.cariIsi("select umur from pasien where no_rkm_medis=?", TNoRM.getText()));
+        kamar = Sequel.cariIsi("select ifnull(kd_kamar,'') from kamar_inap where no_rawat=? order by tgl_masuk desc limit 1", TNoRw.getText());
+        namakamar = kamar + ", " + Sequel.cariIsi("select nm_bangsal from bangsal inner join kamar on bangsal.kd_bangsal=kamar.kd_bangsal "
+                + " where kamar.kd_kamar=? ", kamar);
+        kamar = "Kamar";
+        param.put("kamar", kamar);
+        param.put("namakamar", namakamar);
+        param.put("dpjp", TCatatanKonsul.getText());
+        param.put("instruksi", TPemeriksaan.getText());
+        param.put("diagnosa", TSaran.getText());
+        param.put("namars", var.getnamars());
+        param.put("alamatrs", var.getalamatrs());
+        param.put("kotars", var.getkabupatenrs());
+        param.put("propinsirs", var.getpropinsirs());
+        param.put("kontakrs", var.getkontakrs());
+        param.put("emailrs", var.getemailrs());
+        param.put("logo", Sequel.cariGambar("select logo from setting"));
+        Valid.MyReport("rptBarcodeRM11.jrxml", "report", "::[ Laporan SOAP ]::", "select * from pasien where pasien.no_rkm_medis='" + TNoRM.getText() + "'", param);
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_BtnPrintActionPerformed
+
+    private void BtnPrintKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnPrintKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+            BtnPrintActionPerformed(null);
+        } else {
+            //Valid.pindah(evt,BtnEdit,BtnAll);
+        }
+    }//GEN-LAST:event_BtnPrintKeyPressed
+
     /**
     * @param args the command line arguments
     */
@@ -423,7 +498,9 @@ public class DlgSoapResume extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private widget.Button BtnKeluar;
+    private widget.Button BtnPrint;
     private widget.Button BtnSimpan;
+    private widget.Tanggal DTPCari1;
     private widget.PanelBiasa FormInput;
     private widget.TextArea TCatatanKonsul;
     private widget.TextBox TNoRM;
@@ -436,6 +513,7 @@ public class DlgSoapResume extends javax.swing.JDialog {
     private widget.Label jLabel14;
     private widget.Label jLabel16;
     private widget.Label jLabel18;
+    private widget.Label jLabel20;
     private widget.Label jLabel3;
     private widget.panelisi panelGlass8;
     private widget.ScrollPane scrollPane1;
@@ -447,6 +525,8 @@ public class DlgSoapResume extends javax.swing.JDialog {
  
 
     public void setDataPasien(String norw,String norm,String namapasien) {
+        LocalDate theday = LocalDate.parse(Valid.SetTgl(DTPCari1.getSelectedItem()+""));
+        LocalDate lastday = theday.minus(1, ChronoUnit.DAYS);
         TNoRw.setText(norw);
         TNoRM.setText(norm);
         TPasien.setText(namapasien+" ("+Sequel.cariIsi("SELECT CONCAT(umurdaftar,' ' ,sttsumur) FROM reg_periksa WHERE no_rawat=?", norw)+")");  
@@ -457,9 +537,9 @@ public class DlgSoapResume extends javax.swing.JDialog {
 //        TDokter.setText(dokter);
 //        //Tkdpoli.setText(kdpoli);
 //        TPoli.setText(poli);
-        TPemeriksaan.setText(Sequel.cariIsi("SELECT instruksi FROM pemeriksaan_ranap WHERE no_rawat=? AND tgl_perawatan = '2023-09-04' ORDER BY jam_rawat LIMIT 1", norw));
+        TPemeriksaan.setText(Sequel.cariIsi("SELECT instruksi FROM pemeriksaan_ranap WHERE no_rawat=? AND tgl_perawatan = '"+lastday+"' ORDER BY jam_rawat LIMIT 1", norw));
         TPemeriksaan.append("\n\n");
-        String asu2 = Sequel.cariStringArrayLine("SELECT databarang.nama_brng FROM resep_obat JOIN resep_dokter ON resep_obat.no_resep = resep_dokter.no_resep JOIN databarang ON resep_dokter.kode_brng = databarang.kode_brng where resep_obat.no_rawat='"+norw+"' AND resep_obat.tgl_perawatan = '2023-09-04'");
+        String asu2 = Sequel.cariStringArrayLine("SELECT databarang.nama_brng FROM resep_obat JOIN resep_dokter ON resep_obat.no_resep = resep_dokter.no_resep JOIN databarang ON resep_dokter.kode_brng = databarang.kode_brng where resep_obat.no_rawat='"+norw+"' AND resep_obat.tgl_perawatan = '"+lastday+"'");
         TPemeriksaan.append(asu2);
         TSaran.setText(Sequel.cariStringArrayLine("SELECT nm_penyakit FROM diagnosa_pasien JOIN penyakit ON penyakit.kd_penyakit = diagnosa_pasien.kd_penyakit WHERE no_rawat='"+norw+"'"));
 //        TSaran.setText(Sequel.cariIsi("SELECT saran FROM rujukan_internal_poli_detail WHERE no_rawat=?", norw));

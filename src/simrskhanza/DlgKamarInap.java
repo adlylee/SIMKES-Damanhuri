@@ -147,7 +147,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
             } else if (i == 6) {
                 column.setPreferredWidth(80);
             } else if (i == 7) {
-                column.setPreferredWidth(160);
+                column.setPreferredWidth(200);
             } else if (i == 8) {
                 column.setPreferredWidth(100);
             } else if (i == 9) {
@@ -8673,7 +8673,7 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
                 while (rs.next()) {
                     tabMode.addRow(new String[]{
                         rs.getString("no_rawat"), rs.getString("no_rkm_medis"), rs.getString("nm_pasien") + " (" + rs.getString("umur") + ")",
-                        rs.getString("alamat"), rs.getString("no_tlp"), rs.getString("p_jawab"), rs.getString("hubunganpj"), rs.getString("png_jawab") + ": " + Sequel.cariIsi("select no_sep from bridging_sep where no_rawat='" + rs.getString("no_rawat") + "'"),
+                        rs.getString("alamat"), rs.getString("no_tlp"), rs.getString("p_jawab"), rs.getString("hubunganpj"), rs.getString("png_jawab") + ": " + Sequel.cariIsi("select no_sep from bridging_sep where no_rawat='" + rs.getString("no_rawat") + "'") + " ("+Sequel.cariIsi("SELECT IF(jnsPelayanan='2','Ralan','Ranap') as jnspelayanan FROM bridging_sep where no_rawat='" + rs.getString("no_rawat") + "'") +")",
                         rs.getString("kamar"), Valid.SetAngka(rs.getDouble("trf_kamar")), rs.getString("diagnosa_awal"),
                         rs.getString("diagnosa_akhir"), rs.getString("tgl_masuk"), rs.getString("jam_masuk"), rs.getString("tgl_keluar"),
                         rs.getString("jam_keluar"), Valid.SetAngka(rs.getDouble("ttl_biaya")), rs.getString("stts_pulang"),
