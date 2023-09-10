@@ -45,7 +45,7 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" +
-                        "    Version 05.09.2023 [ 1.0.24 ] [Activated] GO KLAIM DIGITAL \n"+
+                        "    Version 10.09.2023 [ 1.0.24 ] [Activated] GO KLAIM DIGITAL \n"+
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai                              \n"+
                         "                                                                           \n"+
@@ -60,7 +60,8 @@ public final class koneksiDB {
                         "       - Edit booking registrasi                           \n"+
                         "       - Rekap kegiatan radiologi                           \n"+
                         "       - Hasil expertise & riwayat pemeriksaan radiologi                           \n"+
-                        "       - UTD penyerahan darah                         \n");
+                        "       - UTD penyerahan darah                         \n"+
+                        "       - Laporan SOAP                         \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);
                 try {
@@ -276,7 +277,7 @@ public final class koneksiDB {
             prop.loadFromXML(new FileInputStream("setting/database.xml"));
             var=EnkripsiAES.decrypt(prop.getProperty("PORTORTHANC"));
         }catch(Exception e){
-            var=""; 
+            var="";   
         }
         return var;
     }
@@ -295,7 +296,12 @@ public final class koneksiDB {
         try{
             prop.loadFromXML(new FileInputStream("setting/database.xml"));
             var=prop.getProperty("URLORTHANC");
-            var=var.replace("http://", "");
+            if (var.contains("http")) {
+                var = var.replace("http://", "");
+            }
+            if (var.contains("https")) {
+                var = var.replace("https://", "");
+            }
         }catch(Exception e){
             var=""; 
         }

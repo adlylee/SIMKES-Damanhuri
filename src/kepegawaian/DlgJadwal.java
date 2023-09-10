@@ -60,7 +60,7 @@ public class DlgJadwal extends javax.swing.JDialog {
     private JsonNode nameNode;
     private JsonNode response;
     private BPJSApi api = new BPJSApi();
-    private String link = "", requestJson = "", URL = "", utc = "";
+    private String link = "", requestJson = "", URL = "", utc = "",hari="", key="";
 
     /** Creates new form DlgJadwal
      * @param parent
@@ -995,6 +995,14 @@ private void BtnPoliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
 
     private void tampil() {
         Valid.tabelKosong(tabMode);
+        if (!hari.equals("")){
+            key = " jadwal.kd_dokter like '%" + TCari.getText().trim() + "%' and jadwal.hari_kerja='"+hari+"' ";
+        }
+        if (hari.equals("")) {
+            key =" jadwal.kd_dokter like '%" + TCari.getText().trim() + "%' or dokter.nm_dokter like '%" + TCari.getText().trim() + "%' or "+
+                " jadwal.hari_kerja like '%" + TCari.getText().trim() + "%' or poliklinik.nm_poli like '%" + TCari.getText().trim() + "%' "+
+                " order by jadwal.kd_dokter ";
+        }
         try{           
             ps=koneksi.prepareStatement(
                 "select jadwal.kd_dokter,dokter.nm_dokter,jadwal.hari_kerja, "+
@@ -1002,14 +1010,8 @@ private void BtnPoliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                 "from jadwal inner join poliklinik inner join dokter "+
                 "on jadwal.kd_dokter=dokter.kd_dokter "+
                 "and jadwal.kd_poli=poliklinik.kd_poli "+
-                "where jadwal.kd_dokter like ? or dokter.nm_dokter like ? or "+
-                "jadwal.hari_kerja like ? or poliklinik.nm_poli like ? "+
-                "order by jadwal.kd_dokter");
+                "where "+key+"");
             try {
-                ps.setString(1,"%"+TCari.getText().trim()+"%");
-                ps.setString(2,"%"+TCari.getText().trim()+"%");
-                ps.setString(3,"%"+TCari.getText().trim()+"%");
-                ps.setString(4,"%"+TCari.getText().trim()+"%");
                 rs=ps.executeQuery();
                 while(rs.next()){
                     tabMode.addRow(new Object[]{
@@ -1111,5 +1113,29 @@ private void BtnPoliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
         }
     }
     
+    public void isCek() {
+        if (var.getkode().equals("Admin Utama")) {
+            BtnSimpan.setEnabled(var.getregistrasi());
+            BtnBatal.setEnabled(var.getregistrasi());
+            BtnHapus.setEnabled(var.getregistrasi());
+            BtnEdit.setEnabled(var.getregistrasi());
+            BtnPrint.setEnabled(var.getregistrasi());
+        } else {
+            BtnSimpan.setEnabled(false);
+            BtnBatal.setEnabled(false);
+            BtnHapus.setEnabled(false);
+            BtnEdit.setEnabled(false);
+            BtnPrint.setEnabled(false);
+        }
+    }
     
+    public JTable getTable(){
+        return tbJadwal;
+    }
+
+    public void setNoRm(String dokter, String hari) {
+        TCari.setText(dokter);
+        this.hari=hari;    
+        tampil();
+    } 
 }

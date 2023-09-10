@@ -9,7 +9,6 @@
   karena telah berdoa buruk, semua ini kami lakukan karena kami ti
   dak pernah rela karya kami dibajak tanpa ijin.
  */
-
 package simrskhanza;
 
 import kepegawaian.DlgCariDokter;
@@ -27,135 +26,192 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import javax.swing.JOptionPane;
+import widget.Tanggal;
 
 /**
  *
  * @author perpustakaan
  */
 public class DlgSoapResume extends javax.swing.JDialog {
-    private Connection koneksi=koneksiDB.condb();
-    private sekuel Sequel=new sekuel();
-    private validasi Valid=new validasi();
-    private PreparedStatement ps;
-    private ResultSet rs;
-    private DlgCariDokter dokter=new DlgCariDokter(null,false);
-    private DlgCariDokter2 dokter2=new DlgCariDokter2(null,false);
-    private DlgCariPoli poli=new DlgCariPoli(null,false);
-    private DlgCariPoli2 poli2=new DlgCariPoli2(null,false);
-    private String aktifjadwal="",kamar = "", namakamar = "";
+
+    private Connection koneksi = koneksiDB.condb();
+    private sekuel Sequel = new sekuel();
+    private validasi Valid = new validasi();
+    private PreparedStatement ps, ps2;
+    private ResultSet rs, rs2;
+    private DlgCariDokter dokter = new DlgCariDokter(null, false);
+    private DlgCariDokter2 dokter2 = new DlgCariDokter2(null, false);
+    private DlgCariPoli poli = new DlgCariPoli(null, false);
+    private DlgCariPoli2 poli2 = new DlgCariPoli2(null, false);
+    private String aktifjadwal = "", kamar = "", namakamar = "", instruksiPagi = "", instruksiSiang = "", instruksiMalam = "";
     private Properties prop = new Properties();
-    private int lebar=0,tinggi=0;
-    /** Creates new form DlgPemberianObat
+    private int lebar = 0, tinggi = 0;
+//    LocalDate today = LocalDate.now();
+//    StringBuilder instruksiPagi = new StringBuilder();
+//    StringBuilder instruksiSiang = new StringBuilder();
+//    StringBuilder instruksiMalam = new StringBuilder();
+
+    /**
+     * Creates new form DlgPemberianObat
+     *
      * @param parent
-     * @param modal */
+     * @param modal
+     */
     public DlgSoapResume(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setSize(755,285);
-        
+        setSize(755, 285);
+
         dokter.addWindowListener(new WindowListener() {
             @Override
-            public void windowOpened(WindowEvent e) {;}
+            public void windowOpened(WindowEvent e) {;
+            }
+
             @Override
-            public void windowClosing(WindowEvent e) {}
+            public void windowClosing(WindowEvent e) {
+            }
+
             @Override
             public void windowClosed(WindowEvent e) {
-                if(dokter.getTable().getSelectedRow()!= -1){   
+                if (dokter.getTable().getSelectedRow() != -1) {
 //                    Tkddokter.setText(dokter.getTable().getValueAt(dokter.getTable().getSelectedRow(),0).toString());
 //                    TDokter.setText(dokter.getTable().getValueAt(dokter.getTable().getSelectedRow(),1).toString());
 //                    Tkddokter.requestFocus();
-                }                
+                }
             }
+
             @Override
-            public void windowIconified(WindowEvent e) {}
+            public void windowIconified(WindowEvent e) {
+            }
+
             @Override
-            public void windowDeiconified(WindowEvent e) {}
+            public void windowDeiconified(WindowEvent e) {
+            }
+
             @Override
-            public void windowActivated(WindowEvent e) {}
+            public void windowActivated(WindowEvent e) {
+            }
+
             @Override
-            public void windowDeactivated(WindowEvent e) {}
+            public void windowDeactivated(WindowEvent e) {
+            }
         });
-                
+
         dokter2.addWindowListener(new WindowListener() {
             @Override
-            public void windowOpened(WindowEvent e) {;}
+            public void windowOpened(WindowEvent e) {;
+            }
+
             @Override
-            public void windowClosing(WindowEvent e) {}
+            public void windowClosing(WindowEvent e) {
+            }
+
             @Override
             public void windowClosed(WindowEvent e) {
-                if(dokter2.getTable().getSelectedRow()!= -1){   
+                if (dokter2.getTable().getSelectedRow() != -1) {
 //                    Tkddokter.setText(dokter2.getTable().getValueAt(dokter2.getTable().getSelectedRow(),0).toString());
 //                    TDokter.setText(dokter2.getTable().getValueAt(dokter2.getTable().getSelectedRow(),1).toString());
 //                    Tkddokter.requestFocus();
                 }
             }
+
             @Override
-            public void windowIconified(WindowEvent e) {}
+            public void windowIconified(WindowEvent e) {
+            }
+
             @Override
-            public void windowDeiconified(WindowEvent e) {}
+            public void windowDeiconified(WindowEvent e) {
+            }
+
             @Override
-            public void windowActivated(WindowEvent e) {}
+            public void windowActivated(WindowEvent e) {
+            }
+
             @Override
-            public void windowDeactivated(WindowEvent e) {}
+            public void windowDeactivated(WindowEvent e) {
+            }
         });
-        
+
         poli.addWindowListener(new WindowListener() {
             @Override
-            public void windowOpened(WindowEvent e) {}
+            public void windowOpened(WindowEvent e) {
+            }
+
             @Override
-            public void windowClosing(WindowEvent e) {}
+            public void windowClosing(WindowEvent e) {
+            }
+
             @Override
             public void windowClosed(WindowEvent e) {
-              
+
             }
+
             @Override
-            public void windowIconified(WindowEvent e) {}
+            public void windowIconified(WindowEvent e) {
+            }
+
             @Override
-            public void windowDeiconified(WindowEvent e) {}
+            public void windowDeiconified(WindowEvent e) {
+            }
+
             @Override
-            public void windowActivated(WindowEvent e) {}
+            public void windowActivated(WindowEvent e) {
+            }
+
             @Override
-            public void windowDeactivated(WindowEvent e) {}
-        });        
-                
+            public void windowDeactivated(WindowEvent e) {
+            }
+        });
+
         poli2.addWindowListener(new WindowListener() {
             @Override
-            public void windowOpened(WindowEvent e) {}
+            public void windowOpened(WindowEvent e) {
+            }
+
             @Override
-            public void windowClosing(WindowEvent e) {}
+            public void windowClosing(WindowEvent e) {
+            }
+
             @Override
             public void windowClosed(WindowEvent e) {
             }
+
             @Override
-            public void windowIconified(WindowEvent e) {}
+            public void windowIconified(WindowEvent e) {
+            }
+
             @Override
-            public void windowDeiconified(WindowEvent e) {}
+            public void windowDeiconified(WindowEvent e) {
+            }
+
             @Override
-            public void windowActivated(WindowEvent e) {}
+            public void windowActivated(WindowEvent e) {
+            }
+
             @Override
-            public void windowDeactivated(WindowEvent e) {}
-        });   
-        
+            public void windowDeactivated(WindowEvent e) {
+            }
+        });
+
         try {
             prop.loadFromXML(new FileInputStream("setting/database.xml"));
-            aktifjadwal=prop.getProperty("JADWALDOKTERDIREGISTRASI");
+            aktifjadwal = prop.getProperty("JADWALDOKTERDIREGISTRASI");
         } catch (Exception ex) {
-            aktifjadwal="";            
-        }
+            aktifjadwal = "";
+        }        
     }
 
     //private DlgCariObatPenyakit dlgobtpny=new DlgCariObatPenyakit(null,false);
-    
-
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -178,11 +234,11 @@ public class DlgSoapResume extends javax.swing.JDialog {
         TSaran = new widget.TextArea();
         panelGlass8 = new widget.panelisi();
         jLabel20 = new widget.Label();
-        DTPCari1 = new widget.Tanggal();
+        TanggalCari1 = new widget.Tanggal();
+        BtnCari = new widget.Button();
         jLabel14 = new widget.Label();
         BtnPrint = new widget.Button();
         BtnKeluar = new widget.Button();
-        BtnSimpan = new widget.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -241,11 +297,6 @@ public class DlgSoapResume extends javax.swing.JDialog {
         TCatatanKonsul.setColumns(20);
         TCatatanKonsul.setRows(5);
         TCatatanKonsul.setName("TCatatanKonsul"); // NOI18N
-        TCatatanKonsul.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                TCatatanKonsulKeyPressed(evt);
-            }
-        });
         scrollPane1.setViewportView(TCatatanKonsul);
 
         FormInput.add(scrollPane1);
@@ -263,20 +314,15 @@ public class DlgSoapResume extends javax.swing.JDialog {
         TPemeriksaan.setColumns(20);
         TPemeriksaan.setRows(5);
         TPemeriksaan.setName("TPemeriksaan"); // NOI18N
-        TPemeriksaan.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                TPemeriksaanKeyPressed(evt);
-            }
-        });
         scrollPane2.setViewportView(TPemeriksaan);
 
         FormInput.add(scrollPane2);
-        scrollPane2.setBounds(98, 145, 630, 130);
+        scrollPane2.setBounds(98, 145, 630, 200);
 
         jLabel18.setText("Diagnosa :");
         jLabel18.setName("jLabel18"); // NOI18N
         FormInput.add(jLabel18);
-        jLabel18.setBounds(0, 295, 90, 23);
+        jLabel18.setBounds(0, 365, 90, 23);
 
         scrollPane3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         scrollPane3.setName("scrollPane3"); // NOI18N
@@ -285,15 +331,10 @@ public class DlgSoapResume extends javax.swing.JDialog {
         TSaran.setColumns(20);
         TSaran.setRows(5);
         TSaran.setName("TSaran"); // NOI18N
-        TSaran.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                TSaranKeyPressed(evt);
-            }
-        });
         scrollPane3.setViewportView(TSaran);
 
         FormInput.add(scrollPane3);
-        scrollPane3.setBounds(100, 295, 630, 80);
+        scrollPane3.setBounds(100, 365, 630, 130);
 
         internalFrame1.add(FormInput, java.awt.BorderLayout.CENTER);
         FormInput.getAccessibleContext().setAccessibleName("");
@@ -305,19 +346,36 @@ public class DlgSoapResume extends javax.swing.JDialog {
 
         jLabel20.setText("Tanggal :");
         jLabel20.setName("jLabel20"); // NOI18N
-        jLabel20.setPreferredSize(new java.awt.Dimension(85, 23));
+        jLabel20.setPreferredSize(new java.awt.Dimension(90, 23));
         panelGlass8.add(jLabel20);
 
-        DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "06-09-2023" }));
-        DTPCari1.setDisplayFormat("dd-MM-yyyy");
-        DTPCari1.setName("DTPCari1"); // NOI18N
-        DTPCari1.setOpaque(false);
-        DTPCari1.setPreferredSize(new java.awt.Dimension(95, 23));
-        panelGlass8.add(DTPCari1);
+        TanggalCari1.setForeground(new java.awt.Color(50, 70, 50));
+        TanggalCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "09-09-2023" }));
+        TanggalCari1.setDisplayFormat("dd-MM-yyyy");
+        TanggalCari1.setName("TanggalCari1"); // NOI18N
+        TanggalCari1.setOpaque(false);
+        TanggalCari1.setPreferredSize(new java.awt.Dimension(95, 23));
+        panelGlass8.add(TanggalCari1);
+
+        BtnCari.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/accept.png"))); // NOI18N
+        BtnCari.setMnemonic('2');
+        BtnCari.setToolTipText("Alt+2");
+        BtnCari.setName("BtnCari"); // NOI18N
+        BtnCari.setPreferredSize(new java.awt.Dimension(28, 23));
+        BtnCari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCariActionPerformed(evt);
+            }
+        });
+        BtnCari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnCariKeyPressed(evt);
+            }
+        });
+        panelGlass8.add(BtnCari);
 
         jLabel14.setName("jLabel14"); // NOI18N
-        jLabel14.setPreferredSize(new java.awt.Dimension(520, 23));
+        jLabel14.setPreferredSize(new java.awt.Dimension(320, 23));
         panelGlass8.add(jLabel14);
 
         BtnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/b_print.png"))); // NOI18N
@@ -356,54 +414,12 @@ public class DlgSoapResume extends javax.swing.JDialog {
         });
         panelGlass8.add(BtnKeluar);
 
-        BtnSimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/save-16x16.png"))); // NOI18N
-        BtnSimpan.setMnemonic('S');
-        BtnSimpan.setText("Simpan");
-        BtnSimpan.setToolTipText("Alt+S");
-        BtnSimpan.setName("BtnSimpan"); // NOI18N
-        BtnSimpan.setPreferredSize(new java.awt.Dimension(100, 30));
-        BtnSimpan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnSimpanActionPerformed(evt);
-            }
-        });
-        BtnSimpan.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                BtnSimpanKeyPressed(evt);
-            }
-        });
-        panelGlass8.add(BtnSimpan);
-
         internalFrame1.add(panelGlass8, java.awt.BorderLayout.PAGE_END);
 
         getContentPane().add(internalFrame1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpanActionPerformed
-//        if(TNoRw.getText().trim().equals("")||TNoRM.getText().trim().equals("")||TPasien.getText().trim().equals("")){
-//            Valid.textKosong(TNoRM,"Pasien");
-//        }else{
-//            try {
-//                String detail_internal_poli;
-//                detail_internal_poli = "UPDATE rujukan_internal_poli_detail SET pemeriksaan= '"+TPemeriksaan.getText()+"', diagnosa = '"+TDiagnosa.getText()+"', saran = '"+TSaran.getText()+"' WHERE no_rawat ='"+TNoRw.getText()+"'"; 
-//                PreparedStatement pst_detail = koneksiDB.condb().prepareStatement(detail_internal_poli);          
-//                pst_detail.execute();
-//                JOptionPane.showMessageDialog(null,"Jawaban konsul berhasil disimpan..!!");
-//            } catch (Exception e) {
-//                System.out.println(e);
-//            }  
-//            dispose();
-//        }  
-}//GEN-LAST:event_BtnSimpanActionPerformed
-
-    private void BtnSimpanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnSimpanKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_SPACE){
-            BtnSimpanActionPerformed(null);
-        }else{
-        }
-}//GEN-LAST:event_BtnSimpanKeyPressed
 
     private void BtnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnKeluarActionPerformed
 //        Tkddokter.setText("");
@@ -415,52 +431,43 @@ public class DlgSoapResume extends javax.swing.JDialog {
 }//GEN-LAST:event_BtnKeluarActionPerformed
 
     private void BtnKeluarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnKeluarKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_SPACE){
-//            Tkddokter.setText("");
-//            TDokter.setText("");
-           // Tkdpoli.setText("");
-//            TPoli.setText("");
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
             dispose();
         }
 }//GEN-LAST:event_BtnKeluarKeyPressed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        
+
     }//GEN-LAST:event_formWindowActivated
 
     private void TNoRwKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TNoRwKeyPressed
-        
+
     }//GEN-LAST:event_TNoRwKeyPressed
 
-    private void TCatatanKonsulKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TCatatanKonsulKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TCatatanKonsulKeyPressed
-
-    private void TPemeriksaanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TPemeriksaanKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TPemeriksaanKeyPressed
-
-    private void TSaranKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TSaranKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TSaranKeyPressed
-
     private void BtnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPrintActionPerformed
-        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));        
+        LocalDate today = LocalDate.parse(Valid.SetTgl(TanggalCari1.getSelectedItem() + ""));
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Map<String, Object> param = new HashMap<>();
         param.put("norawat", TNoRw.getText());
         param.put("norm", TNoRM.getText());
         param.put("namapasien", Sequel.cariIsi("select nm_pasien from pasien where no_rkm_medis=? ", TNoRM.getText()));
         param.put("jkel", Sequel.cariIsi("select if(jk='L','Laki-laki','Perempuan') as jk from pasien where no_rkm_medis=? ", TNoRM.getText()));
         param.put("umur", Sequel.cariIsi("select umur from pasien where no_rkm_medis=?", TNoRM.getText()));
-        kamar = Sequel.cariIsi("select ifnull(kd_kamar,'') from kamar_inap where no_rawat=? order by tgl_masuk desc limit 1", TNoRw.getText());
-        namakamar = kamar + ", " + Sequel.cariIsi("select nm_bangsal from bangsal inner join kamar on bangsal.kd_bangsal=kamar.kd_bangsal "
-                + " where kamar.kd_kamar=? ", kamar);
-        kamar = "Kamar";
+        param.put("tanggal", Valid.SetTgl(TanggalCari1.getSelectedItem()+""));
         param.put("kamar", kamar);
-        param.put("namakamar", namakamar);
         param.put("dpjp", TCatatanKonsul.getText());
         param.put("instruksi", TPemeriksaan.getText());
         param.put("diagnosa", TSaran.getText());
+        param.put("jns_bayar", Sequel.cariIsi("select png_jawab from reg_periksa join penjab on reg_periksa.kd_pj=penjab.kd_pj where no_rawat=?", TNoRw.getText()));
+        instruksiPagi = getInstruksi(TNoRw.getText(), today.toString(), "Pagi");
+        instruksiPagi += getObat(TNoRw.getText(), today.toString(), "Pagi");
+        instruksiSiang = getInstruksi(TNoRw.getText(), today.toString(), "Siang");
+        instruksiSiang += getObat(TNoRw.getText(), today.toString(), "Siang");
+        instruksiMalam = getInstruksi(TNoRw.getText(), today.toString(), "Malam");
+        instruksiMalam += getObat(TNoRw.getText(), today.toString(), "Malam");
+        param.put("instruksiPagi", instruksiPagi);
+        param.put("instruksiSiang", instruksiSiang);
+        param.put("instruksiMalam", instruksiMalam);
         param.put("namars", var.getnamars());
         param.put("alamatrs", var.getalamatrs());
         param.put("kotars", var.getkabupatenrs());
@@ -468,7 +475,7 @@ public class DlgSoapResume extends javax.swing.JDialog {
         param.put("kontakrs", var.getkontakrs());
         param.put("emailrs", var.getemailrs());
         param.put("logo", Sequel.cariGambar("select logo from setting"));
-        Valid.MyReport("rptBarcodeRM11.jrxml", "report", "::[ Laporan SOAP ]::", "select * from pasien where pasien.no_rkm_medis='" + TNoRM.getText() + "'", param);
+        Valid.MyReport("rptLaporanSOAP.jrxml", "report", "::[ Laporan SOAP ]::", "select * from pasien where pasien.no_rkm_medis='" + TNoRM.getText() + "'", param);
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_BtnPrintActionPerformed
 
@@ -480,9 +487,21 @@ public class DlgSoapResume extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_BtnPrintKeyPressed
 
+    private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCariActionPerformed
+        setDataPasien(TNoRw.getText(), TNoRM.getText(), TPasien.getText(),kamar);
+    }//GEN-LAST:event_BtnCariActionPerformed
+
+    private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnCariKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+            BtnCariActionPerformed(null);
+        } else {
+//            Valid.pindah(evt, TCari, BtnAll);
+        }
+    }//GEN-LAST:event_BtnCariKeyPressed
+
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
             DlgSoapResume dialog = new DlgSoapResume(new javax.swing.JFrame(), true);
@@ -497,10 +516,9 @@ public class DlgSoapResume extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private widget.Button BtnCari;
     private widget.Button BtnKeluar;
     private widget.Button BtnPrint;
-    private widget.Button BtnSimpan;
-    private widget.Tanggal DTPCari1;
     private widget.PanelBiasa FormInput;
     private widget.TextArea TCatatanKonsul;
     private widget.TextBox TNoRM;
@@ -508,6 +526,7 @@ public class DlgSoapResume extends javax.swing.JDialog {
     private widget.TextBox TPasien;
     private widget.TextArea TPemeriksaan;
     private widget.TextArea TSaran;
+    private widget.Tanggal TanggalCari1;
     private widget.InternalFrame internalFrame1;
     private widget.Label jLabel13;
     private widget.Label jLabel14;
@@ -520,35 +539,136 @@ public class DlgSoapResume extends javax.swing.JDialog {
     private widget.ScrollPane scrollPane2;
     private widget.ScrollPane scrollPane3;
     // End of variables declaration//GEN-END:variables
-    
 
- 
-
-    public void setDataPasien(String norw,String norm,String namapasien) {
-        LocalDate theday = LocalDate.parse(Valid.SetTgl(DTPCari1.getSelectedItem()+""));
-        LocalDate lastday = theday.minus(1, ChronoUnit.DAYS);
+    public void setDataPasien(String norw, String norm, String namapasien, String kamar) {
+        LocalDate today = LocalDate.parse(Valid.SetTgl(TanggalCari1.getSelectedItem() + ""));
+        LocalDate lastday = today.minus(1, ChronoUnit.DAYS);
         TNoRw.setText(norw);
         TNoRM.setText(norm);
-        TPasien.setText(namapasien+" ("+Sequel.cariIsi("SELECT CONCAT(umurdaftar,' ' ,sttsumur) FROM reg_periksa WHERE no_rawat=?", norw)+")");  
-        String asu = Sequel.cariStringArrayLine("SELECT nm_dokter FROM dpjp_ranap JOIN dokter ON dpjp_ranap.kd_dokter = dokter.kd_dokter where no_rawat='"+norw+"'");
+        TPasien.setText(namapasien + " (" + Sequel.cariIsi("SELECT CONCAT(umurdaftar,' ' ,sttsumur) FROM reg_periksa WHERE no_rawat=?", norw) + ")");
+        this.kamar=kamar;
+        String asu = Sequel.cariStringArrayLine("SELECT GROUP_CONCAT(CONCAT(nm_dokter,' (',jenis_dpjp,')') SEPARATOR '\\n') FROM dpjp_ranap JOIN dokter ON dpjp_ranap.kd_dokter = dokter.kd_dokter where no_rawat='" + norw + "'");
+//        String lab = Sequel.cariStringArrayLine("SELECT IFNULL(GROUP_CONCAT(jns_perawatan_lab.nm_perawatan),'') from periksa_lab inner join jns_perawatan_lab on periksa_lab.kd_jenis_prw=jns_perawatan_lab.kd_jenis_prw where periksa_lab.no_rawat='"+norw+"' and periksa_lab.tgl_periksa='"+lastday+"'");
+        String lab = Sequel.cariIsi("SELECT IFNULL(GROUP_CONCAT(CONCAT(detail_periksa_lab.jam,' ', template_laboratorium.Pemeriksaan,' ', detail_periksa_lab.nilai,template_laboratorium.satuan,' ',detail_periksa_lab.nilai_rujukan,' (',detail_periksa_lab.keterangan,')') SEPARATOR '\n'),'') as datalab "
+                + "FROM detail_periksa_lab inner join template_laboratorium on detail_periksa_lab.id_template=template_laboratorium.id_template where detail_periksa_lab.no_rawat='" + norw + "' "
+                + "and detail_periksa_lab.tgl_periksa='" + lastday + "' and detail_periksa_lab.keterangan <> '' ORDER BY detail_periksa_lab.jam desc");
+        String radiologi = Sequel.cariStringArrayLine("SELECT IFNULL(GROUP_CONCAT(jns_perawatan_radiologi.nm_perawatan),'') from periksa_radiologi inner join jns_perawatan_radiologi on periksa_radiologi.kd_jenis_prw=jns_perawatan_radiologi.kd_jenis_prw where periksa_radiologi.no_rawat='" + norw + "' and periksa_radiologi.tgl_periksa='" + lastday + "'");
+        String diet = Sequel.cariIsi("select GROUP_CONCAT(CONCAT(detail_beri_diet.waktu,' ', diet.nama_diet) SEPARATOR'\n') from detail_beri_diet inner join diet on detail_beri_diet.kd_diet=diet.kd_diet where no_rawat='" + norw + "' and tanggal='" + lastday + "'");
         TCatatanKonsul.setText(asu);
-//        Tkddokter.setText();
-//        Tkddokter.setText(kddokter);
-//        TDokter.setText(dokter);
-//        //Tkdpoli.setText(kdpoli);
-//        TPoli.setText(poli);
-        TPemeriksaan.setText(Sequel.cariIsi("SELECT instruksi FROM pemeriksaan_ranap WHERE no_rawat=? AND tgl_perawatan = '"+lastday+"' ORDER BY jam_rawat LIMIT 1", norw));
+        TPemeriksaan.setText("(Lab)" + "\n" + lab + "\n\n");
+        TPemeriksaan.append("(Radiologi)" + "\n" + radiologi + "\n\n");
+//        TPemeriksaan.append(Sequel.cariIsi("SELECT GROUP_CONCAT(instruksi SEPARATOR'\n\n') FROM pemeriksaan_ranap WHERE no_rawat=? AND tgl_perawatan = '" + lastday + "' ORDER BY jam_rawat", norw));
+//        TPemeriksaan.append("\n\n");
+//        String asu2 = Sequel.cariStringArrayLine("SELECT databarang.nama_brng FROM resep_obat JOIN resep_dokter ON resep_obat.no_resep = resep_dokter.no_resep JOIN databarang ON resep_dokter.kode_brng = databarang.kode_brng where resep_obat.no_rawat='"+norw+"' AND resep_obat.tgl_perawatan = '"+lastday+"'");
+        TPemeriksaan.append("(Diet)" + "\n" + diet);
         TPemeriksaan.append("\n\n");
-        String asu2 = Sequel.cariStringArrayLine("SELECT databarang.nama_brng FROM resep_obat JOIN resep_dokter ON resep_obat.no_resep = resep_dokter.no_resep JOIN databarang ON resep_dokter.kode_brng = databarang.kode_brng where resep_obat.no_rawat='"+norw+"' AND resep_obat.tgl_perawatan = '"+lastday+"'");
-        TPemeriksaan.append(asu2);
-        TSaran.setText(Sequel.cariStringArrayLine("SELECT nm_penyakit FROM diagnosa_pasien JOIN penyakit ON penyakit.kd_penyakit = diagnosa_pasien.kd_penyakit WHERE no_rawat='"+norw+"'"));
-//        TSaran.setText(Sequel.cariIsi("SELECT saran FROM rujukan_internal_poli_detail WHERE no_rawat=?", norw));
-   }
-    
-    public void isCek(){
-        BtnSimpan.setEnabled(true);
+//        TPemeriksaan.append(getInstruksi(norw, lastday.toString()));
+        TPemeriksaan.append(getInstruksi(norw, lastday.toString(), "Pagi"));
+        TPemeriksaan.append(getInstruksi(norw, lastday.toString(), "Siang"));
+        TPemeriksaan.append(getInstruksi(norw, lastday.toString(), "Malam"));
+        TPemeriksaan.append(getObat(norw, lastday.toString(), "Pagi"));
+        TPemeriksaan.append(getObat(norw, lastday.toString(), "Siang"));
+        TPemeriksaan.append(getObat(norw, lastday.toString(), "Malam"));
+//        TPemeriksaan.append(asu2);
+        TSaran.setText(Sequel.cariStringArrayLine("SELECT nm_penyakit FROM diagnosa_pasien JOIN penyakit ON penyakit.kd_penyakit = diagnosa_pasien.kd_penyakit WHERE no_rawat='" + norw + "'"));
     }
 
+    public void isCek() {
 
+    }
 
+    public static String getShift(LocalTime time) {
+        if (time.isAfter(LocalTime.of(7, 30)) && time.isBefore(LocalTime.of(14, 30))) {
+            return "Pagi";
+        } else if (time.isAfter(LocalTime.of(14, 30)) && time.isBefore(LocalTime.of(20, 30))) {
+            return "Siang";
+        } else {
+            return "Malam";
+        }
+    }
+
+    public String getObat(String norw, String theday, String shift) {
+        StringBuilder obat = new StringBuilder();
+        try {
+            ps = koneksi.prepareStatement("SELECT resep_obat.jam, resep_obat.kd_dokter, dokter.nm_dokter from resep_obat, dokter where resep_obat.kd_dokter=dokter.kd_dokter and resep_obat.no_rawat='" + norw + "' and resep_obat.tgl_perawatan='" + theday + "' order by resep_obat.tgl_perawatan desc,resep_obat.jam asc");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                LocalTime jamResep = LocalTime.parse(rs.getString("jam"));
+                String resepShift = getShift(jamResep);
+                if (shift.equals(resepShift)) {
+                    obat.append("\n").append("Terapi ").append(rs.getString("nm_dokter")).append("\n");
+                    ps2 = koneksi.prepareStatement("SELECT GROUP_CONCAT(CONCAT(resep_dokter.jml, ' ',databarang.nama_brng, ' ', resep_dokter.aturan_pakai) SEPARATOR '\n') AS nama_brng FROM resep_obat "
+                            + "JOIN resep_dokter ON resep_obat.no_resep = resep_dokter.no_resep INNER JOIN databarang ON resep_dokter.kode_brng = databarang.kode_brng WHERE "
+                            + "resep_obat.no_rawat = '" + norw + "' AND resep_obat.status = 'Ranap' AND resep_obat.tgl_perawatan = '" + theday + "' AND resep_obat.kd_dokter = '" + rs.getString("kd_dokter") + "'");
+                    try {
+                        rs2 = ps2.executeQuery();
+                        while (rs2.next()) {
+                            obat.append(rs2.getString("nama_brng")).append("\n");
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Notifikasi 2 : " + e);
+                    } finally {
+                        if (rs2 != null) {
+                            rs2.close();
+                        }
+                        if (ps2 != null) {
+                            ps2.close();
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Notif : " + e);
+        } finally {
+//            if (rs != null) {
+//                rs.close();
+//            }
+//            if (ps != null) {
+//                ps.close();
+//            }
+        }
+        return obat.toString();
+    }
+
+    public String getInstruksi(String norw, String theday, String shift) {
+        StringBuilder instruksi = new StringBuilder();
+        try {
+            String sql = "SELECT jam_rawat, instruksi, suhu_tubuh, tensi, nadi, respirasi, spo2, gcs FROM pemeriksaan_ranap WHERE no_rawat = ? AND tgl_perawatan = ?";
+            ps = koneksi.prepareStatement(sql);
+            ps.setString(1, norw);
+            ps.setString(2, theday);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String jamRawatStr = rs.getString("jam_rawat");
+                LocalTime jamRawat = LocalTime.parse(jamRawatStr);
+                String shiftLabel = "(" + "Instruksi " + shift + ")";
+                if (shift.equals(getShift(jamRawat))) {
+                    String instruksiStr = shiftLabel + "\n"
+                            + "Suhu: " + rs.getString("suhu_tubuh") + "\n"
+                            + "Tensi: " + rs.getString("tensi") + "\n"
+                            + "Nadi: " + rs.getString("nadi") + "\n"
+                            + "Respirasi: " + rs.getString("respirasi") + "\n"
+                            + "SPO2: " + rs.getString("spo2") + "\n"
+                            + "GCS: " + rs.getString("gcs") + "\n\n"
+                            + rs.getString("instruksi") + "\n\n";
+                    instruksi.append(instruksiStr);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Notif: " + e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (Exception e) {
+                System.out.println("Notif : " + e);
+            }
+        }
+        return instruksi.toString();
+    }
 }
