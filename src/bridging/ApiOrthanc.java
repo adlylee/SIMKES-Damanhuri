@@ -261,7 +261,7 @@ public class ApiOrthanc {
 //        headers.add("Accept", "image/jpeg");
 //        requestEntity = new HttpEntity(requestJson,headers);
 //        url = getRest().exchange(koneksiDB.URLORTHANC()+":"+koneksiDB.PORTORTHANC()+"/instances/"+studies_id+"/rendered?quality=20&height=60&width=40", HttpMethod.GET, requestEntity, String.class).getBody();
-        url = koneksiDB.URLORTHANC()+":"+koneksiDB.PORTORTHANC()+"/instances/"+studies_id+"/rendered?quality=20&height=200&width=190";
+        url = koneksiDB.URLORTHANC()+"/instances/"+studies_id+"/rendered?quality=20&height=200&width=190";
         return url;
     }
     

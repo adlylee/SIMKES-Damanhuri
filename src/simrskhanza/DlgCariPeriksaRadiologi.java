@@ -3346,7 +3346,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                     if (viewer.equals("stone")) {
                         seriesbyid = orthanc.AmbilSeriesById(tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString());
                         JsonNode listSeries = seriesbyid;
-                        url_orthanc = "http://" + koneksiDB.USERORTHANC() + ":" + koneksiDB.PASSORTHANC() + "@" + koneksiDB.URLORTHANC2() + "/stone-webviewer/index.html?study=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 4).toString() + "&series=" + listSeries.path("MainDicomTags").path("SeriesInstanceUID").asText();
+                        url_orthanc = koneksiDB.URLORTHANC() + "/stone-webviewer/index.html?study=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 4).toString() + "&series=" + listSeries.path("MainDicomTags").path("SeriesInstanceUID").asText();
                         try {
                             //Set your page url in this string. For eg, I m using URL for Google Search engine
                             java.awt.Desktop.getDesktop().browse(java.net.URI.create(url_orthanc));
@@ -3375,7 +3375,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                     if (viewer.equals("stone")) {
                         seriesbyid = orthanc.AmbilSeriesById(tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString());
                         JsonNode listSeries = seriesbyid;
-                        url_orthanc = "http://" + koneksiDB.USERORTHANC() + ":" + koneksiDB.PASSORTHANC() + "@" + koneksiDB.URLORTHANC2() + "/stone-webviewer/index.html?study=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 4).toString() + "&series=" + listSeries.path("MainDicomTags").path("SeriesInstanceUID").asText();
+                        url_orthanc = koneksiDB.URLORTHANC() + "/stone-webviewer/index.html?study=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 4).toString() + "&series=" + listSeries.path("MainDicomTags").path("SeriesInstanceUID").asText();
                         try {
                             //Set your page url in this string. For eg, I m using URL for Google Search engine
                             java.awt.Desktop.getDesktop().browse(java.net.URI.create(url_orthanc));
