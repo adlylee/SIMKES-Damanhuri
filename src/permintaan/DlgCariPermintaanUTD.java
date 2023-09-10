@@ -46,7 +46,7 @@ public class DlgCariPermintaanUTD extends javax.swing.JDialog {
     private ResultSet rs, rs2;
     private Date now;
     private boolean aktif = false;
-    private String alarm = "", formalarm = "", nol_detik, detik, norm = "", kamar = "", namakamar = "", diagnosa = "", noorder = "", norawat = "", NoRm = "", keterangan = "",goldarah="",resus="";
+    private String alarm = "", formalarm = "", nol_detik, detik, norm = "", kamar = "", namakamar = "", diagnosa = "", noorder = "", norawat = "", NoRm = "", keterangan = "", goldarah = "", resus = "";
 
     /**
      * Creates new form DlgProgramStudi
@@ -59,7 +59,7 @@ public class DlgCariPermintaanUTD extends javax.swing.JDialog {
         initComponents();
 
         tabMode = new DefaultTableModel(null, new Object[]{
-            "No.Permintaan", "No.Rawat", "Pasien", "Jns. Bayar", "Tanggal", "Jam", 
+            "No.Permintaan", "No.Rawat", "Pasien", "Jns. Bayar", "Tanggal", "Jam",
             "G.D", "Resus", "Kode Dokter", "Dokter Perujuk", "Kamar", "Keterangan"
         }) {
             @Override
@@ -238,7 +238,7 @@ public class DlgCariPermintaanUTD extends javax.swing.JDialog {
         Kamar = new widget.TextBox();
         BtnSeek6 = new widget.Button();
         internalFrame3 = new widget.InternalFrame();
-        scrollPane3 = new widget.ScrollPane();
+        Scroll = new widget.ScrollPane();
         tbTransfusi = new widget.Table();
 
         Kd2.setName("Kd2"); // NOI18N
@@ -532,23 +532,11 @@ public class DlgCariPermintaanUTD extends javax.swing.JDialog {
         internalFrame3.setName("internalFrame3"); // NOI18N
         internalFrame3.setLayout(new java.awt.BorderLayout());
 
-        scrollPane3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        scrollPane3.setName("scrollPane3"); // NOI18N
-        scrollPane3.setOpaque(true);
+        Scroll.setName("Scroll"); // NOI18N
+        Scroll.setOpaque(true);
 
-        tbTransfusi.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {},
-                {},
-                {},
-                {}
-            },
-            new String [] {
-
-            }
-        ));
+        tbTransfusi.setAutoCreateRowSorter(true);
         tbTransfusi.setToolTipText("Silahkan klik untuk memilih data yang mau diedit ataupun dihapus");
-        tbTransfusi.setComponentPopupMenu(jPopupMenu1);
         tbTransfusi.setName("tbTransfusi"); // NOI18N
         tbTransfusi.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -559,10 +547,13 @@ public class DlgCariPermintaanUTD extends javax.swing.JDialog {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tbTransfusiKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tbTransfusiKeyReleased(evt);
+            }
         });
-        scrollPane3.setViewportView(tbTransfusi);
+        Scroll.setViewportView(tbTransfusi);
 
-        internalFrame3.add(scrollPane3, java.awt.BorderLayout.PAGE_START);
+        internalFrame3.add(Scroll, java.awt.BorderLayout.CENTER);
 
         internalFrame1.add(internalFrame3, java.awt.BorderLayout.CENTER);
 
@@ -813,20 +804,6 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         dokter.setVisible(true);
     }//GEN-LAST:event_BtnSeek5ActionPerformed
 
-    private void tbTransfusiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTransfusiMouseClicked
-        if (tabMode.getRowCount() != 0) {
-            try {
-                getData();
-            } catch (java.lang.NullPointerException e) {
-            }
-//            if (evt.getClickCount() == 2) {
-//                if (!norawat.equals("")) {
-//                    BtnTambahActionPerformed(null);
-//                }
-//            }
-        }
-    }//GEN-LAST:event_tbTransfusiMouseClicked
-
     private void BtnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTambahActionPerformed
         if (tabMode.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "Maaf, data sudah habis...!!!!");
@@ -843,7 +820,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             penyerahan.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
             penyerahan.setLocationRelativeTo(internalFrame1);
             penyerahan.isCek();
-            penyerahan.setNoRM(noorder,tbTransfusi.getValueAt(tbTransfusi.getSelectedRow(), 10).toString());
+            penyerahan.setNoRM(noorder, tbTransfusi.getValueAt(tbTransfusi.getSelectedRow(), 10).toString());
             penyerahan.setVisible(true);
             this.setCursor(Cursor.getDefaultCursor());
         }
@@ -857,17 +834,6 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             Valid.pindah(evt, BtnAll, BtnKeluar);
         }
     }//GEN-LAST:event_BtnTambahKeyPressed
-
-    private void tbTransfusiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbTransfusiKeyPressed
-        if (tabMode.getRowCount() != 0) {
-            if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
-                try {
-                    getData();
-                } catch (java.lang.NullPointerException e) {
-                }
-            }
-        }
-    }//GEN-LAST:event_tbTransfusiKeyPressed
 
     private void MnLihatPenyerahanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnLihatPenyerahanActionPerformed
         if (tbTransfusi.getSelectedRow() != -1) {
@@ -889,6 +855,37 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             TCari.requestFocus();
         }
     }//GEN-LAST:event_MnLihatPenyerahanActionPerformed
+
+    private void tbTransfusiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTransfusiMouseClicked
+        if (tabMode.getRowCount() != 0) {
+            try {
+                getData();
+            } catch (java.lang.NullPointerException e) {
+            }
+        }
+    }//GEN-LAST:event_tbTransfusiMouseClicked
+
+    private void tbTransfusiKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbTransfusiKeyReleased
+        if (tabMode.getRowCount() != 0) {
+            if ((evt.getKeyCode() == KeyEvent.VK_ENTER) || (evt.getKeyCode() == KeyEvent.VK_UP) || (evt.getKeyCode() == KeyEvent.VK_DOWN)) {
+                try {
+                    getData();
+                } catch (java.lang.NullPointerException e) {
+                }
+            }
+        }
+    }//GEN-LAST:event_tbTransfusiKeyReleased
+
+    private void tbTransfusiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbTransfusiKeyPressed
+        if (tabMode.getRowCount() != 0) {
+            if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+                try {
+                    getData();
+                } catch (java.lang.NullPointerException e) {
+                }
+            }
+        } 
+    }//GEN-LAST:event_tbTransfusiKeyPressed
 
     /**
      * @param args the command line arguments
@@ -921,6 +918,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.Label LCount;
     private javax.swing.JMenuItem MnCetakHasilUTD;
     private javax.swing.JMenuItem MnLihatPenyerahan;
+    private widget.ScrollPane Scroll;
     private widget.TextBox TCari;
     private widget.TextBox TPasien;
     private widget.Tanggal Tgl1;
@@ -938,7 +936,6 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.panelisi panelGlass10;
     private widget.panelisi panelGlass8;
     private widget.panelisi panelisi1;
-    private widget.ScrollPane scrollPane3;
     private widget.Table tbTransfusi;
     // End of variables declaration//GEN-END:variables
 
@@ -950,15 +947,22 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             NoRm = (tbTransfusi.getValueAt(tbTransfusi.getSelectedRow(), 2).toString().substring(0, 6));
             TPasien.setText(Sequel.cariIsi("select nm_pasien from pasien where no_rkm_medis=?", NoRm));
             goldarah = (tbTransfusi.getValueAt(tbTransfusi.getSelectedRow(), 6).toString());
-            resus = (tbTransfusi.getValueAt(tbTransfusi.getSelectedRow(),7).toString());      
-            keterangan = tbTransfusi.getValueAt(tbTransfusi.getSelectedRow(), 11).toString();            
+            resus = (tbTransfusi.getValueAt(tbTransfusi.getSelectedRow(), 7).toString());
+            keterangan = tbTransfusi.getValueAt(tbTransfusi.getSelectedRow(), 11).toString();
         }
     }
 
     public void isCek() {
-        MnCetakHasilUTD.setEnabled(var.getutd_donor());
-        BtnHapus.setEnabled(var.getutd_donor());
-        BtnPrint.setEnabled(var.getutd_donor());
+        MnCetakHasilUTD.setEnabled(var.getpermintaan_lab());
+        BtnHapus.setEnabled(var.getpermintaan_lab());
+        BtnPrint.setEnabled(var.getpermintaan_lab());
+        if (var.getkode().equals("UTD1")) {
+            BtnTambah.setEnabled(true);
+            MnLihatPenyerahan.setEnabled(true);
+        } else {
+            BtnTambah.setEnabled(false);
+            MnLihatPenyerahan.setEnabled(false);
+        }
     }
 
     public void setPasien(String pasien) {
@@ -974,7 +978,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                     + "from permintaan_utd,kamar_inap, reg_periksa, pasien, kamar, bangsal, dokter, penjab "
                     + "where permintaan_utd.no_rawat=kamar_inap.no_rawat and kamar_inap.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and kamar_inap.kd_kamar=kamar.kd_kamar "
                     + "and kamar.kd_bangsal=bangsal.kd_bangsal and permintaan_utd.dokter_perujuk=dokter.kd_dokter and reg_periksa.kd_pj=penjab.kd_pj and "
-                    + "permintaan_utd.status='ranap' and permintaan_utd.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and bangsal.nm_bangsal like ? and (permintaan_utd.noorder like ? or "
+                    + "permintaan_utd.status='ranap' and kamar_inap.stts_pulang='-' and permintaan_utd.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and bangsal.nm_bangsal like ? and (permintaan_utd.noorder like ? or "
                     + "permintaan_utd.no_rawat like ? or "
                     + "reg_periksa.no_rkm_medis like ? or "
                     + "pasien.nm_pasien like ? or "
@@ -1077,11 +1081,11 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     }
 
     public void emptTeks() {
-        noorder="";
+        noorder = "";
         norawat = "";
-        goldarah="";
-        resus="";
-        keterangan="";
+        goldarah = "";
+        resus = "";
+        keterangan = "";
         TCari.setText("");
         TCari.requestFocus();
     }

@@ -218,6 +218,7 @@ public class UTDStokDarah extends javax.swing.JDialog {
 
         Popup = new javax.swing.JPopupMenu();
         ppCetak = new javax.swing.JMenuItem();
+        MnStatusDimusnahkan = new javax.swing.JMenuItem();
         internalFrame1 = new widget.InternalFrame();
         jPanel2 = new javax.swing.JPanel();
         scrollPane1 = new widget.ScrollPane();
@@ -289,6 +290,22 @@ public class UTDStokDarah extends javax.swing.JDialog {
             }
         });
         Popup.add(ppCetak);
+
+        MnStatusDimusnahkan.setBackground(new java.awt.Color(255, 255, 254));
+        MnStatusDimusnahkan.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        MnStatusDimusnahkan.setForeground(new java.awt.Color(70, 70, 70));
+        MnStatusDimusnahkan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        MnStatusDimusnahkan.setText("Dimusnahkan");
+        MnStatusDimusnahkan.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        MnStatusDimusnahkan.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        MnStatusDimusnahkan.setName("MnStatusDimusnahkan"); // NOI18N
+        MnStatusDimusnahkan.setPreferredSize(new java.awt.Dimension(200, 26));
+        MnStatusDimusnahkan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnStatusDimusnahkanActionPerformed(evt);
+            }
+        });
+        Popup.add(MnStatusDimusnahkan);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -431,7 +448,7 @@ public class UTDStokDarah extends javax.swing.JDialog {
         FormInput.add(Resus);
         Resus.setBounds(294, 72, 65, 23);
 
-        Aftap.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "18-09-2021" }));
+        Aftap.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-09-2023" }));
         Aftap.setDisplayFormat("dd-MM-yyyy");
         Aftap.setName("Aftap"); // NOI18N
         Aftap.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -448,7 +465,7 @@ public class UTDStokDarah extends javax.swing.JDialog {
         FormInput.add(label32);
         label32.setBounds(0, 72, 85, 23);
 
-        Kadaluarsa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "18-09-2021" }));
+        Kadaluarsa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-09-2023" }));
         Kadaluarsa.setDisplayFormat("dd-MM-yyyy");
         Kadaluarsa.setName("Kadaluarsa"); // NOI18N
         Kadaluarsa.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1162,6 +1179,18 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         // TODO add your handling code here:
     }//GEN-LAST:event_NoKantong1KeyPressed
 
+    private void MnStatusDimusnahkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnStatusDimusnahkanActionPerformed
+        if (tabMode.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Maaf, table masih kosong...!!!!");
+            TCari.requestFocus();
+        } else if (NoKantong1.getText().trim().equals("")) {
+            Valid.textKosong(NoKantong1, "No. Kantong");
+        } else {
+            Sequel.mengedit("utd_stok_darah", "no_kantong='" + NoKantong1.getText() + "' ", "status='Dimusnahkan'");            
+            tampil();
+        }
+    }//GEN-LAST:event_MnStatusDimusnahkanActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -1200,6 +1229,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.Tanggal Kadaluarsa;
     private widget.TextBox KodeKomponen;
     private widget.Label LCount;
+    private javax.swing.JMenuItem MnStatusDimusnahkan;
     private widget.TextBox NamaKomponen;
     private widget.TextBox NoKantong;
     private widget.TextBox NoKantong1;

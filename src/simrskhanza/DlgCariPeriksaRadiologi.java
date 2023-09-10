@@ -3330,7 +3330,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 url_orthanc = "";
                 if (NoRawat.getText().equals("")) {
                     if (viewer.equals("dicom")) {
-                        url_orthanc = koneksiDB.URLORTHANC() + ":" + koneksiDB.PORTORTHANC() + "/web-viewer/app/viewer.html?series=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString();
+                        url_orthanc = koneksiDB.URLORTHANC() + "/web-viewer/app/viewer.html?series=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString();
                         OrthancDICOM orthan = new OrthancDICOM(null, false);
                         orthan.setJudul("::[ DICOM PACS Pasien " + tbDokter.getValueAt(tbDokter.getSelectedRow(), 1).toString() + ", Series " + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString() + " ]::", tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString().replaceAll("/", ""), tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString());
                         try {
@@ -3346,7 +3346,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                     if (viewer.equals("stone")) {
                         seriesbyid = orthanc.AmbilSeriesById(tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString());
                         JsonNode listSeries = seriesbyid;
-                        url_orthanc = "http://" + koneksiDB.USERORTHANC() + ":" + koneksiDB.PASSORTHANC() + "@" + koneksiDB.URLORTHANC2() + ":" + koneksiDB.PORTORTHANC() + "/stone-webviewer/index.html?study=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 4).toString() + "&series=" + listSeries.path("MainDicomTags").path("SeriesInstanceUID").asText();
+                        url_orthanc = "http://" + koneksiDB.USERORTHANC() + ":" + koneksiDB.PASSORTHANC() + "@" + koneksiDB.URLORTHANC2() + "/stone-webviewer/index.html?study=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 4).toString() + "&series=" + listSeries.path("MainDicomTags").path("SeriesInstanceUID").asText();
                         try {
                             //Set your page url in this string. For eg, I m using URL for Google Search engine
                             java.awt.Desktop.getDesktop().browse(java.net.URI.create(url_orthanc));
@@ -3359,7 +3359,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 if (!NoRawat.getText().equals("")) {
                     if (viewer.equals("dicom")) {
                         String nm_pasien = Sequel.cariIsi("SELECT nm_pasien FROM pasien JOIN reg_periksa ON pasien.no_rkm_medis = reg_periksa.no_rkm_medis WHERE reg_periksa.no_rawat=?", NoRawat.getText());
-                        url_orthanc = koneksiDB.URLORTHANC() + ":" + koneksiDB.PORTORTHANC() + "/web-viewer/app/viewer.html?series=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString();
+                        url_orthanc = koneksiDB.URLORTHANC() + "/web-viewer/app/viewer.html?series=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString();
                         OrthancDICOM orthan = new OrthancDICOM(null, false);
                         orthan.setJudul("::[ DICOM PACS Pasien " + nm_pasien + ", Series " + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString() + " ]::", NoRawat.getText(), tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString());
                         try {
@@ -3375,7 +3375,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                     if (viewer.equals("stone")) {
                         seriesbyid = orthanc.AmbilSeriesById(tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 3).toString());
                         JsonNode listSeries = seriesbyid;
-                        url_orthanc = "http://" + koneksiDB.USERORTHANC() + ":" + koneksiDB.PASSORTHANC() + "@" + koneksiDB.URLORTHANC2() + ":" + koneksiDB.PORTORTHANC() + "/stone-webviewer/index.html?study=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 4).toString() + "&series=" + listSeries.path("MainDicomTags").path("SeriesInstanceUID").asText();
+                        url_orthanc = "http://" + koneksiDB.USERORTHANC() + ":" + koneksiDB.PASSORTHANC() + "@" + koneksiDB.URLORTHANC2() + "/stone-webviewer/index.html?study=" + tbListDicom.getValueAt(tbListDicom.getSelectedRow(), 4).toString() + "&series=" + listSeries.path("MainDicomTags").path("SeriesInstanceUID").asText();
                         try {
                             //Set your page url in this string. For eg, I m using URL for Google Search engine
                             java.awt.Desktop.getDesktop().browse(java.net.URI.create(url_orthanc));

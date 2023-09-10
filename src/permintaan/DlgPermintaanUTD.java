@@ -1295,8 +1295,8 @@ private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     }
 
     public void isCek() {
-        BtnSimpan.setEnabled(var.getutd_donor());
-        BtnPrint.setEnabled(var.getutd_donor());
+        BtnSimpan.setEnabled(var.getpermintaan_lab());
+        BtnPrint.setEnabled(var.getpermintaan_lab());
     }
 
     private void isForm() {

@@ -3893,8 +3893,13 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
                         insertSEP();
                     }
                 }
+                if ((Sequel.cariInteger("select count(no_rawat) from bridging_sep where no_rawat=? and jnspelayanan='2'", TNoRw.getText()) > 0)) {
+                    JOptionPane.showMessageDialog(null, "Maaf, SEP ralan masih tersedia. Silahkan hapus SEP ralan telebih dahulu..!!");
+                        TCari.requestFocus();
+                }else{
+                    insertSEP();
+                }
             }
-
         }
 }//GEN-LAST:event_BtnSimpanActionPerformed
 
@@ -7023,9 +7028,10 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
                 response = mapper.readTree(lz);
                 response = response.path("sep").path("noSep");
                 System.out.println("SEP : " + response.asText() + "'");
-                String jsonResponse = response.asText().replace(" ", "");//replace spasi sep
+                String jsonResponse = response.asText().trim();
                 if (Sequel.menyimpantf("bridging_sep", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "SEP", 47, new String[]{
-                    response.asText(), TNoRw.getText(), Valid.SetTgl(TanggalSEP.getSelectedItem() + ""), Valid.SetTgl(TanggalRujuk.getSelectedItem() + ""),
+                    jsonResponse, TNoRw.getText(), Valid.SetTgl(TanggalSEP.getSelectedItem() + ""), Valid.SetTgl(TanggalRujuk.getSelectedItem() + ""),
+//                    response.asText(), TNoRw.getText(), Valid.SetTgl(TanggalSEP.getSelectedItem() + ""), Valid.SetTgl(TanggalRujuk.getSelectedItem() + ""),
                     NoRujukan.getText(), KdPpkRujukan.getText(), NmPpkRujukan.getText(), KdPPK.getText(), NmPPK.getText(),
                     JenisPelayanan.getSelectedItem().toString().substring(0, 1), Catatan.getText(), KdPenyakit.getText(),
                     NmPenyakit.getText(), KdPoli.getText(), NmPoli.getText(), Kelas.getSelectedItem().toString().substring(0, 1),

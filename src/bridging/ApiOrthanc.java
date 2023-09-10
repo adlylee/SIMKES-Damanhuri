@@ -73,8 +73,8 @@ public class ApiOrthanc {
                           "}";
             System.out.println("Request JSON : "+requestJson);
             requestEntity = new HttpEntity(requestJson,headers);
-            System.out.println("URL : "+koneksiDB.URLORTHANC()+":"+koneksiDB.PORTORTHANC()+"/tools/find");
-            requestJson=getRest().exchange(koneksiDB.URLORTHANC()+":"+koneksiDB.PORTORTHANC()+"/tools/find", HttpMethod.POST, requestEntity, String.class).getBody();
+            System.out.println("URL : "+koneksiDB.URLORTHANC()+"/tools/find");
+            requestJson=getRest().exchange(koneksiDB.URLORTHANC()+"/tools/find", HttpMethod.POST, requestEntity, String.class).getBody();
             System.out.println("Result JSON : "+requestJson);
             root = mapper.readTree(requestJson);
         }catch(Exception e){
@@ -91,8 +91,8 @@ public class ApiOrthanc {
             System.out.println("Auth : "+authEncrypt);
             headers.add("Authorization", "Basic "+authEncrypt);
             requestEntity = new HttpEntity(headers);
-            System.out.println("URL : "+koneksiDB.URLORTHANC()+":"+koneksiDB.PORTORTHANC()+"/series/"+series);
-            requestJson=getRest().exchange(koneksiDB.URLORTHANC()+":"+koneksiDB.PORTORTHANC()+"/series/"+series, HttpMethod.GET, requestEntity, String.class).getBody();
+            System.out.println("URL : "+koneksiDB.URLORTHANC()+"/series/"+series);
+            requestJson=getRest().exchange(koneksiDB.URLORTHANC()+"/series/"+series, HttpMethod.GET, requestEntity, String.class).getBody();
             System.out.println("Result JSON : "+requestJson);
             root = mapper.readTree(requestJson);
         }catch(Exception e){
