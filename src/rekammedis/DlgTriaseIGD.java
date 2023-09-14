@@ -2103,7 +2103,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
 }//GEN-LAST:event_BtnBatalKeyPressed
 
     private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHapusActionPerformed
-        if (tabMode.getRowCount() == 0) {
+         if (tabMode.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "Maaf, data sudah habis...!!!!");
             TCari.requestFocus();
         } else {
@@ -3048,19 +3048,19 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                 });
             }
             if (cmbTriase.getSelectedItem().toString() == "AIRWAY") {
-                key = "kd_pemeriksaan='KP01'";
+                key = " kd_pemeriksaan='KP01' ";
             } else if (cmbTriase.getSelectedItem().toString() == "BREATHING") {
-                key = "kd_pemeriksaan='KP02'";
+                key = " kd_pemeriksaan='KP02' ";
             } else if (cmbTriase.getSelectedItem().toString() == "CIRCULATION") {
-                key = "kd_pemeriksaan='KP03'";
+                key = " kd_pemeriksaan='KP03' ";
             } else if (cmbTriase.getSelectedItem().toString() == "DISABILITY") {
-                key = "kd_pemeriksaan='KP04'";
+                key = " kd_pemeriksaan='KP04' ";
             } else if (cmbTriase.getSelectedItem().toString() == "Prediksi pemeriksaan penunjang") {
-                key = "kd_pemeriksaan='KP05'";
+                key = " kd_pemeriksaan='KP05' ";
             } else if (cmbTriase.getSelectedItem().toString() == "Prediksi SDM yang akan terlibat") {
-                key = "kd_pemeriksaan='KP06'";
+                key = " kd_pemeriksaan='KP06' ";
             } else if (cmbTriase.getSelectedItem().toString() == "Do'a") {
-                key = "kd_pemeriksaan='KP07'";
+                key = " kd_pemeriksaan='KP07' ";
             }
             ps = koneksi.prepareStatement(
                     "select * from master_triase_igd where " + key + " and nm_tindakan like ? order by kd_level, kd_tindakan");
@@ -3153,14 +3153,28 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
     }
 
     private void hapus() {
-        if (Sequel.queryu2tf("delete from data_triase_igd where no_rawat=? and tanggal=? and jam=?", 3, new String[]{
-            tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString(), tbTriase.getValueAt(tbTriase.getSelectedRow(), 1).toString(), tbTriase.getValueAt(tbTriase.getSelectedRow(), 2).toString()
-        }) == true) {
-            Sequel.queryu("delete from pemeriksaan_ralan where no_rawat='" + tbTriase.getValueAt(i, 0).toString()
-                    + "' and tgl_perawatan='" + tbTriase.getValueAt(i, 1).toString()
-                    + "' and jam_rawat='" + tbTriase.getValueAt(i, 2).toString() + "' ");
-            Sequel.meghapus("detail_pemeriksaan_triase", "no_rawat", tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString());
-            tampil();
+        if (TabPilihan.getSelectedIndex() == 1) {
+            if (tabMode.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "Maaf, data sudah habis...!!!!");
+                TCari.requestFocus();
+            } else if (tbTriase.getSelectedRow() <= -1) {
+                JOptionPane.showMessageDialog(null, "Maaf, Silahkan pilih data yang mau dihapus..!!");
+            } else if (TNoRw.getText().trim().equals("")) {
+                Valid.textKosong(TNoRw, "No. Rawat");
+            } else {
+                int reply = JOptionPane.showConfirmDialog(rootPane, "Eeiiiiiits, Yakin mau dihapus..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                if (reply == JOptionPane.YES_OPTION) {
+                    if (Sequel.queryu2tf("delete from data_triase_igd where no_rawat=? and tanggal=? and jam=?", 3, new String[]{
+                        tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString(), tbTriase.getValueAt(tbTriase.getSelectedRow(), 1).toString(), tbTriase.getValueAt(tbTriase.getSelectedRow(), 2).toString()
+                    }) == true) {
+                        Sequel.queryu("delete from pemeriksaan_ralan where no_rawat='" + tbTriase.getValueAt(i, 0).toString()
+                                + "' and tgl_perawatan='" + tbTriase.getValueAt(i, 1).toString()
+                                + "' and jam_rawat='" + tbTriase.getValueAt(i, 2).toString() + "' ");
+                        Sequel.meghapus("detail_pemeriksaan_triase", "no_rawat", tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString());
+                        tampil();
+                    }
+                }
+            }
         }
     }
 
@@ -3178,11 +3192,11 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                         rpKeluarga.getText(), rOperasi.getText(), rTrauma.getText(), periksafisik, cmbSkalaNyeri.getSelectedItem().toString(), cmbResikoJatuh.getSelectedItem().toString(),
                         resiko, dxKeperawatan.getSelectedItem().toString(), Intervensi.getSelectedItem().toString(), Diagnosa.getText(), Tindakan.getText(), Keterangan.getText()
                     }) == true) {
-                        if (Sequel.menyimpantf("pemeriksaan_ralan", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "Data", 17, new String[]{
+                        if (Sequel.menyimpantf("pemeriksaan_ralan", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "Data", 16, new String[]{
                             TNoRw.getText(), Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(11, 19),
                             Suhu.getText(), Tensi.getText(), Nadi.getText(), Respirasi.getText(), TB.getText(), BB.getText(), "",
                             KeluhanUtama.getText(), RiwayatPenyakit.getText(), "",
-                            "-", "", "", ""
+                            "-", "", ""
                         }) == true) {
                             for (i = 0; i < tbLevel.getRowCount(); i++) {
                                 if (tbLevel.getValueAt(i, 0).toString().equals("true")) {
@@ -3191,7 +3205,10 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                                     });
                                 }
                             }
+                            JOptionPane.showMessageDialog(null, "Berhasil Simpan.");
                             isReset();
+                            TabPilihan.setSelectedIndex(1);
+                            tampil();
                             emptTeks();
                         }
                     }
@@ -3265,6 +3282,10 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                         }
                     }
                 }
+                JOptionPane.showMessageDialog(null, "Berhasil mengedit data..");                
+                TabPilihan.setSelectedIndex(1);
+                emptTeks();
+                tampil();
             } else {
                 sukses = false;
             }
@@ -3277,6 +3298,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             }
             Sequel.AutoComitTrue();
             if (sukses == true) {
+                JOptionPane.showMessageDialog(null, "Berhasil mengedit data..");
                 emptTeks();
                 tampil();
                 TabPilihan.setSelectedIndex(1);

@@ -147,7 +147,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
             } else if (i == 6) {
                 column.setPreferredWidth(80);
             } else if (i == 7) {
-                column.setPreferredWidth(200);
+                column.setPreferredWidth(160);
             } else if (i == 8) {
                 column.setPreferredWidth(100);
             } else if (i == 9) {
@@ -527,34 +527,34 @@ public class DlgKamarInap extends javax.swing.JDialog {
             @Override
             public void windowClosed(WindowEvent e) {
                 if (var.getform().equals("DlgKamarInap")) {
-                    try {
-                        key = "";
-                        psdiagnosa = koneksi.prepareStatement("select kd_penyakit from diagnosa_pasien where no_rawat=? order by prioritas asc");
-                        try {
-                            psdiagnosa.setString(1, norawat.getText());
-                            rs = psdiagnosa.executeQuery();
-                            while (rs.next()) {
-                                key = rs.getString(1) + ", " + key;
-                            }
-                        } catch (Exception ex) {
-                            System.out.println("Notifikasi : " + ex);
-                        } finally {
-                            if (rs != null) {
-                                rs.close();
-                            }
-                            if (psdiagnosa != null) {
-                                psdiagnosa.close();
-                            }
-                        }
-                    } catch (Exception ex) {
-                        System.out.println(ex);
-                    }
+//                    try {
+//                        key = "";
+//                        psdiagnosa = koneksi.prepareStatement("select kd_penyakit from diagnosa_pasien where no_rawat=? order by prioritas asc");
+//                        try {
+//                            psdiagnosa.setString(1, norawat.getText());
+//                            rs = psdiagnosa.executeQuery();
+//                            while (rs.next()) {
+//                                key = rs.getString(1) + ", " + key;
+//                            }
+//                        } catch (Exception ex) {
+//                            System.out.println("Notifikasi : " + ex);
+//                        } finally {
+//                            if (rs != null) {
+//                                rs.close();
+//                            }
+//                            if (psdiagnosa != null) {
+//                                psdiagnosa.close();
+//                            }
+//                        }
+//                    } catch (Exception ex) {
+//                        System.out.println(ex);
+//                    }
 
-                    if (WindowInputKamar.isVisible() == true) {
-                        diagnosaakhir.setText(key);
+                    if (WindowInputKamar.isVisible() == true) {                        
+                        diagnosaakhir.setText(diagnosa.panelDiagnosa1.getTable().getValueAt(diagnosa.panelDiagnosa1.getTable().getSelectedRow(), 1).toString()+" - "+diagnosa.panelDiagnosa1.getTable().getValueAt(diagnosa.panelDiagnosa1.getTable().getSelectedRow(), 2).toString());
                         diagnosaakhir.requestFocus();
                     } else if (WindowInputKamar.isVisible() == false) {
-                        Sequel.mengedit("kamar_inap", "no_rawat='" + norawat.getText() + "' and kd_kamar='" + kdkamar.getText() + "' and tgl_masuk='" + TIn.getText() + "' and jam_masuk='" + JamMasuk.getText() + "'", "diagnosa_akhir='" + key + "'");
+//                        Sequel.mengedit("kamar_inap", "no_rawat='" + norawat.getText() + "' and kd_kamar='" + kdkamar.getText() + "' and tgl_masuk='" + TIn.getText() + "' and jam_masuk='" + JamMasuk.getText() + "'", "diagnosa_akhir='" + key + "'");
                         tampil();
                     }
                 }
@@ -3551,7 +3551,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         R2.setPreferredSize(new java.awt.Dimension(90, 23));
         panelCari.add(R2);
 
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-09-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "11-09-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -3573,7 +3573,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         jLabel22.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel22);
 
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-09-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "11-09-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -3599,7 +3599,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         R3.setPreferredSize(new java.awt.Dimension(75, 23));
         panelCari.add(R3);
 
-        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-09-2023" }));
+        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "11-09-2023" }));
         DTPCari3.setDisplayFormat("dd-MM-yyyy");
         DTPCari3.setName("DTPCari3"); // NOI18N
         DTPCari3.setOpaque(false);
@@ -3621,7 +3621,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         jLabel25.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel25);
 
-        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-09-2023" }));
+        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "11-09-2023" }));
         DTPCari4.setDisplayFormat("dd-MM-yyyy");
         DTPCari4.setName("DTPCari4"); // NOI18N
         DTPCari4.setOpaque(false);
@@ -8823,9 +8823,10 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
     public void setNoRm(String norwt) {
         norawat.setText(norwt);
         Sequel.cariIsi("select no_rkm_medis from reg_periksa where no_rawat=? ", TNoRM, norawat.getText());
-        Sequel.cariIsi("select nm_pasien from pasien where no_rkm_medis=? ", TPasien, TNoRM.getText());
+        Sequel.cariIsi("select nm_pasien from pasien where no_rkm_medis=? ", TPasien, TNoRM.getText());        
         R1.setSelected(true);
         TCari.setText(norwt);
+        String dxAwal = Sequel.cariIsi("SELECT diagnosa from bridging_surat_pri_bpjs where no_rawat=?",norwt);
         try {
             ps = koneksi.prepareStatement("select no_rawat, kd_kamar, diagnosa_awal, diagnosa_akhir, tgl_masuk, jam_masuk, tgl_keluar, jam_keluar, ttl_biaya "
                     + "from kamar_inap where no_rawat=? order by tgl_masuk,jam_masuk desc limit 1 ");
@@ -8843,7 +8844,8 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
                     norawat.setEditable(false);
                     norawat.setText(rs.getString(1));
                     kdkamar.setText(rs.getString(2));
-                    diagnosaawal.setText(rs.getString(3));
+//                    diagnosaawal.setText(rs.getString(3));
+                    diagnosaawal.setText(dxAwal);
                     diagnosaakhir.setText(rs.getString(4));
                     TIn.setText(rs.getString(5));
                     JamMasuk.setText(rs.getString(6));
@@ -8869,7 +8871,7 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
                     norawat.setEditable(true);
                     kdkamar.setEditable(true);
                     diagnosaawal.setEditable(false);
-                    diagnosaawal.setText(dx1);
+                    diagnosaawal.setText(dxAwal);
                     diagnosaakhir.setVisible(false);
                     btnDiagnosa.setVisible(false);
                     TIn.setText("");

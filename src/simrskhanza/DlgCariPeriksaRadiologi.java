@@ -577,6 +577,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         MnLihatGambar = new javax.swing.JMenuItem();
         MnUbahDokterPetugas = new javax.swing.JMenuItem();
         MnRiwayatRad = new javax.swing.JMenuItem();
+        MnRiwayatLab = new javax.swing.JMenuItem();
         MnTarikHasil = new javax.swing.JMenuItem();
         WindowHasil = new javax.swing.JDialog();
         internalFrame6 = new widget.InternalFrame();
@@ -755,6 +756,19 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         });
         jPopupMenu1.add(MnRiwayatRad);
 
+        MnRiwayatLab.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        MnRiwayatLab.setForeground(new java.awt.Color(100, 80, 80));
+        MnRiwayatLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        MnRiwayatLab.setText("Riwayat Pemeriksaan Radiologi");
+        MnRiwayatLab.setName("MnRiwayatLab"); // NOI18N
+        MnRiwayatLab.setPreferredSize(new java.awt.Dimension(250, 28));
+        MnRiwayatLab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnRiwayatLabActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(MnRiwayatLab);
+
         MnTarikHasil.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         MnTarikHasil.setForeground(new java.awt.Color(100, 80, 80));
         MnTarikHasil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
@@ -774,7 +788,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         WindowHasil.setResizable(false);
         WindowHasil.getContentPane().setLayout(new java.awt.BorderLayout(1, 1));
 
-        internalFrame6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Hasil Pemeriksaan ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(100, 80, 80))); // NOI18N
+        internalFrame6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Hasil Pemeriksaan ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 0, 13), new java.awt.Color(100, 80, 80))); // NOI18N
         internalFrame6.setName("internalFrame6"); // NOI18N
         internalFrame6.setLayout(new java.awt.BorderLayout());
 
@@ -940,7 +954,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
             }
         });
         panelIsi7.add(btnHasilRad);
-        btnHasilRad.setBounds(460, 10, 36, 26);
+        btnHasilRad.setBounds(460, 10, 32, 22);
 
         internalFrame6.add(panelIsi7, java.awt.BorderLayout.PAGE_START);
 
@@ -975,7 +989,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         WindowGantiDokterParamedis.setUndecorated(true);
         WindowGantiDokterParamedis.setResizable(false);
 
-        internalFrame5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(239, 244, 234)), "::[ Ubah P.J.Rad, Perujuk & Petugas ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(239, 244, 234)), "::[ Ubah P.J.Rad, Perujuk & Petugas ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame5.setName("internalFrame5"); // NOI18N
         internalFrame5.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -1136,7 +1150,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
         WindowRiwayatRad.setResizable(false);
         WindowRiwayatRad.getContentPane().setLayout(new java.awt.BorderLayout(1, 1));
 
-        internalFrame7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Riwayat Pemeriksaan Radiologi ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(100, 80, 80))); // NOI18N
+        internalFrame7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Riwayat Pemeriksaan Radiologi ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 0, 13), new java.awt.Color(100, 80, 80))); // NOI18N
         internalFrame7.setName("internalFrame7"); // NOI18N
         internalFrame7.setLayout(new java.awt.BorderLayout());
 
@@ -1268,7 +1282,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Pemeriksaan Radiologi ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(100, 80, 80))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Pemeriksaan Radiologi ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 0, 13), new java.awt.Color(100, 80, 80))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -2136,9 +2150,9 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         } else {
             if (Kd2.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Maaf, silahkan pilih data yang mau ditampilkan...!!!!");
-            } else {
+            } else {                
                 try {
-                    HasilPeriksa.setText("");
+                    HasilPeriksa.setText("");                     
                     ps5 = koneksi.prepareStatement(
                             "select hasil from hasil_radiologi where hasil_radiologi.no_rawat=? and hasil_radiologi.tgl_periksa=? and hasil_radiologi.jam=?");
                     try {
@@ -2807,6 +2821,25 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
 //        }
     }//GEN-LAST:event_MnTarikHasilActionPerformed
 
+    private void MnRiwayatLabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnRiwayatLabActionPerformed
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        if (tabMode.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Maaf, data sudah habis...!!!!");
+            TCari.requestFocus();
+        } else if (tbDokter.getSelectedRow() <= -1) {
+            JOptionPane.showMessageDialog(null, "Maaf, Silahkan pilih data..!!");
+        } else {
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            DlgCariPeriksaLab form = new DlgCariPeriksaLab(null, false);
+            form.isCek();
+            form.setPasien(TNoRw.getText());
+            form.setSize(this.getWidth(), this.getHeight());
+            form.setLocationRelativeTo(this);
+            form.setVisible(true);
+            this.setCursor(Cursor.getDefaultCursor());
+        }
+    }//GEN-LAST:event_MnRiwayatLabActionPerformed
+
     private void TKesanKeyPressed(java.awt.event.KeyEvent evt) {
         //        Valid.pindah(evt,TKdPrw,TPemeriksaan);
     }
@@ -2858,6 +2891,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private javax.swing.JMenuItem MnCetakNota;
     private javax.swing.JMenuItem MnLihatGambar;
     private javax.swing.JMenuItem MnLihatHasil;
+    private javax.swing.JMenuItem MnRiwayatLab;
     private javax.swing.JMenuItem MnRiwayatRad;
     private javax.swing.JMenuItem MnTarikGambar;
     private javax.swing.JMenuItem MnTarikHasil;
@@ -3638,5 +3672,5 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             System.out.println(ex);
         }
     }
-
-}
+    
+                                }

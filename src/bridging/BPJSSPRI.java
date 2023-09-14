@@ -22,6 +22,7 @@ import java.security.cert.X509Certificate;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,8 +68,9 @@ public class BPJSSPRI extends javax.swing.JDialog {
     private JsonNode root;
     private JsonNode nameNode;
     private JsonNode response;
-    private String link = "", requestJson = "", URL = "", user = "", utc = "";
+    private String link = "", requestJson = "", URL = "", user = "", utc = "",penjab="";
     private BPJSApi api = new BPJSApi();
+    private SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd"); 
 
     /**
      * Creates new form DlgPemberianInfus
@@ -1099,6 +1101,7 @@ public class BPJSSPRI extends javax.swing.JDialog {
             } else if (Diagnosa.getText().trim().equals("")) {
                 Valid.textKosong(btnDiagnosa, "Diagnosa");
             } else {
+                if (penjab.equals("BPJ") || penjab.equals("A02")) {
                 try {
                     headers = new HttpHeaders();
                     headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -1149,6 +1152,16 @@ public class BPJSSPRI extends javax.swing.JDialog {
                     System.out.println("Notifikasi Bridging : " + ex);
                     if (ex.toString().contains("UnknownHostException")) {
                         JOptionPane.showMessageDialog(null, "Koneksi ke server BPJS terputus...!");
+                    }
+                }
+            }
+                if (!penjab.equals("BPJ") || !penjab.equals("A02")) {
+                    autoNomor();
+                    if (Sequel.menyimpantf("bridging_surat_pri_bpjs", "?,?,?,?,?,?,?,?,?,?", "No.Surat", 10, new String[]{
+                        NoRawat.getText(), NoKartu.getText(), Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), NoSurat.getText(), Valid.SetTgl(TanggalKontrol.getSelectedItem() + ""), KdDokter.getText(), NmDokter.getText(), KdPoli.getText(), NmPoli.getText(), Diagnosa.getText()
+                    }) == true) {
+                        emptTeks();
+                        tampil();
                     }
                 }
             }
@@ -1749,6 +1762,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         ChkInput.setSelected(true);
         NoSurat.setVisible(false);
         jLabel15.setVisible(false);
+        penjab = Sequel.cariIsi("SELECT kd_pj from reg_periksa where no_rawat=?",norawat);
         isForm();
         tampil();
         cekDiagnosa();
@@ -1883,5 +1897,9 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             }
         }
     }
-
+    
+    private void autoNomor() {
+        Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_surat,3),signed)),0) from bridging_surat_pri_bpjs where tgl_surat like '%" + dateformat.format(TanggalSurat.getDate()).substring(0, 4)+ dateformat.format(TanggalSurat.getDate()).substring(5, 7)+dateformat.format(TanggalSurat.getDate()).substring(8, 10) +"%'", dateformat.format(TanggalSurat.getDate()).substring(0, 4)
+                + dateformat.format(TanggalSurat.getDate()).substring(5, 7) + dateformat.format(TanggalSurat.getDate()).substring(8, 10), 3, NoSurat);
+    }
 }
