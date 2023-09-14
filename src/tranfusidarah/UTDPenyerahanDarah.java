@@ -51,7 +51,7 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
     private ResultSet rs,rs2,rsstok,rsdarah;
     private boolean[] pilihan;
     private String[] kodebarang,namabarang,kategori,satuan,jumlah,stokasal,hbeli,total,
-            nokantung,komponen,gd,resus,aftap,kadaluarsa,asaldarah,satatus,js,bhp,kso,menejemen;
+            nokantung,komponen,gd,resus,aftap,kadaluarsa,asaldarah,satatus,js,bhp,kso,menejemen,kodekomponen;
     private double[] harga,biaya;
     private DlgCariPetugas petugas=new DlgCariPetugas(null,false);
     private WarnaTable2 warna=new WarnaTable2();
@@ -70,7 +70,7 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
         Object[] row={
             "P","No.Kantung","Komponen","G.D.","Rhesus","Aftap","Kadaluarsa",
             "Asal Darah","Status","Jasa Sarana","Paket BHP",
-            "KSO","Manajemen","Biaya","No.Reg Kantung"};
+            "KSO","Manajemen","Biaya","No.Reg Kantung","Kode Komponen"};
         tabMode=new DefaultTableModel(null,row){
             @Override public boolean isCellEditable(int rowIndex, int colIndex){
                 boolean a = false;
@@ -85,7 +85,7 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
                 java.lang.String.class,java.lang.String.class,java.lang.String.class,
                 java.lang.String.class,java.lang.String.class,java.lang.String.class,
                 java.lang.String.class,java.lang.String.class,java.lang.String.class,
-                java.lang.String.class,java.lang.Double.class,java.lang.String.class
+                java.lang.String.class,java.lang.Double.class,java.lang.String.class,java.lang.String.class
             };
             @Override
             public Class getColumnClass(int columnIndex) {
@@ -97,7 +97,7 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
         tbDarah.setPreferredScrollableViewportSize(new Dimension(800,800));
         tbDarah.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 15; i++) {
+        for (i = 0; i < 16; i++) {
             TableColumn column = tbDarah.getColumnModel().getColumn(i);
             if(i==0){
                 column.setPreferredWidth(22);
@@ -115,7 +115,7 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
                 column.setPreferredWidth(75);
             }else if((i==7)||(i==13)){
                 column.setPreferredWidth(90);
-            }else if((i==8)||(i==9)||(i==10)||(i==11)||(i==12)||(i==14)){
+            }else if((i==8)||(i==9)||(i==10)||(i==11)||(i==12)||(i==14)||(i==15)){
                 column.setMinWidth(0);
                 column.setMaxWidth(0);
             }
@@ -1909,6 +1909,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             kso=null;
             menejemen=null;
             biaya=null;
+            kodekomponen=null;
             
             pilihan=new boolean[jml];
             nokantung=new String[jml];
@@ -1924,6 +1925,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             kso=new String[jml];
             menejemen=new String[jml];
             biaya=new double[jml];
+            kodekomponen=new String[jml];
             
             index=0;        
             for(i=0;i<tbDarah.getRowCount();i++){
@@ -1942,6 +1944,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                     kso[index]=tbDarah.getValueAt(i,11).toString();
                     menejemen[index]=tbDarah.getValueAt(i,12).toString();
                     biaya[index]=Double.parseDouble(tbDarah.getValueAt(i,13).toString());
+                    kodekomponen[index]=tbDarah.getValueAt(i,14).toString();
                     index++;
                 }
             } 
@@ -1952,7 +1955,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                 tabMode.addRow(new Object[] {
                     pilihan[i],nokantung[i],komponen[i],gd[i],resus[i],
                     aftap[i],kadaluarsa[i],asaldarah[i],satatus[i],js[i],
-                    bhp[i],kso[i],menejemen[i],biaya[i]
+                    bhp[i],kso[i],menejemen[i],biaya[i],kodekomponen[i]
                 });
             }
             
@@ -1963,7 +1966,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                     "utd_stok_darah.asal_darah,utd_stok_darah.status,"+
                     "utd_komponen_darah.jasa_sarana,utd_komponen_darah.paket_bhp,"+
                     "utd_komponen_darah.kso,utd_komponen_darah.manajemen,"+
-                    "utd_komponen_darah.total, utd_stok_darah.no_kantong "+
+                    "utd_komponen_darah.total, utd_stok_darah.no_kantong,utd_komponen_darah.kode "+
                     "from utd_komponen_darah inner join utd_stok_darah "+
                     "on utd_stok_darah.kode_komponen=utd_komponen_darah.kode where "+
                     "utd_stok_darah.status='Ada' and utd_stok_darah.golongan_darah=? and utd_stok_darah.resus=? and utd_stok_darah.no_kantong like ? or "+
@@ -1987,7 +1990,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                         rsdarah.getString(4),rsdarah.getString(5),rsdarah.getString(6),
                         rsdarah.getString(7),rsdarah.getString(8),rsdarah.getDouble(9),
                         rsdarah.getDouble(10),rsdarah.getDouble(11),rsdarah.getDouble(12),
-                        rsdarah.getDouble(13),rsdarah.getString(14)
+                        rsdarah.getDouble(13),rsdarah.getString(14),rsdarah.getString(15)
                     });
                 }
             } catch (Exception e) {

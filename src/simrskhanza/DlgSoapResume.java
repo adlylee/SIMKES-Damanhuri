@@ -578,9 +578,9 @@ public class DlgSoapResume extends javax.swing.JDialog {
     }
 
     public static String getShift(LocalTime time) {
-        if (time.isAfter(LocalTime.of(7, 30)) && time.isBefore(LocalTime.of(14, 30))) {
+        if (time.isAfter(LocalTime.of(6, 0)) && time.isBefore(LocalTime.of(12, 0))) {
             return "Pagi";
-        } else if (time.isAfter(LocalTime.of(14, 30)) && time.isBefore(LocalTime.of(20, 30))) {
+        } else if (time.isAfter(LocalTime.of(13, 0)) && time.isBefore(LocalTime.of(18, 0))) {
             return "Siang";
         } else {
             return "Malam";
