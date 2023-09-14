@@ -1308,7 +1308,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                     tbDarah.setValueAt(false, i, 0);
                                     getData();
                                 } else {
-                                    Sequel.mengedit("utd_stok_darah", "no_bag='" + tbDarah.getValueAt(i, 1).toString() + "'", "status='Diambil'");
+                                    Sequel.mengedit("utd_stok_darah", "no_bag='" + tbDarah.getValueAt(i, 1).toString() + "' AND kode_komponen='" + tbDarah.getValueAt(i, 15).toString() + "'", "status='Diambil'");
                                     Sequel.queryu("update permintaan_utd set keterangan='Sudah Validasi',no_penyerahan='"+nopenyerahan.getText()+"' where noorder='"+noorder+"'");
                                     try {
                                         String kd_jns_prw = Sequel.cariIsi("SELECT kd_lab FROM utd_mapping_komponen WHERE nm_komponen = '" + tbDarah.getValueAt(i, 2).toString() + "'");

@@ -68,9 +68,9 @@ public class BPJSSPRI extends javax.swing.JDialog {
     private JsonNode root;
     private JsonNode nameNode;
     private JsonNode response;
-    private String link = "", requestJson = "", URL = "", user = "", utc = "",penjab="";
+    private String link = "", requestJson = "", URL = "", user = "", utc = "", penjab = "";
     private BPJSApi api = new BPJSApi();
-    private SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd"); 
+    private SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
 
     /**
      * Creates new form DlgPemberianInfus
@@ -1102,59 +1102,55 @@ public class BPJSSPRI extends javax.swing.JDialog {
                 Valid.textKosong(btnDiagnosa, "Diagnosa");
             } else {
                 if (penjab.equals("BPJ") || penjab.equals("A02")) {
-                try {
-                    headers = new HttpHeaders();
-                    headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-                    headers.add("X-Cons-ID", koneksiDB.ConsIdBpjs());
-                    headers.add("X-Timestamp", String.valueOf(api.GetUTCdatetimeAsString()));
-                    headers.add("X-Signature", api.getHmac());
-                    headers.add("user_key", koneksiDB.UserKeyBpjs());
-                    URL = link + "/RencanaKontrol/InsertSPRI";
-                    requestJson = "{"
-                            + "\"request\": {"
-                            + "\"noKartu\":\"" + NoKartu.getText() + "\","
-                            + "\"kodeDokter\":\"" + KdDokter.getText() + "\","
-                            + "\"poliKontrol\":\"" + KdPoli.getText() + "\","
-                            + "\"tglRencanaKontrol\":\"" + Valid.SetTgl(TanggalKontrol.getSelectedItem() + "") + "\","
-                            + "\"user\":\"" + user + "\""
-                            + "}"
-                            + "}";
-                    System.out.println("JSON : " + requestJson);
-                    requestEntity = new HttpEntity(requestJson, headers);
-                    root = mapper.readTree(api.getRest().exchange(URL, HttpMethod.POST, requestEntity, String.class).getBody());
-                    nameNode = root.path("metaData");
-                    System.out.println("code : " + nameNode.path("code").asText());
-                    System.out.println("message : " + nameNode.path("message").asText());
-                    //response = mapper.readTree(api.Decrypt(root.path("response").asText(),utc)).path("noSPRI");
+                    try {
+                        headers = new HttpHeaders();
+                        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+                        headers.add("X-Cons-ID", koneksiDB.ConsIdBpjs());
+                        headers.add("X-Timestamp", String.valueOf(api.GetUTCdatetimeAsString()));
+                        headers.add("X-Signature", api.getHmac());
+                        headers.add("user_key", koneksiDB.UserKeyBpjs());
+                        URL = link + "/RencanaKontrol/InsertSPRI";
+                        requestJson = "{"
+                                + "\"request\": {"
+                                + "\"noKartu\":\"" + NoKartu.getText() + "\","
+                                + "\"kodeDokter\":\"" + KdDokter.getText() + "\","
+                                + "\"poliKontrol\":\"" + KdPoli.getText() + "\","
+                                + "\"tglRencanaKontrol\":\"" + Valid.SetTgl(TanggalKontrol.getSelectedItem() + "") + "\","
+                                + "\"user\":\"" + user + "\""
+                                + "}"
+                                + "}";
+                        System.out.println("JSON : " + requestJson);
+                        requestEntity = new HttpEntity(requestJson, headers);
+                        root = mapper.readTree(api.getRest().exchange(URL, HttpMethod.POST, requestEntity, String.class).getBody());
+                        nameNode = root.path("metaData");
+                        System.out.println("code : " + nameNode.path("code").asText());
+                        System.out.println("message : " + nameNode.path("message").asText());
+                        //response = mapper.readTree(api.Decrypt(root.path("response").asText(),utc)).path("noSPRI");
 
-                    if (nameNode.path("code").asText().equals("200")) {
-                        if (koneksiDB.UrlBpjs().contains("apijkn")) {
+                        if (nameNode.path("code").asText().equals("200")) {
                             JsonNode res1 = root.path("response");
                             String res = api.decrypt(res1.asText());
                             String lz = api.lzDecrypt(res);
                             response = mapper.readTree(lz);
+                            response = response.path("noSPRI");
+                            System.out.println("No SPRI : " + response);
+                            if (Sequel.menyimpantf("bridging_surat_pri_bpjs", "?,?,?,?,?,?,?,?,?,?", "No.Surat", 10, new String[]{
+                                NoRawat.getText(), NoKartu.getText(), Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), response.asText(), Valid.SetTgl(TanggalKontrol.getSelectedItem() + ""), KdDokter.getText(), NmDokter.getText(), KdPoli.getText(), NmPoli.getText(), Diagnosa.getText()
+                            }) == true) {
+                                JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
+                                emptTeks();
+                                tampil();
+                            }
                         } else {
-                            response = root.path("response");
-                        }
-                        response = response.path("noSPRI");
-                        System.out.println("No SPRI : " + response);
-                        if (Sequel.menyimpantf("bridging_surat_pri_bpjs", "?,?,?,?,?,?,?,?,?,?", "No.Surat", 10, new String[]{
-                            NoRawat.getText(), NoKartu.getText(), Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), response.asText(), Valid.SetTgl(TanggalKontrol.getSelectedItem() + ""), KdDokter.getText(), NmDokter.getText(), KdPoli.getText(), NmPoli.getText(), Diagnosa.getText()
-                        }) == true) {
                             JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
-                            emptTeks();
-                            tampil();
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
-                    }
-                } catch (Exception ex) {
-                    System.out.println("Notifikasi Bridging : " + ex);
-                    if (ex.toString().contains("UnknownHostException")) {
-                        JOptionPane.showMessageDialog(null, "Koneksi ke server BPJS terputus...!");
+                    } catch (Exception ex) {
+                        System.out.println("Notifikasi Bridging : " + ex);
+                        if (ex.toString().contains("UnknownHostException")) {
+                            JOptionPane.showMessageDialog(null, "Koneksi ke server BPJS terputus...!");
+                        }
                     }
                 }
-            }
                 if (!penjab.equals("BPJ") || !penjab.equals("A02")) {
                     autoNomor();
                     if (Sequel.menyimpantf("bridging_surat_pri_bpjs", "?,?,?,?,?,?,?,?,?,?", "No.Surat", 10, new String[]{
@@ -1762,7 +1758,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         ChkInput.setSelected(true);
         NoSurat.setVisible(false);
         jLabel15.setVisible(false);
-        penjab = Sequel.cariIsi("SELECT kd_pj from reg_periksa where no_rawat=?",norawat);
+        penjab = Sequel.cariIsi("SELECT kd_pj from reg_periksa where no_rawat=?", norawat);
         isForm();
         tampil();
         cekDiagnosa();
@@ -1791,11 +1787,11 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         isForm();
         tampil();
     }
-    
-    private void cekDiagnosa(){
-        String kd_penyakit = Sequel.cariIsi("SELECT kd_penyakit FROM diagnosa_pasien WHERE no_rawat = ? AND prioritas = 1 AND status = 'Ralan' LIMIT 1",NoRawat.getText());
-        String nm_penyakit = Sequel.cariIsi("SELECT nm_penyakit FROM penyakit WHERE kd_penyakit = ? LIMIT 1",kd_penyakit);
-        Diagnosa.setText(kd_penyakit+" - "+nm_penyakit);
+
+    private void cekDiagnosa() {
+        String kd_penyakit = Sequel.cariIsi("SELECT kd_penyakit FROM diagnosa_pasien WHERE no_rawat = ? AND prioritas = 1 AND status = 'Ralan' LIMIT 1", NoRawat.getText());
+        String nm_penyakit = Sequel.cariIsi("SELECT nm_penyakit FROM penyakit WHERE kd_penyakit = ? LIMIT 1", kd_penyakit);
+        Diagnosa.setText(kd_penyakit + " - " + nm_penyakit);
     }
 
     private void isForm() {
@@ -1897,9 +1893,9 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             }
         }
     }
-    
+
     private void autoNomor() {
-        Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_surat,3),signed)),0) from bridging_surat_pri_bpjs where tgl_surat like '%" + dateformat.format(TanggalSurat.getDate()).substring(0, 4)+ dateformat.format(TanggalSurat.getDate()).substring(5, 7)+dateformat.format(TanggalSurat.getDate()).substring(8, 10) +"%'", dateformat.format(TanggalSurat.getDate()).substring(0, 4)
+        Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_surat,3),signed)),0) from bridging_surat_pri_bpjs where tgl_surat like '%" + dateformat.format(TanggalSurat.getDate()).substring(0, 4) + dateformat.format(TanggalSurat.getDate()).substring(5, 7) + dateformat.format(TanggalSurat.getDate()).substring(8, 10) + "%'", dateformat.format(TanggalSurat.getDate()).substring(0, 4)
                 + dateformat.format(TanggalSurat.getDate()).substring(5, 7) + dateformat.format(TanggalSurat.getDate()).substring(8, 10), 3, NoSurat);
     }
 }

@@ -6060,8 +6060,18 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
                         ps.setString(1, TNoRM.getText());
                         rs = ps.executeQuery();
                         if (rs.next()) {
-                            if (rs.getString("no_peserta").length() < 13) {
-                                JOptionPane.showMessageDialog(null, "Kartu BPJS Pasien tidak valid, silahkan hubungi bagian terkait..!!");
+                            if (kdpnj.getText().equals("BPJ")) {
+                                if (rs.getString("no_peserta").length() < 13) {
+                                    JOptionPane.showMessageDialog(null, "Kartu BPJS Pasien tidak valid, silahkan hubungi bagian terkait..!!");
+                                } else {
+                                    this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                                    BPJSSPRI form = new BPJSSPRI(null, false);
+                                    form.setNoRm(TNoRw.getText(), rs.getString("no_peserta"), TNoRM.getText(), TPasien.getText(), rs.getString("tgl_lahir"), rs.getString("jk"), "-");
+                                    form.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
+                                    form.setLocationRelativeTo(internalFrame1);
+                                    form.setVisible(true);
+                                    this.setCursor(Cursor.getDefaultCursor());
+                                }
                             } else {
                                 this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                                 BPJSSPRI form = new BPJSSPRI(null, false);
