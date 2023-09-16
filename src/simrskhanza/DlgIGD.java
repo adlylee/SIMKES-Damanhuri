@@ -6808,8 +6808,8 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
         MnSKDPBPJS.setEnabled(var.getskdp_bpjs());
         MnPermintaanLab.setEnabled(var.getpermintaan_lab());
         MnPermintaanRadiologi.setEnabled(var.getpermintaan_radiologi());
-        if(var.getkode().equals("Admin Utama")){
-            MnAssesment.setEnabled(true);
+        if(var.getkode().equals("Admin Utama") || var.getkode().equals("unit01") || var.getkode().equals("igdponek")){
+            MnAssesment.setEnabled(true);            
         }else{
             MnAssesment.setEnabled(false);
         }
