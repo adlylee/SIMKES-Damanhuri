@@ -3100,6 +3100,11 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             KdDokter.setText(var.getkode());
             Sequel.cariIsi("select dokter.nm_dokter from dokter where dokter.kd_dokter=?", NmDokter, KdDokter.getText());
         }
+        if (var.getkode().equals("Admin Utama")) {
+            BtnTambah.setEnabled(true);
+        } else {
+            BtnTambah.setVisible(false);
+        }
     }
 
     private void getData() {
