@@ -22,7 +22,11 @@ import javax.swing.table.TableColumn;
 import fungsi.sekuel;
 import fungsi.validasi;
 import java.awt.Cursor;
+import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,6 +35,7 @@ import javax.swing.JOptionPane;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.web.client.RestClientException;
 
 /**
  *
@@ -554,7 +559,7 @@ public final class MyLimsTransaksi extends javax.swing.JDialog {
                 System.out.println("message : " + nameNode.path("message").asText());
                 JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
             }
-        } catch (Exception ex) {
+        } catch (HeadlessException | IOException | KeyManagementException | NoSuchAlgorithmException | RestClientException ex) {
             System.out.println("Notifikasi : " + ex);
             if (ex.toString().contains("UnknownHostException")) {
                 JOptionPane.showMessageDialog(rootPane, "Koneksi ke server LIMS terputus...!");
