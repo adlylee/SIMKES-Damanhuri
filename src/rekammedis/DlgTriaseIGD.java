@@ -2112,12 +2112,8 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                     hapus();
                     emptTeks();
                 } else {
-//                    if (var.getkode().equals(kodepetugas)) {
-                        hapus();
-                        emptTeks();
-//                    } else {
-//                        JOptionPane.showMessageDialog(null, "Hanya bisa dihapus oleh petugas yang bersangkutan..!!");
-//                    }
+                    hapus();
+                    emptTeks();
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Maaf, silahkan pilih data yang mau dihapus terlebih dahulu ...!!!!");
