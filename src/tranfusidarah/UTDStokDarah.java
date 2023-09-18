@@ -36,6 +36,7 @@ public class UTDStokDarah extends javax.swing.JDialog {
     private UTDKomponenDarah komponen=new UTDKomponenDarah(null,true);
     private UTDDonor donor=new UTDDonor(null,true);
     private int i;
+    private String jml = "";
     private Calendar cal;
     private SimpleDateFormat sdf;
 
@@ -168,6 +169,7 @@ public class UTDStokDarah extends javax.swing.JDialog {
                     NoKantong1.setText(donor.getTable().getValueAt(donor.getTable().getSelectedRow(),13).toString());
                     GolonganDarah.setSelectedItem(donor.getTable().getValueAt(donor.getTable().getSelectedRow(),10).toString());
                     Resus.setSelectedItem(donor.getTable().getValueAt(donor.getTable().getSelectedRow(),11).toString());
+                    JenisBag.setSelectedItem(donor.getTable().getValueAt(donor.getTable().getSelectedRow(),15).toString());
 //                    NamaKomponen.setText(komponen.getTable().getValueAt(komponen.getTable().getSelectedRow(),1).toString());
 //                    KodeKomponen.requestFocus();
 //                    cal = Calendar.getInstance();
@@ -244,6 +246,8 @@ public class UTDStokDarah extends javax.swing.JDialog {
         btnKantong = new widget.Button();
         NoKantong1 = new widget.TextBox();
         label13 = new widget.Label();
+        jLabel15 = new widget.Label();
+        JenisBag = new widget.ComboBox();
         ChkInput = new widget.CekBox();
         PanelCariUtama = new javax.swing.JPanel();
         panelCariKategori = new javax.swing.JPanel();
@@ -448,7 +452,7 @@ public class UTDStokDarah extends javax.swing.JDialog {
         FormInput.add(Resus);
         Resus.setBounds(294, 72, 65, 23);
 
-        Aftap.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-09-2023" }));
+        Aftap.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "18-09-2023" }));
         Aftap.setDisplayFormat("dd-MM-yyyy");
         Aftap.setName("Aftap"); // NOI18N
         Aftap.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -465,7 +469,7 @@ public class UTDStokDarah extends javax.swing.JDialog {
         FormInput.add(label32);
         label32.setBounds(0, 72, 85, 23);
 
-        Kadaluarsa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-09-2023" }));
+        Kadaluarsa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "18-09-2023" }));
         Kadaluarsa.setDisplayFormat("dd-MM-yyyy");
         Kadaluarsa.setName("Kadaluarsa"); // NOI18N
         Kadaluarsa.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -525,6 +529,16 @@ public class UTDStokDarah extends javax.swing.JDialog {
         label13.setPreferredSize(new java.awt.Dimension(75, 23));
         FormInput.add(label13);
         label13.setBounds(260, 10, 85, 23);
+
+        jLabel15.setText("J.B.:");
+        jLabel15.setName("jLabel15"); // NOI18N
+        FormInput.add(jLabel15);
+        jLabel15.setBounds(470, 72, 40, 23);
+
+        JenisBag.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SB", "DB", "TB", "QB", "P" }));
+        JenisBag.setName("JenisBag"); // NOI18N
+        FormInput.add(JenisBag);
+        JenisBag.setBounds(520, 72, 65, 23);
 
         PanelInput.add(FormInput, java.awt.BorderLayout.CENTER);
 
@@ -1037,11 +1051,29 @@ public class UTDStokDarah extends javax.swing.JDialog {
         }else if(KodeKomponen.getText().trim().equals("")||NamaKomponen.getText().trim().equals("")){
             Valid.textKosong(KodeKomponen,"Komponen");
         }else{
-            if(Sequel.menyimpantf("utd_stok_darah","?,?,?,?,?,?,?,?,?","Kode",9,new String[]{
+            jml = "";
+            switch(JenisBag.getSelectedItem().toString()){
+                case "SB":
+                    jml = "1";
+                    break;
+                case "DB":
+                    jml = "2";
+                    break;
+                case "TB":
+                    jml = "3";
+                    break;
+                case "QB":
+                    jml = "4";
+                    break;
+                default:
+                    jml = "5";
+                    break;
+            }
+            if(Sequel.menyimpantf("utd_stok_darah","?,?,?,?,?,?,?,?,?,?,?","Kode",11,new String[]{
                 NoKantong.getText(),KodeKomponen.getText(),GolonganDarah.getSelectedItem().toString(),
                 Resus.getSelectedItem().toString(),Valid.SetTgl(Aftap.getSelectedItem()+""),
                 Valid.SetTgl(Kadaluarsa.getSelectedItem()+""),Asal.getSelectedItem().toString(),
-                "Ada",NoKantong1.getText()
+                "Ada",NoKantong1.getText(),jml,jml
               })==true){
                 emptTeks();
                 tampil();
@@ -1226,6 +1258,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.ComboBox CmbCrStatus;
     private widget.PanelBiasa FormInput;
     private widget.ComboBox GolonganDarah;
+    private widget.ComboBox JenisBag;
     private widget.Tanggal Kadaluarsa;
     private widget.TextBox KodeKomponen;
     private widget.Label LCount;
@@ -1246,6 +1279,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.Label jLabel12;
     private widget.Label jLabel13;
     private widget.Label jLabel14;
+    private widget.Label jLabel15;
     private widget.Label jLabel17;
     private widget.Label jLabel18;
     private javax.swing.JPanel jPanel2;

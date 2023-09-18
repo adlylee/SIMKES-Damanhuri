@@ -45,7 +45,7 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
     private SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
     private Dimension screen=Toolkit.getDefaultToolkit().getScreenSize();
     private double ttl=0,y=0,stokbarang=0,bayar=0,total2=0,ppn=0,besarppn=0,tagihanppn=0;;
-    private int jml=0,i=0,index=0,row=0,pilih=0;
+    private int jml=0,i=0,index=0,row=0,pilih=0,max_pakai=0;
     private String verifikasi_penyerahan_darah_di_kasir="",status="Belum Dibayar",noorder="",norm="";
     private PreparedStatement ps,ps2,psstok,psdarah,pssimpanperiksa;
     private ResultSet rs,rs2,rsstok,rsdarah;
@@ -1263,6 +1263,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
     private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpanActionPerformed
         LocalTime currentTime = LocalTime.now();
         String shift = getShift(currentTime);
+        max_pakai = 0;
         if(nopenyerahan.getText().trim().equals("")){
             Valid.textKosong(nopenyerahan,"No.Penyerahan");
         }else if(keterangan.getText().trim().equals("")){
@@ -1300,15 +1301,22 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         //simpan darah
                         for (i = 0; i < tbDarah.getRowCount(); i++) {
                             if (tbDarah.getValueAt(i, 0).toString().equals("true")) {
-                                if (Sequel.menyimpantf("utd_penyerahan_darah_detail", "?,?,?,?,?,?,?", "No.Kantung", 7, new String[]{
+                                if (Sequel.menyimpantf("utd_penyerahan_darah_detail", "?,?,?,?,?,?,?,?", "No.Kantong", 8, new String[]{
                                     nopenyerahan.getText(), tbDarah.getValueAt(i, 14).toString(), tbDarah.getValueAt(i, 9).toString(),
                                     tbDarah.getValueAt(i, 10).toString(), tbDarah.getValueAt(i, 11).toString(),
-                                    tbDarah.getValueAt(i, 12).toString(), tbDarah.getValueAt(i, 13).toString()
+                                    tbDarah.getValueAt(i, 12).toString(), tbDarah.getValueAt(i, 13).toString(),tbDarah.getValueAt(i, 15).toString()
                                 }) == false) {
                                     tbDarah.setValueAt(false, i, 0);
                                     getData();
                                 } else {
-                                    Sequel.mengedit("utd_stok_darah", "no_bag='" + tbDarah.getValueAt(i, 1).toString() + "' AND kode_komponen='" + tbDarah.getValueAt(i, 15).toString() + "'", "status='Diambil'");
+                                    max_pakai = Sequel.cariInteger("SELECT max_pakai FROM utd_stok_darah WHERE no_bag='" + tbDarah.getValueAt(i, 1).toString() + "' AND kode_komponen='" + tbDarah.getValueAt(i, 15).toString() + "'");
+                                    if (max_pakai == 1) {
+                                        max_pakai = max_pakai - 1;
+                                        Sequel.mengedit("utd_stok_darah", "no_bag='" + tbDarah.getValueAt(i, 1).toString() + "' AND kode_komponen='" + tbDarah.getValueAt(i, 15).toString() + "'", "status='Diambil' AND max_pakai = '"+max_pakai+"'");
+                                    } else {
+                                        max_pakai = max_pakai - 1;
+                                        Sequel.mengedit("utd_stok_darah", "no_bag='" + tbDarah.getValueAt(i, 1).toString() + "' AND kode_komponen='" + tbDarah.getValueAt(i, 15).toString() + "'", "max_pakai = '"+max_pakai+"'");
+                                    }
                                     Sequel.queryu("update permintaan_utd set keterangan='Sudah Validasi',no_penyerahan='"+nopenyerahan.getText()+"' where noorder='"+noorder+"'");
                                     try {
                                         String kd_jns_prw = Sequel.cariIsi("SELECT kd_lab FROM utd_mapping_komponen WHERE nm_komponen = '" + tbDarah.getValueAt(i, 2).toString() + "'");

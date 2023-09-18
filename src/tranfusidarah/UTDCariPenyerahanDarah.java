@@ -36,21 +36,20 @@ public class UTDCariPenyerahanDarah extends javax.swing.JDialog {
     private Jurnal jur=new Jurnal();
     private Connection koneksi=koneksiDB.condb();
     private riwayatobat Trackobat=new riwayatobat();
-    private int i=0,no=1,pilih=0;
+    private int i=0,no=1,pilih=0,max_pakai=0;
     private double pendapatan=0,subtotalpendapatan=0,subtotalmedis=0,subtotalnonmedis=0;
     private Dimension screen=Toolkit.getDefaultToolkit().getScreenSize();
     private DlgCariPetugas petugas=new DlgCariPetugas(null,false);
     private UTDKomponenDarah komponen=new UTDKomponenDarah(null,true);
     private String verifikasi_penyerahan_darah_di_kasir=Sequel.cariIsi(
-            "select verifikasi_penyerahan_darah_di_kasir from set_nota");
-    private String aktifkan="",
+            "select verifikasi_penyerahan_darah_di_kasir from set_nota"),aktifkan="",
             sqlpscekmedis="select utd_penggunaan_medis_penyerahan_darah.kode_brng,databarang.nama_brng,utd_penggunaan_medis_penyerahan_darah.jml,utd_penggunaan_medis_penyerahan_darah.harga,"+
                             "utd_penggunaan_medis_penyerahan_darah.total,databarang.kode_sat from utd_penggunaan_medis_penyerahan_darah inner join databarang "+
                             "on utd_penggunaan_medis_penyerahan_darah.kode_brng=databarang.kode_brng where utd_penggunaan_medis_penyerahan_darah.no_penyerahan=?",
             sqlpsceknonmedis="select utd_penggunaan_penunjang_penyerahan_darah.kode_brng,ipsrsbarang.nama_brng,utd_penggunaan_penunjang_penyerahan_darah.jml,utd_penggunaan_penunjang_penyerahan_darah.harga,"+
                             "utd_penggunaan_penunjang_penyerahan_darah.total,ipsrsbarang.kode_sat from utd_penggunaan_penunjang_penyerahan_darah inner join ipsrsbarang "+
                             "on utd_penggunaan_penunjang_penyerahan_darah.kode_brng=ipsrsbarang.kode_brng where utd_penggunaan_penunjang_penyerahan_darah.no_penyerahan=?",
-            norawat="",noorder="";
+            norawat="",noorder="",status_darah="",max_pakai_darah="";
     
     /** Creates new form DlgProgramStudi
      * @param parent
@@ -926,12 +925,20 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                     } else {
                         try {
                             psdarah = koneksi.prepareStatement(
-                                    "select no_kantong from utd_penyerahan_darah_detail where no_penyerahan=? ");
+                                    "select no_kantong , kode_komponen from utd_penyerahan_darah_detail where no_penyerahan=? ");
                             try {
                                 psdarah.setString(1, tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString());
                                 rs2 = psdarah.executeQuery();
                                 while (rs2.next()) {
-                                    Sequel.mengedit("utd_stok_darah", "no_kantong=?", "status='Ada'", 1, new String[]{rs2.getString(1)});
+                                    status_darah = Sequel.cariIsi("SELECT status FROM utd_stok_darah WHERE no_kantong='" + rs2.getString(1) + "' AND kode_komponen='" + rs2.getString(2) + "'");
+                                    max_pakai_darah = Sequel.cariIsi("SELECT max_pakai FROM utd_stok_darah WHERE no_kantong='" + rs2.getString(1) + "' AND kode_komponen='" + rs2.getString(2) + "'");
+                                    if (status_darah.equals("Diambil")) {
+                                        Sequel.mengedit("utd_stok_darah", "no_kantong=? AND kode_komponen=?", "status='Ada' AND max_pakai='1'", 2, new String[]{rs2.getString(1),rs2.getString(2)});
+                                    }
+                                    if (status_darah.equals("Ada")) {
+                                        max_pakai_darah = max_pakai_darah + 1;
+                                        Sequel.mengedit("utd_stok_darah", "no_kantong=? AND kode_komponen=?", "AND max_pakai='"+max_pakai_darah+"'", 2, new String[]{rs2.getString(1),rs2.getString(2)});
+                                    }
                                 }
                             } catch (Exception e) {
                                 System.out.println("Notifikasi Darah : " + e);

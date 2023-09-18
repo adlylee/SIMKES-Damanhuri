@@ -56,7 +56,7 @@ public class DlgCariPeriksaLab extends javax.swing.JDialog {
     private String diagnosa="",saran="",kesan="",Suspen_Piutang_Laborat_Ranap="", Laborat_Ranap="", Beban_Jasa_Medik_Dokter_Laborat_Ranap="", 
             Utang_Jasa_Medik_Dokter_Laborat_Ranap="", Beban_Jasa_Medik_Petugas_Laborat_Ranap="", 
             Utang_Jasa_Medik_Petugas_Laborat_Ranap="", Beban_Kso_Laborat_Ranap="", Utang_Kso_Laborat_Ranap="", 
-            HPP_Persediaan_Laborat_Rawat_inap="", Persediaan_BHP_Laborat_Rawat_Inap="",status="";
+            HPP_Persediaan_Laborat_Rawat_inap="", Persediaan_BHP_Laborat_Rawat_Inap="",status="",bidang = Sequel.cariIsi("SELECT bidang FROM pegawai WHERE nik = ?",var.getkode());
 
     /** Creates new form DlgProgramStudi
      * @param parent
@@ -2273,11 +2273,26 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     }
     
     public void isCek(){
-        MnCetakHasilLab.setEnabled(var.getperiksa_lab());
-        MnCetakNota.setEnabled(var.getperiksa_lab());
-        MnUbah.setEnabled(var.getperiksa_lab());
-        BtnHapus.setEnabled(var.getperiksa_lab());
-        BtnPrint.setEnabled(var.getperiksa_lab());
+        if (var.getkode().equals("Admin Utama")) {
+            MnCetakHasilLab.setEnabled(true);
+            MnCetakNota.setEnabled(true);
+            MnUbah.setEnabled(true);
+            BtnHapus.setEnabled(true);
+            BtnPrint.setEnabled(true);
+        }
+        if (bidang.equals("Instalasi Laboratorium (Muhasabah)")) {
+            MnCetakHasilLab.setEnabled(var.getperiksa_lab());
+            MnCetakNota.setEnabled(var.getperiksa_lab());
+            MnUbah.setEnabled(var.getperiksa_lab());
+            BtnHapus.setEnabled(var.getperiksa_lab());
+            BtnPrint.setEnabled(var.getperiksa_lab());
+        } else {
+            MnCetakHasilLab.setEnabled(false);
+            MnCetakNota.setEnabled(false);
+            MnUbah.setEnabled(false);
+            BtnHapus.setEnabled(false);
+            BtnPrint.setEnabled(false);
+        }
     }
     
     public void setPasien(String pasien){

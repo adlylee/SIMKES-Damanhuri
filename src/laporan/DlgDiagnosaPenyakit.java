@@ -776,6 +776,17 @@ public class DlgDiagnosaPenyakit extends javax.swing.JDialog {
         panelDiagnosa1.setRM(TNoRw.getText(),TNoRM.getText(),Valid.SetTgl(DTPCari1.getSelectedItem()+""),Valid.SetTgl(DTPCari2.getSelectedItem()+""),Status.getSelectedItem().toString(),TCari.getText().trim());
     }
     
+    public void setNoRm(String norwt, Date tgl1, Date tgl2,String status , Integer tab) {
+        TNoRw.setText(norwt);
+        TCari.setText(norwt);
+        Status.setSelectedItem(status);
+        isRawat();
+        isPsien();   
+        DTPCari1.setDate(tgl1);
+        DTPCari2.setDate(tgl2);
+        panelDiagnosa1.setRM(TNoRw.getText(),TNoRM.getText(),Valid.SetTgl(DTPCari1.getSelectedItem()+""),Valid.SetTgl(DTPCari2.getSelectedItem()+""),Status.getSelectedItem().toString(),TCari.getText().trim(),tab);
+    }
+    
     
     
     public void isCek(){

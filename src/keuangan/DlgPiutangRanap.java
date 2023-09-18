@@ -768,7 +768,7 @@ private void BtnCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                         "on dpjp_ranap.kd_dokter=dokter.kd_dokter where dpjp_ranap.no_rawat=? ");
                 dokterranap="";
                 try {
-                    psdpjp.setString(1,tbBangsal.getValueAt(i,21).toString());
+                    psdpjp.setString(1,tbBangsal.getValueAt(i,22).toString());
                     rs3=psdpjp.executeQuery();                    
                     while(rs3.next()){
                         dokterranap=rs3.getString("nm_dokter")+", "+dokterranap;

@@ -2076,11 +2076,11 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             } else {
                 sukses = false;
                 JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat pemrosesan data, input data dibatalkan.\nPeriksa kembali data sebelum melanjutkan menyimpan..!!");
-                Sequel.RollBack();
+//                Sequel.RollBack();
             }
             Sequel.AutoComitTrue();
             if (sukses == true) {
-                emptTeks();
+//                emptTeks();
             }
         }
 }//GEN-LAST:event_BtnSimpanActionPerformed
@@ -2110,12 +2110,14 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             if (tbTriase.getSelectedRow() != -1) {
                 if (var.getkode().equals("Admin Utama")) {
                     hapus();
+                    emptTeks();
                 } else {
-                    if (var.getkode().equals(kodepetugas)) {
+//                    if (var.getkode().equals(kodepetugas)) {
                         hapus();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Hanya bisa dihapus oleh petugas yang bersangkutan..!!");
-                    }
+                        emptTeks();
+//                    } else {
+//                        JOptionPane.showMessageDialog(null, "Hanya bisa dihapus oleh petugas yang bersangkutan..!!");
+//                    }
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Maaf, silahkan pilih data yang mau dihapus terlebih dahulu ...!!!!");
@@ -2140,12 +2142,12 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                     insertPasien();
                     ganti();
                 } else {
-                    if (var.getkode().equals(kodepetugas)) {
+//                    if (var.getkode().equals(kodepetugas)) {
                         insertPasien();
                         ganti();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Hanya bisa diganti oleh petugas yang bersangkutan..!!");
-                    }
+//                    } else {
+//                        JOptionPane.showMessageDialog(null, "Hanya bisa diganti oleh petugas yang bersangkutan..!!");
+//                    }
                 }
             }
         }
@@ -3047,20 +3049,33 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                     pilih[i], kodelevel[i], level[i], kodetindakan[i], pengkajian[i]
                 });
             }
-            if (cmbTriase.getSelectedItem().toString() == "AIRWAY") {
-                key = " kd_pemeriksaan='KP01' ";
-            } else if (cmbTriase.getSelectedItem().toString() == "BREATHING") {
-                key = " kd_pemeriksaan='KP02' ";
-            } else if (cmbTriase.getSelectedItem().toString() == "CIRCULATION") {
-                key = " kd_pemeriksaan='KP03' ";
-            } else if (cmbTriase.getSelectedItem().toString() == "DISABILITY") {
-                key = " kd_pemeriksaan='KP04' ";
-            } else if (cmbTriase.getSelectedItem().toString() == "Prediksi pemeriksaan penunjang") {
-                key = " kd_pemeriksaan='KP05' ";
-            } else if (cmbTriase.getSelectedItem().toString() == "Prediksi SDM yang akan terlibat") {
-                key = " kd_pemeriksaan='KP06' ";
-            } else if (cmbTriase.getSelectedItem().toString() == "Do'a") {
-                key = " kd_pemeriksaan='KP07' ";
+            if (null == cmbTriase.getSelectedItem().toString()) {
+                key = " kd_pemeriksaan like '%%' ";
+            } else switch (cmbTriase.getSelectedItem().toString()) {
+                case "AIRWAY":
+                    key = " kd_pemeriksaan='KP01' ";
+                    break;
+                case "BREATHING":
+                    key = " kd_pemeriksaan='KP02' ";
+                    break;
+                case "CIRCULATION":
+                    key = " kd_pemeriksaan='KP03' ";
+                    break;
+                case "DISABILITY":
+                    key = " kd_pemeriksaan='KP04' ";
+                    break;
+                case "Prediksi pemeriksaan penunjang":
+                    key = " kd_pemeriksaan='KP05' ";
+                    break;
+                case "Prediksi SDM yang akan terlibat":
+                    key = " kd_pemeriksaan='KP06' ";
+                    break;
+                case "Do'a":
+                    key = " kd_pemeriksaan='KP07' ";
+                    break;
+                default:
+                    key = " kd_pemeriksaan like '%%' ";
+                    break;
             }
             ps = koneksi.prepareStatement(
                     "select * from master_triase_igd where " + key + " and nm_tindakan like ? order by kd_level, kd_tindakan");
@@ -3169,13 +3184,24 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             } else {
                 int reply = JOptionPane.showConfirmDialog(rootPane, "Eeiiiiiits, Yakin mau dihapus..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
                 if (reply == JOptionPane.YES_OPTION) {
-                    if (Sequel.queryu2tf("delete from data_triase_igd where no_rawat=? and tanggal=? and jam=?", 3, new String[]{
-                        tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString(), tbTriase.getValueAt(tbTriase.getSelectedRow(), 1).toString(), tbTriase.getValueAt(tbTriase.getSelectedRow(), 2).toString()
+//                    if (Sequel.queryu2tf("delete from data_triase_igd where no_rawat=? and tanggal=? and jam=?", 3, new String[]{
+//                        tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString(), tbTriase.getValueAt(tbTriase.getSelectedRow(), 1).toString(), tbTriase.getValueAt(tbTriase.getSelectedRow(), 2).toString()
+//                    }) == true) {
+//                        Sequel.queryu("delete from pemeriksaan_ralan where no_rawat='" + tbTriase.getValueAt(i, 0).toString()
+//                                + "' and tgl_perawatan='" + tbTriase.getValueAt(i, 1).toString()
+//                                + "' and jam_rawat='" + tbTriase.getValueAt(i, 2).toString() + "' ");
+//                        Sequel.meghapus("detail_pemeriksaan_triase", "no_rawat", tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString());
+//                        tampil();
+//                    }
+                    if (Sequel.queryu2tf("delete from detail_pemeriksaan_triase where no_rawat=?", 1, new String[]{
+                        tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString()
                     }) == true) {
-                        Sequel.queryu("delete from pemeriksaan_ralan where no_rawat='" + tbTriase.getValueAt(i, 0).toString()
-                                + "' and tgl_perawatan='" + tbTriase.getValueAt(i, 1).toString()
-                                + "' and jam_rawat='" + tbTriase.getValueAt(i, 2).toString() + "' ");
-                        Sequel.meghapus("detail_pemeriksaan_triase", "no_rawat", tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString());
+                        Sequel.queryu("delete from pemeriksaan_ralan where no_rawat='" + tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString()
+                                + "' and tgl_perawatan='" + tbTriase.getValueAt(tbTriase.getSelectedRow(), 1).toString()
+                                + "' and jam_rawat='" + tbTriase.getValueAt(tbTriase.getSelectedRow(), 2).toString() + "' ");
+                        Sequel.queryu("delete from data_triase_igd where no_rawat='" + tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString()
+                                + "' and tanggal='" + tbTriase.getValueAt(tbTriase.getSelectedRow(), 1).toString()
+                                + "' and jam='" + tbTriase.getValueAt(tbTriase.getSelectedRow(), 2).toString() + "' ");
                         tampil();
                     }
                 }

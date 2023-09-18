@@ -933,6 +933,16 @@ public class PanelDiagnosa extends widget.panelisi {
         this.keyword=keyword;
     }
     
+    public void setRM(String norawat,String norm,String tanggal1,String tanggal2,String status,String keyword,Integer tab){
+        this.norawat=norawat;
+        this.norm=norm;
+        this.tanggal1=tanggal1;
+        this.tanggal2=tanggal2;
+        this.status=status;
+        this.keyword=keyword;
+        TabRawat.setSelectedIndex(tab);
+    }
+    
     public void simpan(){
         try {
             koneksi.setAutoCommit(false);

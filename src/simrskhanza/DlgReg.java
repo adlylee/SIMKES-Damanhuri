@@ -101,7 +101,7 @@ public final class DlgReg extends javax.swing.JDialog {
     private String nosisrute = "", aktifkanparsial = "no", BASENOREG = "",user="",limit="",
             URUTNOREG = "", status = "Baru", order = "reg_periksa.tgl_registrasi,reg_periksa.jam_reg desc", alamatperujuk = "-", aktifjadwal = "", IPPRINTERTRACER = "", umur = "0", sttsumur = "Th",
             validasiregistrasi = Sequel.cariIsi("select wajib_closing_kasir from set_validasi_registrasi"),
-            validasicatatan = Sequel.cariIsi("select tampilkan_catatan from set_validasi_catatan"), nm_pasien = "", no_reg = "", nm_poli = "", url = "";
+            validasicatatan = Sequel.cariIsi("select tampilkan_catatan from set_validasi_catatan"), nm_pasien = "", no_reg = "", nm_poli = "", url = "", bidang = "";
     private SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
     
     private DlgCariPoli poli3 = new DlgCariPoli(null, false);
@@ -5878,14 +5878,21 @@ public final class DlgReg extends javax.swing.JDialog {
 }//GEN-LAST:event_THbngnKeyPressed
 
     private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpanActionPerformed
-        if (var.getkode().equals("unit20") || var.getkode().equals("Admin Utama")
-                || var.getkode().equals("07012012017113007") || var.getkode().equals("07012062014313059") || var.getkode().equals("07012062019213080") || var.getkode().equals("07012062019213082") || var.getkode().equals("07012082019413099")
-                || var.getkode().equals("07012082019413103") || var.getkode().equals("07012102014413067") || var.getkode().equals("07012102014413068") || var.getkode().equals("07012102016113021") || var.getkode().equals("07012102018213015")
-                || var.getkode().equals("07012032011313006") || var.getkode().equals("07012102009213002")) {
+        bidang = cekBidang(var.getkode());
+        if (var.getkode().equals("Admin Utama") || bidang.equals("Instalasi Rekam Medis (Amanah)") || var.getkode().equals("unit20")) {
             trySimpan();
         } else {
             setStatusPasien("Diterima","");
         }
+        
+//        if (var.getkode().equals("unit20") || var.getkode().equals("Admin Utama")
+//                || var.getkode().equals("07012012017113007") || var.getkode().equals("07012062014313059") || var.getkode().equals("07012062019213080") || var.getkode().equals("07012062019213082") || var.getkode().equals("07012082019413099")
+//                || var.getkode().equals("07012082019413103") || var.getkode().equals("07012102014413067") || var.getkode().equals("07012102014413068") || var.getkode().equals("07012102016113021") || var.getkode().equals("07012102018213015")
+//                || var.getkode().equals("07012032011313006") || var.getkode().equals("07012102009213002")) {
+//            trySimpan();
+//        } else {
+//            setStatusPasien("Diterima","");
+//        }
 //        } else if (var.getkode().contains("unit")) {
 //            setStatusPasien("Diterima");
 //        } else {
@@ -5902,10 +5909,12 @@ public final class DlgReg extends javax.swing.JDialog {
 }//GEN-LAST:event_BtnSimpanKeyPressed
 
     private void BtnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBatalActionPerformed
-        if (var.getkode().equals("unit20")|| var.getkode().equals("Admin Utama")
-                || var.getkode().equals("07012012017113007") || var.getkode().equals("07012062014313059") || var.getkode().equals("07012062019213080") || var.getkode().equals("07012062019213082") || var.getkode().equals("07012082019413099")
-                || var.getkode().equals("07012082019413103") || var.getkode().equals("07012102014413067") || var.getkode().equals("07012102014413068") || var.getkode().equals("07012102016113021") || var.getkode().equals("07012102018213015")
-                || var.getkode().equals("07012032011313006") || var.getkode().equals("07012102009213002")) {
+//        if (var.getkode().equals("unit20")|| var.getkode().equals("Admin Utama")
+//                || var.getkode().equals("07012012017113007") || var.getkode().equals("07012062014313059") || var.getkode().equals("07012062019213080") || var.getkode().equals("07012062019213082") || var.getkode().equals("07012082019413099")
+//                || var.getkode().equals("07012082019413103") || var.getkode().equals("07012102014413067") || var.getkode().equals("07012102014413068") || var.getkode().equals("07012102016113021") || var.getkode().equals("07012102018213015")
+//                || var.getkode().equals("07012032011313006") || var.getkode().equals("07012102009213002")) {
+        bidang = cekBidang(var.getkode());
+        if (var.getkode().equals("Admin Utama") || bidang.equals("Instalasi Rekam Medis (Amanah)") || var.getkode().equals("unit20")) {
             ChkInput.setSelected(true);
             isForm();
             emptTeks();
@@ -5930,10 +5939,12 @@ public final class DlgReg extends javax.swing.JDialog {
 }//GEN-LAST:event_BtnBatalKeyPressed
 
     private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHapusActionPerformed
-        if (var.getkode().equals("unit20")|| var.getkode().equals("Admin Utama")
-                || var.getkode().equals("07012012017113007") || var.getkode().equals("07012062014313059") || var.getkode().equals("07012062019213080") || var.getkode().equals("07012062019213082") || var.getkode().equals("07012082019413099")
-                || var.getkode().equals("07012082019413103") || var.getkode().equals("07012102014413067") || var.getkode().equals("07012102014413068") || var.getkode().equals("07012102016113021") || var.getkode().equals("07012102018213015")
-                || var.getkode().equals("07012032011313006") || var.getkode().equals("07012102009213002")) {
+//        if (var.getkode().equals("unit20")|| var.getkode().equals("Admin Utama")
+//                || var.getkode().equals("07012012017113007") || var.getkode().equals("07012062014313059") || var.getkode().equals("07012062019213080") || var.getkode().equals("07012062019213082") || var.getkode().equals("07012082019413099")
+//                || var.getkode().equals("07012082019413103") || var.getkode().equals("07012102014413067") || var.getkode().equals("07012102014413068") || var.getkode().equals("07012102016113021") || var.getkode().equals("07012102018213015")
+//                || var.getkode().equals("07012032011313006") || var.getkode().equals("07012102009213002")) {
+        bidang = cekBidang(var.getkode());
+        if (var.getkode().equals("Admin Utama") || bidang.equals("Instalasi Rekam Medis (Amanah)") || var.getkode().equals("unit20")) {
             hapusRow();
         } else {
             setStatusPasien("Sudah","");
@@ -6052,10 +6063,12 @@ public final class DlgReg extends javax.swing.JDialog {
 }//GEN-LAST:event_BtnAllKeyPressed
 
     private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditActionPerformed
-        if (var.getkode().equals("unit20")|| var.getkode().equals("Admin Utama")
-                || var.getkode().equals("07012012017113007") || var.getkode().equals("07012062014313059") || var.getkode().equals("07012062019213080") || var.getkode().equals("07012062019213082") || var.getkode().equals("07012082019413099")
-                || var.getkode().equals("07012082019413103") || var.getkode().equals("07012102014413067") || var.getkode().equals("07012102014413068") || var.getkode().equals("07012102016113021") || var.getkode().equals("07012102018213015")
-                || var.getkode().equals("07012032011313006") || var.getkode().equals("07012102009213002")) {
+//        if (var.getkode().equals("unit20")|| var.getkode().equals("Admin Utama")
+//                || var.getkode().equals("07012012017113007") || var.getkode().equals("07012062014313059") || var.getkode().equals("07012062019213080") || var.getkode().equals("07012062019213082") || var.getkode().equals("07012082019413099")
+//                || var.getkode().equals("07012082019413103") || var.getkode().equals("07012102014413067") || var.getkode().equals("07012102014413068") || var.getkode().equals("07012102016113021") || var.getkode().equals("07012102018213015")
+//                || var.getkode().equals("07012032011313006") || var.getkode().equals("07012102009213002")) {
+        bidang = cekBidang(var.getkode());
+        if (var.getkode().equals("Admin Utama") || bidang.equals("Instalasi Rekam Medis (Amanah)") || var.getkode().equals("unit20")) {
             editRow();
         } else {
             setStatusPasien("Dilayani",tbPetugas.getModel().getValueAt(tbPetugas.getSelectedRow(), 22).toString());
@@ -11853,5 +11866,10 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
                 System.out.println("Notifikasi : " + e);
             }
         }
+    }
+    
+    private String cekBidang(String nik){
+        String cari = Sequel.cariIsi("SELECT bidang FROM pegawai WHERE nik = ?",nik);
+        return cari;
     }
 }

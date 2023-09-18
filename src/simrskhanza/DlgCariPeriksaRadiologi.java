@@ -3205,12 +3205,12 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     }
 
     public void isCek() {
-        MnCetakNota.setEnabled(var.getperiksa_radiologi());
-        BtnHapus.setEnabled(var.getperiksa_radiologi());
-        MnUbahDokterPetugas.setEnabled(var.getperiksa_radiologi());
-        MnLihatGambar.setEnabled(var.getperiksa_radiologi());
-        MnLihatHasil.setEnabled(var.getperiksa_radiologi());
-        BtnPrint.setEnabled(var.getperiksa_radiologi());
+//        MnCetakNota.setEnabled(var.getperiksa_radiologi());
+//        BtnHapus.setEnabled(var.getperiksa_radiologi());
+//        MnUbahDokterPetugas.setEnabled(var.getperiksa_radiologi());
+//        MnLihatGambar.setEnabled(var.getperiksa_radiologi());
+//        MnLihatHasil.setEnabled(var.getperiksa_radiologi());
+//        BtnPrint.setEnabled(var.getperiksa_radiologi());
         if (var.getkode().equals("Admin Utama") || var.getkode().equals("D0000132") || var.getkode().equals("DR00019") || var.getkode().equals("rad1")) {
             BtnHapus.setEnabled(true);
             MnCetakNota.setEnabled(true);
@@ -3218,6 +3218,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             MnLihatHasil.setEnabled(true);
             MnUbahDokterPetugas.setEnabled(true);
             MnTarikGambar.setEnabled(true);
+            MnTarikHasil.setEnabled(true);
         } else {
             BtnHapus.setEnabled(false);
             MnCetakNota.setEnabled(false);
@@ -3225,6 +3226,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             MnLihatHasil.setEnabled(false);
             MnUbahDokterPetugas.setEnabled(false);
             MnTarikGambar.setEnabled(false);
+            MnTarikHasil.setEnabled(false);
         }
     }
 
