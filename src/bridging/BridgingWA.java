@@ -98,7 +98,7 @@ public class BridgingWA {
     }
 
     public void sendWaBatal(String no_rkm_medis, String nama, String tanggal, String polidari, String polike) {
-        try {
+        try {            
             reurn = "";
             message = "Assalamualaikum " + nama + ". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai .\nHandak mahabar akan kalaunya JADWAL PERIKSA ke " + polidari + " sebelumnya dibatalkan, karena Dokter berhalangan hadir. Dan dipindah jadi tanggal " + tanggal + " ke " + polike + ". \nTerkait dengan habar di atas, kami ucapkan permohonan maaf dan terima kasih atas kepercayaan pian berobat di RSUD H. Damanhuri. \nTerima kasih \nWassalamualaikum \nDaftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US \nDaftar Online Tanpa Antri via JKN Mobile Klik Disini >>> https://play.google.com/store/apps/details?id=app.bpjs.mobile";
             number = Sequel.cariIsi("SELECT no_tlp FROM pasien WHERE no_rkm_medis = " + no_rkm_medis);
@@ -113,7 +113,7 @@ public class BridgingWA {
                 JSONObject j=new JSONObject(mss);
                 reurn = waGw(j.toString(),nama);
                 System.out.println(reurn);
-            }
+                }
         } catch (IOException ex) {
             System.out.println("Notifikasi : " + ex);
             System.out.println(url);
@@ -158,7 +158,7 @@ public class BridgingWA {
                         con.getInputStream()));
                 String inputLine;
                 StringBuffer response = new StringBuffer();
-
+ 
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }

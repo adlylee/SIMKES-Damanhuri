@@ -1637,8 +1637,10 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                     return respon;
                 }
             } else {
-                JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
-                return respon;
+                if (!nameNode.path("code").asText().equals("201")) {
+                    JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
+                    return respon;
+                }
             }
         } catch (Exception ex) {
             System.out.println("Notifikasi Bridging : " + ex);

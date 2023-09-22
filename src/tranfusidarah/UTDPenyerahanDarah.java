@@ -1312,7 +1312,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                     max_pakai = Sequel.cariInteger("SELECT max_pakai FROM utd_stok_darah WHERE no_bag='" + tbDarah.getValueAt(i, 1).toString() + "' AND kode_komponen='" + tbDarah.getValueAt(i, 15).toString() + "'");
                                     if (max_pakai == 1) {
                                         max_pakai = max_pakai - 1;
-                                        Sequel.mengedit("utd_stok_darah", "no_bag='" + tbDarah.getValueAt(i, 1).toString() + "' AND kode_komponen='" + tbDarah.getValueAt(i, 15).toString() + "'", "status='Diambil' AND max_pakai = '"+max_pakai+"'");
+                                        Sequel.mengedit("utd_stok_darah", "no_bag='" + tbDarah.getValueAt(i, 1).toString() + "' AND kode_komponen='" + tbDarah.getValueAt(i, 15).toString() + "'", "status='Diambil', max_pakai = '"+max_pakai+"'");
                                     } else {
                                         max_pakai = max_pakai - 1;
                                         Sequel.mengedit("utd_stok_darah", "no_bag='" + tbDarah.getValueAt(i, 1).toString() + "' AND kode_komponen='" + tbDarah.getValueAt(i, 15).toString() + "'", "max_pakai = '"+max_pakai+"'");

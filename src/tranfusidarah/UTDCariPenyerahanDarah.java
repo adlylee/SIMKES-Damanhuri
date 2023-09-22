@@ -933,11 +933,12 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                                     status_darah = Sequel.cariIsi("SELECT status FROM utd_stok_darah WHERE no_kantong='" + rs2.getString(1) + "' AND kode_komponen='" + rs2.getString(2) + "'");
                                     max_pakai_darah = Sequel.cariIsi("SELECT max_pakai FROM utd_stok_darah WHERE no_kantong='" + rs2.getString(1) + "' AND kode_komponen='" + rs2.getString(2) + "'");
                                     if (status_darah.equals("Diambil")) {
-                                        Sequel.mengedit("utd_stok_darah", "no_kantong=? AND kode_komponen=?", "status='Ada' AND max_pakai='1'", 2, new String[]{rs2.getString(1),rs2.getString(2)});
+                                        Sequel.mengedit("utd_stok_darah", "no_kantong=? AND kode_komponen=?", "status='Ada', max_pakai='1'", 2, new String[]{rs2.getString(1),rs2.getString(2)});
                                     }
                                     if (status_darah.equals("Ada")) {
-                                        max_pakai_darah = max_pakai_darah + 1;
-                                        Sequel.mengedit("utd_stok_darah", "no_kantong=? AND kode_komponen=?", "AND max_pakai='"+max_pakai_darah+"'", 2, new String[]{rs2.getString(1),rs2.getString(2)});
+//                                        max_pakai_darah = max_pakai_darah + 1;
+                                        max_pakai = Integer.parseInt(max_pakai_darah) + 1;
+                                        Sequel.mengedit("utd_stok_darah", "no_kantong=? AND kode_komponen=?", "max_pakai='"+max_pakai+"'", 2, new String[]{rs2.getString(1),rs2.getString(2)});
                                     }
                                 }
                             } catch (Exception e) {

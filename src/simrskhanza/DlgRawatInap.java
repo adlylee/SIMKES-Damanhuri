@@ -3558,19 +3558,22 @@ public final class DlgRawatInap extends javax.swing.JDialog {
                     }
                     break;
                 case 3:
-                    if ((!TKeluhan.getText().trim().equals("")) || (!TPemeriksaan.getText().trim().equals(""))
-                            || (!TSuhu.getText().trim().equals("")) || (!TTensi.getText().trim().equals(""))
-                            || (!TAlergi.getText().trim().equals("")) || (!TTinggi.getText().trim().equals(""))
-                            || (!TBerat.getText().trim().equals("")) || (!TRespirasi.getText().trim().equals(""))
-                            || (!TNadi.getText().trim().equals("")) || (!TGCS.getText().trim().equals(""))) {
-                        Sequel.menyimpan("pemeriksaan_ranap", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "Data", 20, new String[]{
-                            TNoRw.getText(), Valid.SetTgl(DTPTgl.getSelectedItem() + ""), cmbJam.getSelectedItem() + ":" + cmbMnt.getSelectedItem() + ":" + cmbDtk.getSelectedItem(),
-                            TSuhu.getText(), TTensi.getText(), TNadi.getText(), TRespirasi.getText(), TTinggi.getText(),
-                            TBerat.getText(), TSpo.getText(), TGCS.getText(), TKeluhan.getText(), TPemeriksaan.getText(), TAlergi.getText(),
-                            TPenilaian.getText(), TRtl.getText(), TInstruksi.getText(), TEvaluasi.getText(), kdptg1.getText(), null
-                        });
-                        tampilPemeriksaan();
-                        BtnBatalActionPerformed(evt);
+                    int reply = JOptionPane.showConfirmDialog(rootPane, "Eeiiiiiits, udah bener belum data yang mau disimpan..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                    if (reply == JOptionPane.YES_OPTION) {
+                        if ((!TKeluhan.getText().trim().equals("")) || (!TPemeriksaan.getText().trim().equals(""))
+                                || (!TSuhu.getText().trim().equals("")) || (!TTensi.getText().trim().equals(""))
+                                || (!TAlergi.getText().trim().equals("")) || (!TTinggi.getText().trim().equals(""))
+                                || (!TBerat.getText().trim().equals("")) || (!TRespirasi.getText().trim().equals(""))
+                                || (!TNadi.getText().trim().equals("")) || (!TGCS.getText().trim().equals(""))) {
+                            Sequel.menyimpan("pemeriksaan_ranap", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "Data", 20, new String[]{
+                                TNoRw.getText(), Valid.SetTgl(DTPTgl.getSelectedItem() + ""), cmbJam.getSelectedItem() + ":" + cmbMnt.getSelectedItem() + ":" + cmbDtk.getSelectedItem(),
+                                TSuhu.getText(), TTensi.getText(), TNadi.getText(), TRespirasi.getText(), TTinggi.getText(),
+                                TBerat.getText(), TSpo.getText(), TGCS.getText(), TKeluhan.getText(), TPemeriksaan.getText(), TAlergi.getText(),
+                                TPenilaian.getText(), TRtl.getText(), TInstruksi.getText(), TEvaluasi.getText(), kdptg1.getText(), null
+                            });
+                            tampilPemeriksaan();
+                            BtnBatalActionPerformed(evt);
+                        }
                     }
                     break;
                 case 4:
@@ -3863,9 +3866,12 @@ public final class DlgRawatInap extends javax.swing.JDialog {
                             if (tbPemeriksaan.getValueAt(i, 22).toString().equals("Verified")) {
                                 JOptionPane.showMessageDialog(null, "Maaf, data sudah divalidasi...!!!!");
                             } else {
-                                Sequel.queryu("delete from pemeriksaan_ranap where no_rawat='" + tbPemeriksaan.getValueAt(i, 1).toString()
-                                        + "' and tgl_perawatan='" + tbPemeriksaan.getValueAt(i, 4).toString()
-                                        + "' and jam_rawat='" + tbPemeriksaan.getValueAt(i, 5).toString() + "' ");
+                                int reply = JOptionPane.showConfirmDialog(rootPane, "Eeiiiiiits, Yakin mau dihapus..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                                if (reply == JOptionPane.YES_OPTION) {
+                                    Sequel.queryu("delete from pemeriksaan_ranap where no_rawat='" + tbPemeriksaan.getValueAt(i, 1).toString()
+                                            + "' and tgl_perawatan='" + tbPemeriksaan.getValueAt(i, 4).toString()
+                                            + "' and jam_rawat='" + tbPemeriksaan.getValueAt(i, 5).toString() + "' ");
+                                }
                             }
                         }
                     }
@@ -4502,23 +4508,27 @@ private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                     }
                 }
                 break;
-            case 3:
+            case 3:                
                 if (TKeluhan.getText().trim().equals("") && TPemeriksaan.getText().trim().equals("") && TSuhu.getText().trim().equals("") && TTensi.getText().trim().equals("")) {
                     Valid.textKosong(TKeluhan, "Hasil Periksa/Perkambangan/Suhu Badan/Tensi");
                 } else {
-                    if (tbPemeriksaan.getSelectedRow() > -1) {
-                        Sequel.mengedit("pemeriksaan_ranap", "no_rawat='" + tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 1)
-                                + "' and tgl_perawatan='" + tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 4)
-                                + "' and jam_rawat='" + tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 5) + "'",
-                                "no_rawat='" + TNoRw.getText() + "',suhu_tubuh='" + TSuhu.getText() + "',tensi='" + TTensi.getText() + "',"
-                                + "keluhan='" + TKeluhan.getText() + "',pemeriksaan='" + TPemeriksaan.getText() + "',penilaian='" + TPenilaian.getText() + "',rtl='" + TRtl.getText() + "',"
-                                + "nadi='" + TNadi.getText() + "',respirasi='" + TRespirasi.getText() + "',spo2='" + TSpo.getText() + "',"
-                                + "tinggi='" + TTinggi.getText() + "',berat='" + TBerat.getText() + "',"
-                                + "gcs='" + TGCS.getText() + "',alergi='" + TAlergi.getText() + "',"
-                                + "tgl_perawatan='" + Valid.SetTgl(DTPTgl.getSelectedItem() + "") + "',"
-                                + "jam_rawat='" + cmbJam.getSelectedItem() + ":" + cmbMnt.getSelectedItem() + ":" + cmbDtk.getSelectedItem() + "'");
-                        tampilPemeriksaan();
-                        BtnBatalActionPerformed(evt);
+                    String nmpetugas = Sequel.cariIsi("SELECT petugas.nama from pemeriksaan_ranap join petugas on pemeriksaan_ranap.nip=petugas.nip where no_rawat='"+TNoRw.getText()+"' and tgl_perawatan='"+Valid.SetTgl(DTPTgl.getSelectedItem()+"")+"' and jam_rawat='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 5).toString()+"'");
+                    int reply = JOptionPane.showConfirmDialog(rootPane, "Yakin ingin mengedit data CPPT oleh "+nmpetugas+"..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                    if (reply == JOptionPane.YES_OPTION) {
+                        if (tbPemeriksaan.getSelectedRow() > -1) {
+                            Sequel.mengedit("pemeriksaan_ranap", "no_rawat='" + tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 1)
+                                    + "' and tgl_perawatan='" + tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 4)
+                                    + "' and jam_rawat='" + tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 5) + "'",
+                                    "no_rawat='" + TNoRw.getText() + "',suhu_tubuh='" + TSuhu.getText() + "',tensi='" + TTensi.getText() + "',"
+                                    + "keluhan='" + TKeluhan.getText() + "',pemeriksaan='" + TPemeriksaan.getText() + "',penilaian='" + TPenilaian.getText() + "',rtl='" + TRtl.getText() + "',"
+                                    + "nadi='" + TNadi.getText() + "',respirasi='" + TRespirasi.getText() + "',spo2='" + TSpo.getText() + "',"
+                                    + "tinggi='" + TTinggi.getText() + "',berat='" + TBerat.getText() + "',"
+                                    + "gcs='" + TGCS.getText() + "',alergi='" + TAlergi.getText() + "',"
+                                    + "tgl_perawatan='" + Valid.SetTgl(DTPTgl.getSelectedItem() + "") + "',"
+                                    + "jam_rawat='" + cmbJam.getSelectedItem() + ":" + cmbMnt.getSelectedItem() + ":" + cmbDtk.getSelectedItem() + "'");
+                            tampilPemeriksaan();
+                            BtnBatalActionPerformed(evt);
+                        }
                     } else {
                         JOptionPane.showMessageDialog(rootPane, "Silahkan pilih data yang mau diganti..!!");
                         TCari.requestFocus();
@@ -6240,6 +6250,8 @@ private void BtnEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
             cmbMnt.setSelectedItem(tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 5).toString().substring(3, 5));
             cmbDtk.setSelectedItem(tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 5).toString().substring(6, 8));
             Valid.SetTgl(DTPTgl, tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 4).toString());
+            kdptg1.setText(Sequel.cariIsi("select nip from pemeriksaan_ranap where no_rawat=? and tgl_perawatan='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 4).toString()+"' and jam_rawat='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 5).toString()+"'",TNoRw.getText()));
+            TPerawat1.setText(Sequel.cariIsi("select nama from petugas where nip=?",kdptg1.getText()));
         }
     }
 

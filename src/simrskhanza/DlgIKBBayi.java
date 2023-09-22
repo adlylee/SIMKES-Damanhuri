@@ -2823,7 +2823,7 @@ private void MnKartuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         tampil();
-//        BtnKelurahan1.hide();
+        BtnKelurahan1.hide();
     }//GEN-LAST:event_formWindowOpened
 
     private void MnInformasiBayiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnInformasiBayiActionPerformed
@@ -3208,6 +3208,7 @@ private void MnKartuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
             param.put("emailrs",var.getemailrs());
             param.put("logo",Sequel.cariGambar("select logo from setting"));
             param.put("logo2",Sequel.cariGambar("select logo from setting"));
+            param.put("tgllahir", Sequel.cariIsi("select DATE_FORMAT(tgl_lahir,'%d-%m-%Y') from pasien where no_rkm_medis=? ", NoRm.getText()));
             Valid.MyReport("rptSKL3.jrxml","report","::[ Surat Kelahiran Bayi ]::",
                 "select pasien.no_rkm_medis, pasien.nm_pasien, pasien.jk, "+
                 "pasien.tgl_lahir,pasien_bayi.jam_lahir, pasien.umur, "+
@@ -3218,7 +3219,7 @@ private void MnKartuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                 "pasien_bayi.proses_lahir,pasien_bayi.anakke, pasien_bayi.keterangan, "+
                 "pasien_bayi.diagnosa,pasien_bayi.penyulit_kehamilan,pasien_bayi.ketuban,"+
                 "pasien_bayi.lingkar_perut,pasien_bayi.lingkar_dada,pegawai.nama,"+
-                "pasien_bayi.no_skl from pasien inner join pegawai inner join pasien_bayi "+
+                "pasien_bayi.no_skl,pasien_bayi.pekerjaanibu from pasien inner join pegawai inner join pasien_bayi "+
                 "inner join kelurahan inner join kecamatan inner join kabupaten "+
                 "on pasien.no_rkm_medis=pasien_bayi.no_rkm_medis and pasien_bayi.penolong=pegawai.nik "+
                 "and pasien.kd_kel=kelurahan.kd_kel and pasien.kd_kec=kecamatan.kd_kec and pasien.kd_kab=kabupaten.kd_kab "+
@@ -3605,7 +3606,7 @@ private void MnKartuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
             menit.setSelectedItem(tbDokter.getValueAt(tbDokter.getSelectedRow(),4).toString().substring(3,5));
             detik.setSelectedItem(tbDokter.getValueAt(tbDokter.getSelectedRow(),4).toString().substring(6,8));
             UmurBayi.setText(tbDokter.getValueAt(tbDokter.getSelectedRow(),5).toString());
-            Valid.SetTgl(Lahir,tbDokter.getValueAt(tbDokter.getSelectedRow(),6).toString()); 
+            Valid.SetTgl(Daftar,tbDokter.getValueAt(tbDokter.getSelectedRow(),6).toString()); 
             Nmibu.setText(tbDokter.getValueAt(tbDokter.getSelectedRow(),7).toString());
             UmurIbu.setText(tbDokter.getValueAt(tbDokter.getSelectedRow(),8).toString());
             NmAyah.setText(tbDokter.getValueAt(tbDokter.getSelectedRow(),9).toString());
@@ -3758,6 +3759,6 @@ private void MnKartuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
 
     private void autoSKL() {
         Valid.autoNomer6("select ifnull(MAX(CONVERT(LEFT(no_skl,4),signed)),0) from pasien inner join pasien_bayi on pasien.no_rkm_medis=pasien_bayi.no_rkm_medis where "+
-                       "pasien.tgl_lahir like '%"+birthday.toString().substring(0,4)+"%' ","/RSUD-YanKes/"+birthday.toString().substring(0,4),4,NoSKL);         
+                       "pasien.tgl_lahir like '%"+birthday.toString().substring(0,4)+"%' ","/RSUD-Yan Kes/"+birthday.toString().substring(0,4),4,NoSKL);         
     }
 }

@@ -1069,11 +1069,11 @@ public class UTDStokDarah extends javax.swing.JDialog {
                     jml = "5";
                     break;
             }
-            if(Sequel.menyimpantf("utd_stok_darah","?,?,?,?,?,?,?,?,?,?,?","Kode",11,new String[]{
+            if(Sequel.menyimpantf("utd_stok_darah","?,?,?,?,?,?,?,?,?,?","Kode",10,new String[]{
                 NoKantong.getText(),KodeKomponen.getText(),GolonganDarah.getSelectedItem().toString(),
                 Resus.getSelectedItem().toString(),Valid.SetTgl(Aftap.getSelectedItem()+""),
                 Valid.SetTgl(Kadaluarsa.getSelectedItem()+""),Asal.getSelectedItem().toString(),
-                "Ada",NoKantong1.getText(),jml,jml
+                "Ada",NoKantong1.getText(),jml
               })==true){
                 emptTeks();
                 tampil();

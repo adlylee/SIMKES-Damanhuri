@@ -2287,7 +2287,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             BtnHapus.setEnabled(var.getperiksa_lab());
             BtnPrint.setEnabled(var.getperiksa_lab());
         } else {
-            MnCetakHasilLab.setEnabled(false);
+            MnCetakHasilLab.setEnabled(true);
             MnCetakNota.setEnabled(false);
             MnUbah.setEnabled(false);
             BtnHapus.setEnabled(false);

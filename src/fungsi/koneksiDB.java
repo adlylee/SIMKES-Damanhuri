@@ -45,7 +45,7 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" +
-                        "    Version 16.09.2023 [ 1.0.24 ] [Activated] GO KLAIM DIGITAL \n"+
+                        "    Version 21.09.2023 [ 1.0.25 ] [Activated] GO KLAIM DIGITAL \n"+
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai                              \n"+
                         "                                                                           \n"+
@@ -59,7 +59,7 @@ public final class koneksiDB {
                         "    * Changelog :                                                       \n"+
                         "       - UTD penyerahan darah                         \n"+
                         "       - Laporan SOAP                         \n"+
-                        "       - Report periksa lab                         \n");
+                        "       - Bridging Hasil Laboratorium                         \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);
                 try {
