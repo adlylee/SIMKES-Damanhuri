@@ -306,7 +306,7 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
 
         tabMode5 = new DefaultTableModel(null, new Object[]{
             "No.Resep", "Tgl.Peresepan", "Jam Peresepan", "No.Rawat", "No.RM",
-            "Pasien", "Dokter Peresep", "Status", "Kode Dokter", "Ruang/Kamar", "Kode Bangsal"
+            "Pasien", "Dokter Peresep", "Status", "Kode Dokter", "Ruang/Kamar", "Kode Bangsal","Jenis Bayar"
         }) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -322,11 +322,11 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
         tbResepPulang.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         for (int i = 0;
-                i < 11; i++) {
+                i < 12; i++) {
             TableColumn column = tbResepPulang.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(75);
-            } else if (i == 1) {
+            } else if ((i == 1) || (i==11)) {
                 column.setPreferredWidth(80);
             } else if (i == 2) {
                 column.setPreferredWidth(85);
@@ -2999,9 +2999,9 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
             ps = koneksi.prepareStatement("select resep_pulang.no_resep,resep_dokter_pulang.tgl_peresepan,resep_dokter_pulang.jam_peresepan,"
                     + " resep_pulang.no_rawat,pasien.no_rkm_medis,pasien.nm_pasien,resep_dokter_pulang.kd_dokter,dokter.nm_dokter, "
                     + " if(resep_dokter_pulang.jam_peresepan=resep_dokter_pulang.jam_perawatan,'Belum Terlayani','Sudah Terlayani') as status,bangsal.nm_bangsal,  "
-                    + " kamar.kd_bangsal from resep_dokter_pulang inner join resep_pulang inner join reg_periksa inner join pasien inner join dokter inner join bangsal inner join kamar inner join kamar_inap "
+                    + " kamar.kd_bangsal,penjab.png_jawab from resep_dokter_pulang inner join resep_pulang inner join reg_periksa inner join pasien inner join dokter inner join bangsal inner join kamar inner join kamar_inap inner join penjab "
                     + " on resep_pulang.no_rawat=reg_periksa.no_rawat and resep_pulang.no_resep=resep_dokter_pulang.no_resep and kamar.kd_bangsal=bangsal.kd_bangsal and reg_periksa.no_rawat=kamar_inap.no_rawat and kamar_inap.kd_kamar=kamar.kd_kamar "
-                    + " and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and resep_dokter_pulang.kd_dokter=dokter.kd_dokter where "
+                    + " and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and resep_dokter_pulang.kd_dokter=dokter.kd_dokter and reg_periksa.kd_pj=penjab.kd_pj where "
                     + " resep_dokter_pulang.tgl_perawatan between ? and ? and dokter.nm_dokter like ? and bangsal.nm_bangsal like ? and ( resep_pulang.no_resep like ? or "
                     + " resep_pulang.no_rawat like ? or "
                     + " pasien.no_rkm_medis like ? or "
@@ -3022,7 +3022,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                     tabMode5.addRow(new String[]{
                         rs.getString("no_resep"), rs.getString("tgl_peresepan"), rs.getString("jam_peresepan"), rs.getString("no_rawat"),
                         rs.getString("no_rkm_medis"), rs.getString("nm_pasien"), rs.getString("nm_dokter"), rs.getString("status"),
-                        rs.getString("kd_dokter"), rs.getString("nm_bangsal"), rs.getString("kd_bangsal")
+                        rs.getString("kd_dokter"), rs.getString("nm_bangsal"), rs.getString("kd_bangsal"),rs.getString("png_jawab")
                     });
                 }
 

@@ -1057,10 +1057,16 @@ public class UTDStokDarah extends javax.swing.JDialog {
                     jml = "1";
                     break;
                 case "DB":
-                    jml = "2";
+                    jml = "1";
                     break;
                 case "TB":
-                    jml = "3";
+                    if (KodeKomponen.getText().equals("UTD4")) {
+                        jml="1";                                
+                    }
+                    if (KodeKomponen.getText().equals("UTD6")) {
+                        jml="1";                                
+                    }
+//                    jml = "3";
                     break;
                 case "QB":
                     jml = "4";

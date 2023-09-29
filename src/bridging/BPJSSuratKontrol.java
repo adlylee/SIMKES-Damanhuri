@@ -1637,10 +1637,8 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                     return respon;
                 }
             } else {
-                if (!nameNode.path("code").asText().equals("201")) {
                     JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
-                    return respon;
-                }
+                    return nameNode.path("code").asText();                
             }
         } catch (Exception ex) {
             System.out.println("Notifikasi Bridging : " + ex);
@@ -1693,7 +1691,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 }
             } else {
                 JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
-                return nosuratedit;
+                return nameNode.path("code").asText();
             }
         } catch (Exception ex) {
             System.out.println("Notifikasi Bridging : " + ex);

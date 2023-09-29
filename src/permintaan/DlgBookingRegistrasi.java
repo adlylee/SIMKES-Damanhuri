@@ -51,7 +51,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
     private Properties prop = new Properties();
     private PreparedStatement ps;
     private ResultSet rs;
-    private int i=0,kuota=0;
+    private int i=0,kuota=0,jml=0;
     private DlgCariDokter dokter=new DlgCariDokter(null,false);
     private DlgCariDokter2 dokter2=new DlgCariDokter2(null,false);
     private DlgCariPoli poli=new DlgCariPoli(null,false);
@@ -2169,9 +2169,16 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                     KdDokter1.getText(), KdPoli4.getText(),Valid.SetTgl(TanggalPeriksa1.getSelectedItem()+""), NoReg1.getText(),
                     tbObat.getValueAt(i, 3).toString(), tbObat.getValueAt(i, 5).toString()
                 }) == true) {
+                    Sequel.mengedit3("skdp_bpjs", "no_rkm_medis=? and tanggal_datang=?", "tanggal_datang=?,kd_dokter=?", 4, new String[]{
+                        Valid.SetTgl(TanggalPeriksa1.getSelectedItem() + ""), KdDokter1.getText(),
+                        tbObat.getValueAt(i, 3).toString(), tbObat.getValueAt(i, 5).toString()
+                    });
                 }
             }
         }
+        JOptionPane.showMessageDialog(null, "Berhasil ganti jadwal booking..!!!");
+        isReset();
+        tampil();
         WindowGanti.dispose();
     }//GEN-LAST:event_BtnSimpan7ActionPerformed
 
@@ -2578,5 +2585,12 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             emptTeks();
             tampil();
         }
-}
+    }
+    
+    public void isReset() {
+        jml = tbObat.getRowCount();
+        for (i = 0; i < jml; i++) {
+            tbObat.setValueAt(true, i, 0);
+        }
+    }
 }
