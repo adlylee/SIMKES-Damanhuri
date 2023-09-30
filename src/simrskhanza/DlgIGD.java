@@ -6568,7 +6568,7 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
             nmpnj.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 5).toString());
             kdpnj.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 22).toString());
             TKategori.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 23).toString());
-
+            AsalRujukan.setText(Sequel.cariIsi("SELECT perujuk FROM rujuk_masuk where no_rawat=?",TNoRw.getText()));
         }
     }
 

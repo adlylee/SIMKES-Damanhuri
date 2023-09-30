@@ -1013,6 +1013,7 @@ public final class DlgRawatInap extends javax.swing.JDialog {
         TNoRw1 = new widget.TextBox();
         TNoRM1 = new widget.TextBox();
         TPasien1 = new widget.TextBox();
+        BtnSimpan9 = new widget.Button();
         internalFrame1 = new widget.InternalFrame();
         jPanel3 = new javax.swing.JPanel();
         panelGlass8 = new widget.panelisi();
@@ -1292,7 +1293,7 @@ public final class DlgRawatInap extends javax.swing.JDialog {
             }
         });
         internalFrame9.add(BtnSimpan8);
-        BtnSimpan8.setBounds(340, 150, 120, 30);
+        BtnSimpan8.setBounds(74, 150, 100, 30);
 
         jLabel.setText("SHK :");
         jLabel.setName("jLabel"); // NOI18N
@@ -1357,6 +1358,19 @@ public final class DlgRawatInap extends javax.swing.JDialog {
         TPasien1.setName("TPasien1"); // NOI18N
         internalFrame9.add(TPasien1);
         TPasien1.setBounds(283, 30, 260, 23);
+
+        BtnSimpan9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/inventaris.png"))); // NOI18N
+        BtnSimpan9.setMnemonic('S');
+        BtnSimpan9.setText("Ganti");
+        BtnSimpan9.setToolTipText("Alt+S");
+        BtnSimpan9.setName("BtnSimpan9"); // NOI18N
+        BtnSimpan9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSimpan9ActionPerformed(evt);
+            }
+        });
+        internalFrame9.add(BtnSimpan9);
+        BtnSimpan9.setBounds(180, 150, 100, 30);
 
         WindowInput.getContentPane().add(internalFrame9, java.awt.BorderLayout.CENTER);
 
@@ -1534,7 +1548,7 @@ public final class DlgRawatInap extends javax.swing.JDialog {
         panelGlass10.add(jLabel19);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "29-09-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30-09-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -1548,7 +1562,7 @@ public final class DlgRawatInap extends javax.swing.JDialog {
         panelGlass10.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "29-09-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30-09-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -3162,7 +3176,7 @@ public final class DlgRawatInap extends javax.swing.JDialog {
         TPasien.setBounds(283, 10, 260, 23);
 
         DTPTgl.setForeground(new java.awt.Color(50, 70, 50));
-        DTPTgl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "29-09-2023" }));
+        DTPTgl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30-09-2023" }));
         DTPTgl.setDisplayFormat("dd-MM-yyyy");
         DTPTgl.setName("DTPTgl"); // NOI18N
         DTPTgl.setOpaque(false);
@@ -5621,6 +5635,13 @@ private void BtnEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
         // TODO add your handling code here:
     }//GEN-LAST:event_TNoRw1KeyPressed
 
+    private void BtnSimpan9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpan9ActionPerformed
+        if (Sequel.mengedittf("shk_bayi", "no_rawat='" + TNoRw1.getText() + "'",
+                "keterangan='" + TKeterangan.getText() + "'") == true) {
+            JOptionPane.showMessageDialog(null, "Berhasil Mengedit SHK..!!");
+        }
+    }//GEN-LAST:event_BtnSimpan9ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -5668,6 +5689,7 @@ private void BtnEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
     private widget.Button BtnSeekPetugas2;
     private widget.Button BtnSimpan;
     private widget.Button BtnSimpan8;
+    private widget.Button BtnSimpan9;
     private widget.CekBox ChkAccor;
     private widget.CekBox ChkInput;
     private widget.CekBox ChkInput1;
