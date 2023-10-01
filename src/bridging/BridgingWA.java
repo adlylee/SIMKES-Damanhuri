@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -71,26 +72,60 @@ public class BridgingWA {
 
     public void sendWa(String no_rkm_medis, String nama, String tanggal, String poli) {
         try {
-            message = "Assalamualaikum " + nama + ". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai .\n"
-                    + " Handak behabar dan meingatakan pian, kalau nya BESOK tanggal " + tanggal + " pian ada JADWAL PERIKSA ke " + poli + " di Rumah Sakit H. Damanhuri Barabai . Pian bisa datang LANGSUNG ke ANJUNGAN PASIEN MANDIRI (APM) ."
-                    + " Pastikan RUJUKAN BPJS pian masih berlaku. Jika sudah habis, maka mintalah rujukan kembali untuk berobat ke Rumah Sakit.Terima kasih \n \nWassalamualaikum\n"
-                    + " Daftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US";
+            message = "Assalamualaikum " + nama + ". \n\nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai.\n\n"
+                    + "Handak behabar dan meingatakan pian, kalau nya BESOK tanggal " + tanggal + " pian ada JADWAL PERIKSA ke " + poli + " di Rumah Sakit H. Damanhuri Barabai.\n\nJam pendaftaran & cetak SEP bisa dilayani mulai dari jam: \nPOLI PAGI : 07.30 - 11.00 wita. \n\nPOLI SORE : 14.00 - 18.00 wita. \nDokternya ada antara jam 16:00:00 sampai 17:00:00. "
+                    + "\n\nPian bisa datang LANGSUNG ke ANJUNGAN PASIEN MANDIRI (APM).\n\n"
+                    + "Pastikan RUJUKAN BPJS pian masih berlaku. Jika sudah habis, maka mintalah rujukan kembali untuk berobat ke Rumah Sakit. Terima kasih \nWassalamualaikum\n\n"
+                    + "Daftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US \n\nDaftar Online Tanpa Antri via JKN Mobile Klik Disini >>> https://play.google.com/store/apps/details?id=app.bpjs.mobile \n\n*Jam pelayanan sewaktu waktu dapat berubah*";
             number = Sequel.cariIsi("SELECT no_tlp FROM pasien WHERE no_rkm_medis = " + no_rkm_medis);
+            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldserver + "'") + "/wagateway/kirimpesan";
+            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldphone + "'");
+            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldtoken + "'");
+            String encodedMessage = URLEncoder.encode(message, "UTF-8");
+            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + encodedMessage + "&api_key=" + token;
+//            System.out.println("PostField : " + requestJson);
+            System.out.println("PostField : "+no_rkm_medis+ " "+nama +" &api_key=" + token );
             if (number.equals("")) {
                 System.out.println("Nomor telepon kosong !!!");
             } else {
-                number = number.replaceFirst("0", "62");
-                Map<String,String> mss=new HashMap<>();
-                mss.put("number", number);
-                mss.put("body", message);
+                URL obj = new URL(urlApi);
+                HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+                con.setRequestMethod("POST");
+                con.setRequestProperty("User-Agent", USER_AGENT);
+                con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                con.setRequestProperty("charset", "utf-8");
 
-                JSONObject j=new JSONObject(mss);
-                reurn = waGw(j.toString(),nama);
-                System.out.println(reurn);
+                // For POST only - START
+                con.setDoOutput(true);
+                OutputStreamWriter os = new OutputStreamWriter(con.getOutputStream());
+                os.write(requestJson);
+                os.flush();
+                os.close();
+                // For POST only - END
+
+                int responseCode = con.getResponseCode();
+                System.out.println("POST Response Code :: " + responseCode);
+
+                if (responseCode == HttpURLConnection.HTTP_OK) { //success
+                    BufferedReader in = new BufferedReader(new InputStreamReader(
+                            con.getInputStream()));
+                    String inputLine;
+                    StringBuffer response = new StringBuffer();
+
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
+
+                    // print result
+                    System.out.println(response.toString());
+                } else {
+                    System.out.println("POST request not worked");
+                }
             }
         } catch (Exception ex) {
             System.out.println("Notifikasi : " + ex);
-            System.out.println(url);
+            System.out.println(urlApi);
             if (ex.toString().contains("UnknownHostException")) {
                 JOptionPane.showMessageDialog(null, "Koneksi ke server WA terputus...!");
             }
@@ -99,28 +134,84 @@ public class BridgingWA {
 
     public void sendWaBatal(String no_rkm_medis, String nama, String tanggal, String polidari, String polike) {
         try {
-            reurn = "";
-            message = "Assalamualaikum " + nama + ". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai .\nHandak mahabar akan kalaunya JADWAL PERIKSA ke " + polidari + " sebelumnya dibatalkan, karena Dokter berhalangan hadir. Dan dipindah jadi tanggal " + tanggal + " ke " + polike + ". \nTerkait dengan habar di atas, kami ucapkan permohonan maaf dan terima kasih atas kepercayaan pian berobat di RSUD H. Damanhuri. \nTerima kasih \nWassalamualaikum \nDaftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US \nDaftar Online Tanpa Antri via JKN Mobile Klik Disini >>> https://play.google.com/store/apps/details?id=app.bpjs.mobile";
+            message = "Assalamualaikum " + nama + ". \n\nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai.\n\nHandak mahabar akan kalaunya JADWAL PERIKSA ke " + polidari + " sebelumnya dibatalkan, karena Dokter berhalangan hadir. Dan dipindah jadi tanggal " + tanggal + " ke " + polike + ". \n\nTerkait dengan habar di atas, kami ucapkan permohonan maaf dan terima kasih atas kepercayaan pian berobat di RSUD H. Damanhuri. \nTerima kasih \nWassalamualaikum \n\nDaftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US \n\nDaftar Online Tanpa Antri via JKN Mobile Klik Disini >>> https://play.google.com/store/apps/details?id=app.bpjs.mobile \n\n*Jam pelayanan sewaktu waktu dapat berubah*";
             number = Sequel.cariIsi("SELECT no_tlp FROM pasien WHERE no_rkm_medis = " + no_rkm_medis);
+            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldserver + "'") + "/wagateway/kirimpesan";
+            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldphone + "'");
+            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldtoken + "'");
+            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message + "&api_key=" + token;
+            String encodedMessage = URLEncoder.encode(message, "UTF-8");
+            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + encodedMessage + "&api_key=" + token;
+//            System.out.println("PostField : " + requestJson);
+            System.out.println("PostField : "+no_rkm_medis+ " "+nama +" &api_key=" + token );
             if (number.equals("")) {
                 System.out.println("Nomor telepon kosong !!!");
             } else {
-                number = number.replaceFirst("0", "62");
-                Map<String,String> mss=new HashMap<>();
-                mss.put("number", number);
-                mss.put("body", message);
+                URL obj = new URL(urlApi);
+                HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+                con.setRequestMethod("POST");
+                con.setRequestProperty("User-Agent", USER_AGENT);
+                con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                con.setRequestProperty("charset", "utf-8");
 
-                JSONObject j=new JSONObject(mss);
-                reurn = waGw(j.toString(),nama);
-                System.out.println(reurn);
+                // For POST only - START
+                con.setDoOutput(true);
+                OutputStreamWriter os = new OutputStreamWriter(con.getOutputStream());
+                os.write(requestJson);
+                os.flush();
+                os.close();
+                // For POST only - END
+
+                int responseCode = con.getResponseCode();
+                System.out.println("POST Response Code :: " + responseCode);
+
+                if (responseCode == HttpURLConnection.HTTP_OK) { //success
+                    BufferedReader in = new BufferedReader(new InputStreamReader(
+                            con.getInputStream()));
+                    String inputLine;
+                    StringBuffer response = new StringBuffer();
+
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
+
+                    // print result
+                    System.out.println(response.toString());
+                } else {
+                    System.out.println("POST request not worked");
+                }
             }
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             System.out.println("Notifikasi : " + ex);
-            System.out.println(url);
+            System.out.println(urlApi);
             if (ex.toString().contains("UnknownHostException")) {
                 JOptionPane.showMessageDialog(null, "Koneksi ke server WA terputus...!");
             }
         }
+//        try {            
+//            reurn = "";
+//            message = "Assalamualaikum " + nama + ". \nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai .\nHandak mahabar akan kalaunya JADWAL PERIKSA ke " + polidari + " sebelumnya dibatalkan, karena Dokter berhalangan hadir. Dan dipindah jadi tanggal " + tanggal + " ke " + polike + ". \nTerkait dengan habar di atas, kami ucapkan permohonan maaf dan terima kasih atas kepercayaan pian berobat di RSUD H. Damanhuri. \nTerima kasih \nWassalamualaikum \nDaftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US \nDaftar Online Tanpa Antri via JKN Mobile Klik Disini >>> https://play.google.com/store/apps/details?id=app.bpjs.mobile";
+//            number = Sequel.cariIsi("SELECT no_tlp FROM pasien WHERE no_rkm_medis = " + no_rkm_medis);
+//            if (number.equals("")) {
+//                System.out.println("Nomor telepon kosong !!!");
+//            } else {
+//                number = number.replaceFirst("0", "62");
+//                Map<String,String> mss=new HashMap<>();
+//                mss.put("number", number);
+//                mss.put("body", message);
+//
+//                JSONObject j=new JSONObject(mss);
+//                reurn = waGw(j.toString(),nama);
+//                System.out.println(reurn);
+//                }
+//        } catch (IOException ex) {
+//            System.out.println("Notifikasi : " + ex);
+//            System.out.println(url);
+//            if (ex.toString().contains("UnknownHostException")) {
+//                JOptionPane.showMessageDialog(null, "Koneksi ke server WA terputus...!");
+//            }
+//        }
     }
 
     public void sendwaUTD(String nama, String no_telp, String tanggal) {
@@ -158,7 +249,7 @@ public class BridgingWA {
                         con.getInputStream()));
                 String inputLine;
                 StringBuffer response = new StringBuffer();
-
+ 
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }
@@ -233,29 +324,79 @@ public class BridgingWA {
     }
 
         public void sendwaMPP(String nama, String tanggal, String kamar) {
-        try {
-            reurn = "";
-            message = "Pemberitahuan pasien perlu penanganan MPP lebih lanjut.\n\nPasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal + "";
-            number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='198011042005012011'");
-            if (number.equals("")) {
-                System.out.println("Nomor telepon kosong !!!");
-            } else {
-                number = number.replaceFirst("0", "62");
-                Map<String,String> mss=new HashMap<>();
-                mss.put("number", number);
-                mss.put("body", message);
+            try {
+                message = "Pemberitahuan pasien perlu penanganan MPP lebih lanjut.\n\nPasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal + "";
+                number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='198011042005012011'");
+                urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldserver + "'") + "/wagateway/kirimpesan";
+                sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldphone + "'");
+                token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldtoken + "'");
+                requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message + "&api_key=" + token;
+                System.out.println("PostField : " + requestJson);
 
-                JSONObject j=new JSONObject(mss);
-                reurn = waGw(j.toString(),nama);
-                System.out.println(reurn);
+                URL obj = new URL(urlApi);
+                HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+                con.setRequestMethod("POST");
+                con.setRequestProperty("User-Agent", USER_AGENT);
+                con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                con.setRequestProperty("charset", "utf-8");
+
+                // For POST only - START
+                con.setDoOutput(true);
+                OutputStreamWriter os = new OutputStreamWriter(con.getOutputStream());
+                os.write(requestJson);
+                os.flush();
+                os.close();
+                // For POST only - END
+
+                int responseCode = con.getResponseCode();
+                System.out.println("POST Response Code :: " + responseCode);
+
+                if (responseCode == HttpURLConnection.HTTP_OK) { //success
+                    BufferedReader in = new BufferedReader(new InputStreamReader(
+                            con.getInputStream()));
+                    String inputLine;
+                    StringBuffer response = new StringBuffer();
+
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
+
+                    // print result
+                    System.out.println(response.toString());
+                } else {
+                    System.out.println("POST request not worked");
+                }
+            } catch (Exception ex) {
+                System.out.println("Notifikasi : " + ex);
+                System.out.println(url);
+                if (ex.toString().contains("UnknownHostException")) {
+                    JOptionPane.showMessageDialog(null, "Koneksi ke server WA terputus...!");
+                }
             }
-        } catch (IOException ex) {
-            System.out.println("Notifikasi : " + ex);
-            System.out.println(url);
-            if (ex.toString().contains("UnknownHostException")) {
-                JOptionPane.showMessageDialog(null, "Koneksi ke server WA terputus...!");
-            }
-        }
+//        try {
+//            reurn = "";
+//            message = "Pemberitahuan pasien perlu penanganan MPP lebih lanjut.\n\nPasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal + "";
+//            number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='198011042005012011'");
+//            if (number.equals("")) {
+//                System.out.println("Nomor telepon kosong !!!");
+//            } else {
+//                number = number.replaceFirst("0", "62");
+//                Map<String,String> mss=new HashMap<>();
+//                mss.put("number", number);
+//                mss.put("body", message);
+//
+//                JSONObject j=new JSONObject(mss);
+//                reurn = waGw(j.toString(),nama);
+//                System.out.println(reurn);
+//            }
+//        } catch (IOException ex) {
+//            System.out.println("Notifikasi : " + ex);
+//            System.out.println(url);
+//            if (ex.toString().contains("UnknownHostException")) {
+//                JOptionPane.showMessageDialog(null, "Koneksi ke server WA terputus...!");
+//            }
+//        }
     }
     
     public String waGw(String j,String nama) throws IOException{

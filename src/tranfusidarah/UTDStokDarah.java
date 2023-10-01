@@ -1057,10 +1057,16 @@ public class UTDStokDarah extends javax.swing.JDialog {
                     jml = "1";
                     break;
                 case "DB":
-                    jml = "2";
+                    jml = "1";
                     break;
                 case "TB":
-                    jml = "3";
+                    if (KodeKomponen.getText().equals("UTD4")) {
+                        jml="1";                                
+                    }
+                    if (KodeKomponen.getText().equals("UTD6")) {
+                        jml="1";                                
+                    }
+//                    jml = "3";
                     break;
                 case "QB":
                     jml = "4";
@@ -1069,11 +1075,11 @@ public class UTDStokDarah extends javax.swing.JDialog {
                     jml = "5";
                     break;
             }
-            if(Sequel.menyimpantf("utd_stok_darah","?,?,?,?,?,?,?,?,?,?,?","Kode",11,new String[]{
+            if(Sequel.menyimpantf("utd_stok_darah","?,?,?,?,?,?,?,?,?,?","Kode",10,new String[]{
                 NoKantong.getText(),KodeKomponen.getText(),GolonganDarah.getSelectedItem().toString(),
                 Resus.getSelectedItem().toString(),Valid.SetTgl(Aftap.getSelectedItem()+""),
                 Valid.SetTgl(Kadaluarsa.getSelectedItem()+""),Asal.getSelectedItem().toString(),
-                "Ada",NoKantong1.getText(),jml,jml
+                "Ada",NoKantong1.getText(),jml
               })==true){
                 emptTeks();
                 tampil();

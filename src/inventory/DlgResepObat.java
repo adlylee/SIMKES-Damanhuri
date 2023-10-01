@@ -2245,7 +2245,8 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             param.put("noresep", NoResep.getText());
             param.put("jam", cmbJam.getSelectedItem() + ":" + cmbMnt.getSelectedItem() + ":" + cmbDtk.getSelectedItem());
             param.put("noantrian", Sequel.cariIsi("select no_antrian from antrian_apotek where no_resep=?", NoResep.getText()));
-            param.put("reseppulang", Sequel.cariIsi("select no_rawat from resep_pulang where no_resep=? limit 1",NoResep.getText()));            
+            param.put("reseppulang", Sequel.cariIsi("select no_rawat from resep_pulang where no_resep=? limit 1",NoResep.getText()));
+            param.put("nosep", Sequel.cariIsi("SELECT ifnull(no_sep,'') as sep FROM bridging_sep where no_rawat=?",TNoRw.getText()));
             try {
                 String a = Sequel.cariIsi("select no_rawat from kamar_inap where kamar_inap.no_rawat=?", TNoRw.getText());
 

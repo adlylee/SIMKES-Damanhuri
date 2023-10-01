@@ -607,7 +607,7 @@ public class PanelDiagnosa extends widget.panelisi {
                     "diagnosa_pasien.kd_penyakit,penyakit.nm_penyakit, diagnosa_pasien.status,diagnosa_pasien.status_penyakit,reg_periksa.umurdaftar,reg_periksa.sttsumur, "+
                     "if(diagnosa_pasien.status='Ralan',(select nm_poli from poliklinik where poliklinik.kd_poli=reg_periksa.kd_poli),"+
                     "(select bangsal.nm_bangsal from kamar_inap inner join kamar inner join bangsal on kamar_inap.kd_kamar=kamar.kd_kamar "+
-                    "and kamar.kd_bangsal=bangsal.kd_bangsal where kamar_inap.no_rawat=reg_periksa.no_rawat limit 1 )) as ruangan,pasien.no_ktp,pasien.tgl_lahir,pasien.alamat,pasien.jk, "+
+                    "and kamar.kd_bangsal=bangsal.kd_bangsal where kamar_inap.stts_pulang <> 'Pindah Kamar' and kamar_inap.no_rawat=reg_periksa.no_rawat limit 1 )) as ruangan,pasien.no_ktp,pasien.tgl_lahir,pasien.alamat,pasien.jk, "+
                     "IF(diagnosa_pasien.status = 'Ralan',(SELECT MAX(reg_periksa.stts) FROM reg_periksa WHERE reg_periksa.no_rawat = diagnosa_pasien.no_rawat),(SELECT kamar_inap.stts_pulang FROM kamar_inap WHERE kamar_inap.no_rawat = diagnosa_pasien.no_rawat LIMIT 1)) AS pulang "+
                     "from diagnosa_pasien inner join reg_periksa inner join pasien inner join penyakit "+
                     "on diagnosa_pasien.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "+
@@ -900,7 +900,7 @@ public class PanelDiagnosa extends widget.panelisi {
                 pstindakanpasien.setString(27,"%"+norm+"%");          
                 pstindakanpasien.setString(28,"%"+keyword+"%");  
                 rs=pstindakanpasien.executeQuery();
-                while(rs.next()){
+                while(rs.next()){ 
                     TabModeTindakanPasien.addRow(new Object[]{false,rs.getString(1),
                                    rs.getString(2),
                                    rs.getString(3),

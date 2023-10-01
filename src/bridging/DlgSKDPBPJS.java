@@ -1149,6 +1149,47 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
                             emptTeks();
                             tampil();
                         }
+                        }
+                    if (nomer.equals("201")) {
+                        if (Sequel.menyimpantf("skdp_bpjs", "?,?,?,?,?,?,?,?,?,?,?,?,?", "Tahun dan nomor surat", 13, new String[]{
+                            TanggalPeriksa.getSelectedItem().toString().substring(6, 10), TNoRM.getText(), Diagnosa.getText(), Terapi.getText(),
+                            Alasan1.getText(), nomer, Rtl1.getText(), nosep, Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""),
+                            Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), antrian, KdDokter.getText(), Status.getSelectedItem().toString()
+                        }) == true) {
+                            System.out.println("Simpan SKDP Berhasil-");
+                            Sequel.menyimpan2("booking_registrasi", "?,?,?,?,?,?,?,?,?,?,?", "Pasien dan Tanggal", 11, new String[]{
+                                Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), TanggalSurat.getSelectedItem().toString().substring(11, 19), TNoRM.getText(),
+                                Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), KdDokter.getText(),
+                                KdPoli.getText(), NoReg.getText(), Sequel.cariIsi("select kd_pj from pasien where no_rkm_medis=?", TNoRM.getText()), "0",
+                                Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + " " + TanggalPeriksa.getSelectedItem().toString().substring(11, 19),
+                                "belum"
+                            });
+                            JOptionPane.showMessageDialog(null, "Berhasil Simpan-");
+                            emptTeks();
+                            tampil();
+                        }
+                        }
+                    if (nomer.equals("203")) {
+                        String tgl = Sequel.cariIsi("SELECT tgl_rencana FROM bridging_surat_kontrol_bpjs where no_sep = ?",nosep);
+                        if (tgl == TanggalPeriksa.getSelectedItem().toString().substring(6, 10)) {
+                            if (Sequel.menyimpantf("skdp_bpjs", "?,?,?,?,?,?,?,?,?,?,?,?,?", "Tahun dan nomor surat", 13, new String[]{
+                            TanggalPeriksa.getSelectedItem().toString().substring(6, 10), TNoRM.getText(), Diagnosa.getText(), Terapi.getText(),
+                            Alasan1.getText(), nomer, Rtl1.getText(), nosep, Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""),
+                            Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), antrian, KdDokter.getText(), Status.getSelectedItem().toString()
+                            }) == true) {
+                                System.out.println("Simpan SKDP Berhasil-");
+                                Sequel.menyimpan2("booking_registrasi", "?,?,?,?,?,?,?,?,?,?,?", "Pasien dan Tanggal", 11, new String[]{
+                                    Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), TanggalSurat.getSelectedItem().toString().substring(11, 19), TNoRM.getText(),
+                                    Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), KdDokter.getText(),
+                                    KdPoli.getText(), NoReg.getText(), Sequel.cariIsi("select kd_pj from pasien where no_rkm_medis=?", TNoRM.getText()), "0",
+                                    Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + " " + TanggalPeriksa.getSelectedItem().toString().substring(11, 19),
+                                    "belum"
+                                });
+                                JOptionPane.showMessageDialog(null, "Berhasil Simpan-");
+                                emptTeks();
+                                tampil();
+                            }
+                        }
                     }
                 } else {
                     if (Sequel.menyimpantf("skdp_bpjs", "?,?,?,?,?,?,?,?,?,?,?,?,?", "Tahun dan nomor surat", 13, new String[]{
@@ -1484,23 +1525,77 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             Valid.textKosong(Diagnosa, "Diagnosa");
         } else {
             if (tbObat.getSelectedRow() != -1) {
-                nomer = kontrol.editSurat(Alasan2.getText(), Rtl2.getText(), KdDokter1.getText(), NmDokter1.getText(), KdPoli1.getText(), NmPoli1.getText(), Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), user);
-                if (!nomer.equals("")) {
-                if (Sequel.mengedittf("skdp_bpjs", "tahun=? and no_antrian=?", "tahun=?,no_rkm_medis=?,diagnosa=?,terapi=?,alasan1=?,alasan2=?,rtl1=?,rtl2=?,tanggal_datang=?,tanggal_rujukan=?,no_antrian=?,kd_dokter=?,status=?", 15, new String[]{
-                    TanggalPeriksa.getSelectedItem().toString().substring(6, 10), TNoRM.getText(), Diagnosa.getText(), Terapi.getText(),
-                    Alasan1.getText(), Alasan2.getText(), Rtl1.getText(), Rtl2.getText(), Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""),
-                    Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), NoSurat.getText(), KdDokter.getText(), Status.getSelectedItem().toString(),
-                    tbObat.getValueAt(tbObat.getSelectedRow(), 0).toString(), tbObat.getValueAt(tbObat.getSelectedRow(), 11).toString()
-                }) == true) {
-                    Sequel.mengedit3("booking_registrasi", "no_rkm_medis=? and tanggal_periksa=?", "tanggal_booking=?,no_rkm_medis=?,tanggal_periksa=?,kd_dokter=?,kd_poli=?,no_reg=?", 8, new String[]{
-                        Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), TNoRM.getText(),
-                        Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), KdDokter.getText(),
-                        KdPoli.getText(), NoReg.getText(), tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString(),
-                        tbObat.getValueAt(tbObat.getSelectedRow(), 9).toString()
-                    });
-                    emptTeks();
-                    tampil();
-                }
+                if (set_status_rawat.equals("Ranap")) {
+                    if (penjab.equals("BPJ") || penjab.equals("A02")) {
+                        nomer = kontrol.editSurat(Alasan2.getText(), Rtl2.getText(), KdDokter1.getText(), NmDokter1.getText(), KdPoli1.getText(), NmPoli1.getText(), Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), user);
+                        if (!nomer.equals("")) {
+                            if (Sequel.mengedittf("skdp_bpjs", "tahun=? and no_antrian=?", "tahun=?,no_rkm_medis=?,diagnosa=?,terapi=?,alasan1=?,alasan2=?,rtl1=?,rtl2=?,tanggal_datang=?,tanggal_rujukan=?,no_antrian=?,kd_dokter=?,status=?", 15, new String[]{
+                                TanggalPeriksa.getSelectedItem().toString().substring(6, 10), TNoRM.getText(), Diagnosa.getText(), Terapi.getText(),
+                                Alasan1.getText(), Alasan2.getText(), Rtl1.getText(), Rtl2.getText(), Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""),
+                                Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), NoSurat.getText(), KdDokter.getText(), Status.getSelectedItem().toString(),
+                                tbObat.getValueAt(tbObat.getSelectedRow(), 0).toString(), tbObat.getValueAt(tbObat.getSelectedRow(), 11).toString()
+                            }) == true) {
+                                Sequel.mengedit3("booking_registrasi", "no_rkm_medis=? and tanggal_periksa=?", "tanggal_booking=?,no_rkm_medis=?,tanggal_periksa=?,kd_dokter=?,kd_poli=?,no_reg=?", 8, new String[]{
+                                    Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), TNoRM.getText(),
+                                    Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), KdDokter.getText(),
+                                    KdPoli.getText(), NoReg.getText(), tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString(),
+                                    tbObat.getValueAt(tbObat.getSelectedRow(), 9).toString()
+                                });
+                                emptTeks();
+                                tampil();
+                            }
+                        }
+                        if (nomer.equals("201")) {
+                            if (Sequel.mengedittf("skdp_bpjs", "tahun=? and no_antrian=?", "tahun=?,no_rkm_medis=?,diagnosa=?,terapi=?,alasan1=?,alasan2=?,rtl1=?,rtl2=?,tanggal_datang=?,tanggal_rujukan=?,no_antrian=?,kd_dokter=?,status=?", 15, new String[]{
+                                TanggalPeriksa.getSelectedItem().toString().substring(6, 10), TNoRM.getText(), Diagnosa.getText(), Terapi.getText(),
+                                Alasan1.getText(), Alasan2.getText(), Rtl1.getText(), Rtl2.getText(), Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""),
+                                Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), NoSurat.getText(), KdDokter.getText(), Status.getSelectedItem().toString(),
+                                tbObat.getValueAt(tbObat.getSelectedRow(), 0).toString(), tbObat.getValueAt(tbObat.getSelectedRow(), 11).toString()
+                            }) == true) {
+                                Sequel.mengedit3("booking_registrasi", "no_rkm_medis=? and tanggal_periksa=?", "tanggal_booking=?,no_rkm_medis=?,tanggal_periksa=?,kd_dokter=?,kd_poli=?,no_reg=?", 8, new String[]{
+                                    Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), TNoRM.getText(),
+                                    Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), KdDokter.getText(),
+                                    KdPoli.getText(), NoReg.getText(), tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString(),
+                                    tbObat.getValueAt(tbObat.getSelectedRow(), 9).toString()
+                                });
+                                emptTeks();
+                                tampil();
+                            }
+                        }
+                        if (nomer.equals("203")) {
+                            if (Sequel.mengedittf("skdp_bpjs", "tahun=? and no_antrian=?", "tahun=?,no_rkm_medis=?,diagnosa=?,terapi=?,alasan1=?,alasan2=?,rtl1=?,rtl2=?,tanggal_datang=?,tanggal_rujukan=?,no_antrian=?,kd_dokter=?,status=?", 15, new String[]{
+                                TanggalPeriksa.getSelectedItem().toString().substring(6, 10), TNoRM.getText(), Diagnosa.getText(), Terapi.getText(),
+                                Alasan1.getText(), Alasan2.getText(), Rtl1.getText(), Rtl2.getText(), Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""),
+                                Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), NoSurat.getText(), KdDokter.getText(), Status.getSelectedItem().toString(),
+                                tbObat.getValueAt(tbObat.getSelectedRow(), 0).toString(), tbObat.getValueAt(tbObat.getSelectedRow(), 11).toString()
+                            }) == true) {
+                                Sequel.mengedit3("booking_registrasi", "no_rkm_medis=? and tanggal_periksa=?", "tanggal_booking=?,no_rkm_medis=?,tanggal_periksa=?,kd_dokter=?,kd_poli=?,no_reg=?", 8, new String[]{
+                                    Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), TNoRM.getText(),
+                                    Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), KdDokter.getText(),
+                                    KdPoli.getText(), NoReg.getText(), tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString(),
+                                    tbObat.getValueAt(tbObat.getSelectedRow(), 9).toString()
+                                });
+                                emptTeks();
+                                tampil();
+                            }
+                        }
+                    }
+                } else {
+                    if (Sequel.mengedittf("skdp_bpjs", "tahun=? and no_antrian=?", "tahun=?,no_rkm_medis=?,diagnosa=?,terapi=?,alasan1=?,alasan2=?,rtl1=?,rtl2=?,tanggal_datang=?,tanggal_rujukan=?,no_antrian=?,kd_dokter=?,status=?", 15, new String[]{
+                        TanggalPeriksa.getSelectedItem().toString().substring(6, 10), TNoRM.getText(), Diagnosa.getText(), Terapi.getText(),
+                        Alasan1.getText(), Alasan2.getText(), Rtl1.getText(), Rtl2.getText(), Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""),
+                        Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), NoSurat.getText(), KdDokter.getText(), Status.getSelectedItem().toString(),
+                        tbObat.getValueAt(tbObat.getSelectedRow(), 0).toString(), tbObat.getValueAt(tbObat.getSelectedRow(), 11).toString()
+                    }) == true) {
+                        Sequel.mengedit3("booking_registrasi", "no_rkm_medis=? and tanggal_periksa=?", "tanggal_booking=?,no_rkm_medis=?,tanggal_periksa=?,kd_dokter=?,kd_poli=?,no_reg=?", 8, new String[]{
+                            Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), TNoRM.getText(),
+                            Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), KdDokter.getText(),
+                            KdPoli.getText(), NoReg.getText(), tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString(),
+                            tbObat.getValueAt(tbObat.getSelectedRow(), 9).toString()
+                        });
+                        emptTeks();
+                        tampil();
+                    }
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih terlebih dulu data yang mau anda ganti...\n Klik data pada table untuk memilih data...!!!!");
@@ -1561,7 +1656,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }//GEN-LAST:event_NoSuratKeyPressed
 
     private void TanggalPeriksaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_TanggalPeriksaItemStateChanged
-        try {
+        try {    
             isNomer();
         } catch (Exception e) {
         }
