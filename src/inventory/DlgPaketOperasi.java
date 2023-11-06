@@ -691,6 +691,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         ubah = false;
+        batalFungsi();
         tampilObat();
     }//GEN-LAST:event_formWindowOpened
 
@@ -1025,5 +1026,10 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         TCari.setText("");
         empTable();
         tampilObat();
+        isNumber();
+    }
+    
+    private void isNumber() {
+        Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(kd_paket,4),signed)),0) from eresep_paket_operasi", "EOP", 4, TkdPaket);
     }
 }

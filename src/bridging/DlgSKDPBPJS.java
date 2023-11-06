@@ -414,7 +414,7 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ SKDP BPJS ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ SKDP BPJS ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -648,7 +648,7 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
         R2.setPreferredSize(new java.awt.Dimension(90, 23));
         panelCari.add(R2);
 
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-09-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-10-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -670,7 +670,7 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
         jLabel22.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel22);
 
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-09-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-10-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -691,7 +691,7 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
         R3.setPreferredSize(new java.awt.Dimension(85, 23));
         panelCari.add(R3);
 
-        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-09-2023" }));
+        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-10-2023" }));
         DTPCari3.setDisplayFormat("dd-MM-yyyy");
         DTPCari3.setName("DTPCari3"); // NOI18N
         DTPCari3.setOpaque(false);
@@ -713,7 +713,7 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
         jLabel25.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel25);
 
-        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-09-2023" }));
+        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-10-2023" }));
         DTPCari4.setDisplayFormat("dd-MM-yyyy");
         DTPCari4.setName("DTPCari4"); // NOI18N
         DTPCari4.setOpaque(false);
@@ -802,7 +802,7 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
 
         TanggalSurat.setEditable(false);
         TanggalSurat.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalSurat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-09-2023 07:53:18" }));
+        TanggalSurat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-10-2023 10:09:56" }));
         TanggalSurat.setDisplayFormat("dd-MM-yyyy hh:mm:ss");
         TanggalSurat.setName("TanggalSurat"); // NOI18N
         TanggalSurat.setOpaque(false);
@@ -914,12 +914,12 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
             }
         });
         FormInput.add(Alasan2);
-        Alasan2.setBounds(110, 160, 266, 23);
+        Alasan2.setBounds(96, 160, 279, 23);
 
         jLabel8.setText("Alasan 2 :");
         jLabel8.setName("jLabel8"); // NOI18N
         FormInput.add(jLabel8);
-        jLabel8.setBounds(10, 160, 95, 23);
+        jLabel8.setBounds(10, 160, 80, 23);
 
         jLabel12.setText("Tindak Lanjut :");
         jLabel12.setName("jLabel12"); // NOI18N
@@ -957,7 +957,7 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
         jLabel14.setBounds(0, 100, 92, 23);
 
         TanggalPeriksa.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalPeriksa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-09-2023 07:53:19" }));
+        TanggalPeriksa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-10-2023 10:09:56" }));
         TanggalPeriksa.setDisplayFormat("dd-MM-yyyy hh:mm:ss");
         TanggalPeriksa.setName("TanggalPeriksa"); // NOI18N
         TanggalPeriksa.setOpaque(false);
@@ -2071,7 +2071,9 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         KdDokter1.setText(Sequel.cariIsi("select kd_dokter_bpjs from maping_dokter_dpjpvclaim where kd_dokter=?", KdDokter.getText()));
         NmDokter1.setText(Sequel.cariIsi("select nm_dokter_bpjs from maping_dokter_dpjpvclaim where kd_dokter=?", KdDokter1.getText()));
         set_status_rawat = status_rawat;
-
+        if (status_rawat.equals("Ranap")) {
+            Terapi.setText(Sequel.cariIsi("SELECT GROUP_CONCAT(databarang.nama_brng) FROM detail_pemberian_obat INNER JOIN databarang ON detail_pemberian_obat.kode_brng=databarang.kode_brng WHERE detail_pemberian_obat.status='Pulang' and detail_pemberian_obat.no_rawat='"+norawat+"'"));
+        }
     }
 
     public boolean compareDates(String d1, String d2) {

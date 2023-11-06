@@ -3005,9 +3005,14 @@ public final class DlgRawatJalan extends javax.swing.JDialog {
                 }else{
                     for(i=0;i<tbPemeriksaan.getRowCount();i++){
                         if(tbPemeriksaan.getValueAt(i,0).toString().equals("true")){
-                            Sequel.queryu("delete from pemeriksaan_ralan where no_rawat='"+tbPemeriksaan.getValueAt(i,1).toString()+
-                                    "' and tgl_perawatan='"+tbPemeriksaan.getValueAt(i,4).toString()+
-                                    "' and jam_rawat='"+tbPemeriksaan.getValueAt(i,5).toString()+"' ");
+                            if (Sequel.cariInteger("SELECT COUNT(no_rawat) FROM data_triase_igd where no_rawat='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),1)+"' and tanggal='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),4)+"' and jam='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),5)+"'") > 0) {
+                                JOptionPane.showMessageDialog(rootPane,"Maaf, Data pemeriksaan masih ada di Triage.\nSilakan periksa data Triage..!!");
+                            }
+                            if (Sequel.cariInteger("SELECT COUNT(no_rawat) FROM data_triase_igd where no_rawat='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),1)+"' and tanggal='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),4)+"' and jam='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),5)+"'") < 1) {
+                                Sequel.queryu("delete from pemeriksaan_ralan where no_rawat='"+tbPemeriksaan.getValueAt(i,1).toString()+
+                                        "' and tgl_perawatan='"+tbPemeriksaan.getValueAt(i,4).toString()+
+                                        "' and jam_rawat='"+tbPemeriksaan.getValueAt(i,5).toString()+"' ");
+                            }
                         }
                     }
                     tampilPemeriksaan();
@@ -3483,24 +3488,29 @@ private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                             (!TNadi.getText().trim().equals(""))||(!TGCS.getText().trim().equals(""))||
                             (!TindakLanjut.getText().trim().equals(""))||(!TPenilaian.getText().trim().equals(""))){
                         if(tbPemeriksaan.getSelectedRow()>-1){
-                            if(Sequel.mengedittf("pemeriksaan_ralan","no_rawat='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),1)+
-                                "' and tgl_perawatan='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),4)+
-                                "' and jam_rawat='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),5)+"'",
-                                "no_rawat='"+TNoRw.getText()+"',suhu_tubuh='"+TSuhu.getText()+"',tensi='"+TTensi.getText()+"',"+
-                                "keluhan='"+TKeluhan.getText()+"',pemeriksaan='"+TPemeriksaan.getText()+"',"+
-                                "nadi='"+TNadi.getText()+"',respirasi='"+TRespirasi.getText()+"',"+
-                                "tinggi='"+TTinggi.getText()+"',berat='"+TBerat.getText()+"',"+
-                                "gcs='"+TGCS.getText()+"',alergi='"+TAlergi.getText()+"',imun_ke='"+cmbImun.getSelectedItem()+"',"+
-//                                "tgl_perawatan='"+Valid.SetTgl(DTPTgl.getSelectedItem()+"")+"',"+
-//                                "jam_rawat='"+cmbJam.getSelectedItem()+":"+cmbMnt.getSelectedItem()+":"+cmbDtk.getSelectedItem()+"',"+
-                                "rtl='"+TindakLanjut.getText()+"',penilaian='"+TPenilaian.getText()+"'")==true){
-//                                "rtl='"+TindakLanjut.getText()+"',penilaian='"+TPenilaian.getText()+"',kesadaran='"+cmbKesadaran.getSelectedItem()+"'")==true){
-                                    TSuhu.setText("");TTensi.setText("");TNadi.setText("");TRespirasi.setText("");
-                                    TTinggi.setText("");TBerat.setText("");TGCS.setText("");TKeluhan.setText("");
-                                    TPemeriksaan.setText("");TAlergi.setText("");cmbImun.setSelectedIndex(0);
-                                    TindakLanjut.setText("");TPenilaian.setText("");
-                                    tampilPemeriksaan();
-                            }                            
+                            if (Sequel.cariInteger("SELECT COUNT(no_rawat) FROM data_triase_igd where no_rawat='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),1)+"' and tanggal='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),4)+"' and jam='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),5)+"'") > 0) {
+                                JOptionPane.showMessageDialog(rootPane,"Maaf, Data pemeriksaan masih ada di Triage.\nSilakan periksa data Triage..!!");
+                            }
+                            if (Sequel.cariInteger("SELECT COUNT(no_rawat) FROM data_triase_igd where no_rawat='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),1)+"' and tanggal='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),4)+"' and jam='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),5)+"'") < 1) {
+                                    if(Sequel.mengedittf("pemeriksaan_ralan","no_rawat='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),1)+
+                                    "' and tgl_perawatan='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),4)+
+                                    "' and jam_rawat='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),5)+"'",
+                                    "no_rawat='"+TNoRw.getText()+"',suhu_tubuh='"+TSuhu.getText()+"',tensi='"+TTensi.getText()+"',"+
+                                    "keluhan='"+TKeluhan.getText()+"',pemeriksaan='"+TPemeriksaan.getText()+"',"+
+                                    "nadi='"+TNadi.getText()+"',respirasi='"+TRespirasi.getText()+"',"+
+                                    "tinggi='"+TTinggi.getText()+"',berat='"+TBerat.getText()+"',"+
+                                    "gcs='"+TGCS.getText()+"',alergi='"+TAlergi.getText()+"',imun_ke='"+cmbImun.getSelectedItem()+"',"+
+    //                                "tgl_perawatan='"+Valid.SetTgl(DTPTgl.getSelectedItem()+"")+"',"+
+    //                                "jam_rawat='"+cmbJam.getSelectedItem()+":"+cmbMnt.getSelectedItem()+":"+cmbDtk.getSelectedItem()+"',"+
+                                    "rtl='"+TindakLanjut.getText()+"',penilaian='"+TPenilaian.getText()+"'")==true){
+    //                                "rtl='"+TindakLanjut.getText()+"',penilaian='"+TPenilaian.getText()+"',kesadaran='"+cmbKesadaran.getSelectedItem()+"'")==true){
+                                        TSuhu.setText("");TTensi.setText("");TNadi.setText("");TRespirasi.setText("");
+                                        TTinggi.setText("");TBerat.setText("");TGCS.setText("");TKeluhan.setText("");
+                                        TPemeriksaan.setText("");TAlergi.setText("");cmbImun.setSelectedIndex(0);
+                                        TindakLanjut.setText("");TPenilaian.setText("");
+                                        tampilPemeriksaan();
+                                }
+                            }                                                        
                         }else{
                             JOptionPane.showMessageDialog(rootPane,"Silahkan pilih data yang mau diganti..!!");
                             TCari.requestFocus();

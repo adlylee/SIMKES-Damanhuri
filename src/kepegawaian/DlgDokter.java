@@ -65,7 +65,7 @@ public class DlgDokter extends javax.swing.JDialog {
         this.setLocation(8,1);
         setSize(885,674);
 
-        Object[] row={"Kode Dokter","Nama Dokter","J.K.","Tmp.Lahir","Tgl.Lahir","G.D.","Agama","Alamat Tinggal","No.HP/Telp","Stts.Nikah","Spesialis","Alumni","No.Ijin Praktek"};
+        Object[] row={"Kode Dokter","Nama Dokter","J.K.","Tmp.Lahir","Tgl.Lahir","G.D.","Agama","Alamat Tinggal","No.HP/Telp","Stts.Nikah","Spesialis","Alumni","No.Ijin Praktek","NIP"};
         tabMode=new DefaultTableModel(null,row){
               @Override public boolean isCellEditable(int rowIndex, int colIndex){return false;}
         };
@@ -77,7 +77,7 @@ public class DlgDokter extends javax.swing.JDialog {
         tbDokter.setPreferredScrollableViewportSize(new Dimension(800,800));
         tbDokter.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (int i = 0; i < 13; i++) {
+        for (int i = 0; i < 14; i++) {
             TableColumn column = tbDokter.getColumnModel().getColumn(i);
             if(i==0){
                 column.setPreferredWidth(100);
@@ -104,6 +104,8 @@ public class DlgDokter extends javax.swing.JDialog {
             }else if(i==11){
                 column.setPreferredWidth(200);
             }else if(i==12){
+                column.setPreferredWidth(100);
+            }else if(i==13){
                 column.setPreferredWidth(100);
             }
         }
@@ -263,6 +265,8 @@ public class DlgDokter extends javax.swing.JDialog {
         KdSps = new widget.TextBox();
         btnSpesial = new widget.Button();
         BtnCariPegawai = new widget.Button();
+        jLabel23 = new widget.Label();
+        TNIP = new widget.TextBox();
         ChkInput = new widget.CekBox();
 
         Popup.setName("Popup"); // NOI18N
@@ -274,7 +278,6 @@ public class DlgDokter extends javax.swing.JDialog {
         MnRestore.setText("Data Sampah");
         MnRestore.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         MnRestore.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        MnRestore.setIconTextGap(5);
         MnRestore.setName("MnRestore"); // NOI18N
         MnRestore.setPreferredSize(new java.awt.Dimension(200, 28));
         MnRestore.addActionListener(new java.awt.event.ActionListener() {
@@ -653,7 +656,7 @@ public class DlgDokter extends javax.swing.JDialog {
         jLabel13.setBounds(2, 102, 105, 23);
 
         DTPLahir.setForeground(new java.awt.Color(50, 70, 50));
-        DTPLahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "27-02-2019" }));
+        DTPLahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "15-10-2023" }));
         DTPLahir.setDisplayFormat("dd-MM-yyyy");
         DTPLahir.setName("DTPLahir"); // NOI18N
         DTPLahir.setOpaque(false);
@@ -810,6 +813,21 @@ public class DlgDokter extends javax.swing.JDialog {
         FormInput.add(BtnCariPegawai);
         BtnCariPegawai.setBounds(253, 12, 28, 23);
 
+        jLabel23.setText("NIP :");
+        jLabel23.setName("jLabel23"); // NOI18N
+        FormInput.add(jLabel23);
+        jLabel23.setBounds(600, 70, 60, 23);
+
+        TNIP.setHighlighter(null);
+        TNIP.setName("TNIP"); // NOI18N
+        TNIP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                TNIPKeyPressed(evt);
+            }
+        });
+        FormInput.add(TNIP);
+        TNIP.setBounds(665, 70, 200, 23);
+
         PanelInput.add(FormInput, java.awt.BorderLayout.CENTER);
 
         ChkInput.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/143.png"))); // NOI18N
@@ -923,7 +941,7 @@ public class DlgDokter extends javax.swing.JDialog {
                         CmbStts.getSelectedItem()+"','"+
                         KdSps.getText()+"','"+
                         TAlumni.getText()+"','"+
-                        TNoi.getText()+"','1'","Kode Dokter");
+                        TNoi.getText()+"','1','"+TNIP.getText()+"'","Kode Dokter");
                 koneksi.setAutoCommit(true); 
                 tampil();
                 emptTeks();
@@ -1066,7 +1084,7 @@ public class DlgDokter extends javax.swing.JDialog {
                         "',stts_nikah='"+CmbStts.getSelectedItem()+
                         "',kd_sps='"+KdSps.getText()+
                         "',alumni='"+TAlumni.getText()+
-                        "',no_ijn_praktek='"+TNoi.getText()+"'");
+                        "',no_ijn_praktek='"+TNoi.getText()+"',nip='"+TNIP.getText()+"'");
                 koneksi.setAutoCommit(true);
                 if(tabMode.getRowCount()!=0){tampil();}
                 emptTeks();
@@ -1193,6 +1211,10 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         }
     }//GEN-LAST:event_tbDokterKeyReleased
 
+    private void TNIPKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TNIPKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TNIPKeyPressed
+
     /**
     * @param args the command line arguments
     */
@@ -1237,6 +1259,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.TextBox TAlumni;
     private widget.TextBox TCari;
     private widget.TextBox TKd;
+    private widget.TextBox TNIP;
     private widget.TextBox TNm;
     private widget.TextBox TNoi;
     private widget.TextBox TSpesialis;
@@ -1258,6 +1281,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.Label jLabel20;
     private widget.Label jLabel21;
     private widget.Label jLabel22;
+    private widget.Label jLabel23;
     private widget.Label jLabel3;
     private widget.Label jLabel4;
     private widget.Label jLabel6;
@@ -1276,7 +1300,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             stat=koneksi.prepareStatement(
                    "select dokter.kd_dokter,dokter.nm_dokter,dokter.jk,dokter.tmp_lahir, "+
                    "dokter.tgl_lahir,dokter.gol_drh,dokter.agama,dokter.almt_tgl,dokter.no_telp, "+
-                   "dokter.stts_nikah,spesialis.nm_sps,dokter.alumni,dokter.no_ijn_praktek "+
+                   "dokter.stts_nikah,spesialis.nm_sps,dokter.alumni,dokter.no_ijn_praktek, dokter.nip "+
                    "from dokter inner join spesialis on dokter.kd_sps=spesialis.kd_sps "+
                    "where dokter.status='1' and dokter.jk like ? and dokter.gol_drh like ? and dokter.stts_nikah like ? and dokter.kd_dokter like ? or "+
                    "dokter.status='1' and dokter.jk like ? and dokter.gol_drh like ? and dokter.stts_nikah like ? and dokter.nm_dokter like ? or "+
@@ -1350,7 +1374,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                                    rs.getString(10),
                                    rs.getString(11),
                                    rs.getString(12),
-                                   rs.getString(13)});
+                                   rs.getString(13),rs.getString("nip")});
                 }
             }catch(Exception e){
                 System.out.println("Notifikasi : "+e);
@@ -1386,6 +1410,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         DTPLahir.setDate(new Date());
         TKd.requestFocus();
         Valid.autoNomer(" dokter ","D",7,TKd);
+        TNIP.setText("");
     }
 
     private void getData() {

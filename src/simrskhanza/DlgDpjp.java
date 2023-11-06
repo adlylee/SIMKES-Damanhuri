@@ -753,12 +753,17 @@ public class DlgDpjp extends javax.swing.JDialog {
             Valid.textKosong(Dokter,"Data Dokter");
         }else{          
             try {
-                koneksi.setAutoCommit(false);
+                koneksi.setAutoCommit(false);                
                 for(i=0;i<tbDiagnosa.getRowCount();i++){ 
                     if(tbDiagnosa.getValueAt(i,0).toString().equals("true")){
-                        Sequel.menyimpan("dpjp_ranap","?,?,?","Dokter",3,new String[]{
-                            TNoRw.getText(),tbDiagnosa.getValueAt(i,1).toString(),Jeniskelas.getSelectedItem().toString()
-                        });
+                        int cari = Sequel.cariInteger("SELECT COUNT(no_rawat) FROM dpjp_ranap where jenis_dpjp='Utama' and no_rawat='"+TNoRw.getText()+"'");
+                        if (Jeniskelas.getSelectedItem().toString().equals("Utama") && cari > 0) {
+                            JOptionPane.showMessageDialog(null, "Maaf, DPJP Utama sudah tersedia..!!");
+                        }else{
+                            Sequel.menyimpan("dpjp_ranap","?,?,?","Dokter",3,new String[]{
+                                TNoRw.getText(),tbDiagnosa.getValueAt(i,1).toString(),Jeniskelas.getSelectedItem().toString()
+                            });                            
+                        }
                     }                    
                 }
                 koneksi.setAutoCommit(true);                

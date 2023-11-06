@@ -619,7 +619,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         Keterangan = new widget.TextArea();
         jLabel73 = new widget.Label();
         dxKeperawatan = new widget.ComboBox();
-        jLabel74 = new widget.Label();
         Intervensi = new widget.ComboBox();
         jLabel96 = new widget.Label();
         jLabel75 = new widget.Label();
@@ -696,7 +695,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Triage IGD ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 0, 13), new java.awt.Color(50, 50, 50))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Triage IGD ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(50, 50, 50))); // NOI18N
         internalFrame1.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setPreferredSize(new java.awt.Dimension(2040, 1053));
@@ -825,18 +824,21 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         FormInput.add(jLabel4);
         jLabel4.setBounds(0, 10, 100, 23);
 
+        TNoRw.setEditable(false);
         TNoRw.setBackground(new java.awt.Color(245, 250, 240));
         TNoRw.setHighlighter(null);
         TNoRw.setName("TNoRw"); // NOI18N
         FormInput.add(TNoRw);
         TNoRw.setBounds(105, 10, 152, 23);
 
+        TPasien.setEditable(false);
         TPasien.setBackground(new java.awt.Color(245, 250, 240));
         TPasien.setHighlighter(null);
         TPasien.setName("TPasien"); // NOI18N
         FormInput.add(TPasien);
         TPasien.setBounds(371, 10, 392, 23);
 
+        TNoRM.setEditable(false);
         TNoRM.setHighlighter(null);
         TNoRM.setName("TNoRM"); // NOI18N
         FormInput.add(TNoRM);
@@ -848,7 +850,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         jLabel18.setBounds(584, 70, 50, 23);
 
         Tanggal.setForeground(new java.awt.Color(50, 70, 50));
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22-09-2023 12:17:59" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-10-2023 10:06:12" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy HH:mm:ss");
         Tanggal.setName("Tanggal"); // NOI18N
         Tanggal.setOpaque(false);
@@ -880,6 +882,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         FormInput.add(jLabel14);
         jLabel14.setBounds(0, 130, 100, 23);
 
+        KdPetugas.setEditable(false);
         KdPetugas.setHighlighter(null);
         KdPetugas.setName("KdPetugas"); // NOI18N
         FormInput.add(KdPetugas);
@@ -1023,6 +1026,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         FormInput.add(jLabel29);
         jLabel29.setBounds(600, 40, 58, 23);
 
+        NoTelp.setEditable(false);
         NoTelp.setHighlighter(null);
         NoTelp.setName("NoTelp"); // NOI18N
         NoTelp.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1539,49 +1543,49 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         R1.setText("Rendah (0-24)");
         R1.setName("R1"); // NOI18N
         FormInput1.add(R1);
-        R1.setBounds(493, 70, 150, 17);
+        R1.setBounds(493, 70, 150, 20);
 
         buttonGroup1.add(R2);
         R2.setText("Sedang (25-44)");
         R2.setName("R2"); // NOI18N
         FormInput1.add(R2);
-        R2.setBounds(493, 90, 150, 17);
+        R2.setBounds(493, 90, 150, 20);
 
         buttonGroup1.add(R3);
         R3.setText("Tinggi (>= 45)");
         R3.setName("R3"); // NOI18N
         FormInput1.add(R3);
-        R3.setBounds(493, 110, 150, 17);
+        R3.setBounds(493, 110, 150, 20);
 
         buttonGroup2.add(R4);
         R4.setText("Tinggi (>=12)");
         R4.setName("R4"); // NOI18N
         FormInput1.add(R4);
-        R4.setBounds(493, 90, 150, 17);
+        R4.setBounds(493, 90, 150, 20);
 
         buttonGroup2.add(R5);
         R5.setText("Rendah (7-11)");
         R5.setName("R5"); // NOI18N
         FormInput1.add(R5);
-        R5.setBounds(493, 70, 150, 17);
+        R5.setBounds(493, 70, 150, 20);
 
         buttonGroup3.add(R6);
         R6.setText("Rendah (0-5)");
         R6.setName("R6"); // NOI18N
         FormInput1.add(R6);
-        R6.setBounds(493, 70, 150, 17);
+        R6.setBounds(493, 70, 150, 20);
 
         buttonGroup3.add(R7);
         R7.setText("Sedang (6-16)");
         R7.setName("R7"); // NOI18N
         FormInput1.add(R7);
-        R7.setBounds(493, 90, 150, 17);
+        R7.setBounds(493, 90, 150, 20);
 
         buttonGroup3.add(R8);
         R8.setText("Tinggi (17-30)");
         R8.setName("R8"); // NOI18N
         FormInput1.add(R8);
-        R8.setBounds(493, 110, 150, 17);
+        R8.setBounds(493, 110, 150, 20);
 
         jLabel62.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel62.setText("VL : Vulnus laseratum (robek)     VM : Vulnus morsum (gigitan binatang)     VP : Vulnus punctum (tusuk)      VS : Vulnus scissum (sayat)");
@@ -1635,11 +1639,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         FormInput1.add(dxKeperawatan);
         dxKeperawatan.setBounds(135, 550, 260, 23);
 
-        jLabel74.setText("Abdomen :");
-        jLabel74.setName("jLabel74"); // NOI18N
-        FormInput1.add(jLabel74);
-        jLabel74.setBounds(255, 550, 90, 23);
-
         Intervensi.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Bersihan jalan nafas", "O2 ..LPM VIA ...", "Monitoring vital sign", "Monitoring cairan", "Manajemen nyeri", "Pasang kateter urine", "Hecting", "Dressing luka", "Cross incision", "Pemasangan bidai", "Pemasangan ngt", " " }));
         Intervensi.setName("Intervensi"); // NOI18N
         FormInput1.add(Intervensi);
@@ -1650,7 +1649,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         jLabel96.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel96.setName("jLabel96"); // NOI18N
         FormInput1.add(jLabel96);
-        jLabel96.setBounds(20, 520, 250, 23);
+        jLabel96.setBounds(20, 520, 290, 23);
 
         jLabel75.setText("Intervensi :");
         jLabel75.setName("jLabel75"); // NOI18N
@@ -1843,7 +1842,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         panelGlass9.add(jLabel19);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22-09-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-10-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -1857,7 +1856,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         panelGlass9.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22-09-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-10-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -2082,9 +2081,16 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             } else if (KdPetugas.getText().trim().equals("") || NmPetugas.getText().trim().equals("")) {
                 Valid.textKosong(btnPetugas, "Petugas");
             } else {
-                insertPasien();
-                simpan();
-                TabPilihan.setSelectedIndex(1);
+//                int cariTriage = Sequel.cariInteger("SELECT COUNT(no_rawat) FROM data_triase_igd WHERE no_rawat=?", TNoRw.getText());
+//                if (cariTriage > 0) {
+//                    insertPasien();
+//                    simpan2();                    
+//                }
+//                if (cariTriage == 0) {
+                    insertPasien();
+                    simpan();
+//                }
+//                TabPilihan.setSelectedIndex(1);
             }
             if (sukses == true) {
                 Sequel.Commit();
@@ -2844,7 +2850,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
     private widget.Label jLabel65;
     private widget.Label jLabel7;
     private widget.Label jLabel73;
-    private widget.Label jLabel74;
     private widget.Label jLabel75;
     private widget.Label jLabel8;
     private widget.Label jLabel9;
@@ -3227,10 +3232,11 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
     }
 
     private void simpan() {
+        System.out.println("simpan");
         try {
             koneksi.setAutoCommit(false);
-            for (i = 0; i < tbLevel.getRowCount(); i++) {
-                if (tbLevel.getValueAt(i, 0).toString().equals("true")) {
+//            for (i = 0; i < tbLevel.getRowCount(); i++) {
+//                if (tbLevel.getValueAt(i, 0).toString().equals("true")) {
                     if (Sequel.menyimpantf("data_triase_igd", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "No.Rawat", 35, new String[]{
                         TNoRw.getText(), Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(11, 19),
                         KdDokter.getText(), KdPetugas.getText(), nmkasus, cmbantar, transport,
@@ -3242,7 +3248,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                     }) == true) {
                         if (Sequel.menyimpantf("pemeriksaan_ralan", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "Data", 16, new String[]{
                             TNoRw.getText(), Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(11, 19),
-                            Suhu.getText(), Tensi.getText(), Nadi.getText(), Respirasi.getText(), TB.getText(), BB.getText(), "",
+                            Suhu.getText(), Tensi.getText(), Nadi.getText(), Respirasi.getText(), TB.getText(), BB.getText(), Alergi.getText(),
                             KeluhanUtama.getText(), RiwayatPenyakit.getText(), "",
                             "-", "", ""
                         }) == true) {
@@ -3252,16 +3258,82 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                                         TNoRw.getText(), tbLevel.getValueAt(i, 3).toString()
                                     });
                                 }
-                            }
-                            JOptionPane.showMessageDialog(null, "Berhasil Simpan.");
-                            isReset();
-                            TabPilihan.setSelectedIndex(1);
-                            tampil();
-                            emptTeks();
+                            }                            
                         }
+                        JOptionPane.showMessageDialog(null, "Berhasil Simpan.");
+                        isReset();
+                        TabPilihan.setSelectedIndex(1);
+                        tampil();
+                        emptTeks();
                     }
-                }
-            }
+//                }
+//            }
+            koneksi.setAutoCommit(true);
+        } catch (Exception e) {
+            System.out.println("Notif : " + e);
+        }
+    }
+    
+    private void simpan2() {
+        System.out.println("simpan2");
+        try {
+//            koneksi.setAutoCommit(false);
+//            for (i = 0; i < tbLevel.getRowCount(); i++) {
+//                if (tbLevel.getValueAt(i, 0).toString().equals("true")) {
+            if (Sequel.mengedittf("data_triase_igd", "no_rawat=?", "kd_dokter=?,kd_petugas=?,namakasus=?,stts_diantar=?,transportasi=?,stts_fungsional=?,"
+                    + "psikologis=?,stts_tinggal=?,keluhan_utama=?,riwayat_penyakit=?,saturasi=?,lk=?,lila=?,imt=?,ld=?,lp=?,"
+                    + "edukasi=?,riwayat_penyakit_dahulu=?,riwayat_pengobatan=?,riwayat_masuk_rs=?,riwayat_penyakit_keluarga=?,"
+                    + "riwayat_operasi=?,riwayat_trauma=?,periksafisik=?,skala_nyeri=?,resiko_jatuh=?,nilai_resiko_jatuh=?,"
+                    + "diagnosa_keperawatan=?,intervensi=?,diagnosis=?,tindakan=?,keterangan=?", 33, new String[]{
+                KdDokter.getText(), KdPetugas.getText(), nmkasus, cmbantar, transport,
+                fungsional, Psikologis.getSelectedItem().toString(), SttsTinggal.getSelectedItem().toString(),
+                KeluhanUtama.getText(), RiwayatPenyakit.getText(), Saturasi.getText(), LK.getText(),
+                LILA.getText(), IMT.getText(), LD.getText(), LP.getText(), Edukasi.getText(), rpDahulu.getText(), rPengobatan.getText(), rMasukRS.getText(), rpKeluarga.getText(),
+                rOperasi.getText(), rTrauma.getText(), periksafisik, cmbSkalaNyeri.getSelectedItem().toString(), cmbResikoJatuh.getSelectedItem().toString(),
+                resiko, dxKeperawatan.getSelectedItem().toString(), Intervensi.getSelectedItem().toString(), Diagnosa.getText(), Tindakan.getText(), Keterangan.getText(),
+                tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString()
+            }) == true) {
+                
+//if (Sequel.mengedittf("data_triase_igd", "no_rawat=?",
+//                    "tanggal=?,jam=?,kd_dokter=?,kd_petugas=?,namakasus=?,stts_diantar=?,transportasi=?,stts_fungsional=?,"
+//                    + "psikologis=?,stts_tinggal=?,keluhan_utama=?,riwayat_penyakit=?,saturasi=?,lk=?,lila=?,imt=?,ld=?,lp=?,"
+//                    + "edukasi=?,riwayat_penyakit_dahulu=?,riwayat_pengobatan=?,riwayat_masuk_rs=?,riwayat_penyakit_keluarga=?,"
+//                    + "riwayat_operasi=?,riwayat_trauma=?,periksafisik=?,skala_nyeri=?,resiko_jatuh=?,nilai_resiko_jatuh=?,"
+//                    + "diagnosa_keperawatan=?,intervensi=?,diagnosis=?,tindakan=?,keterangan=?",
+//                    35, new String[]{
+//                        Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(11, 19),KdDokter.getText(), KdPetugas.getText(), nmkasus, cmbantar, transport,
+//                        fungsional, Psikologis.getSelectedItem().toString(), SttsTinggal.getSelectedItem().toString(),
+//                        KeluhanUtama.getText(), RiwayatPenyakit.getText(), Saturasi.getText(), LK.getText(),
+//                        LILA.getText(), IMT.getText(),LD.getText(),LP.getText(), Edukasi.getText(), rpDahulu.getText(), rPengobatan.getText(), rMasukRS.getText(), rpKeluarga.getText(),
+//                        rOperasi.getText(), rTrauma.getText(), periksafisik, cmbSkalaNyeri.getSelectedItem().toString(), cmbResikoJatuh.getSelectedItem().toString(),
+//                        resiko, dxKeperawatan.getSelectedItem().toString(), Intervensi.getSelectedItem().toString(), Diagnosa.getText(), Tindakan.getText(), Keterangan.getText(),
+//                        tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString()
+//                    }) == true) {
+                        System.out.println("edit triase 2");
+                        if (Sequel.menyimpantf("pemeriksaan_ralan", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "Data", 16, new String[]{
+                            TNoRw.getText(), Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(11, 19),
+                            Suhu.getText(), Tensi.getText(), Nadi.getText(), Respirasi.getText(), TB.getText(), BB.getText(), "",
+                            KeluhanUtama.getText(), RiwayatPenyakit.getText(), "",
+                            "-", "", ""
+                        }) == true) {
+                            System.out.println("simpan2 pemeriksaan_ralan");
+                            for (i = 0; i < tbLevel.getRowCount(); i++) {
+                                if (tbLevel.getValueAt(i, 0).toString().equals("true")) {
+                                    Sequel.menyimpan2("detail_pemeriksaan_triase", "?,?", "Pemeriksaan Triage", 2, new String[]{
+                                        TNoRw.getText(), tbLevel.getValueAt(i, 3).toString()
+                                    });
+                                    System.out.println("simpan2 detail_pemeriksaan_triase");
+                                }
+                            }                            
+                        }
+                        JOptionPane.showMessageDialog(null, "Berhasil Simpan.");
+                        isReset();
+                        TabPilihan.setSelectedIndex(1);
+                        tampil();
+                        emptTeks();
+                    }
+//                }
+//            }
             koneksi.setAutoCommit(true);
         } catch (Exception e) {
             System.out.println("Notif : " + e);
@@ -3313,9 +3385,9 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                         resiko, dxKeperawatan.getSelectedItem().toString(), Intervensi.getSelectedItem().toString(), Diagnosa.getText(), Tindakan.getText(), Keterangan.getText(),
                         tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString(), tbTriase.getValueAt(tbTriase.getSelectedRow(), 1).toString(), tbTriase.getValueAt(tbTriase.getSelectedRow(), 2).toString()
                     }) == true) {
-                Sequel.queryu2("update pemeriksaan_ralan set suhu_tubuh=?,tensi=?,nadi=?,respirasi=?,tinggi=?,berat=?,keluhan=?,pemeriksaan=?"
-                        + " where no_rawat=? and tgl_perawatan=? and jam_rawat=?", 11,
-                        new String[]{Suhu.getText(), Tensi.getText(), Nadi.getText(), Respirasi.getText(), TB.getText(), BB.getText(), KeluhanUtama.getText(), RiwayatPenyakit.getText(),
+                Sequel.queryu2("update pemeriksaan_ralan set suhu_tubuh=?,tensi=?,nadi=?,respirasi=?,tinggi=?,berat=?,keluhan=?,pemeriksaan=?,alergi=? "
+                        + " where no_rawat=? and tgl_perawatan=? and jam_rawat=?", 12,
+                        new String[]{Suhu.getText(), Tensi.getText(), Nadi.getText(), Respirasi.getText(), TB.getText(), BB.getText(), KeluhanUtama.getText(), RiwayatPenyakit.getText(),Alergi.getText(),
                             tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString(), tbTriase.getValueAt(tbTriase.getSelectedRow(), 1).toString(),
                             tbTriase.getValueAt(tbTriase.getSelectedRow(), 2).toString()
                         });

@@ -1278,7 +1278,7 @@ public final class DlgRawatInap extends javax.swing.JDialog {
         WindowInput.setUndecorated(true);
         WindowInput.setResizable(false);
 
-        internalFrame9.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Input SHK ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame9.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Input SHK ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame9.setName("internalFrame9"); // NOI18N
         internalFrame9.setLayout(null);
 
@@ -1378,7 +1378,7 @@ public final class DlgRawatInap extends javax.swing.JDialog {
         setUndecorated(true);
         setResizable(false);
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Perawatan/Tindakan Rawat Inap ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Perawatan/Tindakan Rawat Inap ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -1548,7 +1548,7 @@ public final class DlgRawatInap extends javax.swing.JDialog {
         panelGlass10.add(jLabel19);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30-09-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "03-10-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -1562,7 +1562,7 @@ public final class DlgRawatInap extends javax.swing.JDialog {
         panelGlass10.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30-09-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "03-10-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -3176,7 +3176,7 @@ public final class DlgRawatInap extends javax.swing.JDialog {
         TPasien.setBounds(283, 10, 260, 23);
 
         DTPTgl.setForeground(new java.awt.Color(50, 70, 50));
-        DTPTgl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30-09-2023" }));
+        DTPTgl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "03-10-2023" }));
         DTPTgl.setDisplayFormat("dd-MM-yyyy");
         DTPTgl.setName("DTPTgl"); // NOI18N
         DTPTgl.setOpaque(false);
@@ -4179,33 +4179,32 @@ public final class DlgRawatInap extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(null, "Maaf, data sudah habis. Tidak ada data yang bisa anda print...!!!!");
                     BtnBatal.requestFocus();
                 } else if (tabModePemeriksaan.getRowCount() != 0) {
-                    Map<String, Object> param = new HashMap<>();
-                    param.put("namars", var.getnamars());
-                    param.put("alamatrs", var.getalamatrs());
-                    param.put("kotars", var.getkabupatenrs());
-                    param.put("propinsirs", var.getpropinsirs());
-                    param.put("kontakrs", var.getkontakrs());
-                    param.put("emailrs", var.getemailrs());
-                    param.put("logo", Sequel.cariGambar("select logo from setting"));
-                    String pas = " and reg_periksa.no_rkm_medis like '%" + TCariPasien.getText() + "%' ";
-
-                    String tgl = " pemeriksaan_ranap.tgl_perawatan between '" + Valid.SetTgl(DTPCari1.getSelectedItem() + "") + "' and '" + Valid.SetTgl(DTPCari2.getSelectedItem() + "") + "' " + pas;
-                    Valid.MyReport("rptInapPemeriksaan.jrxml", "report", "::[ Data Pemeriksaan Rawat Inap ]::",
-                            "select pemeriksaan_ranap.no_rawat,reg_periksa.no_rkm_medis,pasien.nm_pasien,"
-                            + "pemeriksaan_ranap.tgl_perawatan,pemeriksaan_ranap.jam_rawat,pemeriksaan_ranap.suhu_tubuh,pemeriksaan_ranap.tensi, "
-                            + "pemeriksaan_ranap.nadi,pemeriksaan_ranap.respirasi,pemeriksaan_ranap.tinggi, "
-                            + "pemeriksaan_ranap.berat,pemeriksaan_ranap.gcs,pemeriksaan_ranap.keluhan, "
-                            + "pemeriksaan_ranap.pemeriksaan,pemeriksaan_ranap.alergi, pemeriksaan_ranap.penilaian, pemeriksaan_ranap.rtl,"
+                            Map<String, Object> param = new HashMap<>();
+                            param.put("namars", var.getnamars());
+                            param.put("alamatrs", var.getalamatrs());
+                            param.put("kotars", var.getkabupatenrs());
+                            param.put("propinsirs", var.getpropinsirs());
+                            param.put("kontakrs", var.getkontakrs());
+                            param.put("emailrs", var.getemailrs());
+                            param.put("logo", Sequel.cariGambar("select logo from setting"));
+                            String pas = " and reg_periksa.no_rkm_medis like '%" + TCariPasien.getText() + "%' ";                            
+                            String tgl = " pemeriksaan_ranap.tgl_perawatan between '" + Valid.SetTgl(DTPCari1.getSelectedItem() + "") + "' and '" + Valid.SetTgl(DTPCari2.getSelectedItem() + "") + "' " + pas;
+                            Valid.MyReport("rptInapPemeriksaan.jrxml", "report", "::[ Data Pemeriksaan Rawat Inap ]::",
+                                    "select pemeriksaan_ranap.no_rawat,reg_periksa.no_rkm_medis,pasien.nm_pasien,"
+                                    + "pemeriksaan_ranap.tgl_perawatan,pemeriksaan_ranap.jam_rawat,pemeriksaan_ranap.suhu_tubuh,pemeriksaan_ranap.tensi, "
+                                    + "pemeriksaan_ranap.nadi,pemeriksaan_ranap.respirasi,pemeriksaan_ranap.tinggi, "
+                                    + "pemeriksaan_ranap.berat,pemeriksaan_ranap.gcs,pemeriksaan_ranap.keluhan, "
+                                    + "pemeriksaan_ranap.pemeriksaan,pemeriksaan_ranap.alergi, pemeriksaan_ranap.penilaian, pemeriksaan_ranap.rtl,"
                             + "pemeriksaan_ranap.instruksi, pemeriksaan_ranap.evaluasi,pemeriksaan_ranap.spo2 from pasien inner join reg_periksa inner join pemeriksaan_ranap "
                             + "on pemeriksaan_ranap.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis where  "
-                            + tgl + "and pemeriksaan_ranap.no_rawat like '%" + TCari.getText().trim() + "%' or "
-                            + tgl + "and reg_periksa.no_rkm_medis like '%" + TCari.getText().trim() + "%' or "
-                            + tgl + "and pasien.nm_pasien like '%" + TCari.getText().trim() + "%' or "
-                            + tgl + "and pemeriksaan_ranap.alergi like '%" + TCari.getText().trim() + "%' or "
-                            + tgl + "and pemeriksaan_ranap.keluhan like '%" + TCari.getText().trim() + "%' or "
-                            + tgl + "and pemeriksaan_ranap.pemeriksaan like '%" + TCari.getText().trim() + "%' "
-                            + "order by pemeriksaan_ranap.no_rawat desc", param);
-                }
+                                    + tgl + "and pemeriksaan_ranap.no_rawat like '%" + TCari.getText().trim() + "%' or "
+                                    + tgl + "and reg_periksa.no_rkm_medis like '%" + TCari.getText().trim() + "%' or "
+                                    + tgl + "and pasien.nm_pasien like '%" + TCari.getText().trim() + "%' or "
+                                    + tgl + "and pemeriksaan_ranap.alergi like '%" + TCari.getText().trim() + "%' or "
+                                    + tgl + "and pemeriksaan_ranap.keluhan like '%" + TCari.getText().trim() + "%' or "
+                                    + tgl + "and pemeriksaan_ranap.pemeriksaan like '%" + TCari.getText().trim() + "%' "
+                                    + "order by pemeriksaan_ranap.no_rawat desc", param);
+                        }                                                
                 break;
             case 4:
                 if (tabModeObstetri.getRowCount() == 0) {

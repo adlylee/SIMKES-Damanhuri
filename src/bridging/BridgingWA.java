@@ -271,68 +271,17 @@ public class BridgingWA {
 
     public void sendwaKerohanian(String nama, String tanggal, String kamar) {
         try {
-            message = "Pemberitahuan Permintaan Form MPP.\n\n"
+            message = "Pemberitahuan Permintaan Kerohanian.\n\n"
                     + "Pasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal + "";
-            number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='198011042005012011'");
-            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldserver+"'") + "/wagateway/kirimpesan";
-            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldphone+"'");
-            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='"+moduleserver+"' AND field = '"+fieldtoken+"'");
-            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message+"&api_key="+token;
+            number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='198011042005012011'");            
+            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldserver + "'") + "/wagateway/kirimpesan";
+            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldphone + "'");
+            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldtoken + "'");
+            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message + "&api_key=" + token;
             System.out.println("PostField : " + requestJson);
-
-            URL obj = new URL(urlApi);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-            con.setRequestMethod("POST");
-            con.setRequestProperty("User-Agent", USER_AGENT);
-            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            con.setRequestProperty("charset", "utf-8");
-
-            // For POST only - START
-            con.setDoOutput(true);
-            OutputStreamWriter os = new OutputStreamWriter(con.getOutputStream());
-            os.write(requestJson);
-            os.flush();
-            os.close();
-            // For POST only - END
-
-            int responseCode = con.getResponseCode();
-            System.out.println("POST Response Code :: " + responseCode);
-
-            if (responseCode == HttpURLConnection.HTTP_OK) { //success
-                BufferedReader in = new BufferedReader(new InputStreamReader(
-                        con.getInputStream()));
-                String inputLine;
-                StringBuffer response = new StringBuffer();
-
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                in.close();
-
-                // print result
-                System.out.println(response.toString());
+            if (number.equals("")) {
+                System.out.println("Nomor telepon kosong !!!");
             } else {
-                System.out.println("POST request not worked");
-            }
-        } catch (Exception ex) {
-            System.out.println("Notifikasi : " + ex);
-            System.out.println(url);
-            if (ex.toString().contains("UnknownHostException")) {
-                JOptionPane.showMessageDialog(null, "Koneksi ke server WA terputus...!");
-            }
-        }
-    }
-
-        public void sendwaMPP(String nama, String tanggal, String kamar) {
-            try {
-                message = "Pemberitahuan pasien perlu penanganan MPP lebih lanjut.\n\nPasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal + "";
-                number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='198011042005012011'");
-                urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldserver + "'") + "/wagateway/kirimpesan";
-                sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldphone + "'");
-                token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldtoken + "'");
-                requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message + "&api_key=" + token;
-                System.out.println("PostField : " + requestJson);
-
                 URL obj = new URL(urlApi);
                 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
                 con.setRequestMethod("POST");
@@ -367,13 +316,70 @@ public class BridgingWA {
                 } else {
                     System.out.println("POST request not worked");
                 }
-            } catch (Exception ex) {
-                System.out.println("Notifikasi : " + ex);
-                System.out.println(url);
-                if (ex.toString().contains("UnknownHostException")) {
-                    JOptionPane.showMessageDialog(null, "Koneksi ke server WA terputus...!");
+            }
+        } catch (Exception ex) {
+            System.out.println("Notifikasi : " + ex);
+            System.out.println(urlApi);
+            if (ex.toString().contains("UnknownHostException")) {
+                JOptionPane.showMessageDialog(null, "Koneksi ke server WA terputus...!");
+            }
+        }
+    }
+
+        public void sendwaMPP(String nama, String tanggal, String kamar) {
+            try {
+            message = "Pemberitahuan pasien perlu penanganan MPP lebih lanjut.\n\nPasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal + "";
+            number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='198011042005012011'");
+            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldserver + "'") + "/wagateway/kirimpesan";
+            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldphone + "'");
+            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldtoken + "'");
+            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message + "&api_key=" + token;            
+            System.out.println("PostField : " + requestJson);
+            if (number.equals("")) {
+                System.out.println("Nomor telepon kosong !!!");
+            } else {
+                URL obj = new URL(urlApi);
+                HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+                con.setRequestMethod("POST");
+                con.setRequestProperty("User-Agent", USER_AGENT);
+                con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                con.setRequestProperty("charset", "utf-8");
+
+                // For POST only - START
+                con.setDoOutput(true);
+                OutputStreamWriter os = new OutputStreamWriter(con.getOutputStream());
+                os.write(requestJson);
+                os.flush();
+                os.close();
+                // For POST only - END
+
+                int responseCode = con.getResponseCode();
+                System.out.println("POST Response Code :: " + responseCode);
+
+                if (responseCode == HttpURLConnection.HTTP_OK) { //success
+                    BufferedReader in = new BufferedReader(new InputStreamReader(
+                            con.getInputStream()));
+                    String inputLine;
+                    StringBuffer response = new StringBuffer();
+
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
+
+                    // print result
+                    System.out.println(response.toString());
+                } else {
+                    System.out.println("POST request not worked");
                 }
             }
+        } catch (Exception ex) {
+            System.out.println("Notifikasi : " + ex);
+            System.out.println(urlApi);
+            if (ex.toString().contains("UnknownHostException")) {
+                JOptionPane.showMessageDialog(null, "Koneksi ke server WA terputus...!");
+            }
+        }
 //        try {
 //            reurn = "";
 //            message = "Pemberitahuan pasien perlu penanganan MPP lebih lanjut.\n\nPasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal + "";

@@ -47,8 +47,8 @@ public final class DlgKamar extends javax.swing.JDialog {
     private PreparedStatement ps;
     private ResultSet rs;
     private int i=0;
-    private String asalform="",ubah_status_kamar=Sequel.cariIsi("select ubah_status_kamar from set_jam_minimal");
-
+    private String asalform="",ubah_status_kamar=Sequel.cariIsi("select ubah_status_kamar from set_jam_minimal"), jabatan = Sequel.cariIsi("SELECT kd_jbtn FROM petugas WHERE nip='"+var.getkode()+"'"),bidang = Sequel.cariIsi("SELECT bidang FROM pegawai WHERE nik = ?",var.getkode());
+    
     /** Creates new form DlgKamar
      * @param parent
      * @param modal */
@@ -1174,7 +1174,7 @@ private void CmbCrIsiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST
         return tbKamar;
     }
        
-     public void isCek(){
+     public void isCek(){         
         BtnSimpan.setEnabled(var.getkamar());
         BtnHapus.setEnabled(var.getkamar());
         BtnPrint.setEnabled(var.getkamar());
@@ -1183,11 +1183,17 @@ private void CmbCrIsiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST
         kd_bangsal.setEditable(var.getkamar());
         Kelas.setEnabled(var.getkamar());        
         asalform=var.getform();
-        if(var.getkode().equals("Admin Utama") || 
-                var.getkode().equals("07012012017113007") || var.getkode().equals("07012062014313059") || var.getkode().equals("07012062019213080") || var.getkode().equals("07012062019213082") || var.getkode().equals("07012082019413099") ||
-                var.getkode().equals("07012082019413103") || var.getkode().equals("07012102014413067") || var.getkode().equals("07012102014413068") || var.getkode().equals("07012102016113021") || var.getkode().equals("07012102018213015")){
+        if(var.getkode().equals("Admin Utama")){
             MnRestore.setEnabled(true);
             BtnEdit.setEnabled(true);
+        }else if(var.getkode().equals("198011042005012011") || var.getkode().equals("197305211992022001") || var.getkode().equals("197610292006041016")
+            || var.getkode().equals("07012012017113007") || var.getkode().equals("07012062014313059") || var.getkode().equals("07012062019213080") || var.getkode().equals("07012062019213082") || var.getkode().equals("07012082019413099") ||
+            var.getkode().equals("07012082019413103") || var.getkode().equals("07012102014413067") || var.getkode().equals("07012102014413068") || var.getkode().equals("07012102016113021") || var.getkode().equals("07012102018213015")){
+            MnRestore.setEnabled(false);
+            BtnEdit.setEnabled(true);
+            BtnSimpan.setEnabled(false);            
+            BtnHapus.setEnabled(false);            
+            btnKamar.setEnabled(false);            
         }else{
             if(ubah_status_kamar.equals("No")){
                 BtnEdit.setEnabled(false);
@@ -1195,8 +1201,4 @@ private void CmbCrIsiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST
             MnRestore.setEnabled(false);
         }
      }
-     
-    
-
- 
 }

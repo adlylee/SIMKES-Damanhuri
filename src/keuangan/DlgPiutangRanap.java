@@ -783,7 +783,7 @@ private void BtnCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                         psdpjp.close();
                     }
                 }
-                tbBangsal.setValueAt(dokterranap,i,20  );
+                tbBangsal.setValueAt(dokterranap,i,21  );
             } catch(Exception e){
                 System.out.println("Notifikasi : "+e);
             }
