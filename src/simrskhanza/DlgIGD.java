@@ -73,7 +73,6 @@ import laporan.DlgDataInsidenKeselamatan;
 import laporan.DlgDiagnosaPenyakit;
 import permintaan.DlgPermintaanLaboratorium;
 import permintaan.DlgPermintaanRadiologi;
-import rekammedis.DlgObatTransferPasien;
 import rekammedis.DlgTriaseIGD;
 import rekammedis.RMTransferPasienAntarRuang;
 
