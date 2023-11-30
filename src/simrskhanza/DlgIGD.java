@@ -3809,11 +3809,11 @@ public final class DlgIGD extends javax.swing.JDialog {
                     //Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_rawat,6),signed)),0) from reg_periksa where tgl_registrasi='" + Valid.SetTgl(DTPReg.getSelectedItem() + "") + "' ", dateformat.format(DTPReg.getDate()) + "/", 6, NoRw);
                     isNumber();
                     if (Sequel.menyimpantf2("reg_periksa", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "No.Rawat", 19,
-                            new String[]{TNoReg.getText(), NoRw.getText(), Valid.SetTgl(DTPReg.getSelectedItem() + ""), CmbJam.getSelectedItem() + ":" + CmbMenit.getSelectedItem() + ":" + CmbDetik.getSelectedItem(),
+                            new String[]{TNoReg.getText(), TNoRw.getText(), Valid.SetTgl(DTPReg.getSelectedItem() + ""), CmbJam.getSelectedItem() + ":" + CmbMenit.getSelectedItem() + ":" + CmbDetik.getSelectedItem(),
                                 kddokter.getText(), TNoRM.getText(), "IGDK", TPngJwb.getText(), TAlmt.getText(), THbngn.getText(), biaya + "", "Belum",
                                 TStatus.getText(), "Ralan", kdpnj.getText(), umur, sttsumur, "Belum Bayar", status}) == true) {
                         ceksukses = true;
-                        setKategori();
+                        setKategori(TNoRw.getText());
                         JOptionPane.showMessageDialog(null, "Berhasil Simpan.");
                     }
                 } else {
@@ -3822,7 +3822,7 @@ public final class DlgIGD extends javax.swing.JDialog {
                                 kddokter.getText(), TNoRM.getText(), "IGDK", TPngJwb.getText(), TAlmt.getText(), THbngn.getText(), biaya + "", "Belum",
                                 TStatus.getText(), "Ralan", kdpnj.getText(), umur, sttsumur, "Belum Bayar", status}) == true) {
                         ceksukses = true;
-                        setKategori();
+                        setKategori(TNoRw.getText());
                         JOptionPane.showMessageDialog(null, "Berhasil Simpan.");
                     } else {
                         Kd2.setText("");
@@ -3832,7 +3832,7 @@ public final class DlgIGD extends javax.swing.JDialog {
                                     kddokter.getText(), TNoRM.getText(), "IGDK", TPngJwb.getText(), TAlmt.getText(), THbngn.getText(), biaya + "", "Belum",
                                     TStatus.getText(), "Ralan", kdpnj.getText(), umur, sttsumur, "Belum Bayar", status}) == true) {
                             ceksukses = true;
-                            setKategori();
+                            setKategori(TNoRw.getText());
                             JOptionPane.showMessageDialog(null, "Berhasil Simpan.");
                         } else {
                             Kd2.setText("");
@@ -3842,7 +3842,7 @@ public final class DlgIGD extends javax.swing.JDialog {
                                         kddokter.getText(), TNoRM.getText(), "IGDK", TPngJwb.getText(), TAlmt.getText(), THbngn.getText(), biaya + "", "Belum",
                                         TStatus.getText(), "Ralan", kdpnj.getText(), umur, sttsumur, "Belum Bayar", status}) == true) {
                                 ceksukses = true;
-                                setKategori();
+                                setKategori(TNoRw.getText());
                                 JOptionPane.showMessageDialog(null, "Berhasil Simpan.");
                             } else {
                                 Kd2.setText("");
@@ -3852,7 +3852,7 @@ public final class DlgIGD extends javax.swing.JDialog {
                                             kddokter.getText(), TNoRM.getText(), "IGDK", TPngJwb.getText(), TAlmt.getText(), THbngn.getText(), biaya + "", "Belum",
                                             TStatus.getText(), "Ralan", kdpnj.getText(), umur, sttsumur, "Belum Bayar", status}) == true) {
                                     ceksukses = true;
-                                    setKategori();
+                                    setKategori(TNoRw.getText());
                                     JOptionPane.showMessageDialog(null, "Berhasil Simpan.");
                                 } else {
                                     Kd2.setText("");
@@ -3862,7 +3862,7 @@ public final class DlgIGD extends javax.swing.JDialog {
                                                 kddokter.getText(), TNoRM.getText(), "IGDK", TPngJwb.getText(), TAlmt.getText(), THbngn.getText(), biaya + "", "Belum",
                                                 TStatus.getText(), "Ralan", kdpnj.getText(), umur, sttsumur, "Belum Bayar", status}) == true) {
                                         ceksukses = true;
-                                        setKategori();
+                                        setKategori(TNoRw.getText());
                                         JOptionPane.showMessageDialog(null, "Berhasil Simpan.");
                                     } else {
                                         Kd2.setText("");
@@ -7699,9 +7699,9 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
         pasien.setVisible(true);
     }
 
-    public void setKategori() {
+    public void setKategori(String no_rawat) {
         Sequel.menyimpan("kategori_pasien_igd", "?,?", 2, new String[]{
-            TNoRw.getText(), "-"
+            no_rawat, "-"
         });
     }
 
