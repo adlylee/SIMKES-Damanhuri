@@ -65,7 +65,7 @@ public class DlgIKBBayi extends javax.swing.JDialog {
             "Umur Ayah","Alamat","Berat Bayi","Panjang Badan",
             "Lk.Kepala","Proses Lahir","Kelahiran Ke","Keterangan",
             "Diagnosa","Penyulit Kehamilan","Ketuban","Lk.Perut",
-            "Lk.Dada","Penolong","No.SKL","Pekerjaan Ayah", "Pekerjaan Ibu"
+            "Lk.Dada","Penolong","No.SKL","Pekerjaan Ayah", "Pekerjaan Ibu","Warna Kulit Bayi"
         }){
               @Override public boolean isCellEditable(int rowIndex, int colIndex){return false;}
         };
@@ -74,7 +74,7 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         tbDokter.setPreferredScrollableViewportSize(new Dimension(800,800));
         tbDokter.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (int i = 0; i < 27; i++) {
+        for (int i = 0; i < 28; i++) {
             TableColumn column = tbDokter.getColumnModel().getColumn(i);
             if(i==0){
                 column.setPreferredWidth(80);
@@ -130,6 +130,8 @@ public class DlgIKBBayi extends javax.swing.JDialog {
                 column.setPreferredWidth(100);
             }else if(i==26){
                 column.setPreferredWidth(100);
+            }else if(i==27){
+                column.setPreferredWidth(80);
             }
         }
         tbDokter.setDefaultRenderer(Object.class, new WarnaTable());
@@ -161,6 +163,7 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         BPJSBayi.setDocument(new batasInput((byte)40).getKata(BPJSBayi));
         PekerjaanAyah.setDocument(new batasInput((byte)15).getKata(PekerjaanAyah));
         PekerjaanIbu.setDocument(new batasInput((byte)15).getKata(PekerjaanIbu));
+        WarnaKulit.setDocument(new batasInput((byte)30).getKata(WarnaKulit));
         
         TCari.setDocument(new batasInput((byte)100).getKata(TCari));
         if(koneksiDB.cariCepat().equals("aktif")){
@@ -407,6 +410,8 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         PekerjaanAyah = new widget.TextBox();
         jLabel26 = new widget.Label();
         PekerjaanIbu = new widget.TextBox();
+        label66 = new widget.Label();
+        WarnaKulit = new widget.TextBox();
 
         Popup.setName("Popup"); // NOI18N
 
@@ -417,7 +422,6 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         ppGrafikjkbayi.setText("Grafik Jns.Kelamin Bayi");
         ppGrafikjkbayi.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafikjkbayi.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafikjkbayi.setIconTextGap(5);
         ppGrafikjkbayi.setName("ppGrafikjkbayi"); // NOI18N
         ppGrafikjkbayi.setPreferredSize(new java.awt.Dimension(180, 30));
         ppGrafikjkbayi.addActionListener(new java.awt.event.ActionListener() {
@@ -443,7 +447,6 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         ppGrafikberat.setText("Keseluruhan");
         ppGrafikberat.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafikberat.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafikberat.setIconTextGap(5);
         ppGrafikberat.setName("ppGrafikberat"); // NOI18N
         ppGrafikberat.setPreferredSize(new java.awt.Dimension(180, 30));
         ppGrafikberat.addActionListener(new java.awt.event.ActionListener() {
@@ -460,7 +463,6 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         ppGrafikberatlaki.setText("Laki-Laki");
         ppGrafikberatlaki.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafikberatlaki.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafikberatlaki.setIconTextGap(5);
         ppGrafikberatlaki.setName("ppGrafikberatlaki"); // NOI18N
         ppGrafikberatlaki.setPreferredSize(new java.awt.Dimension(180, 30));
         ppGrafikberatlaki.addActionListener(new java.awt.event.ActionListener() {
@@ -477,7 +479,6 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         ppGrafikberatwn.setText("Perempuan");
         ppGrafikberatwn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafikberatwn.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafikberatwn.setIconTextGap(5);
         ppGrafikberatwn.setName("ppGrafikberatwn"); // NOI18N
         ppGrafikberatwn.setPreferredSize(new java.awt.Dimension(180, 30));
         ppGrafikberatwn.addActionListener(new java.awt.event.ActionListener() {
@@ -505,7 +506,6 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         ppGrafikpanjang.setText("Keseluruhan");
         ppGrafikpanjang.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafikpanjang.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafikpanjang.setIconTextGap(5);
         ppGrafikpanjang.setName("ppGrafikpanjang"); // NOI18N
         ppGrafikpanjang.setPreferredSize(new java.awt.Dimension(180, 30));
         ppGrafikpanjang.addActionListener(new java.awt.event.ActionListener() {
@@ -522,7 +522,6 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         ppGrafikpanjanglaki.setText("Laki-Laki");
         ppGrafikpanjanglaki.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafikpanjanglaki.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafikpanjanglaki.setIconTextGap(5);
         ppGrafikpanjanglaki.setName("ppGrafikpanjanglaki"); // NOI18N
         ppGrafikpanjanglaki.setPreferredSize(new java.awt.Dimension(180, 30));
         ppGrafikpanjanglaki.addActionListener(new java.awt.event.ActionListener() {
@@ -539,7 +538,6 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         ppGrafikpanjangwn.setText("Perempuan");
         ppGrafikpanjangwn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafikpanjangwn.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafikpanjangwn.setIconTextGap(5);
         ppGrafikpanjangwn.setName("ppGrafikpanjangwn"); // NOI18N
         ppGrafikpanjangwn.setPreferredSize(new java.awt.Dimension(180, 30));
         ppGrafikpanjangwn.addActionListener(new java.awt.event.ActionListener() {
@@ -568,7 +566,6 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         ppGrafiklahirtahun.setText("Keseluruhan");
         ppGrafiklahirtahun.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafiklahirtahun.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafiklahirtahun.setIconTextGap(5);
         ppGrafiklahirtahun.setName("ppGrafiklahirtahun"); // NOI18N
         ppGrafiklahirtahun.setPreferredSize(new java.awt.Dimension(180, 30));
         ppGrafiklahirtahun.addActionListener(new java.awt.event.ActionListener() {
@@ -585,7 +582,6 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         ppGrafiklahirtahunlaki.setText("Laki-Laki");
         ppGrafiklahirtahunlaki.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafiklahirtahunlaki.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafiklahirtahunlaki.setIconTextGap(5);
         ppGrafiklahirtahunlaki.setName("ppGrafiklahirtahunlaki"); // NOI18N
         ppGrafiklahirtahunlaki.setPreferredSize(new java.awt.Dimension(180, 30));
         ppGrafiklahirtahunlaki.addActionListener(new java.awt.event.ActionListener() {
@@ -602,7 +598,6 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         ppGrafiklahirtahunwn.setText("Perempuan");
         ppGrafiklahirtahunwn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafiklahirtahunwn.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafiklahirtahunwn.setIconTextGap(5);
         ppGrafiklahirtahunwn.setName("ppGrafiklahirtahunwn"); // NOI18N
         ppGrafiklahirtahunwn.setPreferredSize(new java.awt.Dimension(180, 30));
         ppGrafiklahirtahunwn.addActionListener(new java.awt.event.ActionListener() {
@@ -631,7 +626,6 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         ppGrafiklahirbulan.setText("Keseluruhan");
         ppGrafiklahirbulan.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafiklahirbulan.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafiklahirbulan.setIconTextGap(5);
         ppGrafiklahirbulan.setName("ppGrafiklahirbulan"); // NOI18N
         ppGrafiklahirbulan.setPreferredSize(new java.awt.Dimension(180, 30));
         ppGrafiklahirbulan.addActionListener(new java.awt.event.ActionListener() {
@@ -648,7 +642,6 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         ppGrafiklahirbulanlaki.setText("Laki-Laki");
         ppGrafiklahirbulanlaki.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafiklahirbulanlaki.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafiklahirbulanlaki.setIconTextGap(5);
         ppGrafiklahirbulanlaki.setName("ppGrafiklahirbulanlaki"); // NOI18N
         ppGrafiklahirbulanlaki.setPreferredSize(new java.awt.Dimension(180, 30));
         ppGrafiklahirbulanlaki.addActionListener(new java.awt.event.ActionListener() {
@@ -665,7 +658,6 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         ppGrafiklahirbulanwn.setText("Perempuan");
         ppGrafiklahirbulanwn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafiklahirbulanwn.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafiklahirbulanwn.setIconTextGap(5);
         ppGrafiklahirbulanwn.setName("ppGrafiklahirbulanwn"); // NOI18N
         ppGrafiklahirbulanwn.setPreferredSize(new java.awt.Dimension(180, 30));
         ppGrafiklahirbulanwn.addActionListener(new java.awt.event.ActionListener() {
@@ -694,7 +686,6 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         ppGrafikproseslahir.setText("Keseluruhan");
         ppGrafikproseslahir.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafikproseslahir.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafikproseslahir.setIconTextGap(5);
         ppGrafikproseslahir.setName("ppGrafikproseslahir"); // NOI18N
         ppGrafikproseslahir.setPreferredSize(new java.awt.Dimension(180, 30));
         ppGrafikproseslahir.addActionListener(new java.awt.event.ActionListener() {
@@ -711,7 +702,6 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         ppGrafikproseslahirlaki.setText("Laki-Laki");
         ppGrafikproseslahirlaki.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafikproseslahirlaki.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafikproseslahirlaki.setIconTextGap(5);
         ppGrafikproseslahirlaki.setName("ppGrafikproseslahirlaki"); // NOI18N
         ppGrafikproseslahirlaki.setPreferredSize(new java.awt.Dimension(180, 30));
         ppGrafikproseslahirlaki.addActionListener(new java.awt.event.ActionListener() {
@@ -728,7 +718,6 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         ppGrafikproseslahirwn.setText("Perempuan");
         ppGrafikproseslahirwn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafikproseslahirwn.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafikproseslahirwn.setIconTextGap(5);
         ppGrafikproseslahirwn.setName("ppGrafikproseslahirwn"); // NOI18N
         ppGrafikproseslahirwn.setPreferredSize(new java.awt.Dimension(180, 30));
         ppGrafikproseslahirwn.addActionListener(new java.awt.event.ActionListener() {
@@ -745,7 +734,6 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         MnKartu.setForeground(new java.awt.Color(70, 70, 70));
         MnKartu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
         MnKartu.setText("Kartu Berobat");
-        MnKartu.setIconTextGap(5);
         MnKartu.setName("MnKartu"); // NOI18N
         MnKartu.setPreferredSize(new java.awt.Dimension(250, 25));
         MnKartu.addActionListener(new java.awt.event.ActionListener() {
@@ -760,7 +748,6 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         MnInformasiBayi.setForeground(new java.awt.Color(70, 70, 70));
         MnInformasiBayi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
         MnInformasiBayi.setText("Label Informasi Bayi");
-        MnInformasiBayi.setIconTextGap(5);
         MnInformasiBayi.setName("MnInformasiBayi"); // NOI18N
         MnInformasiBayi.setPreferredSize(new java.awt.Dimension(250, 28));
         MnInformasiBayi.addActionListener(new java.awt.event.ActionListener() {
@@ -775,7 +762,6 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         MnSKL2.setForeground(new java.awt.Color(70, 70, 70));
         MnSKL2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
         MnSKL2.setText("Surat Keterangan Lahir");
-        MnSKL2.setIconTextGap(5);
         MnSKL2.setName("MnSKL2"); // NOI18N
         MnSKL2.setPreferredSize(new java.awt.Dimension(250, 28));
         MnSKL2.addActionListener(new java.awt.event.ActionListener() {
@@ -793,7 +779,7 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         DlgBridgingLahir.setUndecorated(true);
         DlgBridgingLahir.setResizable(false);
 
-        internalFrame3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 235, 225)), "::[ Bridging Dukcapil Kelahiran Bayi Wilayah DKI Jakarta ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 235, 225)), "::[ Bridging Dukcapil Kelahiran Bayi Wilayah DKI Jakarta ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame3.setName("internalFrame3"); // NOI18N
         internalFrame3.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -1355,7 +1341,7 @@ public class DlgIKBBayi extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Bayi ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Bayi ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setPreferredSize(new java.awt.Dimension(826, 875));
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
@@ -2214,6 +2200,22 @@ public class DlgIKBBayi extends javax.swing.JDialog {
         FormInput.add(PekerjaanIbu);
         PekerjaanIbu.setBounds(328, 100, 140, 23);
 
+        label66.setText("Warna Kulit Bayi :");
+        label66.setName("label66"); // NOI18N
+        label66.setPreferredSize(new java.awt.Dimension(65, 23));
+        FormInput.add(label66);
+        label66.setBounds(940, 100, 98, 23);
+
+        WarnaKulit.setName("WarnaKulit"); // NOI18N
+        WarnaKulit.setPreferredSize(new java.awt.Dimension(207, 23));
+        WarnaKulit.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                WarnaKulitKeyPressed(evt);
+            }
+        });
+        FormInput.add(WarnaKulit);
+        WarnaKulit.setBounds(1040, 100, 290, 23);
+
         PanelInput.add(FormInput, java.awt.BorderLayout.PAGE_START);
 
         internalFrame1.add(PanelInput, java.awt.BorderLayout.PAGE_START);
@@ -2313,7 +2315,7 @@ public class DlgIKBBayi extends javax.swing.JDialog {
                    "pasien_bayi.proses_lahir,pasien_bayi.anakke, pasien_bayi.keterangan, "+
                    "pasien_bayi.diagnosa,pasien_bayi.penyulit_kehamilan,pasien_bayi.ketuban,"+
                    "pasien_bayi.lingkar_perut,pasien_bayi.lingkar_dada,pegawai.nama,"+
-                   "pasien_bayi.no_skl,pasien.pekerjaanpj, pasien_bayi.pekerjaanibu from pasien inner join pegawai inner join pasien_bayi "+
+                   "pasien_bayi.no_skl,pasien.pekerjaanpj, pasien_bayi.pekerjaanibu,pasien_bayi.warnakulit from pasien inner join pegawai inner join pasien_bayi "+
                    "inner join kelurahan inner join kecamatan inner join kabupaten "+
                    "on pasien.no_rkm_medis=pasien_bayi.no_rkm_medis and pasien_bayi.penolong=pegawai.nik "+
                    "and pasien.kd_kel=kelurahan.kd_kel and pasien.kd_kec=kecamatan.kd_kec and pasien.kd_kab=kabupaten.kd_kab "+
@@ -2553,7 +2555,7 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                             keterangan.getText()+"','"+Diagnosa.getText()+"','"+
                             PenyulitKehamilan.getText()+"','"+Ketuban.getText()+"','"+
                             LingkarPerut.getText()+"','"+LingkarDada.getText()+"','"+
-                            KdPenolong.getText()+"','"+NoSKL.getText()+"','"+PekerjaanIbu.getText()+"'","No.RM/No.SKL")==true){
+                            KdPenolong.getText()+"','"+NoSKL.getText()+"','"+PekerjaanIbu.getText()+"','"+WarnaKulit.getText()+"'","No.RM/No.SKL")==true){
 //                            System.out.println("Berhasil Simpan Ke tabel pasien bayi");
                                 Sequel.queryu2("delete from set_no_rkm_medis");
                                 Sequel.queryu2("insert into set_no_rkm_medis values(?)",1,new String[]{NoRm.getText()}); 
@@ -2661,7 +2663,7 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                         keterangan.getText()+"','"+Diagnosa.getText()+"','"+
                         PenyulitKehamilan.getText()+"','"+Ketuban.getText()+"','"+
                         LingkarPerut.getText()+"','"+LingkarDada.getText()+"','"+
-                        KdPenolong.getText()+"','"+NoSKL.getText()+"','"+PekerjaanIbu.getText()+"'","No.RM/No.SKL")==true){
+                        KdPenolong.getText()+"','"+NoSKL.getText()+"','"+PekerjaanIbu.getText()+"','"+WarnaKulit.getText()+"'","No.RM/No.SKL")==true){
                             tampil();
 //                            emptTeks();
                 }             
@@ -2722,7 +2724,7 @@ private void BtnEditActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRS
                     "',penolong='"+KdPenolong.getText()+
                     "',no_skl='"+NoSKL.getText()+
                     "',jam_lahir='"+jam.getSelectedItem()+":"+menit.getSelectedItem()+":"+detik.getSelectedItem()+
-                    "',keterangan='"+keterangan.getText()+"'");
+                    "',keterangan='"+keterangan.getText()+"',pekerjaanibu='"+PekerjaanIbu.getText()+"','warnakulit='"+WarnaKulit.getText()+"'");
             if(tabMode.getRowCount()!=0){tampil();}
             emptTeks();
         }
@@ -3116,7 +3118,7 @@ private void MnKartuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                 "pasien_bayi.proses_lahir,pasien_bayi.anakke, pasien_bayi.keterangan, "+
                 "pasien_bayi.diagnosa,pasien_bayi.penyulit_kehamilan,pasien_bayi.ketuban,"+
                 "pasien_bayi.lingkar_perut,pasien_bayi.lingkar_dada,pegawai.nama,"+
-                "pasien_bayi.no_skl,pasien_bayi.pekerjaanibu from pasien inner join pegawai inner join pasien_bayi "+
+                "pasien_bayi.no_skl,pasien_bayi.pekerjaanibu,pasien_bayi.warnakulit from pasien inner join pegawai inner join pasien_bayi "+
                 "inner join kelurahan inner join kecamatan inner join kabupaten "+
                 "on pasien.no_rkm_medis=pasien_bayi.no_rkm_medis and pasien_bayi.penolong=pegawai.nik "+
                 "and pasien.kd_kel=kelurahan.kd_kel and pasien.kd_kec=kecamatan.kd_kec and pasien.kd_kab=kabupaten.kd_kab "+
@@ -3176,6 +3178,10 @@ private void MnKartuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     private void jamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jamActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jamActionPerformed
+
+    private void WarnaKulitKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_WarnaKulitKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_WarnaKulitKeyPressed
 
     /**
     * @param args the command line arguments
@@ -3275,6 +3281,7 @@ private void MnKartuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     private widget.TextBox UmurPelapor;
     private widget.TextBox UmurSaksi1;
     private widget.TextBox UmurSaksi2;
+    private widget.TextBox WarnaKulit;
     private widget.CekBox ckTglCari;
     private widget.ComboBox cmbCrJk;
     private widget.ComboBox cmbHlm;
@@ -3344,6 +3351,7 @@ private void MnKartuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     private widget.Label label63;
     private widget.Label label64;
     private widget.Label label65;
+    private widget.Label label66;
     private widget.Label label9;
     private widget.ComboBox menit;
     private widget.PanelBiasa panelBiasa2;
@@ -3390,7 +3398,7 @@ private void MnKartuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                    "pasien_bayi.proses_lahir,pasien_bayi.anakke, pasien_bayi.keterangan, "+
                    "pasien_bayi.diagnosa,pasien_bayi.penyulit_kehamilan,pasien_bayi.ketuban,"+
                    "pasien_bayi.lingkar_perut,pasien_bayi.lingkar_dada,pegawai.nama,"+
-                   "pasien_bayi.no_skl, pasien.pekerjaanpj, pasien_bayi.pekerjaanibu "+ 
+                   "pasien_bayi.no_skl, pasien.pekerjaanpj, pasien_bayi.pekerjaanibu,pasien_bayi.warnakulit "+ 
                    "from pasien inner join pegawai inner join pasien_bayi "+
                    "inner join kelurahan inner join kecamatan inner join kabupaten "+
                    "on pasien.no_rkm_medis=pasien_bayi.no_rkm_medis and pasien_bayi.penolong=pegawai.nik "+
@@ -3483,6 +3491,7 @@ private void MnKartuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
         NoRm.requestFocus();
         PekerjaanAyah.setText("");
         PekerjaanIbu.setText("");
+        WarnaKulit.setText("");
     }
     
 
@@ -3523,6 +3532,7 @@ private void MnKartuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
             Sequel.cariIsi("select penolong from pasien_bayi where no_rkm_medis=?",KdPenolong,tbDokter.getValueAt(tbDokter.getSelectedRow(),0).toString());
             PekerjaanAyah.setText(tbDokter.getValueAt(tbDokter.getSelectedRow(),25).toString());
             PekerjaanIbu.setText(tbDokter.getValueAt(tbDokter.getSelectedRow(),26).toString());
+            WarnaKulit.setText(tbDokter.getValueAt(tbDokter.getSelectedRow(),27).toString());
         }
     }
 

@@ -693,7 +693,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         WindowInput3.setUndecorated(true);
         WindowInput3.setResizable(false);
 
-        internalFrame4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Ubah Aturan Pakai Obat Umum ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Ubah Aturan Pakai Obat Umum ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame4.setName("internalFrame4"); // NOI18N
         internalFrame4.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -776,7 +776,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         WindowInput4.setUndecorated(true);
         WindowInput4.setResizable(false);
 
-        internalFrame5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Ubah Aturan Pakai Obat Racik ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Ubah Aturan Pakai Obat Racik ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame5.setName("internalFrame5"); // NOI18N
         internalFrame5.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -859,7 +859,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         WindowInput5.setUndecorated(true);
         WindowInput5.setResizable(false);
 
-        internalFrame6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Aturan Pakai UDD ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Aturan Pakai UDD ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame6.setName("internalFrame6"); // NOI18N
         internalFrame6.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -947,7 +947,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         WindowInput6.setUndecorated(true);
         WindowInput6.setResizable(false);
 
-        internalFrame7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Aturan Pakai BUD ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Aturan Pakai BUD ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame7.setName("internalFrame7"); // NOI18N
         internalFrame7.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -1048,7 +1048,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         WindowInput7.setUndecorated(true);
         WindowInput7.setResizable(false);
 
-        internalFrame9.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Input Nomor Antrian ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame9.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Input Nomor Antrian ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame9.setName("internalFrame9"); // NOI18N
         internalFrame9.setLayout(null);
 
@@ -1099,7 +1099,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Resep Obat ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Resep Obat ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -1315,7 +1315,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         panelGlass9.add(jLabel19);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "17-03-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-10-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -1329,7 +1329,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         panelGlass9.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "17-03-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-10-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -1480,6 +1480,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         FormInput.add(jLabel11);
         jLabel11.setBounds(457, 42, 100, 23);
 
+        NoResep.setEditable(false);
         NoResep.setHighlighter(null);
         NoResep.setName("NoResep"); // NOI18N
         NoResep.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1496,7 +1497,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         jLabel8.setBounds(0, 42, 95, 23);
 
         DTPBeri.setForeground(new java.awt.Color(50, 70, 50));
-        DTPBeri.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "17-03-2023" }));
+        DTPBeri.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-10-2023" }));
         DTPBeri.setDisplayFormat("dd-MM-yyyy");
         DTPBeri.setName("DTPBeri"); // NOI18N
         DTPBeri.setOpaque(false);
@@ -1545,6 +1546,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
 
         ChkRM.setBorder(null);
         ChkRM.setSelected(true);
+        ChkRM.setEnabled(false);
         ChkRM.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ChkRM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ChkRM.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -1815,8 +1817,8 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         if (ChkRM.isSelected() == true) {
             NoResep.setEditable(false);
             NoResep.setBackground(new Color(245, 250, 240));
-            Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_resep,4),signed)),0) from resep_obat where tgl_perawatan='" + Valid.SetTgl(DTPBeri.getSelectedItem() + "") + "' ",
-                    DTPBeri.getSelectedItem().toString().substring(6, 10) + DTPBeri.getSelectedItem().toString().substring(3, 5) + DTPBeri.getSelectedItem().toString().substring(0, 2), 4, NoResep);
+            Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_resep,5),signed)),0) from resep_obat where tgl_perawatan='" + Valid.SetTgl(DTPBeri.getSelectedItem() + "") + "' ",
+                    DTPBeri.getSelectedItem().toString().substring(6, 10) + DTPBeri.getSelectedItem().toString().substring(3, 5) + DTPBeri.getSelectedItem().toString().substring(0, 2), 5, NoResep);
             //Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_resep,6),signed)),0) from resep_obat where tgl_perawatan like '%"+DTPBeri.getSelectedItem().toString().substring(6,10)+"%' ",DTPBeri.getSelectedItem().toString().substring(6,10),6,NoResep);           
         } else if (ChkRM.isSelected() == false) {
             NoResep.setEditable(true);
@@ -2226,6 +2228,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                     tabMode.getValueAt(i, 4).toString(), cmbJam.getSelectedItem() + ":" + cmbMnt.getSelectedItem() + ":" + cmbDtk.getSelectedItem(), TNoRw.getText(), "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
                 });
             }
+            String user = var.getkode();
             Map<String, Object> param = new HashMap<>();
             param.put("namars", var.getnamars());
             param.put("alamatrs", var.getalamatrs());
@@ -2247,10 +2250,19 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             param.put("noantrian", Sequel.cariIsi("select no_antrian from antrian_apotek where no_resep=?", NoResep.getText()));
             param.put("reseppulang", Sequel.cariIsi("select no_rawat from resep_pulang where no_resep=? limit 1",NoResep.getText()));
             param.put("nosep", Sequel.cariIsi("SELECT ifnull(no_sep,'') as sep FROM bridging_sep where no_rawat=?",TNoRw.getText()));
+            param.put("kronis", Sequel.cariIsi("SELECT no_rawat FROM mlite_veronisa where no_rawat=?",TNoRw.getText()));
+            param.put("petugas", Sequel.cariIsi("select nama from pegawai where nik=?", user));
             try {
-                String a = Sequel.cariIsi("select no_rawat from kamar_inap where kamar_inap.no_rawat=?", TNoRw.getText());
-
-                if (a == "") {
+                String a = Sequel.cariIsi("select no_rawat from kamar_inap where kamar_inap.no_rawat=?", TNoRw.getText());                
+                String b = Sequel.cariIsi("select nm_pasien from pasien where no_rkm_medis=?", TNoRm.getText());//added
+                String c = Sequel.cariIsi("SELECT bangsal.nm_bangsal FROM ranap_gabung,kamar_inap,kamar,bangsal WHERE ranap_gabung.no_rawat=kamar_inap.no_rawat and kamar_inap.kd_kamar=kamar.kd_kamar and kamar.kd_bangsal=bangsal.kd_bangsal  and kamar_inap.stts_pulang <> 'Pindah Kamar' and ranap_gabung.no_rawat2=?",TNoRw.getText());//added
+                if (b.toUpperCase().startsWith("BY") && a.equals("")) {//added
+                    kamar = "Kamar";
+                    String getkamar = c;
+                    param.put("kamar", kamar);
+                    param.put("namakamar", getkamar);
+                }
+                else if (a == "") {
                     kamar = "Poli";
                     namakamar = Sequel.cariIsi("select nm_poli from poliklinik inner join reg_periksa on poliklinik.kd_poli=reg_periksa.kd_poli "
                             + "where reg_periksa.no_rawat=?", TNoRw.getText());
@@ -2279,8 +2291,8 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         ppResepObat1.setVisible(false);
         ppResepObat2.setVisible(false);
         ppLembarObat.setVisible(false);
-        Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_resep,4),signed)),0) from resep_obat where tgl_perawatan='" + Valid.SetTgl(DTPBeri.getSelectedItem() + "") + "' ",
-                DTPBeri.getSelectedItem().toString().substring(6, 10) + DTPBeri.getSelectedItem().toString().substring(3, 5) + DTPBeri.getSelectedItem().toString().substring(0, 2), 4, NoResep);
+        Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_resep,5),signed)),0) from resep_obat where tgl_perawatan='" + Valid.SetTgl(DTPBeri.getSelectedItem() + "") + "' ",
+                DTPBeri.getSelectedItem().toString().substring(6, 10) + DTPBeri.getSelectedItem().toString().substring(3, 5) + DTPBeri.getSelectedItem().toString().substring(0, 2), 5, NoResep);
 
         // ppUbahAturanPakai.setVisible(false);
         // ppUbahAturanPakai1.setVisible(false);
@@ -2763,8 +2775,8 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         cmbDtk.setSelectedItem(now.substring(17, 19));
         NoResep.requestFocus();
         if (ChkRM.isSelected() == true) {
-            Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_resep,4),signed)),0) from resep_obat where tgl_perawatan='" + Valid.SetTgl(DTPBeri.getSelectedItem() + "") + "' ",
-                    DTPBeri.getSelectedItem().toString().substring(8, 10) + DTPBeri.getSelectedItem().toString().substring(3, 5) + DTPBeri.getSelectedItem().toString().substring(0, 2), 4, NoResep);
+            Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(no_resep,5),signed)),0) from resep_obat where tgl_perawatan='" + Valid.SetTgl(DTPBeri.getSelectedItem() + "") + "' ",
+                    DTPBeri.getSelectedItem().toString().substring(8, 10) + DTPBeri.getSelectedItem().toString().substring(3, 5) + DTPBeri.getSelectedItem().toString().substring(0, 2), 5, NoResep);
         }
         TNoAntrian.setText("");
         autoNomor();

@@ -447,6 +447,8 @@ public final class DlgDataTB extends javax.swing.JDialog {
         kdpenyakit = new widget.TextBox();
         nmpenyakit = new widget.TextBox();
         btnBangsal = new widget.Button();
+        NoRegTB = new widget.TextBox();
+        jLabel60 = new widget.Label();
         internalFrame3 = new widget.InternalFrame();
         Scroll = new widget.ScrollPane();
         tbJnsPerawatan = new widget.Table();
@@ -471,6 +473,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(462, 563));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -480,6 +483,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
 
         internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Pasien Teridentifikasi TB ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
+        internalFrame1.setPreferredSize(new java.awt.Dimension(462, 563));
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
         jPanel3.setName("jPanel3"); // NOI18N
@@ -628,7 +632,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
         jLabel58.setPreferredSize(new java.awt.Dimension(55, 23));
         panelGlass9.add(jLabel58);
 
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-04-2019" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "23-10-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -641,7 +645,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
         jLabel59.setPreferredSize(new java.awt.Dimension(24, 23));
         panelGlass9.add(jLabel59);
 
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-04-2019" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "23-10-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -706,6 +710,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
 
         internalFrame2.setBorder(null);
         internalFrame2.setName("internalFrame2"); // NOI18N
+        internalFrame2.setPreferredSize(new java.awt.Dimension(102, 309));
         internalFrame2.setLayout(new java.awt.BorderLayout(1, 1));
 
         Scroll1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
@@ -715,7 +720,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
         FormInput.setBackground(new java.awt.Color(255, 255, 255));
         FormInput.setBorder(null);
         FormInput.setName("FormInput"); // NOI18N
-        FormInput.setPreferredSize(new java.awt.Dimension(100, 257));
+        FormInput.setPreferredSize(new java.awt.Dimension(100, 277));
         FormInput.setLayout(null);
 
         jLabel3.setText("Pasien :");
@@ -842,7 +847,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
         FormInput.add(jLabel12);
         jLabel12.setBounds(270, 160, 54, 23);
 
-        TanggalLaporan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-04-2019 11:24:07" }));
+        TanggalLaporan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "23-10-2023 09:32:06" }));
         TanggalLaporan.setDisplayFormat("dd-MM-yyyy HH:mm:ss");
         TanggalLaporan.setName("TanggalLaporan"); // NOI18N
         TanggalLaporan.setOpaque(false);
@@ -1233,7 +1238,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
         FormInput.add(jLabel23);
         jLabel23.setBounds(532, 250, 80, 23);
 
-        MulaiBerobat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-04-2019" }));
+        MulaiBerobat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "23-10-2023" }));
         MulaiBerobat.setDisplayFormat("dd-MM-yyyy");
         MulaiBerobat.setName("MulaiBerobat"); // NOI18N
         MulaiBerobat.setOpaque(false);
@@ -1485,7 +1490,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
         FormInput.add(jLabel31);
         jLabel31.setBounds(0, 440, 100, 23);
 
-        AkhirBerobat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-04-2019" }));
+        AkhirBerobat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "23-10-2023" }));
         AkhirBerobat.setDisplayFormat("dd-MM-yyyy");
         AkhirBerobat.setName("AkhirBerobat"); // NOI18N
         AkhirBerobat.setOpaque(false);
@@ -1517,7 +1522,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
         FormInput.add(jLabel32);
         jLabel32.setBounds(512, 440, 100, 23);
 
-        DianjurkanTesHIV.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-04-2019" }));
+        DianjurkanTesHIV.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "23-10-2023" }));
         DianjurkanTesHIV.setDisplayFormat("dd-MM-yyyy");
         DianjurkanTesHIV.setName("DianjurkanTesHIV"); // NOI18N
         DianjurkanTesHIV.setOpaque(false);
@@ -1529,7 +1534,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
         FormInput.add(DianjurkanTesHIV);
         DianjurkanTesHIV.setBounds(615, 440, 90, 23);
 
-        TanggalTesHIV.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-04-2019" }));
+        TanggalTesHIV.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "23-10-2023" }));
         TanggalTesHIV.setDisplayFormat("dd-MM-yyyy");
         TanggalTesHIV.setName("TanggalTesHIV"); // NOI18N
         TanggalTesHIV.setOpaque(false);
@@ -1739,6 +1744,21 @@ public final class DlgDataTB extends javax.swing.JDialog {
         FormInput.add(btnBangsal);
         btnBangsal.setBounds(676, 560, 28, 23);
 
+        NoRegTB.setHighlighter(null);
+        NoRegTB.setName("NoRegTB"); // NOI18N
+        NoRegTB.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                NoRegTBKeyPressed(evt);
+            }
+        });
+        FormInput.add(NoRegTB);
+        NoRegTB.setBounds(103, 590, 200, 23);
+
+        jLabel60.setText("No. Registrasi SITB :");
+        jLabel60.setName("jLabel60"); // NOI18N
+        FormInput.add(jLabel60);
+        jLabel60.setBounds(0, 590, 100, 23);
+
         Scroll1.setViewportView(FormInput);
 
         internalFrame2.add(Scroll1, java.awt.BorderLayout.CENTER);
@@ -1794,22 +1814,24 @@ public final class DlgDataTB extends javax.swing.JDialog {
             Valid.textKosong(BtnPropinsi,"Propinsi");
         }else if(KeteranganRujukan.getText().trim().equals("")){
             Valid.textKosong(KeteranganRujukan,"Keterangan Rujukan");
-        }else if(PaduanOAT.getText().trim().equals("")){
-            Valid.textKosong(PaduanOAT,"Paduan OAT");
-        }else if(KeteranganSO.getText().trim().equals("")){
-            Valid.textKosong(KeteranganSO,"Keterangan Sumber Obat");
-        }else if(PemeriksaanLaboratBulan2NoReg.getText().trim().equals("")){
-            Valid.textKosong(PemeriksaanLaboratBulan2NoReg,"No.Reg Pemeriksaan Laborat Bulan 2");
-        }else if(PemeriksaanLaboratBulan3NoReg.getText().trim().equals("")){
-            Valid.textKosong(PemeriksaanLaboratBulan3NoReg,"No.Reg Pemeriksaan Laborat Bulan 3");
-        }else if(PemeriksaanLaboratBulan5NoReg.getText().trim().equals("")){
-            Valid.textKosong(PemeriksaanLaboratBulan5NoReg,"No.Reg Pemeriksaan Laborat Bulan 5");
-        }else if(PemeriksaanLaboratAkhirNoReg.getText().trim().equals("")){
-            Valid.textKosong(PemeriksaanLaboratAkhirNoReg,"No.Reg Pemeriksaan Laborat Akhir Pengobatan");
-        }else if(Keterangan.getText().trim().equals("")){
-            Valid.textKosong(Keterangan,"Keterangan");
-        }else if(kdpenyakit.getText().trim().equals("")||nmpenyakit.getText().trim().equals("")){
-            Valid.textKosong(btnBangsal,"Penyakit");
+        }else if(NoRegTB.getText().trim().equals("")){
+            Valid.textKosong(NoRegTB,"No. Registrasi SITB");
+//        }else if(PaduanOAT.getText().trim().equals("")){
+//            Valid.textKosong(PaduanOAT,"Paduan OAT");
+//        }else if(KeteranganSO.getText().trim().equals("")){
+//            Valid.textKosong(KeteranganSO,"Keterangan Sumber Obat");
+//        }else if(PemeriksaanLaboratBulan2NoReg.getText().trim().equals("")){
+//            Valid.textKosong(PemeriksaanLaboratBulan2NoReg,"No.Reg Pemeriksaan Laborat Bulan 2");
+//        }else if(PemeriksaanLaboratBulan3NoReg.getText().trim().equals("")){
+//            Valid.textKosong(PemeriksaanLaboratBulan3NoReg,"No.Reg Pemeriksaan Laborat Bulan 3");
+//        }else if(PemeriksaanLaboratBulan5NoReg.getText().trim().equals("")){
+//            Valid.textKosong(PemeriksaanLaboratBulan5NoReg,"No.Reg Pemeriksaan Laborat Bulan 5");
+//        }else if(PemeriksaanLaboratAkhirNoReg.getText().trim().equals("")){
+//            Valid.textKosong(PemeriksaanLaboratAkhirNoReg,"No.Reg Pemeriksaan Laborat Akhir Pengobatan");
+//        }else if(Keterangan.getText().trim().equals("")){
+//            Valid.textKosong(Keterangan,"Keterangan");
+//        }else if(kdpenyakit.getText().trim().equals("")||nmpenyakit.getText().trim().equals("")){
+//            Valid.textKosong(btnBangsal,"Penyakit");
         }else{
             id_tb_03="";
 //            try {
@@ -1894,7 +1916,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
 //                }
 //            }
             if(Sequel.menyimpantf("data_tb","?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?","Data",50,new String[]{
-                    TNoRw.getText(),id_tb_03,PeriodeLaporan.getSelectedItem().toString(),Valid.SetTgl(TanggalLaporan.getSelectedItem()+"")+" "+TanggalLaporan.getSelectedItem().toString().substring(11,19), 
+                    TNoRw.getText(),NoRegTB.getText(),PeriodeLaporan.getSelectedItem().toString(),Valid.SetTgl(TanggalLaporan.getSelectedItem()+"")+" "+TanggalLaporan.getSelectedItem().toString().substring(11,19), 
                     Valid.SetTgl(TanggalLaporan.getSelectedItem()+"").substring(0,4),kdwasor,"0",KdProp.getText(),KdKab.getText(),KdKec.getText(),KdKel.getText(),Rujukan.getSelectedItem().toString(),
                     KeteranganRujukan.getText(),TipeDiagnosis.getSelectedItem().toString(),Lokasi.getSelectedItem().toString(),Riwayat.getSelectedItem().toString(),StatusHIV.getSelectedItem().toString(),
                     SkoringAnak.getSelectedItem().toString(),Skoring5.getSelectedItem().toString(),Skoring6.getSelectedItem().toString(),Valid.SetTgl(MulaiBerobat.getSelectedItem()+""), 
@@ -2308,7 +2330,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         if(this.getHeight()<750){   
             Scroll1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-            FormInput.setPreferredSize(new Dimension(FormInput.WIDTH,605));
+            FormInput.setPreferredSize(new Dimension(FormInput.WIDTH,625));
             if(this.getWidth()<760){
                 Scroll1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);                                
                 FormInput.setPreferredSize(new Dimension(740,605));
@@ -2888,6 +2910,10 @@ public final class DlgDataTB extends javax.swing.JDialog {
         Valid.pindah(evt,Keterangan,BtnSimpan);
     }//GEN-LAST:event_btnBangsalKeyPressed
 
+    private void NoRegTBKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NoRegTBKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NoRegTBKeyPressed
+
     /**
     * @param args the command line arguments
     */
@@ -2948,6 +2974,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
     private widget.Tanggal MulaiBerobat;
     private widget.TextBox NIK;
     private widget.TextBox NoKartu;
+    private widget.TextBox NoRegTB;
     private widget.ComboBox PPK;
     private widget.TextBox PaduanOAT;
     private widget.TextBox PemeriksaanLaboratAkhirNoReg;
@@ -3045,6 +3072,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
     private widget.Label jLabel58;
     private widget.Label jLabel59;
     private widget.Label jLabel6;
+    private widget.Label jLabel60;
     private widget.Label jLabel7;
     private widget.Label jLabel8;
     private widget.Label jLabel9;
@@ -3190,6 +3218,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
         Keterangan.setText("");
         kdpenyakit.setText("");
         nmpenyakit.setText("");
+        NoRegTB.setText("");
         PeriodeLaporan.requestFocus();
     }
 

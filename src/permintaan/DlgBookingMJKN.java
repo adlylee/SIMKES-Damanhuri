@@ -352,7 +352,7 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
                     + "from mlite_antrian_referensi inner join booking_registrasi inner join pasien inner join poliklinik "
                     + "on mlite_antrian_referensi.tanggal_periksa=booking_registrasi.tanggal_periksa and mlite_antrian_referensi.no_rkm_medis=booking_registrasi.no_rkm_medis and "
                     + "booking_registrasi.no_rkm_medis=pasien.no_rkm_medis and booking_registrasi.kd_poli=poliklinik.kd_poli left join dokter on booking_registrasi.kd_dokter=dokter.kd_dokter "
-                    + "where mlite_antrian_referensi.tanggal_periksa between ? and ? "
+                    + "where mlite_antrian_referensi.keterangan='Via MJKN' and mlite_antrian_referensi.tanggal_periksa between ? and ? "
                     + "and (mlite_antrian_referensi.no_rkm_medis like ? or "
                     + "pasien.nm_pasien like ?)");
             try {

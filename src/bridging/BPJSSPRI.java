@@ -230,6 +230,8 @@ public class BPJSSPRI extends javax.swing.JDialog {
             public void windowClosed(WindowEvent e) {
                 if (cari.getTable().getSelectedRow() != -1) {
                     NoSurat.setText(cari.getTable().getValueAt(cari.getTable().getSelectedRow(), 2).toString());
+                    Valid.SetTgl(TanggalSurat, cari.getTable().getValueAt(cari.getTable().getSelectedRow(), 4).toString());
+                    Valid.SetTgl(TanggalKontrol, cari.getTable().getValueAt(cari.getTable().getSelectedRow(), 4).toString());
                     NoSurat.setVisible(true);
                     jLabel15.setVisible(true);
                 }
@@ -1141,7 +1143,17 @@ public class BPJSSPRI extends javax.swing.JDialog {
                                 emptTeks();
                                 tampil();
                             }
-                        } else {
+                        }
+//                        else if (nameNode.path("code").asText().equals("201")) {
+//                            if (Sequel.menyimpantf("bridging_surat_pri_bpjs", "?,?,?,?,?,?,?,?,?,?", "No.Surat", 10, new String[]{
+//                                NoRawat.getText(), NoKartu.getText(), Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), response.asText(), Valid.SetTgl(TanggalKontrol.getSelectedItem() + ""), KdDokter.getText(), NmDokter.getText(), KdPoli.getText(), NmPoli.getText(), Diagnosa.getText()
+//                            }) == true) {
+//                                System.out.println("Simpan 201..");
+//                                emptTeks();
+//                                tampil();
+//                            }
+//                        }
+                        else {
                             JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
                         }
                     } catch (Exception ex) {
@@ -1188,10 +1200,19 @@ public class BPJSSPRI extends javax.swing.JDialog {
 
     private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHapusActionPerformed
         if (tbObat.getSelectedRow() != -1) {
-            try {
-                bodyWithDeleteRequest();
-            } catch (Exception ex) {
-                System.out.println("Notifikasi Bridging : " + ex);
+            if (NoSurat.getText().length() < 19) {
+                Sequel.meghapus("bridging_surat_pri_bpjs", "no_surat", NoSurat.getText());
+                Integer cari = Sequel.cariInteger("SELECT no_surat FROM bridging_surat_pri_bpjs WHERE no_surat = '"+NoSurat.getText()+"'");
+                if (cari < 1) {
+                    JOptionPane.showMessageDialog(null, "Berhasil Menghapus");
+                }
+            }
+            if (NoSurat.getText().length() == 19) {
+                try {
+                    bodyWithDeleteRequest();
+                } catch (Exception ex) {
+                    System.out.println("Notifikasi Bridging : " + ex);
+                }
             }
         } else {
             JOptionPane.showMessageDialog(null, "Silahkan pilih dulu data yang mau dihapus..!!");
@@ -1394,7 +1415,16 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                             emptTeks();
                             tampil();
                         }
-                    } else {
+                    } 
+                    else if (nameNode.path("code").asText().equals("201")) {//added
+                        if (Sequel.mengedittf("bridging_surat_pri_bpjs", "no_surat=?", "tgl_surat=?,tgl_rencana=?,kd_dokter_bpjs=?,nm_dokter_bpjs=?,kd_poli_bpjs=?,nm_poli_bpjs=?,diagnosa=?", 8, new String[]{
+                            Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), Valid.SetTgl(TanggalKontrol.getSelectedItem() + ""), KdDokter.getText(), NmDokter.getText(), KdPoli.getText(), NmPoli.getText(), Diagnosa.getText(), NoSurat.getText()
+                        }) == true) {
+                            emptTeks();
+                            tampil();
+                        }
+                    }
+                    else {
                         JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
                     }
                 } catch (Exception ex) {
@@ -1759,6 +1789,8 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         NoSurat.setVisible(false);
         jLabel15.setVisible(false);
         penjab = Sequel.cariIsi("SELECT kd_pj from reg_periksa where no_rawat=?", norawat);
+        Valid.SetTgl(TanggalSurat, Sequel.cariIsi("select tgl_registrasi from reg_periksa where no_rawat=?",norawat));//added
+        Valid.SetTgl(TanggalKontrol, Sequel.cariIsi("select tgl_registrasi from reg_periksa where no_rawat=?",norawat));//added
         isForm();
         tampil();
         cekDiagnosa();
