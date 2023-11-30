@@ -26,6 +26,8 @@ import java.awt.event.WindowListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +62,8 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
     private String pilihan = "", kodepetugas = "", norm = "", key = "", resiko = "", periksafisik = "",
             nmkasus = "", cmbantar = "", transport = "", fungsional = "";
     private boolean sukses = true;
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    LocalDateTime now = LocalDateTime.now();
 
     /**
      * Creates new form DlgRujuk
@@ -3232,7 +3236,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
     }
 
     private void simpan() {
-        System.out.println("simpan");
         try {
             koneksi.setAutoCommit(false);
 //            for (i = 0; i < tbLevel.getRowCount(); i++) {
@@ -3246,19 +3249,17 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                         rpKeluarga.getText(), rOperasi.getText(), rTrauma.getText(), periksafisik, cmbSkalaNyeri.getSelectedItem().toString(), cmbResikoJatuh.getSelectedItem().toString(),
                         resiko, dxKeperawatan.getSelectedItem().toString(), Intervensi.getSelectedItem().toString(), Diagnosa.getText(), Tindakan.getText(), Keterangan.getText()
                     }) == true) {
-                        if (Sequel.menyimpantf("pemeriksaan_ralan", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "Data", 16, new String[]{
+                        Sequel.menyimpan("pemeriksaan_ralan", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", 18, new String[]{
                             TNoRw.getText(), Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(11, 19),
                             Suhu.getText(), Tensi.getText(), Nadi.getText(), Respirasi.getText(), TB.getText(), BB.getText(), Alergi.getText(),
                             KeluhanUtama.getText(), RiwayatPenyakit.getText(), "",
-                            "-", "", ""
-                        }) == true) {
-                            for (i = 0; i < tbLevel.getRowCount(); i++) {
-                                if (tbLevel.getValueAt(i, 0).toString().equals("true")) {
-                                    Sequel.menyimpan2("detail_pemeriksaan_triase", "?,?", "Pemeriksaan Triage", 2, new String[]{
-                                        TNoRw.getText(), tbLevel.getValueAt(i, 3).toString()
-                                    });
-                                }
-                            }                            
+                            "-", "", "", KdPetugas.getText(),dtf.format(now)});
+                        for (i = 0; i < tbLevel.getRowCount(); i++) {
+                            if (tbLevel.getValueAt(i, 0).toString().equals("true")) {
+                                Sequel.menyimpan2("detail_pemeriksaan_triase", "?,?", "Pemeriksaan Triage", 2, new String[]{
+                                    TNoRw.getText(), tbLevel.getValueAt(i, 3).toString()
+                                });
+                            }
                         }
                         JOptionPane.showMessageDialog(null, "Berhasil Simpan.");
                         isReset();
@@ -3274,72 +3275,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         }
     }
     
-    private void simpan2() {
-        System.out.println("simpan2");
-        try {
-//            koneksi.setAutoCommit(false);
-//            for (i = 0; i < tbLevel.getRowCount(); i++) {
-//                if (tbLevel.getValueAt(i, 0).toString().equals("true")) {
-            if (Sequel.mengedittf("data_triase_igd", "no_rawat=?", "kd_dokter=?,kd_petugas=?,namakasus=?,stts_diantar=?,transportasi=?,stts_fungsional=?,"
-                    + "psikologis=?,stts_tinggal=?,keluhan_utama=?,riwayat_penyakit=?,saturasi=?,lk=?,lila=?,imt=?,ld=?,lp=?,"
-                    + "edukasi=?,riwayat_penyakit_dahulu=?,riwayat_pengobatan=?,riwayat_masuk_rs=?,riwayat_penyakit_keluarga=?,"
-                    + "riwayat_operasi=?,riwayat_trauma=?,periksafisik=?,skala_nyeri=?,resiko_jatuh=?,nilai_resiko_jatuh=?,"
-                    + "diagnosa_keperawatan=?,intervensi=?,diagnosis=?,tindakan=?,keterangan=?", 33, new String[]{
-                KdDokter.getText(), KdPetugas.getText(), nmkasus, cmbantar, transport,
-                fungsional, Psikologis.getSelectedItem().toString(), SttsTinggal.getSelectedItem().toString(),
-                KeluhanUtama.getText(), RiwayatPenyakit.getText(), Saturasi.getText(), LK.getText(),
-                LILA.getText(), IMT.getText(), LD.getText(), LP.getText(), Edukasi.getText(), rpDahulu.getText(), rPengobatan.getText(), rMasukRS.getText(), rpKeluarga.getText(),
-                rOperasi.getText(), rTrauma.getText(), periksafisik, cmbSkalaNyeri.getSelectedItem().toString(), cmbResikoJatuh.getSelectedItem().toString(),
-                resiko, dxKeperawatan.getSelectedItem().toString(), Intervensi.getSelectedItem().toString(), Diagnosa.getText(), Tindakan.getText(), Keterangan.getText(),
-                tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString()
-            }) == true) {
-                
-//if (Sequel.mengedittf("data_triase_igd", "no_rawat=?",
-//                    "tanggal=?,jam=?,kd_dokter=?,kd_petugas=?,namakasus=?,stts_diantar=?,transportasi=?,stts_fungsional=?,"
-//                    + "psikologis=?,stts_tinggal=?,keluhan_utama=?,riwayat_penyakit=?,saturasi=?,lk=?,lila=?,imt=?,ld=?,lp=?,"
-//                    + "edukasi=?,riwayat_penyakit_dahulu=?,riwayat_pengobatan=?,riwayat_masuk_rs=?,riwayat_penyakit_keluarga=?,"
-//                    + "riwayat_operasi=?,riwayat_trauma=?,periksafisik=?,skala_nyeri=?,resiko_jatuh=?,nilai_resiko_jatuh=?,"
-//                    + "diagnosa_keperawatan=?,intervensi=?,diagnosis=?,tindakan=?,keterangan=?",
-//                    35, new String[]{
-//                        Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(11, 19),KdDokter.getText(), KdPetugas.getText(), nmkasus, cmbantar, transport,
-//                        fungsional, Psikologis.getSelectedItem().toString(), SttsTinggal.getSelectedItem().toString(),
-//                        KeluhanUtama.getText(), RiwayatPenyakit.getText(), Saturasi.getText(), LK.getText(),
-//                        LILA.getText(), IMT.getText(),LD.getText(),LP.getText(), Edukasi.getText(), rpDahulu.getText(), rPengobatan.getText(), rMasukRS.getText(), rpKeluarga.getText(),
-//                        rOperasi.getText(), rTrauma.getText(), periksafisik, cmbSkalaNyeri.getSelectedItem().toString(), cmbResikoJatuh.getSelectedItem().toString(),
-//                        resiko, dxKeperawatan.getSelectedItem().toString(), Intervensi.getSelectedItem().toString(), Diagnosa.getText(), Tindakan.getText(), Keterangan.getText(),
-//                        tbTriase.getValueAt(tbTriase.getSelectedRow(), 0).toString()
-//                    }) == true) {
-                        System.out.println("edit triase 2");
-                        if (Sequel.menyimpantf("pemeriksaan_ralan", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "Data", 16, new String[]{
-                            TNoRw.getText(), Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(11, 19),
-                            Suhu.getText(), Tensi.getText(), Nadi.getText(), Respirasi.getText(), TB.getText(), BB.getText(), "",
-                            KeluhanUtama.getText(), RiwayatPenyakit.getText(), "",
-                            "-", "", ""
-                        }) == true) {
-                            System.out.println("simpan2 pemeriksaan_ralan");
-                            for (i = 0; i < tbLevel.getRowCount(); i++) {
-                                if (tbLevel.getValueAt(i, 0).toString().equals("true")) {
-                                    Sequel.menyimpan2("detail_pemeriksaan_triase", "?,?", "Pemeriksaan Triage", 2, new String[]{
-                                        TNoRw.getText(), tbLevel.getValueAt(i, 3).toString()
-                                    });
-                                    System.out.println("simpan2 detail_pemeriksaan_triase");
-                                }
-                            }                            
-                        }
-                        JOptionPane.showMessageDialog(null, "Berhasil Simpan.");
-                        isReset();
-                        TabPilihan.setSelectedIndex(1);
-                        tampil();
-                        emptTeks();
-                    }
-//                }
-//            }
-            koneksi.setAutoCommit(true);
-        } catch (Exception e) {
-            System.out.println("Notif : " + e);
-        }
-    }
-
     private void ganti() {
         Sequel.AutoComitFalse();
         sukses = true;

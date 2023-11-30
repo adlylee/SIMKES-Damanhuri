@@ -136,7 +136,7 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
         TNoRM.setDocument(new batasInput((byte) 15).getKata(TNoRM));
         TCari.setDocument(new batasInput((byte) 100).getKata(TCari));
         Diagnosa.setDocument(new batasInput((int) 50).getKata(Diagnosa));
-        Terapi.setDocument(new batasInput((int) 50).getKata(Terapi));
+//        Terapi.setDocument(new batasInput((int) 50).getKata(Terapi));
         Alasan1.setDocument(new batasInput((int) 50).getKata(Alasan1));
         Alasan2.setDocument(new batasInput((int) 50).getKata(Alasan2));
         Rtl1.setDocument(new batasInput((int) 50).getKata(Rtl1));
@@ -1087,7 +1087,7 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
         if (penjab.equals("BPJ") || penjab.equals("A02")) {
             seppost = Sequel.cariInteger("select count(bridging_sep.no_sep) from bridging_sep, (select no_rujukan from bridging_sep where no_sep='" + nosep + "' and jnspelayanan='2') as nocarirujuk where bridging_sep.no_sep=nocarirujuk.no_rujukan");
             if (seppost >= 1) {
-                tglrujukan = Sequel.cariIsi("SELECT tglrujukan FROM bridging_sep WHERE jnspelayanan = '2'AND tglsep < (SELECT MAX(tglsep) FROM bridging_sep WHERE nomr = '" + TNoRM.getText() + "' AND jnspelayanan = '1') ORDER BY tglsep DESC LIMIT 1");
+                tglrujukan = Sequel.cariIsi("SELECT tglrujukan FROM bridging_sep WHERE jnspelayanan = '2' AND tglsep < (SELECT MAX(tglsep) FROM bridging_sep WHERE nomr = '" + TNoRM.getText() + "' AND jnspelayanan = '1') ORDER BY tglsep DESC LIMIT 1");
             } else {
                 tglrujukan = Sequel.cariIsi("select tglrujukan from bridging_sep where no_sep='" + nosep + "'");
             }
@@ -1102,8 +1102,8 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
             Valid.textKosong(TNoRM, "pasien");
         } else if (NmDokter.getText().trim().equals("") || KdDokter.getText().trim().equals("")) {
             Valid.textKosong(KdDokter, "Operator");
-        } else if (NmPoli.getText().trim().equals("") || NmPoli.getText().trim().equals("")) {
-            Valid.textKosong(KdPoli, "Operasi");
+        } else if (NmPoli.getText().trim().equals("") || KdPoli.getText().trim().equals("")) {
+            Valid.textKosong(KdPoli, "Unit/Poli");
         } else if (NoSurat.getText().trim().equals("")) {
             Valid.textKosong(NoSurat, "No.Surat");
         } else if (NoReg.getText().trim().equals("")) {

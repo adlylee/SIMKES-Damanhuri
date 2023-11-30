@@ -116,6 +116,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
     public DlgKamarInap(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        WindowCetakBerkas.setSize(670, 350);
         tabMode = new DefaultTableModel(null, new Object[]{
             "No.Rawat", "Nomer RM", "Nama Pasien", "Alamat Pasien", "No. Telp", "Penanggung Jawab", "Hubungan P.J.", "Jenis Bayar", "Kamar", "Tarif Kamar",
             "Diagnosa Awal", "Diagnosa Akhir", "Tgl.Masuk", "Jam Masuk", "Tgl.Keluar", "Jam Keluar",
@@ -7762,7 +7763,8 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
                         dlgro.emptTeks();
                         dlgro.isCek();
                         dlgro.setNoRm(rs2.getString("no_rawat2"), "Ranap");
-                        dlgro.setDokterPerujuk(Sequel.cariIsi("select kd_dokter from dpjp_ranap where no_rawat = ?", tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 0).toString()));
+//                        dlgro.setDokterPerujuk(Sequel.cariIsi("select kd_dokter from dpjp_ranap where no_rawat = ?", tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 0).toString()));
+                        dlgro.setDokterPerujuk(Sequel.cariIsi("select kd_dokter from dpjp_ranap where no_rawat = ?", rs2.getString("no_rawat2")));
                         dlgro.setVisible(true);
                         this.setCursor(Cursor.getDefaultCursor());
                     } else {
@@ -8779,6 +8781,9 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
             JOptionPane.showMessageDialog(null, "Maaf, table masih kosong...!!!!");
             TCari.requestFocus();
         } else if (tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 0).toString().equals("")) {
+            JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu pasien...!!!");
+            tbKamIn.requestFocus();
+        } else {
             this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             TNoRw2.setText(TNoRw1.getText());
             TNoRM2.setText(TNoRM1.getText());
@@ -8809,7 +8814,7 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
             param.put("beratbadan", Sequel.cariIsi("SELECT berat_badan FROM pasien_bayi WHERE no_rkm_medis='" + TNoRM1.getText() + "'"));
             param.put("panjangbadan", Sequel.cariIsi("SELECT panjang_badan FROM pasien_bayi WHERE no_rkm_medis='" + TNoRM1.getText() + "'"));
             param.put("penolong", Sequel.cariIsi("SELECT dokter.nm_dokter FROM pasien_bayi join dokter on pasien_bayi.penolong=dokter.kd_dokter where pasien_bayi.no_rkm_medis='" + TNoRM1.getText() + "'"));
-            param.put("warnakulit", Sequel.cariIsi("SELECT warna_kulit FROM pasien_bayi WHERE no_rkm_medis='" + TNoRM1.getText() + "'"));            
+            param.put("warnakulit", Sequel.cariIsi("SELECT warnakulit FROM pasien_bayi WHERE no_rkm_medis='" + TNoRM1.getText() + "'"));            
             param.put("kamar", Sequel.cariIsi("SELECT bangsal.nm_bangsal FROM kamar_inap,kamar,bangsal WHERE kamar_inap.kd_kamar=kamar.kd_kamar and kamar.kd_bangsal=bangsal.kd_bangsal and kamar_inap.no_rawat='" + TNoRw1.getText() + "'"));
             param.put("tglreg", Sequel.cariIsi("SELECT DATE_FORMAT(tgl_registrasi,'%d-%m-%Y') FROM reg_periksa WHERE no_rawat='" + TNoRw1.getText() + "'"));
             param.put("jamreg", Sequel.cariIsi("SELECT jam_reg FROM reg_periksa WHERE no_rawat='" + TNoRw1.getText() + "'"));
@@ -8869,12 +8874,14 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
                 this.setCursor(Cursor.getDefaultCursor());
             }
             if (chkTransferPasien.isSelected()) {
+                if (Sequel.cariInteger("SELECT COUNT(no_rawat) from transfer_pasien where no_rawat=?", TNoRw2.getText()) > 0
+                        && Sequel.cariInteger("SELECT COUNT(no_rawat) from transfer_pasien_detail where no_rawat=?", TNoRw2.getText()) > 0) {
                 try {
                     ps = koneksi.prepareStatement(
                             "SELECT a.id,a.tanggal, a.jam, a.no_rawat, c.no_rkm_medis, c.nm_pasien,c.jk, DATE_FORMAT(c.tgl_lahir,'%d-%m-%Y') as tgl_lahir,  DATE_FORMAT(b.tgl_registrasi,'%d-%m-%Y') as tgl_registrasi, b.jam_reg, d.nm_dokter, e.nama, f.nm_bangsal, a.alasan_pindah, a.hasil_penunjang, a.keterangan,a.dokter_awal "
-                            + "FROM transfer_pasien as a inner join  reg_periksa as b inner join pasien as c inner join dokter as d inner join petugas as e inner join bangsal as f "
-                            + "ON  a.dokter_awal=d.kd_dokter and a.no_rawat=b.no_rawat and b.no_rkm_medis=c.no_rkm_medis and  a.petugas_awal=e.nip and a.ruang_awal=f.kd_bangsal "
-                            + "WHERE a.no_rawat like ? ");
+                            + "FROM transfer_pasien as a,reg_periksa as b,pasien as c ,dokter as d ,petugas as e ,bangsal as f "
+                            + "where a.dokter_awal=d.kd_dokter and a.no_rawat=b.no_rawat and b.no_rkm_medis=c.no_rkm_medis and  a.petugas_awal=e.nip and a.ruang_awal=f.kd_bangsal "
+                            + "and a.no_rawat like ? ");
                     try {
                         ps.setString(1, "%" + TNoRw2.getText().trim() + "%");
                         rs = ps.executeQuery();
@@ -8893,9 +8900,9 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
                             String dxkep = "";
                             ps2 = koneksi.prepareStatement(
                                     "SELECT DATE_FORMAT(inap.tgl_masuk,'%d-%m-%Y') as tgl_masuk , inap.jam_masuk, bangsal.nm_bangsal, dokter.nm_dokter, petugas.nama "
-                                    + "FROM transfer_pasien as tf inner join kamar_inap as inap inner join dokter inner join petugas inner join bangsal "
-                                    + "ON tf.no_rawat=inap.no_rawat and tf.dokter_pindah=dokter.kd_dokter and tf.petugas_pindah=petugas.nip and tf.ruang_pindah=bangsal.kd_bangsal "
-                                    + "WHERE tf.no_rawat=? ORDER BY inap.tgl_masuk DESC, inap.jam_masuk DESC LIMIT 1");
+                                    + "FROM transfer_pasien as tf,kamar_inap as inap ,dokter ,petugas ,bangsal "
+                                    + "where tf.no_rawat=inap.no_rawat and tf.dokter_pindah=dokter.kd_dokter and tf.petugas_pindah=petugas.nip and tf.ruang_pindah=bangsal.kd_bangsal "
+                                    + "and tf.no_rawat=? ORDER BY inap.tgl_masuk DESC, inap.jam_masuk DESC LIMIT 1");
                             try {
                                 ps2.setString(1, rs.getString("no_rawat"));
                                 rs2 = ps2.executeQuery();
@@ -8919,7 +8926,7 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 
                             ps3 = koneksi.prepareStatement(
                                     "SELECT triase.skala_nyeri, triase.diagnosis, triase.diagnosa_keperawatan, ralan.suhu_tubuh, ralan.tensi, ralan.nadi, ralan.respirasi "
-                                    + "FROM data_triase_igd as triase join pemeriksaan_ralan as ralan on triase.no_rawat=ralan.no_rawat WHERE triase.no_rawat=? ORDER BY ralan.tgl_perawatan DESC, ralan.jam_rawat DESC limit 1");
+                                    + "FROM data_triase_igd as triase ,pemeriksaan_ralan as ralan where triase.no_rawat=ralan.no_rawat and triase.no_rawat=? ORDER BY ralan.tgl_perawatan DESC, ralan.jam_rawat DESC limit 1");
                             try {
                                 ps3.setString(1, rs.getString("no_rawat"));
                                 rs3 = ps3.executeQuery();
@@ -8960,7 +8967,7 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
                             param2.put("dokterawal", rs.getString("nm_dokter"));
                             param2.put("petugasawal", rs.getString("nama"));
                             param2.put("tglmasuk",rs.getString("tgl_registrasi"));
-                            param2.put("jammasuk", rs.getString("jam"));
+                            param2.put("jammasuk", rs.getString("jam_reg"));
                             param2.put("ruangpindah", ruangpindah);
                             param2.put("dokterpindah", dokterpindah);
                             param2.put("petugaspindah", petugaspindah);
@@ -9026,6 +9033,7 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
                 } catch (SQLException ex) {
                     System.out.println(ex);
                 }
+            }
             }
         }
     }//GEN-LAST:event_BtnCetak4ActionPerformed

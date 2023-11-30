@@ -1415,7 +1415,16 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                             emptTeks();
                             tampil();
                         }
-                    } else {
+                    } 
+                    else if (nameNode.path("code").asText().equals("201")) {//added
+                        if (Sequel.mengedittf("bridging_surat_pri_bpjs", "no_surat=?", "tgl_surat=?,tgl_rencana=?,kd_dokter_bpjs=?,nm_dokter_bpjs=?,kd_poli_bpjs=?,nm_poli_bpjs=?,diagnosa=?", 8, new String[]{
+                            Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), Valid.SetTgl(TanggalKontrol.getSelectedItem() + ""), KdDokter.getText(), NmDokter.getText(), KdPoli.getText(), NmPoli.getText(), Diagnosa.getText(), NoSurat.getText()
+                        }) == true) {
+                            emptTeks();
+                            tampil();
+                        }
+                    }
+                    else {
                         JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
                     }
                 } catch (Exception ex) {
@@ -1780,6 +1789,8 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         NoSurat.setVisible(false);
         jLabel15.setVisible(false);
         penjab = Sequel.cariIsi("SELECT kd_pj from reg_periksa where no_rawat=?", norawat);
+        Valid.SetTgl(TanggalSurat, Sequel.cariIsi("select tgl_registrasi from reg_periksa where no_rawat=?",norawat));//added
+        Valid.SetTgl(TanggalKontrol, Sequel.cariIsi("select tgl_registrasi from reg_periksa where no_rawat=?",norawat));//added
         isForm();
         tampil();
         cekDiagnosa();

@@ -91,10 +91,13 @@ public class DlgCariTagihanOperasi extends javax.swing.JDialog {
                 super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
                 String norawat = (String) table.getModel().getValueAt(row, 1);
-                String carinorawat = Sequel.cariIsi("SELECT no_rawat FROM mlite_lap_op WHERE no_rawat='"+norawat+"'");
-                String tgl_op = Sequel.cariIsi("SELECT tanggal_op FROM mlite_lap_op WHERE no_rawat='" + norawat + "'");
+                String tanggal = (String) table.getModel().getValueAt(row, 0);
+                String gettanggal = tanggal.substring(0, Math.min(19, ((String) table.getModel().getValueAt(row, 0)).length()));                
+//                String carinorawat = Sequel.cariIsi("SELECT no_rawat FROM mlite_lap_op WHERE no_rawat='"+norawat+"'");
+                String tgl_op = Sequel.cariIsi("SELECT tanggal_op FROM mlite_lap_op WHERE no_rawat='" + norawat + "' and tanggal_op='"+gettanggal+"'");
 
-                if (!norawat.equals("") && !carinorawat.equals("") && tgl_op.equals("")) {
+//                if (!norawat.equals("") && !carinorawat.equals("") && tgl_op.equals("")) {
+                if (!norawat.equals("") && !tanggal.equals("") && tgl_op.equals("")) {
                     setBackground(Color.BLACK);
                     setForeground(Color.WHITE);
                 } else {
@@ -137,7 +140,7 @@ public class DlgCariTagihanOperasi extends javax.swing.JDialog {
             } else if (i == 1) {
                 column.setPreferredWidth(110);
             } else if (i == 2) {
-                column.setPreferredWidth(70);
+                column.setPreferredWidth(110);
             } else if (i == 3) {
                 column.setPreferredWidth(150);
             } else if (i == 4) {
@@ -2726,7 +2729,7 @@ private void MnHapusObatOperasiActionPerformed(java.awt.event.ActionEvent evt) {
     }//GEN-LAST:event_kdonloop5KeyPressed
 
     private void MnMappingOperasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnMappingOperasiActionPerformed
-        if (tbDokter.getSelectedRow() > -1) {
+         if (tbDokter.getSelectedRow() > -1) {
             if (!tbDokter.getValueAt(tbDokter.getSelectedRow(), 1).toString().equals("")) {
                 Tanggal.setText(tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString().substring(0,19));
                 NoRawat2.setText(tbDokter.getValueAt(tbDokter.getSelectedRow(), 1).toString());
@@ -2754,14 +2757,15 @@ private void MnHapusObatOperasiActionPerformed(java.awt.event.ActionEvent evt) {
         if (NoRawat2.getText().equals("")) {
             Valid.textKosong(NoRawat2, "No. Rawat");
         } else {
-            int reply = JOptionPane.showConfirmDialog(rootPane, "Eeiiiiiits, udah bener belum data yang mau disimpan..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
-            if (reply == JOptionPane.YES_OPTION) {
-                if (Sequel.mengedittf("mlite_lap_op", "no_rawat=? and id=?", "tanggal_op=?", 3, new String[]{
-                    Tanggal.getText(), NoRawat2.getText(), tbTarik.getValueAt(tbTarik.getSelectedRow(), 0).toString()
-                }) == true) {
+            if (tbTarik.getSelectedRow() > -1) {
+                int reply = JOptionPane.showConfirmDialog(rootPane, "Eeiiiiiits, udah bener belum data yang mau disimpan..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                if (reply == JOptionPane.YES_OPTION) {
+                    Sequel.mengedit("mlite_lap_op", "no_rawat = '" + NoRawat2.getText() + "' AND id = '" + tbTarik.getValueAt(tbTarik.getSelectedRow(), 0).toString() + "'", "tanggal_op = '" + Tanggal.getText() + "'");
                     tampilMapping();
                     JOptionPane.showMessageDialog(null, "Berhasil tarik hasil operasi..");
                 }
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Silahkan anda pilih data terlebih dahulu..!!");
             }
         }
     }//GEN-LAST:event_BtnSimpanActionPerformed
@@ -3080,18 +3084,18 @@ private void MnHapusObatOperasiActionPerformed(java.awt.event.ActionEvent evt) {
                                Valid.SetAngka(rs2.getDouble("biaya_dokter_umum")),
                                Valid.SetAngka(rs2.getDouble("total"))};
                     tabMode.addRow(data3); 
-                    total=total+rs2.getDouble("total");
+                    total=total+rs2.getDouble("total");  
                     no++;
                 }
                 if(rs2!=null){
-                    rs2.close();
-                }
+                    rs2.close(); 
+                }  
                 rs4 = koneksi.prepareStatement(
-                        "SELECT mlite_lap_op.hasil_op FROM mlite_lap_op join operasi on mlite_lap_op.no_rawat=operasi.no_rawat WHERE operasi.no_rawat='" + rs.getString("no_rawat") + "' and operasi.tgl_operasi='" + rs.getString("tgl_operasi") + "'").executeQuery();
+                        "SELECT hasil_op FROM mlite_lap_op WHERE no_rawat='" + rs.getString("no_rawat") + "' and tanggal_op='" + rs.getString("tgl_operasi").substring(0,19) + "'").executeQuery();
                 while (rs4.next()) {
-                    Object[] hasil = {"", "Hasil Operasi :", rs4.getString("hasil_op"), "", "", "","",
+                    Object[] data2 = {"", "Hasil Operasi :", rs4.getString("hasil_op"), "", "", "","",
                         "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
-                    tabMode.addRow(hasil);
+                    tabMode.addRow(data2);
                 }
                 if (rs4 != null) {
                     rs4.close();

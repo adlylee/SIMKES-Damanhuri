@@ -820,5 +820,14 @@ private void DTPCari3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     public JTable getTable() {
         return tbKamIn;
     }
-
+    
+    public void setNoRM(String posisi){
+        posisi="surat";
+        R1.setEnabled(false);
+        R2.setEnabled(false);
+        DTPCari1.setEnabled(false);
+        DTPCari2.setEnabled(false);
+        jLabel22.setEnabled(false);
+        R3.setSelected(true);
+    }
 }

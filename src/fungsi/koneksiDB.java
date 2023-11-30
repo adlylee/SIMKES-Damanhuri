@@ -45,7 +45,7 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" + 
-                        "    Version 05.11.2023 [ 1.0.30 ] [Activated] GO KLAIM DIGITAL \n"+
+                        "    Version 28.11.2023 [ 1.0.31 ] [Activated] GO KLAIM DIGITAL \n"+
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai                              \n"+
                         "                                                                           \n"+
@@ -58,8 +58,7 @@ public final class koneksiDB {
                         "                                                                       \n"+
                         "    * Changelog :                                                       \n"+
                         "       - Surat-surat                         \n"+
-                        "       - Berkas Rekam Medis                         \n"+
-                        "       - Validasi Registrasi Pasien                         \n");
+                        "       - Notifikasi Hasil Lab                  \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);
                 try {

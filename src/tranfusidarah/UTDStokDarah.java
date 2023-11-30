@@ -221,6 +221,8 @@ public class UTDStokDarah extends javax.swing.JDialog {
         Popup = new javax.swing.JPopupMenu();
         ppCetak = new javax.swing.JMenuItem();
         MnStatusDimusnahkan = new javax.swing.JMenuItem();
+        MnRestore = new javax.swing.JMenuItem();
+        MnHabis = new javax.swing.JMenuItem();
         internalFrame1 = new widget.InternalFrame();
         jPanel2 = new javax.swing.JPanel();
         scrollPane1 = new widget.ScrollPane();
@@ -310,6 +312,38 @@ public class UTDStokDarah extends javax.swing.JDialog {
             }
         });
         Popup.add(MnStatusDimusnahkan);
+
+        MnRestore.setBackground(new java.awt.Color(255, 255, 254));
+        MnRestore.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        MnRestore.setForeground(new java.awt.Color(70, 70, 70));
+        MnRestore.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        MnRestore.setText("Restore");
+        MnRestore.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        MnRestore.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        MnRestore.setName("MnRestore"); // NOI18N
+        MnRestore.setPreferredSize(new java.awt.Dimension(200, 26));
+        MnRestore.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnRestoreActionPerformed(evt);
+            }
+        });
+        Popup.add(MnRestore);
+
+        MnHabis.setBackground(new java.awt.Color(255, 255, 254));
+        MnHabis.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        MnHabis.setForeground(new java.awt.Color(70, 70, 70));
+        MnHabis.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        MnHabis.setText("Habis");
+        MnHabis.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        MnHabis.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        MnHabis.setName("MnHabis"); // NOI18N
+        MnHabis.setPreferredSize(new java.awt.Dimension(200, 26));
+        MnHabis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnHabisActionPerformed(evt);
+            }
+        });
+        Popup.add(MnHabis);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -452,7 +486,7 @@ public class UTDStokDarah extends javax.swing.JDialog {
         FormInput.add(Resus);
         Resus.setBounds(294, 72, 65, 23);
 
-        Aftap.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "18-09-2023" }));
+        Aftap.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "19-11-2023" }));
         Aftap.setDisplayFormat("dd-MM-yyyy");
         Aftap.setName("Aftap"); // NOI18N
         Aftap.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -469,7 +503,7 @@ public class UTDStokDarah extends javax.swing.JDialog {
         FormInput.add(label32);
         label32.setBounds(0, 72, 85, 23);
 
-        Kadaluarsa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "18-09-2023" }));
+        Kadaluarsa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "19-11-2023" }));
         Kadaluarsa.setDisplayFormat("dd-MM-yyyy");
         Kadaluarsa.setName("Kadaluarsa"); // NOI18N
         Kadaluarsa.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1059,14 +1093,8 @@ public class UTDStokDarah extends javax.swing.JDialog {
                 case "DB":
                     jml = "1";
                     break;
-                case "TB":
-                    if (KodeKomponen.getText().equals("UTD4")) {
-                        jml="1";                                
-                    }
-                    if (KodeKomponen.getText().equals("UTD6")) {
-                        jml="1";                                
-                    }
-//                    jml = "3";
+                case "TB":    
+                    jml  = "1";
                     break;
                 case "QB":
                     jml = "4";
@@ -1229,6 +1257,32 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         }
     }//GEN-LAST:event_MnStatusDimusnahkanActionPerformed
 
+    private void MnRestoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnRestoreActionPerformed
+        if (tabMode.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Maaf, table masih kosong...!!!!");
+            TCari.requestFocus();
+        } else if (NoKantong1.getText().trim().equals("")) {
+            Valid.textKosong(NoKantong1, "No. Kantong");
+        } else {
+            Sequel.mengedit("utd_stok_darah", "no_bag='"+NoKantong1.getText()+"' and kode_komponen='"+KodeKomponen.getText()+"' ", "status='Ada',max_pakai='1'");            
+            JOptionPane.showMessageDialog(null, "Berhasil restore stok darah...");
+            tampil();
+        }
+    }//GEN-LAST:event_MnRestoreActionPerformed
+
+    private void MnHabisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnHabisActionPerformed
+        if (tabMode.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Maaf, table masih kosong...!!!!");
+            TCari.requestFocus();
+        } else if (NoKantong1.getText().trim().equals("")) {
+            Valid.textKosong(NoKantong1, "No. Kantong");
+        } else {
+            Sequel.mengedit("utd_stok_darah", "no_bag='"+NoKantong1.getText()+"' and kode_komponen='"+KodeKomponen.getText()+"'", "status='Diambil',max_pakai='0'");            
+            JOptionPane.showMessageDialog(null, "Berhasil hapus stok darah...");
+            tampil();
+        }
+    }//GEN-LAST:event_MnHabisActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -1268,6 +1322,8 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private widget.Tanggal Kadaluarsa;
     private widget.TextBox KodeKomponen;
     private widget.Label LCount;
+    private javax.swing.JMenuItem MnHabis;
+    private javax.swing.JMenuItem MnRestore;
     private javax.swing.JMenuItem MnStatusDimusnahkan;
     private widget.TextBox NamaKomponen;
     private widget.TextBox NoKantong;
@@ -1422,6 +1478,13 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         BtnHapus.setEnabled(var.getutd_stok_darah());
         BtnEdit.setEnabled(var.getutd_stok_darah());
         BtnPrint.setEnabled(var.getutd_stok_darah());
+        if (var.getkode().equals("Admin Utama")) {
+            MnRestore.setVisible(true);
+            MnHabis.setVisible(true);
+        }else{
+            MnRestore.setVisible(false);
+            MnHabis.setVisible(false);
+        }
     }
     
     private void isForm(){

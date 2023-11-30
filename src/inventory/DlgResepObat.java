@@ -2253,9 +2253,16 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             param.put("kronis", Sequel.cariIsi("SELECT no_rawat FROM mlite_veronisa where no_rawat=?",TNoRw.getText()));
             param.put("petugas", Sequel.cariIsi("select nama from pegawai where nik=?", user));
             try {
-                String a = Sequel.cariIsi("select no_rawat from kamar_inap where kamar_inap.no_rawat=?", TNoRw.getText());
-
-                if (a == "") {
+                String a = Sequel.cariIsi("select no_rawat from kamar_inap where kamar_inap.no_rawat=?", TNoRw.getText());                
+                String b = Sequel.cariIsi("select nm_pasien from pasien where no_rkm_medis=?", TNoRm.getText());//added
+                String c = Sequel.cariIsi("SELECT bangsal.nm_bangsal FROM ranap_gabung,kamar_inap,kamar,bangsal WHERE ranap_gabung.no_rawat=kamar_inap.no_rawat and kamar_inap.kd_kamar=kamar.kd_kamar and kamar.kd_bangsal=bangsal.kd_bangsal  and kamar_inap.stts_pulang <> 'Pindah Kamar' and ranap_gabung.no_rawat2=?",TNoRw.getText());//added
+                if (b.toUpperCase().startsWith("BY") && a.equals("")) {//added
+                    kamar = "Kamar";
+                    String getkamar = c;
+                    param.put("kamar", kamar);
+                    param.put("namakamar", getkamar);
+                }
+                else if (a == "") {
                     kamar = "Poli";
                     namakamar = Sequel.cariIsi("select nm_poli from poliklinik inner join reg_periksa on poliklinik.kd_poli=reg_periksa.kd_poli "
                             + "where reg_periksa.no_rawat=?", TNoRw.getText());

@@ -3925,10 +3925,14 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
 
     private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHapusActionPerformed
         if (tbObat.getSelectedRow() != -1) {
-            try {
-                bodyWithDeleteRequest();
-            } catch (Exception ex) {
-                System.out.println("Notifikasi Bridging : " + ex);
+            int reply = JOptionPane.showConfirmDialog(rootPane, "Yakin ingin menghapus data SEP dari SIMRS dan VClaim..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                try {
+                    bodyWithDeleteRequest();
+                } catch (Exception ex) {
+                    System.out.println("Notifikasi Bridging : " + ex);
+                }
+                JOptionPane.showMessageDialog(null, "Berhasil menghapus..");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Silahkan pilih dulu data yang mau dihapus..!!");

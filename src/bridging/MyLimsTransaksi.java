@@ -51,7 +51,8 @@ public final class MyLimsTransaksi extends javax.swing.JDialog {
     private BPJSCekReferensiPropinsi propinsi = new BPJSCekReferensiPropinsi(null, false);
     private int i = 0,row = 0,r = 0;
     private MyLimsApi api = new MyLimsApi();
-    private String URL = "", link = "", token,requestJson,tanggal = "",jam ="" , tindakan = "";
+    private String URL = "", link = "", token,requestJson,tanggal = "",jam ="" , tindakan = "",
+            kamar,namakamar,sendwa=Sequel.cariIsi("select value from mlite_settings where module='bridging_lims' and field='send_wa'");
     private PreparedStatement ps,ps2,ps3,ps4,psrekening,ps5;
     private ResultSet rs,rs2,rs3,rs5,rsrekening;
     private HttpHeaders headers;
@@ -60,6 +61,7 @@ public final class MyLimsTransaksi extends javax.swing.JDialog {
     private JsonNode root;
     private JsonNode nameNode;
     private JsonNode response;
+    private BridgingWA kirimwa = new BridgingWA();
 
     /**
      * Creates new form DlgKamar
@@ -435,7 +437,31 @@ public final class MyLimsTransaksi extends javax.swing.JDialog {
             }    
         }
         if(status != false){
-            JOptionPane.showMessageDialog(null, "Berhasil Simpan");
+//            JOptionPane.showMessageDialog(null, "Berhasil Simpan");
+            int reply = JOptionPane.showConfirmDialog(rootPane, "Berhasil Simpan.\nApakah anda ingin mengirim whatsapp..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                if (sendwa.equals("true")) {
+                    String norm = Sequel.cariIsi("SELECT no_rkm_medis FROM reg_periksa WHERE no_rawat='" + noRawat.getText() + "'");
+                    String nmpasien = Sequel.cariIsi("SELECT nm_pasien FROM pasien WHERE no_rkm_medis='" + norm + "'");
+                    String kddokter = Sequel.cariIsi("select dokter_perujuk from periksa_lab where no_rawat='" + noRawat.getText() + "' and tgl_periksa='" + tanggal + "' and jam='" + jam + "' limit 1");
+                    String nmdokter = Sequel.cariIsi("SELECT nm_dokter from dokter where kd_dokter='" + kddokter + "'");
+                    kamar = Sequel.cariIsi("select ifnull(kd_kamar,'') from kamar_inap where no_rawat='" + noRawat.getText() + "' order by tgl_masuk desc limit 1");
+                    if (!kamar.equals("")) {
+                        namakamar = kamar + ", " + Sequel.cariIsi("select nm_bangsal from bangsal inner join kamar on bangsal.kd_bangsal=kamar.kd_bangsal "
+                                + " where kamar.kd_kamar='" + kamar + "' ");
+                        kamar = "Kamar: ";
+                    } else if (kamar.equals("")) {
+                        namakamar = Sequel.cariIsi("select nm_poli from poliklinik inner join reg_periksa on poliklinik.kd_poli=reg_periksa.kd_poli "
+                                + "where reg_periksa.no_rawat='" + noRawat.getText() + "'");
+                        kamar = "";
+                    }
+                    kirimwa.sendwaLab(norm, nmpasien, Valid.SetTgl3(tanggal), kddokter, nmdokter, kamar + namakamar);
+                    JOptionPane.showMessageDialog(null, "Selesai mengirim whatsapp..");
+                }
+                if (sendwa.equals("false")) {
+                    JOptionPane.showMessageDialog(null, "Fitur kirim whatsapp belum diaktifkan, harap hubungi tim IT..!!");
+                }
+            }
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
