@@ -1096,7 +1096,7 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
             }
             System.out.println("tglrujukan "+tglrujukan);
             LocalDate tglRujukanmulai = LocalDate.parse(tglrujukan);
-            LocalDate tglRujukanakhir = tglRujukanmulai.plusDays(85);
+            LocalDate tglRujukanakhir = tglRujukanmulai.plusDays(89);
             tglSetelah85Hari = tglRujukanakhir.format(DateTimeFormatter.ISO_LOCAL_DATE);
         }
         int cari = Sequel.cariInteger("select DATEDIFF('" + Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + "','" + tglrujukan + "')");
@@ -1243,7 +1243,7 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
                             if (seppost >= 1) {
                                 JOptionPane.showMessageDialog(rootPane, "Maaf, Rujukan pasien belum tersedia. \nSilahkan meminta rujukan ke Faskes..!!");
                             } else {
-                                if (cari > 85) {
+                                if (cari > 89) {
                                     JOptionPane.showMessageDialog(rootPane, "Maaf, masa rujukan pasien telah habis. Masa berlaku rujukan " + tglrujukan + " s/d " + tglSetelah85Hari + ". \nSilahkan meminta rujukan kembali untuk berobat ke Rumah Sakit.. !!");
                                 } else {
                                     if (caribooking > 0) {
@@ -1274,7 +1274,7 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
                     }
                     if (norujuk.contains("1708R008")) {
                         System.out.println("ini");
-                        if (cari > 85) {
+                        if (cari > 89) {
                             JOptionPane.showMessageDialog(rootPane, "Maaf, masa rujukan pasien telah habis. Masa berlaku rujukan " + tglrujukan + " s/d " + tglSetelah85Hari + ". \nSilahkan meminta rujukan kembali untuk berobat ke Rumah Sakit.. !!");
                         } else {
                             if (caribooking > 0) {

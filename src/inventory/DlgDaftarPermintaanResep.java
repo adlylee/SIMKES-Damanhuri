@@ -21,6 +21,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -71,7 +73,7 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
 
         tabMode = new DefaultTableModel(null, new Object[]{
             "No.Resep", "Tgl.Peresepan", "Jam Peresepan", "No.Rawat", "No.RM",
-            "Pasien", "Dokter Peresep", "Status", "Kode Dokter", "Poli/Unit", "Kode Poli","Jenis Bayar"
+            "Pasien", "Dokter Peresep", "Status", "Kode Dokter", "Poli/Unit", "Kode Poli","Jenis Bayar","PRB"
         }) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -84,7 +86,7 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
         tbResepRalan.setPreferredScrollableViewportSize(new Dimension(500, 500));
         tbResepRalan.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 13; i++) {
             TableColumn column = tbResepRalan.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(75);
@@ -112,6 +114,8 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
                 column.setMaxWidth(0);
             }else if (i == 11) {
                 column.setPreferredWidth(80);
+            }else if (i == 12) {
+                column.setPreferredWidth(35);
             }
         }
 
@@ -759,6 +763,7 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
 
         Popup = new javax.swing.JPopupMenu();
         MnSetKronis = new javax.swing.JMenuItem();
+        MnSetPRB = new javax.swing.JMenuItem();
         internalFrame1 = new widget.InternalFrame();
         jPanel2 = new javax.swing.JPanel();
         panelisi2 = new widget.panelisi();
@@ -853,6 +858,24 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
         });
         Popup.add(MnSetKronis);
 
+        MnSetPRB.setBackground(new java.awt.Color(255, 255, 254));
+        MnSetPRB.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        MnSetPRB.setForeground(new java.awt.Color(70, 70, 70));
+        MnSetPRB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        MnSetPRB.setText("Set Status Obat Kronis");
+        MnSetPRB.setToolTipText("");
+        MnSetPRB.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        MnSetPRB.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        MnSetPRB.setIconTextGap(8);
+        MnSetPRB.setName("MnSetPRB"); // NOI18N
+        MnSetPRB.setPreferredSize(new java.awt.Dimension(170, 25));
+        MnSetPRB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnSetPRBActionPerformed(evt);
+            }
+        });
+        Popup.add(MnSetPRB);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
@@ -888,7 +911,7 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
         panelisi2.add(jLabel20);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10-10-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-11-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -902,7 +925,7 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
         panelisi2.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10-10-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-11-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -2359,6 +2382,45 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
         }
     }//GEN-LAST:event_MnSetKronisActionPerformed
 
+    private void MnSetPRBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnSetPRBActionPerformed
+        if (tabMode.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Maaf, table masih kosong...!!!!");
+            //TNoReg.requestFocus();
+        } else if (!JnsBayar.contains("BPJS")) {
+            JOptionPane.showMessageDialog(null, "Maaf, cara bayar tidak sesuai...!!!");
+        } else if (NoRawat.trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu dengan menklik data pada table...!!!");
+            tbResepRalan.requestFocus();
+        } else {
+            try {
+                if (Sequel.cariInteger("SELECT count(no_rawat) FROM mlite_srb WHERE no_rawat = '" + NoRawat + "'") > 0) {
+                    this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                    int reply = JOptionPane.showConfirmDialog(rootPane, "Eeiiits, Yakin ingin hapus status pasien PRB..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                    if (reply == JOptionPane.YES_OPTION) {
+                        Sequel.meghapus("mlite_srb", "no_rawat", tbResepRalan.getValueAt(tbResepRalan.getSelectedRow(), 3).toString());
+                        tampil();
+                        emptTeks();
+                        JOptionPane.showMessageDialog(rootPane, "Berhasil hapus set status PRB..");
+                    }
+                    this.setCursor(Cursor.getDefaultCursor());
+                } else {
+                    this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                    DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    LocalDate today = LocalDate.now();
+                    String kronis = "insert into mlite_srb (id, tanggal, no_rkm_medis, no_rawat, tgl_registrasi, nosep, status, username) "
+                            + "values ('0','" + today + "','" + NoRM + "','" + NoRawat + "','" + Sequel.cariIsi("SELECT tgl_registrasi FROM reg_periksa WHERE no_rawat=?",NoRawat) + "','" + Sequel.cariIsi("SELECT no_sep FROM bridging_sep WHERE no_rawat=?",NoRawat) + "','Belum','" + var.getkode() + "')";
+                    PreparedStatement ps_krns = koneksiDB.condb().prepareStatement(kronis);
+                    ps_krns.execute();
+                    tampil();
+                    JOptionPane.showMessageDialog(rootPane, "Berhasil set status PRB..");
+                    this.setCursor(Cursor.getDefaultCursor());
+                }
+            } catch (Exception e) {
+                System.out.println("Gagal menyimpan " + e);
+            }
+        }
+    }//GEN-LAST:event_MnSetPRBActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2404,6 +2466,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
     private widget.TextBox Kamar2;
     private widget.Label LCount;
     private javax.swing.JMenuItem MnSetKronis;
+    private javax.swing.JMenuItem MnSetPRB;
     private javax.swing.JPopupMenu Popup;
     private widget.TextBox TCari;
     private javax.swing.JTabbedPane TabPilihRawat;
@@ -2517,6 +2580,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
             System.out.println("Notifikasi : " + e);
         }
         cekKronis();
+        cekPRB();
     }
 
     public void emptTeks() {
@@ -3388,6 +3452,18 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
             try {
                 if (tbResepRalan.getValueAt(j, 11).toString().equals("BPJS") && (cari > 0)) {
                     tbResepRalan.setValueAt(tbResepRalan.getValueAt(j, 11).toString() + " (KRONIS)", j, 11);
+                }
+            } catch (Exception e) {
+                System.out.println("Notifikasi : " + e);
+            }
+        }
+    }
+    private void cekPRB() {
+        for (int j = 0; j < tbResepRalan.getRowCount(); j++) {
+            int cari = Sequel.cariInteger("SELECT count(no_rawat) from mlite_srb where no_rawat=?", tbResepRalan.getValueAt(j, 3).toString());
+            try {
+                if (tbResepRalan.getValueAt(j, 11).toString().equals("BPJS") && (cari > 0)) {
+                    tbResepRalan.setValueAt("Ya", j, 12);
                 }
             } catch (Exception e) {
                 System.out.println("Notifikasi : " + e);

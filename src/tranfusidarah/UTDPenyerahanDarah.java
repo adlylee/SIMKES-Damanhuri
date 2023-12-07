@@ -450,11 +450,11 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
         setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
@@ -2259,5 +2259,5 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         CmbCariGd.setSelectedItem(Sequel.cariIsi("select golongan_darah from permintaan_utd where noorder=?",noorder));
         CmbCariResus.setSelectedItem(Sequel.cariIsi("select resus from permintaan_utd where noorder=?",noorder));
         tampil();
-    }   
-}
+    }
+    }
