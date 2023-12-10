@@ -2623,6 +2623,11 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             BtnHapus.setEnabled(true);
             BtnPrint.setEnabled(true);
             MnHapusPemeriksaan.setEnabled(true);
+            MnKirimWA.setEnabled(true);
+            MnSaranKesan.setEnabled(true);
+            MnBridgingLims.setEnabled(true);            
+            MnSaranKesan1.setEnabled(true);
+            MnBridgingLims1.setEnabled(true);            
         }
         else if (bidang.equals("Instalasi Laboratorium (Muhasabah)")) {
             MnCetakHasilLab.setEnabled(var.getperiksa_lab());
@@ -2631,6 +2636,11 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             BtnHapus.setEnabled(var.getperiksa_lab());
             BtnPrint.setEnabled(var.getperiksa_lab());
             MnHapusPemeriksaan.setEnabled(var.getperiksa_lab());
+            MnKirimWA.setEnabled(var.getperiksa_lab());
+            MnSaranKesan1.setEnabled(var.getperiksa_lab());
+            MnBridgingLims1.setEnabled(var.getperiksa_lab());
+            MnSaranKesan.setEnabled(var.getperiksa_lab());
+            MnBridgingLims.setEnabled(var.getperiksa_lab());
         } else {
             MnCetakHasilLab.setEnabled(true);
             MnCetakNota.setEnabled(false);
@@ -2638,6 +2648,11 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             BtnHapus.setEnabled(false);
             BtnPrint.setEnabled(false);
             MnHapusPemeriksaan.setEnabled(false);
+            MnKirimWA.setEnabled(false);
+            MnSaranKesan1.setEnabled(false);
+            MnBridgingLims1.setEnabled(false);
+            MnSaranKesan.setEnabled(false);
+            MnBridgingLims.setEnabled(false);
         }
         Scroll3.setVisible(false);
     }

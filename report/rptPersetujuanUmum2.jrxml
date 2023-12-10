@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 3.7.2  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="935" columnWidth="505" leftMargin="70" rightMargin="20" topMargin="56" bottomMargin="28">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="namars" class="java.lang.String"/>
+	<parameter name="alamatrs" class="java.lang.String"/>
+	<parameter name="kotars" class="java.lang.String"/>
+	<parameter name="propinsirs" class="java.lang.String"/>
+	<parameter name="kontakrs" class="java.lang.String"/>
+	<parameter name="emailrs" class="java.lang.String"/>
+	<parameter name="petugas" class="java.lang.String"/>
+	<parameter name="dpjp" class="java.lang.String"/>
+	<parameter name="logo" class="java.io.InputStream"/>
+	<queryString>
+		<![CDATA[SELECT pasien.no_rkm_medis, pasien.nm_pasien,pasien.tmp_lahir, pasien.tgl_lahir, pasien.no_ktp, pasien.jk, pasien.alamat, pasien.namakeluarga,
+				 pasien.alamatpj, penjab.png_jawab, pasien.keluarga, pasien.no_tlp FROM reg_periksa,pasien, penjab,kelurahan, kecamatan, kabupaten 
+				 WHERE reg_periksa.no_rkm_medis=pasien.no_rkm_medis and reg_periksa.kd_pj=penjab.kd_pj and pasien.kd_kel=kelurahan.kd_kel AND 
+				 pasien.kd_kec=kecamatan.kd_kec AND pasien.kd_kab=kabupaten.kd_kab]]>
+	</queryString>
+	<field name="namakeluarga" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="png_jawab" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="720" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="13" width="494" height="14">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RSUD H. DAMANHURI BARABAI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="139" width="492" height="14">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[V. PERSETUJUAN OBSERVASI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="37" y="79" width="468" height="52">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" lineSpacing="Single">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Anggota keluarga saya akan menunggu saya di Rawat Inap, bersedia untuk selalu memakai tanda pengenal khusus yang diberikan oleh RS, dan demi keamanan seluruh pasien, setiap keluarga dan siapapun yang akan mengunjungi saya diluar jam berkunjung, bersedia untuk diminta/diperiksa identitasnya dan memakai identitas yang diberikan oleh RS.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="79" width="15" height="14">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" lineSpacing="Single">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[4.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="37" y="37" width="466" height="40">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" lineSpacing="Single">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Saya telah menerima informasi tentang peraturan yang diberlakukan oleh Rumah Sakit dan saya beserta keluarga bersedia untuk mematuhinya, termasuk akan mematuhi jam berkunjung pasien sesuai dengan aturan di rumah sakit.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="37" width="15" height="14">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" lineSpacing="Single">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[3.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="450" y="1" width="54" height="18" forecolor="#000000" backcolor="#F0F0DC">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
+					<font fontName="Arial" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RM 7.2]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="26" width="186" height="1">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="37" y="156" width="468" height="44">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" lineSpacing="Single">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Dengan ini menyatakan selanjutnya bersedia untuk dilakukan observasi/pemantauan yang ada hubungannya dengan penyakit yang diderita oleh diri saya sendiri/istri/suami/anak/ayah/ibu saya.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="37" y="224" width="468" height="40">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" lineSpacing="Single">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Saya mengijinkan/tidak mengijinkan *(coret salah satu) Rumah Sakit memberi akses bagi: keluarga dan handai taulan serta orang-orang yang menengok saya jika saya di rawat inap (sebutkan nama bila ada permintaan khusus yang tidak diijinkan) :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="207" width="492" height="14">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VI. PRIVASI]]></text>
+			</staticText>
+			<line>
+				<reportElement x="37" y="280" width="130" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="24" y="267" width="12" height="14">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" lineSpacing="Single">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[1)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="283" width="12" height="14">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" lineSpacing="Single">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[2)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="37" y="296" width="130" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="24" y="299" width="12" height="14">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" lineSpacing="Single">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[3)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="37" y="312" width="130" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="10" y="325" width="492" height="14">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VII. PENENTUAN DOKTER PENANGGUNG JAWAB PELAYANAN (DPJP)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="37" y="341" width="468" height="26">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" lineSpacing="Single">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Saya telah menerima dan memahami informasi mengenai Dokter Penanggung Jawab Pelayanan selama dirawat di Rumah Sakit.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="341" width="15" height="14">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" lineSpacing="Single">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[1.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="369" width="15" height="14">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" lineSpacing="Single">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[2.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="37" y="369" width="468" height="26">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="11" isBold="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Berdasarkan hal tersebut diatas saya memilih dokter "+$P{dpjp}+" sebagai Dokter Penanggung Jawab Pelayanan."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="402" width="492" height="14">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VIII. INFORMASI BIAYA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="37" y="417" width="468" height="26">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="11" isBold="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Saya memahami tentang informasi biaya pengobatan atau biaya tindakan yang dijelaskan oleh petugas Rumah Sakit dengan cara bayar "+$F{png_jawab}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="451" width="492" height="14">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IX. RS PENDIDIKAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="37" y="467" width="468" height="39">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" lineSpacing="Single">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Di unit pelayanan tertentu RSUD H. Damanhuri Barabai, ada keterlibatan peserta didik dalam memberikan pelayanan yang didampingi oleh petugas RS baik dari dokter, perawat, bidan maupun tenaga medis lainnya.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="520" width="505" height="1">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="1" y="530" width="492" height="14">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TANDA TANGAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="550" width="500" height="26">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" lineSpacing="Single">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Dengan tanda tangan saya dibawah, saya menyatakan bahwa saya telah membaca dan memahami item pada Persetujuan Umum/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="563" width="350" height="13">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" lineSpacing="Single">
+					<font fontName="Arial" size="11" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[General Consent.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="614" width="232" height="14"/>
+				<textElement textAlignment="Center" lineSpacing="Single">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Yang membuat pernyataan,]]></text>
+			</staticText>
+			<textField pattern="dd MMMM yyyy" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="270" y="600" width="232" height="14" forecolor="#000000" backcolor="#F0F0DC">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Barabai, tanggal "+new java.text.SimpleDateFormat("dd/MM/yyyy", new java.util.Locale("id")).format(new Date())+" jam "+new java.text.SimpleDateFormat("HH:mm", new java.util.Locale("id")).format(new Date())]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="680" width="232" height="21"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{petugas}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="614" width="232" height="14"/>
+				<textElement textAlignment="Center" lineSpacing="Single">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Petugas yang memberi penjelasan,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="701" width="232" height="14"/>
+				<textElement textAlignment="Center" lineSpacing="Single">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[( Tanda Tangan dan Nama )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="701" width="230" height="14"/>
+				<textElement textAlignment="Center" lineSpacing="Single">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[( Tanda Tangan dan Nama )]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="270" y="680" width="230" height="21"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{namakeluarga}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -4935,7 +4935,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             param.put("nadi", Sequel.cariIsi("select nadi from pemeriksaan_ralan where no_rawat=?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
             param.put("respirasi", Sequel.cariIsi("select respirasi from pemeriksaan_ralan where no_rawat=?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
 
-            Valid.MyReport("rptBridgingSEP4.jrxml", "report", "::[ Cetak SEP Ranap ]::", "select bridging_sep.no_sep, adddate(bridging_sep.tglrujukan, 85) as tgl_akhir,bridging_sep.no_rawat,bridging_sep.nomr,bridging_sep.nama_pasien,bridging_sep.tglsep,"
+            Valid.MyReport("rptBridgingSEP4.jrxml", "report", "::[ Cetak SEP Ranap ]::", "select bridging_sep.no_sep, adddate(bridging_sep.tglrujukan, 89) as tgl_akhir,bridging_sep.no_rawat,bridging_sep.nomr,bridging_sep.nama_pasien,bridging_sep.tglsep,"
                     + "bridging_sep.tglrujukan,bridging_sep.no_rujukan,bridging_sep.kdppkrujukan,"
                     + "bridging_sep.nmppkrujukan,bridging_sep.kdppkpelayanan,bridging_sep.nmppkpelayanan,"
                     + "if(bridging_sep.jnspelayanan='1','Rawat Inap','Rawat Jalan'),bridging_sep.catatan,bridging_sep.diagawal,"
@@ -5559,7 +5559,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             param.put("nadi", Sequel.cariIsi("select nadi from pemeriksaan_ralan where no_rawat=?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
             param.put("respirasi", Sequel.cariIsi("select respirasi from pemeriksaan_ralan where no_rawat=?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
 
-            Valid.MyReport("rptBridgingSEP9.jrxml", "report", "::[ Cetak SEP Rajal ]::", "select bridging_sep.no_sep, adddate(bridging_sep.tglrujukan, 85) as tgl_akhir,bridging_sep.no_rawat,bridging_sep.nomr,bridging_sep.nama_pasien,bridging_sep.tglsep,"
+            Valid.MyReport("rptBridgingSEP9.jrxml", "report", "::[ Cetak SEP Rajal ]::", "select bridging_sep.no_sep, adddate(bridging_sep.tglrujukan, 89) as tgl_akhir,bridging_sep.no_rawat,bridging_sep.nomr,bridging_sep.nama_pasien,bridging_sep.tglsep,"
                     + "bridging_sep.tglrujukan,bridging_sep.no_rujukan,bridging_sep.kdppkrujukan,"
                     + "bridging_sep.nmppkrujukan,bridging_sep.kdppkpelayanan,bridging_sep.nmppkpelayanan,"
                     + "if(bridging_sep.jnspelayanan='1','Rawat Inap','Rawat Jalan'),bridging_sep.catatan,bridging_sep.diagawal,"
@@ -6081,7 +6081,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
             param.put("nadi", Sequel.cariIsi("select nadi from pemeriksaan_ralan where no_rawat=?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
             param.put("respirasi", Sequel.cariIsi("select respirasi from pemeriksaan_ralan where no_rawat=?", tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString()));
 
-            Valid.MyReport("rptBridgingSEPPrioritas.jrxml", "report", "::[ Cetak SEP Prioritas ]::", "select bridging_sep.no_sep, adddate(bridging_sep.tglrujukan, 85) as tgl_akhir,bridging_sep.no_rawat,bridging_sep.nomr,bridging_sep.nama_pasien,bridging_sep.tglsep,"
+            Valid.MyReport("rptBridgingSEPPrioritas.jrxml", "report", "::[ Cetak SEP Prioritas ]::", "select bridging_sep.no_sep, adddate(bridging_sep.tglrujukan, 89) as tgl_akhir,bridging_sep.no_rawat,bridging_sep.nomr,bridging_sep.nama_pasien,bridging_sep.tglsep,"
                     + "bridging_sep.tglrujukan,bridging_sep.no_rujukan,bridging_sep.kdppkrujukan,"
                     + "bridging_sep.nmppkrujukan,bridging_sep.kdppkpelayanan,bridging_sep.nmppkpelayanan,"
                     + "if(bridging_sep.jnspelayanan='1','Rawat Inap','Rawat Jalan'),bridging_sep.catatan,bridging_sep.diagawal,"

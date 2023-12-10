@@ -2456,20 +2456,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }
     
     private void isNomer2(){
-        switch (URUTNOREG) {
-            case "poli":
-                Valid.autoNomer3("select ifnull(MAX(CONVERT(no_reg,signed)),0) from booking_registrasi where kd_poli='"+KdPoli4.getText()+"' and tanggal_periksa='"+Valid.SetTgl(TanggalPeriksa1.getSelectedItem()+"")+"'","",3,NoReg1);
-                break;
-            case "dokter":
-                Valid.autoNomer3("select ifnull(MAX(CONVERT(no_reg,signed)),0) from booking_registrasi where kd_dokter='"+KdDokter1.getText()+"' and tanggal_periksa='"+Valid.SetTgl(TanggalPeriksa1.getSelectedItem()+"")+"'","",3,NoReg1);
-                break;
-            case "dokter + poli":             
-                Valid.autoNomer3("select ifnull(MAX(CONVERT(no_reg,signed)),0) from booking_registrasi where kd_dokter='"+KdDokter1.getText()+"' and kd_poli='"+KdPoli4.getText()+"' and tanggal_periksa='"+Valid.SetTgl(TanggalPeriksa1.getSelectedItem()+"")+"'","",3,NoReg1);
-                break;
-            default:
-                Valid.autoNomer3("select ifnull(MAX(CONVERT(no_reg,signed)),0) from booking_registrasi where kd_dokter='"+KdDokter1.getText()+"' and tanggal_periksa='"+Valid.SetTgl(TanggalPeriksa1.getSelectedItem()+"")+"'","",3,NoReg1);
-                break;
-        }
+        Valid.autoNomer3("select ifnull(MAX(CONVERT(no_reg,signed)),0) from booking_registrasi where kd_poli='"+KdPoli4.getText()+"' and tanggal_periksa='"+Valid.SetTgl(TanggalPeriksa1.getSelectedItem()+"")+"'","",3,NoReg1);
     }
     
     private void getData() {
