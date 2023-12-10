@@ -862,7 +862,7 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
         MnSetPRB.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         MnSetPRB.setForeground(new java.awt.Color(70, 70, 70));
         MnSetPRB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
-        MnSetPRB.setText("Set Status Obat Kronis");
+        MnSetPRB.setText("Set PRB");
         MnSetPRB.setToolTipText("");
         MnSetPRB.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         MnSetPRB.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -911,7 +911,7 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
         panelisi2.add(jLabel20);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-11-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01-12-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -925,7 +925,7 @@ public class DlgDaftarPermintaanResep extends javax.swing.JDialog {
         panelisi2.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-11-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01-12-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -3462,7 +3462,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
         for (int j = 0; j < tbResepRalan.getRowCount(); j++) {
             int cari = Sequel.cariInteger("SELECT count(no_rawat) from mlite_srb where no_rawat=?", tbResepRalan.getValueAt(j, 3).toString());
             try {
-                if (tbResepRalan.getValueAt(j, 11).toString().equals("BPJS") && (cari > 0)) {
+                if (tbResepRalan.getValueAt(j, 11).toString().contains("BPJS") && (cari > 0)) {
                     tbResepRalan.setValueAt("Ya", j, 12);
                 }
             } catch (Exception e) {

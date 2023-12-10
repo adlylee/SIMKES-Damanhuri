@@ -12,6 +12,7 @@
 package rekammedis;
 
 import fungsi.WarnaTable;
+import fungsi.batasInput;
 import fungsi.koneksiDB;
 import fungsi.sekuel;
 import fungsi.validasi;
@@ -280,8 +281,16 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                 }
                 return this;
             }
-        });
-
+        });        
+        KeluhanUtama.setDocument(new batasInput((int)400).getKata(KeluhanUtama));
+        RiwayatPenyakit.setDocument(new batasInput((int)400).getKata(RiwayatPenyakit));
+        Tensi.setDocument(new batasInput((byte)10).getKata(Tensi));
+        Nadi.setDocument(new batasInput((byte)3).getKata(Nadi));
+        Suhu.setDocument(new batasInput((byte)5).getKata(Suhu));
+        Respirasi.setDocument(new batasInput((byte)3).getKata(Respirasi));
+        Saturasi.setDocument(new batasInput((byte)5).getKata(Saturasi));
+        TB.setDocument(new batasInput((byte)5).getKata(TB));
+        BB.setDocument(new batasInput((byte)5).getKata(BB));
         if (koneksiDB.cariCepat().equals("aktif")) {
             TCari.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
                 @Override
@@ -3249,16 +3258,18 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                         rpKeluarga.getText(), rOperasi.getText(), rTrauma.getText(), periksafisik, cmbSkalaNyeri.getSelectedItem().toString(), cmbResikoJatuh.getSelectedItem().toString(),
                         resiko, dxKeperawatan.getSelectedItem().toString(), Intervensi.getSelectedItem().toString(), Diagnosa.getText(), Tindakan.getText(), Keterangan.getText()
                     }) == true) {
-                        Sequel.menyimpan("pemeriksaan_ralan", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", 18, new String[]{
+                        if (Sequel.menyimpantf("pemeriksaan_ralan", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "No.Rawat", 18, new String[]{
                             TNoRw.getText(), Valid.SetTgl(Tanggal.getSelectedItem() + ""), Tanggal.getSelectedItem().toString().substring(11, 19),
-                            Suhu.getText(), Tensi.getText(), Nadi.getText(), Respirasi.getText(), TB.getText(), BB.getText(), Alergi.getText(),
-                            KeluhanUtama.getText(), RiwayatPenyakit.getText(), "",
-                            "-", "", "", KdPetugas.getText(),dtf.format(now)});
-                        for (i = 0; i < tbLevel.getRowCount(); i++) {
-                            if (tbLevel.getValueAt(i, 0).toString().equals("true")) {
-                                Sequel.menyimpan2("detail_pemeriksaan_triase", "?,?", "Pemeriksaan Triage", 2, new String[]{
-                                    TNoRw.getText(), tbLevel.getValueAt(i, 3).toString()
-                                });
+                            Suhu.getText(), Tensi.getText(), Nadi.getText(), Respirasi.getText(), TB.getText(), BB.getText(),"",
+                            KeluhanUtama.getText(), RiwayatPenyakit.getText(),Alergi.getText(),
+                            "-", "", "", KdPetugas.getText(),dtf.format(now)
+                        }) == true) {
+                            for (i = 0; i < tbLevel.getRowCount(); i++) {
+                                if (tbLevel.getValueAt(i, 0).toString().equals("true")) {
+                                    Sequel.menyimpan2("detail_pemeriksaan_triase", "?,?", "Pemeriksaan Triage", 2, new String[]{
+                                        TNoRw.getText(), tbLevel.getValueAt(i, 3).toString()
+                                    });
+                                }
                             }
                         }
                         JOptionPane.showMessageDialog(null, "Berhasil Simpan.");
@@ -3465,16 +3476,16 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
 
         nmkasus = "";
         if (chkNontrauma.isSelected() == true) {
-            nmkasus = nmkasus + "Non Trauma" + ";";
+            nmkasus = nmkasus + "Non Trauma;";
         }
         if (chkTrauma.isSelected() == true) {
-            nmkasus = nmkasus + "Trauma" + ";";
+            nmkasus = nmkasus + "Trauma;";
         }
         if (chkLakaTunggal.isSelected() == true) {
-            nmkasus = nmkasus + "Laka Tunggal" + ";";
+            nmkasus = nmkasus + "Laka Tunggal;";
         }
         if (chkLakaGanda.isSelected() == true) {
-            nmkasus = nmkasus + "Laka Ganda" + ";";
+            nmkasus = nmkasus + "Laka Ganda;";
         }
         if (chkLainnya.isSelected() == true) {
             nmkasus = nmkasus + "Lainnya, " + TKasus.getText() + ";";

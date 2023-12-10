@@ -6408,7 +6408,7 @@
         </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="1">
-            <StringItem index="0" value="07/12/2023"/>
+            <StringItem index="0" value="08/12/2023"/>
           </StringArray>
         </Property>
         <Property name="displayFormat" type="java.lang.String" value="dd/MM/yyyy"/>
@@ -8404,7 +8404,7 @@
             <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/picture/file-edit-16x16.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value=" Didesain &amp; dibuat oleh Khanza.Soft Media. (Opt by ICT RSHD Barabai Build.V.20231207)"/>
+            <Property name="text" type="java.lang.String" value=" Didesain &amp; dibuat oleh Khanza.Soft Media. (Opt by ICT RSHD Barabai Build.V.20231208)"/>
             <Property name="horizontalTextPosition" type="int" value="4"/>
             <Property name="iconTextGap" type="int" value="3"/>
             <Property name="name" type="java.lang.String" value="jLabel7" noResource="true"/>

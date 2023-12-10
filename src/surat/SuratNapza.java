@@ -85,6 +85,8 @@ public class SuratNapza extends javax.swing.JDialog {
             }
         }
         tbSuratNapza.setDefaultRenderer(Object.class, new WarnaTable());
+        
+        keterangan.setDocument(new batasInput((byte) 100).getKata(keterangan));
     }
 
     /**
@@ -655,7 +657,7 @@ public class SuratNapza extends javax.swing.JDialog {
             Valid.textKosong(keterangan, "keperluan");
         }else{
            if (Sequel.menyimpantf("datasurat", "?,?,?,?,?,?,?,?,?,?,?,?", "Data", 12, new String[]{
-               "0", TNoSurat.getText(), TNoRawat.getText(), TKdDokter.getText(), Valid.SetTgl(TglSurat.getSelectedItem() + ""), "Napza",
+               null, TNoSurat.getText(), TNoRawat.getText(), TKdDokter.getText(), Valid.SetTgl(TglSurat.getSelectedItem() + ""), "Napza",
                CmbJam.getSelectedItem() + ":" + CmbMenit.getSelectedItem() + ":" + CmbDetik.getSelectedItem(),
                CmbJam1.getSelectedItem() + ":" + CmbMenit1.getSelectedItem() + ":" + CmbDetik1.getSelectedItem(),
                CmbJam2.getSelectedItem() + ":" + CmbMenit2.getSelectedItem() + ":" + CmbDetik2.getSelectedItem(),

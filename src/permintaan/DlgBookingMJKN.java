@@ -340,7 +340,6 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
         internalFrame8.add(jLabel17);
         jLabel17.setBounds(0, 30, 70, 23);
 
-        NoReg.setEditable(false);
         NoReg.setHighlighter(null);
         NoReg.setName("NoReg"); // NOI18N
         internalFrame8.add(NoReg);
@@ -391,7 +390,7 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
         jLabel8.setPreferredSize(new java.awt.Dimension(100, 23));
         panelCari.add(jLabel8);
 
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "06-12-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-12-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -404,7 +403,7 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
         jLabel22.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel22);
 
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "06-12-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-12-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
