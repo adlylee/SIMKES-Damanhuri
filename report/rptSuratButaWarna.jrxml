@@ -5,24 +5,18 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="192"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<parameter name="namars" class="java.lang.String"/>
-	<parameter name="alamatrs" class="java.lang.String"/>
-	<parameter name="kotars" class="java.lang.String"/>
-	<parameter name="propinsirs" class="java.lang.String"/>
-	<parameter name="kontakrs" class="java.lang.String"/>
-	<parameter name="emailrs" class="java.lang.String"/>
+	<parameter name="namasps" class="java.lang.String"/>
 	<parameter name="logo" class="java.io.InputStream"/>
 	<parameter name="nomor" class="java.lang.String"/>
 	<parameter name="logo2" class="java.io.InputStream"/>
-	<parameter name="namasps" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT datasurat.id, datasurat.tgl_surat,datasurat.no_rawat, pasien.no_rkm_medis, pasien.nm_pasien, CONCAT(reg_periksa.umurdaftar,' ',reg_periksa.sttsumur) as umur, 
-pasien.pekerjaan, pasien.jk, concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab) as alamat,
-dokter.nm_dokter, datasurat.jns_surat, datasurat.no_surat, datasurat.data1,datasurat.data2,DATEDIFF(data2,data1)+1 as lama, datasurat.data3, spesialis.nm_sps,dokter.nip, REPLACE(REPLACE(poliklinik.nm_poli,'SORE',''),'PAGI','') as nm_poli 
-FROM datasurat,reg_periksa,pasien,kelurahan,kecamatan,kabupaten,dokter,poliklinik,spesialis 
-WHERE datasurat.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and datasurat.kd_dokter=dokter.kd_dokter and dokter.kd_sps=spesialis.kd_sps 
-and pasien.kd_kel=kelurahan.kd_kel and pasien.kd_kec=kecamatan.kd_kec and pasien.kd_kab=kabupaten.kd_kab and datasurat.data3=poliklinik.kd_poli 
-and datasurat.jns_surat='Sakit']]>
+		<![CDATA[SELECT datasurat.id, datasurat.tgl_surat,datasurat.no_rawat, pasien.no_rkm_medis, pasien.nm_pasien, CONCAT(reg_periksa.umurdaftar,' ',reg_periksa.sttsumur) as umur,
+pasien.pekerjaan, pasien.jk, concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab) as alamat, pasien.tgl_lahir, pasien.tmp_lahir,
+dokter.nm_dokter, datasurat.jns_surat, datasurat.no_surat, datasurat.data1, datasurat.data2, datasurat.data3,datasurat.data4, datasurat.data5, spesialis.nm_sps, dokter.nip 
+FROM datasurat inner JOIN reg_periksa inner JOIN pasien inner join kelurahan inner join kecamatan inner join kabupaten inner JOIN dokter 
+on datasurat.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and datasurat.kd_dokter=dokter.kd_dokter 
+and pasien.kd_kel=kelurahan.kd_kel and pasien.kd_kec=kecamatan.kd_kec and pasien.kd_kab=kabupaten.kd_kab 
+where datasurat.jns_surat='Buta Warna']]>
 	</queryString>
 	<field name="nm_dokter" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -30,16 +24,13 @@ and datasurat.jns_surat='Sakit']]>
 	<field name="nip" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="nm_sps" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="no_rkm_medis" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="nm_pasien" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="umur" class="java.lang.String">
+	<field name="tmp_lahir" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tgl_lahir" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="jk" class="java.lang.String">
@@ -48,16 +39,13 @@ and datasurat.jns_surat='Sakit']]>
 	<field name="pekerjaan" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="nm_sps" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="alamat" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="data2" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="data1" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="lama" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<background>
@@ -66,9 +54,8 @@ and datasurat.jns_surat='Sakit']]>
 	<title>
 		<band height="802" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Transparent" x="0" y="171" width="93" height="14" forecolor="#000000" backcolor="#F0F0DC">
+				<reportElement mode="Transparent" x="0" y="167" width="93" height="17" forecolor="#000000" backcolor="#F0F0DC">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
@@ -76,28 +63,25 @@ and datasurat.jns_surat='Sakit']]>
 				<text><![CDATA[NIP]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="0" y="191" width="93" height="14" forecolor="#000000" backcolor="#F0F0DC">
+				<reportElement mode="Transparent" x="0" y="187" width="93" height="17" forecolor="#000000" backcolor="#F0F0DC">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle" lineSpacing="Single">
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Jabatan/Pekerjaan]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="120" y="170" width="10" height="14" forecolor="#000000" backcolor="#F0F0DC">
+				<reportElement mode="Transparent" x="120" y="167" width="10" height="17" forecolor="#000000" backcolor="#F0F0DC">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle" lineSpacing="Single">
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="0" y="133" width="454" height="14" forecolor="#000000" backcolor="#F0F0DC">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
+				<reportElement mode="Transparent" x="0" y="133" width="454" height="16" forecolor="#000000" backcolor="#F0F0DC"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
 				</textElement>
@@ -110,17 +94,17 @@ and datasurat.jns_surat='Sakit']]>
 				<textElement textAlignment="Center" lineSpacing="Single">
 					<font fontName="Times New Roman" size="14" isBold="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[SURAT KETERANGAN SAKIT]]></text>
+				<text><![CDATA[SURAT KETERANGAN TIDAK BUTA WARNA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="263" y="490" width="110" height="14" forecolor="#000000" backcolor="#F0F0DC">
+				<reportElement mode="Transparent" x="268" y="673" width="94" height="14" forecolor="#000000" backcolor="#F0F0DC">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Dokter Yang Merawat]]></text>
+				<text><![CDATA[Dokter Pemeriksa]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Transparent" x="62" y="18" width="328" height="23" forecolor="#000000" backcolor="#F0F0DC"/>
@@ -191,12 +175,11 @@ and datasurat.jns_surat='Sakit']]>
 				<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
 				</textElement>
-				<text><![CDATA[No.441 /         / RSUD-Yan Kes /]]></text>
+				<text><![CDATA[No.440 /         / RSUD-Yan Kes /]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="0" y="153" width="93" height="14" forecolor="#000000" backcolor="#F0F0DC">
+				<reportElement mode="Transparent" x="0" y="150" width="93" height="17" forecolor="#000000" backcolor="#F0F0DC">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
@@ -204,28 +187,24 @@ and datasurat.jns_surat='Sakit']]>
 				<text><![CDATA[Nama]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="120" y="153" width="10" height="14" forecolor="#000000" backcolor="#F0F0DC">
+				<reportElement mode="Transparent" x="120" y="150" width="10" height="17" forecolor="#000000" backcolor="#F0F0DC">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle" lineSpacing="Single">
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="230" width="456" height="14">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
+				<reportElement x="0" y="227" width="456" height="49"/>
 				<textElement textAlignment="Justified" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12"/>
 				</textElement>
-				<text><![CDATA[Menerangkan dengan sebenarnya bahwa :]]></text>
+				<text><![CDATA[Dalam hal ini menjalankan tugasnya dengan mengingat sumpah dokter yang telah di ucapkan sewaktu menerima jabatannya, dengan ini menerangkan bahwa ia telah memeriksa dengan teliti seseorang :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="0" y="269" width="93" height="14" forecolor="#000000" backcolor="#F0F0DC">
+				<reportElement mode="Transparent" x="0" y="280" width="93" height="17" forecolor="#000000" backcolor="#F0F0DC">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
@@ -233,10 +212,9 @@ and datasurat.jns_surat='Sakit']]>
 				<text><![CDATA[Nama]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="120" y="269" width="10" height="14" forecolor="#000000" backcolor="#F0F0DC">
+				<reportElement mode="Transparent" x="120" y="280" width="10" height="17" forecolor="#000000" backcolor="#F0F0DC">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
@@ -244,20 +222,18 @@ and datasurat.jns_surat='Sakit']]>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="0" y="288" width="93" height="14" forecolor="#000000" backcolor="#F0F0DC">
+				<reportElement mode="Transparent" x="0" y="299" width="93" height="17" forecolor="#000000" backcolor="#F0F0DC">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Umur]]></text>
+				<text><![CDATA[TTL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="120" y="287" width="10" height="14" forecolor="#000000" backcolor="#F0F0DC">
+				<reportElement mode="Transparent" x="120" y="298" width="10" height="17" forecolor="#000000" backcolor="#F0F0DC">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
@@ -265,9 +241,8 @@ and datasurat.jns_surat='Sakit']]>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="0" y="307" width="93" height="14" forecolor="#000000" backcolor="#F0F0DC">
+				<reportElement mode="Transparent" x="0" y="318" width="93" height="17" forecolor="#000000" backcolor="#F0F0DC">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
@@ -275,10 +250,9 @@ and datasurat.jns_surat='Sakit']]>
 				<text><![CDATA[Jenis Kelamin]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="120" y="306" width="10" height="14" forecolor="#000000" backcolor="#F0F0DC">
+				<reportElement mode="Transparent" x="120" y="317" width="10" height="17" forecolor="#000000" backcolor="#F0F0DC">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
@@ -286,9 +260,8 @@ and datasurat.jns_surat='Sakit']]>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="0" y="326" width="93" height="14" forecolor="#000000" backcolor="#F0F0DC">
+				<reportElement mode="Transparent" x="0" y="337" width="93" height="17" forecolor="#000000" backcolor="#F0F0DC">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
@@ -296,10 +269,9 @@ and datasurat.jns_surat='Sakit']]>
 				<text><![CDATA[Pekerjaan]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="120" y="325" width="10" height="14" forecolor="#000000" backcolor="#F0F0DC">
+				<reportElement mode="Transparent" x="120" y="336" width="10" height="17" forecolor="#000000" backcolor="#F0F0DC">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
@@ -307,9 +279,8 @@ and datasurat.jns_surat='Sakit']]>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="0" y="345" width="93" height="14" forecolor="#000000" backcolor="#F0F0DC">
+				<reportElement mode="Transparent" x="0" y="356" width="93" height="17" forecolor="#000000" backcolor="#F0F0DC">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
@@ -317,39 +288,284 @@ and datasurat.jns_surat='Sakit']]>
 				<text><![CDATA[Alamat]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="120" y="344" width="10" height="14" forecolor="#000000" backcolor="#F0F0DC">
+				<reportElement mode="Transparent" x="120" y="355" width="10" height="17" forecolor="#000000" backcolor="#F0F0DC">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="393" width="93" height="17" forecolor="#000000" backcolor="#F0F0DC">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Atas Permintaan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="120" y="393" width="10" height="17" forecolor="#000000" backcolor="#F0F0DC">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="125" y="393" width="93" height="17" forecolor="#000000" backcolor="#F0F0DC">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[SENDIRI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="412" width="110" height="17" forecolor="#000000" backcolor="#F0F0DC">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Dengan Surat Tanggal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="120" y="410" width="10" height="17" forecolor="#000000" backcolor="#F0F0DC">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="125" y="411" width="93" height="17" forecolor="#000000" backcolor="#F0F0DC">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="214" y="414" width="110" height="17" forecolor="#000000" backcolor="#F0F0DC">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="235" y="413" width="10" height="17" forecolor="#000000" backcolor="#F0F0DC">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="241" y="414" width="93" height="17" forecolor="#000000" backcolor="#F0F0DC">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="431" width="334" height="17" forecolor="#000000" backcolor="#F0F0DC">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Dan berpendapat bahwa yang diperiksa tersebut]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="154" y="463" width="152" height="17" forecolor="#000000" backcolor="#F0F0DC">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[BUTA WARNA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="165" y="476" width="130" height="17" forecolor="#000000" backcolor="#F0F0DC">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIDAK BUTA WARNA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="510" width="92" height="17" forecolor="#000000" backcolor="#F0F0DC">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Keperluan untuk]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="120" y="510" width="10" height="17" forecolor="#000000" backcolor="#F0F0DC">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="552" width="456" height="30">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" lineSpacing="Single">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Surat keterangan dokter ini diberikan kepadanya untuk masa waktu 3 (tiga) bulan terhitung sejak tanggal dikeluarkan.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="591" width="456" height="30">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" lineSpacing="Single">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Demikian surat keterangan ini diberikan kepadanya untuk dapat dipergunakan sebagaimana mestinya.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="259" y="643" width="120" height="14" forecolor="#000000" backcolor="#F0F0DC">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Dikeluarkan di : Barabai]]></text>
+			</staticText>
 			<textField>
-				<reportElement x="215" y="567" width="206" height="18"/>
+				<reportElement x="125" y="150" width="329" height="17">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement lineSpacing="Single">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nm_dokter}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="125" y="282" width="329" height="18"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nm_pasien}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="125" y="301" width="329" height="18"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tmp_lahir}+", "+$F{tgl_lahir}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="125" y="320" width="329" height="18"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{jk}.equals("L") ? "Laki-Laki":"Perempuan")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="125" y="339" width="329" height="18"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{pekerjaan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="125" y="356" width="329" height="34"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alamat}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="125" y="512" width="330" height="18"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{data1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="191" y="750" width="256" height="18"/>
 				<textElement textAlignment="Center" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{nm_dokter}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="202" width="93" height="17" forecolor="#000000" backcolor="#F0F0DC">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Alamat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="120" y="202" width="10" height="17" forecolor="#000000" backcolor="#F0F0DC">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="125" y="202" width="327" height="17" forecolor="#000000" backcolor="#F0F0DC">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Jl. Murakata No. 04 Barabai Kab. HST]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="125" y="167" width="329" height="17">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nip}]]></textFieldExpression>
+			</textField>
 			<textField pattern="dd MMMM yyyy" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="215" y="475" width="206" height="14" forecolor="#000000" backcolor="#F0F0DC">
+				<reportElement mode="Transparent" x="212" y="657" width="206" height="14" forecolor="#000000" backcolor="#F0F0DC">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single" markup="none">
 					<font fontName="Times New Roman" size="12" isBold="false" isUnderline="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Barabai : "+new java.text.SimpleDateFormat("dd MMMM yyyy", new java.util.Locale("id")).format(new Date())]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Pada Tanggal : "+new java.text.SimpleDateFormat("dd MMMM yyyy", new java.util.Locale("id")).format(new Date())]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="215" y="583" width="206" height="18"/>
+				<reportElement x="191" y="763" width="256" height="18"/>
 				<textElement textAlignment="Center" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{namasps}+" "+$F{nm_sps}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["NIP. "+$F{nip}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="73" width="454" height="1">
@@ -368,190 +584,22 @@ and datasurat.jns_surat='Sakit']]>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement mode="Transparent" x="120" y="190" width="10" height="14" forecolor="#000000" backcolor="#F0F0DC">
+				<reportElement mode="Transparent" x="121" y="187" width="10" height="17" forecolor="#000000" backcolor="#F0F0DC">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle" lineSpacing="Single">
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement mode="Transparent" x="0" y="209" width="93" height="14" forecolor="#000000" backcolor="#F0F0DC">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<textField>
+				<reportElement x="125" y="187" width="329" height="17">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle" lineSpacing="Single">
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Alamat]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Transparent" x="120" y="207" width="10" height="14" forecolor="#000000" backcolor="#F0F0DC">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle" lineSpacing="Single">
-					<font fontName="Times New Roman" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Transparent" x="133" y="207" width="321" height="14" forecolor="#000000" backcolor="#F0F0DC">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle" lineSpacing="Single">
-					<font fontName="Times New Roman" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Jl. Murakata No. 04 Barabai]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="429" width="456" height="14">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Justified" lineSpacing="Single">
-					<font fontName="Times New Roman" size="12"/>
-				</textElement>
-				<text><![CDATA[Demikian surat keterangan ini dibuat untuk dipergunakan sebagaimana mestinya.]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="133" y="153" width="321" height="14">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-				</reportElement>
-				<textElement lineSpacing="Single">
-					<font fontName="Times New Roman" size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{nm_dokter}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="133" y="269" width="321" height="14">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-				</reportElement>
-				<textElement lineSpacing="Single">
-					<font fontName="Times New Roman" size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{nm_pasien}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="133" y="171" width="321" height="14">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-				</reportElement>
-				<textElement lineSpacing="Single">
-					<font fontName="Times New Roman" size="12"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{nip}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="133" y="189" width="321" height="14">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-				</reportElement>
-				<textElement lineSpacing="Single">
-					<font fontName="Times New Roman" size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{namasps}+" "+$F{nm_sps}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="133" y="287" width="321" height="14">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-				</reportElement>
-				<textElement lineSpacing="Single">
-					<font fontName="Times New Roman" size="12"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{umur}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="133" y="307" width="321" height="14">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-				</reportElement>
-				<textElement lineSpacing="Single">
-					<font fontName="Times New Roman" size="12"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[($F{jk}.equals("L") ? "Laki-Laki":"Perempuan")]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="133" y="324" width="321" height="14">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-				</reportElement>
-				<textElement lineSpacing="Single">
-					<font fontName="Times New Roman" size="12"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{pekerjaan}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="133" y="343" width="321" height="14">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-				</reportElement>
-				<textElement lineSpacing="Single">
-					<font fontName="Times New Roman" size="12"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{alamat}.toUpperCase()]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement mode="Transparent" x="0" y="252" width="93" height="14" forecolor="#000000" backcolor="#F0F0DC">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle" lineSpacing="Single">
-					<font fontName="Times New Roman" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[No. Rekam Medik]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Transparent" x="120" y="250" width="10" height="14" forecolor="#000000" backcolor="#F0F0DC">
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle" lineSpacing="Single">
-					<font fontName="Times New Roman" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="-1" y="370" width="454" height="42"/>
-				<textElement lineSpacing="Single">
-					<font fontName="Times New Roman" size="12"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Bahwa orang yang namanya tersebut di atas benar dalam keadaan sakit, untuk pemulihan kesehatan perlu diberikan istirahat selama "+$F{lama}+ " hari pada tanggal "+$F{data1}+ " sampai dengan tanggal "+$F{data2}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="133" y="251" width="321" height="14">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-				</reportElement>
-				<textElement lineSpacing="Single">
-					<font fontName="Times New Roman" size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{no_rkm_medis}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

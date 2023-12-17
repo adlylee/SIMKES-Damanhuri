@@ -1237,8 +1237,8 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
                     LocalDate today = LocalDate.now();
                     if (!norujuk.contains("1708R008")) {
                         System.out.println("!ini");
-                        if (tglrujukan.isEmpty() || tglrujukan == null) {
-                            JOptionPane.showMessageDialog(null, "Maaf, SEP pasien belum tersedia...!!");
+                        if (tglrujukan.equals("")|| tglrujukan == null) {
+                            JOptionPane.showMessageDialog(null, "Maaf, SEP pasien belum tersedia / pasien post op...!!");
                         } else {
                             if (seppost >= 1) {
                                 JOptionPane.showMessageDialog(rootPane, "Maaf, Rujukan pasien belum tersedia. \nSilahkan meminta rujukan ke Faskes..!!");

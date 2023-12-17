@@ -348,9 +348,10 @@ public final class SuratKeluar extends javax.swing.JDialog {
         TKesan = new widget.TextArea();
         jLabel8 = new widget.Label();
         jLabel10 = new widget.Label();
-        scrollPane3 = new widget.ScrollPane();
-        DST = new widget.TextArea();
         AP = new widget.TextBox();
+        NoDST = new widget.TextBox();
+        jLabel25 = new widget.Label();
+        DST = new widget.Tanggal();
         jPanel3 = new javax.swing.JPanel();
         panelGlass10 = new widget.panelisi();
         jLabel23 = new widget.Label();
@@ -520,12 +521,11 @@ public final class SuratKeluar extends javax.swing.JDialog {
             }
         });
         FormInput.add(TglMasuk);
-        TglMasuk.setBounds(440, 160, 90, 23);
+        TglMasuk.setBounds(95, 160, 90, 23);
 
-        jLabel19.setText("Tgl. Masuk :");
         jLabel19.setName("jLabel19"); // NOI18N
         FormInput.add(jLabel19);
-        jLabel19.setBounds(360, 160, 70, 23);
+        jLabel19.setBounds(20, 160, 70, 23);
 
         jLabel4.setText("No. Surat :");
         jLabel4.setName("jLabel4"); // NOI18N
@@ -536,7 +536,7 @@ public final class SuratKeluar extends javax.swing.JDialog {
         TNoSurat.setHighlighter(null);
         TNoSurat.setName("TNoSurat"); // NOI18N
         FormInput.add(TNoSurat);
-        TNoSurat.setBounds(95, 10, 250, 23);
+        TNoSurat.setBounds(95, 10, 205, 23);
 
         kddokter.setEditable(false);
         kddokter.setHighlighter(null);
@@ -552,25 +552,26 @@ public final class SuratKeluar extends javax.swing.JDialog {
         TDokter.setEditable(false);
         TDokter.setName("TDokter"); // NOI18N
         FormInput.add(TDokter);
-        TDokter.setBounds(220, 100, 310, 23);
+        TDokter.setBounds(220, 100, 280, 23);
 
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setText("Tgl. Keluar :");
         jLabel20.setName("jLabel20"); // NOI18N
         FormInput.add(jLabel20);
-        jLabel20.setBounds(360, 190, 70, 23);
+        jLabel20.setBounds(190, 160, 70, 23);
 
         TglKeluar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "06-12-2023" }));
         TglKeluar.setDisplayFormat("dd-MM-yyyy");
         TglKeluar.setName("TglKeluar"); // NOI18N
         TglKeluar.setOpaque(false);
         FormInput.add(TglKeluar);
-        TglKeluar.setBounds(440, 190, 90, 23);
+        TglKeluar.setBounds(260, 160, 90, 23);
 
         kdBangsal.setEditable(false);
         kdBangsal.setHighlighter(null);
         kdBangsal.setName("kdBangsal"); // NOI18N
         FormInput.add(kdBangsal);
-        kdBangsal.setBounds(275, 130, 65, 23);
+        kdBangsal.setBounds(95, 130, 65, 23);
 
         BangsalCari.setEditable(false);
         BangsalCari.setName("BangsalCari"); // NOI18N
@@ -581,18 +582,18 @@ public final class SuratKeluar extends javax.swing.JDialog {
             }
         });
         FormInput.add(BangsalCari);
-        BangsalCari.setBounds(340, 130, 190, 23);
+        BangsalCari.setBounds(160, 130, 170, 23);
 
-        jLabel21.setText("Ruangan/Poli :");
+        jLabel21.setText("Ruang/Poli :");
         jLabel21.setName("jLabel21"); // NOI18N
         jLabel21.setPreferredSize(new java.awt.Dimension(50, 23));
         FormInput.add(jLabel21);
-        jLabel21.setBounds(190, 130, 80, 23);
+        jLabel21.setBounds(10, 130, 80, 23);
 
         jLabel31.setText("Jenis Surat :");
         jLabel31.setName("jLabel31"); // NOI18N
         FormInput.add(jLabel31);
-        jLabel31.setBounds(0, 40, 90, 23);
+        jLabel31.setBounds(200, 40, 90, 23);
 
         cmbJenisSurat1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "Surat Keterangan Opname", "Surat Keterangan Tidak Buta Warna", "Surat Keterangan Sakit", "Surat Resume Medis", "Surat Keterangan Istirahat", "Surat Sehat", "Surat Napza", "Surat Keterangan Dokter", "Surat Keterangan Pasca Operasi" }));
         cmbJenisSurat1.setName("cmbJenisSurat1"); // NOI18N
@@ -613,7 +614,7 @@ public final class SuratKeluar extends javax.swing.JDialog {
             }
         });
         FormInput.add(cmbJenisSurat1);
-        cmbJenisSurat1.setBounds(95, 40, 250, 23);
+        cmbJenisSurat1.setBounds(295, 40, 230, 23);
 
         TglSurat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "06-12-2023" }));
         TglSurat.setDisplayFormat("dd-MM-yyyy");
@@ -630,12 +631,12 @@ public final class SuratKeluar extends javax.swing.JDialog {
             }
         });
         FormInput.add(TglSurat);
-        TglSurat.setBounds(95, 130, 90, 23);
+        TglSurat.setBounds(95, 40, 120, 23);
 
         jLabel22.setText("Tgl. Surat :");
         jLabel22.setName("jLabel22"); // NOI18N
         FormInput.add(jLabel22);
-        jLabel22.setBounds(0, 130, 90, 23);
+        jLabel22.setBounds(0, 40, 90, 23);
 
         btnPasien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
         btnPasien.setMnemonic('6');
@@ -653,7 +654,7 @@ public final class SuratKeluar extends javax.swing.JDialog {
             }
         });
         FormInput.add(btnPasien);
-        btnPasien.setBounds(530, 70, 28, 23);
+        btnPasien.setBounds(500, 70, 28, 23);
 
         BtnDokter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
         BtnDokter.setMnemonic('X');
@@ -670,7 +671,7 @@ public final class SuratKeluar extends javax.swing.JDialog {
             }
         });
         FormInput.add(BtnDokter);
-        BtnDokter.setBounds(530, 100, 28, 23);
+        BtnDokter.setBounds(500, 100, 28, 23);
 
         btnBangsalCari.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
         btnBangsalCari.setMnemonic('3');
@@ -688,7 +689,7 @@ public final class SuratKeluar extends javax.swing.JDialog {
             }
         });
         FormInput.add(btnBangsalCari);
-        btnBangsalCari.setBounds(530, 130, 28, 23);
+        btnBangsalCari.setBounds(330, 130, 28, 23);
 
         TNoRw.setHighlighter(null);
         TNoRw.setName("TNoRw"); // NOI18N
@@ -705,12 +706,12 @@ public final class SuratKeluar extends javax.swing.JDialog {
         TPasien.setHighlighter(null);
         TPasien.setName("TPasien"); // NOI18N
         FormInput.add(TPasien);
-        TPasien.setBounds(300, 70, 230, 23);
+        TPasien.setBounds(300, 70, 200, 23);
 
         jLabel7.setText("Keperluan :");
         jLabel7.setName("jLabel7"); // NOI18N
         FormInput.add(jLabel7);
-        jLabel7.setBounds(0, 230, 90, 23);
+        jLabel7.setBounds(0, 190, 90, 23);
 
         scrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         scrollPane1.setName("scrollPane1"); // NOI18N
@@ -727,40 +728,40 @@ public final class SuratKeluar extends javax.swing.JDialog {
         scrollPane1.setViewportView(TKesan);
 
         FormInput.add(scrollPane1);
-        scrollPane1.setBounds(95, 235, 250, 48);
+        scrollPane1.setBounds(95, 190, 255, 53);
 
         jLabel8.setText("Atas Permintaan :");
         jLabel8.setName("jLabel8"); // NOI18N
         FormInput.add(jLabel8);
-        jLabel8.setBounds(0, 160, 90, 23);
+        jLabel8.setBounds(0, 250, 90, 23);
 
         jLabel10.setText("Dengan surat tgl :");
         jLabel10.setName("jLabel10"); // NOI18N
         FormInput.add(jLabel10);
-        jLabel10.setBounds(0, 190, 90, 23);
+        jLabel10.setBounds(0, 280, 90, 23);
 
-        scrollPane3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        scrollPane3.setName("scrollPane3"); // NOI18N
-
-        DST.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        DST.setColumns(20);
-        DST.setRows(5);
-        DST.setName("DST"); // NOI18N
-        DST.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                DSTKeyPressed(evt);
-            }
-        });
-        scrollPane3.setViewportView(DST);
-
-        FormInput.add(scrollPane3);
-        scrollPane3.setBounds(95, 190, 250, 38);
-
-        AP.setEditable(false);
         AP.setHighlighter(null);
         AP.setName("AP"); // NOI18N
         FormInput.add(AP);
-        AP.setBounds(95, 160, 250, 23);
+        AP.setBounds(95, 250, 255, 23);
+
+        NoDST.setHighlighter(null);
+        NoDST.setName("NoDST"); // NOI18N
+        FormInput.add(NoDST);
+        NoDST.setBounds(260, 280, 90, 23);
+
+        jLabel25.setText("No :");
+        jLabel25.setName("jLabel25"); // NOI18N
+        jLabel25.setPreferredSize(new java.awt.Dimension(50, 23));
+        FormInput.add(jLabel25);
+        jLabel25.setBounds(215, 280, 40, 23);
+
+        DST.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "12-12-2023" }));
+        DST.setDisplayFormat("dd-MM-yyyy");
+        DST.setName("DST"); // NOI18N
+        DST.setOpaque(false);
+        FormInput.add(DST);
+        DST.setBounds(95, 280, 90, 23);
 
         Scroll.setViewportView(FormInput);
 
@@ -1016,8 +1017,7 @@ public final class SuratKeluar extends javax.swing.JDialog {
 }//GEN-LAST:event_BtnKeluarKeyPressed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-//        cmbJenisSurat1.setSelectedIndex(0);
-        autoNomor();
+//        autoNomor();
     }//GEN-LAST:event_formWindowOpened
 
     private void BtnAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAllActionPerformed
@@ -1170,7 +1170,7 @@ public final class SuratKeluar extends javax.swing.JDialog {
         } else {
             switch (cmbJenisSurat1.getSelectedIndex()) {
                 case 1:
-                    isSimpanSurat("Opname", kdBangsal.getText());
+                    isSimpanSurat("Opname");
                     cmbJenisSurat.setSelectedIndex(1);
                     break;
                 case 2:
@@ -1178,7 +1178,7 @@ public final class SuratKeluar extends javax.swing.JDialog {
                     if (reply == JOptionPane.YES_OPTION) {
                         if (Sequel.menyimpantf("datasurat", "?,?,?,?,?,?,?,?,?,?,?,?", "Data", 12, new String[]{
                             "0", TNoSurat.getText(), TNoRw.getText(), kddokter.getText(), Valid.SetTgl(TglSurat.getSelectedItem() + ""), "Buta Warna",
-                            TKesan.getText(), AP.getText(), DST.getText(), "", "", var.getkode()
+                            TKesan.getText(), AP.getText(), Valid.SetTgl(DST.getSelectedItem() + ""), NoDST.getText(), "", var.getkode()
                         }) == true) {
                             emptTeks();
                             JOptionPane.showMessageDialog(null, "Berhasil Simpan Surat Keterangan Tidak Buta Warna...");
@@ -1187,23 +1187,23 @@ public final class SuratKeluar extends javax.swing.JDialog {
                     cmbJenisSurat.setSelectedIndex(2);
                     break;
                 case 3:
-                    isSimpanSurat("Sakit", kdBangsal.getText());
+                    isSimpanSurat("Sakit");
                     cmbJenisSurat.setSelectedIndex(3);
                     break;
                 case 4:
-                    isSimpanSurat("Resume Medis", kdBangsal.getText());
+                    isSimpanSurat("Resume Medis");
                     cmbJenisSurat.setSelectedIndex(4);
                     break;
                 case 5:
-                    isSimpanSurat("Istirahat", kdBangsal.getText());
+                    isSimpanSurat("Istirahat");
                     cmbJenisSurat.setSelectedIndex(5);
                     break;
                 case 8:
-                    isSimpanSurat2("Dokter", kdBangsal.getText());
+                    isSimpanSurat2("Dokter");
                     cmbJenisSurat.setSelectedIndex(6);
                     break;
                 case 9:
-                    isSimpanSurat2("Operasi", kdBangsal.getText());
+                    isSimpanSurat2("Operasi");
                     cmbJenisSurat.setSelectedIndex(7);
                     break;
                 default:
@@ -1237,39 +1237,37 @@ public final class SuratKeluar extends javax.swing.JDialog {
         if (TNoSurat.getText().trim().equals("")) {
             Valid.textKosong(TNoSurat, "no surat");
         } else {
-            switch (cmbJenisSurat1.getSelectedItem().toString()) {
+            switch (cmbJenisSurat.getSelectedItem().toString()) {
                 case "Opname":
-                    Sequel.mengedit("datasurat", "id = '" + no + "' and jns_surat='Opname'", "kd_dokter = '" + kddokter.getText() + "',data1='" + Valid.SetTgl(TglMasuk.getSelectedItem() + "") + "',data2='" + Valid.SetTgl(TglKeluar.getSelectedItem() + "") + "',data3='" + kdBangsal.getText() + "'");
-                    JOptionPane.showMessageDialog(null, "Berhasil mengedit data surat opname..");
+                    isEdit("Opname");
                     break;
                 case "Buta Warna":
-                    Sequel.mengedit("datasurat", "id = '" + no + "' and jns_surat='Buta Warna'", "kd_dokter = '" + kddokter.getText() + "',data1='" + TKesan.getText() + "'");
-                    JOptionPane.showMessageDialog(null, "Berhasil mengedit data surat keterangan tidak buta warna..");
+                    if (Sequel.mengedittf("datasurat", "id=? and jns_surat=?", "kd_dokter=?,data1=?,data2=?,data3=?,data4=?", 7, new String[]{
+                        kddokter.getText(), TKesan.getText(), AP.getText(), Valid.SetTgl(DST.getSelectedItem() + ""),NoDST.getText(), no, "Buta Warna"
+                    }) == true) {
+                        getTampilMaster();
+                        emptTeks();
+                        JOptionPane.showMessageDialog(null, "Berhasil edit data surat buta warna...");
+                    }
                     break;
                 case "Sakit":
-                    Sequel.mengedit("datasurat", "id = '" + no + "' and jns_surat='Sakit'", "kd_dokter = '" + kddokter.getText() + "',data1='" + Valid.SetTgl(TglMasuk.getSelectedItem() + "") + "',data2='" + Valid.SetTgl(TglKeluar.getSelectedItem() + "") + "',data3='" + kdBangsal.getText() + "'");
-                    JOptionPane.showMessageDialog(null, "Berhasil mengedit data surat sakit..");
+                    isEdit("Sakit");
                     break;
                 case "Resume Medis":
-                    Sequel.mengedit("datasurat", "id = '" + no + "' and jns_surat='Resume Medis'", "kd_dokter = '" + kddokter.getText() + "',data1='" + Valid.SetTgl(TglMasuk.getSelectedItem() + "") + "',data2='" + Valid.SetTgl(TglKeluar.getSelectedItem() + "") + "',data3='" + kdBangsal.getText() + "'");
-                    JOptionPane.showMessageDialog(null, "Berhasil mengedit data surat resume medis..");
+                    isEdit("Resume Medis");
                     break;
                 case "Istirahat":
-                    Sequel.mengedit("datasurat", "id = '" + no + "' and jns_surat='Istirahat'", "kd_dokter = '" + kddokter.getText() + "',data1='" + Valid.SetTgl(TglMasuk.getSelectedItem() + "") + "',data2='" + Valid.SetTgl(TglKeluar.getSelectedItem() + "") + "',data3='" + kdBangsal.getText() + "'");
-                    JOptionPane.showMessageDialog(null, "Berhasil mengedit data surat istirahat..");
+                    isEdit("Istirahat");
                     break;
                 case "Dokter":
-                    Sequel.mengedit("datasurat", "id = '" + no + "' and jns_surat='Dokter'", "kd_dokter = '" + kddokter.getText() + "',data1='" + Valid.SetTgl(TglMasuk.getSelectedItem() + "") + "',data3='" + kdBangsal.getText() + "'");
-                    JOptionPane.showMessageDialog(null, "Berhasil mengedit data surat dokter..");
+                    isEdit2("Dokter");
                     break;
                 case "Operasi":
-                    Sequel.mengedit("datasurat", "id = '" + no + "' and jns_surat='Operasi'", "kd_dokter = '" + kddokter.getText() + "',data1='" + Valid.SetTgl(TglMasuk.getSelectedItem() + "") + "',data3='" + kdBangsal.getText() + "'");
-                    JOptionPane.showMessageDialog(null, "Berhasil mengedit data surat operasi..");
+                    isEdit2("Operasi");
                     break;
                 default:
                     break;
             }
-            getTampilMaster();
         }
     }//GEN-LAST:event_BtnEditActionPerformed
 
@@ -1322,12 +1320,16 @@ public final class SuratKeluar extends javax.swing.JDialog {
         } else if (!(no.equals(""))) {
             this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             Map<String, Object> param = new HashMap<>();
-            String dxAkhir = Sequel.cariIsi("SELECT diagnosa_akhir FROM kamar_inap where no_rawat=? order by tgl_keluar LIMIT 1", TNoRw.getText());
-            String terapi = Sequel.cariIsi("SELECT GROUP_CONCAT(databarang.nama_brng) FROM detail_pemberian_obat,databarang where detail_pemberian_obat.kode_brng=databarang.kode_brng and detail_pemberian_obat.status='Pulang' and detail_pemberian_obat.no_rawat='" + TNoRw.getText() + "'");
+            String dxAkhir = Sequel.cariIsi("SELECT IFNULL(diagnosa_utama,'') as diagnosa_utama FROM resume_pasien_ranap where no_rawat=?", TNoRw.getText());
+            String terapi = Sequel.cariIsi("SELECT IFNULL(GROUP_CONCAT(databarang.nama_brng),'') as nama_brng FROM detail_pemberian_obat,databarang where detail_pemberian_obat.kode_brng=databarang.kode_brng and detail_pemberian_obat.status='Pulang' and detail_pemberian_obat.no_rawat='" + TNoRw.getText() + "'");
+            String riwayatmasuk = Sequel.cariIsi("SELECT IFNULL(keluhan_utama,'') FROM resume_pasien_ranap where no_rawat=?", TNoRw.getText());
+            String dxRalan = Sequel.cariIsi("select CONCAT(d.kd_penyakit,' ', p.nm_penyakit) as dx from diagnosa_pasien d join penyakit p on d.kd_penyakit=p.kd_penyakit where d.prioritas='1' and d.status='Ralan' and d.no_rawat=?", TNoRw.getText());
             getSpesialis();
             param.put("namasps", nm_sps);
-            param.put(" dxAkhir", dxAkhir);
+            param.put("dxAkhir", dxAkhir);
+            param.put("riwayatmasuk", riwayatmasuk);
             param.put("terapi", terapi);
+            param.put("dxRalan", dxRalan);
             param.put("namars", var.getnamars());
             param.put("alamatrs", var.getalamatrs());
             param.put("kotars", var.getkabupatenrs());
@@ -1387,7 +1389,9 @@ public final class SuratKeluar extends javax.swing.JDialog {
                 jLabel8.setVisible(false);
                 AP.setVisible(false);
                 jLabel10.setVisible(false);
-                scrollPane3.setVisible(false);
+                DST.setVisible(false);
+                jLabel25.setVisible(false);
+                NoDST.setVisible(false);                
                 break;
             case 1:
                 getJenisSurat();
@@ -1404,9 +1408,11 @@ public final class SuratKeluar extends javax.swing.JDialog {
                 TglMasuk.setVisible(false);
                 TglKeluar.setVisible(false);
                 jLabel8.setVisible(true);
-                scrollPane3.setVisible(true);
+                DST.setVisible(true);
                 jLabel10.setVisible(true);
                 AP.setVisible(true);
+                jLabel25.setVisible(true);
+                NoDST.setVisible(true);                
                 break;
             case 3:
                 getJenisSurat();
@@ -1435,6 +1441,9 @@ public final class SuratKeluar extends javax.swing.JDialog {
                 break;
             case 8:
                 getJenisSurat();
+                jLabel7.setVisible(true);
+                scrollPane1.setVisible(true);
+                jLabel19.setText("Tanggal :");                
                 jLabel20.setVisible(false);
                 TglKeluar.setVisible(false);
                 break;
@@ -1563,10 +1572,6 @@ public final class SuratKeluar extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_MnSuratOpname2ActionPerformed
 
-    private void DSTKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DSTKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DSTKeyPressed
-
     /**
      * @param args the command line arguments
      */
@@ -1595,7 +1600,7 @@ public final class SuratKeluar extends javax.swing.JDialog {
     private widget.Button BtnKeluar;
     private widget.Button BtnPrint;
     private widget.Button BtnSimpan1;
-    private widget.TextArea DST;
+    private widget.Tanggal DST;
     private widget.Tanggal DTPCari1;
     private widget.Tanggal DTPCari2;
     private widget.PanelBiasa FormInput;
@@ -1604,6 +1609,7 @@ public final class SuratKeluar extends javax.swing.JDialog {
     private javax.swing.JMenu MnCetakSurat1;
     private javax.swing.JMenuItem MnSuratOpname1;
     private javax.swing.JMenuItem MnSuratOpname2;
+    private widget.TextBox NoDST;
     private widget.ScrollPane Scroll;
     private widget.ScrollPane Scroll3;
     private widget.TextBox TCari;
@@ -1632,6 +1638,7 @@ public final class SuratKeluar extends javax.swing.JDialog {
     private widget.Label jLabel22;
     private widget.Label jLabel23;
     private widget.Label jLabel24;
+    private widget.Label jLabel25;
     private widget.Label jLabel3;
     private widget.Label jLabel31;
     private widget.Label jLabel4;
@@ -1646,7 +1653,6 @@ public final class SuratKeluar extends javax.swing.JDialog {
     private widget.panelisi panelGlass10;
     private widget.panelisi panelGlass5;
     private widget.ScrollPane scrollPane1;
-    private widget.ScrollPane scrollPane3;
     private widget.Table tbData;
     // End of variables declaration//GEN-END:variables
 
@@ -1684,13 +1690,14 @@ public final class SuratKeluar extends javax.swing.JDialog {
                     "SELECT datasurat.id, datasurat.tgl_surat,datasurat.no_rawat, pasien.no_rkm_medis, pasien.nm_pasien, dokter.nm_dokter,datasurat.jns_surat, datasurat.no_surat, "
                     + "datasurat.data1, datasurat.data2, bangsal.nm_bangsal FROM datasurat,reg_periksa,pasien,dokter,bangsal WHERE datasurat.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and datasurat.kd_dokter=dokter.kd_dokter and datasurat.data3=bangsal.kd_bangsal "
                     + "and datasurat.jns_surat='Opname' and datasurat.tgl_surat BETWEEN ? and ? and "
-                    + "(pasien.no_rkm_medis like ? or pasien.nm_pasien like ? or dokter.nm_dokter like ?) ORDER BY datasurat.tgl_surat DESC");
+                    + "(datasurat.no_rawat like ? or pasien.no_rkm_medis like ? or pasien.nm_pasien like ? or dokter.nm_dokter like ?) ORDER BY datasurat.tgl_surat DESC");
             try {
                 ps.setString(1, Valid.SetTgl(DTPCari1.getSelectedItem() + ""));
                 ps.setString(2, Valid.SetTgl(DTPCari2.getSelectedItem() + ""));
                 ps.setString(3, "%" + TCari.getText().trim() + "%");
                 ps.setString(4, "%" + TCari.getText().trim() + "%");
                 ps.setString(5, "%" + TCari.getText().trim() + "%");
+                ps.setString(6, "%" + TCari.getText().trim() + "%");
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     tabMode.addRow(new Object[]{rs.getString("id"), rs.getString("no_surat"), rs.getString("tgl_surat"), rs.getString("no_rawat"), rs.getString("no_rkm_medis"),
@@ -1747,13 +1754,14 @@ public final class SuratKeluar extends javax.swing.JDialog {
                     "SELECT datasurat.id, datasurat.tgl_surat,datasurat.no_rawat, pasien.no_rkm_medis, pasien.nm_pasien, dokter.nm_dokter,datasurat.jns_surat, datasurat.no_surat, "
                     + "datasurat.data1, datasurat.data2, datasurat.data3 FROM datasurat,reg_periksa,pasien,dokter WHERE datasurat.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and datasurat.kd_dokter=dokter.kd_dokter "
                     + "and datasurat.jns_surat='Buta Warna' and datasurat.tgl_surat BETWEEN ? and ? and "
-                    + "(pasien.no_rkm_medis like ? or pasien.nm_pasien like ? or dokter.nm_dokter like ?) ORDER BY datasurat.tgl_surat DESC");
+                    + "(datasurat.no_rawat like ? or pasien.no_rkm_medis like ? or pasien.nm_pasien like ? or dokter.nm_dokter like ?) ORDER BY datasurat.tgl_surat DESC");
             try {
                 ps.setString(1, Valid.SetTgl(DTPCari1.getSelectedItem() + ""));
                 ps.setString(2, Valid.SetTgl(DTPCari2.getSelectedItem() + ""));
                 ps.setString(3, "%" + TCari.getText().trim() + "%");
                 ps.setString(4, "%" + TCari.getText().trim() + "%");
                 ps.setString(5, "%" + TCari.getText().trim() + "%");
+                ps.setString(6, "%" + TCari.getText().trim() + "%");
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     tabMode2.addRow(new Object[]{rs.getString("id"), rs.getString("no_surat"), rs.getString("tgl_surat"), rs.getString("no_rawat"), rs.getString("no_rkm_medis"),
@@ -1812,13 +1820,14 @@ public final class SuratKeluar extends javax.swing.JDialog {
                     "SELECT datasurat.id, datasurat.tgl_surat,datasurat.no_rawat, pasien.no_rkm_medis, pasien.nm_pasien, dokter.nm_dokter,datasurat.jns_surat, datasurat.no_surat, "
                     + "datasurat.data1,datasurat.data2, datasurat.data4, REPLACE(REPLACE(poliklinik.nm_poli,'SORE',''),'PAGI','') as nm_poli,DATEDIFF(data2,data1)+1 as lama FROM datasurat,reg_periksa,pasien,dokter,poliklinik WHERE datasurat.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and datasurat.kd_dokter=dokter.kd_dokter and datasurat.data3=poliklinik.kd_poli "
                     + "and datasurat.jns_surat='Sakit' and datasurat.tgl_surat BETWEEN ? and ? and "
-                    + "(pasien.no_rkm_medis like ? or pasien.nm_pasien like ? or dokter.nm_dokter like ?) ORDER BY datasurat.tgl_surat DESC");
+                    + "(datasurat.no_rawat like ? or pasien.no_rkm_medis like ? or pasien.nm_pasien like ? or dokter.nm_dokter like ?) ORDER BY datasurat.tgl_surat DESC");
             try {
                 ps.setString(1, Valid.SetTgl(DTPCari1.getSelectedItem() + ""));
                 ps.setString(2, Valid.SetTgl(DTPCari2.getSelectedItem() + ""));
                 ps.setString(3, "%" + TCari.getText().trim() + "%");
                 ps.setString(4, "%" + TCari.getText().trim() + "%");
                 ps.setString(5, "%" + TCari.getText().trim() + "%");
+                ps.setString(6, "%" + TCari.getText().trim() + "%");
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     tabMode3.addRow(new String[]{
@@ -1877,13 +1886,14 @@ public final class SuratKeluar extends javax.swing.JDialog {
                     "SELECT datasurat.id, datasurat.tgl_surat,datasurat.no_rawat, pasien.no_rkm_medis, pasien.nm_pasien, dokter.nm_dokter,datasurat.jns_surat, datasurat.no_surat, "
                     + "datasurat.data1, datasurat.data2, bangsal.nm_bangsal FROM datasurat,reg_periksa,pasien,dokter,bangsal WHERE datasurat.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and datasurat.kd_dokter=dokter.kd_dokter and datasurat.data3=bangsal.kd_bangsal "
                     + "and datasurat.jns_surat='Resume Medis' and datasurat.tgl_surat BETWEEN ? and ? and "
-                    + "(pasien.no_rkm_medis like ? or pasien.nm_pasien like ? or dokter.nm_dokter like ?) ORDER BY datasurat.tgl_surat DESC");
+                    + "(datasurat.no_rawat like ? or pasien.no_rkm_medis like ? or pasien.nm_pasien like ? or dokter.nm_dokter like ?) ORDER BY datasurat.tgl_surat DESC");
             try {
                 ps.setString(1, Valid.SetTgl(DTPCari1.getSelectedItem() + ""));
                 ps.setString(2, Valid.SetTgl(DTPCari2.getSelectedItem() + ""));
                 ps.setString(3, "%" + TCari.getText().trim() + "%");
                 ps.setString(4, "%" + TCari.getText().trim() + "%");
                 ps.setString(5, "%" + TCari.getText().trim() + "%");
+                ps.setString(6, "%" + TCari.getText().trim() + "%");
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     tabMode4.addRow(new String[]{
@@ -1944,13 +1954,14 @@ public final class SuratKeluar extends javax.swing.JDialog {
                     "SELECT datasurat.id, datasurat.tgl_surat,datasurat.no_rawat, pasien.no_rkm_medis, pasien.nm_pasien, dokter.nm_dokter,datasurat.jns_surat, datasurat.no_surat, "
                     + "datasurat.data1, datasurat.data2, bangsal.nm_bangsal, DATEDIFF(data2,data1)+1 as lama FROM datasurat,reg_periksa,pasien,dokter,bangsal WHERE datasurat.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and datasurat.kd_dokter=dokter.kd_dokter and datasurat.data3=bangsal.kd_bangsal "
                     + "and datasurat.jns_surat='Istirahat' and datasurat.tgl_surat BETWEEN ? and ? and "
-                    + "(pasien.no_rkm_medis like ? or pasien.nm_pasien like ? or dokter.nm_dokter like ?) ORDER BY datasurat.tgl_surat DESC");
+                    + "(datasurat.no_rawat like ? or pasien.no_rkm_medis like ? or pasien.nm_pasien like ? or dokter.nm_dokter like ?) ORDER BY datasurat.tgl_surat DESC");
             try {
                 ps.setString(1, Valid.SetTgl(DTPCari1.getSelectedItem() + ""));
                 ps.setString(2, Valid.SetTgl(DTPCari2.getSelectedItem() + ""));
                 ps.setString(3, "%" + TCari.getText().trim() + "%");
                 ps.setString(4, "%" + TCari.getText().trim() + "%");
                 ps.setString(5, "%" + TCari.getText().trim() + "%");
+                ps.setString(6, "%" + TCari.getText().trim() + "%");
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     tabMode5.addRow(new String[]{
@@ -2010,13 +2021,14 @@ public final class SuratKeluar extends javax.swing.JDialog {
                     "SELECT datasurat.id, datasurat.tgl_surat,datasurat.no_rawat, pasien.no_rkm_medis, pasien.nm_pasien, dokter.nm_dokter,datasurat.jns_surat, datasurat.no_surat, "
                     + "datasurat.data1,datasurat.data4, REPLACE(REPLACE(poliklinik.nm_poli,'SORE',''),'PAGI','') as nm_poli FROM datasurat,reg_periksa,pasien,dokter,poliklinik WHERE datasurat.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and datasurat.kd_dokter=dokter.kd_dokter and datasurat.data3=poliklinik.kd_poli "
                     + "and datasurat.jns_surat='Dokter' and datasurat.tgl_surat BETWEEN ? and ? and "
-                    + "(pasien.no_rkm_medis like ? or pasien.nm_pasien like ? or dokter.nm_dokter like ?) ORDER BY datasurat.tgl_surat DESC");
+                    + "(datasurat.no_rawat like ? or pasien.no_rkm_medis like ? or pasien.nm_pasien like ? or dokter.nm_dokter like ?) ORDER BY datasurat.tgl_surat DESC");
             try {
                 ps.setString(1, Valid.SetTgl(DTPCari1.getSelectedItem() + ""));
                 ps.setString(2, Valid.SetTgl(DTPCari2.getSelectedItem() + ""));
                 ps.setString(3, "%" + TCari.getText().trim() + "%");
                 ps.setString(4, "%" + TCari.getText().trim() + "%");
                 ps.setString(5, "%" + TCari.getText().trim() + "%");
+                ps.setString(6, "%" + TCari.getText().trim() + "%");
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     tabMode6.addRow(new String[]{
@@ -2075,13 +2087,14 @@ public final class SuratKeluar extends javax.swing.JDialog {
                     "SELECT datasurat.id, datasurat.tgl_surat,datasurat.no_rawat, pasien.no_rkm_medis, pasien.nm_pasien, dokter.nm_dokter,datasurat.jns_surat, datasurat.no_surat, "
                     + "datasurat.data1, bangsal.nm_bangsal FROM datasurat,reg_periksa,pasien,dokter,bangsal WHERE datasurat.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and datasurat.kd_dokter=dokter.kd_dokter and datasurat.data3=bangsal.kd_bangsal "
                     + "and datasurat.jns_surat='Operasi' and datasurat.tgl_surat BETWEEN ? and ? and "
-                    + "(pasien.no_rkm_medis like ? or pasien.nm_pasien like ? or dokter.nm_dokter like ?) ORDER BY datasurat.tgl_surat DESC");
+                    + "(datasurat.no_rawat like ? or pasien.no_rkm_medis like ? or pasien.nm_pasien like ? or dokter.nm_dokter like ?) ORDER BY datasurat.tgl_surat DESC");
             try {
                 ps.setString(1, Valid.SetTgl(DTPCari1.getSelectedItem() + ""));
                 ps.setString(2, Valid.SetTgl(DTPCari2.getSelectedItem() + ""));
                 ps.setString(3, "%" + TCari.getText().trim() + "%");
                 ps.setString(4, "%" + TCari.getText().trim() + "%");
                 ps.setString(5, "%" + TCari.getText().trim() + "%");
+                ps.setString(6, "%" + TCari.getText().trim() + "%");
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     tabMode7.addRow(new String[]{
@@ -2111,7 +2124,7 @@ public final class SuratKeluar extends javax.swing.JDialog {
                 + "tgl_surat like '" + TglSurat.getSelectedItem().toString().substring(6, 10) + "%' ", "/RSUD/-Yan Kes/" + TglSurat.getSelectedItem().toString().substring(6, 10), 4, TNoSurat);
     }
     
-    private void isSimpanSurat(String jnssurat, String kode){
+    private void isSimpanSurat(String jnssurat){
         if (kdBangsal.getText().trim().equals("")) {
             Valid.textKosong(kdBangsal, "Ruangan/Poli");
         } else if (TglMasuk.getSelectedItem().toString().equals("")) {
@@ -2123,7 +2136,7 @@ public final class SuratKeluar extends javax.swing.JDialog {
             if (reply == JOptionPane.YES_OPTION) {
                 if (Sequel.menyimpantf("datasurat", "?,?,?,?,?,?,?,?,?,?,?,?", "Data", 12, new String[]{
                     "0", TNoSurat.getText(), TNoRw.getText(), kddokter.getText(), Valid.SetTgl(TglSurat.getSelectedItem() + ""), jnssurat,
-                    Valid.SetTgl(TglMasuk.getSelectedItem() + ""), Valid.SetTgl(TglKeluar.getSelectedItem() + ""), kode, "", "", var.getkode()
+                    Valid.SetTgl(TglMasuk.getSelectedItem() + ""), Valid.SetTgl(TglKeluar.getSelectedItem() + ""), kdBangsal.getText(), "", "", var.getkode()
                 }) == true) {
                     emptTeks();
                     JOptionPane.showMessageDialog(null, "Berhasil Simpan Surat " + jnssurat + "...");
@@ -2132,7 +2145,7 @@ public final class SuratKeluar extends javax.swing.JDialog {
         }
     }
     
-    private void isSimpanSurat2(String jnssurat, String kode){
+    private void isSimpanSurat2(String jnssurat){
         if (kdBangsal.getText().trim().equals("")) {
             Valid.textKosong(kdBangsal, "Ruangan/Poli");
         } else if (TglMasuk.getSelectedItem().toString().equals("")) {
@@ -2144,7 +2157,7 @@ public final class SuratKeluar extends javax.swing.JDialog {
             if (reply == JOptionPane.YES_OPTION) {
                 if (Sequel.menyimpantf("datasurat", "?,?,?,?,?,?,?,?,?,?,?,?", "Data", 12, new String[]{
                     "0", TNoSurat.getText(), TNoRw.getText(), kddokter.getText(), Valid.SetTgl(TglSurat.getSelectedItem() + ""), jnssurat,
-                    Valid.SetTgl(TglMasuk.getSelectedItem() + ""), "", kode, "", "", var.getkode()
+                    Valid.SetTgl(TglMasuk.getSelectedItem() + ""), "", kdBangsal.getText(), TKesan.getText(), "", var.getkode()
                 }) == true) {
                     emptTeks();
                     JOptionPane.showMessageDialog(null, "Berhasil Simpan Surat " + jnssurat + "...");
@@ -2200,7 +2213,8 @@ public final class SuratKeluar extends javax.swing.JDialog {
             TDokter.setText(tbData.getValueAt(tbData.getSelectedRow(), 6).toString());
             TKesan.setText(tbData.getValueAt(tbData.getSelectedRow(), 7).toString());
             AP.setText(tbData.getValueAt(tbData.getSelectedRow(), 8).toString());
-            DST.setText(tbData.getValueAt(tbData.getSelectedRow(), 9).toString());            
+            Valid.SetTgl(DST, tbData.getValueAt(tbData.getSelectedRow(), 9).toString());    
+            NoDST.setText(Sequel.cariIsi("SELECT data4 FROM datasurat where id=?", no));
             cmbJenisSurat1.setSelectedIndex(2);
         }
     }
@@ -2235,12 +2249,13 @@ public final class SuratKeluar extends javax.swing.JDialog {
         TglKeluar.setDate(new Date());
         TKesan.setText("");
         AP.setText("");
-        DST.setText("");
+        DST.setDate(new Date());
         cmbJenisSurat1.setSelectedIndex(0);
         autoNomor();
     }
 
     public void setPasien(String norawat, String norm, String nama, String jenis, String status) {
+        TCari.setText(norawat);
         cmbJenisSurat1.setEnabled(false);
         TNoRw.setText(norawat);
         TNoRM.setText(norm);
@@ -2251,10 +2266,13 @@ public final class SuratKeluar extends javax.swing.JDialog {
             kdBangsal.setText(Sequel.cariIsi("SELECT kd_poli FROM reg_periksa where no_rawat=?", norawat));
             BangsalCari.setText(Sequel.cariIsi("SELECT nm_poli FROM poliklinik where kd_poli=?", kdBangsal.getText()));            
         }
-        if (status.equals("Ranap")) {
+        if (status.equals("Ranap") ) {
             kddokter.setText(Sequel.cariIsi("SELECT kd_dokter FROM dpjp_ranap where no_rawat=? and jenis_dpjp='Utama'", norawat));
             TDokter.setText(Sequel.cariIsi("SELECT nm_dokter FROM dokter WHERE kd_dokter=?", kddokter.getText()));
-            Valid.SetTgl(TglMasuk, Sequel.cariIsi("SELECT tgl_masuk FROM kamar_inap WHERE no_rawat=? order by tgl_masuk asc limit 1", norawat));
+            if (!jenis.equals("Istirahat")) {
+                Valid.SetTgl(TglMasuk, Sequel.cariIsi("SELECT tgl_masuk FROM kamar_inap WHERE no_rawat=? order by tgl_masuk asc limit 1", norawat));
+                Valid.SetTgl(TglKeluar,Sequel.cariIsi("SELECT tgl_keluar FROM kamar_inap WHERE no_rawat=? order by tgl_masuk desc limit 1",TNoRw.getText()));
+            }
         }
         switch (jenis) {
             case "Opname":
@@ -2284,8 +2302,8 @@ public final class SuratKeluar extends javax.swing.JDialog {
             case "Operasi":
                 cmbJenisSurat1.setSelectedIndex(9);
                 cmbJenisSurat1ActionPerformed(null);
-                String tgl_operasi = Sequel.cariIsi("SELECT tgl_operasi FROM operasi WHERE no_rawat=? limit 1", norawat);               
-                Valid.SetTgl(TglMasuk, tgl_operasi.substring(0,10));
+//                String tgl_operasi = Sequel.cariIsi("SELECT tgl_operasi FROM operasi WHERE no_rawat=? limit 1", norawat);               
+//                Valid.SetTgl(TglMasuk, tgl_operasi.substring(0,10));
                 break;
             default:
                 break;
@@ -2296,6 +2314,7 @@ public final class SuratKeluar extends javax.swing.JDialog {
         jLabel7.setVisible(false);
         scrollPane1.setVisible(false);
         jLabel19.setVisible(true);
+        jLabel19.setText("Tgl. Masuk :");
         jLabel20.setVisible(true);
         jLabel21.setVisible(true);
         kdBangsal.setVisible(true);
@@ -2305,8 +2324,10 @@ public final class SuratKeluar extends javax.swing.JDialog {
         TglKeluar.setVisible(true);    
         jLabel8.setVisible(false);
         jLabel10.setVisible(false);
-        scrollPane3.setVisible(false);
+        DST.setVisible(false);
         AP.setVisible(false);
+        jLabel25.setVisible(false);
+        NoDST.setVisible(false);
     }
     
     public String getQueryReport(String jns, String no) {
@@ -2321,9 +2342,12 @@ public final class SuratKeluar extends javax.swing.JDialog {
             select = " ,dokter.no_ijn_praktek,bangsal.nm_bangsal,DATEDIFF(data2,data1)+1 as lama ";
             where = " and datasurat.data3=bangsal.kd_bangsal ";
         }
+        if (jns.equals("Buta Warna")) {
+            poli = ""; select = ""; where="";
+        }
         String query = "SELECT datasurat.id, datasurat.tgl_surat,datasurat.no_rawat, pasien.no_rkm_medis, pasien.nm_pasien,CONCAT(reg_periksa.umurdaftar,' ',reg_periksa.sttsumur) as umur, pasien.pekerjaan,pasien.jk,pasien.tmp_lahir,pasien.tgl_lahir, "
                 + "dokter.nm_dokter,datasurat.jns_surat, datasurat.no_surat, concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab) as alamat,"
-                + "datasurat.data1, datasurat.data2,datasurat.data4,datasurat.data5,spesialis.nm_sps,dokter.nip " + select + " "
+                + "datasurat.data1, datasurat.data2,datasurat.data3,datasurat.data4,datasurat.data5,spesialis.nm_sps,dokter.nip " + select + " "
                 + "FROM datasurat,reg_periksa,pasien,kelurahan,kecamatan,kabupaten,dokter,spesialis " + poli + " "
                 + "WHERE datasurat.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and datasurat.kd_dokter=dokter.kd_dokter "
                 + "and pasien.kd_kel=kelurahan.kd_kel and pasien.kd_kec=kecamatan.kd_kec and pasien.kd_kab=kabupaten.kd_kab and dokter.kd_sps=spesialis.kd_sps " + where + " "
@@ -2396,5 +2420,25 @@ public final class SuratKeluar extends javax.swing.JDialog {
                 nm_sps = "Dokter Spesialis";
                 break;
         }
-    }    
+    }
+
+    private void isEdit(String jns) {
+        if (Sequel.mengedittf("datasurat", "id=? and jns_surat=?", "kd_dokter=?,data1=?,data2=?,data3=?", 6, new String[]{
+            kddokter.getText(), Valid.SetTgl(TglMasuk.getSelectedItem() + "").toString(), Valid.SetTgl(TglKeluar.getSelectedItem() + "").toString(), kdBangsal.getText(), no, jns
+        }) == true) {
+            getTampilMaster();
+            emptTeks();
+            JOptionPane.showMessageDialog(null, "Berhasil edit data surat " + jns + "...");
+        }
+    }
+
+    private void isEdit2(String jns) {
+        if (Sequel.mengedittf("datasurat", "id=? and jns_surat=?", "kd_dokter=?,data1=?,data3=?", 5, new String[]{
+            kddokter.getText(), Valid.SetTgl(TglMasuk.getSelectedItem() + "").toString(), kdBangsal.getText(), no, jns
+        }) == true) {
+            getTampilMaster();
+            emptTeks();
+            JOptionPane.showMessageDialog(null, "Berhasil edit data surat " + jns + "...");
+        }
+    }
 }

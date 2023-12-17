@@ -2724,7 +2724,7 @@ private void BtnEditActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRS
                     "',penolong='"+KdPenolong.getText()+
                     "',no_skl='"+NoSKL.getText()+
                     "',jam_lahir='"+jam.getSelectedItem()+":"+menit.getSelectedItem()+":"+detik.getSelectedItem()+
-                    "',keterangan='"+keterangan.getText()+"',pekerjaanibu='"+PekerjaanIbu.getText()+"','warnakulit='"+WarnaKulit.getText()+"'");
+                    "',keterangan='"+keterangan.getText()+"',pekerjaanibu='"+PekerjaanIbu.getText()+"',warnakulit='"+WarnaKulit.getText()+"'");
             if(tabMode.getRowCount()!=0){tampil();}
             emptTeks();
         }

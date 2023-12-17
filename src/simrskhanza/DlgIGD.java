@@ -75,6 +75,7 @@ import permintaan.DlgPermintaanLaboratorium;
 import permintaan.DlgPermintaanRadiologi;
 import rekammedis.DlgTriaseIGD;
 import rekammedis.RMTransferPasienAntarRuang;
+import surat.DlgSuratSehat;
 import surat.SuratKeluar;
 
 /**
@@ -102,8 +103,8 @@ public final class DlgIGD extends javax.swing.JDialog {
     private String a = "", kdigd = "", nosisrute = "", aktifkanparsial = "no", URUTNOREG = "", cari = "",
             status = "Baru", alamatperujuk = "-", umur = "0", sttsumur = "Th", IPPRINTERTRACER = "",
             validasiregistrasi = Sequel.cariIsi("select wajib_closing_kasir from set_validasi_registrasi"),
-            validasicatatan = Sequel.cariIsi("select tampilkan_catatan from set_validasi_catatan"),bidang="";
-    
+            validasicatatan = Sequel.cariIsi("select tampilkan_catatan from set_validasi_catatan"),bidang="",
+            norwtlama="",tglreglama="",jamreglama="",kddokterlama="",normlama="",kdpjlama="";    
     /**
      * Creates new form DlgReg
      *
@@ -2631,7 +2632,7 @@ public final class DlgIGD extends javax.swing.JDialog {
 
         TglSakit1.setEditable(false);
         TglSakit1.setForeground(new java.awt.Color(50, 70, 50));
-        TglSakit1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-12-2023" }));
+        TglSakit1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "14-12-2023" }));
         TglSakit1.setDisplayFormat("dd-MM-yyyy");
         TglSakit1.setName("TglSakit1"); // NOI18N
         TglSakit1.setOpaque(false);
@@ -2679,7 +2680,7 @@ public final class DlgIGD extends javax.swing.JDialog {
 
         TglSakit2.setEditable(false);
         TglSakit2.setForeground(new java.awt.Color(50, 70, 50));
-        TglSakit2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-12-2023" }));
+        TglSakit2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "14-12-2023" }));
         TglSakit2.setDisplayFormat("dd-MM-yyyy");
         TglSakit2.setName("TglSakit2"); // NOI18N
         TglSakit2.setOpaque(false);
@@ -3319,7 +3320,7 @@ public final class DlgIGD extends javax.swing.JDialog {
         panelGlass7.add(jLabel15);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-12-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "14-12-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -3333,7 +3334,7 @@ public final class DlgIGD extends javax.swing.JDialog {
         panelGlass7.add(jLabel17);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-12-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "14-12-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -3426,7 +3427,7 @@ public final class DlgIGD extends javax.swing.JDialog {
         jLabel9.setBounds(165, 72, 36, 23);
 
         DTPReg.setForeground(new java.awt.Color(50, 70, 50));
-        DTPReg.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-12-2023" }));
+        DTPReg.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "14-12-2023" }));
         DTPReg.setDisplayFormat("dd-MM-yyyy");
         DTPReg.setName("DTPReg"); // NOI18N
         DTPReg.setOpaque(false);
@@ -3832,7 +3833,7 @@ public final class DlgIGD extends javax.swing.JDialog {
                                 TStatus.getText(), "Ralan", kdpnj.getText(), umur, sttsumur, "Belum Bayar", status}) == true) {
                         ceksukses = true;
                         setKategori(TNoRw.getText());
-                        isLog();
+                        isLog("Simpan");
                         JOptionPane.showMessageDialog(null, "Berhasil Simpan.");
                     }
                 } else {
@@ -3842,7 +3843,7 @@ public final class DlgIGD extends javax.swing.JDialog {
                                 TStatus.getText(), "Ralan", kdpnj.getText(), umur, sttsumur, "Belum Bayar", status}) == true) {
                         ceksukses = true;
                         setKategori(TNoRw.getText());
-                        isLog();
+                        isLog("Simpan");
                         JOptionPane.showMessageDialog(null, "Berhasil Simpan.");
                     } else {
                         Kd2.setText("");
@@ -3853,7 +3854,7 @@ public final class DlgIGD extends javax.swing.JDialog {
                                     TStatus.getText(), "Ralan", kdpnj.getText(), umur, sttsumur, "Belum Bayar", status}) == true) {
                             ceksukses = true;
                             setKategori(TNoRw.getText());
-                            isLog();
+                            isLog("Simpan");
                             JOptionPane.showMessageDialog(null, "Berhasil Simpan.");
                         } else {
                             Kd2.setText("");
@@ -3864,7 +3865,7 @@ public final class DlgIGD extends javax.swing.JDialog {
                                         TStatus.getText(), "Ralan", kdpnj.getText(), umur, sttsumur, "Belum Bayar", status}) == true) {
                                 ceksukses = true;
                                 setKategori(TNoRw.getText());
-                                isLog();
+                                isLog("Simpan");
                                 JOptionPane.showMessageDialog(null, "Berhasil Simpan.");
                             } else {
                                 Kd2.setText("");
@@ -3875,7 +3876,7 @@ public final class DlgIGD extends javax.swing.JDialog {
                                             TStatus.getText(), "Ralan", kdpnj.getText(), umur, sttsumur, "Belum Bayar", status}) == true) {
                                     ceksukses = true;
                                     setKategori(TNoRw.getText());
-                                    isLog();
+                                    isLog("Simpan");
                                     JOptionPane.showMessageDialog(null, "Berhasil Simpan.");
                                 } else {
                                     Kd2.setText("");
@@ -3886,7 +3887,7 @@ public final class DlgIGD extends javax.swing.JDialog {
                                                 TStatus.getText(), "Ralan", kdpnj.getText(), umur, sttsumur, "Belum Bayar", status}) == true) {
                                         ceksukses = true;
                                         setKategori(TNoRw.getText());
-                                        isLog();
+                                        isLog("Simpan");
                                         JOptionPane.showMessageDialog(null, "Berhasil Simpan.");
                                     } else {
                                         Kd2.setText("");
@@ -3944,10 +3945,27 @@ public final class DlgIGD extends javax.swing.JDialog {
     private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHapusActionPerformed
         for (i = 0; i < tbPetugas.getRowCount(); i++) {
             if (tbPetugas.getValueAt(i, 0).toString().equals("true")) {
-                Sequel.meghapus("reg_periksa", "no_rawat", tbPetugas.getValueAt(i, 2).toString());
-                Sequel.meghapus("kategori_pasien_igd", "no_rawat", tbPetugas.getValueAt(i, 2).toString());
+                if (Sequel.meghapustf("reg_periksa", "no_rawat", tbPetugas.getValueAt(i, 2).toString()) == true) {                                    
+                    Sequel.meghapus("kategori_pasien_igd", "no_rawat", tbPetugas.getValueAt(i, 2).toString());
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                    LocalDateTime now = LocalDateTime.now();
+                    String requestJson = "{"
+                            + "\"data\":{"
+                            + "\"no_rawat\":\"" + tbPetugas.getValueAt(i, 2).toString() + "\","
+                            + "\"tgl_registrasi\":\"" + tbPetugas.getValueAt(i, 3).toString() + "\","
+                            + "\"jam_reg\":\"" + tbPetugas.getValueAt(i, 4).toString() + "\","
+                            + "\"kd_dokter\":\"" + tbPetugas.getValueAt(i, 6).toString() + "\","
+                            + "\"no_rkm_medis\":\"" + tbPetugas.getValueAt(i, 8).toString() + "\","
+                            + "\"kd_poli\":\"IGDK\","
+                            + "\"kd_pj\":\"" + tbPetugas.getValueAt(i, 22).toString() + "\"},"
+                            + "\"action\":\"Hapus\""
+                            + "}";
+                    Sequel.menyimpan("mlite_log", "null,'" + var.getkode() + "','reg_periksa','" + requestJson + "','" + dtf.format(now) + "'");
+                }
+//                    Sequel.meghapus("reg_periksa", "no_rawat", tbPetugas.getValueAt(i, 2).toString());
+//                    Sequel.meghapus("kategori_pasien_igd", "no_rawat", tbPetugas.getValueAt(i, 2).toString());
             }
-        }
+        }   
         tampil();
         emptTeks();
 }//GEN-LAST:event_BtnHapusActionPerformed
@@ -4079,6 +4097,7 @@ public final class DlgIGD extends javax.swing.JDialog {
                                 kddokter.getText(), TNoRM.getText(), "IGDK", TPngJwb.getText(), TAlmt.getText(), "" + biaya, THbngn.getText(),
                                 TStatus.getText(), kdpnj.getText(), umur, sttsumur, tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 2).toString()
                             });
+                    isLog("Edit");
                 } else {
                     if ((Sequel.cariInteger("select count(no_rawat) from rawat_jl_dr where no_rawat=?", TNoRw.getText()) > 0)
                             || (Sequel.cariInteger("select count(no_rawat) from rawat_jl_pr where no_rawat=?", TNoRw.getText()) > 0)
@@ -4094,6 +4113,7 @@ public final class DlgIGD extends javax.swing.JDialog {
                                     kddokter.getText(), TNoRM.getText(), "IGDK", TPngJwb.getText(), TAlmt.getText(), "" + biaya, THbngn.getText(),
                                     TStatus.getText(), kdpnj.getText(), umur, sttsumur, tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 2).toString()
                                 });
+                        isLog("Edit");
                     }
                 }
                 tampil();
@@ -6988,13 +7008,17 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
             tbPetugas.requestFocus();
         } else {
             this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            SuratKeluar dlgki = new SuratKeluar(null, false);
-            dlgki.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
-            dlgki.setLocationRelativeTo(internalFrame1);
-            dlgki.emptTeks();
-            dlgki.setPasien(TNoRw.getText(), TNoRM.getText(), TPasien.getText(), "Sehat", "Ralan");
-            dlgki.setVisible(true);
-            this.setCursor(Cursor.getDefaultCursor());
+                this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                DlgSuratSehat dlgro = new DlgSuratSehat(null, false);
+                dlgro.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
+                dlgro.setLocationRelativeTo(internalFrame1);
+                dlgro.emptTeks();
+                //dlgro.isCek();
+                dlgro.setPasien(TNoRM.getText(), TNoRw.getText(), TPasien.getText(), TDokter.getText(), kddokter.getText());
+                //dlgro.get
+                // dlgro.
+                dlgro.setVisible(true);
+                this.setCursor(Cursor.getDefaultCursor());
         }
     }//GEN-LAST:event_MnCetakSuratSehatActionPerformed
 
@@ -7382,6 +7406,12 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
             kdpnj.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 22).toString());
             TKategori.setText(tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 23).toString());
             AsalRujukan.setText(Sequel.cariIsi("SELECT perujuk FROM rujuk_masuk where no_rawat=?",TNoRw.getText()));
+            norwtlama = tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 2).toString();
+            tglreglama = tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 3).toString();
+            jamreglama = tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 4).toString();
+            kddokterlama = tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 6).toString();
+            normlama = tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 8).toString();
+            kdpjlama = tbPetugas.getValueAt(tbPetugas.getSelectedRow(), 22).toString();
         }
     }
 
@@ -7828,18 +7858,61 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
         return cari;
     }
     
-    private void isLog(){
+    private void isLog(String action) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
-        String requestJson = "{"
-                                + "\"no_rawat\":\"" + TNoRw.getText() + "\","
-                                + "\"tgl_registrasi\":\"" + Valid.SetTgl(DTPReg.getSelectedItem() + "") + "\","
-                                + "\"jam_reg\":\"" + CmbJam.getSelectedItem() + ":" + CmbMenit.getSelectedItem() + ":" + CmbDetik.getSelectedItem() + "\","
-                                + "\"kd_dokter\":\"" + kddokter.getText() + "\","
-                                + "\"no_rkm_medis\":\"" + TNoRM.getText() + "\","
-                                + "\"kd_poli\":\"IGDK\","
-                                + "\"kd_pj\":\"" + kdpnj.getText() + "\""
-                                + "}";
-        Sequel.menyimpan("mlite_log", "null,'"+var.getkode()+"','registrasi','"+requestJson+"','"+dtf.format(now)+"'");
+        String requestJson = "";
+        switch (action) {
+            case "Edit":
+                requestJson = "{"
+                        + "\"dari\":{"
+                        + "\"no_rawat\":\"" + norwtlama + "\","
+                        + "\"tgl_registrasi\":\"" + tglreglama + "\","
+                        + "\"jam_reg\":\"" + jamreglama + "\","
+                        + "\"kd_dokter\":\"" + kddokterlama + "\","
+                        + "\"no_rkm_medis\":\"" + normlama + "\","
+                        + "\"kd_poli\":\"IGDK\","
+                        + "\"kd_pj\":\"" + kdpjlama + "\"},"
+                        + "\"ke\":{"
+                        + "\"no_rawat\":\"" + TNoRw.getText() + "\","
+                        + "\"tgl_registrasi\":\"" + Valid.SetTgl(DTPReg.getSelectedItem() + "") + "\","
+                        + "\"jam_reg\":\"" + CmbJam.getSelectedItem() + ":" + CmbMenit.getSelectedItem() + ":" + CmbDetik.getSelectedItem() + "\","
+                        + "\"kd_dokter\":\"" + kddokter.getText() + "\","
+                        + "\"no_rkm_medis\":\"" + TNoRM.getText() + "\","
+                        + "\"kd_poli\":\"IGDK\","
+                        + "\"kd_pj\":\"" + kdpnj.getText() + "\"},"
+                        + "\"action\":\"" + action + "\""
+                        + "}";
+                break;
+            case "Simpan":
+                requestJson = "{"
+                        + "\"data\":{"
+                        + "\"no_rawat\":\"" + TNoRw.getText() + "\","
+                        + "\"tgl_registrasi\":\"" + Valid.SetTgl(DTPReg.getSelectedItem() + "") + "\","
+                        + "\"jam_reg\":\"" + CmbJam.getSelectedItem() + ":" + CmbMenit.getSelectedItem() + ":" + CmbDetik.getSelectedItem() + "\","
+                        + "\"kd_dokter\":\"" + kddokter.getText() + "\","
+                        + "\"no_rkm_medis\":\"" + TNoRM.getText() + "\","
+                        + "\"kd_poli\":\"IGDK\","
+                        + "\"kd_pj\":\"" + kdpnj.getText() + "\"},"
+                        + "\"action\":\"" + action + "\""
+                        + "}";
+                break;
+            case "Hapus":
+                requestJson = "{"
+                        + "\"data\":{"
+                        + "\"no_rawat\":\"" + TNoRw.getText() + "\","
+                        + "\"tgl_registrasi\":\"" + Valid.SetTgl(DTPReg.getSelectedItem() + "") + "\","
+                        + "\"jam_reg\":\"" + CmbJam.getSelectedItem() + ":" + CmbMenit.getSelectedItem() + ":" + CmbDetik.getSelectedItem() + "\","
+                        + "\"kd_dokter\":\"" + kddokter.getText() + "\","
+                        + "\"no_rkm_medis\":\"" + TNoRM.getText() + "\","
+                        + "\"kd_poli\":\"IGDK\","
+                        + "\"kd_pj\":\"" + kdpnj.getText() + "\"},"
+                        + "\"action\":\"" + action + "\""
+                        + "}";
+                break;
+            default:
+                break;
+        }
+        Sequel.menyimpan("mlite_log", "null,'" + var.getkode() + "','reg_periksa','" + requestJson + "','" + dtf.format(now) + "'");
     }
 }
