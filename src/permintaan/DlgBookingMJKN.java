@@ -37,7 +37,7 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
     private int i = 0;
     private DlgCariDokter dokter = new DlgCariDokter(null, false);
     private DlgCariPoli poli=new DlgCariPoli(null,false);
-    private String norm="",tglperiksa="",noreg="";
+    private String norm="",tglperiksa="",noreg="";    
     /**
      * Creates new form DlgPemberianInfus
      *
@@ -349,7 +349,7 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
         NoReg.setBounds(335, 30, 70, 23);
 
         TanggalPeriksa.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalPeriksa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "13-12-2023 12:13:23" }));
+        TanggalPeriksa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-12-2023 01:56:01" }));
         TanggalPeriksa.setDisplayFormat("dd-MM-yyyy hh:mm:ss");
         TanggalPeriksa.setName("TanggalPeriksa"); // NOI18N
         TanggalPeriksa.setOpaque(false);
@@ -416,7 +416,7 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
         jLabel8.setPreferredSize(new java.awt.Dimension(100, 23));
         panelCari.add(jLabel8);
 
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "13-12-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-12-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -429,7 +429,7 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
         jLabel22.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel22);
 
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "13-12-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-12-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);

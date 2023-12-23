@@ -55,7 +55,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
     private validasi Valid = new validasi();
     private PreparedStatement ps, ps2, ps3;
     private ResultSet rs, rs2, rs3;
-    private int i = 0, pilihan = 0, z = 0, jml = 0;
+    private int i = 0, pilihan = 0, z = 0, jml = 0,index = 0;
     private boolean[] pilih;
     private String[] kodebarang, namabarang, dosis, caraberi, tanggal, jam;
     private String penunjang = "", tglpindah = "", jampindah = "", ruangpindah = "", dokterpindah = "", petugaspindah = "", suhu = "", nadi = "", darah = "", respirasi = "", nyeri = "", dx = "", dxkep = "",tglmasuk="",jammasuk="",kelas="",sttsTransfer="", key="",kodeptg="",limit="";    
@@ -818,7 +818,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         CmbDetik2.setBounds(365, 10, 62, 23);
 
         DTPReg.setForeground(new java.awt.Color(50, 70, 50));
-        DTPReg.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "11-12-2023" }));
+        DTPReg.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "19-12-2023" }));
         DTPReg.setDisplayFormat("dd-MM-yyyy");
         DTPReg.setName("DTPReg"); // NOI18N
         DTPReg.setOpaque(false);
@@ -867,7 +867,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
             }
         });
         PanelInput1.add(TCari1);
-        TCari1.setBounds(70, 40, 197, 23);
+        TCari1.setBounds(65, 40, 320, 23);
 
         BtnCari2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/accept.png"))); // NOI18N
         BtnCari2.setMnemonic('3');
@@ -885,7 +885,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
             }
         });
         PanelInput1.add(BtnCari2);
-        BtnCari2.setBounds(270, 40, 28, 23);
+        BtnCari2.setBounds(390, 40, 28, 23);
 
         FormInput3.add(PanelInput1, java.awt.BorderLayout.CENTER);
 
@@ -1283,6 +1283,11 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         chkLain.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         chkLain.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         chkLain.setName("chkLain"); // NOI18N
+        chkLain.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chkLainMouseClicked(evt);
+            }
+        });
         FormInput1.add(chkLain);
         chkLain.setBounds(565, 440, 70, 23);
 
@@ -1418,7 +1423,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         panelGlass9.add(jLabel19);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "11-12-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "19-12-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -1432,7 +1437,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         panelGlass9.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "11-12-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "19-12-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -1937,6 +1942,14 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_BtnCari2KeyPressed
 
+    private void chkLainMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkLainMouseClicked
+        if (chkLain.isSelected()) {
+            TLainnya.setVisible(true);
+        }else{
+            TLainnya.setVisible(false);
+        }
+    }//GEN-LAST:event_chkLainMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -2205,6 +2218,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         chkEeg.setSelected(false);
         chkUsg.setSelected(false);
         chkLain.setSelected(false);
+        TLainnya.setVisible(false);
         TLainnya.setText("");        
     }
 
@@ -2381,78 +2395,76 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
     }
 
     public void tampilResep() {
-        z = 0;
-        for (i = 0; i < tbResep.getRowCount(); i++) {
-            if (!tbResep.getValueAt(i, 0).toString().equals("")) {
-                z++;
-            }
-        }
-        pilih = null;
-        pilih = new boolean[z];
-        tanggal = null;
-        tanggal = new String[z];
-        jam = null;
-        jam = new String[z];
-        kodebarang = null;
-        kodebarang = new String[z];
-        namabarang = null;
-        namabarang = new String[z];
-        dosis = null;
-        dosis = new String[z];
-        caraberi = null;
-        caraberi = new String[z];
-        z = 0;
-        for (i = 0; i < tbResep.getRowCount(); i++) {
-            if (!tbResep.getValueAt(i, 1).toString().equals("")) {
-                pilih[z] = Boolean.parseBoolean(tbResep.getValueAt(i, 0).toString());
-                tanggal[z] = tbResep.getValueAt(i, 1).toString();
-                jam[z] = tbResep.getValueAt(i, 2).toString();
-                kodebarang[z] = tbResep.getValueAt(i, 3).toString();
-                namabarang[z] = tbResep.getValueAt(i, 4).toString();
-                dosis[z] = tbResep.getValueAt(i, 5).toString();
-                caraberi[z] = tbResep.getValueAt(i, 6).toString();
-                z++;
-            }
-        }
-        
-        if (TCari1.getText().equals("")) {
-            limit = " limit 20 ";
-        }else{
-            limit ="";
-        }
-
-        Valid.tabelKosong(tabModeResep);
-        for (i = 0; i < z; i++) {
-            tabModeResep.addRow(new Object[]{
-                pilih[i], tanggal[i], jam[i], kodebarang[i], namabarang[i], dosis[i], caraberi[i]
-            });
-        }
         try {
+            jml = 0;
+            for (i = 0; i < tbResep.getRowCount(); i++) {
+                if (tbResep.getValueAt(i, 0).toString().equals("true")) {
+                    jml++;
+                }
+            }
+
+            pilih = null;
+            pilih = new boolean[jml];
+            tanggal = null;
+            tanggal = new String[jml];
+            jam = null;
+            jam = new String[jml];
+            kodebarang = null;
+            kodebarang = new String[jml];
+            namabarang = null;
+            namabarang = new String[jml];
+            dosis = null;
+            dosis = new String[jml];
+            caraberi = null;
+            caraberi = new String[jml];
+
+            index = 0;
+            for (i = 0; i < tbResep.getRowCount(); i++) {
+                if (tbResep.getValueAt(i, 0).toString().equals("true")) {
+                    pilih[index] = true;
+                    tanggal[index] = tbResep.getValueAt(i, 1).toString();
+                    jam[index] = tbResep.getValueAt(i, 2).toString();
+                    kodebarang[index] = tbResep.getValueAt(i, 3).toString();
+                    namabarang[index] = tbResep.getValueAt(i, 4).toString();
+                    dosis[index] = tbResep.getValueAt(i, 5).toString();
+                    caraberi[index] = tbResep.getValueAt(i, 6).toString();
+                    index++;
+                }
+            }
+
+            Valid.tabelKosong(tabModeResep);
+            for (i = 0; i < jml; i++) {
+                tabModeResep.addRow(new Object[]{pilih[i], tanggal[i], jam[i], kodebarang[i], namabarang[i], dosis[i], caraberi[i]});
+            }
+            
+            if (TCari.getText().equals("")) {
+                limit = " limit 20 ";
+            } else {
+                limit = "";
+            }
+
             ps = koneksi.prepareStatement(
-                    "SELECT detail_pemberian_obat.tgl_perawatan, detail_pemberian_obat.jam, detail_pemberian_obat.kode_brng, databarang.nama_brng FROM detail_pemberian_obat join databarang ON  detail_pemberian_obat.kode_brng=databarang.kode_brng "
-                    + "WHERE detail_pemberian_obat.status='"+sttsTransfer+"' AND detail_pemberian_obat.no_rawat=? and (databarang.nama_brng like ? or databarang.kode_brng like ?) order by detail_pemberian_obat.tgl_perawatan, detail_pemberian_obat.jam "+limit+"");
+                    "SELECT detail_pemberian_obat.tgl_perawatan, detail_pemberian_obat.jam, detail_pemberian_obat.kode_brng, databarang.nama_brng,detail_pemberian_obat.no_rawat,detail_pemberian_obat.status FROM detail_pemberian_obat join databarang ON  detail_pemberian_obat.kode_brng=databarang.kode_brng "
+                    + "WHERE detail_pemberian_obat.status='"+sttsTransfer+"' and detail_pemberian_obat.no_rawat like ? and databarang.nama_brng like ? order by detail_pemberian_obat.tgl_perawatan, detail_pemberian_obat.jam "+limit+"");
             try {
-                ps.setString(1, TNoRw.getText().trim());
+                ps.setString(1, "%" + TNoRw.getText().trim() + "%");
                 ps.setString(2, "%" + TCari1.getText().trim() + "%");
-                ps.setString(3, "%" + TCari1.getText().trim() + "%");
                 rs = ps.executeQuery();
                 while (rs.next()) {
-                    tabModeResep.addRow(new Object[]{false, rs.getString("tgl_perawatan"), rs.getString("jam"), rs.getString("kode_brng"), rs.getString("nama_brng"), "", ""
-                    });
+                    tabModeResep.addRow(new Object[]{false, rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), "", ""});
                 }
             } catch (Exception e) {
-                System.out.println("Notifikasi : " + e);
+                System.out.println("Notifikasi 1 : " + e);
             } finally {
                 if (rs != null) {
                     rs.close();
                 }
-
                 if (ps != null) {
                     ps.close();
                 }
             }
         } catch (Exception e) {
-            System.out.println("Notifikasi : " + e);
+            System.out.println("Notifikasi 2 : " + e);
         }
     }
 

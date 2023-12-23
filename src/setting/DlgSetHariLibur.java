@@ -74,7 +74,7 @@ public final class DlgSetHariLibur extends javax.swing.JDialog {
             if (i == 0) {
                 column.setPreferredWidth(100);
             } else if (i == 1) {
-                column.setPreferredWidth(100);
+                column.setPreferredWidth(200);
             }
         }
         tbData.setDefaultRenderer(Object.class, new WarnaTable());
@@ -368,7 +368,7 @@ public final class DlgSetHariLibur extends javax.swing.JDialog {
             }
         });
         panelGlass2.add(Tanggal);
-        Tanggal.setBounds(100, 40, 150, 23);
+        Tanggal.setBounds(100, 40, 240, 23);
 
         label12.setText("Tanggal :");
         label12.setName("label12"); // NOI18N
@@ -387,11 +387,17 @@ public final class DlgSetHariLibur extends javax.swing.JDialog {
         if (Tanggal.getText().trim().equals("")) {
             Valid.textKosong(Tanggal, "Tanggal");
         } else {
-//            Sequel.menyimpan("set_hari_libur", "'" + ThnCari.getSelectedItem().toString() + "-" + BlnCari.getSelectedItem().toString() + "','" + Tanggal.getText().replace(' ', ',') + "'");
+            String tglInput = Tanggal.getText().replace(' ', ',');
+            String[] tglArray = tglInput.split(",");
+            for (int i = 0; i < tglArray.length; i++) {
+                tglArray[i] = String.format("%02d", Integer.parseInt(tglArray[i].trim()));
+            }
+            String tglFormatted = String.join(",", tglArray);
+
             Sequel.menyimpan2("set_hari_libur", "?,?", 2,
-                    new String[]{ThnCari.getSelectedItem().toString() + "-" + BlnCari.getSelectedItem().toString(), Tanggal.getText().replace(' ', ',')},
+                    new String[]{ThnCari.getSelectedItem().toString() + "-" + BlnCari.getSelectedItem().toString(), tglFormatted},
                     "tanggal=?", "ktg=?", 2,
-                    new String[]{Tanggal.getText().replace(' ', ','), ThnCari.getSelectedItem().toString() + "-" + BlnCari.getSelectedItem().toString()});
+                    new String[]{tglFormatted, ThnCari.getSelectedItem().toString() + "-" + BlnCari.getSelectedItem().toString()});
             tampil();
             emptTeks();
         }
@@ -423,10 +429,13 @@ public final class DlgSetHariLibur extends javax.swing.JDialog {
             Tanggal.requestFocus();
         } else if (Tanggal.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(null, "Maaf, Gagal menghapus. Pilih dulu data yang mau dihapus.\nKlik data pada table untuk memilih...!!!!");
-//        }else if(!(nmpj.getText().trim().equals(""))){
+        }else if(!(Tanggal.getText().trim().equals(""))){
+            Sequel.queryu2("delete from set_hari_libur where tanggal=? and ktg=?", 2, new String[]{
+                tbData.getValueAt(tbData.getSelectedRow(), 0).toString(), tbData.getValueAt(tbData.getSelectedRow(), 1).toString()
+            });
 //            Valid.hapusTable(tabMode,kdpj,"set_harga_obat_ralan","kd_pj");
-//            tampil();
-//            emptTeks();
+            tampil();
+            emptTeks();
         }
 }//GEN-LAST:event_BtnHapusActionPerformed
 
@@ -605,9 +614,9 @@ public final class DlgSetHariLibur extends javax.swing.JDialog {
     private void getData() {
         int row = tbData.getSelectedRow();
         if (row != -1) {
-               ThnCari.setSelectedItem(Valid.SetTgl2(tbData.getValueAt(tbData.getSelectedRow(), 0).toString().substring(0,4)));    
-               BlnCari.setSelectedItem(Valid.SetTgl2(tbData.getValueAt(tbData.getSelectedRow(), 0).toString().substring(5,7)));    
-               Tanggal.setText(tbData.getValueAt(tbData.getSelectedRow(), 1).toString());
+            ThnCari.setSelectedItem(tabMode.getValueAt(row, 0).toString().substring(0, 4));
+            BlnCari.setSelectedItem(tabMode.getValueAt(row, 0).toString().substring(5, 7));
+            Tanggal.setText(tbData.getValueAt(tbData.getSelectedRow(), 1).toString());
 //            kdpj.setText(tbObatPenyakit.getValueAt(row,0).toString());
 //            nmpj.setText(tbObatPenyakit.getValueAt(row,1).toString());
 //            harga.setText(tbObatPenyakit.getValueAt(row,2).toString());
