@@ -37,8 +37,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
@@ -84,6 +86,8 @@ public class DlgPasien extends javax.swing.JDialog {
     private LocalDate birthday;
     private Period p;
     private long p2;
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    LocalDateTime now = LocalDateTime.now();
 
     /**
      * Creates new form DlgPas
@@ -941,6 +945,9 @@ public class DlgPasien extends javax.swing.JDialog {
         kdjabatanpolri = new widget.TextBox();
         kdperusahaan = new widget.TextBox();
         kdcacat = new widget.TextBox();
+        NoRMLama = new widget.TextBox();
+        NmLama = new widget.TextBox();
+        KtpLama = new widget.TextBox();
         internalFrame1 = new widget.InternalFrame();
         jPanel3 = new javax.swing.JPanel();
         panelGlass8 = new widget.panelisi();
@@ -2157,6 +2164,30 @@ public class DlgPasien extends javax.swing.JDialog {
             }
         });
 
+        NoRMLama.setHighlighter(null);
+        NoRMLama.setName("NoRMLama"); // NOI18N
+        NoRMLama.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                NoRMLamaKeyPressed(evt);
+            }
+        });
+
+        NmLama.setHighlighter(null);
+        NmLama.setName("NmLama"); // NOI18N
+        NmLama.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                NmLamaKeyPressed(evt);
+            }
+        });
+
+        KtpLama.setHighlighter(null);
+        KtpLama.setName("KtpLama"); // NOI18N
+        KtpLama.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                KtpLamaKeyPressed(evt);
+            }
+        });
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
@@ -2476,7 +2507,7 @@ public class DlgPasien extends javax.swing.JDialog {
         FormInput.add(jLabel13);
         jLabel13.setBounds(4, 102, 95, 23);
 
-        DTPLahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-09-2023" }));
+        DTPLahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "13-12-2023" }));
         DTPLahir.setDisplayFormat("dd-MM-yyyy");
         DTPLahir.setName("DTPLahir"); // NOI18N
         DTPLahir.setOpaque(false);
@@ -2608,7 +2639,7 @@ public class DlgPasien extends javax.swing.JDialog {
         FormInput.add(TKtp);
         TKtp.setBounds(712, 132, 130, 23);
 
-        DTPDaftar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-09-2023" }));
+        DTPDaftar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "13-12-2023" }));
         DTPDaftar.setDisplayFormat("dd-MM-yyyy");
         DTPDaftar.setName("DTPDaftar"); // NOI18N
         DTPDaftar.setOpaque(false);
@@ -3418,6 +3449,9 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         Valid.textKosong(nmbahasa, "Bahasa");
     } else if (nmperusahaan.getText().trim().equals("")) {
         Valid.textKosong(nmperusahaan, "Perusahaan/Instansi");
+    } else if (Sequel.cariInteger("select count(no_ktp) from pasien where no_ktp=?", TKtp.getText()) > 0) {
+        JOptionPane.showMessageDialog(null, "Pasien dengan NIK tersebut sudah ada.\nSilakan periksa di data pasien..!!!");
+        TKtp.requestFocus();
     } else {
         try {
 
@@ -3470,7 +3504,9 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                     Sequel.queryu2("delete from set_no_rkm_medis");
                     Sequel.queryu2("insert into set_no_rkm_medis values(?)", 1, new String[]{TNo.getText()});
                 }
+                isLog("Simpan");
                 emptTeks();
+                JOptionPane.showMessageDialog(null, "Berhasil simpan..");
             } else {
                 autoNomor();
                 cekNomor();
@@ -3490,7 +3526,9 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                         Sequel.queryu2("delete from set_no_rkm_medis");
                         Sequel.queryu2("insert into set_no_rkm_medis values(?)", 1, new String[]{TNo.getText()});
                     }
+                    isLog("Simpan");
                     emptTeks();
+                    JOptionPane.showMessageDialog(null, "Berhasil simpan..");
                 } else {
                     autoNomor();
                     cekNomor();
@@ -3510,7 +3548,9 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                             Sequel.queryu2("delete from set_no_rkm_medis");
                             Sequel.queryu2("insert into set_no_rkm_medis values(?)", 1, new String[]{TNo.getText()});
                         }
+                        isLog("Simpan");
                         emptTeks();
+                        JOptionPane.showMessageDialog(null, "Berhasil simpan..");
                     } else {
                         autoNomor();
                         cekNomor();
@@ -3530,7 +3570,9 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                                 Sequel.queryu2("delete from set_no_rkm_medis");
                                 Sequel.queryu2("insert into set_no_rkm_medis values(?)", 1, new String[]{TNo.getText()});
                             }
+                            isLog("Simpan");
                             emptTeks();
+                            JOptionPane.showMessageDialog(null, "Berhasil simpan..");
                         } else {
                             autoNomor();
                             cekNomor();
@@ -3550,7 +3592,9 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                                     Sequel.queryu2("delete from set_no_rkm_medis");
                                     Sequel.queryu2("insert into set_no_rkm_medis values(?)", 1, new String[]{TNo.getText()});
                                 }
+                                isLog("Simpan");
                                 emptTeks();
+                                JOptionPane.showMessageDialog(null, "Berhasil simpan..");
                             } else {
                                 TNm.requestFocus();
                                 autoNomor();
@@ -3593,12 +3637,23 @@ private void BtnBatalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
 
 private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHapusActionPerformed
     switch (TabRawat.getSelectedIndex()) {
-        case 1:
-            for (z = 0; z < tbPasien.getRowCount(); z++) {
-                if (tbPasien.getValueAt(z, 0).toString().equals("true")) {
-                    Sequel.meghapus("pasien", "no_rkm_medis", tbPasien.getValueAt(z, 1).toString());
+        case 1:                      
+                for (z = 0; z < tbPasien.getRowCount(); z++) {
+                    if (tbPasien.getValueAt(z, 0).toString().equals("true")) {
+                        if (Sequel.meghapustf("pasien", "no_rkm_medis", tbPasien.getValueAt(z, 1).toString()) == true) {
+                            String requestJson = "{"
+                                    + "\"data\":{"
+                                    + "\"no_rkm_medis\":\"" + tbPasien.getValueAt(z, 1).toString() + "\","
+                                    + "\"nm_pasien\":\"" + tbPasien.getValueAt(z, 2).toString() + "\","
+                                    + "\"no_ktp\":\"" + tbPasien.getValueAt(z, 3).toString() + "\","
+                                    + "\"alamat\":\"" + tbPasien.getValueAt(z, 8).toString() + "\"},"
+                                    + "\"action\":\"Hapus\""
+                                    + "}";
+                        Sequel.menyimpan("mlite_log", "null,'" + var.getkode() + "','pasien','" + requestJson + "','" + dtf.format(now) + "'");
+                        }                        
+//                        Sequel.meghapus("pasien", "no_rkm_medis", tbPasien.getValueAt(z, 1).toString());
+                    }
                 }
-            }
             tampil();
             break;
         default:
@@ -3719,6 +3774,7 @@ private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                     Sequel.cariIsi("select propinsi.kd_prop from propinsi where propinsi.nm_prop=?", Propinsi.getText()),
                     PropinsiPj.getText(), Kd2.getText()
                 });
+        isLog("Edit");
         emptTeks();
     }
 }//GEN-LAST:event_BtnEditActionPerformed
@@ -5602,6 +5658,7 @@ private void KabupatenMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
                     NoRmTujuan.getText(), TNo.getText()
                 });
                 Sequel.meghapus("pasien", "no_rkm_medis", TNo.getText());
+                isLog("Gabung");
                 tampil();
                 emptTeks();
                 WindowGabungRM.dispose();
@@ -6018,6 +6075,18 @@ private void KabupatenMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
         }
     }//GEN-LAST:event_MnKartu6ActionPerformed
 
+    private void NoRMLamaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NoRMLamaKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NoRMLamaKeyPressed
+
+    private void NmLamaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NmLamaKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NmLamaKeyPressed
+
+    private void KtpLamaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KtpLamaKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_KtpLamaKeyPressed
+
     /**
      * @data args the command line arguments
      */
@@ -6118,6 +6187,7 @@ private void KabupatenMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
     private widget.TextBox Kelurahan;
     private widget.TextBox Kelurahan2;
     private widget.TextBox KelurahanPj;
+    private widget.TextBox KtpLama;
     private widget.Label LCount;
     private javax.swing.JMenu MenuBPJS;
     private javax.swing.JMenu MenuIdentitas;
@@ -6165,7 +6235,9 @@ private void KabupatenMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
     private javax.swing.JMenuItem MnViaBPJSNik;
     private javax.swing.JMenuItem MnViaBPJSNoKartu;
     private widget.TextBox NmIbu;
+    private widget.TextBox NmLama;
     private widget.TextBox NmPasienTujuan;
+    private widget.TextBox NoRMLama;
     private widget.TextBox NoRm;
     private widget.TextBox NoRmTujuan;
     private widget.TextBox Pekerjaan;
@@ -6642,6 +6714,9 @@ private void KabupatenMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
 
             Valid.SetTgl(DTPLahir, tbPasien.getValueAt(tbPasien.getSelectedRow(), 6).toString());
             Valid.SetTgl(DTPDaftar, tbPasien.getValueAt(tbPasien.getSelectedRow(), 13).toString());
+            NoRMLama.setText(tbPasien.getValueAt(tbPasien.getSelectedRow(), 1).toString());//added
+            NmLama.setText(tbPasien.getValueAt(tbPasien.getSelectedRow(), 2).toString());//added
+            KtpLama.setText(tbPasien.getValueAt(tbPasien.getSelectedRow(), 3).toString());//added
         }
     }
 
@@ -6774,5 +6849,51 @@ private void KabupatenMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
         System.out.println(norm_stri);
         TNo.setText(norm_stri);
 
+    }
+    
+    private void isLog(String action) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        String requestJson = "";
+        switch (action) {
+            case "Edit":
+                requestJson = "{"
+                        + "\"dari\":{"
+                        + "\"no_rkm_medis\":\"" + NoRMLama.getText() + "\","
+                        + "\"nm_pasien\":\"" + NmLama.getText() + "\","
+                        + "\"no_ktp\":\"" + KtpLama.getText() + "\"},"
+                        + "\"ke\":{"
+                        + "\"no_rkm_medis\":\"" + TNo.getText() + "\","
+                        + "\"nm_pasien\":\"" + TNm.getText() + "\","
+                        + "\"no_ktp\":\"" + TKtp.getText() + "\"},"
+                        + "\"action\":\"" + action + "\"}";
+                break;
+            case "Simpan":
+                requestJson = "{"
+                        + "\"data\":{"
+                        + "\"no_rkm_medis\":\"" + TNo.getText() + "\","
+                        + "\"nm_pasien\":\"" + TNm.getText() + "\","
+                        + "\"no_ktp\":\"" + TKtp.getText() + "\","
+                        + "\"alamat\":\"" + Alamat.getText() + "\"},"
+                        + "\"action\":\"" + action + "\""
+                        + "}";
+                break;
+            case "Gabung":
+                String no_ktp = Sequel.cariIsi("select no_ktp from pasien where no_rkm_medis=?", NoRmTujuan.getText());
+                requestJson = "{"
+                        + "\"dari\":"
+                        + "{\"no_rkm_medis\":\"" + NoRmTujuan.getText() + "\","
+                        + "\"nm_pasien\":\"" + NmPasienTujuan.getText() + "\","
+                        + "\"no_ktp\":\"" + no_ktp + "\"},"
+                        + "\"ke\":{"
+                        + "\"no_rkm_medis\":\"" + TNo.getText() + "\","
+                        + "\"nm_pasien\":\"" + TNm.getText() + "\","
+                        + "\"no_ktp\":\"" + TKtp.getText() + "\"},"
+                        + "\"action\":\"gabung\"}";
+                break;
+            default:
+                break;
+        }
+        Sequel.menyimpan("mlite_log", "null,'" + var.getkode() + "','pasien','" + requestJson + "','" + dtf.format(now) + "'");
     }
 }

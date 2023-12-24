@@ -397,7 +397,6 @@ public class DlgCariPeriksaLab extends javax.swing.JDialog {
         MnSaranKesan = new javax.swing.JMenuItem();
         MnBridgingLims = new javax.swing.JMenuItem();
         MnHapusPemeriksaan = new javax.swing.JMenuItem();
-        MnKirimWA = new javax.swing.JMenuItem();
         WindowSaran = new javax.swing.JDialog();
         internalFrame6 = new widget.InternalFrame();
         panelGlass6 = new widget.panelisi();
@@ -536,20 +535,6 @@ public class DlgCariPeriksaLab extends javax.swing.JDialog {
             }
         });
         jPopupMenu1.add(MnHapusPemeriksaan);
-
-        MnKirimWA.setBackground(new java.awt.Color(255, 255, 254));
-        MnKirimWA.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        MnKirimWA.setForeground(new java.awt.Color(70, 70, 70));
-        MnKirimWA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
-        MnKirimWA.setText("Kirim Whatsapp");
-        MnKirimWA.setName("MnKirimWA"); // NOI18N
-        MnKirimWA.setPreferredSize(new java.awt.Dimension(200, 28));
-        MnKirimWA.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MnKirimWAActionPerformed(evt);
-            }
-        });
-        jPopupMenu1.add(MnKirimWA);
 
         WindowSaran.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         WindowSaran.setName("WindowSaran"); // NOI18N
@@ -1894,42 +1879,6 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_MnSaranKesan1ActionPerformed
 
-    private void MnKirimWAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnKirimWAActionPerformed
-        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        if (tabMode.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(null, "Maaf, data sudah habis...!!!!");
-            TCari.requestFocus();
-        } else if (Kd2.getText().trim().equals("")) {
-            JOptionPane.showMessageDialog(null, "Maaf, Gagal mengirim. Pilih dulu data yang mau dikirim.\nKlik No.Rawat pada table untuk memilih...!!!!");
-        } else if (!(Kd2.getText().trim().equals(""))) {
-            int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah anda ingin mengirim whatsapp..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
-            if (reply == JOptionPane.YES_OPTION) {
-                if (sendwa.equals("true")) {
-                    String norm = Sequel.cariIsi("SELECT no_rkm_medis FROM reg_periksa WHERE no_rawat='" + Kd2.getText() + "'");
-                    String nmpasien = Sequel.cariIsi("SELECT nm_pasien FROM pasien WHERE no_rkm_medis='" + norm + "'");
-                    String kddokter = Sequel.cariIsi("select dokter_perujuk from periksa_lab where no_rawat='" + Kd2.getText() + "' and tgl_periksa='" + tbDokter.getValueAt(tbDokter.getSelectedRow(), 3).toString() + "' and jam='" + tbDokter.getValueAt(tbDokter.getSelectedRow(), 4).toString() + "' limit 1");
-                    String nmdokter = Sequel.cariIsi("SELECT nm_dokter from dokter where kd_dokter='" + kddokter + "'");
-                    kamar = Sequel.cariIsi("select ifnull(kd_kamar,'') from kamar_inap where no_rawat='" + Kd2.getText() + "' order by tgl_masuk desc limit 1");
-                    if (!kamar.equals("")) {
-                        namakamar = kamar + ", " + Sequel.cariIsi("select nm_bangsal from bangsal inner join kamar on bangsal.kd_bangsal=kamar.kd_bangsal "
-                                + " where kamar.kd_kamar='" + kamar + "' ");
-                        kamar = "Kamar: ";
-                    } else if (kamar.equals("")) {
-                        namakamar = Sequel.cariIsi("select nm_poli from poliklinik inner join reg_periksa on poliklinik.kd_poli=reg_periksa.kd_poli "
-                                + "where reg_periksa.no_rawat='" + Kd2.getText() + "'");
-                        kamar = "";
-                    }
-                    kirimwa.sendwaLab(norm, nmpasien, Valid.SetTgl3(tbDokter.getValueAt(tbDokter.getSelectedRow(), 3).toString()), kddokter, nmdokter, kamar + namakamar);
-                    JOptionPane.showMessageDialog(null, "Selesai mengirim whatsapp..");
-                }
-                if (sendwa.equals("false")) {
-                    JOptionPane.showMessageDialog(null, "Fitur kirim whatsapp belum diaktifkan, harap hubungi tim IT..!!");
-                }
-            }
-        }
-        this.setCursor(Cursor.getDefaultCursor());
-    }//GEN-LAST:event_MnKirimWAActionPerformed
-
     /**
     * @param args the command line arguments
     */
@@ -1963,7 +1912,6 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private javax.swing.JMenuItem MnCetakHasilLab;
     private javax.swing.JMenuItem MnCetakNota;
     private javax.swing.JMenuItem MnHapusPemeriksaan;
-    private javax.swing.JMenuItem MnKirimWA;
     private javax.swing.JMenuItem MnSaranKesan;
     private javax.swing.JMenuItem MnSaranKesan1;
     private javax.swing.JMenuItem MnUbah;
@@ -2623,7 +2571,6 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             BtnHapus.setEnabled(true);
             BtnPrint.setEnabled(true);
             MnHapusPemeriksaan.setEnabled(true);
-            MnKirimWA.setEnabled(true);
             MnSaranKesan.setEnabled(true);
             MnBridgingLims.setEnabled(true);            
             MnSaranKesan1.setEnabled(true);
@@ -2636,7 +2583,6 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             BtnHapus.setEnabled(var.getperiksa_lab());
             BtnPrint.setEnabled(var.getperiksa_lab());
             MnHapusPemeriksaan.setEnabled(var.getperiksa_lab());
-            MnKirimWA.setEnabled(var.getperiksa_lab());
             MnSaranKesan1.setEnabled(var.getperiksa_lab());
             MnBridgingLims1.setEnabled(var.getperiksa_lab());
             MnSaranKesan.setEnabled(var.getperiksa_lab());
@@ -2648,7 +2594,6 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             BtnHapus.setEnabled(false);
             BtnPrint.setEnabled(false);
             MnHapusPemeriksaan.setEnabled(false);
-            MnKirimWA.setEnabled(false);
             MnSaranKesan1.setEnabled(false);
             MnBridgingLims1.setEnabled(false);
             MnSaranKesan.setEnabled(false);

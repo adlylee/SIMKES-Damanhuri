@@ -398,6 +398,7 @@ import permintaan.DlgCariPermintaanUTD;
 import mpp.DlgSkriningMPP;
 import perlap.DlgLapRBA;
 import perlap.DlgPermintaanRBA;
+import setting.DlgSetHariLibur;
 import setting.DlgSetUtd;
 
 /**
@@ -959,6 +960,7 @@ public class frmUtama extends javax.swing.JFrame {
         btnSetKompUtd = new widget.ButtonBig();
         btnRekapKegiatanRad = new widget.ButtonBig();
         btnPermintaanRBA = new widget.ButtonBig();
+        btnSetHariLibur = new widget.ButtonBig();
         internalFrame1 = new widget.InternalFrame();
         BtnMenu = new widget.ButtonBig();
         jSeparator4 = new javax.swing.JSeparator();
@@ -5658,7 +5660,7 @@ public class frmUtama extends javax.swing.JFrame {
 
         tanggal.setEditable(false);
         tanggal.setForeground(new java.awt.Color(50, 70, 50));
-        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07/12/2023" }));
+        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22/12/2023" }));
         tanggal.setDisplayFormat("dd/MM/yyyy");
         tanggal.setName("tanggal"); // NOI18N
         tanggal.setOpaque(false);
@@ -5981,6 +5983,18 @@ public class frmUtama extends javax.swing.JFrame {
             }
         });
 
+        btnSetHariLibur.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/Gnome-X-Office-Address-Book-48.png"))); // NOI18N
+        btnSetHariLibur.setText("Set Hari Libur");
+        btnSetHariLibur.setToolTipText("");
+        btnSetHariLibur.setIconTextGap(0);
+        btnSetHariLibur.setName("btnSetHariLibur"); // NOI18N
+        btnSetHariLibur.setPreferredSize(new java.awt.Dimension(200, 90));
+        btnSetHariLibur.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSetHariLiburActionPerformed(evt);
+            }
+        });
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("::[ Khanza SIMKES 2019 ]::");
         setBackground(new java.awt.Color(153, 255, 153));
@@ -6297,7 +6311,8 @@ public class frmUtama extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(70, 70, 70));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/file-edit-16x16.png"))); // NOI18N
-        jLabel7.setText(" Didesain & dibuat oleh Khanza.Soft Media. (Opt by ICT RSHD Barabai Build.V.20231208)");
+        jLabel7.setText(" Didesain & dibuat oleh Khanza.Soft Media. (Opt by ICT RSHD Barabai Build.V.20231223)");
+        jLabel7.setToolTipText("");
         jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jLabel7.setIconTextGap(3);
         jLabel7.setName("jLabel7"); // NOI18N
@@ -12491,6 +12506,18 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_btnPermintaanRBAActionPerformed
 
+    private void btnSetHariLiburActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSetHariLiburActionPerformed
+        isTutup();
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        DlgSetHariLibur form = new DlgSetHariLibur(this, false);
+//        form.emptTeks();
+        form.setSize(PanelUtama.getWidth(), PanelUtama.getHeight());
+        form.setLocationRelativeTo(PanelUtama);
+        form.setVisible(true);
+        DlgHome.dispose();
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_btnSetHariLiburActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -12864,6 +12891,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private widget.ButtonBig btnSetBiayaHarian;
     private widget.ButtonBig btnSetBiayaMasukSekali;
     private widget.ButtonBig btnSetHargaKamar;
+    private widget.ButtonBig btnSetHariLibur;
     private widget.ButtonBig btnSetInputParsial;
     private widget.ButtonBig btnSetKompUtd;
     private widget.ButtonBig btnSetObatRalan;
@@ -15208,6 +15236,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             
             if(var.getpassword_asuransi()==true){
                 Panelmenu.add(btnPasswordAsuransi);
+                Panelmenu.add(btnSetHariLibur);                
                 jmlmenu++;
             }
         }    
@@ -17058,6 +17087,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         
         if(var.getpassword_asuransi()==true){
             Panelmenu.add(btnPasswordAsuransi);
+            Panelmenu.add(btnSetHariLibur);
             jmlmenu++;
         }
     }
@@ -19634,6 +19664,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         if(var.getpassword_asuransi()==true){
             if(btnPasswordAsuransi.getText().toLowerCase().trim().contains(TCari.getText().toLowerCase().trim())){
                 Panelmenu.add(btnPasswordAsuransi);
+                Panelmenu.add(btnSetHariLibur);
                 jmlmenu++;
             }                
         }

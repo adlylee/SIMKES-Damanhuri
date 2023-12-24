@@ -3309,7 +3309,7 @@ public final class DlgRawatJalan extends javax.swing.JDialog {
         dokter.dispose();
         pasien.dispose();
         String stts = Sequel.cariIsi("select stts from reg_periksa where no_rawat='"+TNoRw.getText()+"'");
-        if (stts.equals("Belum")) {
+        if (stts.equals("Belum") || stts.equals("Berkas Diterima")) {
             Sequel.mengedit("reg_periksa","no_rawat=?","stts=?",2,new String[]{"Diperiksa",TNoRw.getText()});            
         }
         dispose();

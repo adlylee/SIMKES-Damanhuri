@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import kepegawaian.DlgCariDokter;
 import kepegawaian.DlgCariDokter2;
+import setting.DlgSetHariLibur;
 import simrskhanza.DlgCariPoli;
 
 /**
@@ -36,7 +37,7 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
     private int i = 0;
     private DlgCariDokter dokter = new DlgCariDokter(null, false);
     private DlgCariPoli poli=new DlgCariPoli(null,false);
-    private String norm="",tglperiksa="",noreg="";
+    private String norm="",tglperiksa="",noreg="";    
     /**
      * Creates new form DlgPemberianInfus
      *
@@ -200,6 +201,8 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
         BtnPoli4 = new widget.Button();
         jLabel17 = new widget.Label();
         NoReg = new widget.TextBox();
+        TanggalPeriksa = new widget.Tanggal();
+        jLabel18 = new widget.Label();
         internalFrame1 = new widget.InternalFrame();
         Scroll = new widget.ScrollPane();
         tbObat = new widget.Table();
@@ -338,12 +341,35 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
         jLabel17.setText("No. Reg :");
         jLabel17.setName("jLabel17"); // NOI18N
         internalFrame8.add(jLabel17);
-        jLabel17.setBounds(0, 30, 70, 23);
+        jLabel17.setBounds(260, 30, 70, 23);
 
         NoReg.setHighlighter(null);
         NoReg.setName("NoReg"); // NOI18N
         internalFrame8.add(NoReg);
-        NoReg.setBounds(75, 30, 70, 23);
+        NoReg.setBounds(335, 30, 70, 23);
+
+        TanggalPeriksa.setForeground(new java.awt.Color(50, 70, 50));
+        TanggalPeriksa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-12-2023 01:56:01" }));
+        TanggalPeriksa.setDisplayFormat("dd-MM-yyyy hh:mm:ss");
+        TanggalPeriksa.setName("TanggalPeriksa"); // NOI18N
+        TanggalPeriksa.setOpaque(false);
+        TanggalPeriksa.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                TanggalPeriksaItemStateChanged(evt);
+            }
+        });
+        TanggalPeriksa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                TanggalPeriksaKeyPressed(evt);
+            }
+        });
+        internalFrame8.add(TanggalPeriksa);
+        TanggalPeriksa.setBounds(75, 30, 150, 23);
+
+        jLabel18.setText("Tgl. Periksa :");
+        jLabel18.setName("jLabel18"); // NOI18N
+        internalFrame8.add(jLabel18);
+        jLabel18.setBounds(0, 30, 70, 23);
 
         WindowGanti.getContentPane().add(internalFrame8, java.awt.BorderLayout.CENTER);
 
@@ -390,7 +416,7 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
         jLabel8.setPreferredSize(new java.awt.Dimension(100, 23));
         panelCari.add(jLabel8);
 
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-12-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-12-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -403,7 +429,7 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
         jLabel22.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel22);
 
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "07-12-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-12-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -568,6 +594,17 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_tbObatMouseClicked
 
+    private void TanggalPeriksaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_TanggalPeriksaItemStateChanged
+        try {
+            isNomer2();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_TanggalPeriksaItemStateChanged
+
+    private void TanggalPeriksaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TanggalPeriksaKeyPressed
+        Valid.pindah(evt,NoReg,BtnDokter1);
+    }//GEN-LAST:event_TanggalPeriksaKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -602,12 +639,14 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
     private widget.TextBox NoReg;
     private widget.ScrollPane Scroll;
     private widget.TextBox TCari;
+    private widget.Tanggal TanggalPeriksa;
     private javax.swing.JDialog WindowGanti;
     private widget.InternalFrame internalFrame1;
     private widget.InternalFrame internalFrame8;
     private widget.Label jLabel15;
     private widget.Label jLabel16;
     private widget.Label jLabel17;
+    private widget.Label jLabel18;
     private widget.Label jLabel22;
     private widget.Label jLabel6;
     private widget.Label jLabel7;
@@ -667,6 +706,6 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
     }
     
     private void isNomer2(){
-        Valid.autoNomer3("select ifnull(MAX(CONVERT(no_reg,signed)),0) from booking_registrasi where kd_poli='"+KdPoli4.getText()+"' and tanggal_periksa='"+tbObat.getValueAt(tbObat.getSelectedRow(), 4).toString()+"'","",3,NoReg);
+        Valid.autoNomer3("select ifnull(MAX(CONVERT(no_reg,signed)),0) from booking_registrasi where kd_poli='"+KdPoli4.getText()+"' and tanggal_periksa='"+Valid.SetTgl(TanggalPeriksa.getSelectedItem()+"")+"'","",3,NoReg);
     }
 }

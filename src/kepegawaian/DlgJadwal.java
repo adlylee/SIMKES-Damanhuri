@@ -61,6 +61,7 @@ public class DlgJadwal extends javax.swing.JDialog {
     private JsonNode response;
     private BPJSApi api = new BPJSApi();
     private String link = "", requestJson = "", URL = "", utc = "",hari="", key="";
+    private DlgJadwalDokter jadwal = new DlgJadwalDokter(null, false);
 
     /** Creates new form DlgJadwal
      * @param parent
@@ -220,6 +221,7 @@ public class DlgJadwal extends javax.swing.JDialog {
         BtnEdit = new widget.Button();
         BtnPrint = new widget.Button();
         BtnKeluar = new widget.Button();
+        BtnJadwal = new widget.Button();
         panelGlass9 = new widget.panelisi();
         jLabel6 = new widget.Label();
         TCari = new widget.TextBox();
@@ -397,6 +399,24 @@ public class DlgJadwal extends javax.swing.JDialog {
         });
         panelGlass8.add(BtnKeluar);
         BtnKeluar.setBounds(518, 10, 100, 30);
+
+        BtnJadwal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/plus_16.png"))); // NOI18N
+        BtnJadwal.setMnemonic('K');
+        BtnJadwal.setText("Jadwal Dokter");
+        BtnJadwal.setToolTipText("Alt+K");
+        BtnJadwal.setName("BtnJadwal"); // NOI18N
+        BtnJadwal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnJadwalActionPerformed(evt);
+            }
+        });
+        BtnJadwal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnJadwalKeyPressed(evt);
+            }
+        });
+        panelGlass8.add(BtnJadwal);
+        BtnJadwal.setBounds(718, 10, 150, 30);
 
         jPanel3.add(panelGlass8, java.awt.BorderLayout.CENTER);
 
@@ -935,6 +955,20 @@ private void BtnPoliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
         Valid.pindah(evt,cmbDtk2,KdPoli);
     }//GEN-LAST:event_KuotaKeyPressed
 
+    private void BtnJadwalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnJadwalActionPerformed
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+//        jadwal.emptTeks();
+        jadwal.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
+        jadwal.setLocationRelativeTo(internalFrame1);
+        jadwal.setAlwaysOnTop(false);
+        jadwal.setVisible(true);
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_BtnJadwalActionPerformed
+
+    private void BtnJadwalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnJadwalKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnJadwalKeyPressed
+
     /**
     * @param args the command line arguments
     */
@@ -957,6 +991,7 @@ private void BtnPoliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     private widget.Button BtnCari;
     private widget.Button BtnEdit;
     private widget.Button BtnHapus;
+    private widget.Button BtnJadwal;
     private widget.Button BtnKeluar;
     private widget.Button BtnPoli;
     private widget.Button BtnPrint;
@@ -1120,12 +1155,14 @@ private void BtnPoliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
             BtnHapus.setEnabled(var.getregistrasi());
             BtnEdit.setEnabled(var.getregistrasi());
             BtnPrint.setEnabled(var.getregistrasi());
+            BtnJadwal.setEnabled(var.getregistrasi());
         } else {
             BtnSimpan.setEnabled(false);
             BtnBatal.setEnabled(false);
             BtnHapus.setEnabled(false);
             BtnEdit.setEnabled(false);
             BtnPrint.setEnabled(false);
+            BtnJadwal.setEnabled(false);
         }
     }
     
