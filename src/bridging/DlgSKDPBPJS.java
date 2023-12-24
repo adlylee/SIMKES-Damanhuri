@@ -54,8 +54,8 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
     private ResultSet rs, rs2;
     private int i = 0, seppost = 0;
     private DlgCariDokter dokter = new DlgCariDokter(null, false);
-//    private DlgCariPoli poli = new DlgCariPoli(null, false);
-    private DlgJadwal poli = new DlgJadwal(null, false);
+    private DlgCariPoli poli = new DlgCariPoli(null, false);
+//    private DlgJadwal poli = new DlgJadwal(null, false);
     private BPJSSuratKontrol kontrol = new BPJSSuratKontrol(null, false);
     private String URUTNOREG = "", tglSetelah85Hari = "", status = "", set_status_rawat = "", kdpoli = "", nmpoli = "", noantri = "", antrian = "", user = "", nosep = "", nosepCari = "", penjab = "", diag, kddokter = "", norujuk = "", norujukCari = "", tglrujukan = "", hari = "";
     private SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");//added
@@ -237,11 +237,12 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
             @Override
             public void windowClosed(WindowEvent e) {
                 if (poli.getTable().getSelectedRow() != -1) {
-//                    KdPoli.setText(poli.getTable().getValueAt(poli.getTable().getSelectedRow(), 0).toString());
-                    NmPoli.setText(poli.getTable().getValueAt(poli.getTable().getSelectedRow(), 6).toString());
+                    KdPoli.setText(poli.getTable().getValueAt(poli.getTable().getSelectedRow(), 0).toString());
+                    NmPoli.setText(poli.getTable().getValueAt(poli.getTable().getSelectedRow(), 1).toString());
+//                    NmPoli.setText(poli.getTable().getValueAt(poli.getTable().getSelectedRow(), 6).toString());
                     isNomer();
-                    KdPoli.setText(Sequel.cariIsi("select kd_poli from poliklinik where nm_poli=?", NmPoli.getText()));
-                    cekHfisPoli(KdPoli.getText());
+//                    KdPoli.setText(Sequel.cariIsi("select kd_poli from poliklinik where nm_poli=?", NmPoli.getText()));
+//                    cekHfisPoli(KdPoli.getText());
                 }
             }
 
@@ -1582,8 +1583,12 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }//GEN-LAST:event_BtnPoliKeyPressed
 
     private void BtnPoliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPoliActionPerformed
+//        poli.isCek();
+//        poli.setNoRm(KdDokter.getText(), konversi(TanggalPeriksa.getSelectedItem() + ""));
+//        poli.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
+//        poli.setLocationRelativeTo(internalFrame1);
+//        poli.setVisible(true);
         poli.isCek();
-        poli.setNoRm(KdDokter.getText(), konversi(TanggalPeriksa.getSelectedItem() + ""));
         poli.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
         poli.setLocationRelativeTo(internalFrame1);
         poli.setVisible(true);
