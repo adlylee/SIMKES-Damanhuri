@@ -2786,8 +2786,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         String hasil = hasilexpertise.path("response").path("hasil").asText();
         String kesan = hasilexpertise.path("response").path("kesan").asText();
         String saran = hasilexpertise.path("response").path("saran").asText();
-        if (Sequel
-                .cariInteger("select count(no_rawat) from saran_kesan_rad where no_rawat='" + tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString() + "'") > 0) {
+        if (Sequel.cariInteger("select count(no_rawat) from saran_kesan_rad where no_rawat='" + tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString() + "'") > 0) {
             int opsi = JOptionPane.showConfirmDialog(null, notif, "Sudah ada hasil expertise,apakah ingin update hasil expertise?", JOptionPane.YES_NO_OPTION);
             if (opsi == JOptionPane.YES_OPTION) {
 //                JOptionPane.showMessageDialog(null, "Saat dipilih yes !");
@@ -2817,7 +2816,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             }
 //            else 
 //                JOptionPane.showMessageDialog(null, "Saat dipilih no !");            
-        }
+        }    
     }//GEN-LAST:event_MnTarikGambarActionPerformed
 
     private void tbListDicom1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbListDicom1MouseClicked

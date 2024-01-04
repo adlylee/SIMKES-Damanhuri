@@ -513,7 +513,8 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         cmbNyeri = new widget.TextBox();
         KeadaanUmumSebelum1 = new widget.TextBox();
         TanggalMasuk = new widget.TextBox();
-        dxKeperawatan = new widget.TextBox();
+        scrollPane1 = new widget.ScrollPane();
+        dxKeperawatan = new widget.TextArea();
         internalFrame3 = new widget.InternalFrame();
         Scroll = new widget.ScrollPane();
         tbObat = new widget.Table();
@@ -1375,10 +1376,22 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         FormInput1.add(TanggalMasuk);
         TanggalMasuk.setBounds(105, 10, 285, 23);
 
-        dxKeperawatan.setEditable(false);
+        scrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        scrollPane1.setName("scrollPane1"); // NOI18N
+
+        dxKeperawatan.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        dxKeperawatan.setColumns(20);
+        dxKeperawatan.setRows(5);
         dxKeperawatan.setName("dxKeperawatan"); // NOI18N
-        FormInput1.add(dxKeperawatan);
-        dxKeperawatan.setBounds(510, 350, 270, 23);
+        dxKeperawatan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                dxKeperawatanKeyPressed(evt);
+            }
+        });
+        scrollPane1.setViewportView(dxKeperawatan);
+
+        FormInput1.add(scrollPane1);
+        scrollPane1.setBounds(510, 350, 270, 53);
 
         FormTriase1.add(FormInput1, java.awt.BorderLayout.PAGE_START);
 
@@ -1950,6 +1963,10 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_chkLainMouseClicked
 
+    private void dxKeperawatanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dxKeperawatanKeyPressed
+        Valid.pindah(evt,Diagnosa,Terapi);
+    }//GEN-LAST:event_dxKeperawatanKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -2042,7 +2059,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
     private widget.CekBox chkUsg;
     private widget.ComboBox cmbJenisTransfer;
     private widget.TextBox cmbNyeri;
-    private widget.TextBox dxKeperawatan;
+    private widget.TextArea dxKeperawatan;
     private widget.InternalFrame internalFrame1;
     private widget.InternalFrame internalFrame3;
     private widget.InternalFrame internalFrame5;
@@ -2096,6 +2113,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
     private widget.panelisi panelGlass8;
     private widget.panelisi panelGlass9;
     private widget.panelisi panelisi5;
+    private widget.ScrollPane scrollPane1;
     private widget.ScrollPane scrollPane5;
     private widget.Table tbObat;
     private widget.Table tbResep;

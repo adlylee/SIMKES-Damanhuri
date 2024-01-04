@@ -555,6 +555,8 @@ public class DlgJadwalDokter extends javax.swing.JDialog {
             isArrayTanggal();
             if (id.equals("")) {
                 id = null;
+            }else{
+                id=id;
             }
             Sequel.menyimpan3("jadwal_dokter", "?,?,?,?,?,?", 6, new String[]{
                 id, kddokter.getText(), KdPoli.getText(), ThnCari.getSelectedItem().toString(), BlnCari.getSelectedItem().toString(), Arrays.toString(remainingDaysArray)
@@ -727,9 +729,12 @@ public class DlgJadwalDokter extends javax.swing.JDialog {
 
     private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditActionPerformed
         if (tbJadwal.getSelectedRow() != -1) {
-            Sequel.mengedit3("jadwal_dokter", "id=? and tahun=? and bulan=? and kd_dokter=? and kd_poli=?", "tanggal=?", 6, new String[]{
-                Tanggal.getText(), tabMode.getValueAt(tbJadwal.getSelectedRow(), 0).toString(), ThnCari.getSelectedItem().toString(), BlnCari.getSelectedItem().toString(), kddokter.getText(), KdPoli.getText()
-            });
+            Sequel.queryu2("update jadwal_dokter set tanggal=?, kd_dokter=?, kd_poli=? "
+                    + " where id=? and tahun=? and bulan=? and kd_dokter=? and kd_poli=?", 8,
+                    new String[]{Tanggal.getText(), kddokter.getText(), KdPoli.getText(),
+                        tabMode.getValueAt(tbJadwal.getSelectedRow(), 0).toString(), tabMode.getValueAt(tbJadwal.getSelectedRow(), 4).toString().substring(0, 4),
+                        tabMode.getValueAt(tbJadwal.getSelectedRow(), 4).toString().substring(5, 7), tabMode.getValueAt(tbJadwal.getSelectedRow(), 6).toString(), tabMode.getValueAt(tbJadwal.getSelectedRow(), 7).toString()
+                    });
             tampil();
             JOptionPane.showMessageDialog(null, "Berhasil edit..");
         }
@@ -896,8 +901,8 @@ public class DlgJadwalDokter extends javax.swing.JDialog {
             kddokter.setText(tbJadwal.getValueAt(row, 6).toString());
             KdPoli.setText(tbJadwal.getValueAt(row, 7).toString());
         }
-    }
-
+    } 
+    
     String konversi(int year, int month, int day) {
         dateString = String.format("%d-%d-%d", year, month, day);
         try {

@@ -229,6 +229,8 @@ public final class DlgPaketOperasi extends javax.swing.JDialog {
         btnDokter = new widget.Button();
         btnDokter1 = new widget.Button();
         TNmPaket = new widget.TextBox();
+        cmbBangsal = new widget.ComboBox();
+        jLabel14 = new widget.Label();
         Scroll = new widget.ScrollPane();
         tbResep = new widget.Table();
 
@@ -350,7 +352,7 @@ public final class DlgPaketOperasi extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Paket Obat Operasi Dokter ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Paket Obat Operasi Dokter ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
@@ -464,7 +466,7 @@ public final class DlgPaketOperasi extends javax.swing.JDialog {
             }
         });
         FormInput.add(TkdPaket);
-        TkdPaket.setBounds(75, 12, 120, 23);
+        TkdPaket.setBounds(75, 10, 120, 23);
 
         KdDokter.setHighlighter(null);
         KdDokter.setName("KdDokter"); // NOI18N
@@ -474,23 +476,23 @@ public final class DlgPaketOperasi extends javax.swing.JDialog {
             }
         });
         FormInput.add(KdDokter);
-        KdDokter.setBounds(75, 50, 120, 23);
+        KdDokter.setBounds(75, 40, 120, 23);
 
         NmDokter.setEditable(false);
         NmDokter.setHighlighter(null);
         NmDokter.setName("NmDokter"); // NOI18N
         FormInput.add(NmDokter);
-        NmDokter.setBounds(195, 50, 230, 23);
+        NmDokter.setBounds(195, 40, 230, 23);
 
         jLabel3.setText("Nama Paket :");
         jLabel3.setName("jLabel3"); // NOI18N
         FormInput.add(jLabel3);
-        jLabel3.setBounds(0, 12, 72, 23);
+        jLabel3.setBounds(0, 10, 72, 23);
 
         jLabel13.setText("Dokter :");
         jLabel13.setName("jLabel13"); // NOI18N
         FormInput.add(jLabel13);
-        jLabel13.setBounds(0, 50, 72, 23);
+        jLabel13.setBounds(0, 40, 72, 23);
 
         btnDokter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
         btnDokter.setMnemonic('3');
@@ -507,7 +509,7 @@ public final class DlgPaketOperasi extends javax.swing.JDialog {
             }
         });
         FormInput.add(btnDokter);
-        btnDokter.setBounds(428, 50, 28, 23);
+        btnDokter.setBounds(428, 40, 28, 23);
 
         btnDokter1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
         btnDokter1.setMnemonic('3');
@@ -524,7 +526,7 @@ public final class DlgPaketOperasi extends javax.swing.JDialog {
             }
         });
         FormInput.add(btnDokter1);
-        btnDokter1.setBounds(428, 12, 28, 23);
+        btnDokter1.setBounds(428, 10, 28, 23);
 
         TNmPaket.setHighlighter(null);
         TNmPaket.setName("TNmPaket"); // NOI18N
@@ -534,7 +536,27 @@ public final class DlgPaketOperasi extends javax.swing.JDialog {
             }
         });
         FormInput.add(TNmPaket);
-        TNmPaket.setBounds(195, 12, 230, 23);
+        TNmPaket.setBounds(195, 10, 230, 23);
+
+        cmbBangsal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "B0014 APOTEK RAJAL", "B0001 APOTEK RANAP", "B0018 APOTEK IGD", "B0002 GUDANG FARMASI" }));
+        cmbBangsal.setName("cmbBangsal"); // NOI18N
+        cmbBangsal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbBangsalActionPerformed(evt);
+            }
+        });
+        cmbBangsal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cmbBangsalKeyPressed(evt);
+            }
+        });
+        FormInput.add(cmbBangsal);
+        cmbBangsal.setBounds(80, 70, 210, 23);
+
+        jLabel14.setText("Depo :");
+        jLabel14.setName("jLabel14"); // NOI18N
+        FormInput.add(jLabel14);
+        jLabel14.setBounds(0, 70, 72, 23);
 
         internalFrame1.add(FormInput, java.awt.BorderLayout.PAGE_START);
 
@@ -783,6 +805,14 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         }
     }//GEN-LAST:event_BtnBatalKeyPressed
 
+    private void cmbBangsalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmbBangsalKeyPressed
+        
+    }//GEN-LAST:event_cmbBangsalKeyPressed
+
+    private void cmbBangsalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBangsalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbBangsalActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -818,10 +848,12 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JDialog WindowPilihData;
     private widget.Button btnDokter;
     private widget.Button btnDokter1;
+    private widget.ComboBox cmbBangsal;
     private widget.TextBox idPaket;
     private widget.InternalFrame internalFrame1;
     private widget.InternalFrame internalFrame8;
     private widget.Label jLabel13;
+    private widget.Label jLabel14;
     private widget.Label jLabel3;
     private widget.Label jLabel6;
     private widget.Label label9;
@@ -875,9 +907,9 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                     + " where  databarang.status='1' and gudangbarang.kd_bangsal=? and databarang.kode_brng like ? or "
                     + " databarang.status='1' and gudangbarang.kd_bangsal=? and databarang.nama_brng like ? ");
             try {
-                psresep.setString(1, "B0001");
+                psresep.setString(1, cmbBangsal.getSelectedItem().toString().substring(0,5));
                 psresep.setString(2, "%" + TCari.getText().trim() + "%");
-                psresep.setString(3, "B0001");
+                psresep.setString(3, cmbBangsal.getSelectedItem().toString().substring(0,5));
                 psresep.setString(4, "%" + TCari.getText().trim() + "%");
                 rsobat = psresep.executeQuery();
                 while (rsobat.next()) {
@@ -1027,6 +1059,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         empTable();
         tampilObat();
         isNumber();
+        cmbBangsal.setSelectedIndex(0);
     }
     
     private void isNumber() {

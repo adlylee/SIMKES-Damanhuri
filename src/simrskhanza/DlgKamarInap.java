@@ -6617,7 +6617,7 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
                             Sequel.menyimpan("ranap_gabung", "?,?", "Data Ranap Gabung", 2, new String[]{
                                 norawat.getText(), NoRawatGabung.getText()
                             });
-                            if (rs.getString("kd_poli").equals("IGDK")) {
+                            if (rs.getString("kd_poli").equals("IGD01")) {
                                 Sequel.menyimpan("kategori_pasien_igd", "?,?", "Kategori", 2, new String[]{
                                     NoRawatGabung.getText(), "KEBIDANAN"
                                 });

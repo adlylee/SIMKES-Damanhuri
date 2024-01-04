@@ -3093,11 +3093,11 @@ private void tbLabRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
                     "inner join reg_periksa inner join pasien inner join dokter inner join poliklinik "+
                     "on permintaan_lab.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "+
                     "and permintaan_lab.dokter_perujuk=dokter.kd_dokter and reg_periksa.kd_poli=poliklinik.kd_poli where "+
-                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGDK' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and permintaan_lab.noorder like ? or "+
-                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGDK' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and permintaan_lab.no_rawat like ? or "+
-                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGDK' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and reg_periksa.no_rkm_medis like ? or "+
-                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGDK' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and pasien.nm_pasien like ? or "+
-                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGDK' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and dokter.nm_dokter like ? order by "+
+                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGD01' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and permintaan_lab.noorder like ? or "+
+                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGD01' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and permintaan_lab.no_rawat like ? or "+
+                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGD01' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and reg_periksa.no_rkm_medis like ? or "+
+                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGD01' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and pasien.nm_pasien like ? or "+
+                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGD01' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and dokter.nm_dokter like ? order by "+
                     "permintaan_lab.tgl_permintaan,permintaan_lab.jam_permintaan desc");
             try {
                 ps.setString(1,Valid.SetTgl(Tgl1.getSelectedItem()+""));
@@ -3220,13 +3220,13 @@ private void tbLabRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
                     "and permintaan_detail_permintaan_lab.kd_jenis_prw=permintaan_pemeriksaan_lab.kd_jenis_prw and "+
                     "template_laboratorium.id_template=permintaan_detail_permintaan_lab.id_template "+
                     "and reg_periksa.kd_poli=poliklinik.kd_poli where "+
-                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGDK' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and permintaan_lab.noorder like ? or "+
-                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGDK' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and permintaan_lab.no_rawat like ? or "+
-                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGDK' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and reg_periksa.no_rkm_medis like ? or "+
-                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGDK' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and pasien.nm_pasien like ? or "+
-                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGDK' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and jns_perawatan_lab.nm_perawatan like ? or "+
-                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGDK' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and template_laboratorium.Pemeriksaan like ? or "+
-                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGDK' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and dokter.nm_dokter like ? order by "+
+                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGD01' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and permintaan_lab.noorder like ? or "+
+                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGD01' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and permintaan_lab.no_rawat like ? or "+
+                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGD01' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and reg_periksa.no_rkm_medis like ? or "+
+                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGD01' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and pasien.nm_pasien like ? or "+
+                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGD01' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and jns_perawatan_lab.nm_perawatan like ? or "+
+                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGD01' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and template_laboratorium.Pemeriksaan like ? or "+
+                    "permintaan_lab.status='ralan' and poliklinik.kd_poli != 'IGD01' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and dokter.nm_dokter like ? order by "+
                     "permintaan_lab.tgl_permintaan,permintaan_lab.jam_permintaan desc");
             try {
                 ps.setString(1,Valid.SetTgl(Tgl1.getSelectedItem()+""));
@@ -3704,7 +3704,7 @@ private void tbLabRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
                     "inner join reg_periksa inner join pasien inner join dokter inner join poliklinik "+
                     "on permintaan_lab.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "+
                     "and permintaan_lab.dokter_perujuk=dokter.kd_dokter and reg_periksa.kd_poli=poliklinik.kd_poli where "+
-                    "permintaan_lab.status='ralan' and poliklinik.kd_poli='IGDK' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and (permintaan_lab.noorder like ? or "+
+                    "permintaan_lab.status='ralan' and poliklinik.kd_poli='IGD01' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and (permintaan_lab.noorder like ? or "+
                     "permintaan_lab.no_rawat like ? or "+
                     "reg_periksa.no_rkm_medis like ? or "+
                     "pasien.nm_pasien like ? or "+
@@ -3815,7 +3815,7 @@ private void tbLabRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
                     "and permintaan_detail_permintaan_lab.kd_jenis_prw=permintaan_pemeriksaan_lab.kd_jenis_prw and "+
                     "template_laboratorium.id_template=permintaan_detail_permintaan_lab.id_template "+
                     "and reg_periksa.kd_poli=poliklinik.kd_poli where "+
-                    "permintaan_lab.status='ralan' and poliklinik.kd_poli='IGDK' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and (permintaan_lab.noorder like ? or "+
+                    "permintaan_lab.status='ralan' and poliklinik.kd_poli='IGD01' and permintaan_lab.tgl_permintaan between ? and ? and dokter.nm_dokter like ? and poliklinik.nm_poli like ? and (permintaan_lab.noorder like ? or "+
                     "permintaan_lab.no_rawat like ? or "+
                     "reg_periksa.no_rkm_medis like ? or "+
                     "pasien.nm_pasien like ? or "+

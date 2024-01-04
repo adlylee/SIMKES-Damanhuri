@@ -45,7 +45,7 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" + 
-                        "    Version 23.12.2023 [ 1.0.32 ] [Activated] GO KLAIM DIGITAL \n"+
+                        "    Version 04.01.2024 [ 1.0.34 ] [Activated] GO KLAIM DIGITAL \n"+
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai                              \n"+
                         "                                                                           \n"+
