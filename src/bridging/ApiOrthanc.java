@@ -3,6 +3,7 @@ package bridging;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fungsi.koneksiDB;
+import fungsi.sekuel;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.KeyManagementException;
@@ -42,6 +43,7 @@ public class ApiOrthanc {
     private String auth,authEncrypt,requestJson;
     private byte[] encodedBytes;
     private int i=1;
+    private sekuel Sequel = new sekuel();
     
     public ApiOrthanc(){
         try {
@@ -231,6 +233,7 @@ public class ApiOrthanc {
     
     public JsonNode AmbilHasilExpertise(String Norm,String Tanggal1,String Studies_id){
         System.out.println("Percobaan Mengambil Hasil Expertise Pasien : "+Norm);
+        String setting = Sequel.cariIsi("select value from mlite_settings where module='orthanc' and field='server-expertise'");
         try{
             headers = new HttpHeaders();
 //            System.out.println("Auth : "+authEncrypt);
@@ -238,13 +241,15 @@ public class ApiOrthanc {
             requestJson = "{"+
                                 "\"token\": \"hollows\","+
                                 "\"no_rkm_medis\": \""+Norm+"\","+
-                                "\"studies_id\": \""+Studies_id+"\","+
+                                "\"studies_id\": \""+Studies_id+"\","+ 
                                 "\"tgl_periksa\": \""+Tanggal1+"\""+
                           "}";
             System.out.println("Request JSON : "+requestJson);
             requestEntity = new HttpEntity(requestJson,headers);
-//            System.out.println("URL : "+koneksiDB.URLORTHANC()+":"+koneksiDB.PORTORTHANC()+"/tools/find");
-            requestJson=getRest().exchange("http://dev.rshdbarabai.com/dokter-rad/expertise", HttpMethod.POST, requestEntity, String.class).getBody();
+//            System.out.println("URL : "+koneksiDB.URLORTHANC()+":"+koneksiDB.PORTORTHANC()+"/tools/find");            
+            System.out.println("URL : "+setting+"/dokter-rad/expertise");
+            requestJson=getRest().exchange(setting+"/dokter-rad/expertise", HttpMethod.POST, requestEntity, String.class).getBody();
+//            requestJson=getRest().exchange(setting+"/dokter-rad/expertise", HttpMethod.GET, requestEntity, String.class).getBody();
             System.out.println("Result JSON : "+requestJson);
             root = mapper.readTree(requestJson);
         }catch(Exception e){

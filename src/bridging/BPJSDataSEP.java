@@ -6704,7 +6704,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         JenisPelayanan.setSelectedItem(status);
         JenisPelayananItemStateChanged(null);
         isRawat();
-        if (kdpoli == "IGDK") {
+        if (kdpoli == "IGD01") {
             cekDiagnosa();
         }
     }

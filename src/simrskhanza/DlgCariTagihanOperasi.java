@@ -53,7 +53,7 @@ public class DlgCariTagihanOperasi extends javax.swing.JDialog {
     public DlgCariTagihanOperasi(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-
+                
         Object[] row={"Tgl.Operasi",
                       "No.Rawat",
                       "Pasien",
@@ -334,6 +334,10 @@ public class DlgCariTagihanOperasi extends javax.swing.JDialog {
                         kdasistanestesi2.setText(petugas.getTable().getValueAt(petugas.getTable().getSelectedRow(),0).toString());
                         nmasistanestesi2.setText(petugas.getTable().getValueAt(petugas.getTable().getSelectedRow(),1).toString());
                         kdasistanestesi2.requestFocus();
+                    }else if(pilihan==17){//added
+                        kdPrwRes.setText(petugas.getTable().getValueAt(petugas.getTable().getSelectedRow(),0).toString());
+                        nmPrwRes.setText(petugas.getTable().getValueAt(petugas.getTable().getSelectedRow(),1).toString());
+                        kdPrwRes.requestFocus();
                     }               
                 }            
             }
@@ -394,6 +398,7 @@ public class DlgCariTagihanOperasi extends javax.swing.JDialog {
         MnHapusTagihanOperasi = new javax.swing.JMenuItem();
         MnUbahOperatorPetugas = new javax.swing.JMenuItem();
         MnMappingOperasi = new javax.swing.JMenuItem();
+        MnBiayaAnestesi = new javax.swing.JMenuItem();
         WindowGantiDokterParamedis = new javax.swing.JDialog();
         internalFrame5 = new widget.InternalFrame();
         scrollPane2 = new widget.ScrollPane();
@@ -504,6 +509,32 @@ public class DlgCariTagihanOperasi extends javax.swing.JDialog {
         panelisi2 = new widget.panelisi();
         BtnSimpan = new widget.Button();
         BtnCloseIn5 = new widget.Button();
+        WindowBiayaAnestesi = new javax.swing.JDialog();
+        internalFrame7 = new widget.InternalFrame();
+        FormInput1 = new widget.panelisi();
+        label41 = new widget.Label();
+        nmdranes = new widget.TextBox();
+        label42 = new widget.Label();
+        biayaDrAnes = new widget.TextBox();
+        label43 = new widget.Label();
+        nmast = new widget.TextBox();
+        label44 = new widget.Label();
+        biayaAstAnes = new widget.TextBox();
+        BtnSimpan5 = new widget.Button();
+        BtnCloseIn6 = new widget.Button();
+        label45 = new widget.Label();
+        label47 = new widget.Label();
+        label46 = new widget.Label();
+        nmPrwRes = new widget.TextBox();
+        kdPrwRes = new widget.TextBox();
+        btnPrwRes1 = new widget.Button();
+        FormInput2 = new widget.PanelBiasa();
+        jLabel3 = new widget.Label();
+        TNoRw = new widget.TextBox();
+        TNoRM = new widget.TextBox();
+        TPasien = new widget.TextBox();
+        Tanggal1 = new widget.TextBox();
+        label16 = new widget.Label();
         internalFrame1 = new widget.InternalFrame();
         scrollPane1 = new widget.ScrollPane();
         tbDokter = new widget.Table();
@@ -532,6 +563,7 @@ public class DlgCariTagihanOperasi extends javax.swing.JDialog {
         Kd2.setPreferredSize(new java.awt.Dimension(207, 23));
 
         jPopupMenu1.setName("jPopupMenu1"); // NOI18N
+        jPopupMenu1.setPreferredSize(new java.awt.Dimension(252, 142));
 
         MnHapusObatOperasi.setBackground(new java.awt.Color(255, 255, 254));
         MnHapusObatOperasi.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
@@ -588,6 +620,20 @@ public class DlgCariTagihanOperasi extends javax.swing.JDialog {
             }
         });
         jPopupMenu1.add(MnMappingOperasi);
+
+        MnBiayaAnestesi.setBackground(new java.awt.Color(255, 255, 254));
+        MnBiayaAnestesi.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        MnBiayaAnestesi.setForeground(new java.awt.Color(70, 70, 70));
+        MnBiayaAnestesi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        MnBiayaAnestesi.setText("Ubah Biaya Anestesi & Prw. Resusitasi");
+        MnBiayaAnestesi.setName("MnBiayaAnestesi"); // NOI18N
+        MnBiayaAnestesi.setPreferredSize(new java.awt.Dimension(220, 26));
+        MnBiayaAnestesi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnBiayaAnestesiActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(MnBiayaAnestesi);
 
         WindowGantiDokterParamedis.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         WindowGantiDokterParamedis.setName("WindowGantiDokterParamedis"); // NOI18N
@@ -1562,6 +1608,188 @@ public class DlgCariTagihanOperasi extends javax.swing.JDialog {
         internalFrame6.add(panelisi2, java.awt.BorderLayout.PAGE_END);
 
         WindowMappingTglOp.getContentPane().add(internalFrame6, java.awt.BorderLayout.CENTER);
+
+        WindowBiayaAnestesi.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        WindowBiayaAnestesi.setName("WindowBiayaAnestesi"); // NOI18N
+        WindowBiayaAnestesi.setUndecorated(true);
+        WindowBiayaAnestesi.setResizable(false);
+
+        internalFrame7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Biaya Dokter Anestesi ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame7.setName("internalFrame7"); // NOI18N
+        internalFrame7.setWarnaBawah(new java.awt.Color(240, 245, 235));
+        internalFrame7.setLayout(new java.awt.BorderLayout());
+
+        FormInput1.setName("FormInput1"); // NOI18N
+        FormInput1.setPreferredSize(new java.awt.Dimension(89, 434));
+        FormInput1.setLayout(null);
+
+        label41.setText("Dokter Anestesi :");
+        label41.setName("label41"); // NOI18N
+        label41.setPreferredSize(new java.awt.Dimension(70, 23));
+        FormInput1.add(label41);
+        label41.setBounds(10, 10, 122, 23);
+
+        nmdranes.setEditable(false);
+        nmdranes.setName("nmdranes"); // NOI18N
+        nmdranes.setPreferredSize(new java.awt.Dimension(207, 23));
+        FormInput1.add(nmdranes);
+        nmdranes.setBounds(135, 10, 265, 23);
+
+        label42.setText("Biaya dr :");
+        label42.setName("label42"); // NOI18N
+        label42.setPreferredSize(new java.awt.Dimension(70, 23));
+        FormInput1.add(label42);
+        label42.setBounds(375, 10, 122, 23);
+
+        biayaDrAnes.setText("0");
+        biayaDrAnes.setName("biayaDrAnes"); // NOI18N
+        biayaDrAnes.setPreferredSize(new java.awt.Dimension(80, 23));
+        FormInput1.add(biayaDrAnes);
+        biayaDrAnes.setBounds(525, 10, 100, 23);
+
+        label43.setText("Ast. Anestesi 1 :");
+        label43.setName("label43"); // NOI18N
+        label43.setPreferredSize(new java.awt.Dimension(70, 23));
+        FormInput1.add(label43);
+        label43.setBounds(10, 40, 122, 23);
+
+        nmast.setEditable(false);
+        nmast.setName("nmast"); // NOI18N
+        nmast.setPreferredSize(new java.awt.Dimension(207, 23));
+        FormInput1.add(nmast);
+        nmast.setBounds(135, 40, 265, 23);
+
+        label44.setText("Biaya ast. 1:");
+        label44.setName("label44"); // NOI18N
+        label44.setPreferredSize(new java.awt.Dimension(70, 23));
+        FormInput1.add(label44);
+        label44.setBounds(375, 40, 122, 23);
+
+        biayaAstAnes.setText("0");
+        biayaAstAnes.setName("biayaAstAnes"); // NOI18N
+        biayaAstAnes.setPreferredSize(new java.awt.Dimension(80, 23));
+        FormInput1.add(biayaAstAnes);
+        biayaAstAnes.setBounds(525, 40, 100, 23);
+
+        BtnSimpan5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/save-16x16.png"))); // NOI18N
+        BtnSimpan5.setMnemonic('S');
+        BtnSimpan5.setText("Simpan");
+        BtnSimpan5.setToolTipText("Alt+S");
+        BtnSimpan5.setName("BtnSimpan5"); // NOI18N
+        BtnSimpan5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSimpan5ActionPerformed(evt);
+            }
+        });
+        FormInput1.add(BtnSimpan5);
+        BtnSimpan5.setBounds(510, 150, 100, 30);
+
+        BtnCloseIn6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/cross.png"))); // NOI18N
+        BtnCloseIn6.setMnemonic('U');
+        BtnCloseIn6.setText("Tutup");
+        BtnCloseIn6.setToolTipText("Alt+U");
+        BtnCloseIn6.setName("BtnCloseIn6"); // NOI18N
+        BtnCloseIn6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCloseIn6ActionPerformed(evt);
+            }
+        });
+        FormInput1.add(BtnCloseIn6);
+        BtnCloseIn6.setBounds(610, 150, 100, 30);
+
+        label45.setText("Rp.");
+        label45.setName("label45"); // NOI18N
+        label45.setPreferredSize(new java.awt.Dimension(70, 23));
+        FormInput1.add(label45);
+        label45.setBounds(495, 10, 28, 23);
+
+        label47.setText("Rp.");
+        label47.setName("label47"); // NOI18N
+        label47.setPreferredSize(new java.awt.Dimension(70, 23));
+        FormInput1.add(label47);
+        label47.setBounds(495, 40, 28, 23);
+
+        label46.setText("Prw. Resusitasi :");
+        label46.setName("label46"); // NOI18N
+        label46.setPreferredSize(new java.awt.Dimension(70, 23));
+        FormInput1.add(label46);
+        label46.setBounds(10, 70, 122, 23);
+
+        nmPrwRes.setEditable(false);
+        nmPrwRes.setName("nmPrwRes"); // NOI18N
+        nmPrwRes.setPreferredSize(new java.awt.Dimension(207, 23));
+        FormInput1.add(nmPrwRes);
+        nmPrwRes.setBounds(205, 70, 175, 23);
+
+        kdPrwRes.setEditable(false);
+        kdPrwRes.setName("kdPrwRes"); // NOI18N
+        kdPrwRes.setPreferredSize(new java.awt.Dimension(207, 23));
+        FormInput1.add(kdPrwRes);
+        kdPrwRes.setBounds(135, 70, 70, 23);
+
+        btnPrwRes1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
+        btnPrwRes1.setMnemonic('2');
+        btnPrwRes1.setToolTipText("Alt+2");
+        btnPrwRes1.setName("btnPrwRes1"); // NOI18N
+        btnPrwRes1.setPreferredSize(new java.awt.Dimension(28, 23));
+        btnPrwRes1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrwRes1ActionPerformed(evt);
+            }
+        });
+        FormInput1.add(btnPrwRes1);
+        btnPrwRes1.setBounds(380, 70, 28, 23);
+
+        internalFrame7.add(FormInput1, java.awt.BorderLayout.CENTER);
+
+        FormInput2.setBackground(new java.awt.Color(215, 225, 215));
+        FormInput2.setName("FormInput2"); // NOI18N
+        FormInput2.setPreferredSize(new java.awt.Dimension(260, 43));
+        FormInput2.setLayout(null);
+
+        jLabel3.setText("No.Rawat :");
+        jLabel3.setName("jLabel3"); // NOI18N
+        jLabel3.setPreferredSize(null);
+        FormInput2.add(jLabel3);
+        jLabel3.setBounds(0, 10, 70, 23);
+
+        TNoRw.setHighlighter(null);
+        TNoRw.setName("TNoRw"); // NOI18N
+        FormInput2.add(TNoRw);
+        TNoRw.setBounds(74, 10, 120, 23);
+
+        TNoRM.setEditable(false);
+        TNoRM.setHighlighter(null);
+        TNoRM.setName("TNoRM"); // NOI18N
+        FormInput2.add(TNoRM);
+        TNoRM.setBounds(195, 10, 60, 23);
+
+        TPasien.setEditable(false);
+        TPasien.setHighlighter(null);
+        TPasien.setName("TPasien"); // NOI18N
+        FormInput2.add(TPasien);
+        TPasien.setBounds(256, 10, 150, 23);
+
+        Tanggal1.setEditable(false);
+        Tanggal1.setName("Tanggal1"); // NOI18N
+        Tanggal1.setPreferredSize(new java.awt.Dimension(207, 23));
+        Tanggal1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                Tanggal1KeyPressed(evt);
+            }
+        });
+        FormInput2.add(Tanggal1);
+        Tanggal1.setBounds(500, 10, 180, 23);
+
+        label16.setText("Tanggal Op :");
+        label16.setName("label16"); // NOI18N
+        label16.setPreferredSize(new java.awt.Dimension(70, 23));
+        FormInput2.add(label16);
+        label16.setBounds(425, 10, 70, 23);
+
+        internalFrame7.add(FormInput2, java.awt.BorderLayout.PAGE_START);
+
+        WindowBiayaAnestesi.getContentPane().add(internalFrame7, java.awt.BorderLayout.CENTER);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -2784,6 +3012,62 @@ private void MnHapusObatOperasiActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }//GEN-LAST:event_NoRawat2KeyPressed
 
+    private void BtnSimpan5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpan5ActionPerformed
+        if (TNoRw.getText().equals("")) {
+            Valid.textKosong(TNoRw, "No. Rawat");
+        } else {
+            int reply = JOptionPane.showConfirmDialog(rootPane, "Eeiiiiiits, udah bener belum data yang mau disimpan..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                if (Sequel.mengedittf("operasi", "no_rawat=? and tgl_operasi=?", "biayadokter_anestesi=?,biayaasisten_anestesi=?,perawaat_resusitas=?", 5, new String[]{
+                    biayaDrAnes.getText(), biayaAstAnes.getText(), kdPrwRes.getText(), TNoRw.getText(), Tanggal1.getText()
+                }) == true) {
+                    JOptionPane.showMessageDialog(null, "Berhasil simpan..");
+                    biayaDrAnes.setText("");
+                    biayaAstAnes.setText("");
+                    WindowBiayaAnestesi.dispose();
+                    tampil();
+                }
+            }
+        }
+    }//GEN-LAST:event_BtnSimpan5ActionPerformed
+
+    private void BtnCloseIn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCloseIn6ActionPerformed
+        WindowBiayaAnestesi.dispose();
+    }//GEN-LAST:event_BtnCloseIn6ActionPerformed
+
+    private void MnBiayaAnestesiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnBiayaAnestesiActionPerformed
+        if (tbDokter.getSelectedRow() > -1) {
+            if (!tbDokter.getValueAt(tbDokter.getSelectedRow(), 1).toString().equals("")) {
+                Tanggal1.setText(tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString().substring(0,19));
+                TNoRw.setText(tbDokter.getValueAt(tbDokter.getSelectedRow(), 1).toString());
+                TNoRM.setText(tbDokter.getValueAt(tbDokter.getSelectedRow(), 2).toString().substring(0, 6));
+                TPasien.setText(Sequel.cariIsi("select nm_pasien from pasien where no_rkm_medis=?", TNoRM.getText()));
+                String kddranes = Sequel.cariIsi("select dokter_anestesi from operasi where no_rawat=?", TNoRw.getText());
+                nmdranes.setText(Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?", kddranes));
+                String kdastanes = Sequel.cariIsi("select asisten_anestesi from operasi where no_rawat=?", TNoRw.getText());
+                nmast.setText(Sequel.cariIsi("select nama from petugas where nip=?", kdastanes));
+                kdPrwRes.setText(Sequel.cariIsi("select perawaat_resusitas from operasi where no_rawat=?", TNoRw.getText()));
+                nmPrwRes.setText(Sequel.cariIsi("select nama from petugas where nip=?", kdPrwRes.getText()));
+                WindowBiayaAnestesi.setSize(780, 250);        
+                WindowBiayaAnestesi.setLocationRelativeTo(internalFrame1);
+                WindowBiayaAnestesi.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_MnBiayaAnestesiActionPerformed
+
+    private void Tanggal1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Tanggal1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Tanggal1KeyPressed
+
+    private void btnPrwRes1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrwRes1ActionPerformed
+        pilihan = 17;
+        petugas.emptTeks();
+        petugas.isCek();
+        petugas.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
+        petugas.setLocationRelativeTo(internalFrame1);
+        petugas.setVisible(true);
+    }//GEN-LAST:event_btnPrwRes1ActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -2809,15 +3093,20 @@ private void MnHapusObatOperasiActionPerformed(java.awt.event.ActionEvent evt) {
     private widget.Button BtnCari5;
     private widget.Button BtnCloseIn4;
     private widget.Button BtnCloseIn5;
+    private widget.Button BtnCloseIn6;
     private widget.Button BtnKeluar;
     private widget.Button BtnOperator1;
     private widget.Button BtnOperator2;
     private widget.Button BtnPrint;
     private widget.Button BtnSimpan;
     private widget.Button BtnSimpan4;
+    private widget.Button BtnSimpan5;
     private widget.panelisi FormInput;
+    private widget.panelisi FormInput1;
+    private widget.PanelBiasa FormInput2;
     private widget.TextBox Kd2;
     private widget.Label LTotal;
+    private javax.swing.JMenuItem MnBiayaAnestesi;
     private javax.swing.JMenuItem MnHapusObatOperasi;
     private javax.swing.JMenuItem MnHapusTagihanOperasi;
     private javax.swing.JMenuItem MnMappingOperasi;
@@ -2825,11 +3114,18 @@ private void MnHapusObatOperasiActionPerformed(java.awt.event.ActionEvent evt) {
     private widget.TextBox NoRawat;
     private widget.TextBox NoRawat2;
     private widget.TextBox TCari;
+    private widget.TextBox TNoRM;
+    private widget.TextBox TNoRw;
+    private widget.TextBox TPasien;
     private widget.TextBox Tanggal;
+    private widget.TextBox Tanggal1;
     private widget.Tanggal Tgl1;
     private widget.Tanggal Tgl2;
+    private javax.swing.JDialog WindowBiayaAnestesi;
     private javax.swing.JDialog WindowGantiDokterParamedis;
     private javax.swing.JDialog WindowMappingTglOp;
+    private widget.TextBox biayaAstAnes;
+    private widget.TextBox biayaDrAnes;
     private widget.Button btnAnak;
     private widget.Button btnAsis1;
     private widget.Button btnAsis2;
@@ -2846,13 +3142,17 @@ private void MnHapusObatOperasiActionPerformed(java.awt.event.ActionEvent evt) {
     private widget.Button btnOnloop5;
     private widget.Button btnPrwLuar;
     private widget.Button btnPrwRes;
+    private widget.Button btnPrwRes1;
     private widget.Button btndrpjanak;
     private widget.Button btndrumum;
     private widget.InternalFrame internalFrame1;
     private widget.InternalFrame internalFrame5;
     private widget.InternalFrame internalFrame6;
+    private widget.InternalFrame internalFrame7;
+    private widget.Label jLabel3;
     private javax.swing.JPopupMenu jPopupMenu1;
     private widget.TextBox kdInstrumen;
+    private widget.TextBox kdPrwRes;
     private widget.TextBox kdanestesi;
     private widget.TextBox kdasistanestesi;
     private widget.TextBox kdasistanestesi2;
@@ -2882,6 +3182,7 @@ private void MnHapusObatOperasiActionPerformed(java.awt.event.ActionEvent evt) {
     private widget.Label label13;
     private widget.Label label14;
     private widget.Label label15;
+    private widget.Label label16;
     private widget.Label label17;
     private widget.Label label18;
     private widget.Label label19;
@@ -2905,18 +3206,28 @@ private void MnHapusObatOperasiActionPerformed(java.awt.event.ActionEvent evt) {
     private widget.Label label37;
     private widget.Label label38;
     private widget.Label label39;
+    private widget.Label label41;
+    private widget.Label label42;
+    private widget.Label label43;
+    private widget.Label label44;
+    private widget.Label label45;
+    private widget.Label label46;
+    private widget.Label label47;
     private widget.Label label64;
     private widget.Label label9;
+    private widget.TextBox nmPrwRes;
     private widget.TextBox nmanestesi;
     private widget.TextBox nmasistanestesi;
     private widget.TextBox nmasistanestesi2;
     private widget.TextBox nmasistoperator1;
     private widget.TextBox nmasistoperator2;
     private widget.TextBox nmasistoperator3;
+    private widget.TextBox nmast;
     private widget.TextBox nmbidan;
     private widget.TextBox nmbidan2;
     private widget.TextBox nmbidan3;
     private widget.TextBox nmdranak;
+    private widget.TextBox nmdranes;
     private widget.TextBox nmdrumum;
     private widget.TextBox nminstrumen;
     private widget.TextBox nmmem;

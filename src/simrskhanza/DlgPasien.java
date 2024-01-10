@@ -15,6 +15,7 @@ import bridging.BPJSCekNIK;
 import bridging.BPJSCekNoKartu;
 import bridging.BPJSNik;
 import bridging.BPJSPeserta;
+import com.sun.javafx.tk.TKPulseListener;
 import fungsi.WarnaTable;
 import fungsi.batasInput;
 import fungsi.koneksiDB;
@@ -3449,7 +3450,7 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         Valid.textKosong(nmbahasa, "Bahasa");
     } else if (nmperusahaan.getText().trim().equals("")) {
         Valid.textKosong(nmperusahaan, "Perusahaan/Instansi");
-    } else if (Sequel.cariInteger("select count(no_ktp) from pasien where no_ktp=?", TKtp.getText()) > 0) {
+    } else if ((TKtp.getText().trim().length()==16) && Sequel.cariInteger("select count(no_ktp) from pasien where no_ktp=?", TKtp.getText()) > 0) {
         JOptionPane.showMessageDialog(null, "Pasien dengan NIK tersebut sudah ada.\nSilakan periksa di data pasien..!!!");
         TKtp.requestFocus();
     } else {

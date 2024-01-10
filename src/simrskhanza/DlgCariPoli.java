@@ -40,6 +40,7 @@ public final class DlgCariPoli extends javax.swing.JDialog {
     private Connection koneksi=koneksiDB.condb();
     private PreparedStatement ps;
     private ResultSet rs;
+    private String nmsps="";//added
     /** Creates new form DlgPenyakit
      * @param parent
      * @param modal */
@@ -264,6 +265,7 @@ public final class DlgCariPoli extends javax.swing.JDialog {
 
     private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCariActionPerformed
         tampil();
+//        tampil(TCari.getText());
 }//GEN-LAST:event_BtnCariActionPerformed
 
     private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnCariKeyPressed
@@ -328,6 +330,7 @@ public final class DlgCariPoli extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         tampil();
+//        tampil(TCari.getText());
     }//GEN-LAST:event_formWindowOpened
 
     /**
@@ -402,4 +405,59 @@ public final class DlgCariPoli extends javax.swing.JDialog {
     public void isCek(){        
         BtnTambah.setEnabled(var.getadmin());
     }
+    
+    public void tampil(String kode) {
+        Valid.tabelKosong(tabMode);
+        String nama = konversiSpesialis(kode);
+        TCari.setText(nama);
+        try {
+            ps = koneksi.prepareStatement("select kd_poli, nm_poli registrasi, registrasilama "
+                    + " from poliklinik where status='1' and nm_poli like ? order by nm_poli");
+            try {
+                ps.setString(1, "%" + TCari.getText().trim() + "%");
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    tabMode.addRow(new Object[]{rs.getString(1), rs.getString(2)});
+                }
+            } catch (SQLException e) {
+                System.out.println("Notifikasi : " + e);
+            } finally {
+                if (rs != null) {
+                    rs.close();
+                }
+
+                if (ps != null) {
+                    ps.close();
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Notifikasi : " + e);
+        }
+        LCount.setText("" + tabMode.getRowCount());
+    }
+    
+    String konversiSpesialis(String kd_sps) {
+        nmsps = Sequel.cariIsi("select nm_sps from spesialis where kd_sps=?",kd_sps);
+        switch (kd_sps) {
+            case "S0005":
+                return "Ortho";
+            case "S0006":
+                return "Bedah Umum";
+            case "S0009":
+                return "THT";
+            case "S0020":
+                return "Jantung";
+            case "S0021":
+                return "Jiwa";
+            case "S0023":
+                return "Bedah Mulut";
+            case "S0026":
+                return "Saraf";
+            case "S0027":
+                return "Paru";
+            default:
+                return nmsps;
+        }
+    }
+
 }

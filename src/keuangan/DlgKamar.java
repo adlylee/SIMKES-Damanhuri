@@ -47,7 +47,7 @@ public final class DlgKamar extends javax.swing.JDialog {
     private PreparedStatement ps;
     private ResultSet rs;
     private int i=0;
-    private String asalform="",ubah_status_kamar=Sequel.cariIsi("select ubah_status_kamar from set_jam_minimal"), jabatan = Sequel.cariIsi("SELECT kd_jbtn FROM petugas WHERE nip='"+var.getkode()+"'"),bidang = Sequel.cekBidang(var.getkode());
+    private String asalform="",ubah_status_kamar=Sequel.cariIsi("select ubah_status_kamar from set_jam_minimal"),bidang = Sequel.cekBidang(var.getkode());
     
     /** Creates new form DlgKamar
      * @param parent
@@ -1183,6 +1183,7 @@ private void CmbCrIsiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST
 //        kd_bangsal.setEditable(var.getkamar());
 //        Kelas.setEnabled(var.getkamar());        
         asalform=var.getform();
+        String jabatan = Sequel.cariIsi("SELECT kd_jbtn FROM petugas WHERE nip=?",var.getkode());
         if(var.getkode().equals("Admin Utama")){
             MnRestore.setEnabled(true);
             BtnEdit.setEnabled(true);
@@ -1200,6 +1201,9 @@ private void CmbCrIsiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST
             BtnHapus.setEnabled(false);            
             btnKamar.setEnabled(false);      
             TTarif.setEditable(false);
+            TKd.setEditable(false);
+            Kelas.setEnabled(false); 
+            kd_bangsal.setEditable(false);
         }else{
             if(ubah_status_kamar.equals("No")){
                 BtnEdit.setEnabled(false);

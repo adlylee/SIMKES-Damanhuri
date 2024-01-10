@@ -400,6 +400,7 @@ import perlap.DlgLapRBA;
 import perlap.DlgPermintaanRBA;
 import setting.DlgSetHariLibur;
 import setting.DlgSetUtd;
+import setting.DlgTrialWhatsapp;
 
 /**
  *
@@ -961,6 +962,7 @@ public class frmUtama extends javax.swing.JFrame {
         btnRekapKegiatanRad = new widget.ButtonBig();
         btnPermintaanRBA = new widget.ButtonBig();
         btnSetHariLibur = new widget.ButtonBig();
+        btnTrialSendWA = new widget.ButtonBig();
         internalFrame1 = new widget.InternalFrame();
         BtnMenu = new widget.ButtonBig();
         jSeparator4 = new javax.swing.JSeparator();
@@ -5660,7 +5662,7 @@ public class frmUtama extends javax.swing.JFrame {
 
         tanggal.setEditable(false);
         tanggal.setForeground(new java.awt.Color(50, 70, 50));
-        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "22/12/2023" }));
+        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02/01/2024" }));
         tanggal.setDisplayFormat("dd/MM/yyyy");
         tanggal.setName("tanggal"); // NOI18N
         tanggal.setOpaque(false);
@@ -5995,6 +5997,18 @@ public class frmUtama extends javax.swing.JFrame {
             }
         });
 
+        btnTrialSendWA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/whatsapp.png"))); // NOI18N
+        btnTrialSendWA.setText("Send Whatsapp");
+        btnTrialSendWA.setToolTipText("");
+        btnTrialSendWA.setIconTextGap(0);
+        btnTrialSendWA.setName("btnTrialSendWA"); // NOI18N
+        btnTrialSendWA.setPreferredSize(new java.awt.Dimension(200, 90));
+        btnTrialSendWA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTrialSendWAActionPerformed(evt);
+            }
+        });
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("::[ Khanza SIMKES 2019 ]::");
         setBackground(new java.awt.Color(153, 255, 153));
@@ -6311,7 +6325,7 @@ public class frmUtama extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(70, 70, 70));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/file-edit-16x16.png"))); // NOI18N
-        jLabel7.setText(" Didesain & dibuat oleh Khanza.Soft Media. (Opt by ICT RSHD Barabai Build.V.20231223)");
+        jLabel7.setText(" Didesain & dibuat oleh Khanza.Soft Media. (Opt by ICT RSHD Barabai Build.V.20240104)");
         jLabel7.setToolTipText("");
         jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jLabel7.setIconTextGap(3);
@@ -12518,6 +12532,17 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_btnSetHariLiburActionPerformed
 
+    private void btnTrialSendWAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrialSendWAActionPerformed
+        isTutup();
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        DlgTrialWhatsapp user = new DlgTrialWhatsapp(this, false);
+        user.setSize(PanelUtama.getWidth(), PanelUtama.getHeight());
+        user.setLocationRelativeTo(PanelUtama);
+        user.setVisible(true);
+        DlgHome.dispose();
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_btnTrialSendWAActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -12959,6 +12984,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private widget.ButtonBig btnToolLab;
     private widget.ButtonBig btnToolRad;
     private widget.ButtonBig btnTracker;
+    private widget.ButtonBig btnTrialSendWA;
     private widget.ButtonBig btnUTDCekalDarah;
     private widget.ButtonBig btnUTDDonorDarah;
     private widget.ButtonBig btnUTDKomponenDarah;
@@ -15119,6 +15145,8 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
 
             if(var.getadmin()==true){
                 Panelmenu.add(btnAdmin);
+                Panelmenu.add(btnSetHariLibur);
+                Panelmenu.add(btnTrialSendWA);
                 jmlmenu++;
             }
 
@@ -15235,8 +15263,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             }
             
             if(var.getpassword_asuransi()==true){
-                Panelmenu.add(btnPasswordAsuransi);
-                Panelmenu.add(btnSetHariLibur);                
+                Panelmenu.add(btnPasswordAsuransi);              
                 jmlmenu++;
             }
         }    
@@ -16970,6 +16997,8 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
 
         if(var.getadmin()==true){
             Panelmenu.add(btnAdmin);
+            Panelmenu.add(btnSetHariLibur);
+            Panelmenu.add(btnTrialSendWA);
             jmlmenu++;
         }
 
@@ -17087,7 +17116,6 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         
         if(var.getpassword_asuransi()==true){
             Panelmenu.add(btnPasswordAsuransi);
-            Panelmenu.add(btnSetHariLibur);
             jmlmenu++;
         }
     }
@@ -19501,6 +19529,8 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         if(var.getadmin()==true){
             if(btnAdmin.getText().toLowerCase().trim().contains(TCari.getText().toLowerCase().trim())){
                 Panelmenu.add(btnAdmin);
+                Panelmenu.add(btnSetHariLibur);
+                Panelmenu.add(btnTrialSendWA);
                 jmlmenu++;
             }                
         }
@@ -19664,7 +19694,6 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         if(var.getpassword_asuransi()==true){
             if(btnPasswordAsuransi.getText().toLowerCase().trim().contains(TCari.getText().toLowerCase().trim())){
                 Panelmenu.add(btnPasswordAsuransi);
-                Panelmenu.add(btnSetHariLibur);
                 jmlmenu++;
             }                
         }

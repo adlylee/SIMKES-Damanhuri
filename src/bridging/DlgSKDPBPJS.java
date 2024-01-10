@@ -57,9 +57,10 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
     private DlgCariPoli poli = new DlgCariPoli(null, false);
 //    private DlgJadwal poli = new DlgJadwal(null, false);
     private BPJSSuratKontrol kontrol = new BPJSSuratKontrol(null, false);
-    private String URUTNOREG = "", tglSetelah85Hari = "", status = "", set_status_rawat = "", kdpoli = "", nmpoli = "", noantri = "", antrian = "", user = "", nosep = "", nosepCari = "", penjab = "", diag, kddokter = "", norujuk = "", norujukCari = "", tglrujukan = "", hari = "";
+    private String URUTNOREG = "", tglSetelah85Hari = "", status = "", set_status_rawat = "", kdpoli = "", nmpoli = "", noantri = "", antrian = "", user = "", nosep = "", nosepCari = "", penjab = "", diag, kddokter = "", norujuk = "", norujukCari = "", tglrujukan = "", hari = "",
+            kdsps="";
     private SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");//added
-
+    
     /**
      * Creates new form DlgPemberianInfus
      *
@@ -1588,14 +1589,18 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 //        poli.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
 //        poli.setLocationRelativeTo(internalFrame1);
 //        poli.setVisible(true);
+        if (!KdDokter.equals("")) { 
+            kdsps = Sequel.cariIsi("select spesialis.kd_sps from dokter join spesialis on dokter.kd_sps=spesialis.kd_sps where dokter.kd_dokter=?",KdDokter.getText());            
+        }
         poli.isCek();
+        poli.tampil(kdsps);
         poli.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
         poli.setLocationRelativeTo(internalFrame1);
         poli.setVisible(true);
     }//GEN-LAST:event_BtnPoliActionPerformed
 
     private void NoRegKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NoRegKeyPressed
-        Valid.pindah(evt, NoSurat, BtnSimpan);
+        Valid.pindah(evt, NoSurat, BtnSimpan); 
     }//GEN-LAST:event_NoRegKeyPressed
 
     private void MnSuratActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnSuratActionPerformed
@@ -2093,9 +2098,9 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         if (!KdDokter.getText().equals("") && !KdPoli.getText().equals("")) {
             if (!cari.contains(tanggal)) {
                 stat = true;
-                JOptionPane.showMessageDialog(null, "Maaf, Jadwal dokter/poli tidak tersedia pada tanggal yang dipilih..!!!");
-                KdPoli.setText("");
-                NmPoli.setText("");
+                JOptionPane.showMessageDialog(null, "Maaf, Jadwal dokter/poli tidak tersedia pada tanggal yang dipilih./nSilakan pilih tanggal lain..!!!");
+//                KdPoli.setText("");
+//                NmPoli.setText("");
             }
         }
         return stat;
