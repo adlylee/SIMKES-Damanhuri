@@ -1669,14 +1669,17 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
 }//GEN-LAST:event_BtnBatalKeyPressed
 
     private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHapusActionPerformed
-        for(i=0;i<tbObat.getRowCount();i++){ 
-            if(tbObat.getValueAt(i,0).toString().equals("true")){
-                Sequel.queryu2("delete from booking_registrasi where no_rkm_medis=? and tanggal_periksa=?",2,new String[]{
-                    tbObat.getValueAt(i,3).toString(),tbObat.getValueAt(i,5).toString()
-                });
+        int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin menghapus data...??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            for (i = 0; i < tbObat.getRowCount(); i++) {
+                if (tbObat.getValueAt(i, 0).toString().equals("true")) {
+                    Sequel.queryu2("delete from booking_registrasi where no_rkm_medis=? and tanggal_periksa=?", 2, new String[]{
+                        tbObat.getValueAt(i, 3).toString(), tbObat.getValueAt(i, 5).toString()
+                    });
+                }
             }
+            tampil();
         }
-        tampil();
 }//GEN-LAST:event_BtnHapusActionPerformed
 
     private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnHapusKeyPressed
@@ -2160,19 +2163,22 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }//GEN-LAST:event_BtnCloseIn7ActionPerformed
 
     private void BtnSimpan7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpan7ActionPerformed
-        for (i = 0; i < tbObat.getRowCount(); i++) {
-            if (tbObat.getValueAt(i, 0).toString().equals("true")) {
-                NoReg1.setText("");
-                isNomer2();
-                if (Sequel.mengedittf("booking_registrasi", "no_rkm_medis=? and tanggal_periksa=?", "kd_dokter=?,kd_poli=?,tanggal_periksa=?, no_reg=?", 6
-                        , new String[]{
-                    KdDokter1.getText(), KdPoli4.getText(),Valid.SetTgl(TanggalPeriksa1.getSelectedItem()+""), NoReg1.getText(),
-                    tbObat.getValueAt(i, 3).toString(), tbObat.getValueAt(i, 5).toString()
-                }) == true) {
-                    Sequel.mengedit3("skdp_bpjs", "no_rkm_medis=? and tanggal_datang=?", "tanggal_datang=?,kd_dokter=?", 4, new String[]{
-                        Valid.SetTgl(TanggalPeriksa1.getSelectedItem() + ""), KdDokter1.getText(),
-                        tbObat.getValueAt(i, 3).toString(), tbObat.getValueAt(i, 5).toString()
-                    });
+        int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin menyimpan data...??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            for (i = 0; i < tbObat.getRowCount(); i++) {
+                if (tbObat.getValueAt(i, 0).toString().equals("true")) {
+                    NoReg1.setText("");
+                    isNomer2();
+                    if (Sequel.mengedittf("booking_registrasi", "no_rkm_medis=? and tanggal_periksa=?", "kd_dokter=?,kd_poli=?,tanggal_periksa=?, no_reg=?", 6,
+                            new String[]{
+                                KdDokter1.getText(), KdPoli4.getText(), Valid.SetTgl(TanggalPeriksa1.getSelectedItem() + ""), NoReg1.getText(),
+                                tbObat.getValueAt(i, 3).toString(), tbObat.getValueAt(i, 5).toString()
+                            }) == true) {
+                        Sequel.mengedit3("skdp_bpjs", "no_rkm_medis=? and tanggal_datang=?", "tanggal_datang=?,kd_dokter=?", 4, new String[]{
+                            Valid.SetTgl(TanggalPeriksa1.getSelectedItem() + ""), KdDokter1.getText(),
+                            tbObat.getValueAt(i, 3).toString(), tbObat.getValueAt(i, 5).toString()
+                        });
+                    }
                 }
             }
         }
@@ -2565,12 +2571,15 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }
     
     private void isEditBooking() {
-        if (Sequel.mengedittf("booking_registrasi", "no_rkm_medis=? and tanggal_periksa=?", "tanggal_periksa=?,kd_dokter=?,kd_poli=?,no_reg=?,kd_pj=?", 7, new String[]{
-            Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), KdDokter.getText(),
-            KdPoli.getText(), NoReg.getText(), kdpnj.getText(), tabMode.getValueAt(tbObat.getSelectedRow(), 3).toString(), tabMode.getValueAt(tbObat.getSelectedRow(), 5).toString()
-        }) == true) {
-            emptTeks();
-            tampil();
+        int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin menyimpan data...??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            if (Sequel.mengedittf("booking_registrasi", "no_rkm_medis=? and tanggal_periksa=?", "tanggal_periksa=?,kd_dokter=?,kd_poli=?,no_reg=?,kd_pj=?", 7, new String[]{
+                Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), KdDokter.getText(),
+                KdPoli.getText(), NoReg.getText(), kdpnj.getText(), tabMode.getValueAt(tbObat.getSelectedRow(), 3).toString(), tabMode.getValueAt(tbObat.getSelectedRow(), 5).toString()
+            }) == true) {
+                emptTeks();
+                tampil();
+            }
         }
     }
     

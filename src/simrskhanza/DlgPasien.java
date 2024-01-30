@@ -3450,6 +3450,9 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         Valid.textKosong(nmbahasa, "Bahasa");
     } else if (nmperusahaan.getText().trim().equals("")) {
         Valid.textKosong(nmperusahaan, "Perusahaan/Instansi");
+    } else if ((TNoPeserta.getText().trim().length()==13) && Sequel.cariInteger("select count(no_peserta) from pasien where no_peserta=?", TNoPeserta.getText()) > 0) {
+        JOptionPane.showMessageDialog(null, "Pasien dengan No. Peserta tersebut sudah ada.\nSilakan periksa di data pasien..!!!");
+        TNoPeserta.requestFocus();
     } else if ((TKtp.getText().trim().length()==16) && Sequel.cariInteger("select count(no_ktp) from pasien where no_ktp=?", TKtp.getText()) > 0) {
         JOptionPane.showMessageDialog(null, "Pasien dengan NIK tersebut sudah ada.\nSilakan periksa di data pasien..!!!");
         TKtp.requestFocus();

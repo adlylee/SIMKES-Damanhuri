@@ -556,7 +556,7 @@ public class DlgSetUtd extends javax.swing.JDialog {
     private void tampil() {
         Valid.tabelKosong(tabMode);
         try{
-            ResultSet rs=koneksi.prepareStatement("select * from utd_mapping_komponen").executeQuery();
+            ResultSet rs=koneksi.prepareStatement("select * from utd_mapping_komponen where status='1'").executeQuery();
             while(rs.next()){
                 tabMode.addRow(new Object[]{
                     rs.getString(1),

@@ -32,6 +32,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import keuangan.Jurnal;
 import kepegawaian.DlgCariPetugas;
+import keuangan.DlgCariPerawatanRanap;
 import simrskhanza.DlgKamarInap;
 import simrskhanza.DlgKamarInap2;
 import static tranfusidarah.UTDDonor.getShift;
@@ -46,7 +47,7 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
     private Dimension screen=Toolkit.getDefaultToolkit().getScreenSize();
     private double ttl=0,y=0,stokbarang=0,bayar=0,total2=0,ppn=0,besarppn=0,tagihanppn=0;;
     private int jml=0,i=0,index=0,row=0,pilih=0,max_pakai=0;
-    private String verifikasi_penyerahan_darah_di_kasir="",status="Belum Dibayar",noorder="",norm="";
+    private String verifikasi_penyerahan_darah_di_kasir="",status="Belum Dibayar",noorder="",norm="",kelas="";
     private PreparedStatement ps,ps2,psstok,psdarah,pssimpanperiksa;
     private ResultSet rs,rs2,rsstok,rsdarah;
     private boolean[] pilihan;
@@ -57,6 +58,7 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
     private WarnaTable2 warna=new WarnaTable2();
     private UTDCariPenyerahanDarah carijual=new UTDCariPenyerahanDarah(null,false);
     private DlgKamarInap2 kamar=new DlgKamarInap2(null,false);
+    public DlgCariPerawatanRanap perawatan = new DlgCariPerawatanRanap(null, false);
 
     /** Creates new form DlgProgramStudi
      * @param parent
@@ -113,9 +115,9 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
                 column.setPreferredWidth(75);
             }else if(i==6){
                 column.setPreferredWidth(75);
-            }else if((i==7)||(i==13)){
+            }else if(i==7){
                 column.setPreferredWidth(90);
-            }else if((i==8)||(i==9)||(i==10)||(i==11)||(i==12)||(i==14)||(i==15)){
+            }else if((i==8)||(i==9)||(i==10)||(i==11)||(i==12)||(i==14)||(i==15)||(i==13)){
                 column.setMinWidth(0);
                 column.setMaxWidth(0);
             }
@@ -336,6 +338,8 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
         CmbCariGd = new widget.ComboBox();
         jLabel13 = new widget.Label();
         CmbCariResus = new widget.ComboBox();
+        jLabel14 = new widget.Label();
+        CmbCariKelas = new widget.ComboBox();
         label9 = new widget.Label();
         TCari = new widget.TextBox();
         BtnCari1 = new widget.Button();
@@ -510,6 +514,31 @@ public class UTDPenyerahanDarah extends javax.swing.JDialog {
             }
         });
         panelisi1.add(CmbCariResus);
+
+        jLabel14.setText("Kelas :");
+        jLabel14.setName("jLabel14"); // NOI18N
+        jLabel14.setPreferredSize(new java.awt.Dimension(45, 23));
+        panelisi1.add(jLabel14);
+
+        CmbCariKelas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-", "Non kelas", "Dg penyulit", "VIP", "VVIP" }));
+        CmbCariKelas.setName("CmbCariKelas"); // NOI18N
+        CmbCariKelas.setPreferredSize(new java.awt.Dimension(100, 23));
+        CmbCariKelas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                CmbCariKelasItemStateChanged(evt);
+            }
+        });
+        CmbCariKelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CmbCariKelasActionPerformed(evt);
+            }
+        });
+        CmbCariKelas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                CmbCariKelasKeyPressed(evt);
+            }
+        });
+        panelisi1.add(CmbCariKelas);
 
         label9.setText("Key Word :");
         label9.setName("label9"); // NOI18N
@@ -1278,6 +1307,8 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
             Valid.textKosong(nmpengambil,"Pengambil Darah");
         }else if(alamatpengambil.getText().trim().equals("")){
             Valid.textKosong(alamatpengambil,"Alamat Pengambil Darah");
+        }else if(CmbCariKelas.getSelectedItem().toString().trim().equals("-")){
+            Valid.textKosong(CmbCariKelas,"Kelas");
         }else if(ttl<=0){
             JOptionPane.showMessageDialog(null,"Maaf, Silahkan masukkan data penyerahan darah...!!!!");
             TCari.requestFocus();
@@ -1301,10 +1332,12 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         //simpan darah
                         for (i = 0; i < tbDarah.getRowCount(); i++) {
                             if (tbDarah.getValueAt(i, 0).toString().equals("true")) {
+                                    String input_total = String.valueOf(ttl);
                                 if (Sequel.menyimpantf("utd_penyerahan_darah_detail", "?,?,?,?,?,?,?,?", "No.Kantong", 8, new String[]{
                                     nopenyerahan.getText(), tbDarah.getValueAt(i, 14).toString(), tbDarah.getValueAt(i, 9).toString(),
                                     tbDarah.getValueAt(i, 10).toString(), tbDarah.getValueAt(i, 11).toString(),
-                                    tbDarah.getValueAt(i, 12).toString(), tbDarah.getValueAt(i, 13).toString(),tbDarah.getValueAt(i, 15).toString()
+                                    tbDarah.getValueAt(i, 12).toString(),input_total , tbDarah.getValueAt(i, 15).toString()
+//                                    tbDarah.getValueAt(i, 12).toString(), tbDarah.getValueAt(i, 13).toString(),tbDarah.getValueAt(i, 15).toString()
                                 }) == false) {
                                     tbDarah.setValueAt(false, i, 0);
                                     getData();
@@ -1319,8 +1352,16 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                     }
                                     Sequel.queryu("update permintaan_utd set keterangan='Sudah Validasi',no_penyerahan='"+nopenyerahan.getText()+"' where noorder='"+noorder+"'");
                                     try {
-                                        String kd_jns_prw = Sequel.cariIsi("SELECT kd_lab FROM utd_mapping_komponen WHERE nm_komponen = '" + tbDarah.getValueAt(i, 2).toString() + "'");
-                                        ps = koneksi.prepareStatement("SELECT kd_jenis_prw , material , bhp , tarif_tindakanpr , kso, menejemen , total_byrpr FROM jns_perawatan_inap WHERE kd_jenis_prw = '" + kd_jns_prw + "'");
+//                                        String kd_jns_prw = Sequel.cariIsi("SELECT kd_lab FROM utd_mapping_komponen WHERE nm_komponen = '" + tbDarah.getValueAt(i, 2).toString() + "'");
+                                        String cari = "";
+                                        if (!noorder.equals("")) {
+                                            cari = Sequel.cariIsi("SELECT kd_jenis_prw FROM permintaan_pemeriksaan_utd WHERE noorder = '" + noorder + "'");
+                                        }                     
+                                        if (noorder.equals("")) {
+                                            cari = Sequel.cariIsi("select kd_lab from utd_mapping_komponen inner join jns_perawatan_inap  on utd_mapping_komponen.kd_lab=jns_perawatan_inap.kd_jenis_prw "
+                                                    + "where utd_mapping_komponen.status='1' and utd_mapping_komponen.kd_komponen='"+tbDarah.getValueAt(i, 15).toString()+"' and jns_perawatan_inap.kelas='"+kelas+"'");
+                                        }
+                                        ps = koneksi.prepareStatement("SELECT kd_jenis_prw , material , bhp , tarif_tindakanpr , kso, menejemen , total_byrpr FROM jns_perawatan_inap WHERE kd_jenis_prw = '" + cari + "'");
                                         rs = ps.executeQuery();
                                         while (rs.next()) {
                                             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -1466,7 +1507,8 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                    tabMode.getValueAt(i,2).toString()+"','"+
                                    tabMode.getValueAt(i,3).toString()+"','"+
                                    tabMode.getValueAt(i,4).toString()+"','"+
-                                   tabMode.getValueAt(i,13).toString()+"','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''","Transaksi Penjualan Darah"); 
+                                   LTotal.getText()+"','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''","Transaksi Penjualan Darah"); 
+//                                   tabMode.getValueAt(i,13).toString()+"','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''","Transaksi Penjualan Darah"); 
                     }
                 } catch (Exception e) {
                 }                
@@ -1795,6 +1837,25 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         // TODO add your handling code here:
     }//GEN-LAST:event_norawatKeyPressed
 
+    private void CmbCariKelasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbCariKelasItemStateChanged
+        if(tabMode.getRowCount()!=0){
+            if(tbDarah.getSelectedColumn()==0){
+                try {                  
+                    getData();
+                } catch (Exception e) {
+                }
+            }                
+        }
+    }//GEN-LAST:event_CmbCariKelasItemStateChanged
+
+    private void CmbCariKelasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CmbCariKelasKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CmbCariKelasKeyPressed
+
+    private void CmbCariKelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmbCariKelasActionPerformed
+
+    }//GEN-LAST:event_CmbCariKelasActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -1826,6 +1887,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private widget.Button BtnTambah;
     private widget.ComboBox CmbAkun;
     private widget.ComboBox CmbCariGd;
+    private widget.ComboBox CmbCariKelas;
     private widget.ComboBox CmbCariResus;
     private widget.TextBox Kd2;
     private widget.Label LCount;
@@ -1849,6 +1911,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private widget.Label jLabel11;
     private widget.Label jLabel12;
     private widget.Label jLabel13;
+    private widget.Label jLabel14;
     private widget.Label jLabel17;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
@@ -1951,7 +2014,8 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                     bhp[index]=tbDarah.getValueAt(i,10).toString();
                     kso[index]=tbDarah.getValueAt(i,11).toString();
                     menejemen[index]=tbDarah.getValueAt(i,12).toString();
-                    biaya[index]=Double.parseDouble(tbDarah.getValueAt(i,13).toString());
+                    biaya[index]=Double.parseDouble(LTotal.getText());
+//                    biaya[index]=Double.parseDouble(tbDarah.getValueAt(i,13).toString());
                     kodekomponen[index]=tbDarah.getValueAt(i,14).toString();
                     index++;
                 }
@@ -2174,10 +2238,28 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             ttl=0;
             int row2=tbDarah.getRowCount();
             for(int r=0;r<row2;r++){ 
-                if(tbDarah.getValueAt(r,0).toString().equals("true")){
+                if(tbDarah.getValueAt(r,0).toString().equals("true") 
+                        && !CmbCariKelas.getSelectedItem().toString().equals("-")){//added                    
                     y=0;
                     try {
-                        y=Double.parseDouble(tbDarah.getValueAt(r,13).toString()); 
+                        kelas = "";
+                        switch (CmbCariKelas.getSelectedItem().toString()) {
+                            case "Non kelas":
+                                kelas = "-";
+                                break;
+                            case "Dg penyulit":
+                                kelas = "Kelas Utama";
+                                break;
+                            case "VIP":
+                                kelas = "Kelas VIP";
+                                break;
+                            case "VVIP":
+                                kelas = "Kelas VVIP";
+                                break;
+                        }
+//                        y=Double.parseDouble(tbDarah.getValueAt(r,13).toString()); 
+                        y = Sequel.cariIsiAngka("select total_byrpr from utd_mapping_komponen inner join jns_perawatan_inap  on utd_mapping_komponen.kd_lab=jns_perawatan_inap.kd_jenis_prw\n"
+                                + "where utd_mapping_komponen.status='1' and utd_mapping_komponen.kd_komponen='"+tbDarah.getValueAt(r,15).toString()+"' and jns_perawatan_inap.kelas = '"+kelas+"'");
                     } catch (Exception e) {
                         y=0;
                     }
@@ -2258,6 +2340,22 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         keterangan.setText(bangsal);
         CmbCariGd.setSelectedItem(Sequel.cariIsi("select golongan_darah from permintaan_utd where noorder=?",noorder));
         CmbCariResus.setSelectedItem(Sequel.cariIsi("select resus from permintaan_utd where noorder=?",noorder));
+        String kelas = Sequel.cariIsi("select kelas from permintaan_pemeriksaan_utd inner join jns_perawatan_inap on permintaan_pemeriksaan_utd.kd_jenis_prw=jns_perawatan_inap.kd_jenis_prw where permintaan_pemeriksaan_utd.noorder='"+noorder+"'");
+        CmbCariKelas.setEnabled(false);
+        switch (kelas){
+            case "-":
+                CmbCariKelas.setSelectedIndex(1);
+                break;
+            case "Kelas Utama":
+                CmbCariKelas.setSelectedIndex(2);
+                break;
+            case "Kelas VIP":
+                CmbCariKelas.setSelectedIndex(3);
+                break;
+            case "Kelas VVIP":
+                CmbCariKelas.setSelectedIndex(4);
+                break;
+        }        
         tampil();
     }
     }

@@ -400,22 +400,22 @@ public class DlgRujukanPoliInternal extends javax.swing.JDialog {
         }else if(kddokter.getText().trim().equals("")||TDokter.getText().trim().equals("")){
             Valid.textKosong(kddokter,"dokter");
         }else{
-            try {
-                String detail_internal;
-                detail_internal = "insert into rujukan_internal_poli_detail values ('"+TNoRw.getText()+"','"+TCatatanKonsul.getText()+"','','','')"; 
-                PreparedStatement pst_detail = koneksiDB.condb().prepareStatement(detail_internal);          
-                pst_detail.execute();
-            } catch (Exception e) {
-                System.out.println(e);
+            int cari = Sequel.cariInteger("select count(no_rawat) from rujukan_internal_poli_detail where no_rawat='" + TNoRw.getText() + "'");
+            if (cari < 1) {
+                if (Sequel.menyimpantf("rujukan_internal_poli", "?,?,?", "Rujukan Sama", 3, new String[]{
+                    TNoRw.getText(), kddokter.getText(), kdpoli.getText()
+                }) == true) {
+                    Sequel.queryu("insert into rujukan_internal_poli_detail values ('" + TNoRw.getText() + "','" + TCatatanKonsul.getText() + "','','','')");
+                    JOptionPane.showMessageDialog(null, "Data berhasil disimpan..!!!");
+                    BtnKeluarActionPerformed(evt);
+                }
             }
-            
-            if(Sequel.menyimpantf("rujukan_internal_poli","?,?,?","Rujukan Sama",3,new String[]{
-                    TNoRw.getText(),kddokter.getText(),kdpoli.getText()
-                })==true){
-                JOptionPane.showMessageDialog(null,"Data berhasil disimpan..!!!");
+            if (cari > 0) {
+                Sequel.mengedit("rujukan_internal_poli_detail", "no_rawat = '" + TNoRw.getText() + "'", "konsul = '" + TCatatanKonsul.getText() + "'");
+                JOptionPane.showMessageDialog(null, "Data berhasil disimpan..!!!");
                 BtnKeluarActionPerformed(evt);
-            }                      
-        }  
+            }
+        }
 }//GEN-LAST:event_BtnSimpanActionPerformed
 
     private void BtnSimpanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnSimpanKeyPressed

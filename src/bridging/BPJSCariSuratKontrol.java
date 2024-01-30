@@ -145,7 +145,7 @@ public final class BPJSCariSuratKontrol extends javax.swing.JDialog {
         } catch (Exception e) {
             System.out.println("E : " + e);
         }
-        cmbTahun.setSelectedIndex(3);
+        cmbTahun.setSelectedIndex(4);
     }
 
     /**

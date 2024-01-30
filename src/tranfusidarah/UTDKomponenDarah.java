@@ -690,7 +690,8 @@ public class UTDKomponenDarah extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null,"Maaf, Pilih dulu data yang akan Anda hapus dengan menklik data pada tabel...!!!");
             tbKomponen.requestFocus();
         }else{
-            Valid.hapusTable(tabModeKomponen,Kode,"utd_komponen_darah","kode");
+//            Valid.hapusTable(tabModeKomponen,Kode,"utd_komponen_darah","kode");
+            Sequel.mengedit("utd_komponen_darah","kode = '"+Kode.getText()+"'","status = '0'");   
             tampil();
             emptTeks();
         }
@@ -816,9 +817,9 @@ public class UTDKomponenDarah extends javax.swing.JDialog {
         }else if(Pembatalan.getText().trim().equals("")){
             Valid.textKosong(Pembatalan,"Pembatalan");
         }else{
-            if(Sequel.menyimpantf("utd_komponen_darah","?,?,?,?,?,?,?,?,?","Kode",9,new String[]{
+            if(Sequel.menyimpantf("utd_komponen_darah","?,?,?,?,?,?,?,?,?,?","Kode",10,new String[]{//edited
                 Kode.getText(),Nama.getText(),Lama.getText(),JasaSarana.getText(),PaketBHP.getText(),
-                KSO.getText(),Manajemen.getText(),Total.getText(),Pembatalan.getText()
+                KSO.getText(),Manajemen.getText(),Total.getText(),Pembatalan.getText(),"1"
               })==true){
                 emptTeks();
                 tampil();
@@ -990,7 +991,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         Valid.tabelKosong(tabModeKomponen);
         try{
             ps=koneksi.prepareStatement(
-                "select * from utd_komponen_darah where kode like ? or nama like ? order by nama");
+                "select * from utd_komponen_darah where status='1' and (kode like ? or nama like ?) order by nama");
             try {
                 ps.setString(1,"%"+TCari.getText().trim()+"%");
                 ps.setString(2,"%"+TCari.getText().trim()+"%");

@@ -1618,14 +1618,11 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             System.out.println("message : " + nameNode.path("message").asText());
             //response = mapper.readTree(api.Decrypt(root.path("response").asText(),utc)).path("noSuratKontrol");
             if (nameNode.path("code").asText().equals("200")) {
-                if (koneksiDB.UrlBpjs().contains("apijkn")) {
-                    JsonNode res1 = root.path("response");
-                    String res = api.decrypt(res1.asText());
-                    String lz = api.lzDecrypt(res);
-                    response = mapper.readTree(lz);
-                } else {
-                    response = root.path("response");
-                }
+                JsonNode res1 = root.path("response");
+                String res = api.decrypt(res1.asText());
+                String lz = api.lzDecrypt(res);
+                response = mapper.readTree(lz);
+                
                 response = response.path("noSuratKontrol");
                 respon = response.asText();
                 System.out.println("No Surat Kontrol : " + respon);

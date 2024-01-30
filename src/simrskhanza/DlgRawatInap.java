@@ -5089,7 +5089,7 @@ private void BtnEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                         TBerat.getText(), TTinggi.getText(), TNadi.getText(), TRespirasi.getText(), TGCS.getText(), TAlergi.getText());
                 var.setform("DlgRawatInap");
                 perawatan2.isCek();
-                perawatan2.tampil2();
+//                perawatan2.tampil2();
                 perawatan2.setSize(this.getWidth() - 20, this.getHeight() - 20);
                 perawatan2.setLocationRelativeTo(internalFrame1);
                 perawatan2.setVisible(true);

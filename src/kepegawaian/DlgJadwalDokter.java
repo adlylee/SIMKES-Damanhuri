@@ -29,10 +29,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -52,8 +50,8 @@ public class DlgJadwalDokter extends javax.swing.JDialog {
     private Connection koneksi = koneksiDB.condb();
     private sekuel Sequel = new sekuel();
     private validasi Valid = new validasi();
-    private PreparedStatement ps, ps2;
-    private ResultSet rs, rs2;
+    private PreparedStatement ps;
+    private ResultSet rs;
     private String id = "", dateString, dayOfWeek, hari;
     private Date date = null;
     private int i = 0;
@@ -182,6 +180,9 @@ public class DlgJadwalDokter extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Popup = new javax.swing.JPopupMenu();
+        ppSemua = new javax.swing.JMenuItem();
+        ppSemua1 = new javax.swing.JMenuItem();
         internalFrame1 = new widget.InternalFrame();
         Scroll = new widget.ScrollPane();
         tbJadwal = new widget.Table();
@@ -215,6 +216,42 @@ public class DlgJadwalDokter extends javax.swing.JDialog {
         Tanggal = new widget.TextArea();
         jLabel8 = new widget.Label();
 
+        Popup.setName("Popup"); // NOI18N
+
+        ppSemua.setBackground(new java.awt.Color(255, 255, 254));
+        ppSemua.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        ppSemua.setForeground(new java.awt.Color(70, 70, 70));
+        ppSemua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        ppSemua.setText("Pilih Semua");
+        ppSemua.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        ppSemua.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        ppSemua.setIconTextGap(8);
+        ppSemua.setName("ppSemua"); // NOI18N
+        ppSemua.setPreferredSize(new java.awt.Dimension(170, 25));
+        ppSemua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ppSemuaActionPerformed(evt);
+            }
+        });
+        Popup.add(ppSemua);
+
+        ppSemua1.setBackground(new java.awt.Color(255, 255, 254));
+        ppSemua1.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        ppSemua1.setForeground(new java.awt.Color(70, 70, 70));
+        ppSemua1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        ppSemua1.setText("Update tanggal");
+        ppSemua1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        ppSemua1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        ppSemua1.setIconTextGap(8);
+        ppSemua1.setName("ppSemua1"); // NOI18N
+        ppSemua1.setPreferredSize(new java.awt.Dimension(170, 25));
+        ppSemua1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ppSemua1ActionPerformed(evt);
+            }
+        });
+        Popup.add(ppSemua1);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
@@ -233,6 +270,7 @@ public class DlgJadwalDokter extends javax.swing.JDialog {
 
         tbJadwal.setToolTipText("Silahkan klik untuk memilih data yang mau diedit ataupun dihapus");
         tbJadwal.setName("tbJadwal"); // NOI18N
+        tbJadwal.setComponentPopupMenu(Popup);
         tbJadwal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbJadwalMouseClicked(evt);
@@ -552,18 +590,21 @@ public class DlgJadwalDokter extends javax.swing.JDialog {
         } else if (TPoli.getText().trim().equals("")) {
             Valid.textKosong(KdPoli, "Poliklinik");
         } else {
-            isArrayTanggal();
-            if (id.equals("")) {
-                id = null;
-            }else{
-                id=id;
+            int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin menyimpan data...??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                isArrayTanggal();
+                if (id.equals("")) {
+                    id = null;
+                } else {
+                    id = id;
+                }
+                Sequel.menyimpan3("jadwal_dokter", "?,?,?,?,?,?", 6, new String[]{
+                    id, kddokter.getText(), KdPoli.getText(), ThnCari.getSelectedItem().toString(), BlnCari.getSelectedItem().toString(), Arrays.toString(remainingDaysArray)
+                }, "kd_dokter=? and kd_poli=? and tahun=? and bulan=? and id=?", "tanggal=?", 6, new String[]{
+                    Arrays.toString(remainingDaysArray), kddokter.getText(), KdPoli.getText(), ThnCari.getSelectedItem().toString(), BlnCari.getSelectedItem().toString(), id
+                });
+                tampil();
             }
-            Sequel.menyimpan3("jadwal_dokter", "?,?,?,?,?,?", 6, new String[]{
-                id, kddokter.getText(), KdPoli.getText(), ThnCari.getSelectedItem().toString(), BlnCari.getSelectedItem().toString(), Arrays.toString(remainingDaysArray)
-            }, "kd_dokter=? and kd_poli=? and tahun=? and bulan=? and id=?", "tanggal=?", 6, new String[]{
-                Arrays.toString(remainingDaysArray), kddokter.getText(), KdPoli.getText(), ThnCari.getSelectedItem().toString(), BlnCari.getSelectedItem().toString(), id
-            });
-            tampil();
         }
 }//GEN-LAST:event_BtnSimpanActionPerformed
 
@@ -578,10 +619,13 @@ public class DlgJadwalDokter extends javax.swing.JDialog {
     private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHapusActionPerformed
         if (tabMode.getRowCount() != 0) {
             if (tbJadwal.getSelectedRow() != -1) {
-                Sequel.queryu2("delete from jadwal_dokter where id=? and kd_dokter=? and kd_poli=? and tahun=? and bulan=?", 5, new String[]{
-                    tabMode.getValueAt(tbJadwal.getSelectedRow(), 0).toString(), kddokter.getText(), KdPoli.getText(), ThnCari.getSelectedItem().toString(), BlnCari.getSelectedItem().toString()
-                });
-                tampil();
+                int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin menghapus data...??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                if (reply == JOptionPane.YES_OPTION) {
+                    Sequel.queryu2("delete from jadwal_dokter where id=? and kd_dokter=? and kd_poli=? and tahun=? and bulan=?", 5, new String[]{
+                        tabMode.getValueAt(tbJadwal.getSelectedRow(), 1).toString(), kddokter.getText(), KdPoli.getText(), ThnCari.getSelectedItem().toString(), BlnCari.getSelectedItem().toString()
+                    });
+                    tampil();
+                }
             }
         }
 }//GEN-LAST:event_BtnHapusActionPerformed
@@ -729,14 +773,17 @@ public class DlgJadwalDokter extends javax.swing.JDialog {
 
     private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditActionPerformed
         if (tbJadwal.getSelectedRow() != -1) {
-            Sequel.queryu2("update jadwal_dokter set tanggal=?, kd_dokter=?, kd_poli=? "
-                    + " where id=? and tahun=? and bulan=? and kd_dokter=? and kd_poli=?", 8,
-                    new String[]{Tanggal.getText(), kddokter.getText(), KdPoli.getText(),
-                        tabMode.getValueAt(tbJadwal.getSelectedRow(), 0).toString(), tabMode.getValueAt(tbJadwal.getSelectedRow(), 4).toString().substring(0, 4),
-                        tabMode.getValueAt(tbJadwal.getSelectedRow(), 4).toString().substring(5, 7), tabMode.getValueAt(tbJadwal.getSelectedRow(), 6).toString(), tabMode.getValueAt(tbJadwal.getSelectedRow(), 7).toString()
-                    });
-            tampil();
-            JOptionPane.showMessageDialog(null, "Berhasil edit..");
+            int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin mengubah data...??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                Sequel.queryu2("update jadwal_dokter set tanggal=?, kd_dokter=?, kd_poli=? "
+                        + " where id=? and tahun=? and bulan=? and kd_dokter=? and kd_poli=?", 8,
+                        new String[]{Tanggal.getText(), kddokter.getText(), KdPoli.getText(),
+                            tabMode.getValueAt(tbJadwal.getSelectedRow(), 1).toString(), tabMode.getValueAt(tbJadwal.getSelectedRow(), 5).toString().substring(0, 4),
+                            tabMode.getValueAt(tbJadwal.getSelectedRow(), 5).toString().substring(5, 7), tabMode.getValueAt(tbJadwal.getSelectedRow(), 7).toString(), tabMode.getValueAt(tbJadwal.getSelectedRow(), 8).toString()
+                        });
+                tampil();
+                JOptionPane.showMessageDialog(null, "Berhasil edit..");
+            }
         }
     }//GEN-LAST:event_BtnEditActionPerformed
 
@@ -751,6 +798,30 @@ public class DlgJadwalDokter extends javax.swing.JDialog {
     private void TanggalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TanggalKeyPressed
 
     }//GEN-LAST:event_TanggalKeyPressed
+
+    private void ppSemuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppSemuaActionPerformed
+        for (i = 0; i < tbJadwal.getRowCount(); i++) {
+            tbJadwal.setValueAt(true, i, 0);
+        }
+    }//GEN-LAST:event_ppSemuaActionPerformed
+
+    private void ppSemua1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppSemua1ActionPerformed
+        int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin update jadwal...??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            for (i = 0; i < tbJadwal.getRowCount(); i++) {
+                if (tbJadwal.getValueAt(i, 0).toString().equals("true")) {
+                    isArrayTanggal();
+                    Sequel.queryu2("update jadwal_dokter set tanggal=?"
+                            + " where id=? and tahun=? and bulan=? and kd_dokter=? and kd_poli=?", 6,
+                            new String[]{Arrays.toString(remainingDaysArray), tabMode.getValueAt(i, 1).toString(), tabMode.getValueAt(i, 5).toString().substring(0, 4),
+                                tabMode.getValueAt(i, 5).toString().substring(5, 7), tabMode.getValueAt(i, 7).toString(), tabMode.getValueAt(i, 8).toString()
+                            });
+                }
+            }
+            tampil();
+            JOptionPane.showMessageDialog(null, "Berhasil update jadwal..!!!");
+        }
+    }//GEN-LAST:event_ppSemua1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -780,6 +851,7 @@ public class DlgJadwalDokter extends javax.swing.JDialog {
     private widget.Button BtnSimpan;
     private widget.TextBox KdPoli;
     private widget.Label LCount;
+    private javax.swing.JPopupMenu Popup;
     private widget.ScrollPane Scroll;
     private widget.TextBox TCari;
     private widget.TextBox TPoli;
@@ -799,12 +871,14 @@ public class DlgJadwalDokter extends javax.swing.JDialog {
     private widget.PanelBiasa panelBiasa1;
     private widget.panelisi panelGlass8;
     private widget.panelisi panelGlass9;
+    private javax.swing.JMenuItem ppSemua;
+    private javax.swing.JMenuItem ppSemua1;
     private widget.ScrollPane scrollPane1;
     private widget.Table tbJadwal;
     // End of variables declaration//GEN-END:variables
 
     private void tampil() {
-        Object[] row = {"ID", "No", "Nama Dokter", "Poliklinik", "Tahun/Bulan", "Tanggal", "Kode Dokter", "Kode Poli"
+        Object[] row = {"P","ID", "No", "Nama Dokter", "Poliklinik", "Tahun/Bulan", "Tanggal", "Kode Dokter", "Kode Poli"
         };
         tabMode = new DefaultTableModel(null, row) {
             @Override
@@ -816,8 +890,8 @@ public class DlgJadwalDokter extends javax.swing.JDialog {
                 return a;
             }
             Class[] types = new Class[]{
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
-                java.lang.Object.class
+                java.lang.Boolean.class,java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, 
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             @Override
@@ -827,21 +901,23 @@ public class DlgJadwalDokter extends javax.swing.JDialog {
         };
         tbJadwal.setModel(tabMode);
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 9; i++) {
             TableColumn column = tbJadwal.getColumnModel().getColumn(i);
-            if (i == 0) {
+            if (i == 1) {
                 column.setMinWidth(0);
                 column.setMaxWidth(0);
-            } else if (i == 1) {
-                column.setPreferredWidth(35);
             } else if (i == 2) {
-                column.setPreferredWidth(200);
+                column.setPreferredWidth(35);
             } else if (i == 3) {
-                column.setPreferredWidth(250);
+                column.setPreferredWidth(200);
             } else if (i == 4) {
-                column.setPreferredWidth(80);
+                column.setPreferredWidth(250);
             } else if (i == 5) {
+                column.setPreferredWidth(80);
+            } else if (i == 6) {
                 column.setPreferredWidth(570);
+            } else if (i == 0) {
+                column.setPreferredWidth(35);
             } else {
                 column.setMinWidth(0);
                 column.setMaxWidth(0);
@@ -864,7 +940,7 @@ public class DlgJadwalDokter extends javax.swing.JDialog {
                 i = 1;
                 while (rs.next()) {
                     tabMode.addRow(new Object[]{
-                        rs.getString("id"), " " + i + ".", rs.getString("nm_dokter"), rs.getString("nm_poli"), rs.getString("tahun").substring(0, 4) + "/" + rs.getString("bulan"), rs.getString("tanggal"), rs.getString("kd_dokter"), rs.getString("kd_poli")
+                        false,rs.getString("id"), " " + i + ".", rs.getString("nm_dokter"), rs.getString("nm_poli"), rs.getString("tahun").substring(0, 4) + "/" + rs.getString("bulan"), rs.getString("tanggal"), rs.getString("kd_dokter"), rs.getString("kd_poli")
                     });
                     i++;
                 }
@@ -892,14 +968,14 @@ public class DlgJadwalDokter extends javax.swing.JDialog {
     private void getData() {
         int row = tbJadwal.getSelectedRow();
         if (row != -1) {
-            id = tabMode.getValueAt(row, 0).toString();
-            nmdokter.setText(tabMode.getValueAt(row, 2).toString());
-            TPoli.setText(tabMode.getValueAt(row, 3).toString());
-            ThnCari.setSelectedItem(tabMode.getValueAt(row, 4).toString().substring(0, 4));
-            BlnCari.setSelectedItem(tabMode.getValueAt(row, 4).toString().substring(5, 7));
-            Tanggal.setText(tbJadwal.getValueAt(row, 5).toString());
-            kddokter.setText(tbJadwal.getValueAt(row, 6).toString());
-            KdPoli.setText(tbJadwal.getValueAt(row, 7).toString());
+            id = tabMode.getValueAt(row, 1).toString();
+            nmdokter.setText(tabMode.getValueAt(row, 3).toString());
+            TPoli.setText(tabMode.getValueAt(row, 4).toString());
+            ThnCari.setSelectedItem(tabMode.getValueAt(row, 5).toString().substring(0, 4));
+            BlnCari.setSelectedItem(tabMode.getValueAt(row, 5).toString().substring(5, 7));
+            Tanggal.setText(tbJadwal.getValueAt(row, 6).toString());
+            kddokter.setText(tbJadwal.getValueAt(row, 7).toString());
+            KdPoli.setText(tbJadwal.getValueAt(row, 8).toString());
         }
     } 
     

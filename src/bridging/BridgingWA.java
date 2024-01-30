@@ -273,7 +273,8 @@ public class BridgingWA {
         try {
             message = "Pemberitahuan Permintaan Kerohanian.\n\n"
                     + "Pasien atas nama " + nama + " di ruang " + kamar + " pada tanggal " + tanggal + "";
-            number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='198011042005012011'");            
+//            number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='198011042005012011'");            
+            number = Sequel.cariIsi("SELECT no_telp FROM petugas WHERE nip='07012092022813042'");            
             urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldserver + "'") + "/wagateway/kirimpesan";
             sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldphone + "'");
             token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldtoken + "'");

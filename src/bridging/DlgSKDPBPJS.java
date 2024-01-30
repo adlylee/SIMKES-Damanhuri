@@ -1089,7 +1089,7 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
     private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpanActionPerformed
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         antrian = NoSurat.getText();
-        String nomer = "", jns_pelayanan = "2";
+        String nomer = "",ret="", jns_pelayanan = "2";
         tglrujukan = "";
         Boolean stats = cekJadwalDokter();
         if (stats.equals(false)) {
@@ -1099,11 +1099,11 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
                 }
                 seppost = Sequel.cariInteger("select count(bridging_sep.no_sep) from bridging_sep, (select no_rujukan from bridging_sep where no_sep='" + nosep + "' and jnspelayanan='" + jns_pelayanan + "') as nocarirujuk where bridging_sep.no_sep=nocarirujuk.no_rujukan");
                 if (seppost >= 1) {
-                    tglrujukan = Sequel.cariIsi("SELECT tglrujukan FROM bridging_sep WHERE jnspelayanan = '" + jns_pelayanan + "' and nomr = '" + TNoRM.getText() + "' AND tglsep < (SELECT MAX(tglsep) FROM bridging_sep WHERE nomr = '" + TNoRM.getText() + "' AND jnspelayanan = '" + jns_pelayanan + "') ORDER BY tglsep DESC LIMIT 1");
+                    tglrujukan = Sequel.cariIsi("SELECT tglrujukan FROM bridging_sep WHERE jnspelayanan = '" + jns_pelayanan + "' and nomr = '" + TNoRM.getText() + "' AND tglsep <= (SELECT MAX(tglsep) FROM bridging_sep WHERE nomr = '" + TNoRM.getText() + "' AND jnspelayanan = '" + jns_pelayanan + "') ORDER BY tglsep DESC LIMIT 1");
                 } else {
                     tglrujukan = Sequel.cariIsi("select tglrujukan from bridging_sep where no_sep='" + nosep + "'");
                 }
-                System.out.println("tglrujukan " + tglrujukan);
+                System.out.println("tglrujukan : " + tglrujukan);
                 LocalDate tglRujukanmulai = LocalDate.parse(tglrujukan);
                 LocalDate tglRujukanakhir = tglRujukanmulai.plusDays(89);
                 tglSetelah85Hari = tglRujukanakhir.format(DateTimeFormatter.ISO_LOCAL_DATE);
@@ -1142,20 +1142,20 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
 
                 if (set_status_rawat.equals("Ranap")) {
                     if (penjab.equals("BPJ") || penjab.equals("A02")) {
-                        nomer = kontrol.simpanSurat(nosep, Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), KdDokter1.getText(), NmDokter1.getText(), KdPoli1.getText(), NmPoli1.getText(), user);
-                        if (!nomer.equals("")) {
-                            isSimpan(nomer);
-                        }
-                        if (nomer.equals("201")) {
+                        ret = kontrol.simpanSurat(nosep, Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), KdDokter1.getText(), NmDokter1.getText(), KdPoli1.getText(), NmPoli1.getText(), user);
+                        if (ret.equals("201")) {
                             autoNomor();
                             isSimpan(NoSurat1.getText());
                         }
-                        if (nomer.equals("203")) {
+                        if (ret.equals("203")) {
                             String tgl = Sequel.cariIsi("SELECT tgl_rencana FROM bridging_surat_kontrol_bpjs where no_sep = ?", nosep);
                             if (tgl == TanggalPeriksa.getSelectedItem().toString().substring(6, 10)) {
                                 autoNomor();
                                 isSimpan(NoSurat1.getText());
                             }
+                        }
+                        if (!ret.equals("")) {
+                            isSimpan(ret);
                         }
                     } else {
                         isSimpan(nomer);

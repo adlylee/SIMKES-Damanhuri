@@ -6794,7 +6794,8 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
                         dpjp.setLocationRelativeTo(internalFrame1);
                         dpjp.isCek();
                         try {
-                            date = new SimpleDateFormat("yyyy-MM-dd").parse(TIn.getText());
+//                            date = new SimpleDateFormat("yyyy-MM-dd").parse(TIn.getText());
+                            date = new SimpleDateFormat("yyyy-MM-dd").parse(tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 0).toString().substring(0,10).replace("/", "-"));
                         } catch (Exception e) {
                             date = DTPCari2.getDate();
                         }
@@ -6825,7 +6826,8 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
             dpjp.setLocationRelativeTo(internalFrame1);
             dpjp.isCek();
             try {
-                date = new SimpleDateFormat("yyyy-MM-dd").parse(TIn.getText());
+//                date = new SimpleDateFormat("yyyy-MM-dd").parse(TIn.getText());
+                date = new SimpleDateFormat("yyyy-MM-dd").parse(tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 0).toString().substring(0,10).replace("/", "-"));
             } catch (Exception e) {
                 date = DTPCari2.getDate();
             }

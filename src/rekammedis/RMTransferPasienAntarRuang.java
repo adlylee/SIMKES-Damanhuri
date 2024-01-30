@@ -819,7 +819,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         CmbDetik2.setBounds(365, 10, 62, 23);
 
         DTPReg.setForeground(new java.awt.Color(50, 70, 50));
-        DTPReg.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "19-12-2023" }));
+        DTPReg.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "29-12-2023" }));
         DTPReg.setDisplayFormat("dd-MM-yyyy");
         DTPReg.setName("DTPReg"); // NOI18N
         DTPReg.setOpaque(false);
@@ -844,7 +844,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         Scroll1.setViewportView(tbResep);
 
         PanelInput1.add(Scroll1);
-        Scroll1.setBounds(10, 70, 410, 130);
+        Scroll1.setBounds(10, 70, 410, 80);
 
         BtnAll1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/plus_16.png"))); // NOI18N
         BtnAll1.setMnemonic('2');
@@ -858,7 +858,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
             }
         });
         PanelInput1.add(BtnAll1);
-        BtnAll1.setBounds(230, 210, 208, 23);
+        BtnAll1.setBounds(210, 160, 208, 23);
 
         TCari1.setName("TCari1"); // NOI18N
         TCari1.setPreferredSize(new java.awt.Dimension(197, 23));
@@ -1436,7 +1436,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         panelGlass9.add(jLabel19);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "19-12-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "29-12-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -1450,7 +1450,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         panelGlass9.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "19-12-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "29-12-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -1875,11 +1875,23 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
                 try {
                     ps.setString(1, tbObat.getValueAt(tbObat.getSelectedRow(), 3).toString());
                     rs = ps.executeQuery();
-                    while (rs.next()) {
-                        Sequel.menyimpan("temporary", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", 38, new String[]{
-                            "0", rs.getString("id"), rs.getString("tanggal"), rs.getString("jam"), rs.getString("nama_brng"), rs.getString("dosis"), rs.getString("cara_pemberian"), "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
-                        });
+                    boolean check = false;
+                    if (rs.first()) {
+                        check = true;
                     }
+                    if (check == true) {
+                        System.out.println("true");
+                        while (rs.next()) {
+                            Sequel.menyimpan("temporary", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", 38, new String[]{
+                                "0", rs.getString("id"), rs.getString("tanggal"), rs.getString("jam"), rs.getString("nama_brng"), rs.getString("dosis"), rs.getString("cara_pemberian"), "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
+                            }); 
+                        }
+                    } else {
+                        System.out.println("false");
+                        Sequel.menyimpan("temporary", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", 38, new String[]{
+                                null, "-", "-", "-", "-", "-", "-", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
+                            }); 
+                    }                    
                 } catch (Exception e) {
                     System.out.println("Notif 2 : " + e);
                 } finally {
@@ -1894,8 +1906,15 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
                 System.out.println("Notif : " + e);
             }
             if (sttsTransfer.equals("Ralan")) {
-                Valid.MyReport("rptTransferPasien.jrxml", "report", "::[ Transfer Pasien IGD ]::",
-                        "select no, temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9, temp10, temp11, temp12, temp13, temp14, temp14, temp15, temp16 from temporary order by no asc", param);
+//                if (Sequel.cariInteger("select count(no) from temporary") == 0) {
+//                    System.out.println("kosong");
+//                    Valid.MyReport("rptTransferPasien.jrxml", param, "::[ Transfer Pasien IGD ]::");
+//                }
+//                if (Sequel.cariInteger("select count(no) from temporary") > 0) {
+//                    System.out.println("ada");
+                    Valid.MyReport("rptTransferPasien.jrxml", "report", "::[ Transfer Pasien IGD ]::",
+                            "select no, temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9, temp10, temp11, temp12, temp13, temp14, temp14, temp15, temp16 from temporary order by no asc", param);
+//                }
             }
             if (sttsTransfer.equals("Ranap")) {
                 Valid.MyReport("rptTransferPasienRanap.jrxml", "report", "::[ Transfer Pasien Antar Ruang ]::",

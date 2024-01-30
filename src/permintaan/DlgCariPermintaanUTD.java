@@ -956,7 +956,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         MnCetakHasilUTD.setEnabled(var.getpermintaan_lab());
         BtnHapus.setEnabled(var.getpermintaan_lab());
         BtnPrint.setEnabled(var.getpermintaan_lab());
-        if (var.getkode().equals("UTD1")) {
+        if (var.getkode().equals("Admin Utama") || var.getkode().equals("UTD1")) {
             BtnTambah.setEnabled(true);
             MnLihatPenyerahan.setEnabled(true);
         } else {
