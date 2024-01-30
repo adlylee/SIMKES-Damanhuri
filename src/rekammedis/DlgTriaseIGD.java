@@ -282,8 +282,8 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                 return this;
             }
         });        
-        KeluhanUtama.setDocument(new batasInput((int)400).getKata(KeluhanUtama));
-        RiwayatPenyakit.setDocument(new batasInput((int)400).getKata(RiwayatPenyakit));
+//        KeluhanUtama.setDocument(new batasInput((int)400).getKata(KeluhanUtama));
+//        RiwayatPenyakit.setDocument(new batasInput((int)400).getKata(RiwayatPenyakit));
         Tensi.setDocument(new batasInput((byte)10).getKata(Tensi));
         Nadi.setDocument(new batasInput((byte)3).getKata(Nadi));
         Suhu.setDocument(new batasInput((byte)5).getKata(Suhu));
@@ -526,8 +526,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         Umur = new widget.TextBox();
         TKasus = new widget.TextBox();
         jLabel13 = new widget.Label();
-        scrollPane1 = new widget.ScrollPane();
-        KeluhanUtama = new widget.TextArea();
         jLabel9 = new widget.Label();
         jLabel36 = new widget.Label();
         scrollPane2 = new widget.ScrollPane();
@@ -577,6 +575,8 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         LD = new widget.TextBox();
         jLabel45 = new widget.Label();
         LP = new widget.TextBox();
+        scrollPane3 = new widget.ScrollPane();
+        KeluhanUtama = new widget.TextArea();
         FormInput1 = new widget.PanelBiasa();
         jLabel94 = new widget.Label();
         jLabel38 = new widget.Label();
@@ -863,7 +863,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         jLabel18.setBounds(584, 70, 50, 23);
 
         Tanggal.setForeground(new java.awt.Color(50, 70, 50));
-        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-10-2023 10:06:12" }));
+        Tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "29-01-2024 14:20:05" }));
         Tanggal.setDisplayFormat("dd-MM-yyyy HH:mm:ss");
         Tanggal.setName("Tanggal"); // NOI18N
         Tanggal.setOpaque(false);
@@ -1082,18 +1082,6 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         jLabel13.setName("jLabel13"); // NOI18N
         FormInput.add(jLabel13);
         jLabel13.setBounds(400, 100, 90, 23);
-
-        scrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        scrollPane1.setName("scrollPane1"); // NOI18N
-
-        KeluhanUtama.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        KeluhanUtama.setColumns(20);
-        KeluhanUtama.setRows(5);
-        KeluhanUtama.setName("KeluhanUtama"); // NOI18N
-        scrollPane1.setViewportView(KeluhanUtama);
-
-        FormInput.add(scrollPane1);
-        scrollPane1.setBounds(493, 130, 270, 38);
 
         jLabel9.setText("Keluhan Utama :");
         jLabel9.setName("jLabel9"); // NOI18N
@@ -1359,6 +1347,18 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         LP.setName("LP"); // NOI18N
         FormInput.add(LP);
         LP.setBounds(715, 310, 50, 23);
+
+        scrollPane3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        scrollPane3.setName("scrollPane3"); // NOI18N
+
+        KeluhanUtama.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        KeluhanUtama.setColumns(20);
+        KeluhanUtama.setRows(5);
+        KeluhanUtama.setName("KeluhanUtama"); // NOI18N
+        scrollPane3.setViewportView(KeluhanUtama);
+
+        FormInput.add(scrollPane3);
+        scrollPane3.setBounds(493, 130, 270, 38);
 
         FormTriase.add(FormInput, java.awt.BorderLayout.PAGE_START);
 
@@ -1855,7 +1855,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         panelGlass9.add(jLabel19);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-10-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "29-01-2024" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -1869,7 +1869,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
         panelGlass9.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "24-10-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "29-01-2024" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -2881,8 +2881,8 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
     private widget.TextBox rTrauma;
     private widget.TextBox rpDahulu;
     private widget.TextBox rpKeluarga;
-    private widget.ScrollPane scrollPane1;
     private widget.ScrollPane scrollPane2;
+    private widget.ScrollPane scrollPane3;
     private widget.ScrollPane scrollPane4;
     private widget.ScrollPane scrollPane6;
     private widget.Table tbLevel;
@@ -3172,8 +3172,8 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             JnsBayar.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 12).toString());
             Psikologis.setSelectedItem(tbTriase.getValueAt(tbTriase.getSelectedRow(), 17).toString());
             SttsTinggal.setSelectedItem(tbTriase.getValueAt(tbTriase.getSelectedRow(), 18).toString());
-            KeluhanUtama.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 19).toString());
-            RiwayatPenyakit.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 20).toString());
+//            KeluhanUtama.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 19).toString());
+//            RiwayatPenyakit.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 20).toString());
             Tensi.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 21).toString());
             Nadi.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 22).toString());
             Respirasi.setText(tbTriase.getValueAt(tbTriase.getSelectedRow(), 23).toString());
@@ -3204,6 +3204,8 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?", NmDokter, KdDokter.getText());
             Sequel.cariIsi("select kd_petugas from data_triase_igd where no_rawat=?", KdPetugas, TNoRw.getText());
             Sequel.cariIsi("select nama from petugas where nip=?", NmPetugas, KdPetugas.getText());
+            Sequel.cariIsi("select keluhan_utama from data_triase_igd where no_rawat=?", KeluhanUtama, TNoRw.getText());
+            Sequel.cariIsi("select riwayat_penyakit from data_triase_igd where no_rawat=?", RiwayatPenyakit, TNoRw.getText());
         }
     }
 
@@ -3568,6 +3570,8 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                         break;
                     case "Lainnya":
                         chkLainnya.setSelected(true);
+                        System.out.println("kss "+kss.toString());
+                        System.out.println("kss[1] "+kss[1]);
                         TKasus.setText(kss[1]);
                         break;
                 }
@@ -3580,19 +3584,19 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             switch (diantar[0]) {
                 case "Keluarga":
                     cmbDiantar.setSelectedIndex(1);
-                    TDiantar.setText(diantar[1]);
+//                    TDiantar.setText(diantar[1]);
                     break;
                 case "Polisi":
                     cmbDiantar.setSelectedIndex(2);
-                    TDiantar.setText(diantar[1]);
+//                    TDiantar.setText(diantar[1]);
                     break;
                 case "Petugas Kesehatan":
                     cmbDiantar.setSelectedIndex(3);
-                    TDiantar.setText(diantar[1]);
+//                    TDiantar.setText(diantar[1]);
                     break;
                 case "Datang Sendiri":
                     cmbDiantar.setSelectedIndex(4);
-                    TDiantar.setText(diantar[1]);
+//                    TDiantar.setText(diantar[1]);
                     break;
                 case "Lainnya":
                     cmbDiantar.setSelectedIndex(5);
@@ -3607,15 +3611,15 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
             switch (trans[0]) {
                 case "Ambulance":
                     Transportasi.setSelectedIndex(1);
-                    TTransportasi.setText(trans[1]);
+//                    TTransportasi.setText(trans[1]);
                     break;
                 case "Mobil Polisi":
                     Transportasi.setSelectedIndex(2);
-                    TTransportasi.setText(trans[1]);
+//                    TTransportasi.setText(trans[1]);
                     break;
                 case "Jalan Kaki":
                     Transportasi.setSelectedIndex(3);
-                    TTransportasi.setText(trans[1]);
+//                    TTransportasi.setText(trans[1]);
                     break;
                 case "Lainnya":
                     Transportasi.setSelectedIndex(4);

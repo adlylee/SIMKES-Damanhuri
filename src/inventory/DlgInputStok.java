@@ -27,6 +27,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
@@ -234,6 +236,8 @@ public class DlgInputStok extends javax.swing.JDialog {
         kdgudang = new widget.TextBox();
         nmgudang = new widget.TextBox();
         BtnGudang = new widget.Button();
+        BtnKeluar1 = new widget.Button();
+        BtnKeluar2 = new widget.Button();
 
         Kd2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         Kd2.setName("Kd2"); // NOI18N
@@ -290,7 +294,7 @@ public class DlgInputStok extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Stok Opname Obat, Alkes & BHP Medis ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Stok Opname Obat, Alkes & BHP Medis ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -531,6 +535,30 @@ public class DlgInputStok extends javax.swing.JDialog {
         panelisi3.add(BtnGudang);
         BtnGudang.setBounds(614, 10, 28, 23);
 
+        BtnKeluar1.setText("Ganti SO");
+        BtnKeluar1.setToolTipText("");
+        BtnKeluar1.setName("BtnKeluar1"); // NOI18N
+        BtnKeluar1.setPreferredSize(new java.awt.Dimension(100, 30));
+        BtnKeluar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnKeluar1ActionPerformed(evt);
+            }
+        });
+        panelisi3.add(BtnKeluar1);
+        BtnKeluar1.setBounds(800, 10, 120, 30);
+
+        BtnKeluar2.setText("Stok Opname");
+        BtnKeluar2.setToolTipText("");
+        BtnKeluar2.setName("BtnKeluar2"); // NOI18N
+        BtnKeluar2.setPreferredSize(new java.awt.Dimension(100, 30));
+        BtnKeluar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnKeluar2ActionPerformed(evt);
+            }
+        });
+        panelisi3.add(BtnKeluar2);
+        BtnKeluar2.setBounds(660, 10, 130, 30);
+
         internalFrame1.add(panelisi3, java.awt.BorderLayout.PAGE_START);
 
         getContentPane().add(internalFrame1, java.awt.BorderLayout.CENTER);
@@ -657,6 +685,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                     }
                     LTotal.setText("0");
                 }
+                JOptionPane.showMessageDialog(null, "Berhasil menyimpan data...");
                 tampil();
             }
 
@@ -806,6 +835,166 @@ private void BtnGudangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         aktif = false;
     }//GEN-LAST:event_formWindowDeactivated
 
+    private void BtnKeluar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnKeluar1ActionPerformed
+        Boolean sukses = false;
+        Integer jml = 0;        
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        if (nmgudang.getText().trim().equals("") || kdgudang.getText().trim().equals("")) {
+            Valid.textKosong(kdgudang, "Gudang");
+        } else if (catatan.getText().trim().equals("")) {
+            Valid.textKosong(catatan, "Keterangan");
+        } else if (tbDokter.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Maaf, data kosong..!!!!");
+            tbDokter.requestFocus();
+        } else {
+            int reply = JOptionPane.showConfirmDialog(rootPane, "Eeiiiiiits, apakah yakin ingin mengubah data..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                Sequel.AutoComitFalse();
+                sukses = true;
+                for (i = 0; i < tbDokter.getRowCount(); i++) {
+                    if (!tbDokter.getValueAt(i, 0).toString().equals("")) {
+                        String namaobat = tbDokter.getValueAt(i, 1).toString() + " " + tbDokter.getValueAt(i, 2).toString();
+                        jml = Sequel.cariInteger("SELECT COUNT(kode_brng) FROM opname WHERE tanggal='" + Valid.SetTgl(Tgl.getSelectedItem() + "") + "' AND kode_brng = '" + tbDokter.getValueAt(i, 1).toString() + "' and kd_bangsal='" + kdgudang.getText() + "'");
+                        if (jml > 0) {
+                            JOptionPane.showMessageDialog(null, namaobat + " masih ada di data Stok Opname.\nSilakan hapus data terlebih dahulu...!!!");
+                        } else {
+                            try {
+                                if (Valid.SetAngka(tbDokter.getValueAt(i, 0).toString()) >= 0) {
+//                                    jml = Sequel.cariInteger("SELECT COUNT(kode_brng) FROM opname WHERE tanggal='" + Valid.SetTgl(Tgl.getSelectedItem() + "") + "' AND kode_brng = '" + tbDokter.getValueAt(i, 1).toString() + "' and kd_bangsal='" + kdgudang.getText() + "'");
+                                    if (jml < 1) {
+                                        if (Sequel.menyimpantf("opname", "?,?,?,?,?,?,?,?,?,?,?", "Stok Opname", 11, new String[]{
+                                            tbDokter.getValueAt(i, 1).toString(), tbDokter.getValueAt(i, 5).toString(), Valid.SetTgl(Tgl.getSelectedItem() + ""), tbDokter.getValueAt(i, 6).toString(),
+                                            tbDokter.getValueAt(i, 0).toString(), tbDokter.getValueAt(i, 7).toString(), tbDokter.getValueAt(i, 8).toString(), catatan.getText(), kdgudang.getText(),
+                                            tbDokter.getValueAt(i, 9).toString(), tbDokter.getValueAt(i, 10).toString()}) == true) {
+                                            int cari = Sequel.cariInteger("SELECT COUNT(kode_brng) FROM opname_stok_awal WHERE tahun='" + Tgl.getSelectedItem().toString().substring(6, 10) + "' AND bulan= '" + Tgl.getSelectedItem().toString().substring(3, 5) + "' AND kode_brng = '" + tbDokter.getValueAt(i, 1).toString() + "' and kd_bangsal='" + kdgudang.getText() + "'");
+                                            if (cari > 0) {
+                                                Sequel.queryu2("update opname_stok_awal set stok=? where kode_brng=? and kd_bangsal=? and tahun=? and bulan=?", 5,
+                                                        new String[]{tbDokter.getValueAt(i, 0).toString(), tbDokter.getValueAt(i, 1).toString(), kdgudang.getText(), Tgl.getSelectedItem().toString().substring(6, 10), Tgl.getSelectedItem().toString().substring(3, 5)
+                                                        });
+                                            }
+                                            Trackobat.catatRiwayat(tbDokter.getValueAt(i, 1).toString(), Valid.SetAngka(tbDokter.getValueAt(i, 0).toString()), 0, "Opname", var.getkode(), kdgudang.getText(), "Simpan");
+                                            Sequel.menyimpan("gudangbarang", "'" + tbDokter.getValueAt(i, 1).toString() + "','" + kdgudang.getText() + "','" + tbDokter.getValueAt(i, 0).toString() + "'",
+                                                    "stok='" + tbDokter.getValueAt(i, 0).toString() + "'", "kode_brng='" + tbDokter.getValueAt(i, 1).toString() + "' and kd_bangsal='" + kdgudang.getText() + "'");
+
+                                        } else {
+                                            sukses = false;
+                                            JOptionPane.showMessageDialog(null, namaobat + " gagal disimpan...!");
+                                        }
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, namaobat + " gagal disimpan karena sudah dilakukan Opname");
+                                    }
+                                }
+                            } catch (Exception e) {
+                                sukses = false;
+                            }
+                            JOptionPane.showMessageDialog(null, "Berhasil mengubah data...");
+                        }
+                    }
+                }
+
+                if (sukses == true) {
+                    Sequel.Commit();
+                } else {
+                    sukses = false;
+                    JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat pemrosesan data, transaksi dibatalkan.\nPeriksa kembali data sebelum melanjutkan menyimpan..!!");
+                    Sequel.RollBack();
+                }
+                Sequel.AutoComitTrue();
+                if (sukses == true) {
+                    for (index = 0; index < tbDokter.getRowCount(); index++) {
+                        tbDokter.setValueAt("", index, 0);
+                    }
+                    LTotal.setText("0");
+                }
+                tampil();
+            }
+        }
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_BtnKeluar1ActionPerformed
+
+    private void BtnKeluar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnKeluar2ActionPerformed
+        Boolean sukses = false;
+        Integer jml = 0;
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        if (nmgudang.getText().trim().equals("") || kdgudang.getText().trim().equals("")) {
+            Valid.textKosong(kdgudang, "Gudang");
+        } else if (catatan.getText().trim().equals("")) {
+            Valid.textKosong(catatan, "Keterangan");
+        } else if (tbDokter.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Maaf, data kosong..!!!!");
+            tbDokter.requestFocus();
+        } else {
+            JOptionPane.showMessageDialog(null,"Pastikan sudah menampilkan semua stok sesuai lokasi...!!!");
+            int reply = JOptionPane.showConfirmDialog(rootPane, "Eeiiiiiits, apakah yakin ingin menyimpan data..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                Sequel.AutoComitFalse();
+                sukses = true;
+                String stok = "";
+                for (i = 0; i < tbDokter.getRowCount(); i++) {
+                    if (!tbDokter.getValueAt(i, 0).toString().equals("")) {
+                        stok = tbDokter.getValueAt(i, 0).toString();
+                    }
+                    if (tbDokter.getValueAt(i, 0).toString().equals("")) {
+                        stok = tbDokter.getValueAt(i, 6).toString();
+                    }
+                    try {
+                        if (Valid.SetAngka(tbDokter.getValueAt(i, 0).toString()) >= 0) {
+                            jml = Sequel.cariInteger("SELECT COUNT(kode_brng) FROM opname WHERE tanggal='" + Valid.SetTgl(Tgl.getSelectedItem() + "") + "' AND kode_brng = '" + tbDokter.getValueAt(i, 1).toString() + "' and kd_bangsal='" + kdgudang.getText() + "'");
+                            if (jml < 1) {
+                                if (Sequel.menyimpantf("opname", "?,?,?,?,?,?,?,?,?,?,?", "Stok Opname", 11, new String[]{
+                                    tbDokter.getValueAt(i, 1).toString(), tbDokter.getValueAt(i, 5).toString(), Valid.SetTgl(Tgl.getSelectedItem() + ""), tbDokter.getValueAt(i, 6).toString(),
+                                    stok, tbDokter.getValueAt(i, 7).toString(), tbDokter.getValueAt(i, 8).toString(), catatan.getText(), kdgudang.getText(),
+                                    tbDokter.getValueAt(i, 9).toString(), tbDokter.getValueAt(i, 10).toString()}) == true) {
+                                    int cari = Sequel.cariInteger("SELECT COUNT(kode_brng) FROM opname_stok_awal WHERE tahun='" + Tgl.getSelectedItem().toString().substring(6, 10) + "' AND bulan= '" + Tgl.getSelectedItem().toString().substring(3, 5) + "' AND kode_brng = '" + tbDokter.getValueAt(i, 1).toString() + "' and kd_bangsal='" + kdgudang.getText() + "'");
+                                    if (cari < 1) {
+                                        Sequel.menyimpan("opname_stok_awal", "?,?,?,?,?,?,?,?,?", "Stok Opname", 9, new String[]{
+                                            null, tbDokter.getValueAt(i, 1).toString(), tbDokter.getValueAt(i, 5).toString(), stok, kdgudang.getText(),
+                                            Tgl.getSelectedItem().toString().substring(6, 10), Tgl.getSelectedItem().toString().substring(3, 5), var.getkode(), dtf.format(now)
+                                        });
+                                    }
+                                    Trackobat.catatRiwayat(tbDokter.getValueAt(i, 1).toString(), Valid.SetAngka(stok), 0, "Opname", var.getkode(), kdgudang.getText(), "Simpan");
+                                    Sequel.menyimpan("gudangbarang", "'" + tbDokter.getValueAt(i, 1).toString() + "','" + kdgudang.getText() + "','" + tbDokter.getValueAt(i, 0).toString() + "'",
+                                            "stok='" + stok + "'", "kode_brng='" + tbDokter.getValueAt(i, 1).toString() + "' and kd_bangsal='" + kdgudang.getText() + "'");
+
+                                } else {
+                                    sukses = false;
+                                    JOptionPane.showMessageDialog(null, tbDokter.getValueAt(i, 1).toString() + " " + tbDokter.getValueAt(i, 2).toString() + " gagal disimpan...!");
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(null, tbDokter.getValueAt(i, 1).toString() + " " + tbDokter.getValueAt(i, 2).toString() + " gagal disimpan karena sudah dilakukan Opname");
+                            }
+                        }
+                    } catch (Exception e) {
+                        sukses = false;
+                    }
+//                    }
+                }
+
+                if (sukses == true) {
+                    Sequel.Commit();
+                } else {
+                    sukses = false;
+                    JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat pemrosesan data, transaksi dibatalkan.\nPeriksa kembali data sebelum melanjutkan menyimpan..!!");
+                    Sequel.RollBack();
+                }
+                Sequel.AutoComitTrue();
+                if (sukses == true) {
+                    for (index = 0; index < tbDokter.getRowCount(); index++) {
+                        tbDokter.setValueAt("", index, 0);
+                    }
+                    LTotal.setText("0");
+                }
+                JOptionPane.showMessageDialog(null, "Berhasil menyimpan data...");
+                tampil();
+            }
+        }
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_BtnKeluar2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -827,6 +1016,8 @@ private void BtnGudangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     private widget.Button BtnCari1;
     private widget.Button BtnGudang;
     private widget.Button BtnKeluar;
+    private widget.Button BtnKeluar1;
+    private widget.Button BtnKeluar2;
     private widget.Button BtnSimpan;
     private widget.TextBox Kd2;
     private widget.Label LTotal;

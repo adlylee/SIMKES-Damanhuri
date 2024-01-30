@@ -1440,7 +1440,7 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                             namakamar=Sequel.cariIsi("select nm_poli from poliklinik inner join reg_periksa on poliklinik.kd_poli=reg_periksa.kd_poli "+
                                     "where reg_periksa.no_rawat='"+rs.getString("no_rawat")+"'");
                         }
-                        String klinis = Sequel.cariIsi("SELECT klinis from diagnosa_pasien_klinis join permintaan_lab on diagnosa_pasien_klinis.noorder=permintaan_lab.noorder where permintaan_lab.no_rawat='"+rs.getString("no_rawat")+"'");
+                        String klinis = Sequel.cariIsi("SELECT klinis from diagnosa_pasien_klinis join permintaan_lab on diagnosa_pasien_klinis.noorder=permintaan_lab.noorder where permintaan_lab.no_rawat='"+rs.getString("no_rawat")+"' and tgl_hasil='"+tbDokter.getValueAt(tbDokter.getSelectedRow(),3).toString()+"' and jam_hasil='"+tbDokter.getValueAt(tbDokter.getSelectedRow(),4).toString()+"'");
                         String carabayar = Sequel.cariIsi("SELECT png_jawab FROM reg_periksa join penjab on reg_periksa.kd_pj=penjab.kd_pj where reg_periksa.no_rawat='"+rs.getString("no_rawat")+"'");
                         Map<String, Object> param = new HashMap<>();
                         param.put("noperiksa",rs.getString("no_rawat"));

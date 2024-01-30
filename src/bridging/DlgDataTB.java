@@ -1830,8 +1830,8 @@ public final class DlgDataTB extends javax.swing.JDialog {
 //            Valid.textKosong(PemeriksaanLaboratAkhirNoReg,"No.Reg Pemeriksaan Laborat Akhir Pengobatan");
 //        }else if(Keterangan.getText().trim().equals("")){
 //            Valid.textKosong(Keterangan,"Keterangan");
-//        }else if(kdpenyakit.getText().trim().equals("")||nmpenyakit.getText().trim().equals("")){
-//            Valid.textKosong(btnBangsal,"Penyakit");
+        }else if(kdpenyakit.getText().trim().equals("")||nmpenyakit.getText().trim().equals("")){
+            Valid.textKosong(btnBangsal,"Penyakit");
         }else{
             id_tb_03="";
 //            try {
@@ -3298,6 +3298,8 @@ public final class DlgDataTB extends javax.swing.JDialog {
     public void setNoRM(String norawat){
         TabRawat.setSelectedIndex(0);
         TNoRw.setText(norawat);
+        kdpenyakit.setText(Sequel.cariIsi("select kd_penyakit from diagnosa_pasien where no_rawat='"+norawat+"' and status='Ralan' and prioritas='1'"));
+        nmpenyakit.setText(Sequel.cariIsi("select nm_penyakit from penyakit where kd_penyakit=?",kdpenyakit.getText()));
         try {
             ps=koneksi.prepareStatement(
                 "select pasien.no_rkm_medis,pasien.nm_pasien,pasien.jk,pasien.tgl_lahir,reg_periksa.umurdaftar, "+

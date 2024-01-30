@@ -172,10 +172,10 @@ public class DlgSirkulasiBarang4 extends javax.swing.JDialog {
             @Override
             public void windowClosed(WindowEvent e) {
                 if(var.getform().equals("DlgSirkulasiBarang")){
-                    if(barang.getTable().getSelectedRow()!= -1){                   
-                        kdbar.setText(barang.getTable().getValueAt(barang.getTable().getSelectedRow(),1).toString());                    
-                        nmbar.setText(barang.getTable().getValueAt(barang.getTable().getSelectedRow(),2).toString());
-                    }  
+                    if(barang.getTable().getSelectedRow()!= -1){
+                            kdbar.setText(barang.getTable().getValueAt(barang.getTable().getSelectedRow(),1).toString());                    
+                            nmbar.setText(barang.getTable().getValueAt(barang.getTable().getSelectedRow(),2).toString());                            
+                        }
                     kdbar.requestFocus();
                 }
             }
@@ -450,7 +450,7 @@ public class DlgSirkulasiBarang4 extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Sirkulasi Obat, Alkes & BHP Medis Keluar Masuk ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Sirkulasi Obat, Alkes & BHP Medis Keluar Masuk ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -903,11 +903,11 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                     jumlahmutasikeluar=0;totalmutasikeluar=0;jumlahmutasimasuk=0;totalmutasimasuk=0;stoksaldoakhir=0;totalsaldoakhir=0;Tstokakhir=0;
                     
                     ps2=koneksi.prepareStatement("SELECT SUM(`real`) FROM opname WHERE kode_brng =? AND tanggal BETWEEN ? AND ?");
-                    try {
+                        try {
                         LocalDate theday = LocalDate.parse(Valid.SetTgl(Tgl1.getSelectedItem()+""));
 //                        System.out.println(theday);
-                        LocalDate lastweek = theday.minus(2, ChronoUnit.WEEKS);
-                        LocalDate nextweek = theday.plus(2, ChronoUnit.WEEKS);
+                            LocalDate lastweek = theday.minus(2, ChronoUnit.WEEKS);
+                            LocalDate nextweek = theday.plus(2, ChronoUnit.WEEKS);
 //                        System.out.println("Last week: " + lastweek);
                         ps2.setString(1,rs.getString(1));
                         ps2.setString(2,lastweek.toString());
@@ -917,17 +917,17 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         if(rs2.next()){
                             stoksaldoawal=rs2.getDouble(1);
                             totalsaldoawal=rs2.getDouble(1) * rs.getDouble(4);
-                        }
-                    } catch (Exception e) {
+                            }
+                        } catch (Exception e) {
                         System.out.println("Notifikasi Stok : "+e);
                     } finally{
                         if(rs2!=null){
-                            rs2.close();
-                        }
+                                rs2.close();
+                            }
                         if(ps2!=null){
-                            ps2.close();
+                                ps2.close();
+                            }
                         }
-                    }
 
                     ps2=koneksi.prepareStatement("select sum(stok),(sum(stok)*h_beli) as aset "+
                         "from gudangbarang inner join databarang on gudangbarang.kode_brng=databarang.kode_brng "+
@@ -994,7 +994,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                     } catch (Exception e) {
                         System.out.println("Pemesanan : "+e);
                     } finally{
-                        if(rs2!=null){
+                        if(rs2!=null){ 
                             rs2.close();
                         }
                         if(ps2!=null){
@@ -1250,11 +1250,11 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                     
                     //stok akhir (Opname)
                     ps2=koneksi.prepareStatement("SELECT SUM(`real`) FROM opname WHERE kode_brng =? AND tanggal BETWEEN ? AND ?");
-                    try {
+                        try {
                         LocalDate theday = LocalDate.parse(Valid.SetTgl(Tgl2.getSelectedItem()+""));
 //                        System.out.println(theday);
-                        LocalDate lastweek = theday.minus(2, ChronoUnit.WEEKS);
-                        LocalDate nextweek = theday.plus(2, ChronoUnit.WEEKS);
+                            LocalDate lastweek = theday.minus(2, ChronoUnit.WEEKS);
+                            LocalDate nextweek = theday.plus(2, ChronoUnit.WEEKS);
 //                        System.out.println("Last week: " + lastweek);
                         ps2.setString(1,rs.getString(1));
                         ps2.setString(2,lastweek.toString());
@@ -1264,17 +1264,17 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         if(rs2.next()){
                             stokakhiropname=rs2.getDouble(1);
                             totalsaldoakhiropname=rs2.getDouble(1) * rs.getDouble(4);
-                        }
-                    } catch (Exception e) {
+                            }
+                        } catch (Exception e) {
                         System.out.println("Notifikasi Stok : "+e);
                     } finally{
                         if(rs2!=null){
-                            rs2.close();
-                        }
+                                rs2.close();
+                            }
                         if(ps2!=null){
-                            ps2.close();
+                                ps2.close();
+                            }
                         }
-                    }
                     
 //                    if((aset>0)||(jumlahbeli>0)||(jumlahpesan>0)||(jumlahjual>0)||(jumlahpasin>0)||(jumlahpiutang>0)||
 //                            (jumlahretbeli>0)||(jumlahretjual>0)||(jumlahretpiut>0)||(jumlahutd>0)||(jumlahkeluar>0)||
@@ -1369,7 +1369,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
             System.out.println("Notifikasi : "+e);
         }
         
-    }
+    } 
     
     private void prosesCari2(String lokasi) {
        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -1828,4 +1828,4 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
          BtnPrint.setEnabled(true);
     }
     
-}
+            }

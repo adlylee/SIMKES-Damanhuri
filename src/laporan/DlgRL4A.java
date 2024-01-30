@@ -81,8 +81,10 @@ public class DlgRL4A extends javax.swing.JDialog {
         BtnKeluar = new widget.Button();
         TabRawat = new javax.swing.JTabbedPane();
         internalFrame2 = new widget.InternalFrame();
+        Scroll = new widget.ScrollPane();
         LoadHTML = new widget.editorpane();
         internalFrame3 = new widget.InternalFrame();
+        Scroll1 = new widget.ScrollPane();
         LoadHTML1 = new widget.editorpane();
 
         Kd2.setName("Kd2"); // NOI18N
@@ -202,9 +204,14 @@ public class DlgRL4A extends javax.swing.JDialog {
         internalFrame2.setName("internalFrame2"); // NOI18N
         internalFrame2.setLayout(new java.awt.BorderLayout(1, 1));
 
+        Scroll.setName("Scroll"); // NOI18N
+        Scroll.setOpaque(true);
+
         LoadHTML.setBorder(null);
         LoadHTML.setName("LoadHTML"); // NOI18N
-        internalFrame2.add(LoadHTML, java.awt.BorderLayout.CENTER);
+        Scroll.setViewportView(LoadHTML);
+
+        internalFrame2.add(Scroll, java.awt.BorderLayout.CENTER);
 
         TabRawat.addTab("Berdasar Tanggal Masuk", internalFrame2);
 
@@ -213,9 +220,14 @@ public class DlgRL4A extends javax.swing.JDialog {
         internalFrame3.setName("internalFrame3"); // NOI18N
         internalFrame3.setLayout(new java.awt.BorderLayout(1, 1));
 
+        Scroll1.setName("Scroll1"); // NOI18N
+        Scroll1.setOpaque(true);
+
         LoadHTML1.setBorder(null);
         LoadHTML1.setName("LoadHTML1"); // NOI18N
-        internalFrame3.add(LoadHTML1, java.awt.BorderLayout.CENTER);
+        Scroll1.setViewportView(LoadHTML1);
+
+        internalFrame3.add(Scroll1, java.awt.BorderLayout.CENTER);
 
         TabRawat.addTab("Berdasar Tanggal Keluar", internalFrame3);
 
@@ -354,6 +366,8 @@ private void btnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_b
     private widget.TextBox Kd2;
     private widget.editorpane LoadHTML;
     private widget.editorpane LoadHTML1;
+    private widget.ScrollPane Scroll;
+    private widget.ScrollPane Scroll1;
     private javax.swing.JTabbedPane TabRawat;
     private widget.Tanggal Tgl1;
     private widget.Tanggal Tgl2;

@@ -37,7 +37,7 @@ public class UTDCariPenyerahanDarah extends javax.swing.JDialog {
     private Connection koneksi=koneksiDB.condb();
     private riwayatobat Trackobat=new riwayatobat();
     private int i=0,no=1,pilih=0,max_pakai=0;
-    private double pendapatan=0,subtotalpendapatan=0,subtotalmedis=0,subtotalnonmedis=0;
+    private double pendapatan=0,subtotalpendapatan=0,subtotalmedis=0,subtotalnonmedis=0, totalpenyerahan=0;
     private Dimension screen=Toolkit.getDefaultToolkit().getScreenSize();
     private DlgCariPetugas petugas=new DlgCariPetugas(null,false);
     private UTDKomponenDarah komponen=new UTDKomponenDarah(null,true);
@@ -942,7 +942,7 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                                     }
                                 }
                             } catch (Exception e) {
-                                System.out.println("Notifikasi Darah : " + e);
+                                System.out.println("Notifikasi Darah 1: " + e);
                             } finally {
                                 if (rs2 != null) {
                                     rs2.close();
@@ -1041,7 +1041,7 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                                 Sequel.mengedit("utd_stok_darah","no_kantong=?","status='Diambil'",1,new String[]{rs2.getString(1)});
                             }
                         } catch (Exception e) {
-                            System.out.println("Notifikasi Darah : "+e);
+                            System.out.println("Notifikasi Darah 2: "+e);
                         }finally{
                             if(rs2!=null){
                                 rs2.close();
@@ -1424,15 +1424,29 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                         psdarah.setString(1,"%"+nmkomponen.getText().trim()+"%");
                         psdarah.setString(2,rs.getString("no_penyerahan"));
                         rs2=psdarah.executeQuery();
-                        while(rs2.next()){
+                        while(rs2.next()){ 
+                            totalpenyerahan=0;
+                            String penyerahan = Sequel.cariIsi("select no_penyerahan from permintaan_utd where no_penyerahan=?",rs.getString("no_penyerahan"));
+                            if (!penyerahan.equals("")) {
+                                String total = Sequel.cariIsi("select total_byrpr from utd_penyerahan_darah_detail inner join permintaan_utd inner join permintaan_pemeriksaan_utd inner join jns_perawatan_inap "
+                                        + "on utd_penyerahan_darah_detail.no_penyerahan=permintaan_utd.no_penyerahan and permintaan_utd.noorder=permintaan_pemeriksaan_utd.noorder "
+                                        + "and permintaan_pemeriksaan_utd.kd_jenis_prw=jns_perawatan_inap.kd_jenis_prw where utd_penyerahan_darah_detail.no_penyerahan='" + rs.getString("no_penyerahan") + "'");
+                                totalpenyerahan = Double.valueOf(total);
+                            }
+                            if (penyerahan.equals("")) {
+                                String total = Sequel.cariIsi("select total from utd_penyerahan_darah_detail where no_penyerahan='" + rs.getString("no_penyerahan") + "'");
+                                totalpenyerahan = Double.valueOf(total);
+                            }
                             tabMode.addRow(new Object[]{
                                 "","",no+".",rs2.getString("no_kantong"),rs2.getString("darah"),
                                 rs2.getString("golongan_darah")+" "+rs2.getString("resus"),
-                                rs2.getString("asal_darah"),rs2.getString("tanggal_aftap")+" | "+rs2.getString("tanggal_kadaluarsa"),
-                                Valid.SetAngka(rs2.getDouble("total"))
+                                rs2.getString("asal_darah"),rs2.getString("tanggal_aftap")+" | "+rs2.getString("tanggal_kadaluarsa"),Valid.SetAngka(totalpenyerahan)
+//                                Valid.SetAngka(rs2.getDouble("total"))
                             });
-                            subtotalpendapatan=subtotalpendapatan+rs2.getDouble("total");
-                            pendapatan=pendapatan+rs2.getDouble("total");
+//                            subtotalpendapatan=subtotalpendapatan+rs2.getDouble("total");
+//                            pendapatan=pendapatan+rs2.getDouble("total");
+                            subtotalpendapatan=subtotalpendapatan+totalpenyerahan;
+                            pendapatan=pendapatan+totalpenyerahan;
                             no++;
                         }
                         if(subtotalpendapatan>0){
@@ -1441,7 +1455,7 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                             });
                         }
                     } catch (Exception e) {
-                        System.out.println("Notifikasi Darah : "+e);
+                        System.out.println("Notifikasi Darah 3: "+e);
                     }finally{
                         if(rs2!=null){
                             rs2.close();

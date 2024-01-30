@@ -17,6 +17,8 @@ import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -944,6 +946,8 @@ public class PanelDiagnosa extends widget.panelisi {
     }
     
     public void simpan(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
         try {
             koneksi.setAutoCommit(false);
             for(i=0;i<tbDiagnosa.getRowCount();i++){ 
@@ -1020,12 +1024,14 @@ public class PanelDiagnosa extends widget.panelisi {
     }
     
     public void hapus(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
         if(TabRawat.getSelectedIndex()==1){
             if(TabModeDiagnosaPasien.getRowCount()==0){
                 JOptionPane.showMessageDialog(null,"Maaf, data sudah habis...!!!!");
             }else{
                 for(i=0;i<tbDiagnosaPasien.getRowCount();i++){ 
-                    if(tbDiagnosaPasien.getValueAt(i,0).toString().equals("true")){
+                    if(tbDiagnosaPasien.getValueAt(i,0).toString().equals("true")){                        
                         Sequel.queryu2("delete from diagnosa_pasien where no_rawat=? and kd_penyakit=?",2,new String[]{
                             tbDiagnosaPasien.getValueAt(i,2).toString(),tbDiagnosaPasien.getValueAt(i,11).toString()
                         });
@@ -1112,5 +1118,55 @@ public class PanelDiagnosa extends widget.panelisi {
             }
         }
         this.setCursor(Cursor.getDefaultCursor());
+    }
+    
+    public void tampilDiagnosa() {
+        Valid.tabelKosong(TabModeDiagnosaPasien);
+        try{            
+            psdiagnosapasien=koneksi.prepareStatement("select reg_periksa.tgl_registrasi,diagnosa_pasien.no_rawat,reg_periksa.no_rkm_medis,pasien.nm_pasien,"+
+                    "diagnosa_pasien.kd_penyakit,penyakit.nm_penyakit, diagnosa_pasien.status,diagnosa_pasien.status_penyakit,reg_periksa.umurdaftar,reg_periksa.sttsumur, "+
+                    "if(diagnosa_pasien.status='Ralan',(select nm_poli from poliklinik where poliklinik.kd_poli=reg_periksa.kd_poli),"+
+                    "(select bangsal.nm_bangsal from kamar_inap inner join kamar inner join bangsal on kamar_inap.kd_kamar=kamar.kd_kamar "+
+                    "and kamar.kd_bangsal=bangsal.kd_bangsal where kamar_inap.stts_pulang <> 'Pindah Kamar' and kamar_inap.no_rawat=reg_periksa.no_rawat limit 1 )) as ruangan,pasien.no_ktp,pasien.tgl_lahir,pasien.alamat,pasien.jk, "+
+                    "IF(diagnosa_pasien.status = 'Ralan',(SELECT MAX(reg_periksa.stts) FROM reg_periksa WHERE reg_periksa.no_rawat = diagnosa_pasien.no_rawat),(SELECT kamar_inap.stts_pulang FROM kamar_inap WHERE kamar_inap.no_rawat = diagnosa_pasien.no_rawat LIMIT 1)) AS pulang "+
+                    "from diagnosa_pasien inner join reg_periksa inner join pasien inner join penyakit "+
+                    "on diagnosa_pasien.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "+
+                    "and diagnosa_pasien.kd_penyakit=penyakit.kd_penyakit "+
+                    "left join kamar_inap on kamar_inap.no_rawat=diagnosa_pasien.no_rawat and kamar_inap.no_rawat=reg_periksa.no_rawat "+
+                    "where reg_periksa.tgl_registrasi between ? and ? and reg_periksa.no_rkm_medis like ? and diagnosa_pasien.kd_penyakit like ? and diagnosa_pasien.status = ? "
+                    + "order by reg_periksa.tgl_registrasi,diagnosa_pasien.prioritas");
+            try {
+                psdiagnosapasien.setString(1,tanggal1);
+                psdiagnosapasien.setString(2,tanggal2);
+                psdiagnosapasien.setString(3,"%"+norm+"%");          
+                psdiagnosapasien.setString(4,keyword+"%");
+                psdiagnosapasien.setString(5,status);
+                rs=psdiagnosapasien.executeQuery();
+                while(rs.next()){
+                    TabModeDiagnosaPasien.addRow(new Object[]{false,
+                                   rs.getString(1),
+                                   rs.getString(2),
+                                   rs.getString(3),
+                                   rs.getString(4),rs.getString(14),rs.getString(12),rs.getString(15),rs.getString(13),
+                                   rs.getString(9)+" "+rs.getString(10),
+                                   rs.getString("ruangan"),
+                                   rs.getString(5),
+                                   rs.getString(6),
+                                   rs.getString(7),
+                                   rs.getString(8),rs.getString("pulang")});
+                }            
+            } catch (Exception e) {
+                System.out.println("Notifikasi : "+e);
+            } finally{
+                if(rs!=null){
+                    rs.close();
+                }
+                if(psdiagnosapasien!=null){
+                    psdiagnosapasien.close();
+                }
+            }
+        }catch(Exception e){
+            System.out.println("Notifikasi : "+e);
+        }
     }
 }

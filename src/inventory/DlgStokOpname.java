@@ -47,6 +47,7 @@ public final class DlgStokOpname extends javax.swing.JDialog {
     private Connection koneksi=koneksiDB.condb();
     private PreparedStatement pstampil;
     private ResultSet rstampil;
+    private riwayatobat Trackobat=new riwayatobat();
     /** Creates new form DlgPenyakit
      * @param parent
      * @param modal */
@@ -445,7 +446,7 @@ public final class DlgStokOpname extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Stok Opname Obat, Alkes & BHP Medis ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Stok Opname Obat, Alkes & BHP Medis ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -664,7 +665,14 @@ public final class DlgStokOpname extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHapusActionPerformed
-        Valid.hapusTable(tabMode,Kdbar,"opname","kd_bangsal='"+kdgudang.getText()+"' and tanggal='"+Tanggal.getSelectedItem()+"' and kode_brng");
+        int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin menghapus data...??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            Valid.hapusTable(tabMode, Kdbar, "opname", "kd_bangsal='" + kdgudang.getText() + "' and tanggal='" + Tanggal.getSelectedItem() + "' and kode_brng");
+            Trackobat.catatRiwayat(tbKamar.getValueAt(tbKamar.getSelectedRow(), 0).toString(), Valid.SetAngka(tbKamar.getValueAt(tbKamar.getSelectedRow(), 6).toString()),
+                    0,"Opname", var.getkode(), kdgudang.getText(), "Hapus");
+            Sequel.menyimpan("gudangbarang", "'" + tbKamar.getValueAt(tbKamar.getSelectedRow(), 0).toString() + "','" + kdgudang.getText() + "','" + tbKamar.getValueAt(tbKamar.getSelectedRow(), 6).toString() + "'",
+                    "stok='" + tbKamar.getValueAt(tbKamar.getSelectedRow(), 6).toString() + "'", "kode_brng='" + tbKamar.getValueAt(tbKamar.getSelectedRow(), 0).toString() + "' and kd_bangsal='" + kdgudang.getText() + "'");
+        }
         BtnCariActionPerformed(evt);
         emptTeks();
 }//GEN-LAST:event_BtnHapusActionPerformed

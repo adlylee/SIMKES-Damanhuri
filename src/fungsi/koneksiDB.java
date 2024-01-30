@@ -45,10 +45,10 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" + 
-                        "    Version 04.01.2024 [ 1.0.34 ] [Activated] GO KLAIM DIGITAL \n"+
+                        "    Version 29.01.2024 [ 1.0.34 ] [Activated] GO KLAIM DIGITAL \n"+
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai                              \n"+
-                        "                                                                           \n"+
+                         "                                                                           \n"+
                         "    Paripurna * * * * *                                  \n"+
                         "                                                                           \n"+
                         "       SMART , GREEN , AND FRIENDLY HOSPITAL                           \n"+
@@ -58,7 +58,8 @@ public final class koneksiDB {
                         "                                                                       \n"+
                         "    * Changelog :                                                       \n"+
                         "       - Surat-surat                         \n"+
-                        "       - Transfer Pasien Ranap                  \n");
+                        "       - Transfer Pasien Ranap                  \n"+
+                        "       - Kunjungan Pasien Ralan & Ranap                  \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);
                 try {

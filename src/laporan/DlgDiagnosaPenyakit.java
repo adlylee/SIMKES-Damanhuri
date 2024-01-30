@@ -217,6 +217,7 @@ public class DlgDiagnosaPenyakit extends javax.swing.JDialog {
         TCariPasien = new widget.TextBox();
         BtnSeek4 = new widget.Button();
         jSeparator5 = new javax.swing.JSeparator();
+        Status1 = new widget.ComboBox();
         jLabel6 = new widget.Label();
         TCari = new widget.TextBox();
         BtnCari = new widget.Button();
@@ -241,7 +242,7 @@ public class DlgDiagnosaPenyakit extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Riwayat Diagnosa & Prosedur Tindakan ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Riwayat Diagnosa & Prosedur Tindakan ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -384,7 +385,7 @@ public class DlgDiagnosaPenyakit extends javax.swing.JDialog {
         jLabel14.setPreferredSize(new java.awt.Dimension(63, 23));
         panelGlass9.add(jLabel14);
 
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30-12-2020" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-10-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -395,7 +396,7 @@ public class DlgDiagnosaPenyakit extends javax.swing.JDialog {
         jLabel19.setPreferredSize(new java.awt.Dimension(18, 23));
         panelGlass9.add(jLabel19);
 
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30-12-2020" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25-10-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -439,6 +440,16 @@ public class DlgDiagnosaPenyakit extends javax.swing.JDialog {
         jSeparator5.setOpaque(true);
         jSeparator5.setPreferredSize(new java.awt.Dimension(1, 23));
         panelGlass9.add(jSeparator5);
+
+        Status1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Semua", "Diagnosa" }));
+        Status1.setName("Status1"); // NOI18N
+        Status1.setPreferredSize(new java.awt.Dimension(100, 23));
+        Status1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Status1ActionPerformed(evt);
+            }
+        });
+        panelGlass9.add(Status1);
 
         jLabel6.setText("Key Word :");
         jLabel6.setName("jLabel6"); // NOI18N
@@ -535,9 +546,8 @@ public class DlgDiagnosaPenyakit extends javax.swing.JDialog {
 
     private void TCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TCariKeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            panelDiagnosa1.setRM(TNoRw.getText(),TNoRM.getText(),Valid.SetTgl(DTPCari1.getSelectedItem()+""),Valid.SetTgl(DTPCari2.getSelectedItem()+""),Status.getSelectedItem().toString(),TCari.getText().trim());
-            panelDiagnosa1.pilihTab();
-            LCount.setText(panelDiagnosa1.getRecord()+"");
+            cmbTampil();
+            LCount.setText(panelDiagnosa1.getRecord() + "");
         }else if(evt.getKeyCode()==KeyEvent.VK_PAGE_DOWN){
             BtnCari.requestFocus();
         }else if(evt.getKeyCode()==KeyEvent.VK_PAGE_UP){
@@ -546,8 +556,7 @@ public class DlgDiagnosaPenyakit extends javax.swing.JDialog {
 }//GEN-LAST:event_TCariKeyPressed
 
     private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCariActionPerformed
-        panelDiagnosa1.setRM(TNoRw.getText(),TNoRM.getText(),Valid.SetTgl(DTPCari1.getSelectedItem()+""),Valid.SetTgl(DTPCari2.getSelectedItem()+""),Status.getSelectedItem().toString(),TCari.getText().trim());
-        panelDiagnosa1.pilihTab();
+        cmbTampil();
         LCount.setText(panelDiagnosa1.getRecord()+"");
 }//GEN-LAST:event_BtnCariActionPerformed
 
@@ -703,6 +712,10 @@ public class DlgDiagnosaPenyakit extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_StatusActionPerformed
 
+    private void Status1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Status1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Status1ActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -733,6 +746,7 @@ public class DlgDiagnosaPenyakit extends javax.swing.JDialog {
     private widget.PanelBiasa FormInput;
     private widget.Label LCount;
     private widget.ComboBox Status;
+    private widget.ComboBox Status1;
     private widget.TextBox TCari;
     private widget.TextBox TCariPasien;
     private widget.TextBox TNoRM;
@@ -808,6 +822,20 @@ public class DlgDiagnosaPenyakit extends javax.swing.JDialog {
         BtnAll.setEnabled(false);
     }
     
+    private void cmbTampil() {
+        switch (Status1.getSelectedItem().toString()) {
+            case "Semua":
+                panelDiagnosa1.setRM(TNoRw.getText(), TNoRM.getText(), Valid.SetTgl(DTPCari1.getSelectedItem() + ""), Valid.SetTgl(DTPCari2.getSelectedItem() + ""), Status.getSelectedItem().toString(), TCari.getText().trim());
+                panelDiagnosa1.pilihTab();
+                break;
+            case "Diagnosa":
+                panelDiagnosa1.setRM(TNoRw.getText(), TNoRM.getText(), Valid.SetTgl(DTPCari1.getSelectedItem() + ""), Valid.SetTgl(DTPCari2.getSelectedItem() + ""), Status.getSelectedItem().toString(), TCari.getText().trim());
+                panelDiagnosa1.tampilDiagnosa();
+                break;
+            default:
+                break;
+        }
+    }
 
 
 }

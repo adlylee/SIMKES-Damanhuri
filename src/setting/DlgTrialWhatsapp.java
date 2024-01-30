@@ -84,7 +84,7 @@ public class DlgTrialWhatsapp extends javax.swing.JDialog {
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
         panelGlass7.setName("panelGlass7"); // NOI18N
-        panelGlass7.setPreferredSize(new java.awt.Dimension(44, 247));
+        panelGlass7.setPreferredSize(new java.awt.Dimension(44, 547));
         panelGlass7.setLayout(null);
 
         jLabel3.setText("No. Telp :");
@@ -117,7 +117,7 @@ public class DlgTrialWhatsapp extends javax.swing.JDialog {
         scrollPane1.setViewportView(pesan);
 
         panelGlass7.add(scrollPane1);
-        scrollPane1.setBounds(80, 40, 280, 53);
+        scrollPane1.setBounds(80, 40, 430, 253);
 
         BtnKeluar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/exit.png"))); // NOI18N
         BtnKeluar.setMnemonic('K');
@@ -137,7 +137,7 @@ public class DlgTrialWhatsapp extends javax.swing.JDialog {
             }
         });
         panelGlass7.add(BtnKeluar);
-        BtnKeluar.setBounds(280, 110, 100, 30);
+        BtnKeluar.setBounds(410, 310, 100, 30);
 
         BtnKirim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/edit_f2.png"))); // NOI18N
         BtnKirim.setMnemonic('S');
@@ -156,12 +156,11 @@ public class DlgTrialWhatsapp extends javax.swing.JDialog {
             }
         });
         panelGlass7.add(BtnKirim);
-        BtnKirim.setBounds(180, 110, 100, 30);
+        BtnKirim.setBounds(310, 310, 100, 30);
 
         internalFrame1.add(panelGlass7, java.awt.BorderLayout.PAGE_START);
 
         getContentPane().add(internalFrame1, java.awt.BorderLayout.CENTER);
-        internalFrame1.getAccessibleContext().setAccessibleName("::[ Send Whatsapp ]::");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
