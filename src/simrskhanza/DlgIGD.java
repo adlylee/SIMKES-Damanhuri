@@ -6115,14 +6115,15 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
             JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu pasien...!!!");
         } else if (TKategori.getText().trim().equals("")) {
             try {
-                if(Sequel.cariIsi("SELECT kategori FROM kategori_pasien_igd WHERE no_rawat = " + TNoRw.getText()) != ""){
+                String category = Sequel.cariIsi("SELECT kategori FROM kategori_pasien_igd WHERE no_rawat = '" + TNoRw.getText()+"'");
+                if(category.equals("")){
                     String bedah;
                     bedah = "insert into kategori_pasien_igd (no_rawat, kategori) values ('" + TNoRw.getText() + "','BEDAH')";
                     PreparedStatement pst_bedah = koneksiDB.condb().prepareStatement(bedah);
                     pst_bedah.execute();
                     tampil();
                 } else {
-                    Sequel.mengedit("kategori_pasien_igd", "kategori", "BEDAH");
+                    Sequel.mengedit("kategori_pasien_igd", "no_rawat = '" + TNoRw.getText() + "'", "kategori='BEDAH'");
                     tampil();
                 }
             } catch (Exception e) {
@@ -6130,10 +6131,7 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
             }
         } else {
             try {
-                String bedah;
-                bedah = "update kategori_pasien_igd set kategori = 'BEDAH' where no_rawat = '" + TNoRw.getText() + "'";
-                PreparedStatement pst_bedah = koneksiDB.condb().prepareStatement(bedah);
-                pst_bedah.execute();
+                Sequel.mengedit("kategori_pasien_igd", "no_rawat = '" + TNoRw.getText() + "'", "kategori='BEDAH'");
                 tampil();
             } catch (Exception e) {
                 System.out.println(e);
@@ -6146,14 +6144,16 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
             JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu pasien...!!!");
         } else if (TKategori.getText().trim().equals("")) {
             try {
-                if(Sequel.cariIsi("SELECT kategori FROM kategori_pasien_igd WHERE no_rawat = " + TNoRw.getText()) != ""){
+                String category = Sequel.cariIsi("SELECT kategori FROM kategori_pasien_igd WHERE no_rawat = '" + TNoRw.getText()+"'");
+                if(category.equals("")){
                     String bedah;
                     bedah = "insert into kategori_pasien_igd (no_rawat, kategori) values ('" + TNoRw.getText() + "','NON-BEDAH')";
                     PreparedStatement pst_bedah = koneksiDB.condb().prepareStatement(bedah);
                     pst_bedah.execute();
                     tampil();
                 } else {
-                    Sequel.mengedit("kategori_pasien_igd", "kategori", "NON-BEDAH");
+                    System.out.println("coba edit kategori");
+                    Sequel.mengedit("kategori_pasien_igd", "no_rawat = '" + TNoRw.getText() + "'", "kategori='NON-BEDAH'");
                     tampil();
                 }
             } catch (Exception e) {
@@ -6161,10 +6161,8 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
             }
         } else {
             try {
-                String bedah;
-                bedah = "update kategori_pasien_igd set kategori = 'NON-BEDAH' where no_rawat = '" + TNoRw.getText() + "'";
-                PreparedStatement pst_bedah = koneksiDB.condb().prepareStatement(bedah);
-                pst_bedah.execute();
+                Sequel.mengedit("kategori_pasien_igd", "no_rawat = '" + TNoRw.getText() + "'", "kategori='NON-BEDAH'");
+                System.out.println("coba edit");
                 tampil();
             } catch (Exception e) {
                 System.out.println(e);
@@ -6177,14 +6175,15 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
             JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu pasien...!!!");
         } else if (TKategori.getText().trim().equals("")) {
             try {
-                if(Sequel.cariIsi("SELECT kategori FROM kategori_pasien_igd WHERE no_rawat = " + TNoRw.getText()) != ""){
+                String category = Sequel.cariIsi("SELECT kategori FROM kategori_pasien_igd WHERE no_rawat = '" + TNoRw.getText()+"'");
+                if(category.equals("")){
                     String bedah;
                     bedah = "insert into kategori_pasien_igd (no_rawat, kategori) values ('" + TNoRw.getText() + "','ANAK')";
                     PreparedStatement pst_bedah = koneksiDB.condb().prepareStatement(bedah);
                     pst_bedah.execute();
                     tampil();
                 } else {
-                    Sequel.mengedit("kategori_pasien_igd", "kategori", "ANAK");
+                    Sequel.mengedit("kategori_pasien_igd", "no_rawat = '" + TNoRw.getText() + "'", "kategori='ANAK'");
                     tampil();
                 }
             } catch (Exception e) {
@@ -6192,10 +6191,7 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
             }
         } else {
             try {
-                String bedah;
-                bedah = "update kategori_pasien_igd set kategori = 'ANAK' where no_rawat = '" + TNoRw.getText() + "'";
-                PreparedStatement pst_bedah = koneksiDB.condb().prepareStatement(bedah);
-                pst_bedah.execute();
+                Sequel.mengedit("kategori_pasien_igd", "no_rawat = '" + TNoRw.getText() + "'", "kategori='ANAK'");
                 tampil();
             } catch (Exception e) {
                 System.out.println(e);
@@ -6208,14 +6204,15 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
             JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu pasien...!!!");
         } else if (TKategori.getText().trim().equals("")) {
             try {
-                if(Sequel.cariIsi("SELECT kategori FROM kategori_pasien_igd WHERE no_rawat = " + TNoRw.getText()) != ""){
+                String category = Sequel.cariIsi("SELECT kategori FROM kategori_pasien_igd WHERE no_rawat = '" + TNoRw.getText()+"'");
+                if(category.equals("")){
                     String bedah;
                     bedah = "insert into kategori_pasien_igd (no_rawat, kategori) values ('" + TNoRw.getText() + "','KEBIDANAN')";
                     PreparedStatement pst_bedah = koneksiDB.condb().prepareStatement(bedah);
                     pst_bedah.execute();
                     tampil();
                 } else {
-                    Sequel.mengedit("kategori_pasien_igd", "kategori", "KEBIDANAN");
+                    Sequel.mengedit("kategori_pasien_igd", "no_rawat = '" + TNoRw.getText() + "'", "kategori='KEBIDANAN'");
                     tampil();
                 }
             } catch (Exception e) {
@@ -6223,10 +6220,7 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
             }
         } else {
             try {
-                String bedah;
-                bedah = "update kategori_pasien_igd set kategori = 'KEBIDANAN' where no_rawat = '" + TNoRw.getText() + "'";
-                PreparedStatement pst_bedah = koneksiDB.condb().prepareStatement(bedah);
-                pst_bedah.execute();
+                Sequel.mengedit("kategori_pasien_igd", "no_rawat = '" + TNoRw.getText() + "'", "kategori='KEBIDANAN'");
                 tampil();
             } catch (Exception e) {
                 System.out.println(e);
@@ -6239,14 +6233,15 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
             JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih dulu pasien...!!!");
         } else if (TKategori.getText().trim().equals("")) {
             try {
-                if(Sequel.cariIsi("SELECT kategori FROM kategori_pasien_igd WHERE no_rawat = " + TNoRw.getText()) != ""){
+                String category = Sequel.cariIsi("SELECT kategori FROM kategori_pasien_igd WHERE no_rawat = '" + TNoRw.getText()+"'");
+                if(category.equals("")){
                     String bedah;
                     bedah = "insert into kategori_pasien_igd (no_rawat, kategori) values ('" + TNoRw.getText() + "','PSIKIATRIK')";
                     PreparedStatement pst_bedah = koneksiDB.condb().prepareStatement(bedah);
                     pst_bedah.execute();
                     tampil();
                 } else {
-                    Sequel.mengedit("kategori_pasien_igd", "kategori", "PSIKIATRIK");
+                    Sequel.mengedit("kategori_pasien_igd", "no_rawat = '" + TNoRw.getText() + "'", "kategori='PSIKIATRIK'");
                     tampil();
                 }
             } catch (Exception e) {
@@ -6254,10 +6249,7 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
             }
         } else {
             try {
-                String bedah;
-                bedah = "update kategori_pasien_igd set kategori = 'PSIKIATRIK' where no_rawat = '" + TNoRw.getText() + "'";
-                PreparedStatement pst_bedah = koneksiDB.condb().prepareStatement(bedah);
-                pst_bedah.execute();
+                Sequel.mengedit("kategori_pasien_igd", "no_rawat = '" + TNoRw.getText() + "'", "kategori='PSIKIATRIK'");
                 tampil();
             } catch (Exception e) {
                 System.out.println(e);

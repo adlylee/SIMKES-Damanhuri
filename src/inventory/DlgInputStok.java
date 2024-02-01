@@ -959,7 +959,6 @@ private void BtnGudangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                                     Trackobat.catatRiwayat(tbDokter.getValueAt(i, 1).toString(), Valid.SetAngka(stok), 0, "Opname", var.getkode(), kdgudang.getText(), "Simpan");
                                     Sequel.menyimpan("gudangbarang", "'" + tbDokter.getValueAt(i, 1).toString() + "','" + kdgudang.getText() + "','" + tbDokter.getValueAt(i, 0).toString() + "'",
                                             "stok='" + stok + "'", "kode_brng='" + tbDokter.getValueAt(i, 1).toString() + "' and kd_bangsal='" + kdgudang.getText() + "'");
-
                                 } else {
                                     sukses = false;
                                     JOptionPane.showMessageDialog(null, tbDokter.getValueAt(i, 1).toString() + " " + tbDokter.getValueAt(i, 2).toString() + " gagal disimpan...!");
@@ -1214,7 +1213,11 @@ private void BtnGudangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     }
 
     public void isCek() {
-        BtnSimpan.setEnabled(var.getstok_opname_obat());
+        String checkOpname = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='farmasi' AND field = 'stokopname'");
+        Boolean check_Opname = Boolean.valueOf(checkOpname);
+        BtnSimpan.setEnabled(check_Opname);
+//        BtnKeluar2.setEnabled(check_Opname);
+//        BtnKeluar1.setEnabled(check_Opname);
     }
 
 }
