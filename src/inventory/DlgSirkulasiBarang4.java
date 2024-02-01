@@ -45,7 +45,7 @@ public class DlgSirkulasiBarang4 extends javax.swing.JDialog {
                    ttltotalrespulang=0,jumlahmutasimasuk=0,jumlahmutasikeluar=0,totalmutasimasuk=0,totalmutasikeluar=0,
                    ttltotalmutasimasuk=0,ttltotalmutasikeluar=0,saldo_awal=0,saldo_akhir=0,saldo_masuk=0,saldo_keluar=0,
                    stok_masuk=0,stok_keluar=0,ttlsaldo_masuk=0,ttlsaldo_keluar=0,stoksaldoawal=0,totalsaldoawal=0,stoksaldoakhir=0,totalsaldoakhir=0,ttlstokawal=0,ttlstokmasuk=0,ttlstokkeluar=0,ttlstokakhir=0,
-                   Tstokakhir=0,Tttlsaldoakhir=0,
+                   Tstokakhir=0,Tttlsaldoakhir=0,ttlsaldoawal=0,ttlsaldomasuk=0,ttlsaldokeluar=0,ttlsaldomasuk1=0,ttlsaldokeluar1=0,ttlsaldoakhiropname=0,
                    stokakhiropname=0,totalsaldoakhiropname=0,ttlstokakhiropname=0;//stokakhir(opname)
     private DlgBarang barang=new DlgBarang(null,false);
     private PreparedStatement ps,ps2;
@@ -872,7 +872,8 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
        Valid.tabelKosong(tabMode); 
        tabMode.addRow(new Object[]{"","","","","","","","","","","","","",""}); 
        try{   
-            saldo_awal = Sequel.cariIsiAngka("SELECT saldo_awal FROM rekeningtahun WHERE kd_rek = '11070101'");
+//            saldo_awal = Sequel.cariIsiAngka("SELECT saldo_awal FROM rekeningtahun WHERE kd_rek = '11070101'");
+            saldo_awal = Double.valueOf("21454669117");
             ps=koneksi.prepareStatement("select databarang.kode_brng,databarang.nama_brng, "+
                         "kodesatuan.satuan , databarang.h_beli from databarang inner join kodesatuan   "+
                         "on databarang.kode_sat=kodesatuan.kode_sat "+
@@ -887,6 +888,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 ttltotalutd=0;ttltotalkeluar=0;ttltotalrespulang=0;
                 ttltotalmutasikeluar=0;ttltotalmutasimasuk=0;
                 ttlstokawal=0;ttlstokmasuk=0;ttlstokkeluar=0;ttlstokakhir=0;Tttlsaldoakhir=0;ttlstokakhiropname=0;
+                ttlsaldoawal=0;ttlsaldomasuk=0;ttlsaldokeluar=0;ttlsaldomasuk1=0;ttlsaldokeluar1=0;ttlsaldoakhiropname=0;
                 ps.setString(1,"%"+nmbar.getText()+"%");
                 ps.setString(2,"%"+TCari.getText().trim()+"%");
                 ps.setString(3,"%"+nmbar.getText()+"%");
@@ -1289,10 +1291,10 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
 //                        saldo_keluar = totaljual + totalpasien + totalkeluar + totalrespulang;
                         saldo_keluar = totalsaldoawal+saldo_masuk-totalsaldoakhiropname;
 //                         + totalretbeli
-                        stoksaldoakhir = stoksaldoawal + stok_masuk;
-                        stoksaldoakhir = stoksaldoakhir - stok_keluar;
-                        totalsaldoakhir = totalsaldoawal + saldo_masuk ;
-                        totalsaldoakhir = totalsaldoakhir - saldo_keluar;
+//                        stoksaldoakhir = stoksaldoawal + stok_masuk;
+//                        stoksaldoakhir = stoksaldoakhir - stok_keluar;
+//                        totalsaldoakhir = totalsaldoawal + saldo_masuk ;
+//                        totalsaldoakhir = totalsaldoakhir - saldo_keluar;
                         
                         tabMode.addRow(new Object[]{"510299102","",rs.getString(2),
                            rs.getString(3),Valid.SetAngka(rs.getDouble(4)),Sequel.cariIsi("select kategori_barang.nama from databarang "+
@@ -1324,11 +1326,18 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         ttlstokakhir=ttlstokakhir+stoksaldoakhir;
                         ttlstokakhiropname = ttlstokakhiropname + stokakhiropname; //stok akhir (opname)
                         
+                        //baru
+                        ttlsaldoawal = ttlsaldoawal + totalsaldoawal;
+                        ttlsaldomasuk1 = ttlsaldomasuk1 + saldo_masuk;
+                        ttlsaldokeluar1 = ttlsaldokeluar1 + saldo_keluar;
+                        ttlsaldoakhiropname = ttlsaldoakhiropname + totalsaldoakhiropname;
+                        
                         
                         ttltotalbeli=ttltotalbeli+totalbeli;
                         ttltotalpesan=ttltotalpesan+totalpesan;
-                        ttltotaljual=ttltotaljual+totaljual;
                         ttlaset=ttlaset+aset;
+                        
+                        ttltotaljual=ttltotaljual+totaljual;
                         ttltotalpasien=ttltotalpasien+totalpasien;
                         ttltotalpiutang=ttltotalpiutang+totalpiutang;
                         ttltotalretbeli=ttltotalretbeli+totalretbeli;
@@ -1347,8 +1356,12 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 saldo_akhir = saldo_awal + ttltotalbeli + ttltotalpesan ;
 //                        + ttltotalretjual;
                 saldo_akhir = saldo_akhir - ttltotaljual - ttltotalkeluar - ttltotalpasien - ttltotalrespulang;
-                tabMode.insertRow(0,new Object[]{"","<>>","Grand Total :","","","",Valid.SetAngka(ttlstokawal),Valid.SetAngka(ttlstokmasuk),Valid.SetAngka(ttlstokkeluar),Valid.SetAngka(ttlstokakhiropname),Valid.SetAngka(saldo_awal),
-                   Valid.SetAngka(ttlaset),Valid.SetAngka(ttlsaldo_masuk),Valid.SetAngka(ttlsaldo_keluar),Valid.SetAngka(saldo_akhir),
+                tabMode.insertRow(0,new Object[]{"","<>>","Grand Total Nya :","","","",
+                    Valid.SetAngka(ttlstokawal),Valid.SetAngka(ttlstokmasuk),Valid.SetAngka(ttlstokkeluar),Valid.SetAngka(ttlstokakhiropname),
+//                    Valid.SetAngka(saldo_awal),Valid.SetAngka(ttlaset),Valid.SetAngka(ttlsaldo_masuk),Valid.SetAngka(ttlsaldo_keluar),Valid.SetAngka(saldo_akhir),
+                    
+                    //baru
+                    Valid.SetAngka(ttlsaldoawal),Valid.SetAngka(ttlsaldomasuk1),Valid.SetAngka(ttlsaldokeluar1),Valid.SetAngka(ttlsaldoakhiropname),
 //                   Valid.SetAngka(ttltotaljual),"",Valid.SetAngka(ttltotalpasien),"",
 //                   Valid.SetAngka(ttltotalpiutang),"",Valid.SetAngka(ttltotalretbeli),"",
 //                   Valid.SetAngka(ttltotalretjual),"",Valid.SetAngka(ttltotalretpiut),"",
