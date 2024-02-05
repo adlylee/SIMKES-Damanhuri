@@ -2088,6 +2088,38 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
         }
 
         if (TabInput.getSelectedIndex() == 1) {
+            if (TabInput2.getSelectedIndex() == 0) {
+                this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                if (tabModeData.getRowCount() == 0) {
+                    JOptionPane.showMessageDialog(null, "Maaf, data sudah habis. Tidak ada data yang bisa anda print...!!!!");
+                    TCari.requestFocus();
+                } else if (tabModeData.getRowCount() != 0) {
+                    Sequel.queryu("delete from temporary");
+                    int row = tabModeData.getRowCount();
+                    for (int i = 0; i < row; i++) {
+                        Sequel.menyimpan("temporary", "'0','"
+                                + tabModeData.getValueAt(i, 1).toString() + "','"
+                                + tabModeData.getValueAt(i, 2).toString() + "','"
+                                + tabModeData.getValueAt(i, 3).toString() + "','"
+                                + tabModeData.getValueAt(i, 4).toString() + "','"
+                                + tabModeData.getValueAt(i, 5).toString() + "','"
+                                + tabModeData.getValueAt(i, 6).toString() + "','"
+                                + tabModeData.getValueAt(i, 7).toString() + "','"
+                                + tabModeData.getValueAt(i, 8).toString() + "','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''", "Data");
+                    }
+                    Map<String, Object> param = new HashMap<>();
+                    param.put("namars", var.getnamars());
+                    param.put("alamatrs", var.getalamatrs());
+                    param.put("kotars", var.getkabupatenrs());
+                    param.put("propinsirs", var.getpropinsirs());
+                    param.put("kontakrs", var.getkontakrs());
+                    param.put("emailrs", var.getemailrs());
+                    param.put("logo", Sequel.cariGambar("select logo from setting"));
+                    Valid.MyReport("rptLapPasienMPP.jrxml", "report", "::[ Rekap Data Pasien MPP ]::",
+                            "select no, temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9, temp10, temp11, temp12, temp13, temp14, temp14, temp15, temp16 from temporary order by no asc", param);
+                }
+                this.setCursor(Cursor.getDefaultCursor());
+            }
             if (TabInput2.getSelectedIndex() == 2) {
                 this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 if (tabModeData2.getRowCount() == 0) {
