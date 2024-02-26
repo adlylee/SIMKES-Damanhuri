@@ -1258,7 +1258,7 @@ public class DlgPasienMati extends javax.swing.JDialog {
                     sttspenduduk.getSelectedItem().toString().substring(0,1)+"','"+
                     keadaan.getSelectedItem()+"','"
                     +jnsPemulasaran.getSelectedItem()+"','"
-                    +Valid.SetTgl(tglPemulasaran.getSelectedItem()+"")+"','"+kdDokter.getText()+"','"+dasarDiagnosis.getSelectedItem().toString()+"'","pasien");
+                    +Valid.SetTgl(tglPemulasaran.getSelectedItem()+"")+"','"+dasarDiagnosis.getSelectedItem().toString()+"','"+kdDokter.getText()+"'","pasien");
             tampil();
             emptTeks();
         }
@@ -1894,11 +1894,12 @@ private void MnCetakSuratMatiActionPerformed(java.awt.event.ActionEvent evt) {//
         BtnSimpan.setEnabled(var.getpasien_meninggal());
         BtnHapus.setEnabled(var.getpasien_meninggal());
         BtnPrint.setEnabled(var.getpasien_meninggal());
-        if (var.getkode().equals("Admin Utama")) {
-            MnGanti.setVisible(true);
-        } else {
-            MnGanti.setVisible(false);
-        }
+        MnGanti.setEnabled(var.getpasien_meninggal());
+//        if (var.getkode().equals("Admin Utama")) {
+//            MnGanti.setVisible(true);
+//        } else {
+//            MnGanti.setVisible(false);
+//        }
     }
     
     public void setNoRm(String norm) {

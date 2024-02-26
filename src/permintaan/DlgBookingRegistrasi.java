@@ -742,7 +742,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         WindowBatalWhatsapp.setUndecorated(true);
         WindowBatalWhatsapp.setResizable(false);
 
-        internalFrame7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Pemindahan Jadwal Poliklinik ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Pemindahan Jadwal Poliklinik ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame7.setName("internalFrame7"); // NOI18N
         internalFrame7.setLayout(null);
 
@@ -847,7 +847,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         WindowGanti.setUndecorated(true);
         WindowGanti.setResizable(false);
 
-        internalFrame8.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Pemindahan Jadwal Poliklinik ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame8.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Pemindahan Jadwal Poliklinik ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame8.setName("internalFrame8"); // NOI18N
         internalFrame8.setLayout(null);
 
@@ -951,7 +951,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         jLabel17.setBounds(0, 30, 70, 23);
 
         TanggalPeriksa1.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalPeriksa1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "09-08-2023 08:30:51" }));
+        TanggalPeriksa1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-02-2024 08:46:57" }));
         TanggalPeriksa1.setDisplayFormat("dd-MM-yyyy hh:mm:ss");
         TanggalPeriksa1.setName("TanggalPeriksa1"); // NOI18N
         TanggalPeriksa1.setOpaque(false);
@@ -987,7 +987,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Booking Registrasi ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Booking Registrasi ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -1214,7 +1214,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         panelGlass10.add(jLabel6);
 
         TCari.setName("TCari"); // NOI18N
-        TCari.setPreferredSize(new java.awt.Dimension(450, 23));
+        TCari.setPreferredSize(new java.awt.Dimension(300, 23));
         TCari.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 TCariKeyPressed(evt);
@@ -1266,7 +1266,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         R2.setPreferredSize(new java.awt.Dimension(125, 23));
         panelCari.add(R2);
 
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "08-08-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-02-2024" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -1289,7 +1289,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         jLabel22.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel22);
 
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "08-08-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-02-2024" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -1311,7 +1311,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         R3.setPreferredSize(new java.awt.Dimension(135, 23));
         panelCari.add(R3);
 
-        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "08-08-2023" }));
+        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-02-2024" }));
         DTPCari3.setDisplayFormat("dd-MM-yyyy");
         DTPCari3.setName("DTPCari3"); // NOI18N
         DTPCari3.setOpaque(false);
@@ -1334,7 +1334,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         jLabel25.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel25);
 
-        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "08-08-2023" }));
+        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-02-2024" }));
         DTPCari4.setDisplayFormat("dd-MM-yyyy");
         DTPCari4.setName("DTPCari4"); // NOI18N
         DTPCari4.setOpaque(false);
@@ -1418,7 +1418,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         TPasien.setBounds(151, 10, 311, 23);
 
         TanggalBooking.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalBooking.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "08-08-2023 11:18:15" }));
+        TanggalBooking.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-02-2024 08:46:57" }));
         TanggalBooking.setDisplayFormat("dd-MM-yyyy hh:mm:ss");
         TanggalBooking.setName("TanggalBooking"); // NOI18N
         TanggalBooking.setOpaque(false);
@@ -1498,7 +1498,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         jLabel14.setBounds(506, 40, 70, 23);
 
         TanggalPeriksa.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalPeriksa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "08-08-2023 11:18:16" }));
+        TanggalPeriksa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-02-2024 08:46:57" }));
         TanggalPeriksa.setDisplayFormat("dd-MM-yyyy hh:mm:ss");
         TanggalPeriksa.setName("TanggalPeriksa"); // NOI18N
         TanggalPeriksa.setOpaque(false);
@@ -1908,7 +1908,9 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }//GEN-LAST:event_BtnEditKeyPressed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        tampil();
+        if (!var.getkode().equals("Admin Utama")) {
+            tampil();
+        }
     }//GEN-LAST:event_formWindowOpened
 
     private void DTPCari1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_DTPCari1ItemStateChanged
@@ -2163,29 +2165,33 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }//GEN-LAST:event_BtnCloseIn7ActionPerformed
 
     private void BtnSimpan7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpan7ActionPerformed
-        int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin menyimpan data...??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
-        if (reply == JOptionPane.YES_OPTION) {
-            for (i = 0; i < tbObat.getRowCount(); i++) {
-                if (tbObat.getValueAt(i, 0).toString().equals("true")) {
-                    NoReg1.setText("");
-                    isNomer2();
-                    if (Sequel.mengedittf("booking_registrasi", "no_rkm_medis=? and tanggal_periksa=?", "kd_dokter=?,kd_poli=?,tanggal_periksa=?, no_reg=?", 6,
-                            new String[]{
-                                KdDokter1.getText(), KdPoli4.getText(), Valid.SetTgl(TanggalPeriksa1.getSelectedItem() + ""), NoReg1.getText(),
+        if (tabMode.getRowCount() == tbObat.getRowCount() && TCari.equals("")) {
+            JOptionPane.showMessageDialog(null, "Jangan dipilih semua");
+        } else {
+            int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin menyimpan data...??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                for (i = 0; i < tbObat.getRowCount(); i++) {
+                    if (tbObat.getValueAt(i, 0).toString().equals("true")) {
+                        NoReg1.setText("");
+                        isNomer2();
+                        if (Sequel.mengedittf("booking_registrasi", "no_rkm_medis=? and tanggal_periksa=?", "kd_dokter=?,kd_poli=?,tanggal_periksa=?, no_reg=?", 6,
+                                new String[]{
+                                    KdDokter1.getText(), KdPoli4.getText(), Valid.SetTgl(TanggalPeriksa1.getSelectedItem() + ""), NoReg1.getText(),
+                                    tbObat.getValueAt(i, 3).toString(), tbObat.getValueAt(i, 5).toString()
+                                }) == true) {
+                            Sequel.mengedit3("skdp_bpjs", "no_rkm_medis=? and tanggal_datang=?", "tanggal_datang=?,kd_dokter=?", 4, new String[]{
+                                Valid.SetTgl(TanggalPeriksa1.getSelectedItem() + ""), KdDokter1.getText(),
                                 tbObat.getValueAt(i, 3).toString(), tbObat.getValueAt(i, 5).toString()
-                            }) == true) {
-                        Sequel.mengedit3("skdp_bpjs", "no_rkm_medis=? and tanggal_datang=?", "tanggal_datang=?,kd_dokter=?", 4, new String[]{
-                            Valid.SetTgl(TanggalPeriksa1.getSelectedItem() + ""), KdDokter1.getText(),
-                            tbObat.getValueAt(i, 3).toString(), tbObat.getValueAt(i, 5).toString()
-                        });
+                            });
+                        }
                     }
                 }
             }
+            JOptionPane.showMessageDialog(null, "Berhasil ganti jadwal booking..!!!");
+            isReset();
+            tampil();
+            WindowGanti.dispose();
         }
-        JOptionPane.showMessageDialog(null, "Berhasil ganti jadwal booking..!!!");
-        isReset();
-        tampil();
-        WindowGanti.dispose();
     }//GEN-LAST:event_BtnSimpan7ActionPerformed
 
     private void BtnDokter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDokter1ActionPerformed

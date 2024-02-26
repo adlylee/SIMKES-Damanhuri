@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -38,7 +39,7 @@ public class DlgSirkulasiBarang extends javax.swing.JDialog {
     private Connection koneksi = koneksiDB.condb();
     private DlgCariBangsal bangsal = new DlgCariBangsal(null, false);
     private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-    private String lokasi = "";
+    private String lokasi = "",cmb="";
     private double ttltotaljual = 0, totaljual = 0, jumlahjual = 0, ttltotalbeli = 0, totalbeli = 0, jumlahbeli = 0,
             ttltotalpesan = 0, totalpesan = 0, jumlahpesan = 0, jumlahutd, totalutd, ttltotalutd, jumlahkeluar, totalkeluar, ttltotalkeluar,
             ttltotalpiutang = 0, totalpiutang = 0, jumlahpiutang = 0, ttltotalretbeli = 0, totalretbeli = 0, jumlahretbeli = 0,
@@ -47,7 +48,7 @@ public class DlgSirkulasiBarang extends javax.swing.JDialog {
             ttltotalrespulang = 0, jumlahmutasimasuk = 0, jumlahmutasikeluar = 0, totalmutasimasuk = 0, totalmutasikeluar = 0,
             ttltotalmutasimasuk = 0, ttltotalmutasikeluar = 0, saldo_awal = 0, saldo_akhir = 0, saldo_masuk = 0, saldo_keluar = 0,
             stok_masuk = 0, stok_keluar = 0, ttlsaldo_masuk = 0, ttlsaldo_keluar = 0, stoksaldoawal = 0, totalsaldoawal = 0, stoksaldoakhir = 0, totalsaldoakhir = 0, ttlstokawal = 0, ttlstokmasuk = 0, ttlstokkeluar = 0, ttlstokakhir = 0,
-            Tstokakhir = 0, Tttlsaldoakhir = 0,
+            Tstokakhir = 0, Tttlsaldoakhir = 0,ttlsaldoawal=0,ttlsaldomasuk=0,ttlsaldokeluar=0,ttlsaldomasuk1=0,ttlsaldokeluar1=0,ttlsaldoakhiropname=0,
             stokakhiropname = 0, totalsaldoakhiropname = 0, ttlstokakhiropname = 0;//stokakhir(opname)
     private DlgBarang barang = new DlgBarang(null, false);
     private PreparedStatement ps, ps2;
@@ -262,6 +263,7 @@ public class DlgSirkulasiBarang extends javax.swing.JDialog {
         label10 = new widget.Label();
         TCari = new widget.TextBox();
         BtnCari = new widget.Button();
+        cmbJenis = new widget.ComboBox();
         label9 = new widget.Label();
         BtnAll = new widget.Button();
         BtnPrint = new widget.Button();
@@ -547,6 +549,17 @@ public class DlgSirkulasiBarang extends javax.swing.JDialog {
         });
         panelisi1.add(BtnCari);
 
+        cmbJenis.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Semua", "BMHP", "Obat" }));
+        cmbJenis.setName("cmbJenis"); // NOI18N
+        cmbJenis.setOpaque(true);
+        cmbJenis.setPreferredSize(new java.awt.Dimension(90, 24));
+        cmbJenis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbJenisActionPerformed(evt);
+            }
+        });
+        panelisi1.add(cmbJenis);
+
         label9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         label9.setName("label9"); // NOI18N
         label9.setPreferredSize(new java.awt.Dimension(79, 30));
@@ -790,6 +803,10 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
         bangsal.setVisible(true);
     }//GEN-LAST:event_ppLokasiBtnPrintActionPerformed
 
+    private void cmbJenisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbJenisActionPerformed
+
+    }//GEN-LAST:event_cmbJenisActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -816,6 +833,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
     private widget.TextBox TCari;
     private widget.ComboBox ThnCari;
     private widget.Button btnBarang;
+    private widget.ComboBox cmbJenis;
     private widget.InternalFrame internalFrame1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private widget.TextBox kdbar;
@@ -843,13 +861,28 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
         Valid.tabelKosong(tabMode);
         tabMode.addRow(new Object[]{"", "", "", "", "", "", "", "", "", "", "", "", "", ""});
         try {
-            saldo_awal = Sequel.cariIsiAngka("SELECT saldo_awal FROM rekeningtahun WHERE kd_rek = '11070101'");
+            switch (cmbJenis.getSelectedIndex()) {
+                case 0:
+                    cmb = "";
+                    break;
+                case 1:
+                    cmb = " databarang.kode_kategori='K05' and ";
+                    break;
+                case 2:
+                    cmb = " databarang.kode_kategori != 'K05' and ";
+                    break;
+                default:
+                    break;
+            }
+
+//            saldo_awal = Sequel.cariIsiAngka("SELECT saldo_awal FROM rekeningtahun WHERE kd_rek = '11070101'");
+            saldo_awal = Double.valueOf("21454669117");
             ps = koneksi.prepareStatement("select databarang.kode_brng,databarang.nama_brng, "
                     + "kodesatuan.satuan , databarang.h_beli from databarang inner join kodesatuan   "
                     + "on databarang.kode_sat=kodesatuan.kode_sat "
-                    + "where databarang.status='1' and databarang.nama_brng like ? and databarang.kode_brng like ? or "
-                    + "databarang.status='1' and databarang.nama_brng like ? and databarang.nama_brng like ? or "
-                    + "databarang.status='1' and databarang.nama_brng like ? and kodesatuan.satuan like ? "
+                    + "where "+cmb+" databarang.status='1' and databarang.nama_brng like ? and databarang.kode_brng like ? or "
+                    + ""+cmb+" databarang.status='1' and databarang.nama_brng like ? and databarang.nama_brng like ? or "
+                    + ""+cmb+" databarang.status='1' and databarang.nama_brng like ? and kodesatuan.satuan like ? "
                     + " order by databarang.kode_brng");
             try {
                 ttltotaljual = 0;
@@ -915,18 +948,19 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
 
                     ps2 = koneksi.prepareStatement("SELECT SUM(stok) FROM opname_stok_awal WHERE kode_brng =? AND tahun=? and bulan=?");
                     try {
-                        LocalDate theday = LocalDate.parse(BlnCari.getSelectedItem().toString());
-                        LocalDate lastmonth = theday.plus(1, ChronoUnit.MONTHS);
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+                        YearMonth theday = YearMonth.parse(ThnCari.getSelectedItem().toString()+"-"+BlnCari.getSelectedItem().toString(), formatter);
+                        YearMonth lastmonth = theday.minusMonths(1);                     
                         ps2.setString(1, rs.getString(1));
                         ps2.setString(2, ThnCari.getSelectedItem().toString());
-                        ps2.setString(3, lastmonth.toString());
+                        ps2.setString(3, lastmonth.toString().substring(5,7));
                         rs2 = ps2.executeQuery();
                         if (rs2.next()) {
                             stoksaldoawal = rs2.getDouble(1);
                             totalsaldoawal = rs2.getDouble(1) * rs.getDouble(4);
                         }
                     } catch (Exception e) {
-                        System.out.println("Notifikasi Stok : " + e);
+                        System.out.println("Notifikasi Stok 1: " + e);
                     } finally {
                         if (rs2 != null) {
                             rs2.close();
@@ -947,7 +981,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                             aset = rs2.getDouble(1) * rs.getDouble(4);
                         }
                     } catch (Exception e) {
-                        System.out.println("Notifikasi Stok : " + e);
+                        System.out.println("Notifikasi Stok 2: " + e);
                     } finally {
                         if (rs2 != null) {
                             rs2.close();
@@ -1256,7 +1290,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                             totalsaldoakhiropname = rs2.getDouble(1) * rs.getDouble(4);
                         }
                     } catch (Exception e) {
-                        System.out.println("Notifikasi Stok : " + e);
+                        System.out.println("Notifikasi Stok 3: " + e);
                     } finally {
                         if (rs2 != null) {
                             rs2.close();
@@ -1288,6 +1322,12 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                     ttlstokkeluar = ttlstokkeluar + stok_keluar;
                     ttlstokakhir = ttlstokakhir + stoksaldoakhir;
                     ttlstokakhiropname = ttlstokakhiropname + stokakhiropname; //stok akhir (opname)
+                    
+                    //baru
+                    ttlsaldoawal = ttlsaldoawal + totalsaldoawal;
+                    ttlsaldomasuk1 = ttlsaldomasuk1 + saldo_masuk;
+                    ttlsaldokeluar1 = ttlsaldokeluar1 + saldo_keluar;
+                    ttlsaldoakhiropname = ttlsaldoakhiropname + totalsaldoakhiropname;
 
                     ttltotalbeli = ttltotalbeli + totalbeli;
                     ttltotalpesan = ttltotalpesan + totalpesan;
@@ -1308,8 +1348,10 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 ttlsaldo_keluar = ttltotaljual + ttltotalkeluar + ttltotalpasien + ttltotalrespulang;
                 saldo_akhir = saldo_awal + ttltotalbeli + ttltotalpesan;
                 saldo_akhir = saldo_akhir - ttltotaljual - ttltotalkeluar - ttltotalpasien - ttltotalrespulang;
-                tabMode.insertRow(0, new Object[]{"", "<>>", "Grand Total :", "", "", "", Valid.SetAngka(ttlstokawal), Valid.SetAngka(ttlstokmasuk), Valid.SetAngka(ttlstokkeluar), Valid.SetAngka(ttlstokakhiropname), Valid.SetAngka(saldo_awal),
-                    Valid.SetAngka(ttlaset), Valid.SetAngka(ttlsaldo_masuk), Valid.SetAngka(ttlsaldo_keluar), Valid.SetAngka(saldo_akhir), //                   Valid.SetAngka(ttltotaljual),"",Valid.SetAngka(ttltotalpasien),"",
+                tabMode.insertRow(0, new Object[]{"", "<>>", "Grand Total :", "", "", "", 
+                    Valid.SetAngka(ttlstokawal), Valid.SetAngka(ttlstokmasuk), Valid.SetAngka(ttlstokkeluar), Valid.SetAngka(ttlstokakhiropname),
+//                    Valid.SetAngka(ttlaset), 
+                    Valid.SetAngka(ttlsaldoawal),Valid.SetAngka(ttlsaldomasuk1),Valid.SetAngka(ttlsaldokeluar1),Valid.SetAngka(ttlsaldoakhiropname), //                   Valid.SetAngka(ttltotaljual),"",Valid.SetAngka(ttltotalpasien),"",
             });
             } catch (Exception e) {
                 System.out.println("Notifikasi Data Barang : " + e);
@@ -1401,7 +1443,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                             aset = rs2.getDouble(2);
                         }
                     } catch (Exception e) {
-                        System.out.println("Notifikasi Stok : " + e);
+                        System.out.println("Notifikasi Stok 4: " + e);
                     } finally {
                         if (rs2 != null) {
                             rs2.close();

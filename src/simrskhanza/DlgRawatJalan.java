@@ -13,6 +13,7 @@
 package simrskhanza;
 
 import bridging.DlgSKDPBPJS;
+import com.google.gson.JsonObject;
 import kepegawaian.DlgCariDokter;
 import kepegawaian.DlgCariPetugas;
 import inventory.DlgPemberianObat;
@@ -619,8 +620,8 @@ public final class DlgRawatJalan extends javax.swing.JDialog {
         KdDok2.setDocument(new batasInput((byte)20).getKata(KdDok2));
         TSuhu.setDocument(new batasInput((byte)5).getKata(TSuhu));
         TTensi.setDocument(new batasInput((byte)8).getKata(TTensi));
-        TKeluhan.setDocument(new batasInput((int)400).getKata(TKeluhan));
-        TPemeriksaan.setDocument(new batasInput((int)400).getKata(TPemeriksaan));
+//        TKeluhan.setDocument(new batasInput((int)400).getKata(TKeluhan));
+//        TPemeriksaan.setDocument(new batasInput((int)400).getKata(TPemeriksaan));
         TPenilaian.setDocument(new batasInput((int)400).getKata(TPenilaian));     
         TAlergi.setDocument(new batasInput((int)50).getKata(TAlergi));        
         TCari.setDocument(new batasInput((int)100).getKata(TCari));       
@@ -3052,6 +3053,8 @@ public final class DlgRawatJalan extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(null,"Maaf, data sudah habis...!!!!");
                     TNoRw.requestFocus();
                 }else{
+                    int reply = JOptionPane.showConfirmDialog(rootPane, "Yakin ingin menghapus data...??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                    if (reply == JOptionPane.YES_OPTION) {
                     for(i=0;i<tbPemeriksaan.getRowCount();i++){
                         if(tbPemeriksaan.getValueAt(i,0).toString().equals("true")){
                             if (Sequel.cariInteger("SELECT COUNT(no_rawat) FROM data_triase_igd where no_rawat='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),1)+"' and tanggal='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),4)+"' and jam='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),5)+"'") > 0) {
@@ -3061,11 +3064,13 @@ public final class DlgRawatJalan extends javax.swing.JDialog {
                                 Sequel.queryu("delete from pemeriksaan_ralan where no_rawat='"+tbPemeriksaan.getValueAt(i,1).toString()+
                                         "' and tgl_perawatan='"+tbPemeriksaan.getValueAt(i,4).toString()+
                                         "' and jam_rawat='"+tbPemeriksaan.getValueAt(i,5).toString()+"' ");
+//                                isLog("Hapus");
                             }
                         }
                     }
                     tampilPemeriksaan();
-                }   break;
+                    JOptionPane.showMessageDialog(null, "Berhasil menghapus data...");
+            }}   break;
             case 5:
                 panelDiagnosa1.setRM(TNoRw.getText(),TNoRM.getText(),Valid.SetTgl(DTPCari1.getSelectedItem()+""),Valid.SetTgl(DTPCari2.getSelectedItem()+""),"Ralan",TCari.getText().trim());
                 panelDiagnosa1.hapus();
@@ -3533,6 +3538,8 @@ private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
         }else{
             switch (TabRawat.getSelectedIndex()) {
                 case 3:
+                    int reply = JOptionPane.showConfirmDialog(rootPane, "Yakin ingin mengedit data...??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                    if (reply == JOptionPane.YES_OPTION) {
                     if((!TKeluhan.getText().trim().equals(""))||(!TPemeriksaan.getText().trim().equals(""))||
                             (!TSuhu.getText().trim().equals(""))||(!TTensi.getText().trim().equals(""))||
                             (!TAlergi.getText().trim().equals(""))||(!TTinggi.getText().trim().equals(""))||
@@ -3544,6 +3551,7 @@ private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                                 JOptionPane.showMessageDialog(rootPane,"Maaf, Data pemeriksaan masih ada di Triage.\nSilakan periksa data Triage..!!");
                             }
                             if (Sequel.cariInteger("SELECT COUNT(no_rawat) FROM data_triase_igd where no_rawat='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),1)+"' and tanggal='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),4)+"' and jam='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),5)+"'") < 1) {
+                                isLog("Edit");
                                     if(Sequel.mengedittf("pemeriksaan_ralan","no_rawat='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),1)+
                                     "' and tgl_perawatan='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),4)+
                                     "' and jam_rawat='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),5)+"'",
@@ -3562,13 +3570,14 @@ private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                                         TindakLanjut.setText("");TPenilaian.setText("");
                                         kdptg1.setText("");TPerawat1.setText("");//added
                                         tampilPemeriksaan();
+                                        JOptionPane.showMessageDialog(null, "Berhasil mengedit data...");
                                 }
                             }                                                        
                         }else{
                             JOptionPane.showMessageDialog(rootPane,"Silahkan pilih data yang mau diganti..!!");
                             TCari.requestFocus();
                         }
-                    }   break;
+                    }}   break;
                 case 4:
                     if(!Catatan.getText().trim().equals("")){
                         if(tbCatatan.getSelectedRow()>-1){
@@ -5805,5 +5814,57 @@ private void BtnEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
         }
         LCount.setText(""+TabModeCatatan.getRowCount());
     }
-                
+   
+    private void isLog(String action) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        String requestJson = "";
+        try {
+            String no_rawat = tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 1).toString();
+            String tgl_perawatan = tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 4).toString();
+            String jam_rawat = tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 5).toString();
+            ps = koneksi.prepareStatement("SELECT * FROM pemeriksaan_ralan WHERE no_rawat='" + no_rawat + "' AND tgl_perawatan='" + tgl_perawatan + "' AND jam_rawat='" + jam_rawat + "'");
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                JsonObject dataJson = new JsonObject();
+                dataJson.addProperty("no_rawat", rs.getString("no_rawat"));
+                dataJson.addProperty("tgl_perawatan", rs.getString("tgl_perawatan"));
+                dataJson.addProperty("jam_rawat", rs.getString("jam_rawat"));
+                dataJson.addProperty("suhu_tubuh", rs.getString("suhu_tubuh"));
+                dataJson.addProperty("tensi", rs.getString("tensi"));
+                dataJson.addProperty("nadi", rs.getString("nadi"));
+                dataJson.addProperty("respirasi", rs.getString("respirasi"));
+                dataJson.addProperty("tinggi", rs.getString("tinggi"));
+                dataJson.addProperty("berat", rs.getString("berat"));
+                dataJson.addProperty("gcs", rs.getString("gcs"));
+                dataJson.addProperty("keluhan", rs.getString("keluhan"));
+                dataJson.addProperty("pemeriksaan", rs.getString("pemeriksaan"));
+                dataJson.addProperty("alergi", rs.getString("alergi"));
+                dataJson.addProperty("imun_ke", rs.getString("imun_ke"));
+                dataJson.addProperty("rtl", rs.getString("rtl"));
+                dataJson.addProperty("penilaian", rs.getString("penilaian"));
+                dataJson.addProperty("nip", rs.getString("nip"));
+
+                JsonObject requestObject = new JsonObject();
+                requestObject.add("data", dataJson);
+                requestObject.addProperty("action", action);
+                requestJson = requestObject.toString();
+            }
+        } catch (Exception e) {
+            System.out.println("Notifikasi : " + e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
                 }
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (Exception ex) {
+                System.out.println("Notifikasi : " + ex);
+            }
+        }
+        Sequel.menyimpan("mlite_log", "null,'" + var.getkode() + "','pemeriksaan_ralan','" + requestJson + "','" + dtf.format(now) + "'");
+    }
+
+}

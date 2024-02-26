@@ -86,7 +86,8 @@ public final class UTDDonor extends javax.swing.JDialog {
             + "utd_penggunaan_penunjang_donor.total,ipsrsbarang.kode_sat from utd_penggunaan_penunjang_donor inner join ipsrsbarang "
             + "on utd_penggunaan_penunjang_donor.kode_brng=ipsrsbarang.kode_brng where utd_penggunaan_penunjang_donor.no_donor=?",
             hari = "", kdkel = "", kdkec = "", kdkab = "", kdprop = "", nodonor = "", dinas = "",umur="",
-            sqltotaldonor = "select COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor ";
+            sqltotaldonor = "select COUNT(utd_pendonor.no_ktp) as jumlah from utd_donor, utd_pendonor where utd_donor.no_pendonor=utd_pendonor.no_pendonor ",
+            h0s18="",h18s24="";
     private BridgingWA kirimwa = new BridgingWA();
     public DlgKabupaten kab = new DlgKabupaten(null, false);
     public DlgPropinsi prop = new DlgPropinsi(null, false);
@@ -331,7 +332,7 @@ public final class UTDDonor extends javax.swing.JDialog {
         }
         tbData.setDefaultRenderer(Object.class, new WarnaTable());
         
-        tabModeRekap = new DefaultTableModel(null, new Object[]{"No.Pendonor", "Nama", "Jumlah Donor"}) {
+        tabModeRekap = new DefaultTableModel(null, new Object[]{"No.Pendonor", "Nama","J.K","Umur","G.D", "Jumlah Donor"}) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
                 return false;
@@ -341,13 +342,19 @@ public final class UTDDonor extends javax.swing.JDialog {
         tbTambahan.setPreferredScrollableViewportSize(new Dimension(800, 800));
         tbTambahan.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 3; i++) {
+        for (i = 0; i < 6; i++) {
             TableColumn column = tbTambahan.getColumnModel().getColumn(i);
             if (i == 0) {
                 column.setPreferredWidth(80);
             } else if (i == 1) {
                 column.setPreferredWidth(200);
             } else if (i == 2) {
+                column.setPreferredWidth(35);
+            } else if (i == 3) {
+                column.setPreferredWidth(45);
+            } else if (i == 4) {
+                column.setPreferredWidth(40);
+            } else if (i == 5) {
                 column.setPreferredWidth(75);
             }
         }
@@ -2691,16 +2698,19 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
                 JOptionPane.showMessageDialog(null, "Maaf, data nik pendonor sudah tersedia..!!");
                 TCari.requestFocus();
             } else {
-                isNumber2();
-                if (Sequel.menyimpantf2("utd_pendonor", "?,?,?,?,?,?,?,?,?,?,?,?,?,?", "No.Donor", 14, new String[]{
-                    NomorPendonor.getText(), NamaPendonor1.getText().toUpperCase(), nik1.getText(), JK1.getSelectedItem().toString().substring(0, 1), tempatlahir.getText().toUpperCase(), Valid.SetTgl(tgl_lahir1.getSelectedItem() + ""),
-                    Alamat1.getText().toUpperCase(), kdkel, kdkec, kdkab, kdprop, GolDarah.getSelectedItem().toString(), Resus1.getSelectedItem().toString(), NomorTelp1.getText()
-                }) == true) {
-                    if (var.getform().equals("UTDDonor")) {
-                        TCari.setText(NomorPendonor.getText());
+                int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin menyimpan data?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                if (reply == JOptionPane.YES_OPTION) {
+                    isNumber2();
+                    if (Sequel.menyimpantf2("utd_pendonor", "?,?,?,?,?,?,?,?,?,?,?,?,?,?", "No.Donor", 14, new String[]{
+                        NomorPendonor.getText(), NamaPendonor1.getText().toUpperCase(), nik1.getText(), JK1.getSelectedItem().toString().substring(0, 1), tempatlahir.getText().toUpperCase(), Valid.SetTgl(tgl_lahir1.getSelectedItem() + ""),
+                        Alamat1.getText().toUpperCase(), kdkel, kdkec, kdkab, kdprop, GolDarah.getSelectedItem().toString(), Resus1.getSelectedItem().toString(), NomorTelp1.getText()
+                    }) == true) {
+                        if (var.getform().equals("UTDDonor")) {
+                            TCari.setText(NomorPendonor.getText());
+                        }
+                        emptTeks();
+                        tampilPendonor();
                     }
-                    emptTeks();
-                    tampilPendonor();
                 }
             }
         }
@@ -5533,9 +5543,10 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
         Valid.tabelKosong(tabModeRekap);
         try {
             pstranfusi = koneksi.prepareStatement(
-                    "SELECT utd_pendonor.no_pendonor,utd_pendonor.nama, COUNT(utd_donor.no_pendonor) as jumlah\n"
-                    + "FROM utd_donor, utd_pendonor WHERE utd_donor.no_pendonor=utd_pendonor.no_pendonor\n"
-                    + "and tanggal BETWEEN ? and ? group by utd_pendonor.no_pendonor order by utd_pendonor.nama"
+                    "SELECT utd_pendonor.no_pendonor,utd_pendonor.nama, COUNT(utd_donor.no_pendonor) as jumlah, "+
+                    "utd_pendonor.jk,CONCAT(year(from_days(datediff(utd_donor.tanggal,utd_pendonor.tgl_lahir))),' Th') as umur, utd_pendonor.golongan_darah "+
+                    "FROM utd_donor, utd_pendonor WHERE utd_donor.no_pendonor=utd_pendonor.no_pendonor "+
+                    "and tanggal BETWEEN ? and ? group by utd_pendonor.no_pendonor order by utd_pendonor.nama"
             );
             try {
                 pstranfusi.setString(1, Valid.SetTgl(TanggalCari3.getSelectedItem() + ""));
@@ -5543,7 +5554,8 @@ private void NamaPendonorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
                 rstranfusi = pstranfusi.executeQuery();
                 while (rstranfusi.next()) {
                     tabModeRekap.addRow(new Object[]{
-                        rstranfusi.getString("no_pendonor"), rstranfusi.getString("nama"), rstranfusi.getString("jumlah")
+                        rstranfusi.getString("no_pendonor"), rstranfusi.getString("nama"), rstranfusi.getString("jk"),
+                        rstranfusi.getString("umur"), rstranfusi.getString("golongan_darah"), rstranfusi.getString("jumlah")
                     });
                 }
             } catch (Exception e) {

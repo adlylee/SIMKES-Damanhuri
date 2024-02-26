@@ -2896,7 +2896,7 @@ public final class DlgTriaseIGD extends javax.swing.JDialog {
                     "select a.no_rawat,a.tanggal, pasien.no_rkm_medis,pasien.nm_pasien,pasien.jk,pasien.tgl_lahir,"
                     + "concat(reg_periksa.umurdaftar,' ',reg_periksa.sttsumur)as umur,pasien.no_ktp,pasien.alamat,pasien.no_tlp,pasien.agama,"
                     + "penjab.png_jawab,a.namakasus,a.stts_diantar,a.transportasi,a.stts_fungsional,a.psikologis,a.stts_tinggal,"
-                    + "b.keluhan,b.pemeriksaan,b.tensi,b.nadi,b.respirasi,b.suhu_tubuh,a.saturasi,a.lk,a.lila,b.tinggi,b.berat,a.imt,"
+                    + "a.keluhan_utama,b.pemeriksaan,b.tensi,b.nadi,b.respirasi,b.suhu_tubuh,a.saturasi,a.lk,a.lila,b.tinggi,b.berat,a.imt,"
                     + "a.edukasi,a.riwayat_penyakit_dahulu,a.riwayat_pengobatan,a.riwayat_masuk_rs,a.riwayat_penyakit_keluarga,"
                     + "a.riwayat_operasi,a.riwayat_trauma,a.periksafisik,a.skala_nyeri,a.resiko_jatuh,a.nilai_resiko_jatuh,"
                     + "a.diagnosa_keperawatan,a.intervensi,a.diagnosis,a.tindakan,a.keterangan,a.kd_dokter,dokter.nm_dokter,a.kd_petugas,petugas.nama,a.jam, a.ld, a.lp "

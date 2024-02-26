@@ -736,7 +736,7 @@ public final class DlgPeresepanDokter extends javax.swing.JDialog {
         jLabel8.setBounds(0, 42, 72, 23);
 
         DTPBeri.setForeground(new java.awt.Color(50, 70, 50));
-        DTPBeri.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "26-10-2023" }));
+        DTPBeri.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "13-02-2024" }));
         DTPBeri.setDisplayFormat("dd-MM-yyyy");
         DTPBeri.setName("DTPBeri"); // NOI18N
         DTPBeri.setOpaque(false);
@@ -1052,7 +1052,7 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             Valid.textKosong(NoResep,"No.Resep");
         }else{
             int reply = JOptionPane.showConfirmDialog(rootPane,"Eeiiiiiits, udah bener belum data yang mau disimpan..??","Konfirmasi",JOptionPane.YES_NO_OPTION);
-            if (reply == JOptionPane.YES_OPTION) {                 
+            if (reply == JOptionPane.YES_OPTION) {                
                 ChkJln.setSelected(false);        
                 if(ubah==false){
                     if(ChkRM.isSelected()==true){
@@ -3014,7 +3014,7 @@ private void ppBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     
     public double cariStok(String kode_brng,String lokasi){
         double stok = 0;
-        stok = Sequel.cariIsiAngka("SELECT stok FROM gudangbarang WHERE kode_brng='"+kode_brng+"' AND kd_bangsal='"+lokasi+"'");
+        stok = Sequel.cariIsiAngka("SELECT stok FROM gudangbarang WHERE kode_brng='"+kode_brng+"' AND kd_bangsal='"+lokasi+"'");        
         return stok;
     }
-}
+    }

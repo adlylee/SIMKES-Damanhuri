@@ -636,16 +636,19 @@ public final class UTDCekalDarah extends javax.swing.JDialog {
         }else if(Keterangan.getText().trim().equals("")){
             Valid.textKosong(Keterangan,"Keterangan");
         }else{
-            if(Sequel.menyimpantf("utd_cekal_darah","?,?,?,?,?","Pendonor",5,new String[]{
-                NoDonor.getText(),Valid.SetTgl(TanggalCekal.getSelectedItem()+""),Dinas.getSelectedItem().toString(),
-                KodePetugas.getText(),Keterangan.getText()
-            })==true){
-                Sequel.mengedit("utd_donor","no_donor=?","status=?",2,new String[]{
-                    "Cekal",NoDonor.getText()
-                });
-                tampil();
-                emptTeks();
-            }                
+            int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin menyimpan data?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                if (Sequel.menyimpantf("utd_cekal_darah", "?,?,?,?,?", "Pendonor", 5, new String[]{
+                    NoDonor.getText(), Valid.SetTgl(TanggalCekal.getSelectedItem() + ""), Dinas.getSelectedItem().toString(),
+                    KodePetugas.getText(), Keterangan.getText()
+                }) == true) {
+                    Sequel.mengedit("utd_donor", "no_donor=?", "status=?", 2, new String[]{
+                        "Cekal", NoDonor.getText()
+                    });
+                    tampil();
+                    emptTeks();
+                }
+            }
         }
 }//GEN-LAST:event_BtnSimpanActionPerformed
 
@@ -670,12 +673,15 @@ public final class UTDCekalDarah extends javax.swing.JDialog {
 }//GEN-LAST:event_BtnBatalKeyPressed
 
     private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHapusActionPerformed
-        Valid.hapusTable(tabMode,NoDonor,"utd_cekal_darah","no_donor");
-        Sequel.mengedit("utd_donor","no_donor=?","status=?",2,new String[]{
-            "Aman",NoDonor.getText()
-        });
-        tampil();
-        emptTeks();
+        int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin menghapus data?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            Valid.hapusTable(tabMode, NoDonor, "utd_cekal_darah", "no_donor");
+            Sequel.mengedit("utd_donor", "no_donor=?", "status=?", 2, new String[]{
+                "Aman", NoDonor.getText()
+            });
+            tampil();
+            emptTeks();
+        }
 }//GEN-LAST:event_BtnHapusActionPerformed
 
     private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnHapusKeyPressed
@@ -694,12 +700,15 @@ public final class UTDCekalDarah extends javax.swing.JDialog {
         }else if(Keterangan.getText().trim().equals("")){
             Valid.textKosong(Keterangan,"Keterangan");
         }else{       
-            if(Sequel.mengedittf("utd_cekal_darah","no_donor=?","tanggal=?,dinas=?,petugas_pemusnahan=?,keterangan=?",5,new String[]{
-                Valid.SetTgl(TanggalCekal.getSelectedItem()+""),Dinas.getSelectedItem().toString(),
-                KodePetugas.getText(),Keterangan.getText(),NoDonor.getText()
-            })==true){
-                tampil();
-                emptTeks();
+            int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin mengubah data?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                if (Sequel.mengedittf("utd_cekal_darah", "no_donor=?", "tanggal=?,dinas=?,petugas_pemusnahan=?,keterangan=?", 5, new String[]{
+                    Valid.SetTgl(TanggalCekal.getSelectedItem() + ""), Dinas.getSelectedItem().toString(),
+                    KodePetugas.getText(), Keterangan.getText(), NoDonor.getText()
+                }) == true) {
+                    tampil();
+                    emptTeks();
+                }
             }
         }
 }//GEN-LAST:event_BtnEditActionPerformed
@@ -740,13 +749,13 @@ public final class UTDCekalDarah extends javax.swing.JDialog {
                 param.put("emailrs",var.getemailrs());   
                 param.put("logo",Sequel.cariGambar("select logo from setting")); 
             Valid.MyReport("rptCekalDonor.jrxml","report","::[ Data Pencekalan Darah Donor ]::",
-                    "select utd_cekal_darah.no_donor,utd_donor.nama,utd_donor.alamat,utd_donor.no_telp,"+
+                    "select utd_cekal_darah.no_donor,utd_pendonor.nama,utd_pendonor.alamat,utd_pendonor.no_telp,"+
                     "utd_cekal_darah.tanggal,utd_cekal_darah.dinas,utd_cekal_darah.petugas_pemusnahan,"+
-                    "petugas.nama as petugas,utd_cekal_darah.keterangan from utd_cekal_darah inner join utd_donor inner join petugas "+
-                    "on utd_cekal_darah.no_donor=utd_donor.no_donor and utd_cekal_darah.petugas_pemusnahan=petugas.nip where "+
+                    "petugas.nama as petugas,utd_cekal_darah.keterangan from utd_cekal_darah inner join utd_donor inner join utd_pendonor inner join petugas "+
+                    "on utd_cekal_darah.no_donor=utd_donor.no_donor and utd_donor.no_pendonor=utd_pendonor.no_pendonor and utd_cekal_darah.petugas_pemusnahan=petugas.nip where "+
                     "utd_cekal_darah.tanggal between '"+Valid.SetTgl(DTPCari1.getSelectedItem()+"")+"' and '"+Valid.SetTgl(DTPCari2.getSelectedItem()+"")+"' and utd_cekal_darah.no_donor like '%"+TCari.getText().trim()+"%' or "+
-                    "utd_cekal_darah.tanggal between '"+Valid.SetTgl(DTPCari1.getSelectedItem()+"")+"' and '"+Valid.SetTgl(DTPCari2.getSelectedItem()+"")+"' and utd_donor.nama like '%"+TCari.getText().trim()+"%' or "+
-                    "utd_cekal_darah.tanggal between '"+Valid.SetTgl(DTPCari1.getSelectedItem()+"")+"' and '"+Valid.SetTgl(DTPCari2.getSelectedItem()+"")+"' and utd_donor.alamat like '%"+TCari.getText().trim()+"%' or "+
+                    "utd_cekal_darah.tanggal between '"+Valid.SetTgl(DTPCari1.getSelectedItem()+"")+"' and '"+Valid.SetTgl(DTPCari2.getSelectedItem()+"")+"' and utd_pendonor.nama like '%"+TCari.getText().trim()+"%' or "+
+                    "utd_cekal_darah.tanggal between '"+Valid.SetTgl(DTPCari1.getSelectedItem()+"")+"' and '"+Valid.SetTgl(DTPCari2.getSelectedItem()+"")+"' and utd_pendonor.alamat like '%"+TCari.getText().trim()+"%' or "+
                     "utd_cekal_darah.tanggal between '"+Valid.SetTgl(DTPCari1.getSelectedItem()+"")+"' and '"+Valid.SetTgl(DTPCari2.getSelectedItem()+"")+"' and petugas.nama like '%"+TCari.getText().trim()+"%' or "+
                     "utd_cekal_darah.tanggal between '"+Valid.SetTgl(DTPCari1.getSelectedItem()+"")+"' and '"+Valid.SetTgl(DTPCari2.getSelectedItem()+"")+"' and utd_cekal_darah.dinas like '%"+TCari.getText().trim()+"%' or "+
                     "utd_cekal_darah.tanggal between '"+Valid.SetTgl(DTPCari1.getSelectedItem()+"")+"' and '"+Valid.SetTgl(DTPCari2.getSelectedItem()+"")+"' and utd_cekal_darah.keterangan like '%"+TCari.getText().trim()+"%' order by utd_cekal_darah.tanggal",param);
@@ -919,13 +928,13 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         Valid.tabelKosong(tabMode);
         try{
             ps=koneksi.prepareStatement(
-                    "select utd_cekal_darah.no_donor,utd_donor.nama,utd_donor.alamat,utd_donor.no_telp,"+
+                    "select utd_cekal_darah.no_donor,utd_pendonor.nama,utd_pendonor.alamat,utd_pendonor.no_telp,"+
                     "utd_cekal_darah.tanggal,utd_cekal_darah.dinas,utd_cekal_darah.petugas_pemusnahan,"+
-                    "petugas.nama,utd_cekal_darah.keterangan from utd_cekal_darah inner join utd_donor inner join petugas "+
-                    "on utd_cekal_darah.no_donor=utd_donor.no_donor and utd_cekal_darah.petugas_pemusnahan=petugas.nip where "+
+                    "petugas.nama,utd_cekal_darah.keterangan from utd_cekal_darah inner join utd_donor inner join utd_pendonor inner join petugas "+
+                    "on utd_cekal_darah.no_donor=utd_donor.no_donor and utd_donor.no_pendonor=utd_pendonor.no_pendonor and utd_cekal_darah.petugas_pemusnahan=petugas.nip where "+
                     "utd_cekal_darah.tanggal between ? and ? and utd_cekal_darah.no_donor like ? or "+
-                    "utd_cekal_darah.tanggal between ? and ? and utd_donor.nama like ? or "+
-                    "utd_cekal_darah.tanggal between ? and ? and utd_donor.alamat like ? or "+
+                    "utd_cekal_darah.tanggal between ? and ? and utd_pendonor.nama like ? or "+
+                    "utd_cekal_darah.tanggal between ? and ? and utd_pendonor.alamat like ? or "+
                     "utd_cekal_darah.tanggal between ? and ? and petugas.nama like ? or "+
                     "utd_cekal_darah.tanggal between ? and ? and utd_cekal_darah.dinas like ? or "+
                     "utd_cekal_darah.tanggal between ? and ? and utd_cekal_darah.keterangan like ? order by utd_cekal_darah.tanggal"

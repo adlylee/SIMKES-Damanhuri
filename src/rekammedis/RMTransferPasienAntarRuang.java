@@ -515,6 +515,10 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         TanggalMasuk = new widget.TextBox();
         scrollPane1 = new widget.ScrollPane();
         dxKeperawatan = new widget.TextArea();
+        jLabel55 = new widget.Label();
+        spo2 = new widget.TextBox();
+        jLabel70 = new widget.Label();
+        gcs = new widget.TextBox();
         internalFrame3 = new widget.InternalFrame();
         Scroll = new widget.ScrollPane();
         tbObat = new widget.Table();
@@ -819,7 +823,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         CmbDetik2.setBounds(365, 10, 62, 23);
 
         DTPReg.setForeground(new java.awt.Color(50, 70, 50));
-        DTPReg.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "29-12-2023" }));
+        DTPReg.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "20-02-2024" }));
         DTPReg.setDisplayFormat("dd-MM-yyyy");
         DTPReg.setName("DTPReg"); // NOI18N
         DTPReg.setOpaque(false);
@@ -917,17 +921,17 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         ScrollTriase2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 253)));
         ScrollTriase2.setName("ScrollTriase2"); // NOI18N
         ScrollTriase2.setOpaque(true);
-        ScrollTriase2.setPreferredSize(new java.awt.Dimension(882, 661));
+        ScrollTriase2.setPreferredSize(new java.awt.Dimension(882, 761));
 
         FormTriase1.setBorder(null);
         FormTriase1.setName("FormTriase1"); // NOI18N
-        FormTriase1.setPreferredSize(new java.awt.Dimension(882, 661));
+        FormTriase1.setPreferredSize(new java.awt.Dimension(882, 751));
         FormTriase1.setLayout(new java.awt.BorderLayout(1, 1));
 
         FormInput1.setBackground(new java.awt.Color(255, 255, 255));
         FormInput1.setBorder(null);
         FormInput1.setName("FormInput1"); // NOI18N
-        FormInput1.setPreferredSize(new java.awt.Dimension(870, 653));
+        FormInput1.setPreferredSize(new java.awt.Dimension(870, 743));
         FormInput1.setLayout(null);
 
         jSeparator15.setBackground(new java.awt.Color(239, 244, 234));
@@ -1215,12 +1219,12 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         TLainnya.setFocusTraversalPolicyProvider(true);
         TLainnya.setName("TLainnya"); // NOI18N
         FormInput1.add(TLainnya);
-        TLainnya.setBounds(645, 440, 130, 23);
+        TLainnya.setBounds(645, 480, 130, 23);
 
         jLabel65.setText("Hasil Pemeriksaan Penunjang yang disertakan pindah :");
         jLabel65.setName("jLabel65"); // NOI18N
         FormInput1.add(jLabel65);
-        jLabel65.setBounds(20, 410, 280, 23);
+        jLabel65.setBounds(20, 450, 280, 23);
 
         jLabel66.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel66.setText("SITUATIONS");
@@ -1261,7 +1265,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         chkLab.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         chkLab.setName("chkLab"); // NOI18N
         FormInput1.add(chkLab);
-        chkLab.setBounds(160, 440, 100, 23);
+        chkLab.setBounds(160, 480, 100, 23);
 
         chkRontgen.setBorder(null);
         chkRontgen.setText("Foto Rontgen");
@@ -1269,7 +1273,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         chkRontgen.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         chkRontgen.setName("chkRontgen"); // NOI18N
         FormInput1.add(chkRontgen);
-        chkRontgen.setBounds(30, 440, 100, 23);
+        chkRontgen.setBounds(30, 480, 100, 23);
 
         chkEkg.setBorder(null);
         chkEkg.setText("EKG");
@@ -1277,7 +1281,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         chkEkg.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         chkEkg.setName("chkEkg"); // NOI18N
         FormInput1.add(chkEkg);
-        chkEkg.setBounds(300, 440, 50, 23);
+        chkEkg.setBounds(300, 480, 50, 23);
 
         chkLain.setBorder(null);
         chkLain.setText("Lain-lain");
@@ -1290,7 +1294,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
             }
         });
         FormInput1.add(chkLain);
-        chkLain.setBounds(565, 440, 70, 23);
+        chkLain.setBounds(565, 480, 70, 23);
 
         chkUsg.setBorder(null);
         chkUsg.setText("USG");
@@ -1298,7 +1302,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         chkUsg.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         chkUsg.setName("chkUsg"); // NOI18N
         FormInput1.add(chkUsg);
-        chkUsg.setBounds(390, 440, 50, 23);
+        chkUsg.setBounds(390, 480, 50, 23);
 
         chkEeg.setBorder(null);
         chkEeg.setText("EEG");
@@ -1306,7 +1310,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         chkEeg.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         chkEeg.setName("chkEeg"); // NOI18N
         FormInput1.add(chkEeg);
-        chkEeg.setBounds(480, 440, 50, 23);
+        chkEeg.setBounds(480, 480, 50, 23);
 
         TAlergi.setEditable(false);
         TAlergi.setFocusTraversalPolicyProvider(true);
@@ -1319,14 +1323,14 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         jSeparator12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(239, 244, 234)));
         jSeparator12.setName("jSeparator12"); // NOI18N
         FormInput1.add(jSeparator12);
-        jSeparator12.setBounds(0, 475, 880, 1);
+        jSeparator12.setBounds(0, 510, 880, 1);
 
         jLabel69.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel69.setText("RECOMENDATION");
         jLabel69.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel69.setName("jLabel69"); // NOI18N
         FormInput1.add(jLabel69);
-        jLabel69.setBounds(20, 480, 170, 23);
+        jLabel69.setBounds(20, 520, 170, 23);
 
         scrollPane5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         scrollPane5.setName("scrollPane5"); // NOI18N
@@ -1338,7 +1342,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         scrollPane5.setViewportView(Terapi);
 
         FormInput1.add(scrollPane5);
-        scrollPane5.setBounds(60, 510, 715, 120);
+        scrollPane5.setBounds(60, 550, 715, 120);
 
         KdBangsal.setEditable(false);
         KdBangsal.setHighlighter(null);
@@ -1391,7 +1395,29 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         scrollPane1.setViewportView(dxKeperawatan);
 
         FormInput1.add(scrollPane1);
-        scrollPane1.setBounds(510, 350, 270, 53);
+        scrollPane1.setBounds(510, 350, 270, 83);
+
+        jLabel55.setText("spO2 :");
+        jLabel55.setName("jLabel55"); // NOI18N
+        FormInput1.add(jLabel55);
+        jLabel55.setBounds(0, 410, 100, 23);
+
+        spo2.setEditable(false);
+        spo2.setFocusTraversalPolicyProvider(true);
+        spo2.setName("spo2"); // NOI18N
+        FormInput1.add(spo2);
+        spo2.setBounds(105, 410, 110, 23);
+
+        jLabel70.setText("GCS :");
+        jLabel70.setName("jLabel70"); // NOI18N
+        FormInput1.add(jLabel70);
+        jLabel70.setBounds(220, 410, 50, 23);
+
+        gcs.setEditable(false);
+        gcs.setFocusTraversalPolicyProvider(true);
+        gcs.setName("gcs"); // NOI18N
+        FormInput1.add(gcs);
+        gcs.setBounds(275, 410, 110, 23);
 
         FormTriase1.add(FormInput1, java.awt.BorderLayout.PAGE_START);
 
@@ -1436,7 +1462,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         panelGlass9.add(jLabel19);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "29-12-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "20-02-2024" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -1450,7 +1476,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         panelGlass9.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "29-12-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "20-02-2024" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -1830,13 +1856,13 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
             param.put("ruangawal", AsalRuang.getText());
             param.put("dokterawal", NmDokter.getText());
             param.put("petugasawal", NmPetugasMenyerahkan.getText());
-            param.put("tglmasuk", TanggalMasuk.getText().toString().substring(0, 10));
-            param.put("jammasuk", TanggalMasuk.getText().toString().substring(11, 19));
+            param.put("tglmasuk", TanggalMasuk.getText().substring(0, 10));
+            param.put("jammasuk", TanggalMasuk.getText().substring(11, 19));
             param.put("ruangpindah", RuangSelanjutnya.getText());
             param.put("dokterpindah", NmDokter1.getText());
             param.put("petugaspindah", NmPetugasMenerima.getText());
-            param.put("tglpindah", TanggalPindah.getText().toString().substring(0, 10));
-            param.put("jampindah", TanggalPindah.getText().toString().substring(11, 19));
+            param.put("tglpindah", TanggalPindah.getText().substring(0, 10));
+            param.put("jampindah", TanggalPindah.getText().substring(11, 19));
             param.put("suhu", Suhu.getText());
             param.put("nadi", Nadi.getText());
             param.put("tensi", TD.getText());
@@ -1844,21 +1870,23 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
             param.put("nyeri", cmbNyeri.getText());
             param.put("dx", Diagnosa.getText());
             param.put("dxkep", dxKeperawatan.getText());
+            param.put("spo2", spo2.getText());
+            param.put("gsc", gcs.getText());
             if (sttsTransfer.equals("Ralan")) {
-                param.put("kateter", Sequel.cariIsi("SELECT tgl_perawatan FROM rawat_jl_pr WHERE kd_jenis_prw='J000319' and no_rawat=?", TNoRw.getText()));
-                param.put("oksigen", Sequel.cariIsi("SELECT tgl_perawatan FROM rawat_jl_pr WHERE kd_jenis_prw in ('J000322','J000323','J000324','J000325','J000326','J000327') and no_rawat=? limit 1", TNoRw.getText()));
-                param.put("ngt", Sequel.cariIsi("SELECT tgl_perawatan FROM rawat_jl_pr WHERE kd_jenis_prw='J000320' and no_rawat=?", TNoRw.getText()));
-                param.put("infus", Sequel.cariIsi("SELECT tgl_perawatan FROM rawat_jl_pr WHERE kd_jenis_prw='J000317' and no_rawat=?", TNoRw.getText()));
+                param.put("kateter", Sequel.cariIsi("SELECT tgl_perawatan FROM rawat_jl_pr WHERE kd_jenis_prw='RJ000514' and no_rawat=?", TNoRw.getText()));
+                param.put("oksigen", Sequel.cariIsi("SELECT tgl_perawatan FROM rawat_jl_pr WHERE kd_jenis_prw in ('RJ000710','RJ000711','RJ000712','RJ000713','RJ000714') and no_rawat=? limit 1", TNoRw.getText()));
+                param.put("ngt", Sequel.cariIsi("SELECT tgl_perawatan FROM rawat_jl_pr WHERE kd_jenis_prw='RJ000708' and no_rawat=?", TNoRw.getText()));
+                param.put("infus", Sequel.cariIsi("SELECT tgl_perawatan FROM rawat_jl_pr WHERE kd_jenis_prw='RJ000705' and no_rawat=?", TNoRw.getText()));
             }
             if (sttsTransfer.equals("Ranap")) {
                 param.put("kateter", Sequel.cariIsi("SELECT rawat_inap_pr.tgl_perawatan FROM rawat_inap_pr join jns_perawatan_inap on rawat_inap_pr.kd_jenis_prw=jns_perawatan_inap.kd_jenis_prw "
-                        + "WHERE jns_perawatan_inap.kd_jenis_prw='J000667' and rawat_inap_pr.no_rawat=? and rawat_inap_pr.tgl_perawatan between '" + TanggalMasuk.getText().substring(0, 10) + "' and '" + TanggalPindah.getText().substring(0, 10) + "' order by rawat_inap_pr.tgl_perawatan limit 1", TNoRw.getText()));
+                        + "WHERE jns_perawatan_inap.kd_jenis_prw='RI000514' and rawat_inap_pr.no_rawat=? and rawat_inap_pr.tgl_perawatan between '" + TanggalMasuk.getText().substring(0, 10) + "' and '" + TanggalPindah.getText().substring(0, 10) + "' order by rawat_inap_pr.tgl_perawatan limit 1", TNoRw.getText()));
                 param.put("oksigen", Sequel.cariIsi("SELECT rawat_inap_pr.tgl_perawatan FROM rawat_inap_pr join jns_perawatan_inap on rawat_inap_pr.kd_jenis_prw=jns_perawatan_inap.kd_jenis_prw "
                         + "WHERE jns_perawatan_inap.nm_perawatan like '%oksigen%' and rawat_inap_pr.no_rawat=? and rawat_inap_pr.tgl_perawatan between '" + TanggalMasuk.getText().substring(0, 10) + "' and '" + TanggalPindah.getText().substring(0, 10) + "' order by rawat_inap_pr.tgl_perawatan limit 1", TNoRw.getText()));
                 param.put("ngt", Sequel.cariIsi("SELECT rawat_inap_pr.tgl_perawatan FROM rawat_inap_pr join jns_perawatan_inap on rawat_inap_pr.kd_jenis_prw=jns_perawatan_inap.kd_jenis_prw "
-                        + "WHERE jns_perawatan_inap.kd_jenis_prw='J000020' and rawat_inap_pr.no_rawat=? and rawat_inap_pr.tgl_perawatan between '" + TanggalMasuk.getText().substring(0, 10) + "' and '" + TanggalPindah.getText().substring(0, 10) + "' order by rawat_inap_pr.tgl_perawatan limit 1", TNoRw.getText()));
+                        + "WHERE jns_perawatan_inap.kd_jenis_prw='RI000708' and rawat_inap_pr.no_rawat=? and rawat_inap_pr.tgl_perawatan between '" + TanggalMasuk.getText().substring(0, 10) + "' and '" + TanggalPindah.getText().substring(0, 10) + "' order by rawat_inap_pr.tgl_perawatan limit 1", TNoRw.getText()));
                 param.put("infus", Sequel.cariIsi("SELECT rawat_inap_pr.tgl_perawatan FROM rawat_inap_pr join jns_perawatan_inap on rawat_inap_pr.kd_jenis_prw=jns_perawatan_inap.kd_jenis_prw "
-                        + "WHERE jns_perawatan_inap.kd_jenis_prw='J000518' and rawat_inap_pr.no_rawat=? and rawat_inap_pr.tgl_perawatan between '" + TanggalMasuk.getText().substring(0, 10) + "' and '" + TanggalPindah.getText().substring(0, 10) + "' order by rawat_inap_pr.tgl_perawatan limit 1", TNoRw.getText()));
+                        + "WHERE jns_perawatan_inap.kd_jenis_prw='RI000705' and rawat_inap_pr.no_rawat=? and rawat_inap_pr.tgl_perawatan between '" + TanggalMasuk.getText().substring(0, 10) + "' and '" + TanggalPindah.getText().substring(0, 10) + "' order by rawat_inap_pr.tgl_perawatan limit 1", TNoRw.getText()));
             }
             param.put("alasan", Alasan.getSelectedItem().toString());
             param.put("alergi", TAlergi.getText());
@@ -1871,23 +1899,20 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
                 ps = koneksi.prepareStatement(
                         "SELECT transfer_pasien_detail.id, transfer_pasien_detail.tanggal, transfer_pasien_detail.jam, databarang.nama_brng, transfer_pasien_detail.dosis, transfer_pasien_detail.cara_pemberian "
                         + "FROM transfer_pasien_detail, databarang WHERE transfer_pasien_detail.kd_barang=databarang.kode_brng and transfer_pasien_detail.no_rawat=? and transfer_pasien_detail.status='" + sttsTransfer + "' "
-                        + "and (tanggal + INTERVAL jam HOUR_SECOND) BETWEEN '"+TanggalMasuk.getText()+"' AND '"+TanggalPindah.getText()+"'");
+                        + "and (transfer_pasien_detail.tanggal + INTERVAL transfer_pasien_detail.jam HOUR_SECOND) BETWEEN '"+TanggalMasuk.getText()+"' AND '"+TanggalPindah.getText()+"'");
                 try {
                     ps.setString(1, tbObat.getValueAt(tbObat.getSelectedRow(), 3).toString());
                     rs = ps.executeQuery();
-                    boolean check = false;
-                    if (rs.first()) {
-                        check = true;
-                    }
-                    if (check == true) {
-                        System.out.println("true");
+                    if (rs.isBeforeFirst()) {
+                        int num = 0;
                         while (rs.next()) {
+                            System.out.println("insert "+num+" : "+rs.getString("nama_brng"));
                             Sequel.menyimpan("temporary", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", 38, new String[]{
-                                "0", rs.getString("id"), rs.getString("tanggal"), rs.getString("jam"), rs.getString("nama_brng"), rs.getString("dosis"), rs.getString("cara_pemberian"), "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
+                                null, rs.getString("id"), rs.getString("tanggal"), rs.getString("jam"), rs.getString("nama_brng"), rs.getString("dosis"), rs.getString("cara_pemberian"), "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
                             }); 
+                            num++;
                         }
                     } else {
-                        System.out.println("false");
                         Sequel.menyimpan("temporary", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", 38, new String[]{
                                 null, "-", "-", "-", "-", "-", "-", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
                             }); 
@@ -2079,6 +2104,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
     private widget.ComboBox cmbJenisTransfer;
     private widget.TextBox cmbNyeri;
     private widget.TextArea dxKeperawatan;
+    private widget.TextBox gcs;
     private widget.InternalFrame internalFrame1;
     private widget.InternalFrame internalFrame3;
     private widget.InternalFrame internalFrame5;
@@ -2099,6 +2125,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
     private widget.Label jLabel52;
     private widget.Label jLabel53;
     private widget.Label jLabel54;
+    private widget.Label jLabel55;
     private widget.Label jLabel56;
     private widget.Label jLabel57;
     private widget.Label jLabel59;
@@ -2114,6 +2141,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
     private widget.Label jLabel68;
     private widget.Label jLabel69;
     private widget.Label jLabel7;
+    private widget.Label jLabel70;
     private widget.Label jLabel74;
     private widget.Label jLabel9;
     private javax.swing.JPanel jPanel2;
@@ -2134,6 +2162,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
     private widget.panelisi panelisi5;
     private widget.ScrollPane scrollPane1;
     private widget.ScrollPane scrollPane5;
+    private widget.TextBox spo2;
     private widget.Table tbObat;
     private widget.Table tbResep;
     private widget.Table tbResep1;
@@ -2162,9 +2191,9 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
                 while (rs.next()) {
 //                    tglpindah = "";
 //                    jampindah = "";
-                    ruangpindah = "";
-                    dokterpindah = "";
-                    petugaspindah = "";
+//                    ruangpindah = "";
+//                    dokterpindah = "";
+//                    petugaspindah = "";
                     suhu = "";
                     nadi = "";
                     darah = "";
@@ -2173,27 +2202,27 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
 //                    dx = Sequel.cariIsi("SELECT GROUP_CONCAT(CONCAT(penyakit.kd_penyakit,' ',penyakit.nm_penyakit)) FROM diagnosa_pasien INNER JOIN penyakit ON diagnosa_pasien.kd_penyakit = penyakit.kd_penyakit WHERE diagnosa_pasien.no_rawat='"+rs.getString("no_rawat")+"' AND diagnosa_pasien.status = 'Ralan'");
                     dx = "";
                     dxkep = "";
-                    ps2 = koneksi.prepareStatement(
-                            "SELECT bangsal.nm_bangsal, dokter.nm_dokter, petugas.nama FROM transfer_pasien as tf,dokter,petugas,bangsal "
-                            + "WHERE tf.dokter_pindah=dokter.kd_dokter and tf.petugas_pindah=petugas.nip and tf.ruang_pindah=bangsal.kd_bangsal and tf.no_rawat=?");
-                    try {
-                        ps2.setString(1, rs.getString("no_rawat"));
-                        rs2 = ps2.executeQuery();
-                        if (rs2.next()) {
-                            ruangpindah = rs2.getString("nm_bangsal");
-                            dokterpindah = rs2.getString("nm_dokter");
-                            petugaspindah = rs2.getString("nama");
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Notif ps2: " + e);
-                    } finally {
-                        if (rs2 != null) {
-                            rs2.close();
-                        }
-                        if (ps2 != null) {
-                            ps2.close();
-                        }
-                    }
+//                    ps2 = koneksi.prepareStatement(
+//                            "SELECT bangsal.nm_bangsal, dokter.nm_dokter, petugas.nama FROM transfer_pasien as tf,dokter,petugas,bangsal "
+//                            + "WHERE tf.dokter_pindah=dokter.kd_dokter and tf.petugas_pindah=petugas.nip and tf.ruang_pindah=bangsal.kd_bangsal and tf.no_rawat=?");
+//                    try {
+//                        ps2.setString(1, rs.getString("no_rawat"));
+//                        rs2 = ps2.executeQuery();
+//                        if (rs2.next()) {
+//                            ruangpindah = rs2.getString("nm_bangsal");
+//                            dokterpindah = rs2.getString("nm_dokter");
+//                            petugaspindah = rs2.getString("nama");
+//                        }
+//                    } catch (Exception e) {
+//                        System.out.println("Notif ps2: " + e);
+//                    } finally {
+//                        if (rs2 != null) {
+//                            rs2.close();
+//                        }
+//                        if (ps2 != null) {
+//                            ps2.close();
+//                        }
+//                    }
 
 //                    ps3 = koneksi.prepareStatement(
 //                            "SELECT triase.skala_nyeri, triase.diagnosa_keperawatan, ralan.suhu_tubuh, ralan.tensi, ralan.nadi, ralan.respirasi "
@@ -2221,7 +2250,11 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
 //                    }
                     tabMode.addRow(new Object[]{
                         rs.getString("id"), rs.getString("tanggal"), rs.getString("jam"), rs.getString("no_rawat"), rs.getString("no_rkm_medis"), rs.getString("nm_pasien"), rs.getString("tgl_lahir"), rs.getString("jk"),
-                        rs.getString("tgl_awal").substring(0,10), rs.getString("tgl_awal").substring(11,19), rs.getString("nm_bangsal"), rs.getString("nm_dokter"), rs.getString("nama"), rs.getString("tgl_pindah").substring(0,10), rs.getString("tgl_pindah").substring(11,19), ruangpindah, dokterpindah, petugaspindah,
+                        rs.getString("tgl_awal").substring(0,10), rs.getString("tgl_awal").substring(11,19), rs.getString("nm_bangsal"), rs.getString("nm_dokter"), rs.getString("nama"), rs.getString("tgl_pindah").substring(0,10), rs.getString("tgl_pindah").substring(11,19), 
+//                        ruangpindah, dokterpindah, petugaspindah,
+                        Sequel.cariIsi("SELECT bangsal.nm_bangsal FROM transfer_pasien INNER JOIN bangsal ON transfer_pasien.ruang_pindah=bangsal.kd_bangsal WHERE transfer_pasien.id='"+rs.getString("id")+"'"),
+                        Sequel.cariIsi("SELECT dokter.nm_dokter FROM transfer_pasien INNER JOIN dokter ON transfer_pasien.dokter_pindah=dokter.kd_dokter WHERE transfer_pasien.id='"+rs.getString("id")+"'"),
+                        Sequel.cariIsi("SELECT petugas.nama FROM transfer_pasien INNER JOIN petugas ON transfer_pasien.petugas_pindah=petugas.nip WHERE transfer_pasien.id='"+rs.getString("id")+"'"),
                         rs.getString("alasan_pindah"), rs.getString("hasil_penunjang"), rs.getString("keterangan"),
                         suhu, nadi, darah, respirasi, "", nyeri, dx, dxkep,
                         rs.getString("status")
@@ -2578,7 +2611,6 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         Sequel.cariIsi("select nm_pasien from pasien where no_rkm_medis=?", TPasien, TNoRM.getText());
         Sequel.cariIsi("select jk from pasien where no_rkm_medis=?", JK, TNoRM.getText());
         Sequel.cariIsi("select tgl_lahir from pasien where no_rkm_medis=?", TglLahir, TNoRM.getText());
-        getCPPT(norwt);
         tampilResep(norwt);
         try {
             ps = koneksi.prepareStatement("select bangsal.kd_bangsal, bangsal.nm_bangsal, kamar.kelas, kamar_inap.tgl_masuk, kamar_inap.jam_masuk from kamar_inap join kamar join bangsal on kamar_inap.kd_kamar=kamar.kd_kamar and kamar.kd_bangsal=bangsal.kd_bangsal "
@@ -2618,28 +2650,60 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
         } catch (SQLException e) {
             System.out.println(e);
         }
+        getCPPT(norwt);
     }
     
-    private void getCPPT(String no_rawat){
-        if (sttsTransfer.equals("Ralan")) {
-            Suhu.setText(Sequel.cariIsi("SELECT suhu_tubuh FROM pemeriksaan_ralan WHERE no_rawat=? ORDER BY tgl_perawatan DESC, jam_rawat DESC LIMIT 1", no_rawat));
-            Nadi.setText(Sequel.cariIsi("SELECT nadi FROM pemeriksaan_ralan WHERE no_rawat=? ORDER BY tgl_perawatan DESC, jam_rawat DESC LIMIT 1", no_rawat));
-            TD.setText(Sequel.cariIsi("SELECT tensi FROM pemeriksaan_ralan WHERE no_rawat=? ORDER BY tgl_perawatan DESC, jam_rawat DESC LIMIT 1", no_rawat));
-            RR.setText(Sequel.cariIsi("SELECT respirasi FROM pemeriksaan_ralan WHERE no_rawat=? ORDER BY tgl_perawatan DESC, jam_rawat DESC LIMIT 1", no_rawat));
-            TAlergi.setText(Sequel.cariIsi("SELECT alergi FROM pemeriksaan_ralan WHERE no_rawat=? ORDER BY tgl_perawatan DESC, jam_rawat DESC LIMIT 1", no_rawat));
-            Diagnosa.setText(Sequel.cariIsi("SELECT GROUP_CONCAT(CONCAT(penyakit.kd_penyakit,' ',penyakit.nm_penyakit)) FROM diagnosa_pasien INNER JOIN penyakit ON diagnosa_pasien.kd_penyakit = penyakit.kd_penyakit WHERE diagnosa_pasien.no_rawat=? AND diagnosa_pasien.status = 'Ralan'", no_rawat));
-            dxKeperawatan.setText(Sequel.cariIsi("SELECT diagnosa_keperawatan FROM data_triase_igd WHERE no_rawat=?", no_rawat));
-            cmbNyeri.setText(Sequel.cariIsi("SELECT skala_nyeri FROM data_triase_igd WHERE no_rawat=?", no_rawat));
-        }
-        if (sttsTransfer.equals("Ranap")) {
-            Suhu.setText(Sequel.cariIsi("SELECT suhu_tubuh FROM pemeriksaan_ranap WHERE no_rawat=? ORDER BY tgl_perawatan DESC, jam_rawat DESC LIMIT 1", no_rawat));
-            Nadi.setText(Sequel.cariIsi("SELECT nadi FROM pemeriksaan_ranap WHERE no_rawat=? ORDER BY tgl_perawatan DESC, jam_rawat DESC LIMIT 1", no_rawat));
-            TD.setText(Sequel.cariIsi("SELECT tensi FROM pemeriksaan_ranap WHERE no_rawat=? ORDER BY tgl_perawatan DESC, jam_rawat DESC LIMIT 1", no_rawat));
-            RR.setText(Sequel.cariIsi("SELECT respirasi FROM pemeriksaan_ranap WHERE no_rawat=? ORDER BY tgl_perawatan DESC, jam_rawat DESC LIMIT 1", no_rawat));
-            TAlergi.setText(Sequel.cariIsi("SELECT alergi FROM pemeriksaan_ranap WHERE no_rawat=? ORDER BY tgl_perawatan DESC, jam_rawat DESC LIMIT 1", no_rawat));
-            Diagnosa.setText("");
-            dxKeperawatan.setText("");
-            cmbNyeri.setText("");
+    private void getCPPT(String no_rawat) {
+        try {
+            if (sttsTransfer.equals("Ranap")) {
+                ps = koneksi.prepareStatement("SELECT suhu_tubuh, nadi, tensi, respirasi, alergi, spo2, gcs  FROM pemeriksaan_ranap WHERE CAST(CONCAT(tgl_perawatan,' ',jam_rawat) AS DATETIME) "
+                        + "BETWEEN ? AND ? AND no_rawat=? ORDER BY tgl_perawatan DESC, jam_rawat DESC LIMIT 1");
+                ps.setString(1, TanggalMasuk.getText());
+                ps.setString(2, TanggalPindah.getText());
+                ps.setString(3, no_rawat);
+            } 
+            if (sttsTransfer.equals("Ralan")) {
+                ps = koneksi.prepareStatement("SELECT suhu_tubuh, nadi, tensi, respirasi, alergi,gcs  FROM pemeriksaan_ralan WHERE CAST(CONCAT(tgl_perawatan,' ',jam_rawat) AS DATETIME) "
+                        + "BETWEEN ? AND ? AND no_rawat=? ORDER BY tgl_perawatan DESC, jam_rawat DESC LIMIT 1");
+                ps.setString(1, TanggalMasuk.getText());
+                ps.setString(2, TanggalPindah.getText());
+                ps.setString(3, no_rawat);
+            }
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                Suhu.setText(rs.getString("suhu_tubuh"));
+                Nadi.setText(rs.getString("nadi"));
+                TD.setText(rs.getString("tensi"));
+                RR.setText(rs.getString("respirasi"));
+                TAlergi.setText(rs.getString("alergi"));
+                if (sttsTransfer.equals("Ranap")) {
+                    spo2.setText(rs.getString("spo2"));
+                    gcs.setText(rs.getString("gcs"));
+                    Diagnosa.setText("");
+                    dxKeperawatan.setText("");
+                    cmbNyeri.setText("");
+                }
+                if (sttsTransfer.equals("Ralan")) {
+                    spo2.setText("");
+                    gcs.setText(rs.getString("gcs"));
+                    Diagnosa.setText(Sequel.cariIsi("SELECT GROUP_CONCAT(CONCAT(penyakit.kd_penyakit,' ',penyakit.nm_penyakit)) FROM diagnosa_pasien INNER JOIN penyakit ON diagnosa_pasien.kd_penyakit = penyakit.kd_penyakit WHERE diagnosa_pasien.no_rawat=? AND diagnosa_pasien.status = 'Ralan'", no_rawat));
+                    dxKeperawatan.setText(Sequel.cariIsi("SELECT diagnosa_keperawatan FROM data_triase_igd WHERE no_rawat=?", no_rawat));
+                    cmbNyeri.setText(Sequel.cariIsi("SELECT skala_nyeri FROM data_triase_igd WHERE no_rawat=?", no_rawat));
+                }                                
+            }
+        } catch (SQLException e) {
+            System.out.println("Notifikasi : " + e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("Notifikasi : " + ex);
+            }
         }
     }
 }

@@ -61,7 +61,7 @@ public final class DlgRawatInap extends javax.swing.JDialog {
     public DlgCariPerawatanRanap2 perawatan2 = new DlgCariPerawatanRanap2(null, false);
     private DlgPasien pasien = new DlgPasien(null, false);
     private PreparedStatement ps, ps2, ps3, ps4, ps5, psrekening, ps6;
-    private ResultSet rs, rsrekening;
+    private ResultSet rs, rsrekening,rs2;
     private final Properties prop = new Properties();
     private int i = 0;
     private double ttljmdokter = 0, ttljmperawat = 0, ttlkso = 0, ttlpendapatan = 0;
@@ -1014,6 +1014,8 @@ public final class DlgRawatInap extends javax.swing.JDialog {
         TNoRM1 = new widget.TextBox();
         TPasien1 = new widget.TextBox();
         BtnSimpan9 = new widget.Button();
+        Popup = new javax.swing.JPopupMenu();
+        MnCetakMonitoring = new javax.swing.JMenuItem();
         internalFrame1 = new widget.InternalFrame();
         jPanel3 = new javax.swing.JPanel();
         panelGlass8 = new widget.panelisi();
@@ -1374,6 +1376,26 @@ public final class DlgRawatInap extends javax.swing.JDialog {
 
         WindowInput.getContentPane().add(internalFrame9, java.awt.BorderLayout.CENTER);
 
+        Popup.setName("Popup"); // NOI18N
+
+        MnCetakMonitoring.setBackground(new java.awt.Color(255, 255, 254));
+        MnCetakMonitoring.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        MnCetakMonitoring.setForeground(new java.awt.Color(70, 70, 70));
+        MnCetakMonitoring.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        MnCetakMonitoring.setText("Cetak Catatan Monitoring Tanda Vital");
+        MnCetakMonitoring.setToolTipText("");
+        MnCetakMonitoring.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        MnCetakMonitoring.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        MnCetakMonitoring.setIconTextGap(8);
+        MnCetakMonitoring.setName("MnCetakMonitoring"); // NOI18N
+        MnCetakMonitoring.setPreferredSize(new java.awt.Dimension(275, 25));
+        MnCetakMonitoring.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnCetakMonitoringActionPerformed(evt);
+            }
+        });
+        Popup.add(MnCetakMonitoring);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
@@ -1548,7 +1570,7 @@ public final class DlgRawatInap extends javax.swing.JDialog {
         panelGlass10.add(jLabel19);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "03-10-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-02-2024" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -1562,7 +1584,7 @@ public final class DlgRawatInap extends javax.swing.JDialog {
         panelGlass10.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "03-10-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-02-2024" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -2062,6 +2084,7 @@ public final class DlgRawatInap extends javax.swing.JDialog {
             }
         });
         Scroll3.setViewportView(tbPemeriksaan);
+        tbPemeriksaan.setComponentPopupMenu(Popup);
 
         internalFrame5.add(Scroll3, java.awt.BorderLayout.CENTER);
 
@@ -3176,7 +3199,7 @@ public final class DlgRawatInap extends javax.swing.JDialog {
         TPasien.setBounds(283, 10, 260, 23);
 
         DTPTgl.setForeground(new java.awt.Color(50, 70, 50));
-        DTPTgl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "03-10-2023" }));
+        DTPTgl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-02-2024" }));
         DTPTgl.setDisplayFormat("dd-MM-yyyy");
         DTPTgl.setName("DTPTgl"); // NOI18N
         DTPTgl.setOpaque(false);
@@ -5641,6 +5664,98 @@ private void BtnEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
         }
     }//GEN-LAST:event_BtnSimpan9ActionPerformed
 
+    private void MnCetakMonitoringActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnCetakMonitoringActionPerformed
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        if (tabModePemeriksaan.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Maaf, data sudah habis. Tidak ada data yang bisa anda print...!!!!");
+            BtnBatal.requestFocus();
+        } else if (tabModePemeriksaan.getRowCount() != 0) {
+            Sequel.queryu("truncate table temporary");           
+                try {//ralan
+                    ps = koneksi.prepareStatement("SELECT tgl_perawatan, jam_rawat, tensi, nadi, suhu_tubuh, respirasi FROM pemeriksaan_ralan WHERE no_rawat=? ORDER BY tgl_perawatan,jam_rawat ASC");
+                    try {                        
+                        ps.setString(1, TNoRw.getText());
+                        rs = ps.executeQuery();
+                        if (rs.isBeforeFirst()) {
+                            int num = 0;
+                            while (rs.next()) {
+                                Sequel.menyimpan("temporary", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", 38, new String[]{
+                                    null, rs.getString("tgl_perawatan"), rs.getString("jam_rawat"), rs.getString("tensi"), rs.getString("nadi"), rs.getString("suhu_tubuh"), rs.getString("respirasi"),"", "Ralan", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
+                                });
+                                num++;                                
+                            }
+                        } else {
+                            Sequel.menyimpan("temporary", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", 38, new String[]{
+                                null, "-", "-", "-", "-", "-", "-", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
+                            });
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Notif 2 : " + e);
+                    } finally {
+                        if (rs != null) {
+                            rs.close();
+                        }
+                        if (ps != null) {
+                            ps.close();
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println("Notif : " + e);
+                }
+                try {//ranap
+                    ps = koneksi.prepareStatement("SELECT tgl_perawatan, jam_rawat, tensi, nadi, suhu_tubuh, respirasi, spo2 FROM pemeriksaan_ranap WHERE no_rawat=? ORDER BY tgl_perawatan,jam_rawat ASC");
+                    try {                        
+                        ps.setString(1, TNoRw.getText());
+                        rs = ps.executeQuery();
+                        if (rs.isBeforeFirst()) {
+                            int num = 0;
+                            while (rs.next()) {
+                                Sequel.menyimpan("temporary", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", 38, new String[]{
+                                    null, rs.getString("tgl_perawatan"), rs.getString("jam_rawat"), rs.getString("tensi"), rs.getString("nadi"), rs.getString("suhu_tubuh"), rs.getString("respirasi"),rs.getString("spo2"), "Ranap", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
+                                });
+                                num++;                                
+                            }
+                        } else {
+                            Sequel.menyimpan("temporary", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", 38, new String[]{
+                                null, "-", "-", "-", "-", "-", "-", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
+                            });
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Notif 2 : " + e);
+                    } finally {
+                        if (rs != null) {
+                            rs.close();
+                        }
+                        if (ps != null) {
+                            ps.close();
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println("Notif : " + e);
+                }
+            Map<String, Object> param = new HashMap<>();            
+            String umur = Sequel.cariIsi("SELECT concat(umurdaftar,' ', sttsumur) as umur FROM reg_periksa WHERE no_rawat=?",TNoRw.getText());
+            String kd_kamar = Sequel.cariIsi("SELECT kd_kamar FROM kamar_inap WHERE no_rawat='"+TNoRw.getText()+"'");
+            param.put("namapasien", TPasien.getText());
+            param.put("umur", umur);
+            param.put("kamar", kd_kamar);
+            param.put("bangsal", Sequel.cariIsi("SELECT nm_bangsal FROM kamar INNER JOIN bangsal ON kamar.kd_bangsal=bangsal.kd_bangsal WHERE kamar.kd_kamar=?",kd_kamar));            
+            param.put("kelas", Sequel.cariIsi("SELECT kelas FROM kamar WHERE kd_kamar=?",kd_kamar));
+            param.put("diagnosa", Sequel.cariIsi("SELECT CONCAT(diagnosa_pasien.kd_penyakit,' ', penyakit.nm_penyakit) AS dx FROM diagnosa_pasien INNER JOIN penyakit ON diagnosa_pasien.kd_penyakit=penyakit.kd_penyakit \n"
+                    + "WHERE prioritas='1' and status_penyakit='Ralan' AND no_rawat=?", TNoRw.getText()));
+            param.put("namars", var.getnamars());
+            param.put("alamatrs", var.getalamatrs());
+            param.put("kotars", var.getkabupatenrs());
+            param.put("propinsirs", var.getpropinsirs());
+            param.put("kontakrs", var.getkontakrs());
+            param.put("emailrs", var.getemailrs());
+            param.put("logo", Sequel.cariGambar("select logo from setting"));            
+            Valid.MyReport("rptCatatanMonitoring.jrxml", "report", "::[ Catatan Montoring Tanda-tanda Vital ]::",
+                    "select * from temporary order by no asc", param);
+        }
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_MnCetakMonitoringActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -5706,10 +5821,12 @@ private void BtnEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
     private widget.TextBox KdDok2;
     private widget.Label LCount;
     private javax.swing.JTextField Menejemen;
+    private javax.swing.JMenuItem MnCetakMonitoring;
     private widget.PanelBiasa PanelAccor;
     private javax.swing.JPanel PanelInput1;
     private javax.swing.JPanel PanelInput2;
     private javax.swing.JPanel PanelInput3;
+    private javax.swing.JPopupMenu Popup;
     private widget.ScrollPane Scroll;
     private widget.ScrollPane Scroll1;
     private widget.ScrollPane Scroll2;

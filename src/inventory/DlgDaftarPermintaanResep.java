@@ -1995,18 +1995,21 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 } else if (NoRawat.equals("")) {
                     JOptionPane.showMessageDialog(null, "Maaf, Silahkan pilih data resep dokter yang mau divalidasi..!!");
                 } else {
-                    if (Status.equals("Sudah Terlayani")) {
-                        JOptionPane.showMessageDialog(rootPane, "Resep sudah tervalidasi ..!!");
-                    } else {
-                        DlgPeresepanDokter resep = new DlgPeresepanDokter(null, false);
-                        resep.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
-                        resep.setLocationRelativeTo(internalFrame1);
-                        resep.MatikanJam();
-                        resep.setNoRm(NoRawat, Valid.SetTgl2(TglPeresepan), JamPeresepan.substring(0, 2), JamPeresepan.substring(3, 5), JamPeresepan.substring(6, 8), KodeDokter, DokterPeresep, "ralan");
-                        resep.isCek();
-                        resep.tampilobat(NoResep);
-                        TeksKosong();
-                        resep.setVisible(true);
+                    int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin mengubah data?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                    if (reply == JOptionPane.YES_OPTION) {                        
+                        if (Status.equals("Sudah Terlayani")) {
+                            JOptionPane.showMessageDialog(rootPane, "Resep sudah tervalidasi ..!!");
+                        } else {
+                            DlgPeresepanDokter resep = new DlgPeresepanDokter(null, false);
+                            resep.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
+                            resep.setLocationRelativeTo(internalFrame1);
+                            resep.MatikanJam();
+                            resep.setNoRm(NoRawat, Valid.SetTgl2(TglPeresepan), JamPeresepan.substring(0, 2), JamPeresepan.substring(3, 5), JamPeresepan.substring(6, 8), KodeDokter, DokterPeresep, "ralan");
+                            resep.isCek();
+                            resep.tampilobat(NoResep);
+                            TeksKosong();
+                            resep.setVisible(true);
+                        }
                     }
                 }
             } else if (TabRawatJalan.getSelectedIndex() == 1) {
@@ -2021,30 +2024,33 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 } else if (NoRawat.equals("")) {
                     JOptionPane.showMessageDialog(null, "Maaf, Silahkan pilih data resep dokter yang mau divalidasi..!!");
                 } else {
-                    if (Status.equals("Sudah Terlayani")) {
-                        JOptionPane.showMessageDialog(rootPane, "Resep sudah tervalidasi ..!!");
-                    } else {
-                        kamar = Sequel.cariIsi("select kd_bangsal from kamar inner join kamar_inap on kamar_inap.kd_kamar=kamar.kd_kamar "
-                                + "where kamar_inap.no_rawat=? order by kamar_inap.tgl_masuk desc limit 1 ", NoRawat);
-                        bangsal = Sequel.cariIsi("select kd_depo from set_depo_ranap where kd_bangsal=?", kamar);
-                        if (bangsal.equals("")) {
-                            if (Sequel.cariIsi("select asal_stok from set_lokasi").equals("Gunakan Stok Bangsal")) {
-                                var.setkdbangsal(kamar);
-                            } else {
-                                var.setkdbangsal(Sequel.cariIsi("select kd_bangsal from set_lokasi"));
-                            }
+                    int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin mengubah data?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                    if (reply == JOptionPane.YES_OPTION) {                        
+                        if (Status.equals("Sudah Terlayani")) {
+                            JOptionPane.showMessageDialog(rootPane, "Resep sudah tervalidasi ..!!");
                         } else {
-                            var.setkdbangsal(bangsal);
+                            kamar = Sequel.cariIsi("select kd_bangsal from kamar inner join kamar_inap on kamar_inap.kd_kamar=kamar.kd_kamar "
+                                    + "where kamar_inap.no_rawat=? order by kamar_inap.tgl_masuk desc limit 1 ", NoRawat);
+                            bangsal = Sequel.cariIsi("select kd_depo from set_depo_ranap where kd_bangsal=?", kamar);
+                            if (bangsal.equals("")) {
+                                if (Sequel.cariIsi("select asal_stok from set_lokasi").equals("Gunakan Stok Bangsal")) {
+                                    var.setkdbangsal(kamar);
+                                } else {
+                                    var.setkdbangsal(Sequel.cariIsi("select kd_bangsal from set_lokasi"));
+                                }
+                            } else {
+                                var.setkdbangsal(bangsal);
+                            }
+                            DlgPeresepanDokter resep = new DlgPeresepanDokter(null, false);
+                            resep.setSize(internalFrame1.getWidth(), internalFrame1.getHeight());
+                            resep.setLocationRelativeTo(internalFrame1);
+                            resep.MatikanJam();
+                            resep.setNoRm(NoRawat, Valid.SetTgl2(TglPeresepan), JamPeresepan.substring(0, 2), JamPeresepan.substring(3, 5), JamPeresepan.substring(6, 8), KodeDokter, DokterPeresep, "ranap");
+                            resep.isCek();
+                            resep.tampilobat(NoResep);
+                            TeksKosong();
+                            resep.setVisible(true);
                         }
-                        DlgPeresepanDokter resep = new DlgPeresepanDokter(null, false);
-                        resep.setSize(internalFrame1.getWidth(), internalFrame1.getHeight());
-                        resep.setLocationRelativeTo(internalFrame1);
-                        resep.MatikanJam();
-                        resep.setNoRm(NoRawat, Valid.SetTgl2(TglPeresepan), JamPeresepan.substring(0, 2), JamPeresepan.substring(3, 5), JamPeresepan.substring(6, 8), KodeDokter, DokterPeresep, "ranap");
-                        resep.isCek();
-                        resep.tampilobat(NoResep);
-                        TeksKosong();
-                        resep.setVisible(true);
                     }
                 }
             } else if (TabRawatInap.getSelectedIndex() == 1) {
@@ -2059,31 +2065,34 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 } else if (NoRawat.equals("")) {
                     JOptionPane.showMessageDialog(null, "Maaf, Silahkan pilih data resep dokter yang mau divalidasi..!!");
                 } else {
-                    if (Status.equals("Sudah Terlayani")) {
-                        JOptionPane.showMessageDialog(rootPane, "Resep sudah tervalidasi ..!!");
-                    } else {
-//                        kamar = Sequel.cariIsi("select kd_bangsal from kamar inner join kamar_inap on kamar_inap.kd_kamar=kamar.kd_kamar "
-//                                + "where kamar_inap.no_rawat=? order by kamar_inap.tgl_masuk desc limit 1 ", NoRawat);
-//                        bangsal = Sequel.cariIsi("select kd_depo from set_depo_ranap where kd_bangsal=?", kamar);
-//                        if (bangsal.equals("")) {
-//                            if (Sequel.cariIsi("select asal_stok from set_lokasi").equals("Gunakan Stok Bangsal")) {
-//                                var.setkdbangsal(kamar);
-//                            } else {
-//                                var.setkdbangsal(Sequel.cariIsi("select kd_bangsal from set_lokasi"));
-//                            }
-//                        } else {
-//                            var.setkdbangsal(bangsal);
-//                        }
-//                        DlgPeresepanDokter resep = new DlgPeresepanDokter(null, false);
-//                        resep.setSize(internalFrame1.getWidth(), internalFrame1.getHeight());
-//                        resep.setLocationRelativeTo(internalFrame1);
-//                        resep.MatikanJam();
-//                        resep.setNoRm(NoRawat, Valid.SetTgl2(TglPeresepan), JamPeresepan.substring(0, 2), JamPeresepan.substring(3, 5), JamPeresepan.substring(6, 8), KodeDokter, DokterPeresep, "ranap");
-//                        resep.isCek();
-//                        resep.tampilobat(NoResep);
-//                        TeksKosong();
-//                        resep.setVisible(true);
-                        JOptionPane.showMessageDialog(null, "Masih Dalam Tahap Pengembangan");
+                    int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin mengubah data?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                    if (reply == JOptionPane.YES_OPTION) {                        
+                        if (Status.equals("Sudah Terlayani")) {
+                            JOptionPane.showMessageDialog(rootPane, "Resep sudah tervalidasi ..!!");
+                        } else {
+    //                        kamar = Sequel.cariIsi("select kd_bangsal from kamar inner join kamar_inap on kamar_inap.kd_kamar=kamar.kd_kamar "
+    //                                + "where kamar_inap.no_rawat=? order by kamar_inap.tgl_masuk desc limit 1 ", NoRawat);
+    //                        bangsal = Sequel.cariIsi("select kd_depo from set_depo_ranap where kd_bangsal=?", kamar);
+    //                        if (bangsal.equals("")) {
+    //                            if (Sequel.cariIsi("select asal_stok from set_lokasi").equals("Gunakan Stok Bangsal")) {
+    //                                var.setkdbangsal(kamar);
+    //                            } else {
+    //                                var.setkdbangsal(Sequel.cariIsi("select kd_bangsal from set_lokasi"));
+    //                            }
+    //                        } else {
+    //                            var.setkdbangsal(bangsal);
+    //                        }
+    //                        DlgPeresepanDokter resep = new DlgPeresepanDokter(null, false);
+    //                        resep.setSize(internalFrame1.getWidth(), internalFrame1.getHeight());
+    //                        resep.setLocationRelativeTo(internalFrame1);
+    //                        resep.MatikanJam();
+    //                        resep.setNoRm(NoRawat, Valid.SetTgl2(TglPeresepan), JamPeresepan.substring(0, 2), JamPeresepan.substring(3, 5), JamPeresepan.substring(6, 8), KodeDokter, DokterPeresep, "ranap");
+    //                        resep.isCek();
+    //                        resep.tampilobat(NoResep);
+    //                        TeksKosong();
+    //                        resep.setVisible(true);
+                            JOptionPane.showMessageDialog(null, "Masih Dalam Tahap Pengembangan");
+                        }
                     }
                 }
             } else if (TabRawatPulang.getSelectedIndex() == 1) {
@@ -2202,12 +2211,15 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 } else if (NoRawat.equals("")) {
                     JOptionPane.showMessageDialog(null, "Maaf, Silahkan pilih data resep dokter yang mau divalidasi..!!");
                 } else {
-                    if (Status.equals("Sudah Terlayani")) {
-                        JOptionPane.showMessageDialog(rootPane, "Resep sudah tervalidasi ..!!");
-                    } else {
-                        Sequel.meghapus("resep_obat", "no_resep", NoResep);
-                        TeksKosong();
-                        tampil();
+                    int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin menghapus data?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                    if (reply == JOptionPane.YES_OPTION) {
+                        if (Status.equals("Sudah Terlayani")) {
+                            JOptionPane.showMessageDialog(rootPane, "Resep sudah tervalidasi ..!!");
+                        } else {
+                            Sequel.meghapus("resep_obat", "no_resep", NoResep);
+                            TeksKosong();
+                            tampil();
+                        }
                     }
                 }
             } else if (TabRawatJalan.getSelectedIndex() == 1) {
@@ -2222,12 +2234,15 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 } else if (NoRawat.equals("")) {
                     JOptionPane.showMessageDialog(null, "Maaf, Silahkan pilih data resep dokter yang mau divalidasi..!!");
                 } else {
-                    if (Status.equals("Sudah Terlayani")) {
-                        JOptionPane.showMessageDialog(rootPane, "Resep sudah tervalidasi ..!!");
-                    } else {
-                        Sequel.meghapus("resep_obat", "no_resep", NoResep);
-                        TeksKosong();
-                        tampil3();
+                    int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin menghapus data?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                    if (reply == JOptionPane.YES_OPTION) {                        
+                        if (Status.equals("Sudah Terlayani")) {
+                            JOptionPane.showMessageDialog(rootPane, "Resep sudah tervalidasi ..!!");
+                        } else {
+                            Sequel.meghapus("resep_obat", "no_resep", NoResep);
+                            TeksKosong();
+                            tampil3();
+                        }
                     }
                 }
             } else if (TabRawatInap.getSelectedIndex() == 1) {
@@ -2242,12 +2257,15 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 } else if (NoRawat.equals("")) {
                     JOptionPane.showMessageDialog(null, "Maaf, Silahkan pilih data resep dokter yang mau divalidasi..!!");
                 } else {
-                    if (Status.equals("Sudah Terlayani")) {
-                        JOptionPane.showMessageDialog(rootPane, "Resep sudah tervalidasi ..!!");
-                    } else {
-                        Sequel.meghapus("resep_pulang", "no_resep", NoResep);
-                        TeksKosong();
-                        tampil5();
+                    int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin menghapus data?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                    if (reply == JOptionPane.YES_OPTION) {                        
+                        if (Status.equals("Sudah Terlayani")) {
+                            JOptionPane.showMessageDialog(rootPane, "Resep sudah tervalidasi ..!!");
+                        } else {
+                            Sequel.meghapus("resep_pulang", "no_resep", NoResep);
+                            TeksKosong();
+                            tampil5();
+                        }
                     }
                 }
             } else if (TabRawatPulang.getSelectedIndex() == 1) {

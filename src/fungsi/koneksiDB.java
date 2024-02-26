@@ -45,10 +45,10 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" + 
-                        "    Version 29.01.2024 [ 1.0.34 ] [Activated] GO KLAIM DIGITAL \n"+
+                        "    Version 26.02.2024 [ 1.0.36 ] [Activated] GO KLAIM DIGITAL \n"+
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai                              \n"+
-                         "                                                                           \n"+
+                        "                                                                           \n"+
                         "    Paripurna * * * * *                                  \n"+
                         "                                                                           \n"+
                         "       SMART , GREEN , AND FRIENDLY HOSPITAL                           \n"+
@@ -57,9 +57,7 @@ public final class koneksiDB {
                         "                                                                       \n"+
                         "                                                                       \n"+
                         "    * Changelog :                                                       \n"+
-                        "       - Surat-surat                         \n"+
-                        "       - Transfer Pasien Ranap                  \n"+
-                        "       - Kunjungan Pasien Ralan & Ranap                  \n");
+                        "       - Log Hasil Radiologi                 \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);
                 try {
@@ -239,8 +237,8 @@ public final class koneksiDB {
         return var;
     }
     
-    public static String UrlAutoUpdate(){
-        try {
+    public static String UrlAutoUpdate(){ 
+       try {
             prop.loadFromXML(new FileInputStream("setting/database.xml"));
             var = "192.168.0.52/updatesimrs";
 //            var = EnkripsiAES.decrypt(prop.getProperty("URLUPDATESISTEM"));
