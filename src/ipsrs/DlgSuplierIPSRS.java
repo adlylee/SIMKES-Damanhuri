@@ -409,6 +409,7 @@ public class DlgSuplierIPSRS extends javax.swing.JDialog {
         FormInput.add(label12);
         label12.setBounds(0, 12, 90, 23);
 
+        Kd.setEditable(false);
         Kd.setName("Kd"); // NOI18N
         Kd.setPreferredSize(new java.awt.Dimension(207, 23));
         Kd.addKeyListener(new java.awt.event.KeyAdapter() {

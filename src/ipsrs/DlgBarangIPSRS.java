@@ -492,6 +492,7 @@ public final class DlgBarangIPSRS extends javax.swing.JDialog {
         FormInput.add(label1);
         label1.setBounds(0, 10, 90, 23);
 
+        kode_brng.setEditable(false);
         kode_brng.setName("kode_brng"); // NOI18N
         kode_brng.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -526,6 +527,7 @@ public final class DlgBarangIPSRS extends javax.swing.JDialog {
         FormInput.add(label19);
         label19.setBounds(0, 70, 90, 23);
 
+        kode_sat.setEditable(false);
         kode_sat.setName("kode_sat"); // NOI18N
         kode_sat.setPreferredSize(new java.awt.Dimension(207, 23));
         kode_sat.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -587,6 +589,7 @@ public final class DlgBarangIPSRS extends javax.swing.JDialog {
         FormInput.add(label2);
         label2.setBounds(450, 10, 90, 23);
 
+        kdjenis.setEditable(false);
         kdjenis.setName("kdjenis"); // NOI18N
         kdjenis.setPreferredSize(new java.awt.Dimension(207, 23));
         kdjenis.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -972,6 +975,7 @@ private void btnSatuanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     public void tampil() {
         Valid.tabelKosong(tabMode);
         try{
+            if (var.getkode().equals("Admin Utama")) {
             ps=koneksi.prepareStatement(
                         "select ipsrsbarang.kode_brng, ipsrsbarang.nama_brng, kodesatuan.satuan, ipsrsjenisbarang.nm_jenis, "+
                         "ipsrsbarang.stok,ipsrsbarang.harga from ipsrsbarang inner join kodesatuan inner join ipsrsjenisbarang "+
@@ -979,7 +983,18 @@ private void btnSatuanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                         "where ipsrsbarang.status='1' and ipsrsbarang.kode_brng like ? "+
                         "or ipsrsbarang.status='1' and ipsrsbarang.nama_brng like ? "+
                         "or ipsrsbarang.status='1' and kodesatuan.satuan like ? "+
-                        "or ipsrsbarang.status='1' and ipsrsjenisbarang.nm_jenis like ? order by ipsrsbarang.kode_brng");
+                        "or ipsrsbarang.status='1' and ipsrsjenisbarang.nm_jenis like ? order by ipsrsbarang.kode_brng");                
+            } else {
+                String jenis = Sequel.buangChar(Sequel.cariStringArray("SELECT kd_jenis FROM ipsrs_setpj WHERE nik=" + var.getkode() + " and status='1'"));
+                ps = koneksi.prepareStatement(
+                        "select ipsrsbarang.kode_brng, ipsrsbarang.nama_brng, kodesatuan.satuan, ipsrsjenisbarang.nm_jenis, "
+                        + "ipsrsbarang.stok,ipsrsbarang.harga from ipsrsbarang inner join kodesatuan inner join ipsrsjenisbarang "
+                        + "on ipsrsbarang.kode_sat=kodesatuan.kode_sat and ipsrsbarang.jenis=ipsrsjenisbarang.kd_jenis "
+                        + "where ipsrsbarang.status='1' and ipsrsbarang.jenis IN (" + jenis + ") AND  (ipsrsbarang.kode_brng like ? "
+                        + "or ipsrsbarang.nama_brng like ? "
+                        + "or kodesatuan.satuan like ? "
+                        + "or ipsrsjenisbarang.nm_jenis like ?) order by ipsrsbarang.kode_brng");
+            }
             try {
                 ps.setString(1,"%"+TCari.getText().trim()+"%");
                 ps.setString(2,"%"+TCari.getText().trim()+"%");

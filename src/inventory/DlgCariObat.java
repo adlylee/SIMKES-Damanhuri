@@ -50,6 +50,7 @@ import inventory.DlgPaketObatMaster;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import static java.time.temporal.ChronoUnit.DAYS;
 
 /**
  *
@@ -1982,10 +1983,22 @@ public final class DlgCariObat extends javax.swing.JDialog {
     }//GEN-LAST:event_BtnTambahActionPerformed
 
 private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpanActionPerformed
+    DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    LocalDate today = LocalDate.now();
+    LocalDate dateAfter = LocalDate.parse(Valid.SetTgl(DTPTgl.getSelectedItem() + ""));
+    long daysBetween = DAYS.between(today, dateAfter);
+    int day = 0;
+    long days = new Long(day);
+    int ob = Long.compare(days, daysBetween);
+    System.out.println("ob "+ob);
+        System.out.println("today "+today);
+        System.out.println("dateAfter "+dateAfter);
     if (TNoRw.getText().trim().equals("")) {
         Valid.textKosong(TCari, "Data");
     } else if (kdgudang.getText().equals("")) {
         Valid.textKosong(TCari, "Lokasi");
+    } else if (ob == -1) {//added
+        JOptionPane.showMessageDialog(null, "Maaf, GAGAL validasi karena tanggal dan jam tidak sesuai.\nSilakan restart SIMRS..!!!");
     } else {
         int reply = JOptionPane.showConfirmDialog(rootPane, "Eeiiiiiits, udah bener belum data yang mau disimpan..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {

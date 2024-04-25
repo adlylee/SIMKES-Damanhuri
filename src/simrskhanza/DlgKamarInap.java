@@ -1075,6 +1075,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         jLabel55 = new widget.Label();
         chkSPMBiayaObat = new widget.CekBox();
         chkTransferPasien = new widget.CekBox();
+        chkCover = new widget.CekBox();
         internalFrame1 = new widget.InternalFrame();
         PanelCariUtama = new javax.swing.JPanel();
         panelGlass10 = new widget.panelisi();
@@ -1293,6 +1294,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         internalFrame2.add(jLabel11);
         jLabel11.setBounds(173, 145, 15, 23);
 
+        TJmlHari.setEditable(false);
         TJmlHari.setText("0");
         TJmlHari.setHighlighter(null);
         TJmlHari.setName("TJmlHari"); // NOI18N
@@ -1378,6 +1380,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         internalFrame2.add(jLabel16);
         jLabel16.setBounds(0, 145, 72, 23);
 
+        TTarif.setEditable(false);
         TTarif.setText("0");
         TTarif.setHighlighter(null);
         TTarif.setName("TTarif"); // NOI18N
@@ -3638,6 +3641,19 @@ public class DlgKamarInap extends javax.swing.JDialog {
         FormInput13.add(chkTransferPasien);
         chkTransferPasien.setBounds(70, 110, 250, 23);
 
+        chkCover.setBorder(null);
+        chkCover.setText("Cover Rekam Medis");
+        chkCover.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        chkCover.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        chkCover.setName("chkCover"); // NOI18N
+        chkCover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkCoverActionPerformed(evt);
+            }
+        });
+        FormInput13.add(chkCover);
+        chkCover.setBounds(70, 230, 250, 23);
+
         internalFrame10.add(FormInput13, java.awt.BorderLayout.CENTER);
 
         WindowCetakBerkas.getContentPane().add(internalFrame10, java.awt.BorderLayout.CENTER);
@@ -3899,7 +3915,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         R2.setPreferredSize(new java.awt.Dimension(90, 23));
         panelCari.add(R2);
 
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-01-2024" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-04-2024" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -3921,7 +3937,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         jLabel22.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel22);
 
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-01-2024" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-04-2024" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -3947,7 +3963,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         R3.setPreferredSize(new java.awt.Dimension(75, 23));
         panelCari.add(R3);
 
-        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-01-2024" }));
+        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-04-2024" }));
         DTPCari3.setDisplayFormat("dd-MM-yyyy");
         DTPCari3.setName("DTPCari3"); // NOI18N
         DTPCari3.setOpaque(false);
@@ -3969,7 +3985,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         jLabel25.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel25);
 
-        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-01-2024" }));
+        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-04-2024" }));
         DTPCari4.setDisplayFormat("dd-MM-yyyy");
         DTPCari4.setName("DTPCari4"); // NOI18N
         DTPCari4.setOpaque(false);
@@ -4480,6 +4496,8 @@ public class DlgKamarInap extends javax.swing.JDialog {
             Valid.textKosong(norawat, "pasien");
         } else if (TKdBngsal.getText().trim().equals("")) {
             Valid.textKosong(kdkamar, "kamar");
+        } else if (diagnosaawal.getText().trim().equals("")) {
+            Valid.textKosong(diagnosaawal, "Diagnosa awal");
         } else {
             if (norawat.isEditable() == true) {
                 switch (TSttsKamar.getText().trim()) {
@@ -4519,6 +4537,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
                         dlgPasienMati.setLocationRelativeTo(internalFrame1);
                         dlgPasienMati.emptTeks();
                         dlgPasienMati.setNoRm(tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 1).toString());
+                        dlgPasienMati.setNoRw(tbKamIn.getValueAt(tbKamIn.getSelectedRow(), 0).toString());
                         dlgPasienMati.isCek();
                         dlgPasienMati.setVisible(true);
                     } else if (cmbStatus.getSelectedItem().equals("Rujuk")) {
@@ -8912,14 +8931,11 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
             param.put("tglreg", Sequel.cariIsi("SELECT DATE_FORMAT(tgl_registrasi,'%d-%m-%Y') FROM reg_periksa WHERE no_rawat='" + TNoRw1.getText() + "'"));
             param.put("jamreg", Sequel.cariIsi("SELECT jam_reg FROM reg_periksa WHERE no_rawat='" + TNoRw1.getText() + "'"));
             if (chkIdentitasPasien.isSelected()) {
-                Valid.MyReport("rptRM1.jrxml", "report", "::[ Identitas Pasien ]::", "select pasien.no_rkm_medis, pasien.nm_pasien, pasien.no_ktp, pasien.jk, "
-                    + "pasien.tmp_lahir, pasien.tgl_lahir,pasien.nm_ibu, concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab) as alamat, pasien.gol_darah, pasien.pekerjaan,"
-                    + "pasien.stts_nikah,pasien.agama,pasien.tgl_daftar,pasien.no_tlp,pasien.umur, pasien.no_peserta,"
-                    + "pasien.pnd, pasien.keluarga, pasien.namakeluarga,penjab.png_jawab,pasien.pekerjaanpj, "
-                    + "concat(pasien.alamatpj,', ',pasien.kelurahanpj,', ',pasien.kecamatanpj,', ',pasien.kabupatenpj) as alamatpj, suku_bangsa.nama_suku_bangsa from pasien "
-                    + "inner join suku_bangsa inner join kelurahan inner join kecamatan inner join kabupaten "
-                    + "inner join penjab on pasien.kd_pj=penjab.kd_pj and pasien.kd_kel=kelurahan.kd_kel "
-                    + "and pasien.kd_kec=kecamatan.kd_kec and pasien.kd_kab=kabupaten.kd_kab and suku_bangsa.id=pasien.suku_bangsa where pasien.no_rkm_medis='" + TNoRM1.getText() + "' ", param);
+                Valid.MyReport("rptRM1.jrxml", "report", "::[ Identitas Pasien ]::", isReport(TNoRM1.getText()) , param);
+                this.setCursor(Cursor.getDefaultCursor());
+            }
+            if (chkCover.isSelected()) {
+                Valid.MyReport("rptCoverMap.jrxml", "report", "::[ Cover Rekam Medis ]::", isReport(TNoRM1.getText()), param);
                 this.setCursor(Cursor.getDefaultCursor());
             }
             if (chkIdentifikasiBayi.isSelected()) {
@@ -9280,6 +9296,10 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
         }
     }//GEN-LAST:event_MnGelang5ActionPerformed
 
+    private void chkCoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkCoverActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chkCoverActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -9476,6 +9496,7 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
     private widget.Button btnReg;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
+    private widget.CekBox chkCover;
     private widget.CekBox chkIdentifikasiBayi;
     private widget.CekBox chkIdentitasPasien;
     private widget.CekBox chkRM23;
@@ -10051,5 +10072,17 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
             billing.beriobat.dlgobt.tampil();
             billing.beriobat.dlgobt.setVisible(true);
         }
+    }
+    
+    private String isReport(String value) {
+        String query = "select pasien.no_rkm_medis, pasien.nm_pasien, pasien.no_ktp, pasien.jk, "
+                + "pasien.tmp_lahir, pasien.tgl_lahir,pasien.nm_ibu, concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab,', ',propinsi.nm_prop) as alamat, pasien.gol_darah, pasien.pekerjaan,"
+                + "pasien.stts_nikah,pasien.agama,pasien.tgl_daftar,pasien.no_tlp,pasien.umur, pasien.no_peserta,"
+                + "pasien.pnd, pasien.keluarga, pasien.namakeluarga,penjab.png_jawab,pasien.pekerjaanpj, "
+                + "concat(pasien.alamatpj,', ',pasien.kelurahanpj,', ',pasien.kecamatanpj,', ',pasien.kabupatenpj) as alamatpj, suku_bangsa.nama_suku_bangsa from pasien "
+                + "inner join suku_bangsa inner join kelurahan inner join kecamatan inner join kabupaten "
+                + "inner join penjab inner join propinsi on pasien.kd_prop=propinsi.kd_prop and pasien.kd_pj=penjab.kd_pj and pasien.kd_kel=kelurahan.kd_kel "
+                + "and pasien.kd_kec=kecamatan.kd_kec and pasien.kd_kab=kabupaten.kd_kab and suku_bangsa.id=pasien.suku_bangsa where pasien.no_rkm_medis='" + value + "' ";
+        return query;
     }
 }

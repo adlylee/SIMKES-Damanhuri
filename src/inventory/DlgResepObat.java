@@ -283,6 +283,7 @@ public final class DlgResepObat extends javax.swing.JDialog {
         KdDokter.setDocument(new batasInput((byte) 20).getKata(KdDokter));
         NoResep.setDocument(new batasInput((byte) 14).getKata(NoResep));
         TCari.setDocument(new batasInput((byte) 100).getKata(TCari));
+        noAntri.setDocument(new batasInput((byte) 8).getOnlyAngka(noAntri));
         if (koneksiDB.cariCepat().equals("aktif")) {
             TCari.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
                 @Override

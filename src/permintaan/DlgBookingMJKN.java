@@ -5,6 +5,7 @@ import fungsi.batasInput;
 import fungsi.koneksiDB;
 import fungsi.sekuel;
 import fungsi.validasi;
+import fungsi.var;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
@@ -32,12 +33,12 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
     private Connection koneksi = koneksiDB.condb();
     private sekuel Sequel = new sekuel();
     private validasi Valid = new validasi();
-    private PreparedStatement ps;
-    private ResultSet rs;
+    private PreparedStatement ps,ps2;
+    private ResultSet rs,rs2;
     private int i = 0;
     private DlgCariDokter dokter = new DlgCariDokter(null, false);
     private DlgCariPoli poli=new DlgCariPoli(null,false);
-    private String norm="",tglperiksa="",noreg="";    
+    private String norm="",tglperiksa="",noreg="", no_rkm_medis="";    
     /**
      * Creates new form DlgPemberianInfus
      *
@@ -553,8 +554,14 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
 
 
     private void BtnSimpan7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpan7ActionPerformed
-        Sequel.mengedit3("booking_registrasi", "no_rkm_medis=? and tanggal_periksa=?", "kd_dokter=?,kd_poli=?,no_reg=?", 5, new String[]{
-            KdDokter1.getText(), KdPoli4.getText(), NoReg.getText(), tbObat.getValueAt(tbObat.getSelectedRow(), 2).toString(), tbObat.getValueAt(tbObat.getSelectedRow(), 4).toString()});
+        if (tbObat.getValueAt(tbObat.getSelectedRow(), 0).toString().equals("")) {
+            Sequel.mengedit3("reg_periksa", "no_rkm_medis=? and tgl_registrasi=?", "kd_dokter=?,kd_poli=?", 4, new String[]{
+                KdDokter1.getText(), KdPoli4.getText(), tbObat.getValueAt(tbObat.getSelectedRow(), 2).toString(), tbObat.getValueAt(tbObat.getSelectedRow(), 4).toString()});
+        }
+        if (!tbObat.getValueAt(tbObat.getSelectedRow(), 0).toString().equals("")) {
+            Sequel.mengedit3("booking_registrasi", "no_rkm_medis=? and tanggal_periksa=?", "kd_dokter=?,kd_poli=?,no_reg=?", 5, new String[]{
+                KdDokter1.getText(), KdPoli4.getText(), NoReg.getText(), tbObat.getValueAt(tbObat.getSelectedRow(), 2).toString(), tbObat.getValueAt(tbObat.getSelectedRow(), 4).toString()});
+        }
         Sequel.mengedit3("reg_periksa", "no_rkm_medis=? and tgl_registrasi=?", "kd_dokter=?,kd_poli=?,no_reg=?", 5, new String[]{
             KdDokter1.getText(), KdPoli4.getText(), NoReg.getText(), tbObat.getValueAt(tbObat.getSelectedRow(), 2).toString(), tbObat.getValueAt(tbObat.getSelectedRow(), 4).toString()});
         JOptionPane.showMessageDialog(null, "Berhasil ubah jadwal..!!!");
@@ -659,26 +666,29 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
 
     private void tampil() {
         Valid.tabelKosong(tabMode);
+        no_rkm_medis="";
         try {
+            no_rkm_medis = Sequel.buangChar(Sequel.cariStringArray("SELECT mlite_antrian_referensi.no_rkm_medis FROM mlite_antrian_referensi INNER JOIN booking_registrasi ON mlite_antrian_referensi.no_rkm_medis=booking_registrasi.no_rkm_medis "
+                    + "AND mlite_antrian_referensi.tanggal_periksa=booking_registrasi.tanggal_periksa WHERE mlite_antrian_referensi.tanggal_periksa BETWEEN '" + Valid.SetTgl(DTPCari1.getSelectedItem() + "") + "' and '" + Valid.SetTgl(DTPCari2.getSelectedItem() + "") + "' AND mlite_antrian_referensi.keterangan='Via MJKN'"));
             ps = koneksi.prepareStatement(
                     "select booking_registrasi.tanggal_booking, booking_registrasi.jam_booking, booking_registrasi.no_rkm_medis, pasien.nm_pasien, booking_registrasi.tanggal_periksa, "
                     + "booking_registrasi.kd_dokter, dokter.nm_dokter, booking_registrasi.kd_poli, poliklinik.nm_poli, booking_registrasi.no_reg, booking_registrasi.status "
-                    + "from mlite_antrian_referensi inner join booking_registrasi inner join pasien inner join poliklinik "
+                    + "from mlite_antrian_referensi inner join booking_registrasi inner join pasien "
                     + "on mlite_antrian_referensi.tanggal_periksa=booking_registrasi.tanggal_periksa and mlite_antrian_referensi.no_rkm_medis=booking_registrasi.no_rkm_medis and "
-                    + "booking_registrasi.no_rkm_medis=pasien.no_rkm_medis and booking_registrasi.kd_poli=poliklinik.kd_poli left join dokter on booking_registrasi.kd_dokter=dokter.kd_dokter "
+                    + "booking_registrasi.no_rkm_medis=pasien.no_rkm_medis left join poliklinik ON booking_registrasi.kd_poli=poliklinik.kd_poli left join dokter on booking_registrasi.kd_dokter=dokter.kd_dokter "
                     + "where mlite_antrian_referensi.keterangan='Via MJKN' and mlite_antrian_referensi.tanggal_periksa between ? and ? "
                     + "and (mlite_antrian_referensi.no_rkm_medis like ? or "
                     + "pasien.nm_pasien like ?)");
             try {
                 ps.setString(1, Valid.SetTgl(DTPCari1.getSelectedItem() + ""));
                 ps.setString(2, Valid.SetTgl(DTPCari2.getSelectedItem() + ""));
-                ps.setString(3, "%"+TCari.getText().trim()+"%");
-                ps.setString(4, "%"+TCari.getText().trim()+"%");
+                ps.setString(3, "%" + TCari.getText().trim() + "%");
+                ps.setString(4, "%" + TCari.getText().trim() + "%");
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     tabMode.addRow(new Object[]{
-                        rs.getString("tanggal_booking"), rs.getString("jam_booking"), rs.getString("no_rkm_medis"), rs.getString("nm_pasien"),rs.getString("tanggal_periksa"), 
-                        rs.getString("kd_dokter"), rs.getString("nm_dokter"),rs.getString("kd_poli"), rs.getString("nm_poli"),rs.getString("no_reg"),rs.getString("status")
+                        rs.getString("tanggal_booking"), rs.getString("jam_booking"), rs.getString("no_rkm_medis"), rs.getString("nm_pasien"), rs.getString("tanggal_periksa"),
+                        rs.getString("kd_dokter"), rs.getString("nm_dokter"), rs.getString("kd_poli"), rs.getString("nm_poli"), rs.getString("no_reg"), rs.getString("status")
                     });
                 }
             } catch (Exception e) {
@@ -689,6 +699,34 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
                 }
                 if (ps != null) {
                     ps.close();
+                }
+            }
+
+            ps2 = koneksi.prepareStatement(
+                    "select reg_periksa.no_rkm_medis, pasien.nm_pasien, reg_periksa.tgl_registrasi,"
+                    + "reg_periksa.kd_dokter, dokter.nm_dokter, reg_periksa.kd_poli, poliklinik.nm_poli, reg_periksa.no_reg "
+                    + "from reg_periksa inner join mlite_antrian_referensi inner join pasien  "
+                    + "on reg_periksa.tgl_registrasi=mlite_antrian_referensi.tanggal_periksa and reg_periksa.no_rkm_medis=mlite_antrian_referensi.no_rkm_medis and "
+                    + "reg_periksa.no_rkm_medis=pasien.no_rkm_medis left join poliklinik on reg_periksa.kd_poli=poliklinik.kd_poli left join dokter on reg_periksa.kd_dokter=dokter.kd_dokter "
+                    + "where mlite_antrian_referensi.keterangan='Via MJKN' and mlite_antrian_referensi.tanggal_periksa between ? and ? AND mlite_antrian_referensi.no_rkm_medis NOT IN ("+no_rkm_medis+")");
+            try {
+                ps2.setString(1, Valid.SetTgl(DTPCari1.getSelectedItem() + ""));
+                ps2.setString(2, Valid.SetTgl(DTPCari2.getSelectedItem() + ""));
+                rs2 = ps2.executeQuery();
+                while (rs2.next()) {
+                    tabMode.addRow(new Object[]{
+                        "", "", rs2.getString("no_rkm_medis"), rs2.getString("nm_pasien"), rs2.getString("tgl_registrasi"),
+                        rs2.getString("kd_dokter"), rs2.getString("nm_dokter"), rs2.getString("kd_poli"), rs2.getString("nm_poli"), rs2.getString("no_reg"), ""
+                    });
+                }
+            } catch (Exception e) {
+                System.out.println("Notif ps2 : " + e);
+            } finally {
+                if (rs2 != null) {
+                    rs2.close();
+                }
+                if (ps2 != null) {
+                    ps2.close();
                 }
             }
         } catch (Exception e) {

@@ -1626,13 +1626,13 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 response = response.path("noSuratKontrol");
                 respon = response.asText();
                 System.out.println("No Surat Kontrol : " + respon);
-                if (Sequel.menyimpantf("bridging_surat_kontrol_bpjs", "?,?,?,?,?,?,?,?", "No.Surat", 8, new String[]{
-                    nosep, tanggalsurat, respon, tanggalkontrol, kddokter, nmdokter, kdpoli, nmpoli
-                }) == true) {
-                    emptTeks();
-                    tampil();
-                    return respon;
-                }
+                    if (Sequel.menyimpantf("bridging_surat_kontrol_bpjs", "?,?,?,?,?,?,?,?", "No.Surat", 8, new String[]{
+                        nosep, tanggalsurat, respon, tanggalkontrol, kddokter, nmdokter, kdpoli, nmpoli
+                    }) == true) {
+                        emptTeks();
+                        tampil();
+                        return respon;
+                    }
             } else {
                     JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
                     return nameNode.path("code").asText();                
@@ -1678,7 +1678,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 String res = api.decrypt(res1.asText());
                 String lz = api.lzDecrypt(res);
                 response = mapper.readTree(lz);
-                nosuratedit = response.asText();
+                nosuratedit = response.asText();  
                 if (Sequel.mengedittf("bridging_surat_kontrol_bpjs", "no_surat=?", "tgl_surat=?,tgl_rencana=?,kd_dokter_bpjs=?,nm_dokter_bpjs=?,kd_poli_bpjs=?,nm_poli_bpjs=?", 7, new String[]{
                     tglsurat, tglkontrol, kddokter, nmdokter, kdpoli, nmpoli, nosurat
                 }) == true) {
@@ -1853,5 +1853,79 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     public void setTanggal() {
         R2.setSelected(true);
     }
+    
+    public void isTampil (){
+        tampil();
+    }
+    
+     public String setNoSurat2(String nosurat) {//booking
+        NoSurat.setText(nosurat);
+        try {
+            return bodyWithDeleteRequest3();
+        } catch (Exception e) {
+            return "";
+        }
+    }
+    
+    public String bodyWithDeleteRequest3() throws Exception {
+        String notif = "";
+        RestTemplate restTemplate = new RestTemplate();
+        SSLContext sslContext = SSLContext.getInstance("SSL");
+        javax.net.ssl.TrustManager[] trustManagers = {
+            new X509TrustManager() {
+                public X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
 
+                public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+                }
+
+                public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+                }
+            }
+        };
+        sslContext.init(null, trustManagers, new SecureRandom());
+        SSLSocketFactory sslFactory = new SSLSocketFactory(sslContext, SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+        Scheme scheme = new Scheme("https", 443, sslFactory);
+
+        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory() {
+            @Override
+            protected HttpUriRequest createHttpUriRequest(HttpMethod httpMethod, URI uri) {
+                if (HttpMethod.DELETE == httpMethod) {
+                    return new HttpEntityEnclosingDeleteRequest(uri);
+                }
+                return super.createHttpUriRequest(httpMethod, uri);
+            }
+        };
+        factory.getHttpClient().getConnectionManager().getSchemeRegistry().register(scheme);
+        restTemplate.setRequestFactory(factory);
+
+        try {
+            headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+            headers.add("X-Cons-ID", koneksiDB.ConsIdBpjs());
+            headers.add("X-Timestamp", String.valueOf(api.GetUTCdatetimeAsString()));
+            headers.add("X-Signature", api.getHmac());
+            headers.add("user_key", koneksiDB.UserKeyBpjs());
+            URL = link + "/RencanaKontrol/Delete";
+            requestJson = "{\"request\":{\"t_suratkontrol\":{\"noSuratKontrol\":\"" +NoSurat.getText() + "\",\"user\":\"" + user + "\"}}}";
+            requestEntity = new HttpEntity(requestJson, headers);
+            root = mapper.readTree(restTemplate.exchange(URL, HttpMethod.DELETE, requestEntity, String.class).getBody());
+            nameNode = root.path("metaData");
+            System.out.println("code : " + nameNode.path("code").asText());
+            System.out.println("message : " + nameNode.path("message").asText());
+//            JsonNode res1 = root.path("response");
+//            String res = api.decrypt(res1.asText());
+//            String lz = api.lzDecrypt(res);
+//            response = mapper.readTree(lz);
+            notif = nameNode.path("code").asText();            
+        } catch (Exception e) {
+            System.out.println("Notif : " + e);
+            if (e.toString().contains("UnknownHostException")) {
+                JOptionPane.showMessageDialog(null, "Koneksi ke server BPJS terputus...!");
+            }
+            return notif;
+        }
+        return notif;
+    }     
 }

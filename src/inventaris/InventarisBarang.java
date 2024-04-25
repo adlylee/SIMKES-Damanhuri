@@ -579,6 +579,7 @@ public final class InventarisBarang extends javax.swing.JDialog {
         FormInput.add(label1);
         label1.setBounds(0, 10, 90, 23);
 
+        kode_barang.setEditable(false);
         kode_barang.setName("kode_barang"); // NOI18N
         kode_barang.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {

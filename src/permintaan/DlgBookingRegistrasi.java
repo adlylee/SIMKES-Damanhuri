@@ -1,5 +1,6 @@
 package permintaan;
 
+import bridging.BPJSSuratKontrol;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fungsi.WarnaTable;
@@ -37,6 +38,9 @@ import simrskhanza.DlgCariPoli2;
 import simrskhanza.DlgPasien;
 import simrskhanza.DlgPenanggungJawab;
 import bridging.BridgingWA;
+import com.google.gson.JsonObject;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -61,7 +65,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
     private DlgCariPoli2 poli5=new DlgCariPoli2(null,false);
     private DlgCariPoli2 poli6=new DlgCariPoli2(null,false);
     private DlgPasien pasien=new DlgPasien(null,false);
-    private String aktifjadwal="",URUTNOREG="",status="",no_rawat="",umur="",sttsumur="",noreg="";
+    private String aktifjadwal="",URUTNOREG="",status="",no_rawat="",umur="",sttsumur="",noreg="",Alasan2="", Rtl2="",Pj="";
     private JsonNode root, nameNode ,response;
     private ObjectMapper mapper = new ObjectMapper();
     private HttpHeaders headers ;
@@ -71,7 +75,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
     private DlgCariDokter2 dokter4 = new DlgCariDokter2(null, false);
     private DlgCariPoli poli7 = new DlgCariPoli(null, false);
     private DlgCariPoli2 poli8 = new DlgCariPoli2(null, false);
-    
+    private BPJSSuratKontrol kontrol = new BPJSSuratKontrol(null, false);//added
     
 
     /** Creates new form DlgPemberianInfus
@@ -951,7 +955,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         jLabel17.setBounds(0, 30, 70, 23);
 
         TanggalPeriksa1.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalPeriksa1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-02-2024 08:46:57" }));
+        TanggalPeriksa1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-04-2024 08:29:13" }));
         TanggalPeriksa1.setDisplayFormat("dd-MM-yyyy hh:mm:ss");
         TanggalPeriksa1.setName("TanggalPeriksa1"); // NOI18N
         TanggalPeriksa1.setOpaque(false);
@@ -1266,7 +1270,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         R2.setPreferredSize(new java.awt.Dimension(125, 23));
         panelCari.add(R2);
 
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-02-2024" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-04-2024" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -1289,7 +1293,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         jLabel22.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel22);
 
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-02-2024" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-04-2024" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -1311,7 +1315,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         R3.setPreferredSize(new java.awt.Dimension(135, 23));
         panelCari.add(R3);
 
-        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-02-2024" }));
+        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-04-2024" }));
         DTPCari3.setDisplayFormat("dd-MM-yyyy");
         DTPCari3.setName("DTPCari3"); // NOI18N
         DTPCari3.setOpaque(false);
@@ -1334,7 +1338,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         jLabel25.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel25);
 
-        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-02-2024" }));
+        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-04-2024" }));
         DTPCari4.setDisplayFormat("dd-MM-yyyy");
         DTPCari4.setName("DTPCari4"); // NOI18N
         DTPCari4.setOpaque(false);
@@ -1418,7 +1422,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         TPasien.setBounds(151, 10, 311, 23);
 
         TanggalBooking.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalBooking.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-02-2024 08:46:57" }));
+        TanggalBooking.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-04-2024 08:29:13" }));
         TanggalBooking.setDisplayFormat("dd-MM-yyyy hh:mm:ss");
         TanggalBooking.setName("TanggalBooking"); // NOI18N
         TanggalBooking.setOpaque(false);
@@ -1498,7 +1502,7 @@ public class DlgBookingRegistrasi extends javax.swing.JDialog {
         jLabel14.setBounds(506, 40, 70, 23);
 
         TanggalPeriksa.setForeground(new java.awt.Color(50, 70, 50));
-        TanggalPeriksa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-02-2024 08:46:57" }));
+        TanggalPeriksa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16-04-2024 08:29:13" }));
         TanggalPeriksa.setDisplayFormat("dd-MM-yyyy hh:mm:ss");
         TanggalPeriksa.setName("TanggalPeriksa"); // NOI18N
         TanggalPeriksa.setOpaque(false);
@@ -2165,8 +2169,18 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }//GEN-LAST:event_BtnCloseIn7ActionPerformed
 
     private void BtnSimpan7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpan7ActionPerformed
+        String nomer = "";
+        String KdPoli1 = Sequel.cariIsi("select kd_poli_bpjs from maping_poli_bpjs where kd_poli_rs=?", KdPoli4.getText());
+        String NmPoli1 = Sequel.cariIsi("select nm_poli_bpjs from maping_poli_bpjs where kd_poli_bpjs=?", KdPoli1);
+        String KdDokter = Sequel.cariIsi("select kd_dokter_bpjs from maping_dokter_dpjpvclaim where kd_dokter=?", KdDokter1.getText());
+        String NmDokter = Sequel.cariIsi("select nm_dokter_bpjs from maping_dokter_dpjpvclaim where kd_dokter=?", KdDokter1.getText());
+
         if (tabMode.getRowCount() == tbObat.getRowCount() && TCari.equals("")) {
             JOptionPane.showMessageDialog(null, "Jangan dipilih semua");
+        } else if (KdPoli4.getText().trim().equals("") || NmPoli4.getText().trim().equals("")) {
+            Valid.textKosong(KdPoli4, "Poli");
+        } else if (KdDokter1.getText().trim().equals("") || NmDokter1.getText().trim().equals("")) {
+            Valid.textKosong(KdDokter1, "Dokter");
         } else {
             int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin menyimpan data...??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
@@ -2174,15 +2188,44 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                     if (tbObat.getValueAt(i, 0).toString().equals("true")) {
                         NoReg1.setText("");
                         isNomer2();
-                        if (Sequel.mengedittf("booking_registrasi", "no_rkm_medis=? and tanggal_periksa=?", "kd_dokter=?,kd_poli=?,tanggal_periksa=?, no_reg=?", 6,
-                                new String[]{
-                                    KdDokter1.getText(), KdPoli4.getText(), Valid.SetTgl(TanggalPeriksa1.getSelectedItem() + ""), NoReg1.getText(),
-                                    tbObat.getValueAt(i, 3).toString(), tbObat.getValueAt(i, 5).toString()
-                                }) == true) {
-                            Sequel.mengedit3("skdp_bpjs", "no_rkm_medis=? and tanggal_datang=?", "tanggal_datang=?,kd_dokter=?", 4, new String[]{
-                                Valid.SetTgl(TanggalPeriksa1.getSelectedItem() + ""), KdDokter1.getText(),
-                                tbObat.getValueAt(i, 3).toString(), tbObat.getValueAt(i, 5).toString()
-                            });
+                        cekSKDP();//get nosurat nosep untuk edit surkon                        
+//                        String surkonSEP = Sequel.cariIsi("SELECT no_sep FROM bridging_surat_kontrol_bpjs WHERE no_sep='" + Rtl2 + "'");
+                        String surkonSurat = Sequel.cariIsi("SELECT no_surat FROM bridging_surat_kontrol_bpjs WHERE no_sep='" + Rtl2 + "'");                        
+                        String cekCrontab = Sequel.cariIsi("SELECT no_sep FROM booking_cronbot WHERE no_sep='" + Rtl2 + "'");
+                        
+                        System.out.println(tbObat.getValueAt(i, 3).toString() + " sep: " + Rtl2 + " nosurat: " + surkonSurat);
+                        if (Pj.equals("BPJ") || Pj.equals("A02")) {
+                            if (!surkonSurat.isEmpty()) {
+                                if (surkonSurat.length() == 19) {
+                                    nomer = kontrol.setNoSurat2(surkonSurat);
+                                    if (nomer.equals("200")) {
+                                        if (cekCrontab.isEmpty()) {
+                                            isCrontab(Rtl2);
+                                            isSimpan();
+                                        }
+                                        if (!cekCrontab.isEmpty()) {
+                                            isEditCrontab(Rtl2, surkonSurat);
+                                            isSimpan();
+                                        }
+                                    }
+                                    if (nomer.equals("401")) {
+                                        String bridgSEP = Sequel.cariIsi("SELECT no_sep FROM bridging_sep WHERE no_sep='" + Rtl2 + "'");
+                                        if (!bridgSEP.isEmpty()) {
+                                            isSimpan();
+                                        }
+                                    }
+                                }
+                                if (surkonSurat.length() < 19) {
+                                    isSimpan();
+                                }
+                            }
+                            if (surkonSurat.isEmpty()) {
+                                isEditCrontab(Rtl2, surkonSurat);
+                                isSimpan();
+                            }
+                        }
+                        if (!Pj.equals("BPJ") || !Pj.equals("A02")) {
+                            isSimpan();
                         }
                     }
                 }
@@ -2593,6 +2636,88 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         jml = tbObat.getRowCount();
         for (i = 0; i < jml; i++) {
             tbObat.setValueAt(true, i, 0);
+        }
+    }
+    
+    public void cekSKDP() {
+        try {
+            ps = koneksi.prepareStatement("SELECT rtl2,alasan2,kd_pj FROM skdp_bpjs INNER JOIN booking_registrasi ON skdp_bpjs.no_rkm_medis=booking_registrasi.no_rkm_medis AND skdp_bpjs.tanggal_datang=booking_registrasi.tanggal_periksa "
+                    + " AND booking_registrasi.no_rkm_medis=? AND booking_registrasi.tanggal_periksa=? LIMIT 1");
+            Rtl2 = "";//sep
+            Alasan2 = "";//nosurat
+            Pj = "";
+            try {
+                ps.setString(1, tbObat.getValueAt(i, 3).toString());
+                ps.setString(2, tbObat.getValueAt(i, 5).toString());
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    Rtl2 = rs.getString("rtl2");
+                    Alasan2 = rs.getString("alasan2");
+                    Pj = rs.getString("kd_pj");
+                }
+            } catch (Exception e) {
+                System.out.println("Notifikasi cekSKDP() : " + e);
+            } finally {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Notifikasi cekSKDP() 2 : " + e);
+        }
+    }
+    
+    private void isSimpan(){
+        if (Sequel.mengedittf("booking_registrasi", "no_rkm_medis=? and tanggal_periksa=?", "kd_dokter=?,kd_poli=?,tanggal_periksa=?, no_reg=?", 6,
+                new String[]{
+                    KdDokter1.getText(), KdPoli4.getText(), Valid.SetTgl(TanggalPeriksa1.getSelectedItem() + ""), NoReg1.getText(),
+                    tbObat.getValueAt(i, 3).toString(), tbObat.getValueAt(i, 5).toString()
+                }) == true) {
+            Sequel.mengedit3("skdp_bpjs", "no_rkm_medis=? and tanggal_datang=?", "tanggal_datang=?,kd_dokter=?", 4, new String[]{
+                Valid.SetTgl(TanggalPeriksa1.getSelectedItem() + ""), KdDokter1.getText(),
+                tbObat.getValueAt(i, 3).toString(), tbObat.getValueAt(i, 5).toString()
+            });
+        }
+    }
+    
+    private void isCrontab(String sep) {
+        try {
+            ps = koneksi.prepareStatement("SELECT * FROM bridging_surat_kontrol_bpjs WHERE no_sep='" + sep + "'");
+            rs = ps.executeQuery();
+            if (rs.next()) {                    
+                if (Sequel.menyimpantf("booking_cronbot", "?,?,?,?,?,?,?,?", "No. SEP", 8, new String[]{
+                    rs.getString("no_sep"), rs.getString("tgl_surat"), rs.getString("tgl_rencana"), tbObat.getValueAt(i, 3).toString(),
+                    KdPoli4.getText(), KdDokter1.getText(), "Belum", null
+                }) == true) {
+                    Sequel.meghapus("bridging_surat_kontrol_bpjs", "no_sep", rs.getString("no_sep"));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Notifikasi isCrontab(): " + e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (Exception ex) {
+                System.out.println("Notifikasi isCrontab(): " + ex);
+            }
+        }
+    }
+    
+    private void isEditCrontab(String sep, String surkon) {
+        if (Sequel.mengedittf("booking_cronbot", "no_sep=?", "status=?,keterangan=?,kd_poli=?,kd_dokter=?,tanggal_periksa=?", 6, new String[]{
+            "Belum", null, KdPoli4.getText(), KdDokter1.getText(), Valid.SetTgl(TanggalPeriksa1.getSelectedItem() + ""), sep
+        }) == true) {
+            if (!surkon.isEmpty()) {
+                Sequel.meghapus("bridging_surat_kontrol_bpjs", "no_sep", sep);
+            }
         }
     }
 }

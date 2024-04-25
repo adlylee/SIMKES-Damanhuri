@@ -3061,10 +3061,10 @@ public final class DlgRawatJalan extends javax.swing.JDialog {
                                 JOptionPane.showMessageDialog(rootPane,"Maaf, Data pemeriksaan masih ada di Triage.\nSilakan periksa data Triage..!!");
                             }
                             if (Sequel.cariInteger("SELECT COUNT(no_rawat) FROM data_triase_igd where no_rawat='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),1)+"' and tanggal='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),4)+"' and jam='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),5)+"'") < 1) {
+                                isLog("Hapus", tbPemeriksaan.getValueAt(i,4).toString(), tbPemeriksaan.getValueAt(i,5).toString());
                                 Sequel.queryu("delete from pemeriksaan_ralan where no_rawat='"+tbPemeriksaan.getValueAt(i,1).toString()+
                                         "' and tgl_perawatan='"+tbPemeriksaan.getValueAt(i,4).toString()+
                                         "' and jam_rawat='"+tbPemeriksaan.getValueAt(i,5).toString()+"' ");
-//                                isLog("Hapus");
                             }
                         }
                     }
@@ -3551,7 +3551,7 @@ private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                                 JOptionPane.showMessageDialog(rootPane,"Maaf, Data pemeriksaan masih ada di Triage.\nSilakan periksa data Triage..!!");
                             }
                             if (Sequel.cariInteger("SELECT COUNT(no_rawat) FROM data_triase_igd where no_rawat='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),1)+"' and tanggal='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),4)+"' and jam='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),5)+"'") < 1) {
-                                isLog("Edit");
+                                isLog("Edit", tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),4).toString(), tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),5).toString());
                                     if(Sequel.mengedittf("pemeriksaan_ralan","no_rawat='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),1)+
                                     "' and tgl_perawatan='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),4)+
                                     "' and jam_rawat='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(),5)+"'",
@@ -5815,15 +5815,13 @@ private void BtnEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
         LCount.setText(""+TabModeCatatan.getRowCount());
     }
    
-    private void isLog(String action) {
+    private void isLog(String action, String tanggal, String jam) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         String requestJson = "";
         try {
             String no_rawat = tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 1).toString();
-            String tgl_perawatan = tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 4).toString();
-            String jam_rawat = tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 5).toString();
-            ps = koneksi.prepareStatement("SELECT * FROM pemeriksaan_ralan WHERE no_rawat='" + no_rawat + "' AND tgl_perawatan='" + tgl_perawatan + "' AND jam_rawat='" + jam_rawat + "'");
+            ps = koneksi.prepareStatement("SELECT * FROM pemeriksaan_ralan WHERE no_rawat='" + no_rawat + "' AND tgl_perawatan='" + tanggal + "' AND jam_rawat='" + jam + "'");
             rs = ps.executeQuery();
             if (rs.next()) {
                 JsonObject dataJson = new JsonObject();

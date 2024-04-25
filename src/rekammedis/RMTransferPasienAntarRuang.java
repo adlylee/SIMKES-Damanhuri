@@ -1872,21 +1872,23 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
             param.put("dxkep", dxKeperawatan.getText());
             param.put("spo2", spo2.getText());
             param.put("gsc", gcs.getText());
+            param.put("raber", Sequel.cariIsi("SELECT GROUP_CONCAT(CONCAT(' ',dokter.nm_dokter)) as raber FROM dpjp_ranap INNER JOIN dokter ON dpjp_ranap.kd_dokter=dokter.kd_dokter WHERE dpjp_ranap.jenis_dpjp='Raber' AND dpjp_ranap.no_rawat='"+TNoRw.getText()+"'"));
+            param.put("raber1", Sequel.cariIsi("SELECT dokter.nm_dokter as raber FROM dpjp_ranap INNER JOIN dokter ON dpjp_ranap.kd_dokter=dokter.kd_dokter WHERE dpjp_ranap.jenis_dpjp='Raber' AND dpjp_ranap.no_rawat='"+TNoRw.getText()+"' LIMIT 1"));
             if (sttsTransfer.equals("Ralan")) {
-                param.put("kateter", Sequel.cariIsi("SELECT tgl_perawatan FROM rawat_jl_pr WHERE kd_jenis_prw='RJ000514' and no_rawat=?", TNoRw.getText()));
-                param.put("oksigen", Sequel.cariIsi("SELECT tgl_perawatan FROM rawat_jl_pr WHERE kd_jenis_prw in ('RJ000710','RJ000711','RJ000712','RJ000713','RJ000714') and no_rawat=? limit 1", TNoRw.getText()));
-                param.put("ngt", Sequel.cariIsi("SELECT tgl_perawatan FROM rawat_jl_pr WHERE kd_jenis_prw='RJ000708' and no_rawat=?", TNoRw.getText()));
-                param.put("infus", Sequel.cariIsi("SELECT tgl_perawatan FROM rawat_jl_pr WHERE kd_jenis_prw='RJ000705' and no_rawat=?", TNoRw.getText()));
+                param.put("kateter", Sequel.cariIsi("SELECT rawat_jl_pr.tgl_perawatan FROM rawat_jl_pr INNER JOIN jns_perawatan ON rawat_jl_pr.kd_jenis_prw=jns_perawatan.kd_jenis_prw WHERE jns_perawatan.nm_perawatan LIKE '%kateter%' and no_rawat=? LIMIT 1", TNoRw.getText()));
+                param.put("oksigen", Sequel.cariIsi("SELECT rawat_jl_pr.tgl_perawatan FROM rawat_jl_pr INNER JOIN jns_perawatan ON rawat_jl_pr.kd_jenis_prw=jns_perawatan.kd_jenis_prw WHERE jns_perawatan.nm_perawatan LIKE '%oksigen%' and no_rawat=? LIMIT 1", TNoRw.getText()));
+                param.put("ngt", Sequel.cariIsi("SELECT rawat_jl_pr.tgl_perawatan FROM rawat_jl_pr INNER JOIN jns_perawatan ON rawat_jl_pr.kd_jenis_prw=jns_perawatan.kd_jenis_prw WHERE jns_perawatan.nm_perawatan LIKE '%ngt%' and no_rawat=? LIMIT 1", TNoRw.getText()));
+                param.put("infus", Sequel.cariIsi("SELECT rawat_jl_pr.tgl_perawatan FROM rawat_jl_pr INNER JOIN jns_perawatan ON rawat_jl_pr.kd_jenis_prw=jns_perawatan.kd_jenis_prw WHERE jns_perawatan.nm_perawatan LIKE '%infus%' and no_rawat=? LIMIT 1", TNoRw.getText()));
             }
             if (sttsTransfer.equals("Ranap")) {
                 param.put("kateter", Sequel.cariIsi("SELECT rawat_inap_pr.tgl_perawatan FROM rawat_inap_pr join jns_perawatan_inap on rawat_inap_pr.kd_jenis_prw=jns_perawatan_inap.kd_jenis_prw "
-                        + "WHERE jns_perawatan_inap.kd_jenis_prw='RI000514' and rawat_inap_pr.no_rawat=? and rawat_inap_pr.tgl_perawatan between '" + TanggalMasuk.getText().substring(0, 10) + "' and '" + TanggalPindah.getText().substring(0, 10) + "' order by rawat_inap_pr.tgl_perawatan limit 1", TNoRw.getText()));
+                        + "WHERE jns_perawatan_inap.nm_perawatan like '%kateter%' and rawat_inap_pr.no_rawat=? and rawat_inap_pr.tgl_perawatan between '" + TanggalMasuk.getText().substring(0, 10) + "' and '" + TanggalPindah.getText().substring(0, 10) + "' order by rawat_inap_pr.tgl_perawatan limit 1", TNoRw.getText()));
                 param.put("oksigen", Sequel.cariIsi("SELECT rawat_inap_pr.tgl_perawatan FROM rawat_inap_pr join jns_perawatan_inap on rawat_inap_pr.kd_jenis_prw=jns_perawatan_inap.kd_jenis_prw "
                         + "WHERE jns_perawatan_inap.nm_perawatan like '%oksigen%' and rawat_inap_pr.no_rawat=? and rawat_inap_pr.tgl_perawatan between '" + TanggalMasuk.getText().substring(0, 10) + "' and '" + TanggalPindah.getText().substring(0, 10) + "' order by rawat_inap_pr.tgl_perawatan limit 1", TNoRw.getText()));
                 param.put("ngt", Sequel.cariIsi("SELECT rawat_inap_pr.tgl_perawatan FROM rawat_inap_pr join jns_perawatan_inap on rawat_inap_pr.kd_jenis_prw=jns_perawatan_inap.kd_jenis_prw "
-                        + "WHERE jns_perawatan_inap.kd_jenis_prw='RI000708' and rawat_inap_pr.no_rawat=? and rawat_inap_pr.tgl_perawatan between '" + TanggalMasuk.getText().substring(0, 10) + "' and '" + TanggalPindah.getText().substring(0, 10) + "' order by rawat_inap_pr.tgl_perawatan limit 1", TNoRw.getText()));
+                        + "WHERE jns_perawatan_inap.nm_perawatan like '%ngt%' and rawat_inap_pr.no_rawat=? and rawat_inap_pr.tgl_perawatan between '" + TanggalMasuk.getText().substring(0, 10) + "' and '" + TanggalPindah.getText().substring(0, 10) + "' order by rawat_inap_pr.tgl_perawatan limit 1", TNoRw.getText()));
                 param.put("infus", Sequel.cariIsi("SELECT rawat_inap_pr.tgl_perawatan FROM rawat_inap_pr join jns_perawatan_inap on rawat_inap_pr.kd_jenis_prw=jns_perawatan_inap.kd_jenis_prw "
-                        + "WHERE jns_perawatan_inap.kd_jenis_prw='RI000705' and rawat_inap_pr.no_rawat=? and rawat_inap_pr.tgl_perawatan between '" + TanggalMasuk.getText().substring(0, 10) + "' and '" + TanggalPindah.getText().substring(0, 10) + "' order by rawat_inap_pr.tgl_perawatan limit 1", TNoRw.getText()));
+                        + "WHERE jns_perawatan_inap.nm_perawatan like '%infus%' and rawat_inap_pr.no_rawat=? and rawat_inap_pr.tgl_perawatan between '" + TanggalMasuk.getText().substring(0, 10) + "' and '" + TanggalPindah.getText().substring(0, 10) + "' order by rawat_inap_pr.tgl_perawatan limit 1", TNoRw.getText()));
             }
             param.put("alasan", Alasan.getSelectedItem().toString());
             param.put("alergi", TAlergi.getText());
@@ -1906,7 +1908,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
                     if (rs.isBeforeFirst()) {
                         int num = 0;
                         while (rs.next()) {
-                            System.out.println("insert "+num+" : "+rs.getString("nama_brng"));
+//                            System.out.println("insert "+num+" : "+rs.getString("nama_brng"));
                             Sequel.menyimpan("temporary", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", 38, new String[]{
                                 null, rs.getString("id"), rs.getString("tanggal"), rs.getString("jam"), rs.getString("nama_brng"), rs.getString("dosis"), rs.getString("cara_pemberian"), "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
                             }); 
@@ -2256,7 +2258,8 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
                         Sequel.cariIsi("SELECT dokter.nm_dokter FROM transfer_pasien INNER JOIN dokter ON transfer_pasien.dokter_pindah=dokter.kd_dokter WHERE transfer_pasien.id='"+rs.getString("id")+"'"),
                         Sequel.cariIsi("SELECT petugas.nama FROM transfer_pasien INNER JOIN petugas ON transfer_pasien.petugas_pindah=petugas.nip WHERE transfer_pasien.id='"+rs.getString("id")+"'"),
                         rs.getString("alasan_pindah"), rs.getString("hasil_penunjang"), rs.getString("keterangan"),
-                        suhu, nadi, darah, respirasi, "", nyeri, dx, dxkep,
+//                        suhu, nadi, darah, respirasi, "", nyeri, dx, dxkep,
+                        "","","","","","","","",
                         rs.getString("status")
                     });
                 }

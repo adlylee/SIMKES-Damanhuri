@@ -74,7 +74,7 @@ public class DlgCariPeriksaRadiologi extends javax.swing.JDialog {
     private String kdpetugas = "", kdpenjab = "", Suspen_Piutang_Radiologi_Ranap = "", Radiologi_Ranap = "", Beban_Jasa_Medik_Dokter_Radiologi_Ranap = "",
             Utang_Jasa_Medik_Dokter_Radiologi_Ranap = "", Beban_Jasa_Medik_Petugas_Radiologi_Ranap = "",
             Utang_Jasa_Medik_Petugas_Radiologi_Ranap = "", Beban_Kso_Radiologi_Ranap = "", Utang_Kso_Radiologi_Ranap = "",
-            HPP_Persediaan_Radiologi_Rawat_Inap = "", Persediaan_BHP_Radiologi_Rawat_Inap = "";
+            HPP_Persediaan_Radiologi_Rawat_Inap = "", Persediaan_BHP_Radiologi_Rawat_Inap = "",klinis="";
     private DlgCariHasilPeriksaRad radiologi = new DlgCariHasilPeriksaRad(null, false);
 
     /**
@@ -2477,50 +2477,38 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             param.put("logo", Sequel.cariGambar("select logo from setting"));
             param.put("klinis", Sequel.cariIsi("SELECT klinis FROM diagnosa_pasien_klinis WHERE noorder='"+NoOrder.getText()+"'"));
             param.put("perujuk", Perujuk.getText());
-            String pj = Sequel.cariIsi("select kd_dokter from periksa_radiologi where no_rawat=?",tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString());
+            String pj = Sequel.cariIsi("select kd_dokter from periksa_radiologi where no_rawat=?", tbDokter.getValueAt(tbDokter.getSelectedRow(), 0).toString());
             pilihan = (String) JOptionPane.showInputDialog(null, "Silahkan pilih hasil pemeriksaan..!", "Hasil Pemeriksaan", JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Pasien IGD", "Pasien Rawat Jalan", "Pasien Rawat Inap", "Pasien Dari Luar"}, "Pasien IGD");
-            if (pj.equals("DR00019")) {
-                switch (pilihan) {
-                    case "Pasien IGD":
-                        Valid.MyReport("rptPeriksaRadiologi.jrxml", "report", "::[ Pemeriksaan Radiologi ]::",
-                                "select current_date as tanggal", param);
-                        break;
-                    case "Pasien Rawat Jalan":
-                        Valid.MyReport("rptPeriksaRadiologi2.jrxml", "report", "::[ Pemeriksaan Radiologi ]::",
-                                "select current_date as tanggal", param);
-                        break;
-                    case "Pasien Rawat Inap":
-                        Valid.MyReport("rptPeriksaRadiologi3.jrxml", "report", "::[ Pemeriksaan Radiologi ]::",
-                                "select current_date as tanggal", param);
-                        break;
-                    case "Pasien Dari Luar":
-                        param.put("pengirim", Perujuk.getText());
-                        Valid.MyReport("rptPeriksaRadiologi4.jrxml", "report", "::[ Pemeriksaan Radiologi ]::",
-                                "select current_date as tanggal", param);
-                        break;
-                }
+            String reportName = "";
+            switch (pj) {
+                case "-":
+                    JOptionPane.showMessageDialog(null, "Silakan sesuaikan dokter penanggung jawab terlebih dahulu..!!!");
+                    break;
+                case "DR00019":
+                case "D0000132":
+                case "D0000189":
+                    switch (pilihan) {
+                        case "Pasien IGD":
+                            reportName = "rptPeriksaRadiologi" + (pj.equals("DR00019") ? "" : (pj.equals("D0000132") ? "5" : "9")) + ".jrxml";
+                            break;
+                        case "Pasien Rawat Jalan":
+                            reportName = "rptPeriksaRadiologi" + (pj.equals("DR00019") ? "2" : (pj.equals("D0000132") ? "6" : "10")) + ".jrxml";
+                            break;
+                        case "Pasien Rawat Inap":
+                            reportName = "rptPeriksaRadiologi" + (pj.equals("DR00019") ? "3" : (pj.equals("D0000132") ? "7" : "11")) + ".jrxml";
+                            break;
+                        case "Pasien Dari Luar":
+                            param.put("pengirim", Perujuk.getText());
+                            reportName = "rptPeriksaRadiologi" + (pj.equals("DR00019") ? "4" : (pj.equals("D0000132") ? "8" : "12")) + ".jrxml";
+                            break;
+                    }
+                    break;
             }
-            if (pj.equals("D0000132")) {
-                switch (pilihan) {
-                    case "Pasien IGD":
-                        Valid.MyReport("rptPeriksaRadiologi5.jrxml", "report", "::[ Pemeriksaan Radiologi ]::",
-                                "select current_date as tanggal", param);
-                        break;
-                    case "Pasien Rawat Jalan":
-                        Valid.MyReport("rptPeriksaRadiologi6.jrxml", "report", "::[ Pemeriksaan Radiologi ]::",
-                                "select current_date as tanggal", param);
-                        break;
-                    case "Pasien Rawat Inap":
-                        Valid.MyReport("rptPeriksaRadiologi7.jrxml", "report", "::[ Pemeriksaan Radiologi ]::",
-                                "select current_date as tanggal", param);
-                        break;
-                    case "Pasien Dari Luar":
-                        param.put("pengirim", Perujuk.getText());
-                        Valid.MyReport("rptPeriksaRadiologi8.jrxml", "report", "::[ Pemeriksaan Radiologi ]::",
-                                "select current_date as tanggal", param);
-                        break;
-                }
+
+            if (!reportName.isEmpty()) {
+                Valid.MyReport(reportName, "report", "::[ Pemeriksaan Radiologi ]::", "select current_date as tanggal", param);
             }
+
             this.setCursor(Cursor.getDefaultCursor());
         }
     }//GEN-LAST:event_BtnPrint1ActionPerformed
@@ -3122,9 +3110,10 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             Valid.tabelKosong(tabMode);
             ps = koneksi.prepareStatement(
                     "select periksa_radiologi.no_rawat,reg_periksa.no_rkm_medis,pasien.nm_pasien,petugas.nama,periksa_radiologi.tgl_periksa,periksa_radiologi.jam,"
-                    + "periksa_radiologi.dokter_perujuk,periksa_radiologi.kd_dokter,dokter.nm_dokter,diagnosa_pasien_klinis.klinis from periksa_radiologi inner join reg_periksa inner join pasien inner join petugas inner join dokter "
-                    + "on periksa_radiologi.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and periksa_radiologi.kd_dokter=dokter.kd_dokter and periksa_radiologi.nip=petugas.nip "
-                    + "left join permintaan_radiologi on periksa_radiologi.no_rawat=permintaan_radiologi.no_rawat left join diagnosa_pasien_klinis on diagnosa_pasien_klinis.noorder=permintaan_radiologi.noorder where "
+                    + "periksa_radiologi.dokter_perujuk,periksa_radiologi.kd_dokter,dokter.nm_dokter from periksa_radiologi inner join reg_periksa inner join pasien inner join petugas inner join dokter "
+                    + "on periksa_radiologi.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and periksa_radiologi.kd_dokter=dokter.kd_dokter and periksa_radiologi.nip=petugas.nip WHERE "
+//                    + "left join permintaan_radiologi on periksa_radiologi.no_rawat=permintaan_radiologi.no_rawat where "
+//                    + "left join permintaan_radiologi on periksa_radiologi.no_rawat=permintaan_radiologi.no_rawat left join diagnosa_pasien_klinis on diagnosa_pasien_klinis.noorder=permintaan_radiologi.noorder where "
                     + "periksa_radiologi.tgl_periksa between ? and ? and periksa_radiologi.no_rawat like ? and reg_periksa.no_rkm_medis like ? "
                     + "and petugas.nip like ? and dokter.nm_dokter like ? and pasien.nm_pasien like ? or "
                     + "periksa_radiologi.tgl_periksa between ? and ? and periksa_radiologi.no_rawat like ? and reg_periksa.no_rkm_medis like ? "
@@ -3167,9 +3156,11 @@ private void tbDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                         namakamar = Sequel.cariIsi("select nm_poli from poliklinik inner join reg_periksa on poliklinik.kd_poli=reg_periksa.kd_poli "
                                 + "where reg_periksa.no_rawat='" + rs.getString("no_rawat") + "'");
                     }
+                    klinis = Sequel.cariIsi("SELECT klinis FROM diagnosa_pasien_klinis INNER JOIN permintaan_radiologi ON diagnosa_pasien_klinis.noorder=permintaan_radiologi.noorder " +
+                            "WHERE permintaan_radiologi.tgl_hasil='"+rs.getString("tgl_periksa")+"' AND permintaan_radiologi.jam_hasil='"+rs.getString("jam")+"' AND permintaan_radiologi.no_rawat='"+rs.getString("no_rawat")+"'");
                     tabMode.addRow(new Object[]{
                         rs.getString("no_rawat"), rs.getString("no_rkm_medis") + " " + rs.getString("nm_pasien") + " (" + kamar + " : " + namakamar + ")", rs.getString("nama"),
-                        rs.getString("tgl_periksa"), rs.getString("jam"), Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?", rs.getString("dokter_perujuk")), rs.getString("nm_dokter"), rs.getString("klinis"),
+                        rs.getString("tgl_periksa"), rs.getString("jam"), Sequel.cariIsi("select nm_dokter from dokter where kd_dokter=?", rs.getString("dokter_perujuk")), rs.getString("nm_dokter"), klinis,
                          Sequel.cariIsi("select perujuk from rujuk_masuk where no_rawat='" + rs.getString("no_rawat") + "'")
                     });
                     tabMode.addRow(new Object[]{"", "", "Kode Periksa", "Nama Pemeriksaan", "Biaya Pemeriksaan", "", "", "", ""});

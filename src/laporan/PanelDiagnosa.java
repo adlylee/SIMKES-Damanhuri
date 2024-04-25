@@ -49,7 +49,7 @@ public class PanelDiagnosa extends widget.panelisi {
         initComponents();
         TabModeDiagnosaPasien=new DefaultTableModel(null,new Object[]{
             "P","Tgl.Rawat","No.Rawat","No.R.M.","Nama Pasien","Alamat","NIK","J.K","Tgl.Lahir","Umur","Ruangan","Kode","Nama Penyakit",
-            "Status","Kasus","Stts. Pulang"}){
+            "Status","Kasus","Stts. Pulang","TB","BB"}){
             @Override public boolean isCellEditable(int rowIndex, int colIndex){
                 boolean a = false;
                 if (colIndex==0) {
@@ -61,7 +61,8 @@ public class PanelDiagnosa extends widget.panelisi {
                 java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, 
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, 
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, 
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class 
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, 
+                java.lang.Object.class, java.lang.Object.class
              };
              @Override
              public Class getColumnClass(int columnIndex) {
@@ -72,7 +73,7 @@ public class PanelDiagnosa extends widget.panelisi {
         tbDiagnosaPasien.setPreferredScrollableViewportSize(new Dimension(500,500));
         tbDiagnosaPasien.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 16; i++) {
+        for (i = 0; i < 18; i++) {
             TableColumn column = tbDiagnosaPasien.getColumnModel().getColumn(i);
             if(i==0){
                 column.setPreferredWidth(20);
@@ -106,6 +107,10 @@ public class PanelDiagnosa extends widget.panelisi {
                 column.setPreferredWidth(50);
             }else if(i==15){
                 column.setPreferredWidth(90);
+            }else if(i==16){
+                column.setPreferredWidth(50);
+            }else if(i==17){
+                column.setPreferredWidth(50);
             }
         }
         tbDiagnosaPasien.setDefaultRenderer(Object.class, new WarnaTable());
@@ -683,7 +688,8 @@ public class PanelDiagnosa extends widget.panelisi {
                                    rs.getString(5),
                                    rs.getString(6),
                                    rs.getString(7),
-                                   rs.getString(8),rs.getString("pulang")});
+                                   rs.getString(8),rs.getString("pulang")
+                                   ,cekSOAP("tinggi", rs.getString(2)),cekSOAP("berat", rs.getString(2))});
                 }            
             } catch (Exception e) {
                 System.out.println("Notifikasi : "+e);
@@ -1168,5 +1174,16 @@ public class PanelDiagnosa extends widget.panelisi {
         }catch(Exception e){
             System.out.println("Notifikasi : "+e);
         }
+    }
+    private String cekSOAP(String column, String acuan) {
+        String isi = "";
+        if (status.equals("Ralan")) {
+            isi = "pemeriksaan_ralan";
+        }
+        if (status.equals("Ranap")) {
+            isi = "pemeriksaan_ranap";
+        }
+        String cari = Sequel.cariIsi("SELECT " + column + " FROM " + isi + " WHERE no_rawat=? ORDER BY tgl_perawatan, jam_rawat DESC LIMIT 1", acuan);
+        return cari;
     }
 }

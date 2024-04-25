@@ -3183,6 +3183,9 @@ private void MnPeriksaLabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 }//GEN-LAST:event_MnPeriksaLabActionPerformed
 
     private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpanActionPerformed
+        String tglreg = Sequel.cariIsi("SELECT tgl_registrasi FROM reg_periksa WHERE no_rawat='" + TNoRw.getText() + "'");
+        String jamreg = Sequel.cariIsi("SELECT jam_reg FROM reg_periksa WHERE no_rawat='" + TNoRw.getText() + "'");
+        String kdpj = Sequel.cariIsi("SELECT kd_pj FROM reg_periksa WHERE no_rawat='" + TNoRw.getText() + "'");
         try {
             pscekbilling=koneksi.prepareStatement(sqlpscekbilling);
             try {
@@ -3213,6 +3216,8 @@ private void MnPeriksaLabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
             JOptionPane.showMessageDialog(null,"Maaf, Silahkan tampilkan semua pilihan tagihan...!!!");
         }else if(cek>0){
             JOptionPane.showMessageDialog(null,"Maaf, data tagihan pasien dengan No.Rawat tersebut sudah pernah disimpan...!!!");
+        }else if(kdpj.equals("BPJ") && Sequel.compareDates(tglreg +" "+jamreg, 2)){//added
+            JOptionPane.showMessageDialog(null, "Maaf, gagal menyimpan karena pasien masih dalam pemeriksaan.");
         }else if(cek==0){
             if(piutang<=0){
                 if(kekurangan<0){
@@ -3221,7 +3226,7 @@ private void MnPeriksaLabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
                     if(countbayar>1){
                         JOptionPane.showMessageDialog(null,"Maaf, kembali harus bernilai 0 untuk cara bayar lebih dari 1...!!!");
                     }else{
-                        isSimpan();
+                        isSimpan();                        
                     }                        
                 }else if(kekurangan==0){
                     isSimpan();
