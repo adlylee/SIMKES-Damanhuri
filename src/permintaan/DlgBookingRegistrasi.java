@@ -2192,10 +2192,10 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 //                        String surkonSEP = Sequel.cariIsi("SELECT no_sep FROM bridging_surat_kontrol_bpjs WHERE no_sep='" + Rtl2 + "'");
                         String surkonSurat = Sequel.cariIsi("SELECT no_surat FROM bridging_surat_kontrol_bpjs WHERE no_sep='" + Rtl2 + "'");                        
                         String cekCrontab = Sequel.cariIsi("SELECT no_sep FROM booking_cronbot WHERE no_sep='" + Rtl2 + "'");
-                        
-                        System.out.println(tbObat.getValueAt(i, 3).toString() + " sep: " + Rtl2 + " nosurat: " + surkonSurat);
+                                                
                         if (Pj.equals("BPJ") || Pj.equals("A02")) {
                             if (!surkonSurat.isEmpty()) {
+                                System.out.println(tbObat.getValueAt(i, 3).toString() + " sep: " + Rtl2 + " nosurat: " + surkonSurat);
                                 if (surkonSurat.length() == 19) {
                                     nomer = kontrol.setNoSurat2(surkonSurat);
                                     if (nomer.equals("200")) {
@@ -2226,7 +2226,8 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                         }
                         if (!Pj.equals("BPJ") || !Pj.equals("A02")) {
                             isSimpan();
-                        }
+                        }                        
+                        isBookMjkn(tbObat.getValueAt(i, 3).toString(), tbObat.getValueAt(i, 5).toString());
                     }
                 }
             }
@@ -2720,4 +2721,34 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             }
         }
     }
+    
+    private void isBookMjkn(String norm, String tgl_periksa) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter ymd = DateTimeFormatter.ofPattern("yyyyMMdd");
+        LocalDateTime now = LocalDateTime.now();
+        try {
+            ps = koneksi.prepareStatement("SELECT kodebooking FROM mlite_antrian_referensi WHERE no_rkm_medis='" + norm + "' AND tanggal_periksa='" + tgl_periksa + "'");
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                if (Sequel.menyimpantf("mlite_antrian_referensi_batal", "?,?,?", "Data", 3, new String[]{
+                    dtf.format(now), rs.getString("kodebooking"), "Perubahan Jadwal Dokter " + norm + " " + ymd.format(now) + ""
+                }) == true) {
+                    Sequel.queryu("update mlite_antrian_referensi set status_kirim='Batal' where kodebooking='" + rs.getString("kodebooking") + "'");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Notifikasi isBookMjkn(): " + e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (Exception ex) {
+                System.out.println("Notifikasi isBookMjkn(): " + ex);
+            }
+        }
+    }   
 }

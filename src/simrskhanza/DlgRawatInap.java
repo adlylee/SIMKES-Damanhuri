@@ -4025,15 +4025,15 @@ public final class DlgRawatInap extends javax.swing.JDialog {
                             if (tbPemeriksaan.getValueAt(i, 0).toString().equals("true")) {
                                 if (tbPemeriksaan.getValueAt(i, 22).toString().equals("Verified")) {
                                     if (var.getkode().equals("Admin Utama")) {
-                                        isLog("Hapus", tbPemeriksaan.getValueAt(i, 4).toString(), tbPemeriksaan.getValueAt(i, 5).toString());
-                                        Sequel.queryu("delete from pemeriksaan_ranap where no_rawat='" + tbPemeriksaan.getValueAt(i, 1).toString()
+                                        isLog("Edit", tbPemeriksaan.getValueAt(i, 4).toString(), tbPemeriksaan.getValueAt(i, 5).toString(), tbPemeriksaan.getValueAt(i, 1).toString());
+                                        Sequel.queryu("UPDATE pemeriksaan_ranap SET verified_at=NULL WHERE no_rawat='" + tbPemeriksaan.getValueAt(i, 1).toString()
                                                 + "' and tgl_perawatan='" + tbPemeriksaan.getValueAt(i, 4).toString()
                                                 + "' and jam_rawat='" + tbPemeriksaan.getValueAt(i, 5).toString() + "' ");
                                     } else {
                                         JOptionPane.showMessageDialog(null, "Maaf, data sudah divalidasi...!!!!");
                                     }
                                 } else {
-                                    isLog("Hapus", tbPemeriksaan.getValueAt(i, 4).toString(), tbPemeriksaan.getValueAt(i, 5).toString());
+                                    isLog("Hapus", tbPemeriksaan.getValueAt(i, 4).toString(), tbPemeriksaan.getValueAt(i, 5).toString(), tbPemeriksaan.getValueAt(i, 1).toString());
                                     Sequel.queryu("delete from pemeriksaan_ranap where no_rawat='" + tbPemeriksaan.getValueAt(i, 1).toString()
                                             + "' and tgl_perawatan='" + tbPemeriksaan.getValueAt(i, 4).toString()
                                             + "' and jam_rawat='" + tbPemeriksaan.getValueAt(i, 5).toString() + "' ");
@@ -4682,7 +4682,7 @@ private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                     int reply = JOptionPane.showConfirmDialog(rootPane, "Yakin ingin mengubah data CPPT oleh "+nmpetugas+"..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
                     if (reply == JOptionPane.YES_OPTION) {
                         if (tbPemeriksaan.getSelectedRow() > -1) {
-                            isLog("Edit", tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 4).toString(), tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 5).toString());
+                            isLog("Edit", tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 4).toString(), tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 5).toString(), tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 1).toString());
                             Sequel.mengedit("pemeriksaan_ranap", "no_rawat='" + tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 1)
                                     + "' and tgl_perawatan='" + tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 4)
                                     + "' and jam_rawat='" + tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 5) + "'",
@@ -6848,12 +6848,12 @@ private void BtnEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
         dlgobt.setVisible(true);
     }
 
-    private void isLog(String action, String tanggal, String jam) {
+    private void isLog(String action, String tanggal, String jam, String norawat) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         String requestJson = "";
         try {
-            ps = koneksi.prepareStatement("SELECT * FROM pemeriksaan_ranap WHERE no_rawat='" + TNoRw.getText() + "' AND tgl_perawatan='" + tanggal + "' AND jam_rawat='" + jam + "'");
+            ps = koneksi.prepareStatement("SELECT * FROM pemeriksaan_ranap WHERE no_rawat='" + norawat + "' AND tgl_perawatan='" + tanggal + "' AND jam_rawat='" + jam + "'");
             rs = ps.executeQuery();
             if (rs.next()) {
                 JsonObject dataJson = new JsonObject();

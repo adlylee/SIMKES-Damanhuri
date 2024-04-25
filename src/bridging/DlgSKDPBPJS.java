@@ -1450,9 +1450,14 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                         }
                     }
                 } else {
-                    if (penjab.equals("BPJ") || penjab.equals("A02")) {
-                        nomer = kontrol.editSurat(Alasan2.getText(), Rtl2.getText(), KdDokter1.getText(), NmDokter1.getText(), KdPoli1.getText(), NmPoli1.getText(), Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), user);
+                    if (KdPoli.getText().equals("PL051")) {
                         isEdit();
+                    }
+                    if (KdPoli.getText().equals("PL051")) {
+                        if (penjab.equals("BPJ") || penjab.equals("A02")) {
+                            nomer = kontrol.editSurat(Alasan2.getText(), Rtl2.getText(), KdDokter1.getText(), NmDokter1.getText(), KdPoli1.getText(), NmPoli1.getText(), Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""), user);
+                            isEdit();
+                        }
                     }
                 }
             } else {
