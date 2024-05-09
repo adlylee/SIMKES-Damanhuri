@@ -5514,7 +5514,7 @@ private void MnLaporanRekapKunjunganBulananPoliActionPerformed(java.awt.event.Ac
                         dlgki.isCek();
                         dlgki.setNoRm(TNoRw.getText());
                         dlgki.setVisible(true);
-                        Valid.editTable(tabMode, "reg_periksa", "no_rawat", TNoRw, "stts='Dirawat'");
+//                        Valid.editTable(tabMode, "reg_periksa", "no_rawat", TNoRw, "stts='Dirawat'");
                     }                 
                 }
                 if (tabMode.getRowCount() != 0) {
