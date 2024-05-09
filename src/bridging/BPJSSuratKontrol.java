@@ -24,6 +24,7 @@ import java.sql.ResultSet;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
@@ -70,7 +71,7 @@ public class BPJSSuratKontrol extends javax.swing.JDialog {
     private JsonNode root;
     private JsonNode nameNode;
     private JsonNode response;
-    private String link = "", requestJson = "", URL = "", user = "", utc = "";
+    private String link = "", requestJson = "", URL = "", user = "", utc = "", logNosep = "", logTglsurat = "", logNosurat = "", logTglrencana = "", logKddokter = "", logKdpoli = "";
     private BPJSApi api = new BPJSApi();
 
     /**
@@ -1004,24 +1005,30 @@ public class BPJSSuratKontrol extends javax.swing.JDialog {
 }//GEN-LAST:event_TanggalSuratKeyPressed
 
     private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpanActionPerformed
-        if (!NoSurat.getText().equals("")) {
-            if (Sequel.menyimpantf("bridging_surat_kontrol_bpjs", "?,?,?,?,?,?,?,?", "No.Surat", 8, new String[]{
-                    NoSEP.getText(), Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), NoSurat.getText(), Valid.SetTgl(TanggalKontrol.getSelectedItem() + ""), KdDokter.getText(), NmDokter.getText(), KdPoli.getText(), NmPoli.getText()
-                }) == true) {
-                    emptTeks();
-                    tampil();
-                }
-        } else {
-            if (NoRawat.getText().trim().equals("") || NoSEP.getText().trim().equals("")) {
-                Valid.textKosong(NoRawat, "pasien");
-            } else if (NmDokter.getText().trim().equals("") || KdDokter.getText().trim().equals("")) {
-                Valid.textKosong(KdDokter, "Dokter");
-            } else if (NmPoli.getText().trim().equals("") || NmPoli.getText().trim().equals("")) {
-                Valid.textKosong(KdPoli, "Poli");
+        int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin menyimpan data...??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {            
+            if (!NoSurat.getText().equals("")) {
+                if (Sequel.menyimpantf("bridging_surat_kontrol_bpjs", "?,?,?,?,?,?,?,?", "No.Surat", 8, new String[]{
+                        NoSEP.getText(), Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), NoSurat.getText(), Valid.SetTgl(TanggalKontrol.getSelectedItem() + ""), KdDokter.getText(), NmDokter.getText(), KdPoli.getText(), NmPoli.getText()
+                    }) == true) {
+                        isLog("Simpan");
+                        emptTeks();
+                        tampil();
+                    }
             } else {
-                simpanSurat(NoSEP.getText(), Valid.SetTgl(TanggalKontrol.getSelectedItem() + ""), Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), KdDokter.getText(), NmDokter.getText(), KdPoli.getText(), NmPoli.getText(), user);
+                if (NoRawat.getText().trim().equals("") || NoSEP.getText().trim().equals("")) {
+                    Valid.textKosong(NoRawat, "pasien");
+                } else if (NmDokter.getText().trim().equals("") || KdDokter.getText().trim().equals("")) {
+                    Valid.textKosong(KdDokter, "Dokter");
+                } else if (NmPoli.getText().trim().equals("") || NmPoli.getText().trim().equals("")) {
+                    Valid.textKosong(KdPoli, "Poli");
+                } else {
+                    simpanSurat(NoSEP.getText(), Valid.SetTgl(TanggalKontrol.getSelectedItem() + ""), Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), KdDokter.getText(), NmDokter.getText(), KdPoli.getText(), NmPoli.getText(), user);
+                    isLog("Simpan");
+                }
             }
-        }
+            JOptionPane.showMessageDialog(null, "Berhasil menyimpan data");
+    }
 }//GEN-LAST:event_BtnSimpanActionPerformed
 
     private void BtnSimpanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnSimpanKeyPressed
@@ -1048,11 +1055,16 @@ public class BPJSSuratKontrol extends javax.swing.JDialog {
 
     private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHapusActionPerformed
         if (tbObat.getSelectedRow() != -1) {
-            try {
-                bodyWithDeleteRequest();
-            } catch (Exception ex) {
-                System.out.println("Notifikasi Bridging : " + ex);
-            }
+            int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin menghapus data...??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                try {
+                    bodyWithDeleteRequest();
+                    isLog("Hapus");
+                } catch (Exception ex) {
+                    System.out.println("Notifikasi Bridging : " + ex);
+                }
+                JOptionPane.showMessageDialog(null, "Berhasil menghapus data");
+            }        
         } else {
             JOptionPane.showMessageDialog(null, "Silahkan pilih dulu data yang mau dihapus..!!");
         }
@@ -1221,10 +1233,15 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         } else if (NmPoli.getText().trim().equals("") || NmPoli.getText().trim().equals("")) {
             Valid.textKosong(KdPoli, "Poli");
         } else {
-            if (tbObat.getSelectedRow() != -1) {
-                editSurat(NoSurat.getText(), NoSEP.getText(), KdDokter.getText(), NmDokter.getText(), KdPoli.getText(), NmPoli.getText(), Valid.SetTgl(TanggalKontrol.getSelectedItem() + ""), Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), user);
-            } else {
-                JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih terlebih dulu data yang mau anda ganti...\n Klik data pada table untuk memilih data...!!!!");
+            int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin mengubah data...??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                if (tbObat.getSelectedRow() != -1) {
+                    editSurat(NoSurat.getText(), NoSEP.getText(), KdDokter.getText(), NmDokter.getText(), KdPoli.getText(), NmPoli.getText(), Valid.SetTgl(TanggalKontrol.getSelectedItem() + ""), Valid.SetTgl(TanggalSurat.getSelectedItem() + ""), user);
+                    isLog("Edit");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Maaf, Silahkan anda pilih terlebih dulu data yang mau anda ganti...\n Klik data pada table untuk memilih data...!!!!");
+                }
+                JOptionPane.showMessageDialog(null, "Berhasil mengubah data");
             }
         }
     }//GEN-LAST:event_BtnEditActionPerformed
@@ -1540,6 +1557,12 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             NmPoli.setText(tbObat.getValueAt(tbObat.getSelectedRow(), 14).toString());
             Valid.SetTgl(TanggalSurat, tbObat.getValueAt(tbObat.getSelectedRow(), 8).toString());
             Valid.SetTgl(TanggalKontrol, tbObat.getValueAt(tbObat.getSelectedRow(), 10).toString());
+            logNosep = tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString();
+            logTglsurat = tbObat.getValueAt(tbObat.getSelectedRow(), 8).toString();
+            logNosurat = tbObat.getValueAt(tbObat.getSelectedRow(), 9).toString();
+            logTglrencana = tbObat.getValueAt(tbObat.getSelectedRow(), 10).toString();
+            logKddokter = tbObat.getValueAt(tbObat.getSelectedRow(), 11).toString();
+            logKdpoli = tbObat.getValueAt(tbObat.getSelectedRow(), 13).toString();
         }
     }
 
@@ -1626,13 +1649,13 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 response = response.path("noSuratKontrol");
                 respon = response.asText();
                 System.out.println("No Surat Kontrol : " + respon);
-                if (Sequel.menyimpantf("bridging_surat_kontrol_bpjs", "?,?,?,?,?,?,?,?", "No.Surat", 8, new String[]{
-                    nosep, tanggalsurat, respon, tanggalkontrol, kddokter, nmdokter, kdpoli, nmpoli
-                }) == true) {
-                    emptTeks();
-                    tampil();
-                    return respon;
-                }
+                    if (Sequel.menyimpantf("bridging_surat_kontrol_bpjs", "?,?,?,?,?,?,?,?", "No.Surat", 8, new String[]{
+                        nosep, tanggalsurat, respon, tanggalkontrol, kddokter, nmdokter, kdpoli, nmpoli
+                    }) == true) {
+                        emptTeks();
+                        tampil();
+                        return respon;
+                    }
             } else {
                     JOptionPane.showMessageDialog(null, nameNode.path("message").asText());
                     return nameNode.path("code").asText();                
@@ -1678,7 +1701,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 String res = api.decrypt(res1.asText());
                 String lz = api.lzDecrypt(res);
                 response = mapper.readTree(lz);
-                nosuratedit = response.asText();
+                nosuratedit = response.asText();  
                 if (Sequel.mengedittf("bridging_surat_kontrol_bpjs", "no_surat=?", "tgl_surat=?,tgl_rencana=?,kd_dokter_bpjs=?,nm_dokter_bpjs=?,kd_poli_bpjs=?,nm_poli_bpjs=?", 7, new String[]{
                     tglsurat, tglkontrol, kddokter, nmdokter, kdpoli, nmpoli, nosurat
                 }) == true) {
@@ -1853,5 +1876,122 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     public void setTanggal() {
         R2.setSelected(true);
     }
+    
+    public void isTampil (){
+        tampil();
+    }
+    
+     public String setNoSurat2(String nosurat) {//booking
+        NoSurat.setText(nosurat);
+        try {
+            return bodyWithDeleteRequest3();
+        } catch (Exception e) {
+            return "";
+        }
+    }
+    
+    public String bodyWithDeleteRequest3() throws Exception {
+        String notif = "";
+        RestTemplate restTemplate = new RestTemplate();
+        SSLContext sslContext = SSLContext.getInstance("SSL");
+        javax.net.ssl.TrustManager[] trustManagers = {
+            new X509TrustManager() {
+                public X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
 
+                public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+                }
+
+                public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+                }
+            }
+        };
+        sslContext.init(null, trustManagers, new SecureRandom());
+        SSLSocketFactory sslFactory = new SSLSocketFactory(sslContext, SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+        Scheme scheme = new Scheme("https", 443, sslFactory);
+
+        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory() {
+            @Override
+            protected HttpUriRequest createHttpUriRequest(HttpMethod httpMethod, URI uri) {
+                if (HttpMethod.DELETE == httpMethod) {
+                    return new HttpEntityEnclosingDeleteRequest(uri);
+                }
+                return super.createHttpUriRequest(httpMethod, uri);
+            }
+        };
+        factory.getHttpClient().getConnectionManager().getSchemeRegistry().register(scheme);
+        restTemplate.setRequestFactory(factory);
+
+        try {
+            headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+            headers.add("X-Cons-ID", koneksiDB.ConsIdBpjs());
+            headers.add("X-Timestamp", String.valueOf(api.GetUTCdatetimeAsString()));
+            headers.add("X-Signature", api.getHmac());
+            headers.add("user_key", koneksiDB.UserKeyBpjs());
+            URL = link + "/RencanaKontrol/Delete";
+            requestJson = "{\"request\":{\"t_suratkontrol\":{\"noSuratKontrol\":\"" +NoSurat.getText() + "\",\"user\":\"" + user + "\"}}}";
+            requestEntity = new HttpEntity(requestJson, headers);
+            root = mapper.readTree(restTemplate.exchange(URL, HttpMethod.DELETE, requestEntity, String.class).getBody());
+            nameNode = root.path("metaData");
+            System.out.println("code : " + nameNode.path("code").asText());
+            System.out.println("message : " + nameNode.path("message").asText());
+//            JsonNode res1 = root.path("response");
+//            String res = api.decrypt(res1.asText());
+//            String lz = api.lzDecrypt(res);
+//            response = mapper.readTree(lz);
+            notif = nameNode.path("code").asText();            
+        } catch (Exception e) {
+            System.out.println("Notif : " + e);
+            if (e.toString().contains("UnknownHostException")) {
+                JOptionPane.showMessageDialog(null, "Koneksi ke server BPJS terputus...!");
+            }
+            return notif;
+        }
+        return notif;
+    }     
+    
+    private void isLog(String action) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        String requestJson = "";
+        switch (action) {
+            case "Edit":
+                requestJson = "{"
+                        + "\"dari\":{"
+                        + "\"no_sep\":\"" + logNosep + "\","
+                        + "\"tgl_surat\":\"" + logTglsurat + "\","
+                        + "\"no_surat\":\"" + logNosurat + "\","
+                        + "\"tgl_rencana\":\"" + logTglrencana + "\","
+                        + "\"kd_dokter_bpjs\":\"" + logKddokter + "\","
+                        + "\"kd_poli_bpjs\":\"" + logKdpoli + "\"},"
+                        + "\"ke\":{"
+                        + "\"no_sep\":\"" + NoSEP.getText() + "\","
+                        + "\"tgl_surat\":\"" + Valid.SetTgl(TanggalSurat.getSelectedItem() + "") + "\","
+                        + "\"no_surat\":\"" + NoSurat.getText() + "\","
+                        + "\"tgl_rencana\":\"" + Valid.SetTgl(TanggalKontrol.getSelectedItem() + "") + "\","
+                        + "\"kd_dokter_bpjs\":\"" + KdDokter.getText() + "\","
+                        + "\"kd_poli_bpjs\":\"" + KdPoli.getText() + "\"},"
+                        + "\"action\":\"" + action + "\""
+                        + "}";
+                break;
+            case "Simpan":
+            case "Hapus":
+                requestJson = "{"
+                        + "\"data\":{"
+                        + "\"no_sep\":\"" + NoSEP.getText() + "\","
+                        + "\"tgl_surat\":\"" + Valid.SetTgl(TanggalSurat.getSelectedItem() + "") + "\","
+                        + "\"no_surat\":\"" + NoSurat.getText() + "\","
+                        + "\"tgl_rencana\":\"" + Valid.SetTgl(TanggalKontrol.getSelectedItem() + "") + "\","
+                        + "\"kd_dokter_bpjs\":\"" + KdDokter.getText() + "\","
+                        + "\"kd_poli_bpjs\":\"" + KdPoli.getText() + "\"},"
+                        + "\"action\":\"" + action + "\""
+                        + "}";
+                break;
+            default:
+                break;
+        }
+        Sequel.menyimpan("mlite_log", "null,'" + var.getkode() + "','bridging_surat_kontrol_bpjs','" + requestJson + "','" + dtf.format(now) + "'");
+    }
 }

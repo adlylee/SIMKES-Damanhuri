@@ -375,6 +375,7 @@
                 </Component>
                 <Component class="widget.TextBox" name="kode_barang">
                   <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
                     <Property name="name" type="java.lang.String" value="kode_barang" noResource="true"/>
                   </Properties>
                   <Events>

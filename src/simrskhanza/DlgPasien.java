@@ -15,6 +15,7 @@ import bridging.BPJSCekNIK;
 import bridging.BPJSCekNoKartu;
 import bridging.BPJSNik;
 import bridging.BPJSPeserta;
+import bridging.BridgingWA;
 import com.sun.javafx.tk.TKPulseListener;
 import fungsi.WarnaTable;
 import fungsi.batasInput;
@@ -89,6 +90,7 @@ public class DlgPasien extends javax.swing.JDialog {
     private long p2;
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     LocalDateTime now = LocalDateTime.now();
+    private BridgingWA kirimwa = new BridgingWA();
 
     /**
      * Creates new form DlgPas
@@ -212,7 +214,7 @@ public class DlgPasien extends javax.swing.JDialog {
         TNo.setDocument(new batasInput((byte) 15).getKata(TNo));
         TNm.setDocument(new batasInput((byte) 40).getKata(TNm));
         NmIbu.setDocument(new batasInput((byte) 40).getKata(NmIbu));
-        TKtp.setDocument(new batasInput((byte) 20).getOnlyAngka(TKtp));
+        TKtp.setDocument(new batasInput((byte) 16).getOnlyAngka(TKtp));
         Kdpnj.setDocument(new batasInput((byte) 3).getKata(Kdpnj));
         TTlp.setDocument(new batasInput((int) 40).getOnlyAngka(TTlp));
         TTmp.setDocument(new batasInput((byte) 15).getKata(TTmp));
@@ -901,6 +903,7 @@ public class DlgPasien extends javax.swing.JDialog {
         ppRiwayat = new javax.swing.JMenuItem();
         ppCatatanPasien = new javax.swing.JMenuItem();
         ppGabungRM = new javax.swing.JMenuItem();
+        MnKirimKartu = new javax.swing.JMenuItem();
         buttonGroup1 = new javax.swing.ButtonGroup();
         Kd2 = new widget.TextBox();
         DlgDemografi = new javax.swing.JDialog();
@@ -1850,6 +1853,21 @@ public class DlgPasien extends javax.swing.JDialog {
         });
         jPopupMenu1.add(ppGabungRM);
 
+        MnKirimKartu.setBackground(new java.awt.Color(255, 255, 254));
+        MnKirimKartu.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        MnKirimKartu.setForeground(new java.awt.Color(70, 70, 70));
+        MnKirimKartu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        MnKirimKartu.setText("Kirim Kartu Berobat via Whatsapp ");
+        MnKirimKartu.setToolTipText("");
+        MnKirimKartu.setName("MnKirimKartu"); // NOI18N
+        MnKirimKartu.setPreferredSize(new java.awt.Dimension(150, 26));
+        MnKirimKartu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnKirimKartuActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(MnKirimKartu);
+
         Kd2.setName("Kd2"); // NOI18N
         Kd2.setPreferredSize(new java.awt.Dimension(207, 23));
 
@@ -2167,27 +2185,12 @@ public class DlgPasien extends javax.swing.JDialog {
 
         NoRMLama.setHighlighter(null);
         NoRMLama.setName("NoRMLama"); // NOI18N
-        NoRMLama.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                NoRMLamaKeyPressed(evt);
-            }
-        });
 
         NmLama.setHighlighter(null);
         NmLama.setName("NmLama"); // NOI18N
-        NmLama.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                NmLamaKeyPressed(evt);
-            }
-        });
 
         KtpLama.setHighlighter(null);
         KtpLama.setName("KtpLama"); // NOI18N
-        KtpLama.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                KtpLamaKeyPressed(evt);
-            }
-        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -2508,7 +2511,7 @@ public class DlgPasien extends javax.swing.JDialog {
         FormInput.add(jLabel13);
         jLabel13.setBounds(4, 102, 95, 23);
 
-        DTPLahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "13-12-2023" }));
+        DTPLahir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "14-03-2024" }));
         DTPLahir.setDisplayFormat("dd-MM-yyyy");
         DTPLahir.setName("DTPLahir"); // NOI18N
         DTPLahir.setOpaque(false);
@@ -2640,7 +2643,7 @@ public class DlgPasien extends javax.swing.JDialog {
         FormInput.add(TKtp);
         TKtp.setBounds(712, 132, 130, 23);
 
-        DTPDaftar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "13-12-2023" }));
+        DTPDaftar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "14-03-2024" }));
         DTPDaftar.setDisplayFormat("dd-MM-yyyy");
         DTPDaftar.setName("DTPDaftar"); // NOI18N
         DTPDaftar.setOpaque(false);
@@ -3455,6 +3458,9 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         TNoPeserta.requestFocus();
     } else if ((TKtp.getText().trim().length()==16) && Sequel.cariInteger("select count(no_ktp) from pasien where no_ktp=?", TKtp.getText()) > 0) {
         JOptionPane.showMessageDialog(null, "Pasien dengan NIK tersebut sudah ada.\nSilakan periksa di data pasien..!!!");
+        TKtp.requestFocus();
+    }else if (TKtp.getText().trim().length()!=16) {
+        JOptionPane.showMessageDialog(null, "NIK pasien harus 16 digit..!!!");
         TKtp.requestFocus();
     } else {
         try {
@@ -6079,17 +6085,17 @@ private void KabupatenMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
         }
     }//GEN-LAST:event_MnKartu6ActionPerformed
 
-    private void NoRMLamaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NoRMLamaKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NoRMLamaKeyPressed
-
-    private void NmLamaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NmLamaKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NmLamaKeyPressed
-
-    private void KtpLamaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KtpLamaKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_KtpLamaKeyPressed
+    private void MnKirimKartuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnKirimKartuActionPerformed
+//        for (z = 0; z < tbPasien.getRowCount(); z++) {
+//            if (tbPasien.getValueAt(z, 0).toString().equals("true")) {
+//                int reply = JOptionPane.showConfirmDialog(rootPane, "Apakah yakin ingin mengirim Kartu Berobat Pasien?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+//                if (reply == JOptionPane.YES_OPTION) {
+//                    kirimwa.sendWaKartu(tbPasien.getValueAt(z, 1).toString(), tbPasien.getValueAt(z, 2).toString(),"");
+//                    JOptionPane.showMessageDialog(null, "Berhasil Mengirim Whatsapp ...!!!!");
+//                }
+//            }
+//        }
+    }//GEN-LAST:event_MnKirimKartuActionPerformed
 
     /**
      * @data args the command line arguments
@@ -6222,6 +6228,7 @@ private void KabupatenMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
     private javax.swing.JMenuItem MnKartu5;
     private javax.swing.JMenuItem MnKartu6;
     private javax.swing.JMenuItem MnKartuStatus;
+    private javax.swing.JMenuItem MnKirimKartu;
     private javax.swing.JMenuItem MnLaporanAnestesia;
     private javax.swing.JMenuItem MnLaporanIGD;
     private javax.swing.JMenuItem MnLaporanRM;

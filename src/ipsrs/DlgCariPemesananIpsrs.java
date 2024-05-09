@@ -1227,8 +1227,9 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     }
     
     public void isCek(){
+        int cari = Sequel.cariInteger("SELECT count(nik) FROM ipsrs_setpj WHERE nik=? AND status='1'", var.getkode());//added by w
         BtnPrint.setEnabled(var.getpenerimaan_non_medis());
-        if(var.getkode().equals("Admin Utama")){
+        if (var.getkode().equals("Admin Utama") || cari > 0) {  
             ppHapus.setEnabled(true);
         }else{
             ppHapus.setEnabled(false);

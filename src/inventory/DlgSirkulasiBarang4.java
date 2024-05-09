@@ -36,7 +36,7 @@ public class DlgSirkulasiBarang4 extends javax.swing.JDialog {
     private Connection koneksi=koneksiDB.condb();
     private DlgCariBangsal bangsal = new DlgCariBangsal(null, false);
     private Dimension screen=Toolkit.getDefaultToolkit().getScreenSize(); 
-    private String lokasi="";
+    private String lokasi="",cmb="";
     private double ttltotaljual=0,totaljual=0,jumlahjual=0,ttltotalbeli=0,totalbeli=0,jumlahbeli=0,
                    ttltotalpesan=0,totalpesan=0,jumlahpesan=0,jumlahutd,totalutd,ttltotalutd,jumlahkeluar,totalkeluar,ttltotalkeluar,
                    ttltotalpiutang=0,totalpiutang=0,jumlahpiutang=0,ttltotalretbeli=0,totalretbeli=0,jumlahretbeli=0,
@@ -277,6 +277,7 @@ public class DlgSirkulasiBarang4 extends javax.swing.JDialog {
         label10 = new widget.Label();
         TCari = new widget.TextBox();
         BtnCari = new widget.Button();
+        cmbJenis = new widget.ComboBox();
         label9 = new widget.Label();
         BtnAll = new widget.Button();
         BtnPrint = new widget.Button();
@@ -569,6 +570,17 @@ public class DlgSirkulasiBarang4 extends javax.swing.JDialog {
         });
         panelisi1.add(BtnCari);
 
+        cmbJenis.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Semua", "BMHP", "Obat" }));
+        cmbJenis.setName("cmbJenis"); // NOI18N
+        cmbJenis.setOpaque(true);
+        cmbJenis.setPreferredSize(new java.awt.Dimension(90, 24));
+        cmbJenis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbJenisActionPerformed(evt);
+            }
+        });
+        panelisi1.add(cmbJenis);
+
         label9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         label9.setName("label9"); // NOI18N
         label9.setPreferredSize(new java.awt.Dimension(79, 30));
@@ -818,6 +830,10 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
         bangsal.setVisible(true);
     }//GEN-LAST:event_ppLokasiBtnPrintActionPerformed
 
+    private void cmbJenisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbJenisActionPerformed
+
+    }//GEN-LAST:event_cmbJenisActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -844,6 +860,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
     private widget.Tanggal Tgl1;
     private widget.Tanggal Tgl2;
     private widget.Button btnBarang;
+    private widget.ComboBox cmbJenis;
     private widget.InternalFrame internalFrame1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private widget.TextBox kdbar;
@@ -870,16 +887,29 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
 
     private void prosesCari() {
        Valid.tabelKosong(tabMode); 
-       tabMode.addRow(new Object[]{"","","","","","","","","","","","","",""}); 
-       try{   
+       tabMode.addRow(new Object[]{"","","","","","","","","","","","","",""});         
+       try{
+        switch (cmbJenis.getSelectedIndex()) {
+            case 0:
+                cmb = "";
+                break;
+            case 1:
+                cmb = " databarang.kode_kategori='K05' and ";
+                break;
+            case 2:
+                cmb = " databarang.kode_kategori != 'K05' and ";
+                break;
+            default:
+                break;
+        }
 //            saldo_awal = Sequel.cariIsiAngka("SELECT saldo_awal FROM rekeningtahun WHERE kd_rek = '11070101'");
             saldo_awal = Double.valueOf("21454669117");
             ps=koneksi.prepareStatement("select databarang.kode_brng,databarang.nama_brng, "+
                         "kodesatuan.satuan , databarang.h_beli from databarang inner join kodesatuan   "+
                         "on databarang.kode_sat=kodesatuan.kode_sat "+
-                        "where databarang.status='1' and databarang.nama_brng like ? and databarang.kode_brng like ? or "+
-                        "databarang.status='1' and databarang.nama_brng like ? and databarang.nama_brng like ? or "+
-                        "databarang.status='1' and databarang.nama_brng like ? and kodesatuan.satuan like ? "+
+                        "where "+cmb+" databarang.status='1' and databarang.nama_brng like ? and databarang.kode_brng like ? or "+
+                        ""+cmb+" databarang.status='1' and databarang.nama_brng like ? and databarang.nama_brng like ? or "+
+                        ""+cmb+" databarang.status='1' and databarang.nama_brng like ? and kodesatuan.satuan like ? "+
                         " order by databarang.kode_brng");
             try {
                 ttltotaljual=0;ttltotalbeli=0;ttltotalpesan=0;

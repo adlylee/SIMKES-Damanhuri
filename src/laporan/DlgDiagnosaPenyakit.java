@@ -814,7 +814,10 @@ public class DlgDiagnosaPenyakit extends javax.swing.JDialog {
         }
     }
 
-    public void isPsien2() {//untuk disable button ketika ambil dx DlgPasienMati
+    public void isPsien2(String norw) {//untuk disable button ketika ambil dx DlgPasienMati
+        TNoRw.setText(norw);
+        isRawat();
+        isPsien();   
         BtnSimpan.setEnabled(false);
         BtnBatal.setEnabled(false);
         BtnHapus.setEnabled(false);

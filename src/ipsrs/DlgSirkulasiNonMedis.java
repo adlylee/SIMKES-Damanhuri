@@ -35,7 +35,7 @@ public class DlgSirkulasiNonMedis extends javax.swing.JDialog {
     private Connection koneksi = koneksiDB.condb();
     private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
     private double ttltotalbeli = 0, totalbeli = 0, stok = 0, aset = 0, ttlaset = 0, jumlahbeli = 0, stok_awal = 0, harga_awal = 0, ttltotalpesan = 0, totalpesan = 0, jumlahpesan = 0, stokbyfaktur = 0, hargabyfaktur = 0, stokgetbyfaktur = 0, hargagetbyfaktur = 0, stokpostbyfaktur = 0, hargapostbyfaktur = 0, saldo_awal = 0, saldo_akhir = 0,
-            jumlahkeluar, totalkeluar, ttltotalkeluar, ttlmasuk=0,stokmasuk =0, sisasaldo =0,saldoawalbrg=0,sisastok=0,stokawal=0,ttlstokawal=0,ttlstokmsk,ttlstokklr,ttlstokakhir;
+            jumlahkeluar, totalkeluar, ttltotalkeluar, ttlmasuk=0,stokmasuk =0, sisasaldo =0,saldoawalbrg=0,sisastok=0,stokawal=0,ttlstokawal=0,ttlstokmsk,ttlstokklr,ttlstokakhir,harga=0;
     private String kd_rek = "",tgl="";
     private PreparedStatement ps, ps2, ps3, ps4;
     private ResultSet rs, rs2, rs3, rs4;
@@ -578,7 +578,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                     + " from ipsrsgudang "
                                     + " where ipsrsgudang.kode_brng=? and ipsrsgudang.tgl_beli "
                                     + " between ? and ? and ipsrsgudang.no_faktur='Opname' ORDER BY tgl_beli ASC LIMIT 1");
-                            try {
+                            try { 
                                 ps2.setString(1, rs.getString(1));
                                 ps2.setString(2, Valid.SetTgl(Tgl1.getSelectedItem() + ""));
                                 ps2.setString(3, Valid.SetTgl(Tgl2.getSelectedItem() + ""));
@@ -696,6 +696,29 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                     ps2.close();
                                 }
                             }
+                            
+                            ps2 = koneksi.prepareStatement("select harga "//added
+                                        + " from ipsrsgudang "
+                                        + " where ipsrsgudang.kode_brng=? and ipsrsgudang.tgl_beli "
+                                        + " between ? and ? AND no_faktur !='Opname'");
+                            try {
+                                ps2.setString(1, rs.getString(1));
+                                ps2.setString(2, Valid.SetTgl(Tgl1.getSelectedItem() + ""));
+                                ps2.setString(3, Valid.SetTgl(Tgl2.getSelectedItem() + ""));
+                                rs2 = ps2.executeQuery();
+                                if (rs2.next()) {
+                                    harga = rs2.getDouble(1);
+                                }
+                            } catch (Exception e) {
+                                System.out.println("Notifikasi tes : " + e);
+                            } finally {
+                                if (rs2 != null) {
+                                    rs2.close();
+                                }
+                                if (ps2 != null) {
+                                    ps2.close();
+                                }
+                            }
 
                             if ((aset > 0) || (jumlahbeli > 0) || (jumlahpesan > 0) || (jumlahkeluar > 0)) {
                                 tabMode.addRow(new Object[]{rs.getString(1),"", rs.getString(2) + " (" + rs.getString(6) + ")",
@@ -708,7 +731,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                 ps3 = koneksi.prepareStatement("select stok, harga , no_faktur , no_batch , tgl_beli "
                                         + " from ipsrsgudang "
                                         + " where ipsrsgudang.kode_brng=? and ipsrsgudang.tgl_beli "
-                                        + " between ? and ? ");
+                                        + " between ? and ? AND no_faktur !='Opname'");
                                 try {
                                     ps3.setString(1, rs.getString(1));
                                     ps3.setString(2, Valid.SetTgl(Tgl1.getSelectedItem() + ""));
@@ -723,20 +746,28 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                         hargapostbyfaktur = 0;
                                         ttlmasuk = 0;
                                         stokmasuk = 0;
-                                        sisastok = 0;sisasaldo=0;saldoawalbrg=0;
-                                        ps2 = koneksi.prepareStatement("select ipsrsopname.real "
+                                        sisastok = 0;sisasaldo=0;saldoawalbrg=0;                                                                    
+//                                        String getharga = rs3.getString("harga");
+//                                        System.out.println("getharga "+getharga);
+                                        System.out.println("harga "+harga);
+                                        
+                                        ps2 = koneksi.prepareStatement("select ifnull(ipsrsopname.real,'0') "
                                                 + " from ipsrsopname "
                                                 + " where ipsrsopname.tanggal=? and ipsrsopname.kode_brng=?");
                                         try {
+                                            System.out.println("tgl "+tgl);
                                             ps2.setString(1, tgl);
+                                            System.out.println("barang "+rs.getString(1));
                                             ps2.setString(2, rs.getString(1));
+//                                            System.out.println("harga "+harga);
+//                                            System.out.println("harga rs3 "+rs3.getString("harga"));
                                             rs2 = ps2.executeQuery();
                                             if (rs2.next()) {
                                                 stokawal = rs2.getDouble(1);
                                             }
                                         } catch (Exception e) {
                                             System.out.println("Notifikasi Detail Opname : " + e);
-                                        } finally {
+                                        } finally { 
                                             if (rs2 != null) {
                                                 rs2.close();
                                             }
@@ -809,8 +840,8 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                                         ttlmasuk = hargabyfaktur + hargagetbyfaktur;
                                         stokmasuk = stokbyfaktur + stokgetbyfaktur;
                                         sisastok = stokawal + stokmasuk - stokpostbyfaktur;
-                                        sisasaldo = saldoawalbrg + ttlmasuk - hargapostbyfaktur;
                                         saldoawalbrg = stokawal * rs3.getDouble(2);
+                                        sisasaldo = saldoawalbrg + ttlmasuk - hargapostbyfaktur;
                                         tabMode.addRow(new Object[]{"",kd_rek, rs.getString(2),
                                             "", Valid.SetAngka(rs3.getDouble(2)), Valid.SetAngka(stokawal),
                                             Valid.SetAngka(stokmasuk), Valid.SetAngka(stokpostbyfaktur),Valid.SetAngka(sisastok),

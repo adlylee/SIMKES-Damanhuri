@@ -143,6 +143,7 @@ public class InformasiKerohanian extends javax.swing.JDialog {
             public void windowClosed(WindowEvent e) {
                 if (var.getform().equals("InformasiKerohanian")) {
                     if (petugas.getTable().getSelectedRow() != -1) {
+                        NmPtg1.setText(petugas.getTable().getValueAt(petugas.getTable().getSelectedRow(), 0).toString());
                         NmPtg.setText(petugas.getTable().getValueAt(petugas.getTable().getSelectedRow(), 1).toString());
                         NmPtg.requestFocus();
                     }
@@ -232,9 +233,11 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         BtnSimpan4 = new widget.Button();
         jLabel26 = new widget.Label();
         jLabel9 = new widget.Label();
-        TKeterangan = new widget.TextBox();
         btnPetugas = new widget.Button();
         NmPtg = new widget.TextBox();
+        scrollPane3 = new widget.ScrollPane();
+        TKeterangan = new widget.TextArea();
+        NmPtg1 = new widget.TextBox();
         internalFrame1 = new widget.InternalFrame();
         jPanel2 = new javax.swing.JPanel();
         panelGlass8 = new widget.panelisi();
@@ -287,7 +290,7 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         WindowAmbilPetugas.setUndecorated(true);
         WindowAmbilPetugas.setResizable(false);
 
-        internalFrame5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Petugas ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Petugas ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame5.setName("internalFrame5"); // NOI18N
         internalFrame5.setLayout(null);
 
@@ -327,21 +330,6 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         internalFrame5.add(jLabel9);
         jLabel9.setBounds(6, 72, 100, 23);
 
-        TKeterangan.setHighlighter(null);
-        TKeterangan.setName("TKeterangan"); // NOI18N
-        TKeterangan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TKeteranganActionPerformed(evt);
-            }
-        });
-        TKeterangan.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                TKeteranganKeyPressed(evt);
-            }
-        });
-        internalFrame5.add(TKeterangan);
-        TKeterangan.setBounds(110, 72, 400, 53);
-
         btnPetugas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
         btnPetugas.setMnemonic('4');
         btnPetugas.setToolTipText("ALt+4");
@@ -358,7 +346,25 @@ public class InformasiKerohanian extends javax.swing.JDialog {
         NmPtg.setHighlighter(null);
         NmPtg.setName("NmPtg"); // NOI18N
         internalFrame5.add(NmPtg);
-        NmPtg.setBounds(110, 32, 377, 23);
+        NmPtg.setBounds(217, 32, 270, 23);
+
+        scrollPane3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        scrollPane3.setName("scrollPane3"); // NOI18N
+
+        TKeterangan.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        TKeterangan.setColumns(20);
+        TKeterangan.setRows(5);
+        TKeterangan.setName("TKeterangan"); // NOI18N
+        scrollPane3.setViewportView(TKeterangan);
+
+        internalFrame5.add(scrollPane3);
+        scrollPane3.setBounds(110, 75, 380, 60);
+
+        NmPtg1.setEditable(false);
+        NmPtg1.setHighlighter(null);
+        NmPtg1.setName("NmPtg1"); // NOI18N
+        internalFrame5.add(NmPtg1);
+        NmPtg1.setBounds(110, 32, 106, 23);
 
         WindowAmbilPetugas.getContentPane().add(internalFrame5, java.awt.BorderLayout.CENTER);
 
@@ -377,7 +383,7 @@ public class InformasiKerohanian extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Permintaan Kerohanian ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Permintaan Kerohanian ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(70, 70, 70))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -688,6 +694,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
 
     private void BtnAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAllActionPerformed
         NmPtg.setText("");
+        NmPtg1.setText("");        
         CrKamar.setText("");
         tampil();
     }//GEN-LAST:event_BtnAllActionPerformed
@@ -764,12 +771,12 @@ private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         if (tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString().trim().equals("")) {
             Valid.textKosong(TCari, "No.Permintaan");
         } else {
-            if (Sequel.cariInteger("select count(noorder) from permintaan_pemeriksaan_kerohanian where and noorder=?", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString()) > 0) {
+//            if (Sequel.cariInteger("select count(noorder) from permintaan_pemeriksaan_kerohanian where noorder=?", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString()) > 0) {
 //                JOptionPane.showMessageDialog(null, "Maaf, Tidak boleh dihapus karena sudah ada tindakan yang sudah dibayar.\nSilahkan hubungi kasir...!!!!");
-            } else {
+//            } else {
                 Sequel.meghapus("permintaan_kerohanian", "noorder", tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString());
                 tampil();
-            }
+//        }
         }
     } else {
         JOptionPane.showMessageDialog(null, "Maaf, silahkan pilih data permintaan...!!!!");
@@ -820,7 +827,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                 Valid.textKosong(NmPtg, "No.Permintaan");
             } else {
                 Sequel.mengedit("permintaan_kerohanian", "noorder=?", "petugas=?,keterangan=?", 3, new String[]{
-                    NmPtg.getText(), TKeterangan.getText(), tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString()
+                    NmPtg1.getText(), TKeterangan.getText(), tbKerohanian.getValueAt(tbKerohanian.getSelectedRow(), 1).toString()
                 });
                 TeksKosong();
                 tampil();
@@ -973,14 +980,6 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         }
     }//GEN-LAST:event_BtnKirimWAActionPerformed
 
-    private void TKeteranganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TKeteranganActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TKeteranganActionPerformed
-
-    private void TKeteranganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKeteranganKeyPressed
-        //Valid.pindah(evt,TNoReg,DTPReg);
-    }//GEN-LAST:event_TKeteranganKeyPressed
-
     private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPetugasActionPerformed
         var.setform("InformasiKerohanian");
         petugas.emptTeks();
@@ -1022,8 +1021,9 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.Label LCount;
     private javax.swing.JMenuItem MnCetakKerohanian;
     private widget.TextBox NmPtg;
+    private widget.TextBox NmPtg1;
     private widget.TextBox TCari;
-    private widget.TextBox TKeterangan;
+    private widget.TextArea TKeterangan;
     private widget.Tanggal Tgl1;
     private widget.Tanggal Tgl2;
     private javax.swing.JDialog WindowAmbilPetugas;
@@ -1043,6 +1043,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     private widget.panelisi panelGlass8;
     private widget.panelisi panelisi1;
     private widget.ScrollPane scrollPane1;
+    private widget.ScrollPane scrollPane3;
     private widget.Table tbKerohanian;
     // End of variables declaration//GEN-END:variables
 
@@ -1057,7 +1058,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                     + "inner join kamar_inap on permintaan_kerohanian.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "
                     + "and permintaan_kerohanian.noorder=permintaan_pemeriksaan_kerohanian.noorder and permintaan_kerohanian.perujuk=petugas.nip and "
                     + "kamar.kd_bangsal=bangsal.kd_bangsal and reg_periksa.no_rawat=kamar_inap.no_rawat and permintaan_kerohanian.kd_kamar=kamar.kd_kamar where "
-                    + "kamar_inap.tgl_keluar='0000-00-00' and kamar_inap.stts_pulang='-' and permintaan_kerohanian.tgl_permintaan between ? and ? and bangsal.nm_bangsal like ? and (permintaan_kerohanian.noorder like ? or "
+                    + "kamar_inap.tgl_keluar='0000-00-00' and permintaan_kerohanian.tgl_permintaan between ? and ? and bangsal.nm_bangsal like ? and (permintaan_kerohanian.noorder like ? or "
                     + "permintaan_kerohanian.no_rawat like ? or "
                     + "reg_periksa.no_rkm_medis like ? or "
                     + "pasien.nm_pasien like ? or "
@@ -1150,6 +1151,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         Petugas = "";
         Ket = "";
         NmPtg.setText("");
+        NmPtg1.setText("");
         TKeterangan.setText("");
     }
 }

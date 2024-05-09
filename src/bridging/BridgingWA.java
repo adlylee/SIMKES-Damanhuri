@@ -569,4 +569,63 @@ public class BridgingWA {
         input.close();
         return resultBuf.toString();
     }
+    
+    public void sendWaKartu(String no_rkm_medis, String nama, String gambar) {
+        try {
+            message = "Assalamualaikum " + nama + ". \n\nUlun RSHD SIAP WA Bot dari Rumah Sakit H. Damanhuri Barabai.\n\nTerima kasih \nWassalamualaikum \n\nDaftar Online Tanpa Antri via Apam Barabai Klik Disini >>> https://play.google.com/store/apps/details?id=com.rshdbarabai.apam&hl=in&gl=US \n\nDaftar Online Tanpa Antri via JKN Mobile Klik Disini >>> https://play.google.com/store/apps/details?id=app.bpjs.mobile \n\n*Jam pelayanan sewaktu waktu dapat berubah*";
+            number = Sequel.cariIsi("SELECT no_tlp FROM pasien WHERE no_rkm_medis = " + no_rkm_medis);
+            urlApi = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldserver + "'") + "/wagateway/kirimpesan";
+            sender = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldphone + "'");
+            token = Sequel.cariIsi("SELECT value FROM mlite_settings WHERE module='" + moduleserver + "' AND field = '" + fieldtoken + "'");
+            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + message + "&api_key=" + token;
+            String encodedMessage = URLEncoder.encode(message, "UTF-8");
+            requestJson = "type=text&sender=" + sender + "&number=" + number + "&message=" + encodedMessage + "&api_key=" + token;
+//            System.out.println("PostField : " + requestJson);
+            System.out.println("PostField : " + no_rkm_medis + " " + nama + " &api_key=" + token);
+            if (number.equals("")) {
+                System.out.println("Nomor telepon kosong !!!");
+            } else {
+                URL obj = new URL(urlApi);
+                HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+                con.setRequestMethod("POST");
+                con.setRequestProperty("User-Agent", USER_AGENT);
+                con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                con.setRequestProperty("charset", "utf-8");
+
+                // For POST only - START
+                con.setDoOutput(true);
+                OutputStreamWriter os = new OutputStreamWriter(con.getOutputStream());
+                os.write(requestJson);
+                os.flush();
+                os.close();
+                // For POST only - END
+
+                int responseCode = con.getResponseCode();
+                System.out.println("POST Response Code :: " + responseCode);
+
+                if (responseCode == HttpURLConnection.HTTP_OK) { //success
+                    BufferedReader in = new BufferedReader(new InputStreamReader(
+                            con.getInputStream()));
+                    String inputLine;
+                    StringBuffer response = new StringBuffer();
+
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
+
+                    // print result
+                    System.out.println(response.toString());
+                } else {
+                    System.out.println("POST request not worked");
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("Notifikasi : " + ex);
+            System.out.println(urlApi);
+            if (ex.toString().contains("UnknownHostException")) {
+                JOptionPane.showMessageDialog(null, "Koneksi ke server WA terputus...!");
+            }
+        }
+    }
 }

@@ -35,6 +35,8 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -1822,5 +1824,18 @@ public final class sekuel {
             System.out.println("Notifikasi : "+e);
         }
         return bool;
+    }
+   
+   public boolean compareDates(String d1, int hour) {
+        Boolean status = false;
+        LocalDateTime currentDate = LocalDateTime.now();
+        LocalDateTime currentDateMinus6Months = currentDate.minusHours(hour);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime date1 = LocalDateTime.parse(d1,formatter);
+
+        if (date1.isAfter(currentDateMinus6Months)) {
+            status = true;
+        }
+        return status;
     }
 }

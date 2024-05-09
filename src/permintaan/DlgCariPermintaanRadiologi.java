@@ -1544,6 +1544,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                         dlgro.isCek();
                         dlgro.setOrder(tbRadiologiRalan.getValueAt(tbRadiologiRalan.getSelectedRow(),0).toString(),tbRadiologiRalan.getValueAt(tbRadiologiRalan.getSelectedRow(),1).toString(),"Ralan");
                         dlgro.setDokterPerujuk(tbRadiologiRalan.getValueAt(tbRadiologiRalan.getSelectedRow(),10).toString(),tbRadiologiRalan.getValueAt(tbRadiologiRalan.getSelectedRow(),11).toString());
+                        dlgro.setDefault();//added
                         dlgro.setVisible(true);
                         this.setCursor(Cursor.getDefaultCursor());
                     }
@@ -1570,6 +1571,7 @@ private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
                         dlgro.isCek();
                         dlgro.setOrder(tbRadiologiRanap.getValueAt(tbRadiologiRanap.getSelectedRow(),0).toString(),tbRadiologiRanap.getValueAt(tbRadiologiRanap.getSelectedRow(),1).toString(),"Ranap");
                         dlgro.setDokterPerujuk(tbRadiologiRanap.getValueAt(tbRadiologiRanap.getSelectedRow(),10).toString(),tbRadiologiRanap.getValueAt(tbRadiologiRanap.getSelectedRow(),11).toString());
+                        dlgro.setDefault();//added
                         dlgro.setVisible(true);
                         this.setCursor(Cursor.getDefaultCursor());
                     }

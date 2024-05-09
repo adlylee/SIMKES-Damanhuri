@@ -5361,6 +5361,7 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
     private void btnSKDPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSKDPActionPerformed
         skdp.setNoRm(NoKartu.getText());
         skdp.setTanggal();
+        skdp.isTampil();        
         skdp.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
         skdp.setLocationRelativeTo(internalFrame1);
         skdp.setVisible(true);
@@ -6868,6 +6869,23 @@ public final class BPJSDataSEP extends javax.swing.JDialog {
         NmDPJPLayan.setText(Sequel.cariIsi("select nm_dokter_bpjs from maping_dokter_dpjpvclaim where kd_dokter=?", kddokter));
         JenisPelayanan.setSelectedItem(status);
         JenisPelayananItemStateChanged(null);
+        isRawat();
+        if (kdpoli == "IGD01") {
+            cekDiagnosa();
+        }
+    }
+    
+    public void setNoRmNonCek2(String norwt, Date tgl1, String status, String kdpoli, String namapoli, String kddokter, String info) {
+        TNoRw.setText(norwt);
+        TCari.setText(norwt);
+        TCari1.setText(norwt);
+        KdPoli.setText(Sequel.cariIsi("select kd_poli_bpjs from maping_poli_bpjs where kd_poli_rs=?", kdpoli));
+        NmPoli.setText(Sequel.cariIsi("select nm_poli_bpjs from maping_poli_bpjs where kd_poli_bpjs=?", KdPoli.getText()));
+        KdDPJPLayan.setText(Sequel.cariIsi("select kd_dokter_bpjs from maping_dokter_dpjpvclaim where kd_dokter=?", kddokter));
+        NmDPJPLayan.setText(Sequel.cariIsi("select nm_dokter_bpjs from maping_dokter_dpjpvclaim where kd_dokter=?", kddokter));
+        JenisPelayanan.setSelectedItem(status);
+        JenisPelayananItemStateChanged(null);
+        cekdulu = info;
         isRawat();
         if (kdpoli == "IGD01") {
             cekDiagnosa();

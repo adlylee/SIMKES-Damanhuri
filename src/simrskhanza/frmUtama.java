@@ -59,6 +59,7 @@ import bridging.BPJSMapingDokterDPJP;
 import bridging.BPJSMonitoringKlaim;
 import bridging.BPJSMonitoringKunjungan;
 import bridging.BPJSRujukanKeluar;
+import bridging.BPJSSuratKontrol;
 import bridging.INACBGCariCoderNIK;
 import bridging.INACBGCoderNIK;
 import bridging.INACBGHybrid;
@@ -399,6 +400,7 @@ import permintaan.DlgCariPermintaanUTD;
 import mpp.DlgSkriningMPP;
 import perlap.DlgLapRBA;
 import perlap.DlgPermintaanRBA;
+import setting.DlgPindahRiwPasien;
 import setting.DlgSetHariLibur;
 import setting.DlgSetMCU;
 import setting.DlgSetUtd;
@@ -967,6 +969,8 @@ public class frmUtama extends javax.swing.JFrame {
         btnTrialSendWA = new widget.ButtonBig();
         btnSetPaketMCU = new widget.ButtonBig();
         btnLapKunjunganPasien = new widget.ButtonBig();
+        btnPindahRiw = new widget.ButtonBig();
+        btnSurkonBPJS = new widget.ButtonBig();
         internalFrame1 = new widget.InternalFrame();
         BtnMenu = new widget.ButtonBig();
         jSeparator4 = new javax.swing.JSeparator();
@@ -5666,7 +5670,7 @@ public class frmUtama extends javax.swing.JFrame {
 
         tanggal.setEditable(false);
         tanggal.setForeground(new java.awt.Color(50, 70, 50));
-        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "25/01/2024" }));
+        tanggal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "04/05/2024" }));
         tanggal.setDisplayFormat("dd/MM/yyyy");
         tanggal.setName("tanggal"); // NOI18N
         tanggal.setOpaque(false);
@@ -6037,6 +6041,30 @@ public class frmUtama extends javax.swing.JFrame {
             }
         });
 
+        btnPindahRiw.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/checklist.png"))); // NOI18N
+        btnPindahRiw.setText("Pindah Pasien");
+        btnPindahRiw.setToolTipText("");
+        btnPindahRiw.setIconTextGap(0);
+        btnPindahRiw.setName("btnPindahRiw"); // NOI18N
+        btnPindahRiw.setPreferredSize(new java.awt.Dimension(200, 90));
+        btnPindahRiw.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPindahRiwActionPerformed(evt);
+            }
+        });
+
+        btnSurkonBPJS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/1481038237_Adobe_Bridge_CS.png"))); // NOI18N
+        btnSurkonBPJS.setText("Surat Kontrol BPJS");
+        btnSurkonBPJS.setToolTipText("");
+        btnSurkonBPJS.setIconTextGap(0);
+        btnSurkonBPJS.setName("btnSurkonBPJS"); // NOI18N
+        btnSurkonBPJS.setPreferredSize(new java.awt.Dimension(200, 90));
+        btnSurkonBPJS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSurkonBPJSActionPerformed(evt);
+            }
+        });
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("::[ Khanza SIMKES 2019 ]::");
         setBackground(new java.awt.Color(153, 255, 153));
@@ -6353,7 +6381,7 @@ public class frmUtama extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(70, 70, 70));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/file-edit-16x16.png"))); // NOI18N
-        jLabel7.setText(" Didesain & dibuat oleh Khanza.Soft Media. (Opt by ICT RSHD Barabai Build.V.20240129)");
+        jLabel7.setText(" Didesain & dibuat oleh Khanza.Soft Media. (Opt by ICT RSHD Barabai Build.V.20240407)");
         jLabel7.setToolTipText("");
         jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jLabel7.setIconTextGap(3);
@@ -12594,6 +12622,30 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_btnLapKunjunganPasienActionPerformed
 
+    private void btnPindahRiwActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPindahRiwActionPerformed
+        isTutup();
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        DlgPindahRiwPasien form = new DlgPindahRiwPasien(this, false);
+//        form.emptTeks();
+        form.setSize(PanelUtama.getWidth(), PanelUtama.getHeight());
+        form.setLocationRelativeTo(PanelUtama);
+        form.setVisible(true);
+        DlgHome.dispose();
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_btnPindahRiwActionPerformed
+
+    private void btnSurkonBPJSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSurkonBPJSActionPerformed
+        isTutup();
+        DlgHome.dispose();
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        BPJSSuratKontrol form=new BPJSSuratKontrol(this,false);
+        form.isCek();
+        form.setSize(PanelUtama.getWidth(), PanelUtama.getHeight());
+        form.setLocationRelativeTo(PanelUtama);
+        form.setVisible(true);
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_btnSurkonBPJSActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -12871,6 +12923,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private widget.ButtonBig btnPerujukLabPerTahun;
     private widget.ButtonBig btnPerujukRadiologiPerTahun;
     private widget.ButtonBig btnPerusahaan;
+    private widget.ButtonBig btnPindahRiw;
     private widget.ButtonBig btnPiutang;
     private widget.ButtonBig btnPiutangBelumLunas;
     private widget.ButtonBig btnPiutangPerAkunPiutang;
@@ -13015,6 +13068,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
     private widget.ButtonBig btnSuratRuang;
     private widget.ButtonBig btnSuratSifat;
     private widget.ButtonBig btnSuratStatus;
+    private widget.ButtonBig btnSurkonBPJS;
     private widget.ButtonBig btnSurveilansPD3I;
     private widget.ButtonBig btnSurveilansRalan;
     private widget.ButtonBig btnSurveilansRanap;
@@ -14871,6 +14925,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             
             if(var.getbpjs_sep()==true){
                 Panelmenu.add(btnBPJSSEP);
+                Panelmenu.add(btnSurkonBPJS);
                 jmlmenu++;
             }
             
@@ -15202,6 +15257,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
                 Panelmenu.add(btnSetHariLibur);
                 Panelmenu.add(btnTrialSendWA);
                 Panelmenu.add(btnSetPaketMCU);
+                Panelmenu.add(btnPindahRiw);
                 jmlmenu++;
             }
 
@@ -16728,6 +16784,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
 
         if(var.getbpjs_sep()==true){
             Panelmenu.add(btnBPJSSEP);
+            Panelmenu.add(btnSurkonBPJS);
             jmlmenu++;
         }
         
@@ -17056,6 +17113,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
             Panelmenu.add(btnSetHariLibur);
             Panelmenu.add(btnTrialSendWA);
             Panelmenu.add(btnSetPaketMCU);
+            Panelmenu.add(btnPindahRiw);
             jmlmenu++;
         }
 
@@ -19135,6 +19193,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
         if(var.getbpjs_sep()==true){
             if(btnBPJSSEP.getText().toLowerCase().trim().contains(TCari.getText().toLowerCase().trim())){
                 Panelmenu.add(btnBPJSSEP);
+                Panelmenu.add(btnSurkonBPJS);
                 jmlmenu++;
             }                
         }
@@ -19590,6 +19649,7 @@ private void BtnSimpanPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:e
                 Panelmenu.add(btnSetHariLibur);
                 Panelmenu.add(btnTrialSendWA);
                 Panelmenu.add(btnSetPaketMCU);
+                Panelmenu.add(btnPindahRiw);
                 jmlmenu++;
             }                
         }

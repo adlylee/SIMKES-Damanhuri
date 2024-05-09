@@ -45,10 +45,10 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" + 
-                        "    Version 02.02.2024 [ 1.0.35 ] [Activated] GO KLAIM DIGITAL \n"+
+                        "    Version 07.05.2024 [ 1.0.37 ] [Activated] GO KLAIM DIGITAL \n"+
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai                              \n"+
-                         "                                                                           \n"+
+                        "                                                                           \n"+
                         "    Paripurna * * * * *                                  \n"+
                         "                                                                           \n"+
                         "       SMART , GREEN , AND FRIENDLY HOSPITAL                           \n"+
@@ -57,9 +57,11 @@ public final class koneksiDB {
                         "                                                                       \n"+
                         "                                                                       \n"+
                         "    * Changelog :                                                       \n"+
-                        "       - Stok Opname                         \n"+
-                        "       - Fix Bug Transfer Pasien                  \n"+
-                        "       - Fix Bug Triage                  \n");
+                        "       - Booking Update SKDP Surkon MJKN                 \n"+
+                        "       - Log SKDP                 \n"+
+                        "       - Closing Billing > 2 Jam                 \n"+
+                        "       - Log Surat Kontrol                 \n"+
+                        "       - ICD FUCoD Pasien Meninggal        \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);
                 try {
@@ -239,8 +241,8 @@ public final class koneksiDB {
         return var;
     }
     
-    public static String UrlAutoUpdate(){
-        try {
+    public static String UrlAutoUpdate(){ 
+       try {
             prop.loadFromXML(new FileInputStream("setting/database.xml"));
             var = "192.168.0.52/updatesimrs";
 //            var = EnkripsiAES.decrypt(prop.getProperty("URLUPDATESISTEM"));

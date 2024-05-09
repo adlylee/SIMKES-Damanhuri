@@ -1,6 +1,7 @@
 package simrskhanza;
 
 import bridging.DlgSKDPBPJS;
+import com.google.gson.JsonObject;
 import keuangan.DlgCariPerawatanRanap;
 import keuangan.DlgCariPerawatanRanap2;
 import inventory.DlgPemberianObat;
@@ -27,6 +28,8 @@ import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -61,7 +64,7 @@ public final class DlgRawatInap extends javax.swing.JDialog {
     public DlgCariPerawatanRanap2 perawatan2 = new DlgCariPerawatanRanap2(null, false);
     private DlgPasien pasien = new DlgPasien(null, false);
     private PreparedStatement ps, ps2, ps3, ps4, ps5, psrekening, ps6;
-    private ResultSet rs, rsrekening;
+    private ResultSet rs, rsrekening,rs2;
     private final Properties prop = new Properties();
     private int i = 0;
     private double ttljmdokter = 0, ttljmperawat = 0, ttlkso = 0, ttlpendapatan = 0;
@@ -1014,6 +1017,8 @@ public final class DlgRawatInap extends javax.swing.JDialog {
         TNoRM1 = new widget.TextBox();
         TPasien1 = new widget.TextBox();
         BtnSimpan9 = new widget.Button();
+        Popup = new javax.swing.JPopupMenu();
+        MnCetakMonitoring = new javax.swing.JMenuItem();
         internalFrame1 = new widget.InternalFrame();
         jPanel3 = new javax.swing.JPanel();
         panelGlass8 = new widget.panelisi();
@@ -1374,6 +1379,26 @@ public final class DlgRawatInap extends javax.swing.JDialog {
 
         WindowInput.getContentPane().add(internalFrame9, java.awt.BorderLayout.CENTER);
 
+        Popup.setName("Popup"); // NOI18N
+
+        MnCetakMonitoring.setBackground(new java.awt.Color(255, 255, 254));
+        MnCetakMonitoring.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        MnCetakMonitoring.setForeground(new java.awt.Color(70, 70, 70));
+        MnCetakMonitoring.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
+        MnCetakMonitoring.setText("Cetak Catatan Monitoring Tanda Vital");
+        MnCetakMonitoring.setToolTipText("");
+        MnCetakMonitoring.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        MnCetakMonitoring.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        MnCetakMonitoring.setIconTextGap(8);
+        MnCetakMonitoring.setName("MnCetakMonitoring"); // NOI18N
+        MnCetakMonitoring.setPreferredSize(new java.awt.Dimension(275, 25));
+        MnCetakMonitoring.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnCetakMonitoringActionPerformed(evt);
+            }
+        });
+        Popup.add(MnCetakMonitoring);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
@@ -1548,7 +1573,7 @@ public final class DlgRawatInap extends javax.swing.JDialog {
         panelGlass10.add(jLabel19);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "03-10-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-02-2024" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -1562,7 +1587,7 @@ public final class DlgRawatInap extends javax.swing.JDialog {
         panelGlass10.add(jLabel21);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "03-10-2023" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-02-2024" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -2062,6 +2087,7 @@ public final class DlgRawatInap extends javax.swing.JDialog {
             }
         });
         Scroll3.setViewportView(tbPemeriksaan);
+        tbPemeriksaan.setComponentPopupMenu(Popup);
 
         internalFrame5.add(Scroll3, java.awt.BorderLayout.CENTER);
 
@@ -3176,7 +3202,7 @@ public final class DlgRawatInap extends javax.swing.JDialog {
         TPasien.setBounds(283, 10, 260, 23);
 
         DTPTgl.setForeground(new java.awt.Color(50, 70, 50));
-        DTPTgl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "03-10-2023" }));
+        DTPTgl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-02-2024" }));
         DTPTgl.setDisplayFormat("dd-MM-yyyy");
         DTPTgl.setName("DTPTgl"); // NOI18N
         DTPTgl.setOpaque(false);
@@ -3993,13 +4019,21 @@ public final class DlgRawatInap extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(null, "Maaf, data sudah habis...!!!!");
                     TNoRw.requestFocus();
                 } else {
-                    for (i = 0; i < tbPemeriksaan.getRowCount(); i++) {
-                        if (tbPemeriksaan.getValueAt(i, 0).toString().equals("true")) {
-                            if (tbPemeriksaan.getValueAt(i, 22).toString().equals("Verified")) {
-                                JOptionPane.showMessageDialog(null, "Maaf, data sudah divalidasi...!!!!");
-                            } else {
-                                int reply = JOptionPane.showConfirmDialog(rootPane, "Eeiiiiiits, Yakin mau dihapus..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
-                                if (reply == JOptionPane.YES_OPTION) {
+                    int reply = JOptionPane.showConfirmDialog(rootPane, "Eeiiiiiits, Yakin ingin menghapus data..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                    if (reply == JOptionPane.YES_OPTION) {
+                        for (i = 0; i < tbPemeriksaan.getRowCount(); i++) {
+                            if (tbPemeriksaan.getValueAt(i, 0).toString().equals("true")) {
+                                if (tbPemeriksaan.getValueAt(i, 22).toString().equals("Verified")) {
+                                    if (var.getkode().equals("Admin Utama")) {
+                                        isLog("Edit", tbPemeriksaan.getValueAt(i, 4).toString(), tbPemeriksaan.getValueAt(i, 5).toString(), tbPemeriksaan.getValueAt(i, 1).toString());
+                                        Sequel.queryu("UPDATE pemeriksaan_ranap SET verified_at=NULL WHERE no_rawat='" + tbPemeriksaan.getValueAt(i, 1).toString()
+                                                + "' and tgl_perawatan='" + tbPemeriksaan.getValueAt(i, 4).toString()
+                                                + "' and jam_rawat='" + tbPemeriksaan.getValueAt(i, 5).toString() + "' ");
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, "Maaf, data sudah divalidasi...!!!!");
+                                    }
+                                } else {
+                                    isLog("Hapus", tbPemeriksaan.getValueAt(i, 4).toString(), tbPemeriksaan.getValueAt(i, 5).toString(), tbPemeriksaan.getValueAt(i, 1).toString());
                                     Sequel.queryu("delete from pemeriksaan_ranap where no_rawat='" + tbPemeriksaan.getValueAt(i, 1).toString()
                                             + "' and tgl_perawatan='" + tbPemeriksaan.getValueAt(i, 4).toString()
                                             + "' and jam_rawat='" + tbPemeriksaan.getValueAt(i, 5).toString() + "' ");
@@ -4007,6 +4041,7 @@ public final class DlgRawatInap extends javax.swing.JDialog {
                             }
                         }
                     }
+                    JOptionPane.showMessageDialog(null, "Berhasil menghapus data...");
                     tampilPemeriksaan();
                 }
                 break;
@@ -4451,7 +4486,7 @@ private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                         if (Sequel.cariRegistrasi(tbRawatDr.getValueAt(tbRawatDr.getSelectedRow(), 1).toString()) > 0) {
                             JOptionPane.showMessageDialog(rootPane, "Data billing sudah terverifikasi, data tidak boleh diubah.\nSilahkan hubungi bagian kasir/keuangan ..!!");
                             TCari.requestFocus();
-                        } else {
+                        } else {                            
                             if (Sequel.mengedittf("rawat_inap_dr", "no_rawat='" + tbRawatDr.getValueAt(tbRawatDr.getSelectedRow(), 1)
                                     + "' and kd_jenis_prw='" + tbRawatDr.getValueAt(tbRawatDr.getSelectedRow(), 10)
                                     + "' and kd_dokter='" + tbRawatDr.getValueAt(tbRawatDr.getSelectedRow(), 5)
@@ -4644,9 +4679,10 @@ private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                     Valid.textKosong(TKeluhan, "Hasil Periksa/Perkambangan/Suhu Badan/Tensi");
                 } else {
                     String nmpetugas = Sequel.cariIsi("SELECT petugas.nama from pemeriksaan_ranap join petugas on pemeriksaan_ranap.nip=petugas.nip where no_rawat='"+TNoRw.getText()+"' and tgl_perawatan='"+Valid.SetTgl(DTPTgl.getSelectedItem()+"")+"' and jam_rawat='"+tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 5).toString()+"'");
-                    int reply = JOptionPane.showConfirmDialog(rootPane, "Yakin ingin mengedit data CPPT oleh "+nmpetugas+"..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                    int reply = JOptionPane.showConfirmDialog(rootPane, "Yakin ingin mengubah data CPPT oleh "+nmpetugas+"..??", "Konfirmasi", JOptionPane.YES_NO_OPTION);
                     if (reply == JOptionPane.YES_OPTION) {
                         if (tbPemeriksaan.getSelectedRow() > -1) {
+                            isLog("Edit", tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 4).toString(), tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 5).toString(), tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 1).toString());
                             Sequel.mengedit("pemeriksaan_ranap", "no_rawat='" + tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 1)
                                     + "' and tgl_perawatan='" + tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 4)
                                     + "' and jam_rawat='" + tbPemeriksaan.getValueAt(tbPemeriksaan.getSelectedRow(), 5) + "'",
@@ -4658,6 +4694,7 @@ private void BtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                                     + "tgl_perawatan='" + Valid.SetTgl(DTPTgl.getSelectedItem() + "") + "',"
                                     + "jam_rawat='" + cmbJam.getSelectedItem() + ":" + cmbMnt.getSelectedItem() + ":" + cmbDtk.getSelectedItem() + "'");
                             tampilPemeriksaan();
+                            JOptionPane.showMessageDialog(null, "Berhasil mengubah data...");
                             BtnBatalActionPerformed(evt);
                         }
                     } else {
@@ -5641,6 +5678,98 @@ private void BtnEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
         }
     }//GEN-LAST:event_BtnSimpan9ActionPerformed
 
+    private void MnCetakMonitoringActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnCetakMonitoringActionPerformed
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        if (tabModePemeriksaan.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Maaf, data sudah habis. Tidak ada data yang bisa anda print...!!!!");
+            BtnBatal.requestFocus();
+        } else if (tabModePemeriksaan.getRowCount() != 0) {
+            Sequel.queryu("truncate table temporary");           
+                try {//ralan
+                    ps = koneksi.prepareStatement("SELECT tgl_perawatan, jam_rawat, tensi, nadi, suhu_tubuh, respirasi FROM pemeriksaan_ralan WHERE no_rawat=? ORDER BY tgl_perawatan,jam_rawat ASC");
+                    try {                        
+                        ps.setString(1, TNoRw.getText());
+                        rs = ps.executeQuery();
+                        if (rs.isBeforeFirst()) {
+                            int num = 0;
+                            while (rs.next()) {
+                                Sequel.menyimpan("temporary", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", 38, new String[]{
+                                    null, rs.getString("tgl_perawatan"), rs.getString("jam_rawat"), rs.getString("tensi"), rs.getString("nadi"), rs.getString("suhu_tubuh"), rs.getString("respirasi"),"", "Ralan", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
+                                });
+                                num++;                                
+                            }
+                        } else {
+                            Sequel.menyimpan("temporary", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", 38, new String[]{
+                                null, "-", "-", "-", "-", "-", "-", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
+                            });
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Notif 2 : " + e);
+                    } finally {
+                        if (rs != null) {
+                            rs.close();
+                        }
+                        if (ps != null) {
+                            ps.close();
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println("Notif : " + e);
+                }
+                try {//ranap
+                    ps = koneksi.prepareStatement("SELECT tgl_perawatan, jam_rawat, tensi, nadi, suhu_tubuh, respirasi, spo2 FROM pemeriksaan_ranap WHERE no_rawat=? ORDER BY tgl_perawatan,jam_rawat ASC");
+                    try {                        
+                        ps.setString(1, TNoRw.getText());
+                        rs = ps.executeQuery();
+                        if (rs.isBeforeFirst()) {
+                            int num = 0;
+                            while (rs.next()) {
+                                Sequel.menyimpan("temporary", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", 38, new String[]{
+                                    null, rs.getString("tgl_perawatan"), rs.getString("jam_rawat"), rs.getString("tensi"), rs.getString("nadi"), rs.getString("suhu_tubuh"), rs.getString("respirasi"),rs.getString("spo2"), "Ranap", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
+                                });
+                                num++;                                
+                            }
+                        } else {
+                            Sequel.menyimpan("temporary", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", 38, new String[]{
+                                null, "-", "-", "-", "-", "-", "-", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
+                            });
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Notif 2 : " + e);
+                    } finally {
+                        if (rs != null) {
+                            rs.close();
+                        }
+                        if (ps != null) {
+                            ps.close();
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println("Notif : " + e);
+                }
+            Map<String, Object> param = new HashMap<>();            
+            String umur = Sequel.cariIsi("SELECT concat(umurdaftar,' ', sttsumur) as umur FROM reg_periksa WHERE no_rawat=?",TNoRw.getText());
+            String kd_kamar = Sequel.cariIsi("SELECT kd_kamar FROM kamar_inap WHERE no_rawat='"+TNoRw.getText()+"'");
+            param.put("namapasien", TPasien.getText());
+            param.put("umur", umur);
+            param.put("kamar", kd_kamar);
+            param.put("bangsal", Sequel.cariIsi("SELECT nm_bangsal FROM kamar INNER JOIN bangsal ON kamar.kd_bangsal=bangsal.kd_bangsal WHERE kamar.kd_kamar=?",kd_kamar));            
+            param.put("kelas", Sequel.cariIsi("SELECT kelas FROM kamar WHERE kd_kamar=?",kd_kamar));
+            param.put("diagnosa", Sequel.cariIsi("SELECT CONCAT(diagnosa_pasien.kd_penyakit,' ', penyakit.nm_penyakit) AS dx FROM diagnosa_pasien INNER JOIN penyakit ON diagnosa_pasien.kd_penyakit=penyakit.kd_penyakit \n"
+                    + "WHERE prioritas='1' and status_penyakit='Ralan' AND no_rawat=?", TNoRw.getText()));
+            param.put("namars", var.getnamars());
+            param.put("alamatrs", var.getalamatrs());
+            param.put("kotars", var.getkabupatenrs());
+            param.put("propinsirs", var.getpropinsirs());
+            param.put("kontakrs", var.getkontakrs());
+            param.put("emailrs", var.getemailrs());
+            param.put("logo", Sequel.cariGambar("select logo from setting"));            
+            Valid.MyReport("rptCatatanMonitoring.jrxml", "report", "::[ Catatan Montoring Tanda-tanda Vital ]::",
+                    "select * from temporary order by no asc", param);
+        }
+        this.setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_MnCetakMonitoringActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -5706,10 +5835,12 @@ private void BtnEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
     private widget.TextBox KdDok2;
     private widget.Label LCount;
     private javax.swing.JTextField Menejemen;
+    private javax.swing.JMenuItem MnCetakMonitoring;
     private widget.PanelBiasa PanelAccor;
     private javax.swing.JPanel PanelInput1;
     private javax.swing.JPanel PanelInput2;
     private javax.swing.JPanel PanelInput3;
+    private javax.swing.JPopupMenu Popup;
     private widget.ScrollPane Scroll;
     private widget.ScrollPane Scroll1;
     private widget.ScrollPane Scroll2;
@@ -6717,4 +6848,54 @@ private void BtnEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
         dlgobt.setVisible(true);
     }
 
+    private void isLog(String action, String tanggal, String jam, String norawat) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        String requestJson = "";
+        try {
+            ps = koneksi.prepareStatement("SELECT * FROM pemeriksaan_ranap WHERE no_rawat='" + norawat + "' AND tgl_perawatan='" + tanggal + "' AND jam_rawat='" + jam + "'");
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                JsonObject dataJson = new JsonObject();
+                dataJson.addProperty("no_rawat", rs.getString("no_rawat"));
+                dataJson.addProperty("tgl_perawatan", rs.getString("tgl_perawatan"));
+                dataJson.addProperty("jam_rawat", rs.getString("jam_rawat"));
+                dataJson.addProperty("suhu_tubuh", rs.getString("suhu_tubuh"));
+                dataJson.addProperty("tensi", rs.getString("tensi"));
+                dataJson.addProperty("nadi", rs.getString("nadi"));
+                dataJson.addProperty("respirasi", rs.getString("respirasi"));
+                dataJson.addProperty("tinggi", rs.getString("tinggi"));
+                dataJson.addProperty("berat", rs.getString("berat"));
+                dataJson.addProperty("spo2", rs.getString("spo2"));
+                dataJson.addProperty("gcs", rs.getString("gcs"));
+                dataJson.addProperty("keluhan", rs.getString("keluhan"));
+                dataJson.addProperty("pemeriksaan", rs.getString("pemeriksaan"));
+                dataJson.addProperty("alergi", rs.getString("alergi"));
+                dataJson.addProperty("penilaian", rs.getString("penilaian"));
+                dataJson.addProperty("rtl", rs.getString("rtl"));
+                dataJson.addProperty("instruksi", rs.getString("instruksi"));
+                dataJson.addProperty("nip", rs.getString("nip"));
+                dataJson.addProperty("verified_at", rs.getString("verified_at"));
+
+                JsonObject requestObject = new JsonObject();
+                requestObject.add("data", dataJson);
+                requestObject.addProperty("action", action);
+                requestJson = requestObject.toString();
+            }
+        } catch (Exception e) {
+            System.out.println("Notifikasi : " + e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (Exception ex) {
+                System.out.println("Notifikasi : " + ex);
+            }
+        }
+        Sequel.menyimpan("mlite_log", "null,'" + var.getkode() + "','pemeriksaan_ranap','" + requestJson + "','" + dtf.format(now) + "'");
+    }
 }

@@ -1698,7 +1698,7 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
                         psstok.setString(2,tbObat.getValueAt(i,2).toString());
                         rsstok=psstok.executeQuery();
                         if(rsstok.next()){
-                            stokbarang=rsstok.getDouble(1);
+                            stokbarang=rsstok.getDouble(1);                            
                         }
                     } catch (Exception e) {
                         stokbarang=0;

@@ -2088,6 +2088,38 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
         }
 
         if (TabInput.getSelectedIndex() == 1) {
+            if (TabInput2.getSelectedIndex() == 0) {
+                this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                if (tabModeData.getRowCount() == 0) {
+                    JOptionPane.showMessageDialog(null, "Maaf, data sudah habis. Tidak ada data yang bisa anda print...!!!!");
+                    TCari.requestFocus();
+                } else if (tabModeData.getRowCount() != 0) {
+                    Sequel.queryu("delete from temporary");
+                    int row = tabModeData.getRowCount();
+                    for (int i = 0; i < row; i++) {
+                        Sequel.menyimpan("temporary", "'0','"
+                                + tabModeData.getValueAt(i, 1).toString() + "','"
+                                + tabModeData.getValueAt(i, 2).toString() + "','"
+                                + tabModeData.getValueAt(i, 3).toString() + "','"
+                                + tabModeData.getValueAt(i, 4).toString() + "','"
+                                + tabModeData.getValueAt(i, 5).toString() + "','"
+                                + tabModeData.getValueAt(i, 6).toString() + "','"
+                                + tabModeData.getValueAt(i, 7).toString() + "','"
+                                + tabModeData.getValueAt(i, 8).toString() + "','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''", "Data");
+                    }
+                    Map<String, Object> param = new HashMap<>();
+                    param.put("namars", var.getnamars());
+                    param.put("alamatrs", var.getalamatrs());
+                    param.put("kotars", var.getkabupatenrs());
+                    param.put("propinsirs", var.getpropinsirs());
+                    param.put("kontakrs", var.getkontakrs());
+                    param.put("emailrs", var.getemailrs());
+                    param.put("logo", Sequel.cariGambar("select logo from setting"));
+                    Valid.MyReport("rptLapPasienMPP.jrxml", "report", "::[ Rekap Data Pasien MPP ]::",
+                            "select no, temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9, temp10, temp11, temp12, temp13, temp14, temp14, temp15, temp16 from temporary order by no asc", param);
+                }
+                this.setCursor(Cursor.getDefaultCursor());
+            }
             if (TabInput2.getSelectedIndex() == 2) {
                 this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 if (tabModeData2.getRowCount() == 0) {
@@ -2374,10 +2406,12 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
         Valid.tabelKosong(tabModeData);
         try {
             ps = koneksi.prepareStatement(
-                    "select reg_periksa.no_rawat, concat(reg_periksa.no_rkm_medis,' ',pasien.nm_pasien) as pasien, concat(reg_periksa.umurdaftar,' ',reg_periksa.sttsumur) as pasien, concat(kamar_inap.kd_kamar,' ',bangsal.nm_bangsal) as kamar,evaluasi_awal_mpp.tanggal,"
-                    + "evaluasi_awal_mpp.nilai_skrining, petugas.nama, evaluasi_awal_mpp.catatan_skrining from evaluasi_awal_mpp, reg_periksa,pasien,petugas, kamar,bangsal, kamar_inap where evaluasi_awal_mpp.no_rawat=reg_periksa.no_rawat "
-                    + "and reg_periksa.no_rkm_medis=pasien.no_rkm_medis and kamar_inap.kd_kamar=kamar.kd_kamar and kamar.kd_bangsal=bangsal.kd_bangsal and petugas.nip=evaluasi_awal_mpp.petugas and "
-                    + "evaluasi_awal_mpp.no_rawat=kamar_inap.no_rawat and evaluasi_awal_mpp.tanggal between ? and ? and (evaluasi_awal_mpp.no_rawat like ? or reg_periksa.no_rkm_medis like ? or pasien.nm_pasien like ?)");
+                    "SELECT reg_periksa.no_rawat, concat(reg_periksa.no_rkm_medis,' ',pasien.nm_pasien) as pasien, concat(reg_periksa.umurdaftar,' ',reg_periksa.sttsumur) as umur, "
+                    + "evaluasi_awal_mpp.tanggal,evaluasi_awal_mpp.nilai_skrining, petugas.nama, evaluasi_awal_mpp.catatan_skrining "
+                    + "FROM evaluasi_awal_mpp INNER JOIN reg_periksa INNER JOIN pasien INNER JOIN petugas INNER JOIN kamar INNER JOIN bangsal INNER JOIN kamar_inap "
+                    + "ON evaluasi_awal_mpp.no_rawat=reg_periksa.no_rawat AND reg_periksa.no_rkm_medis=pasien.no_rkm_medis AND evaluasi_awal_mpp.petugas=petugas.nip "
+                    + "AND kamar.kd_bangsal=bangsal.kd_bangsal AND reg_periksa.no_rawat=kamar_inap.no_rawat AND kamar_inap.kd_kamar=kamar.kd_kamar AND "                    
+                    + "evaluasi_awal_mpp.tanggal between ? AND ? AND (evaluasi_awal_mpp.no_rawat LIKE ? OR reg_periksa.no_rkm_medis LIKE ? OR pasien.nm_pasien LIKE ?) GROUP BY evaluasi_awal_mpp.no_rawat ORDER BY evaluasi_awal_mpp.tanggal DESC");
             try {
                 ps.setString(1, Valid.SetTgl(DTPCari1.getSelectedItem() + ""));
                 ps.setString(2, Valid.SetTgl(DTPCari2.getSelectedItem() + ""));
@@ -2386,7 +2420,8 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 ps.setString(5, "%" + TCari.getText().trim() + "%");
                 rs = ps.executeQuery();
                 while (rs.next()) {
-                    tabModeData.addRow(new Object[]{false, rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(8), rs.getString(7)});
+                    tabModeData.addRow(new Object[]{false, rs.getString("no_rawat"), rs.getString("pasien"), rs.getString("umur"), cekKamar(rs.getString("no_rawat"),
+                        rs.getString("tanggal")), rs.getString("tanggal"), rs.getString("nilai_skrining"), rs.getString("catatan_skrining"), rs.getString("nama")});
                 }
             } catch (Exception e) {
                 System.out.println("Notifikasi 1 : " + e);
@@ -2783,5 +2818,11 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
         } else {
             BtnKirim.setVisible(false);
         }
+    }
+
+    public String cekKamar(String norawat, String tanggal) {
+        String bangsal;
+        bangsal = Sequel.cariIsi("SELECT bangsal.nm_bangsal FROM kamar JOIN kamar_inap ON kamar.kd_kamar = kamar_inap.kd_kamar JOIN bangsal ON kamar.kd_bangsal = bangsal.kd_bangsal WHERE kamar_inap.no_rawat = '" + norawat + "' AND kamar_inap.tgl_masuk <= '" + tanggal + "' ORDER BY kamar_inap.tgl_masuk DESC LIMIT 1");
+        return bangsal;
     }
 }

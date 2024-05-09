@@ -603,9 +603,9 @@ public class DlgJadwalDokter extends javax.swing.JDialog {
                 }, "kd_dokter=? and kd_poli=? and tahun=? and bulan=? and id=?", "tanggal=?", 6, new String[]{
                     Arrays.toString(remainingDaysArray), kddokter.getText(), KdPoli.getText(), ThnCari.getSelectedItem().toString(), BlnCari.getSelectedItem().toString(), id
                 });
-                tampil();
-            }
-        }
+                    tampil();
+                }
+            }        
 }//GEN-LAST:event_BtnSimpanActionPerformed
 
     private void BtnSimpanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnSimpanKeyPressed
