@@ -3216,29 +3216,36 @@ private void MnPeriksaLabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
             JOptionPane.showMessageDialog(null,"Maaf, Silahkan tampilkan semua pilihan tagihan...!!!");
         }else if(cek>0){
             JOptionPane.showMessageDialog(null,"Maaf, data tagihan pasien dengan No.Rawat tersebut sudah pernah disimpan...!!!");
-        }else if(kdpj.equals("BPJ") && Sequel.compareDates(tglreg +" "+jamreg, 2)){//added
-            JOptionPane.showMessageDialog(null, "Maaf, gagal menyimpan karena pasien masih dalam pemeriksaan.");
+//        }else if(kdpj.equals("BPJ") && Sequel.compareDates(tglreg +" "+jamreg, 2)){//added
+//            JOptionPane.showMessageDialog(null, "Maaf, gagal menyimpan karena pasien masih dalam pemeriksaan.");
         }else if(cek==0){
-            if(piutang<=0){
-                if(kekurangan<0){
-                    JOptionPane.showMessageDialog(null,"Maaf, pembayaran pasien masih kurang ...!!!");
-                }else if(kekurangan>0){
-                    if(countbayar>1){
-                        JOptionPane.showMessageDialog(null,"Maaf, kembali harus bernilai 0 untuk cara bayar lebih dari 1...!!!");
+            if (var.getkode().equals("Admin Utama")) {
+                if(piutang<=0){
+                    if(kekurangan<0){
+                        JOptionPane.showMessageDialog(null,"Maaf, pembayaran pasien masih kurang ...!!!");
+                    }else if(kekurangan>0){
+                        if(countbayar>1){
+                            JOptionPane.showMessageDialog(null,"Maaf, kembali harus bernilai 0 untuk cara bayar lebih dari 1...!!!");
+                        }else{
+                            isSimpan();                        
+                        }                        
+                    }else if(kekurangan==0){
+                        isSimpan();
+                    }                
+                }else if(piutang>=1){
+                    if(kekurangan<0){
+                        JOptionPane.showMessageDialog(null,"Maaf, piutang belum genap. Silahkan isi di jumlah piutang ...!!!");
+                    }else if(kekurangan>0){
+                        JOptionPane.showMessageDialog(null,"Maaf, terjadi kelebihan piutang ...!!!");
                     }else{
-                        isSimpan();                        
-                    }                        
-                }else if(kekurangan==0){
-                    isSimpan();
-                }                
-            }else if(piutang>=1){
-                if(kekurangan<0){
-                    JOptionPane.showMessageDialog(null,"Maaf, piutang belum genap. Silahkan isi di jumlah piutang ...!!!");
-                }else if(kekurangan>0){
-                    JOptionPane.showMessageDialog(null,"Maaf, terjadi kelebihan piutang ...!!!");
-                }else{
-                    isSimpan();
-                }                    
+                        isSimpan();
+                    }                    
+                }
+                
+            }else{
+                if (kdpj.equals("BPJ") && Sequel.compareDates(tglreg +" "+jamreg, 2)) {
+                    JOptionPane.showMessageDialog(null, "Maaf, gagal menyimpan karena pasien masih dalam pemeriksaan.");                    
+                }
             }
         }
         

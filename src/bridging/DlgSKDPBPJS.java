@@ -1,5 +1,6 @@
 package bridging;
 
+import com.google.gson.JsonObject;
 import fungsi.WarnaTable;
 import fungsi.batasInput;
 import fungsi.koneksiDB;
@@ -19,6 +20,7 @@ import java.sql.ResultSet;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -58,7 +60,7 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
 //    private DlgJadwal poli = new DlgJadwal(null, false);
     private BPJSSuratKontrol kontrol = new BPJSSuratKontrol(null, false);
     private String URUTNOREG = "", tglSetelah85Hari = "", status = "", set_status_rawat = "", kdpoli = "", nmpoli = "", noantri = "", antrian = "", user = "", nosep = "", nosepCari = "", penjab = "", diag, kddokter = "", norujuk = "", norujukCari = "", tglrujukan = "", hari = "",
-            kdsps="";
+            kdsps = "", nomrlog = "", tgldatanglog = "", tglrujukanlog = "", kddokterlog = "";
     private SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");//added
     
     /**
@@ -1249,6 +1251,7 @@ public class DlgSKDPBPJS extends javax.swing.JDialog {
                 if (reply == JOptionPane.YES_OPTION) {
                     String surat = tbObat.getValueAt(tbObat.getSelectedRow(), 6).toString();
                     kontrol.setNoSurat(surat);
+                    isLog("Hapus");
                     if (Sequel.queryu2tf("delete from skdp_bpjs where tahun=? and no_antrian=?", 2, new String[]{
                         tbObat.getValueAt(tbObat.getSelectedRow(), 0).toString(), tbObat.getValueAt(tbObat.getSelectedRow(), 11).toString()
                     }) == true) {
@@ -1857,6 +1860,10 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             NmPoli1.setText(Sequel.cariIsi("select nm_poli_bpjs from maping_poli_bpjs where kd_poli_bpjs=?", KdPoli1.getText()));
             KdDokter1.setText(Sequel.cariIsi("select kd_dokter_bpjs from maping_dokter_dpjpvclaim where kd_dokter=?", tbObat.getValueAt(tbObat.getSelectedRow(), 13).toString()));
             NmDokter1.setText(Sequel.cariIsi("select nm_dokter_bpjs from maping_dokter_dpjpvclaim where kd_dokter=?", tbObat.getValueAt(tbObat.getSelectedRow(), 14).toString()));
+            nomrlog = tbObat.getValueAt(tbObat.getSelectedRow(), 1).toString();
+            tgldatanglog = tbObat.getValueAt(tbObat.getSelectedRow(), 9).toString();
+            tglrujukanlog = tbObat.getValueAt(tbObat.getSelectedRow(), 10).toString();
+            kddokterlog = tbObat.getValueAt(tbObat.getSelectedRow(), 13).toString();            
         }
     }
 
@@ -2083,6 +2090,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + " " + TanggalPeriksa.getSelectedItem().toString().substring(11, 19),
                 "belum"
             });
+            isLog("Simpan");
             JOptionPane.showMessageDialog(null, "Berhasil Simpan");
             emptTeks();
             tampil();
@@ -2096,6 +2104,7 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }
     
     private void isEdit() {
+        isLog("Edit");
         if (Sequel.mengedittf("skdp_bpjs", "tahun=? and no_antrian=?", "tahun=?,no_rkm_medis=?,diagnosa=?,terapi=?,alasan1=?,alasan2=?,rtl1=?,rtl2=?,tanggal_datang=?,tanggal_rujukan=?,no_antrian=?,kd_dokter=?,status=?", 15, new String[]{
             TanggalPeriksa.getSelectedItem().toString().substring(6, 10), TNoRM.getText(), Diagnosa.getText(), Terapi.getText(),
             Alasan1.getText(), Alasan2.getText(), Rtl1.getText(), Rtl2.getText(), Valid.SetTgl(TanggalPeriksa.getSelectedItem() + ""),
@@ -2111,5 +2120,43 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             emptTeks();
             tampil();
         }
+    }
+    
+    private void isLog(String action) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        String requestJson = "";
+        switch (action) {
+            case "Edit":                
+                requestJson = "{"
+                        + "\"dari\":{"
+                        + "\"no_rkm_medis\":\"" + nomrlog + "\","
+                        + "\"tanggal_datang\":\"" + tgldatanglog + "\","
+                        + "\"tanggal_rujukan\":\"" + tglrujukanlog + "\","
+                        + "\"kd_dokter\":\"" + kddokterlog + "\"},"
+                        + "\"ke\":{"
+                        + "\"no_rkm_medis\":\"" + TNoRM.getText() + "\","
+                        + "\"tanggal_datang\":\"" + Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + "\","
+                        + "\"tanggal_rujukan\":\"" + Valid.SetTgl(TanggalSurat.getSelectedItem() + "") + "\","
+                        + "\"kd_dokter\":\"" + KdDokter.getText() + "\"},"
+                        + "\"action\":\"" + action + "\""
+                        + "}";
+                break;
+            case "Simpan":
+            case "Hapus":
+                requestJson = "{"
+                        + "\"data\":{"
+                        + "\"no_rkm_medis\":\"" + TNoRM.getText() + "\","
+                        + "\"tanggal_datang\":\"" + Valid.SetTgl(TanggalPeriksa.getSelectedItem() + "") + "\","
+                        + "\"tanggal_rujukan\":\"" + Valid.SetTgl(TanggalSurat.getSelectedItem() + "") + "\","
+                        + "\"kd_dokter\":\"" + KdDokter.getText() + "\"},"
+                        + "\"action\":\"" + action + "\""
+                        + "}";
+                break;
+            default:
+                break;
+        }
+
+        Sequel.menyimpan("mlite_log", "null,'" + var.getkode() + "','skdp_bpjs','" + requestJson + "','" + dtf.format(now) + "'");
     }
 }

@@ -45,7 +45,7 @@ public final class koneksiDB {
                         "    | || |_   | |    |  _ <  ___) || | | || |/  /\n" +
                         "    |_||___|  |_|    |_| \\_\\|____/ |_| |_||___ /\n" +
                         "                                                  \n" + 
-                        "    Version 25.04.2024 [ 1.0.37 ] [Activated] GO KLAIM DIGITAL \n"+
+                        "    Version 07.05.2024 [ 1.0.37 ] [Activated] GO KLAIM DIGITAL \n"+
                         "                                                                           \n"+
                         "    RSUD H. Damanhuri Barabai                              \n"+
                         "                                                                           \n"+
@@ -57,7 +57,11 @@ public final class koneksiDB {
                         "                                                                       \n"+
                         "                                                                       \n"+
                         "    * Changelog :                                                       \n"+
-                        "       - Booking Update SKDP Surkon MJKN                 \n");
+                        "       - Booking Update SKDP Surkon MJKN                 \n"+
+                        "       - Log SKDP                 \n"+
+                        "       - Closing Billing > 2 Jam                 \n"+
+                        "       - Log Surat Kontrol                 \n"+
+                        "       - ICD FUCoD Pasien Meninggal        \n");
             }catch(Exception e){
                 System.out.println("Notif : "+e);
                 try {

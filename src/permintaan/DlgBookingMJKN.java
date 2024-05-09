@@ -51,7 +51,7 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
         WindowGanti.setSize(500, 174);
 
         tabMode = new DefaultTableModel(null, new Object[]{
-            "Tgl.Booking", "Jam Booking", "No.RM", "Nama Pasien", "Tgl.Periksa", "Kode Dokter","Nama Dokter",
+            "Tgl.Booking", "Jam Booking", "No.RM", "Nama Pasien", "Tgl.Periksa","Kode Booking", "Kode Dokter","Nama Dokter",
             "Kode Poli", "Poli", "No.Reg", "Status"
         }) {
             @Override
@@ -66,7 +66,8 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
                 java.lang.Object.class, java.lang.Object.class,
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
+                java.lang.Object.class
             };
 
             @Override
@@ -78,7 +79,7 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
         tbObat.setPreferredScrollableViewportSize(new Dimension(500, 500));
         tbObat.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 11; i++) {
+        for (i = 0; i < 12; i++) {
             TableColumn column = tbObat.getColumnModel().getColumn(i);
             if (i == 0) {
             } else if (i == 1) {
@@ -90,16 +91,18 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
             } else if (i == 4) {
                 column.setPreferredWidth(70);
             } else if (i == 5) {
-                column.setPreferredWidth(70);
+                column.setPreferredWidth(180);
             } else if (i == 6) {
-                column.setPreferredWidth(120);
-            } else if (i == 7) {
                 column.setPreferredWidth(70);
-            } else if (i == 8) {
+            } else if (i == 7) {
                 column.setPreferredWidth(120);
+            } else if (i == 8) {
+                column.setPreferredWidth(70);
             } else if (i == 9) {
-                column.setPreferredWidth(50);
+                column.setPreferredWidth(120);
             } else if (i == 10) {
+                column.setPreferredWidth(50);
+            } else if (i == 11) {
                 column.setWidth(70);
             }
         }
@@ -672,7 +675,7 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
                     + "AND mlite_antrian_referensi.tanggal_periksa=booking_registrasi.tanggal_periksa WHERE mlite_antrian_referensi.tanggal_periksa BETWEEN '" + Valid.SetTgl(DTPCari1.getSelectedItem() + "") + "' and '" + Valid.SetTgl(DTPCari2.getSelectedItem() + "") + "' AND mlite_antrian_referensi.keterangan='Via MJKN'"));
             ps = koneksi.prepareStatement(
                     "select booking_registrasi.tanggal_booking, booking_registrasi.jam_booking, booking_registrasi.no_rkm_medis, pasien.nm_pasien, booking_registrasi.tanggal_periksa, "
-                    + "booking_registrasi.kd_dokter, dokter.nm_dokter, booking_registrasi.kd_poli, poliklinik.nm_poli, booking_registrasi.no_reg, booking_registrasi.status "
+                    + "booking_registrasi.kd_dokter, dokter.nm_dokter, booking_registrasi.kd_poli, poliklinik.nm_poli, booking_registrasi.no_reg, booking_registrasi.status, mlite_antrian_referensi.kodebooking "
                     + "from mlite_antrian_referensi inner join booking_registrasi inner join pasien "
                     + "on mlite_antrian_referensi.tanggal_periksa=booking_registrasi.tanggal_periksa and mlite_antrian_referensi.no_rkm_medis=booking_registrasi.no_rkm_medis and "
                     + "booking_registrasi.no_rkm_medis=pasien.no_rkm_medis left join poliklinik ON booking_registrasi.kd_poli=poliklinik.kd_poli left join dokter on booking_registrasi.kd_dokter=dokter.kd_dokter "
@@ -687,12 +690,12 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     tabMode.addRow(new Object[]{
-                        rs.getString("tanggal_booking"), rs.getString("jam_booking"), rs.getString("no_rkm_medis"), rs.getString("nm_pasien"), rs.getString("tanggal_periksa"),
+                        rs.getString("tanggal_booking"), rs.getString("jam_booking"), rs.getString("no_rkm_medis"), rs.getString("nm_pasien"), rs.getString("tanggal_periksa"), rs.getString("kodebooking"),
                         rs.getString("kd_dokter"), rs.getString("nm_dokter"), rs.getString("kd_poli"), rs.getString("nm_poli"), rs.getString("no_reg"), rs.getString("status")
                     });
                 }
             } catch (Exception e) {
-                System.out.println("Notif : " + e);
+                System.out.println("Notif ps: " + e);
             } finally {
                 if (rs != null) {
                     rs.close();
@@ -704,7 +707,7 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
 
             ps2 = koneksi.prepareStatement(
                     "select reg_periksa.no_rkm_medis, pasien.nm_pasien, reg_periksa.tgl_registrasi,"
-                    + "reg_periksa.kd_dokter, dokter.nm_dokter, reg_periksa.kd_poli, poliklinik.nm_poli, reg_periksa.no_reg "
+                    + "reg_periksa.kd_dokter, dokter.nm_dokter, reg_periksa.kd_poli, poliklinik.nm_poli, reg_periksa.no_reg,mlite_antrian_referensi.kodebooking  "
                     + "from reg_periksa inner join mlite_antrian_referensi inner join pasien  "
                     + "on reg_periksa.tgl_registrasi=mlite_antrian_referensi.tanggal_periksa and reg_periksa.no_rkm_medis=mlite_antrian_referensi.no_rkm_medis and "
                     + "reg_periksa.no_rkm_medis=pasien.no_rkm_medis left join poliklinik on reg_periksa.kd_poli=poliklinik.kd_poli left join dokter on reg_periksa.kd_dokter=dokter.kd_dokter "
@@ -715,7 +718,7 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
                 rs2 = ps2.executeQuery();
                 while (rs2.next()) {
                     tabMode.addRow(new Object[]{
-                        "", "", rs2.getString("no_rkm_medis"), rs2.getString("nm_pasien"), rs2.getString("tgl_registrasi"),
+                        "", "", rs2.getString("no_rkm_medis"), rs2.getString("nm_pasien"), rs2.getString("tgl_registrasi"), rs2.getString("kodebooking"),
                         rs2.getString("kd_dokter"), rs2.getString("nm_dokter"), rs2.getString("kd_poli"), rs2.getString("nm_poli"), rs2.getString("no_reg"), ""
                     });
                 }
@@ -730,7 +733,7 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Notif : " + e);
+            System.out.println("Notif 2: " + e);
         }
         LCount.setText("" + tabMode.getRowCount());
     }
@@ -739,7 +742,7 @@ public class DlgBookingMJKN extends javax.swing.JDialog {
         if(tbObat.getSelectedRow()!= -1){            
             norm = tbObat.getValueAt(tbObat.getSelectedRow(),2).toString();
             tglperiksa = tbObat.getValueAt(tbObat.getSelectedRow(),4).toString();
-            noreg = tbObat.getValueAt(tbObat.getSelectedRow(),9).toString();
+            noreg = tbObat.getValueAt(tbObat.getSelectedRow(),10).toString();
         }
     }
     
