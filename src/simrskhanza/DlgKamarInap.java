@@ -9838,7 +9838,7 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 //            ps1 = koneksi.prepareStatement("select CONCAT(diagnosa_pasien.kd_penyakit ,' - ',penyakit.nm_penyakit ) as diagnosa "
 //                    + "from diagnosa_pasien join penyakit on diagnosa_pasien.kd_penyakit = penyakit.kd_penyakit where no_rawat=? and prioritas='1' and status='Ralan' ");
             String dxAwal2 = Sequel.cariIsi("select CONCAT(diagnosa_pasien.kd_penyakit ,' - ',penyakit.nm_penyakit ) as diagnosa "
-                    + "from diagnosa_pasien join penyakit on diagnosa_pasien.kd_penyakit = penyakit.kd_penyakit where no_rawat=? and prioritas='1' and status='Ralan' ",norawat.getText());
+                    + "from diagnosa_pasien join penyakit on diagnosa_pasien.kd_penyakit = penyakit.kd_penyakit where no_rawat=? and prioritas='1' and diagnosa_pasien.status='Ralan' ",norawat.getText());
             try {
                 ps.setString(1, norawat.getText());
 //                ps1.setString(1, norawat.getText());
