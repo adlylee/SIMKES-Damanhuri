@@ -2682,7 +2682,7 @@ public final class RMTransferPasienAntarRuang extends javax.swing.JDialog {
                 if (sttsTransfer.equals("Ranap")) {
                     spo2.setText(rs.getString("spo2"));
                     gcs.setText(rs.getString("gcs"));
-                    Diagnosa.setText("");
+                    Diagnosa.setText(Sequel.cariIsi("SELECT CONCAT(penyakit.kd_penyakit,' ',penyakit.nm_penyakit) FROM diagnosa_pasien INNER JOIN penyakit ON diagnosa_pasien.kd_penyakit = penyakit.kd_penyakit WHERE diagnosa_pasien.no_rawat=? AND diagnosa_pasien.status = 'Ranap' ORDER BY diagnosa_pasien.prioritas ASC LIMIT 1", no_rawat));
                     dxKeperawatan.setText("");
                     cmbNyeri.setText("");
                 }

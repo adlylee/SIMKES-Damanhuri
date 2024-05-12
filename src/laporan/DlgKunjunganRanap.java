@@ -190,34 +190,36 @@ public final class DlgKunjunganRanap extends javax.swing.JDialog {
         }
         tbTambahan.setDefaultRenderer(Object.class, new WarnaTable());
         
-        tabModeGzBuruk = new DefaultTableModel(null, new String[]{"No.", "Nama", "Umur", "Nama Orang Tua", "Alamat", "Kode", "Nama Penyakit", "Tgl. Masuk", "Tgl. Keluar", "Stts. Pulang"}) {
+        tabModeGzBuruk = new DefaultTableModel(null, new String[]{"No.", "Nama", "No.RM","Umur", "Nama Orang Tua", "Alamat", "Kode", "Nama Penyakit", "Tgl. Masuk", "Tgl. Keluar", "Stts. Pulang"}) {
               @Override public boolean isCellEditable(int rowIndex, int colIndex){return false;}
         };
         tbGiziBuruk.setModel(tabModeGzBuruk);
         tbGiziBuruk.setPreferredScrollableViewportSize(new Dimension(500,500));
         tbGiziBuruk.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (i = 0; i < 10; i++) {
+        for (i = 0; i < 11; i++) {
             TableColumn column = tbGiziBuruk.getColumnModel().getColumn(i);
             if(i==0){
                 column.setPreferredWidth(35);
             }else if(i==1){
-                column.setPreferredWidth(150);
-            }else if(i==2){
-                column.setPreferredWidth(70);
-            }else if(i==3){
                 column.setPreferredWidth(170);
+            }else if(i==2){
+                column.setPreferredWidth(60);
+            }else if(i==3){
+                column.setPreferredWidth(70);
             }else if(i==4){
-                column.setPreferredWidth(190);
+                column.setPreferredWidth(160);
             }else if(i==5){
-                column.setPreferredWidth(50);
+                column.setPreferredWidth(190);
             }else if(i==6){
-                column.setPreferredWidth(350);
+                column.setPreferredWidth(50);
             }else if(i==7){
-                column.setPreferredWidth(90);
+                column.setPreferredWidth(350);
             }else if(i==8){
                 column.setPreferredWidth(90);
             }else if(i==9){
+                column.setPreferredWidth(90);
+            }else if(i==10){
                 column.setPreferredWidth(90);
             }
         }
@@ -1672,7 +1674,9 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
     }//GEN-LAST:event_BtnKeluar5ActionPerformed
 
     private void TCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TCari1KeyPressed
-        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            BtnCari2ActionPerformed(null);
+        }
     }//GEN-LAST:event_TCari1KeyPressed
 
     /**
@@ -2559,10 +2563,10 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
         Valid.tabelKosong(tabModeGzBuruk);
         try {
             ps = koneksi.prepareStatement(
-                    "SELECT pasien.nm_pasien, CONCAT(reg_periksa.umurdaftar,' ', reg_periksa.sttsumur) as umur, pasien.namakeluarga, pasien.alamat, diagnosa_pasien.kd_penyakit, penyakit.nm_penyakit, kamar_inap.tgl_masuk, kamar_inap.tgl_keluar, kamar_inap.stts_pulang "
+                    "SELECT pasien.nm_pasien, CONCAT(reg_periksa.umurdaftar,' ', reg_periksa.sttsumur) as umur,pasien.no_rkm_medis, pasien.namakeluarga, pasien.alamat, diagnosa_pasien.kd_penyakit, penyakit.nm_penyakit, kamar_inap.tgl_masuk, kamar_inap.tgl_keluar, kamar_inap.stts_pulang "
                     + "FROM reg_periksa INNER JOIN kamar_inap INNER JOIN diagnosa_pasien INNER JOIN pasien INNER JOIN penyakit "
                     + "ON reg_periksa.no_rawat=kamar_inap.no_rawat AND kamar_inap.no_rawat=diagnosa_pasien.no_rawat AND reg_periksa.no_rkm_medis=pasien.no_rkm_medis AND diagnosa_pasien.kd_penyakit=penyakit.kd_penyakit "
-                    + "WHERE diagnosa_pasien.status='Ranap' AND reg_periksa.umurdaftar < 5 AND reg_periksa.sttsumur IN ('Bl','Th','Hr') "
+                    + "WHERE diagnosa_pasien.status='Ranap' AND reg_periksa.umurdaftar < 5 AND reg_periksa.sttsumur IN ('Bl','Th','Hr') AND kamar_inap.stts_pulang NOT IN ('Pindah Kamar','-') "
                     + "AND kamar_inap.tgl_masuk BETWEEN ? AND ? AND diagnosa_pasien.kd_penyakit LIKE ?  "
                     + " ");
             try {
@@ -2573,7 +2577,7 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                 i = 1;
                 while (rs.next()) {
                     tabModeGzBuruk.addRow(new Object[]{
-                        i, rs.getString("nm_pasien"), rs.getString("umur"), rs.getString("namakeluarga"), rs.getString("alamat"), rs.getString("kd_penyakit"),
+                        i+".", rs.getString("nm_pasien"), rs.getString("no_rkm_medis"), rs.getString("umur"), rs.getString("namakeluarga"), rs.getString("alamat"), rs.getString("kd_penyakit"),
                         rs.getString("nm_penyakit"), rs.getString("tgl_masuk"), rs.getString("tgl_keluar"), rs.getString("stts_pulang")
                     });
                     i++;
